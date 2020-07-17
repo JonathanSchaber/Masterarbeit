@@ -12,7 +12,7 @@ import tensorflow as tf
 def create_dsrl_repr(text: list):
     """Wraps the POS-labelled tokens into a DSRL class
     Args:
-        param1: list of 2-tuples of strings
+        param1: list of 2-tuples of strings [ (<token>, <POS>), ... ]
     Returns:
         DSRL class Text()
     """
@@ -26,3 +26,10 @@ def create_dsrl_repr(text: list):
         predicate.arguments = ["**UNK**" for word in dsrl_text] 
 
     return dsrl_text
+
+
+def main():
+    print(create_dsrl_repr(text))
+
+if __name__ == "__main__":
+    main([("Der", "ART"), ("Hund", "NN"), ("jagt", "VVFIN"), ("die", "ART"), ("Katze", "ART"), (".", "$.")])
