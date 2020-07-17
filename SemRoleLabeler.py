@@ -1,13 +1,28 @@
 
+
+#import tensorflow as tf
 import nltk
 
 from liir.dame.core.representation.Sentence import Sentence
 from liir.dame.core.representation.Text import Text
 from liir.dame.core.representation.Word import Word
 from liir.dame.core.representation.Predicate import Predicate
-from liir.dame.srl.DSRL import DSRL
+#from liir.dame.srl.DSRL import DSRL
 
-import tensorflow as tf
+import parzu_class as parzu
+
+
+
+def parse_sentence(parser: parzu_class.Parser, text: str):
+    """parse sentence and return list of tuples with token and POS-tags
+    Args:
+        param1: parser Object
+        param2: sentence to parse
+    Returns:
+        list of tuples of strings
+    """
+    
+
 
 def create_dsrl_repr(text: list):
     """Wraps the POS-labelled tokens into a DSRL class
@@ -22,13 +37,14 @@ def create_dsrl_repr(text: list):
 
     dsrl_text.append(sentence)
     
-    for predicate in dsrl_text.get_predicates():
-        predicate.arguments = ["**UNK**" for word in dsrl_text] 
+    for sentence in dsrl_text:
+        for predicate in sentence.get_predicates():
+            predicate.arguments = ["**UNK**" for word in sentence] 
 
     return dsrl_text
 
 
-def main():
+def main(text):
     print(create_dsrl_repr(text))
 
 if __name__ == "__main__":
