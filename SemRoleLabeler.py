@@ -26,18 +26,22 @@ def create_ParZu_parser():
     return ParZu
 
 
-def parse_sentence(parser, text):
+def parse_text(parser, text):
     """parse sentence and return list of tuples with token and POS-tags
     Args:
         param1: parser Object
         param2: sentence to parse
     Returns:
-        list of tuples of strings
+        list of lists of tuples of strings
     """
-    text = " ".join(nltk.word_tokenize(text))
-    tagged_sent = parser.tag([text])[0]
-    splitted_sents = tagged_sent.split("\n")
-    tagged_tuple_list = [(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents]
+    tagged_tuple_list = []
+
+    sentences = nltk.sent_tokenize(text)
+    for sentence in sentences:
+        sentence = " ".join(nltk.word_tokenize(sentence))
+        tagged_sent = parser.tag([sentence])[0]
+        splitted_sents = tagged_sent.split("\n")
+        tagged_tuple_list.append([(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents])
     return tagged_tuple_list
 
 
@@ -61,7 +65,7 @@ def create_dsrl_repr(sentences):
     return dsrl_text
 
 
-def process_sentence(parser, text):
+def process_text(parser, text):
     """take raw sentence and retunrn DSRL-processable object
     Args:
         param1: ParZu parser Object
@@ -69,14 +73,14 @@ def process_sentence(parser, text):
     Returns:
         DSRL class Text()
     """
-    parsed_text = parse_sentence(parser, text)
-    dsrl_text_object = create_dsrl_repr([parsed_text])
+    parsed_text = parse_text(parser, text)
+    dsrl_text_object = create_dsrl_repr(parsed_text)
     return dsrl_text_object
 
 
 def main(text):
     ParZu_parser = create_ParZu_parser()
-    obj = process_sentence(ParZu_parser, text)
+    obj = process_text(ParZu_parser, text)
     import pdb; pdb.set_trace()
     
 
