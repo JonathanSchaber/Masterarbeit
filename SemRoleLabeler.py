@@ -7,11 +7,11 @@ from liir.dame.core.representation.Sentence import Sentence
 from liir.dame.core.representation.Text import Text
 from liir.dame.core.representation.Word import Word
 from liir.dame.core.representation.Predicate import Predicate
-#from liir.dame.srl.DSRL import DSRL
+from liir.dame.srl.DSRL import DSRL
 
 import parzu_class as parzu
 
-fin_verb_POS = ["VVFIN", "VAFIN"]
+fin_verb_POS = ["VVFIN", "VAFIN", "VMFIN"]
 
 
 def create_ParZu_parser():
@@ -24,6 +24,7 @@ def create_ParZu_parser():
     options = parzu.process_arguments()
     ParZu = parzu.Parser(options)
     return ParZu
+
 
 
 def parse_text(parser, text):
@@ -78,9 +79,16 @@ def process_text(parser, text):
     return dsrl_text_object
 
 
+def predict_semRoles(dsrl, dsrl_obj):
+    """returns """
+
+
 def main(text):
+    argument_model_config = "../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
+    dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
-    obj = process_text(ParZu_parser, text)
+    dsrl_obj = process_text(ParZu_parser, text)
+    sem_roles = dsrl.predict(dsrl_obj)
     import pdb; pdb.set_trace()
     
 
