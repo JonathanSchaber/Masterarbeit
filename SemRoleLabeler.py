@@ -11,6 +11,8 @@ from liir.dame.core.representation.Predicate import Predicate
 
 import parzu_class as parzu
 
+fin_verb_POS = ["VVFIN", "VAFIN"]
+
 
 def create_ParZu_parser():
     """Create an ParZu-parser object
@@ -32,6 +34,7 @@ def parse_sentence(parser, text):
     Returns:
         list of tuples of strings
     """
+    text = " ".join(nltk.word_tokenize(text))
     tagged_sent = parser.tag([text])[0]
     splitted_sents = tagged_sent.split("\n")
     tagged_tuple_list = [(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents]
@@ -48,7 +51,7 @@ def create_dsrl_repr(sentences):
     dsrl_text = Text()
 
     for sentence in sentences:
-        dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] != "VVFIN" else Predicate(Word(tuple[0])) for tuple in sentence])
+        dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] not in fin_verb_POS else Predicate(Word(tuple[0])) for tuple in sentence])
         dsrl_text.append(dsrl_sentence)
     
     for sentence in dsrl_text:
@@ -58,10 +61,22 @@ def create_dsrl_repr(sentences):
     return dsrl_text
 
 
+def process_sentence(parser, text):
+    """take raw sentence and retunrn DSRL-processable object
+    Args:
+        param1: ParZu parser Object
+        param2: str
+    Returns:
+        DSRL class Text()
+    """
+    parsed_text = parse_sentence(parser, text)
+    dsrl_text_object = create_dsrl_repr([parsed_text])
+    return dsrl_text_object
+
+
 def main(text):
     ParZu_parser = create_ParZu_parser()
-    parsed_text = parse_sentence(ParZu_parser, text)
-    dsrl_text = create_dsrl_repr([parsed_text])
+    obj = process_sentence(ParZu_parser, text)
     import pdb; pdb.set_trace()
     
 
