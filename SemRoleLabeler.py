@@ -11,7 +11,7 @@ from liir.dame.srl.DSRL import DSRL
 
 import parzu_class as parzu
 
-fin_verb_POS = ["VVFIN", "VAFIN", "VMFIN"]
+fin_verb_POS = ["VVFIN", "VVPP", "VMFIN"]
 
 
 def create_ParZu_parser():
@@ -80,7 +80,21 @@ def process_text(parser, text):
 
 
 def predict_semRoles(dsrl, dsrl_obj):
-    """returns """
+    """returns list of lists of SRL-tag per token
+    Args:
+        param1: DAMESRL DSRL() object
+        param2: DAMESL Text() object
+    Returns:
+        list of lists of str
+    """
+    srl_list = []
+    sem_roles = dsrl.predict(dsrl_obj)
+    for sent in sem_roles:
+        sent_list = []
+        for predicate in sent.get_predicates():
+           sent_list.append(predicate.arguments) 
+        srl_list.append(sent_list)
+    return srl_list
 
 
 def main(text):
@@ -88,7 +102,7 @@ def main(text):
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
     dsrl_obj = process_text(ParZu_parser, text)
-    sem_roles = dsrl.predict(dsrl_obj)
+    print(predict_semRoles(dsrl, dsrl_obj))
     import pdb; pdb.set_trace()
     
 
