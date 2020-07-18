@@ -93,5 +93,5 @@ def main(text):
     
 
 if __name__ == "__main__":
-    main("Gestern sah ich einen Vogel über die Dächer fliegen.")
+    main("Meine Mutter schenkte mir dieses Buch. Ich will es behalten.")
     
