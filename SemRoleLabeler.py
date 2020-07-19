@@ -11,7 +11,8 @@ from liir.dame.srl.DSRL import DSRL
 
 import parzu_class as parzu
 
-fin_verb_POS = ["VVFIN", "VVPP", "VMFIN"]
+# Was ist mit VVIMP VAFIN (ev. checks einbauen?)
+fin_verb_POS = ["VVFIN", "VAFIN", "VMFIN", "VVPP", "VVIMP"]
 
 
 def create_ParZu_parser():
@@ -24,7 +25,6 @@ def create_ParZu_parser():
     options = parzu.process_arguments()
     ParZu = parzu.Parser(options)
     return ParZu
-
 
 
 def parse_text(parser, text):
@@ -93,6 +93,8 @@ def predict_semRoles(dsrl, dsrl_obj):
         sent_list = []
         for predicate in sent.get_predicates():
            sent_list.append(predicate.arguments) 
+           if not predicate:
+               sent_list.append([])
         srl_list.append(sent_list)
     return srl_list
 
@@ -107,5 +109,5 @@ def main(text):
     
 
 if __name__ == "__main__":
-    main("Meine Mutter schenkte mir dieses Buch. Ich will es behalten.")
+    main("Wer hat die Gans gestohlen? Gib sie wieder her! Ich will das nicht sehen müssen.")
     
