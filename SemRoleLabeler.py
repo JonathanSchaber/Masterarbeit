@@ -38,7 +38,26 @@ def parse_text(parser, text):
         list of lists of tuples of strings
     """
     tagged_tuple_list = []
-    full_tagged_list = []
+
+    full_tagged_text = parser.main(text)
+
+    for sentence in full_tagged_text:
+        srl_sentence = []
+        for token in sentence:
+            if token[3] != "V":
+                srl_sentence.append((token, "NOT_PRED"))
+            elif token[4] == "VVFIN":
+                srl_sentece.append((token, "PRED"))
+            elif token[4] in aux_verb_POS:
+                for ttoken in sentence:
+                    if ttoken[6] == token[0]:
+                        srl_sentence.append((token, "NOT_PRED"))
+                        break
+                 
+
+
+        if len([token[4] if token[4] in verb_fin_POS + verb_inf_POS + aux_verb_POS for token in sentence]) == 1:
+
 
     sentences = nltk.sent_tokenize(text, language="german")
     for sentence in sentences:
@@ -46,7 +65,6 @@ def parse_text(parser, text):
         tagged_sent = parser.tag([sentence])[0]
         splitted_sents = tagged_sent.split("\n")
         tagged_tuple_list.append([(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents])
-        # full_tagged_list.append([token.split("\] 
     return tagged_tuple_list
 
 
@@ -60,8 +78,6 @@ def create_dsrl_repr(sentences):
     dsrl_text = Text()
 
     for sentence in sentences:
-        AUX_FLAG = True if aux_verb_POS in [tuple[1] for tuple in sentence]
-
         dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] not in verb_POS else Predicate(Word(tuple[0])) for tuple in sentence])
         dsrl_text.append(dsrl_sentence)
     
