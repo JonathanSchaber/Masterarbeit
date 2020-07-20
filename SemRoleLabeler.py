@@ -1,5 +1,3 @@
-
-
 #import tensorflow as tf
 import nltk
 
@@ -12,7 +10,7 @@ from liir.dame.srl.DSRL import DSRL
 import parzu_class as parzu
 
 # Was ist mit VVIMP VAFIN (ev. checks einbauen?)
-fin_verb_POS = ["VVFIN", "VAFIN", "VMFIN", "VVPP", "VVIMP"]
+verb_POS = ["VVFIN", "VMFIN", "VVPP", "VVIMP"]
 
 
 def create_ParZu_parser():
@@ -56,7 +54,7 @@ def create_dsrl_repr(sentences):
     dsrl_text = Text()
 
     for sentence in sentences:
-        dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] not in fin_verb_POS else Predicate(Word(tuple[0])) for tuple in sentence])
+        dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] not in verb_POS else Predicate(Word(tuple[0])) for tuple in sentence])
         dsrl_text.append(dsrl_sentence)
     
     for sentence in dsrl_text:
