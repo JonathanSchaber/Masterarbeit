@@ -97,12 +97,29 @@ def predict_semRoles(dsrl, dsrl_obj):
     return srl_list
 
 
+def pretty_print(srl_list, parse_text):
+    """prints pretty predicted semantic roles for a given sentence.
+    Args:
+        param1: list of lists of lists of strings
+        param2: list of lists of tuples of strings
+    Returns:
+        None
+    """
+    pretty_print_list = []
+    for i, sentence in enumerate(parse_text):
+        for j, token in enumerate(sentence):
+            pretty_print_list.append("\t".join(token) + "\t" + "\t".join(semrole_item[j] for semrole_item in srl_list[i]))
+        pretty_print_list.append("\n")
+    print("\n".join(pretty_print_list))
+
+
 def main(text):
     argument_model_config = "../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
     dsrl_obj = process_text(ParZu_parser, text)
-    print(predict_semRoles(dsrl, dsrl_obj))
+    sem_roles = predict_semRoles(dsrl, dsrl_obj)
+    pretty_print(sem_roles, parse_text(ParZu_parser, text))
     import pdb; pdb.set_trace()
     
 
