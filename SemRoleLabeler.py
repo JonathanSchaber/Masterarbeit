@@ -35,9 +35,9 @@ def parse_text(parser, text):
     """
     tagged_tuple_list = []
 
-    sentences = nltk.sent_tokenize(text)
+    sentences = nltk.sent_tokenize(text, language="german")
     for sentence in sentences:
-        sentence = " ".join(nltk.word_tokenize(sentence))
+        sentence = " ".join(nltk.word_tokenize(sentence, language="german"))
         tagged_sent = parser.tag([sentence])[0]
         splitted_sents = tagged_sent.split("\n")
         tagged_tuple_list.append([(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents])
