@@ -12,9 +12,9 @@ import parzu_class as parzu
 # Was ist mit VVIMP VAFIN (ev. checks einbauen?)
 verb_fin_POS = ["VVFIN", "VVIMP"]
 
-verb_inf_POS = ["VVINF", "VVPP"]
+verb_inf_POS = ["VVINF", "VVPP", "VMINF"]
 
-aux_verb_POS = ["VAFIN", "VMFIN"]
+verb_aux_POS = ["VAFIN", "VMFIN"]
 
 
 def create_ParZu_parser():
@@ -39,33 +39,52 @@ def parse_text(parser, text):
     """
     tagged_tuple_list = []
 
-    full_tagged_text = parser.main(text)
+    sents = [sentence.split("\n") for sentence in parser.main(text)]
+    full_tagged_text = []
+    for sentence in sents:
+        full_tagged_text.append([token.split("\t") for token in sentence])
+
+   ###### REIMPEMETNTNTNTNTNTNTNTNTN
 
     for sentence in full_tagged_text:
         srl_sentence = []
+        import pdb; pdb.set_trace()
         for token in sentence:
             if token[3] != "V":
                 srl_sentence.append((token, "NOT_PRED"))
-            elif token[4] == "VVFIN":
-                srl_sentece.append((token, "PRED"))
-            elif token[4] in aux_verb_POS:
+            elif token[4] in verb_fin_POS:
+                srl_sentence.append((token, "PRED"))
+            elif token[4] in verb_aux_POS:
+                FLAG = True
                 for ttoken in sentence:
                     if ttoken[6] == token[0]:
                         srl_sentence.append((token, "NOT_PRED"))
+                        FLAG = False
                         break
-                 
+                if FLAG:
+                    srl_sentence.append((token, "PRED"))
+            elif token[4] in verb_inf_POS:
+                FLAG = True
+                for ttoken in sentence:
+                    if ttoken[6] == token[0]:
+                        srl_sentence.append((token, "NOT_PRED"))
+                        FLAG = False
+                        break
+                if FLAG:
+                    srl_sentence.append((token, "PRED"))
+            else:
+                import pdb; pdb.set_trace()
+        tagged_tuple_list.append(srl_sentence)
 
-
-        if len([token[4] if token[4] in verb_fin_POS + verb_inf_POS + aux_verb_POS for token in sentence]) == 1:
-
-
-    sentences = nltk.sent_tokenize(text, language="german")
-    for sentence in sentences:
-        sentence = " ".join(nltk.word_tokenize(sentence, language="german"))
-        tagged_sent = parser.tag([sentence])[0]
-        splitted_sents = tagged_sent.split("\n")
-        tagged_tuple_list.append([(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents])
     return tagged_tuple_list
+
+#    sentences = nltk.sent_tokenize(text, language="german")
+#    for sentence in sentences:
+#        sentence = " ".join(nltk.word_tokenize(sentence, language="german"))
+#        tagged_sent = parser.tag([sentence])[0]
+#        splitted_sents = tagged_sent.split("\n")
+#        tagged_tuple_list.append([(token.split("\t")[0], token.split("\t")[1]) for token in splitted_sents])
+#    return tagged_tuple_list
 
 
 def create_dsrl_repr(sentences):
@@ -78,7 +97,7 @@ def create_dsrl_repr(sentences):
     dsrl_text = Text()
 
     for sentence in sentences:
-        dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] not in verb_POS else Predicate(Word(tuple[0])) for tuple in sentence])
+        dsrl_sentence = Sentence([Word(tuple[0]) if tuple[1] != "PRED" else Predicate(Word(tuple[0])) for tuple in sentence])
         dsrl_text.append(dsrl_sentence)
     
     for sentence in dsrl_text:
