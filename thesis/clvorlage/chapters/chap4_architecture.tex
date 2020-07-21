@@ -14,21 +14,50 @@ I use their pre-trained German Character-Attention model which, according to the
 For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
 Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevent predicates in a sentence.
 This is not as straight forward as it seems on the first look.
-Consider the sentence \texttt{Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.} whose dependency parse tree is shown in \reffig{fig:exampleParzu}:
+Consider the sentence \texttt{Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.} whose dependency parse tree is shown in \reffig{fig:example-parzu}:
 This sentence has three verbs in it, \texttt{werden}, texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. pradicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-{\centering \fig{images/exampleParzu.png}{fig:exampleParzu}{Example sentence with multiple predicates.}{16}{ParZu}}
+\fig{images/exampleParzu.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{ParZu}
 
-I propose the following algorithm deciding whether a verb in a sentence is or isn't a predicate using the a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
+I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using the a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
 
-\begin{itemize}
-	\item if the POS-tag of a token \textit{t} is not ``V'' --- i.e. it is a not verbal form ---, it is immediately labelled \texttt{NOT\_PRED}
-	\item if the POS-tag of a token \textit{t} is verbal and its  STTS-tag is ``VVFIN'' --- i.e. it is a inflected full-verb --- it is immediately labelled \texttt{PRED}
-	\item if the POS-tag of a token \textit{t} is verbal and its STTS-tag is not ``VVFIN'', it is checked whether any of the other tokens in this subclause is POS-tagged as ``V'' and if it is dependent on \textit{t}, i.e. if it points to the index of \textit{t}.
-	If this is the case for any token in the subclause, \textit{t} gets labelled \texttt{NOT\_PRED}, since it only modifies another verb.
-	If there is no token that fulfills the above mentioned criteria, \textit{t} is considered a predicate and gets labelled \texttt{PRED}.
-\end{itemize}
+\begin{algorithm}
+\caption{Predicate finding algorithm}
+\label{alg:find-predicates}
+\begin{algorithmic}
+	\FORALL{token $t \in$ sentence}
+		\IF{POS $t \neq$ 'V'}
+			\STATE $t \leftarrow$ NOT\_PRED
+		\ELSE
+			\IF{STTS $t =$ 'VVFIN'}
+				\STATE $t \leftarrow$ PRED
+			\ELSE
+				\STATE FLAG $\leftarrow True$
+				\FORALL{token $u \neq t \in$ sentence}
+					\IF{POS $u =$ 'V' $\land$ $u$ dependent on $t$}
+						\STATE $t \leftarrow$ NOT\_PRED
+						\STATE FLAG $\leftarrow False$
+						\STATE \textbf{break}
+					\ENDIF
+				\ENDFOR
+				\IF{FLAG $= True$}
+					\STATE $t \leftarrow$ PRED
+				\ENDIF
+			\ENDIF
+		\ENDIF
+	\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+% 
+% \begin{itemize}
+% 	\item if the POS-tag of a token \textit{t} is not ``V'' --- i.e. it is a not verbal form ---, it is immediately labelled \texttt{NOT\_PRED}
+% 	\item if the POS-tag of a token \textit{t} is verbal and its  STTS-tag is ``VVFIN'' --- i.e. it is a inflected full-verb --- it is immediately labelled \texttt{PRED}
+% 	\item if the POS-tag of a token \textit{t} is verbal and its STTS-tag is not ``VVFIN'', it is checked whether any of the other tokens in this subclause is POS-tagged as ``V'' and if it is dependent on \textit{t}, i.e. if it points to the index of \textit{t}.
+% 	If this is the case for any token in the subclause, \textit{t} gets labelled \texttt{NOT\_PRED}, since it only modifies another verb.
+% 	If there is no token that fulfills the above mentioned criteria, \textit{t} is considered a predicate and gets labelled \texttt{PRED}.
+% \end{itemize}
 
 \section{German BERT}
 
