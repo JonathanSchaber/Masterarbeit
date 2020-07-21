@@ -16,6 +16,8 @@ verb_inf_POS = ["VVINF", "VAINF", "VMINF", "VVPP", "VAPP", "VMPP", "VVIZU"]
 
 verb_aux_POS = ["VAFIN", "VMFIN", "VAIMP", "VMIMP"]
 
+subclause_marker = ["subjc", "rel"]
+
 
 def create_ParZu_parser():
     """Create an ParZu-parser object
@@ -39,7 +41,7 @@ def check_if_end_note(verb, sentence):
     """
     FLAG = True
     for token in sentence:
-        if token[3] == "V" and token[6] == verb[0]:
+        if token[3] == "V" and token[6] == verb[0] and not token[7] in subclause_marker:
             FLAG = False
             break
     return FLAG
