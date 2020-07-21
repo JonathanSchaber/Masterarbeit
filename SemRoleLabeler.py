@@ -71,7 +71,7 @@ def parse_text(parser, text):
             elif token[4] in verb_inf_POS:
                 srl_sentence.append((token[1], "PRED")) if check_if_end_note(token, sentence) else srl_sentence.append((token[1], "NOT_PRED"))
             else:
-                import pdb; pdb.set_trace()
+                srl_sentence.append((token[1], "NOT_PRED"))
         tagged_tuple_list.append(srl_sentence)
 
     return tagged_tuple_list
