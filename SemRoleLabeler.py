@@ -39,7 +39,7 @@ def parse_text(parser, text):
     """
     tagged_tuple_list = []
 
-    sents = [sentence.split("\n") for sentence in parser.main(text)]
+    sents = [sentence.rstrip().split("\n") for sentence in parser.main(text)]
     full_tagged_text = []
     for sentence in sents:
         full_tagged_text.append([token.split("\t") for token in sentence])
@@ -48,30 +48,29 @@ def parse_text(parser, text):
 
     for sentence in full_tagged_text:
         srl_sentence = []
-        import pdb; pdb.set_trace()
         for token in sentence:
             if token[3] != "V":
-                srl_sentence.append((token, "NOT_PRED"))
+                srl_sentence.append((token[1], "NOT_PRED"))
             elif token[4] in verb_fin_POS:
-                srl_sentence.append((token, "PRED"))
+                srl_sentence.append((token[1], "PRED"))
             elif token[4] in verb_aux_POS:
                 FLAG = True
                 for ttoken in sentence:
-                    if ttoken[6] == token[0]:
-                        srl_sentence.append((token, "NOT_PRED"))
+                    if ttoken[3] == "V" and ttoken[6] == token[0]:
+                        srl_sentence.append((token[1], "NOT_PRED"))
                         FLAG = False
                         break
                 if FLAG:
-                    srl_sentence.append((token, "PRED"))
+                    srl_sentence.append((token[1], "PRED"))
             elif token[4] in verb_inf_POS:
                 FLAG = True
                 for ttoken in sentence:
-                    if ttoken[6] == token[0]:
-                        srl_sentence.append((token, "NOT_PRED"))
+                    if ttoken[3] == "V" and ttoken[6] == token[0]:
+                        srl_sentence.append((token[1], "NOT_PRED"))
                         FLAG = False
                         break
                 if FLAG:
-                    srl_sentence.append((token, "PRED"))
+                    srl_sentence.append((token[1], "PRED"))
             else:
                 import pdb; pdb.set_trace()
         tagged_tuple_list.append(srl_sentence)
@@ -167,5 +166,5 @@ def main(text):
     
 
 if __name__ == "__main__":
-    main("Wer hat die Gans gestohlen? Gib sie wieder her! Ich will das nicht sehen müssen.")
+    main("Nachdem Washington nach Williamsburg zurückgekehrt war, befahl Dinwiddie ihm, eine größere Truppe zu führen, um Trent bei seiner Arbeit zu unterstützen.")
     
