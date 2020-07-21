@@ -14,8 +14,15 @@ I use their pre-trained German Character-Attention model which, according to the
 For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
 Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevent predicates in a sentence.
 This is not as straight forward as it seems on the first look.
-Consider the sentence \texttt{Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.} whose dependency parse tree is shown in \reffig{fig:example-parzu}:
-This sentence has three verbs in it, \texttt{werden}, texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. pradicates that carry ``true'' semantics.
+Consider the sentence 
+
+\begin{examples}
+	\label{ex:multiple-predicates}
+	\item Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.
+\end{examples}
+
+whose dependency parse tree is shown in \reffig{fig:example-parzu}:
+This sentence has three verbs in it, \texttt{werden}, \texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. pradicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
 \fig{images/exampleParzu.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{ParZu}
@@ -25,7 +32,7 @@ I propose the following algorithm \ref{alg:find-predicates} deciding whether a v
 \begin{algorithm}
 \caption{Predicate finding algorithm}
 \label{alg:find-predicates}
-\begin{algorithmic}
+	\begin{algorithmic}[1]
 	\FORALL{token $t \in$ sentence}
 		\IF{POS $t \neq$ 'V'}
 			\STATE $t \leftarrow$ NOT\_PRED
@@ -34,7 +41,7 @@ I propose the following algorithm \ref{alg:find-predicates} deciding whether a v
 				\STATE $t \leftarrow$ PRED
 			\ELSE
 				\STATE FLAG $\leftarrow True$
-				\FORALL{token $u \neq t \in$ sentence}
+				\FORALL{token $u \neq t \in$ subclause \textbf{where} $t \in$ subclause}
 					\IF{POS $u =$ 'V' $\land$ $u$ dependent on $t$}
 						\STATE $t \leftarrow$ NOT\_PRED
 						\STATE FLAG $\leftarrow False$
@@ -49,6 +56,13 @@ I propose the following algorithm \ref{alg:find-predicates} deciding whether a v
 	\ENDFOR
 \end{algorithmic}
 \end{algorithm}
+
+The condition on line 9, that only tokens in the respective subclause are considered, is ensured by making sure that if a token \textit{u}'s POS is ``V'' and it points to its head \textit{t}, that it is not itself the head of a subclause --- i.e. its dependency relation is e.g. ``relative clause''.
+If that is the case the token \textit{u} is considered to belong to another subclause and therefore not preventing token \textt{t} from getting labelled as a predicate.
+Consider again the example \ref{ex:multiple-predicates}: 
+Let's say we are in the for-loop at the token \textit{weitergeleitet}.
+
+
 
 % 
 % \begin{itemize}

@@ -27,19 +27,19 @@
 \contentsline {chapter}{\numberline {4}Architecture}{4}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{4}{section.4.1}
 \contentsline {section}{\numberline {4.2}Semantic Role Labeller}{4}{section.4.2}
-\contentsline {section}{\numberline {4.3}German BERT}{4}{section.4.3}
-\contentsline {chapter}{\numberline {5}Results}{6}{chapter.5}
-\contentsline {section}{\numberline {5.1}BLEU Scores}{6}{section.5.1}
-\contentsline {section}{\numberline {5.2}Evaluation}{6}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}More evaluation}{6}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}Citations}{6}{section.5.3}
-\contentsline {section}{\numberline {5.4}Graphics}{7}{section.5.4}
-\contentsline {section}{\numberline {5.5}Some Linguistics}{8}{section.5.5}
-\contentsline {chapter}{\numberline {6}Conclusion}{9}{chapter.6}
-\contentsline {chapter}{Glossary}{10}{section*.14}
-\contentsline {chapter}{References}{11}{section*.16}
-\contentsline {chapter}{Lebenslauf}{13}{section*.18}
+\contentsline {section}{\numberline {4.3}German BERT}{5}{section.4.3}
+\contentsline {chapter}{\numberline {5}Results}{7}{chapter.5}
+\contentsline {section}{\numberline {5.1}BLEU Scores}{7}{section.5.1}
+\contentsline {section}{\numberline {5.2}Evaluation}{7}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}More evaluation}{7}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}Citations}{7}{section.5.3}
+\contentsline {section}{\numberline {5.4}Graphics}{8}{section.5.4}
+\contentsline {section}{\numberline {5.5}Some Linguistics}{9}{section.5.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{10}{chapter.6}
+\contentsline {chapter}{Glossary}{11}{section*.14}
+\contentsline {chapter}{References}{12}{section*.16}
+\contentsline {chapter}{Lebenslauf}{14}{section*.18}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{14}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{15}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{15}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{16}{appendix.B}
