@@ -1,0 +1,64 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: CLthesis.aux
+A level-1 auxiliary file: chapters/titlepage_phil.aux
+A level-1 auxiliary file: chapters/abstract.aux
+A level-1 auxiliary file: chapters/acknow.aux
+A level-1 auxiliary file: chapters/index.aux
+A level-1 auxiliary file: chapters/acronyms.aux
+A level-1 auxiliary file: chapters/chap1_introduction.aux
+A level-1 auxiliary file: chapters/chap2_semantic_roles.aux
+A level-1 auxiliary file: chapters/chap3_datasets.aux
+A level-1 auxiliary file: chapters/chap4_architecture.aux
+A level-1 auxiliary file: chapters/chap5_results.aux
+A level-1 auxiliary file: chapters/chap6_conclusion.aux
+A level-1 auxiliary file: chapters/glossary.aux
+A level-1 auxiliary file: chapters/references.aux
+The style file: abbrvnat.bst
+A level-1 auxiliary file: chapters/cv.aux
+A level-1 auxiliary file: appendix/tables.aux
+A level-1 auxiliary file: appendix/scripts.aux
+Database file #1: biblio/thesis.bib
+Warning--empty journal in hajivc2009conll
+You've used 13 entries,
+            2773 wiz_defined-function locations,
+            676 strings with 8044 characters,
+and the built_in function-call counts, 7249 in all, are:
+= -- 613
+> -- 531
+< -- 7
++ -- 178
+- -- 165
+* -- 590
+:= -- 1110
+add.period$ -- 41
+call.type$ -- 13
+change.case$ -- 93
+chr.to.int$ -- 13
+cite$ -- 27
+duplicate$ -- 323
+empty$ -- 517
+format.name$ -- 180
+if$ -- 1522
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 13
+newline$ -- 75
+num.names$ -- 52
+pop$ -- 202
+preamble$ -- 1
+purify$ -- 80
+quote$ -- 0
+skip$ -- 279
+stack$ -- 0
+substring$ -- 186
+swap$ -- 62
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 143
+warning$ -- 1
+while$ -- 54
+width$ -- 0
+write$ -- 171
+(There was 1 warning)

@@ -1,0 +1,98 @@
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Artetxe et~al.(2019)Artetxe, Ruder, and Yogatama]{artetxe2019cross}
+M.~Artetxe, S.~Ruder, and D.~Yogatama.
+\newblock On the cross-lingual transferability of monolingual representations.
+\newblock \emph{arXiv preprint arXiv:1910.11856}, 2019.
+
+\bibitem[Callison-Burch et~al.(2006)Callison-Burch, Osborne, and
+  Koehn]{Callison-Burch2006}
+C.~Callison-Burch, M.~Osborne, and P.~Koehn.
+\newblock {Re-evaluating the Role of BLEU in Machine Translation Research}.
+\newblock In \emph{Proceedings of the European Association of Computational
+  Linguistics (EACL)}, pages 249--256, 2006.
+\newblock URL \url{http://www.aclweb.org/anthology/E/E06/E06-1032.pdf}.
+
+\bibitem[Conneau et~al.(2018)Conneau, Lample, Rinott, Williams, Bowman,
+  Schwenk, and Stoyanov]{conneau2018xnli}
+A.~Conneau, G.~Lample, R.~Rinott, A.~Williams, S.~R. Bowman, H.~Schwenk, and
+  V.~Stoyanov.
+\newblock Xnli: Evaluating cross-lingual sentence representations.
+\newblock \emph{arXiv preprint arXiv:1809.05053}, 2018.
+
+\bibitem[Do et~al.(2018)Do, Leeuwenberg, Heyman, and Moens]{do2018flexible}
+Q.~N.~T. Do, A.~Leeuwenberg, G.~Heyman, and M.~F. Moens.
+\newblock A flexible and easy-to-use semantic role labeling framework for
+  different languages.
+\newblock In \emph{Proceedings of the 27th International Conference on
+  Computational Linguistics: System Demonstrations}, pages 161--165, 2018.
+
+\bibitem[Haji{\v{c}} et~al.(2009)Haji{\v{c}}, Ciaramita, Johansson, Kawahara,
+  Mart{\'\i}, M{\`a}rquez, Meyers, Nivre, Pad{\'o}, {\v{S}}tep{\'a}nek,
+  et~al.]{hajivc2009conll}
+J.~Haji{\v{c}}, M.~Ciaramita, R.~Johansson, D.~Kawahara, M.~A. Mart{\'\i},
+  L.~M{\`a}rquez, A.~Meyers, J.~Nivre, S.~Pad{\'o}, J.~{\v{S}}tep{\'a}nek,
+  et~al.
+\newblock The conll-2009 shared task: Syntactic and semantic dependencies in
+  multiple languages.
+\newblock 2009.
+
+\bibitem[Jurafsky and Martin(2019)]{jurafsky2019speech}
+D.~Jurafsky and J.~H. Martin.
+\newblock Speech and language processing (draft). october 2019.
+\newblock \emph{URL https://web. stanford. edu/\~{} jurafsky/slp3}, 2019.
+
+\bibitem[Koehn(2005)]{Koehn2005}
+P.~Koehn.
+\newblock {Europarl: A Parallel Corpus for Statistical Machine Translation}.
+\newblock In \emph{Proceedings of the MT Summit 2005}, pages 79--86, 2005.
+\newblock URL
+  \url{http://www.iccs.inf.ed.ac.uk/~pkoehn/publications/europarl-mtsummit05.pdf}.
+
+\bibitem[Lewis et~al.(2019)Lewis, O{\u{g}}uz, Rinott, Riedel, and
+  Schwenk]{lewis2019mlqa}
+P.~Lewis, B.~O{\u{g}}uz, R.~Rinott, S.~Riedel, and H.~Schwenk.
+\newblock Mlqa: Evaluating cross-lingual extractive question answering.
+\newblock \emph{arXiv preprint arXiv:1910.07475}, 2019.
+
+\bibitem[S{\"a}nger et~al.(2016)S{\"a}nger, Leser, Kemmerer, Adolphs, and
+  Klinger]{sanger2016scare}
+M.~S{\"a}nger, U.~Leser, S.~Kemmerer, P.~Adolphs, and R.~Klinger.
+\newblock Scare―the sentiment corpus of app reviews with fine-grained
+  annotations in german.
+\newblock In \emph{Proceedings of the Tenth International Conference on
+  Language Resources and Evaluation (LREC'16)}, pages 1114--1121, 2016.
+
+\bibitem[Schiller et~al.(1999)Schiller, Teufel, St{\"o}ckert, and
+  Thielen]{schiller1999guidelines}
+A.~Schiller, S.~Teufel, C.~St{\"o}ckert, and C.~Thielen.
+\newblock Guidelines f{\"u}r das tagging deutscher textcorpora.
+\newblock \emph{University of Stuttgart/University of T{\"u}bingen}, 1999.
+
+\bibitem[Sennrich et~al.(2013)Sennrich, Volk, and
+  Schneider]{sennrich2013exploiting}
+R.~Sennrich, M.~Volk, and G.~Schneider.
+\newblock Exploiting synergies between open resources for german dependency
+  parsing, pos-tagging, and morphological analysis.
+\newblock In \emph{Proceedings of the International Conference Recent Advances
+  in Natural Language Processing RANLP 2013}, pages 601--609, 2013.
+
+\bibitem[Troiano et~al.(2019)Troiano, Pad{\'o}, and
+  Klinger]{troiano2019crowdsourcing}
+E.~Troiano, S.~Pad{\'o}, and R.~Klinger.
+\newblock Crowdsourcing and validating event-focused emotion corpora for german
+  and english.
+\newblock \emph{arXiv preprint arXiv:1905.13618}, 2019.
+
+\bibitem[Yang et~al.(2019)Yang, Zhang, Tar, and Baldridge]{yang2019paws}
+Y.~Yang, Y.~Zhang, C.~Tar, and J.~Baldridge.
+\newblock Paws-x: A cross-lingual adversarial dataset for paraphrase
+  identification.
+\newblock \emph{arXiv preprint arXiv:1908.11828}, 2019.
+
+\end{thebibliography}

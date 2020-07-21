@@ -1,0 +1,103 @@
+
+\newchap{Architecture}
+\label{chap:4_architecture}
+
+\section{Overview}
+
+\section{Semantic Role Labeller}
+
+State-of-the-art semantic role labellers (SRLs) are end-to-end models, implementing 
+For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
+I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5 on the CoNLL'09 task \citep{hajivc2009conll}.
+
+``A major advantage of dependency grammars is their ability to deal with languages that are morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
+For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
+Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevent predicates in a sentence.
+This is not as straight forward as it seems on the first look.
+Consider the sentence \texttt{Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.} whose dependency parse tree is shown in \reffig{fig:exampleParzu}:
+This sentence has three verbs in it, \texttt{werden}, texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. pradicates that carry ``true'' semantics.
+
+%\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
+{\centering \fig{images/exampleParzu.png}{fig:exampleParzu}{Example sentence with multiple predicates.}{16}{ParZu}}
+
+I propose the following algorithm deciding whether a verb in a sentence is or isn't a predicate using the a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
+
+\begin{itemize}
+	\item if the POS-tag of a token \textit{t} is not ``V'' --- i.e. it is a not verbal form ---, it is immediately labelled \texttt{NOT\_PRED}
+	\item if the POS-tag of a token \textit{t} is verbal and its  STTS-tag is ``VVFIN'' --- i.e. it is a inflected full-verb --- it is immediately labelled \texttt{PRED}
+	\item if the POS-tag of a token \textit{t} is verbal and its STTS-tag is not ``VVFIN'', it is checked whether any of the other tokens in this subclause is POS-tagged as ``V'' and if it is dependent on \textit{t}, i.e. if it points to the index of \textit{t}.
+	If this is the case for any token in the subclause, \textit{t} gets labelled \texttt{NOT\_PRED}, since it only modifies another verb.
+	If there is no token that fulfills the above mentioned criteria, \textit{t} is considered a predicate and gets labelled \texttt{PRED}.
+\end{itemize}
+
+\section{German BERT}
+
+% \section{BLEU Scores}
+% \label{sec:5_bleuscores}
+% 
+% Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
+% %\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
+% \tab{bleuresults}{BLEU scores of different MT systems}
+% {\begin{tabular}{ll|ccc|c}
+% language pair		& ABC	& YYY	\\
+% \hline
+% EN$\rightarrow$DE	& 20.56	& 32.53 \\
+% DE$\rightarrow$EN	& 43.35	& 52.53 \\
+% \hline
+% \end{tabular}
+% }{ABC BLEU scores}
+% 
+% And we can reference the large table in the appendix as Table \ref{appendixTable}
+% 
+% \section{Evaluation}
+% \label{sec:5_evaluation}
+% We saw in section \ref{sec:5_bleuscores} 
+% 
+% We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
+% 
+% \subsection{More evaluation}
+% \label{subsec:5_moreeval}
+% 
+% 
+% \section{Citations}
+% Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
+% or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
+% 
+% to cite: \cite[30-31]{Koehn2005} \\
+% to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
+% 
+% to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
+% only the author(s): \citeauthor{Callison-Burch2006}\\
+% only the year: \citeyear{Callison-Burch2006}\\
+% 
+% \section{Graphics}
+% 
+% To include a graphic that appears in the list of figures, use the predefined fig command:\\
+% %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
+% \fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
+% 
+% %\reffig{#1: label}
+% And then reference it as \reffig{fig:rosetta} is easy.
+% 
+% \section{Some Linguistics}
+% 
+% (With the package 'covington')\\
+% 
+% Gloss:
+% 
+% \begin{examples}
+%  \item \gll The cat sits on the table.
+% 	    die Katze sitzt auf dem Tisch
+% 	\glt 'Die Katze sitzt auf dem Tisch.'
+%     \glend
+% \end{examples}
+% 
+% Gloss with morphology:
+% 
+% \begin{examples}
+%  \item \gll La gata duerm -e en la cama.
+% 	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
+% 	\glt 'Die Katze schl\"aft im Bett.'
+%     \glend
+% \end{examples}
+% 
