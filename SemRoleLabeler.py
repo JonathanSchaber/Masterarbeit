@@ -59,8 +59,6 @@ def parse_text(parser, text):
     for sentence in sents:
         full_tagged_text.append([token.split("\t") for token in sentence])
 
-   ###### REIMPEMETNTNTNTNTNTNTNTNTN
-
     for sentence in full_tagged_text:
         srl_sentence = []
         for token in sentence:
@@ -70,24 +68,8 @@ def parse_text(parser, text):
                 srl_sentence.append((token[1], "PRED"))
             elif token[4] in verb_aux_POS:
                 srl_sentence.append((token[1], "PRED")) if check_if_end_note(token, sentence) else srl_sentence.append((token[1], "NOT_PRED"))
-#                FLAG = True
-#                for ttoken in sentence:
-#                    if ttoken[3] == "V" and ttoken[6] == token[0]:
-#                        srl_sentence.append((token[1], "NOT_PRED"))
-#                        FLAG = False
-#                        break
-#                if FLAG:
-#                    srl_sentence.append((token[1], "PRED"))
             elif token[4] in verb_inf_POS:
                 srl_sentence.append((token[1], "PRED")) if check_if_end_note(token, sentence) else srl_sentence.append((token[1], "NOT_PRED"))
-#                FLAG = True
-#                for ttoken in sentence:
-#                    if ttoken[3] == "V" and ttoken[6] == token[0]:
-#                        srl_sentence.append((token[1], "NOT_PRED"))
-#                        FLAG = False
-#                        break
-#                if FLAG:
-#                    srl_sentence.append((token[1], "PRED"))
             else:
                 import pdb; pdb.set_trace()
         tagged_tuple_list.append(srl_sentence)
