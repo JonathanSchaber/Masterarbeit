@@ -12,7 +12,7 @@ I use their pre-trained German Character-Attention model which, according to the
 
 ``A major advantage of dependency grammars is their ability to deal with languages that are morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
 For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
-Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevent predicates in a sentence.
+Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevant predicates in a sentence.
 This is not as straight forward as it seems on the first look.
 Consider the sentence 
 
@@ -22,12 +22,12 @@ Consider the sentence
 \end{examples}
 
 whose dependency parse tree is shown in \reffig{fig:example-parzu}:
-This sentence has three verbs in it, \texttt{werden}, \texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. pradicates that carry ``true'' semantics.
+This sentence has three verbs in it, \texttt{werden}, \texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
 \fig{images/exampleParzu.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{ParZu}
 
-I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using the a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
+I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
 
 \begin{algorithm}
 \caption{Predicate finding algorithm}
@@ -58,10 +58,14 @@ I propose the following algorithm \ref{alg:find-predicates} deciding whether a v
 \end{algorithm}
 
 The condition on line 9, that only tokens in the respective subclause are considered, is ensured by making sure that if a token \textit{u}'s POS is ``V'' and it points to its head \textit{t}, that it is not itself the head of a subclause --- i.e. its dependency relation is e.g. ``relative clause''.
-If that is the case the token \textit{u} is considered to belong to another subclause and therefore not preventing token \textt{t} from getting labelled as a predicate.
+If that is the case the token \textit{u} is considered to belong to another subclause and therefore not preventing token \textit{t} from getting labelled as a predicate.
 Consider again the example \ref{ex:multiple-predicates}: 
 Let's say we are in the for-loop at the token \textit{weitergeleitet}.
-
+Because it is a verb but not a finite full-verb, we enter the else-clause on line 7.
+If we were now to loop through all token of sentence \ref{ex:multiple-predicates} we would find that token \textit{führt} is a verb that points to our primary token.
+Without the above outlined constraint that only verbs in the same subclause pointing to our original verb are preventing it from being labelled a predicate, \textit{weitergeleitet} would be labelled as non-predicate.
+This is obviously false.
+Taking into account the above considerations, we see that although \textit{führt} points to \textit{weitergeleitet}, its edge label is \textit{rel} --- which means that it's the head of a relative subclause --- therefore it is not anymore in the same subclause and \textit{weitergeleitet} gets labelled as predicate.
 
 
 % 
@@ -73,7 +77,10 @@ Let's say we are in the for-loop at the token \textit{weitergeleitet}.
 % 	If there is no token that fulfills the above mentioned criteria, \textit{t} is considered a predicate and gets labelled \texttt{PRED}.
 % \end{itemize}
 
+
 \section{German BERT}
+
+Since its publishing two years ago, BERT \citep{devlin2018bert} has often been called a ``turning-point'' in ML in NLP.
 
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}

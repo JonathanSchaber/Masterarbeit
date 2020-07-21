@@ -20,45 +20,45 @@ A level-1 auxiliary file: appendix/tables.aux
 A level-1 auxiliary file: appendix/scripts.aux
 Database file #1: biblio/thesis.bib
 Warning--empty journal in hajivc2009conll
-You've used 13 entries,
+You've used 14 entries,
             2773 wiz_defined-function locations,
-            676 strings with 8044 characters,
-and the built_in function-call counts, 7249 in all, are:
-= -- 613
-> -- 531
+            680 strings with 8242 characters,
+and the built_in function-call counts, 7712 in all, are:
+= -- 650
+> -- 570
 < -- 7
-+ -- 178
-- -- 165
-* -- 590
-:= -- 1110
-add.period$ -- 41
-call.type$ -- 13
-change.case$ -- 93
-chr.to.int$ -- 13
-cite$ -- 27
-duplicate$ -- 323
-empty$ -- 517
-format.name$ -- 180
-if$ -- 1522
++ -- 191
+- -- 177
+* -- 630
+:= -- 1186
+add.period$ -- 44
+call.type$ -- 14
+change.case$ -- 100
+chr.to.int$ -- 14
+cite$ -- 29
+duplicate$ -- 343
+empty$ -- 548
+format.name$ -- 193
+if$ -- 1615
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 13
-newline$ -- 75
-num.names$ -- 52
-pop$ -- 202
+missing$ -- 14
+newline$ -- 80
+num.names$ -- 56
+pop$ -- 216
 preamble$ -- 1
-purify$ -- 80
+purify$ -- 86
 quote$ -- 0
-skip$ -- 279
+skip$ -- 295
 stack$ -- 0
-substring$ -- 186
-swap$ -- 62
+substring$ -- 188
+swap$ -- 63
 text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 143
+type$ -- 154
 warning$ -- 1
-while$ -- 54
+while$ -- 57
 width$ -- 0
-write$ -- 171
+write$ -- 183
 (There was 1 warning)
