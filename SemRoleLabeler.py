@@ -12,9 +12,9 @@ import parzu_class as parzu
 # Was ist mit VVIMP VAFIN (ev. checks einbauen?)
 verb_fin_POS = ["VVFIN", "VVIMP"]
 
-verb_inf_POS = ["VVINF", "VVPP", "VMINF"]
+verb_inf_POS = ["VVINF", "VAINF", "VMINF", "VVPP", "VAPP", "VMPP", "VVIZU"]
 
-verb_aux_POS = ["VAFIN", "VMFIN"]
+verb_aux_POS = ["VAFIN", "VMFIN", "VAIMP", "VMIMP"]
 
 
 def create_ParZu_parser():
@@ -28,6 +28,21 @@ def create_ParZu_parser():
     ParZu = parzu.Parser(options)
     return ParZu
 
+
+def check_if_end_note(verb, sentence):
+    """return True if verb is end note, else False.
+    Args:
+        param1: list of str
+        param2: list of lists of strs
+    Returns:
+        Boolean
+    """
+    FLAG = True
+    for token in sentence:
+        if token[3] == "V" and token[6] == verb[0]:
+            FLAG = False
+            break
+    return FLAG
 
 def parse_text(parser, text):
     """parse sentence and return list of tuples with token and POS-tags
@@ -54,23 +69,25 @@ def parse_text(parser, text):
             elif token[4] in verb_fin_POS:
                 srl_sentence.append((token[1], "PRED"))
             elif token[4] in verb_aux_POS:
-                FLAG = True
-                for ttoken in sentence:
-                    if ttoken[3] == "V" and ttoken[6] == token[0]:
-                        srl_sentence.append((token[1], "NOT_PRED"))
-                        FLAG = False
-                        break
-                if FLAG:
-                    srl_sentence.append((token[1], "PRED"))
+                srl_sentence.append((token[1], "PRED")) if check_if_end_note(token, sentence) else srl_sentence.append((token[1], "NOT_PRED"))
+#                FLAG = True
+#                for ttoken in sentence:
+#                    if ttoken[3] == "V" and ttoken[6] == token[0]:
+#                        srl_sentence.append((token[1], "NOT_PRED"))
+#                        FLAG = False
+#                        break
+#                if FLAG:
+#                    srl_sentence.append((token[1], "PRED"))
             elif token[4] in verb_inf_POS:
-                FLAG = True
-                for ttoken in sentence:
-                    if ttoken[3] == "V" and ttoken[6] == token[0]:
-                        srl_sentence.append((token[1], "NOT_PRED"))
-                        FLAG = False
-                        break
-                if FLAG:
-                    srl_sentence.append((token[1], "PRED"))
+                srl_sentence.append((token[1], "PRED")) if check_if_end_note(token, sentence) else srl_sentence.append((token[1], "NOT_PRED"))
+#                FLAG = True
+#                for ttoken in sentence:
+#                    if ttoken[3] == "V" and ttoken[6] == token[0]:
+#                        srl_sentence.append((token[1], "NOT_PRED"))
+#                        FLAG = False
+#                        break
+#                if FLAG:
+#                    srl_sentence.append((token[1], "PRED"))
             else:
                 import pdb; pdb.set_trace()
         tagged_tuple_list.append(srl_sentence)
@@ -166,5 +183,5 @@ def main(text):
     
 
 if __name__ == "__main__":
-    main("Nachdem Washington nach Williamsburg zurückgekehrt war, befahl Dinwiddie ihm, eine größere Truppe zu führen, um Trent bei seiner Arbeit zu unterstützen.")
+    main("Einer von Tanaghrissons Männern erzählte Contrecoeur, dass Jumonville durch britisches Musketenfeuer getötet worden war.")
     
