@@ -6,6 +6,8 @@
 
 \section{Semantic Role Labeller}
 
+A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a given input text.\footnote{This may be one or multiple sentences.}
+
 State-of-the-art semantic role labellers (SRLs) are end-to-end models, implementing 
 For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
 I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5 on the CoNLL'09 task \citep{hajivc2009conll}.
@@ -17,12 +19,25 @@ This is not as straight forward as it seems on the first look.
 Consider the sentence 
 
 \begin{examples}
+	\label{ex:one-predicate}
+	\item Die Keita-Dynastie regierte das vorkaiserliche und kaiserliche Mali vom 12. Jahrhundert bis Anfang des 17. Jahrhunderts.
+\end{examples}
+
+\begin{examples}
+	\label{ex:one-predicate-mod}
+	\item \gll Im tibetischen Buddhismus werden die Dharma-Lehrer/innen gewöhnlich als Lama bezeichnet.
+		   PREP ASD ASD ASD ASD ASD ASD ASD ASD ASD ASD ASD 
+		\glt 'This is the translation of this sentence.'
+	\glend
+\end{examples}
+
+\begin{examples}
 	\label{ex:multiple-predicates}
 	\item Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.
 \end{examples}
 
 whose dependency parse tree is shown in \reffig{fig:example-parzu}:
-This sentence has three verbs in it, \texttt{werden}, \texttt{weitergeleitet}, and \texttt{führt}, but only the last two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
+This sentence has three verbs in it, \textit{werden}, \textit{weitergeleitet}, and \textit{führt}, but only the last two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
 \fig{images/exampleParzu.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{ParZu}

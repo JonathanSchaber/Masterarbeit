@@ -27,7 +27,7 @@
 \contentsline {chapter}{\numberline {4}Architecture}{4}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{4}{section.4.1}
 \contentsline {section}{\numberline {4.2}Semantic Role Labeller}{4}{section.4.2}
-\contentsline {section}{\numberline {4.3}German BERT}{5}{section.4.3}
+\contentsline {section}{\numberline {4.3}German BERT}{6}{section.4.3}
 \contentsline {chapter}{\numberline {5}Results}{7}{chapter.5}
 \contentsline {section}{\numberline {5.1}BLEU Scores}{7}{section.5.1}
 \contentsline {section}{\numberline {5.2}Evaluation}{7}{section.5.2}

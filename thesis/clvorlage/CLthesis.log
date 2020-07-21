@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  21 JUL 2020 17:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  21 JUL 2020 22:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1186,37 +1186,34 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
  (./chapters/chap4_architecture.tex
 chapter 4.
-<images/exampleParzu.png, id=300, 1214.28656pt x 356.83313pt>
-File: images/exampleParzu.png Graphic file (type png)
-<use images/exampleParzu.png>
-Package pdftex.def Info: images/exampleParzu.png  used on input line 28.
-(pdftex.def)             Requested size: 455.24408pt x 133.77397pt.
-
-Overfull \hbox (28.45274pt too wide) in paragraph at lines 28--28
- [] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 33.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 9.
 [4
 
 
 
-]) [5 <./images/exampleParzu.png (PNG copy)>] [6]
+]
+<images/exampleParzu.png, id=314, 1214.28656pt x 356.83313pt>
+File: images/exampleParzu.png Graphic file (type png)
+<use images/exampleParzu.png>
+Package pdftex.def Info: images/exampleParzu.png  used on input line 44.
+(pdftex.def)             Requested size: 455.24408pt x 133.77397pt.
+
+Overfull \hbox (28.45274pt too wide) in paragraph at lines 44--44
+ [] 
+ []
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 49.
+[5 <./images/exampleParzu.png (PNG copy)>]) [6]
 \openout2 = `chapters/chap5_results.aux'.
 
-
-(./chapters/chap5_results.tex
+ (./chapters/chap5_results.tex
 chapter 5.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 9.49997pt on input line 18.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 18.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 18.
 
 Underfull \hbox (badness 10000) in paragraph at lines 36--38
 
@@ -1232,7 +1229,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=380, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=383, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1334,10 +1331,10 @@ Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 10893 strings out of 492982
- 168235 string characters out of 6134895
- 377002 words of memory out of 5000000
- 14038 multiletter control sequences out of 15000+600000
+ 10897 strings out of 492982
+ 168287 string characters out of 6134895
+ 375090 words of memory out of 5000000
+ 14040 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,870s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1353,10 +1350,10 @@ m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (24 pages, 360838 bytes).
+Output written on CLthesis.pdf (24 pages, 362393 bytes).
 PDF statistics:
- 501 PDF objects out of 1000 (max. 8388607)
- 454 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 503 PDF objects out of 1000 (max. 8388607)
+ 456 compressed objects within 5 object streams
+ 120 named destinations out of 1000 (max. 500000)
  320 words of extra memory for PDF output out of 10000 (max. 10000000)
 
