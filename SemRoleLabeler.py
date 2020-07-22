@@ -16,7 +16,7 @@ verb_inf_POS = ["VVINF", "VAINF", "VMINF", "VVPP", "VAPP", "VMPP", "VVIZU"]
 
 verb_aux_POS = ["VAFIN", "VMFIN", "VAIMP", "VMIMP"]
 
-subclause_marker = ["subjc", "rel"]
+subclause_marker = ["subjc", "objc", "rel"]
 
 
 def create_ParZu_parser():
