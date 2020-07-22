@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 JUL 2020 11:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 JUL 2020 12:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1125,7 +1125,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout2 = `chapters/acronyms.aux'.
 
 
-(./chapters/acronyms.tex [7
+(./chapters/acronyms.tex
+Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--30
+[] 
+ []
+
+[7
 
 
 
@@ -1206,7 +1211,7 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 44--44
  []
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 49.
+put line 50.
 [5 <./images/exampleParzu2.png (PNG copy)>]) [6]
 \openout2 = `chapters/chap5_results.aux'.
 
@@ -1215,9 +1220,45 @@ chapter 5.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 9.49997pt on input line 18.
 
+Package natbib Warning: Citation `Callison-Burch2006' on page 7 undefined on in
+put line 33.
+
+
+Package natbib Warning: Citation `Callison-Burch2006' on page 7 undefined on in
+put line 34.
+
+
+Package natbib Warning: Citation `Koehn2005' on page 7 undefined on input line 
+36.
+
+
+Package natbib Warning: Citation `Koehn2005' on page 7 undefined on input line 
+37.
+
+
+Package natbib Warning: Citation `Koehn2005' on page 7 undefined on input line 
+37.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 36--38
 
  []
+
+
+Package natbib Warning: Citation `Koehn2005' on page 7 undefined on input line 
+39.
+
+
+Package natbib Warning: Citation `Koehn2005' on page 7 undefined on input line 
+39.
+
+
+Package natbib Warning: Citation `Callison-Burch2006' on page 7 undefined on in
+put line 40.
+
+
+Package natbib Warning: Citation `Callison-Burch2006' on page 7 undefined on in
+put line 41.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 39--42
@@ -1229,7 +1270,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=394, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=380, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1314,10 +1355,12 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 
 
 ])
+
+Package natbib Warning: There were undefined citations.
+
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
- (./CLthesis.aux
-(./chapters/titlepage_phil.aux) (./chapters/abstract.aux)
+(./CLthesis.aux (./chapters/titlepage_phil.aux) (./chapters/abstract.aux)
 (./chapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
 (./chapters/chap1_introduction.aux) (./chapters/chap2_semantic_roles.aux)
 (./chapters/chap3_datasets.aux) (./chapters/chap4_architecture.aux)
@@ -1328,17 +1371,13 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 890D6C896EC1198D37095A1ACF4FF3E9;2149.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 10903 strings out of 492982
- 168427 string characters out of 6134895
- 375145 words of memory out of 5000000
- 14044 multiletter control sequences out of 15000+600000
+ 10901 strings out of 492982
+ 168389 string characters out of 6134895
+ 376083 words of memory out of 5000000
+ 14043 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,868s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1355,10 +1394,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (24 pages, 354088 bytes).
+Output written on CLthesis.pdf (24 pages, 350889 bytes).
 PDF statistics:
- 518 PDF objects out of 1000 (max. 8388607)
- 470 compressed objects within 5 object streams
- 122 named destinations out of 1000 (max. 500000)
+ 501 PDF objects out of 1000 (max. 8388607)
+ 453 compressed objects within 5 object streams
+ 121 named destinations out of 1000 (max. 500000)
  328 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{14}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -10,13 +10,11 @@ M.~Artetxe, S.~Ruder, and D.~Yogatama.
 \newblock On the cross-lingual transferability of monolingual representations.
 \newblock \emph{arXiv preprint arXiv:1910.11856}, 2019.
 
-\bibitem[Callison-Burch et~al.(2006)Callison-Burch, Osborne, and
-  Koehn]{Callison-Burch2006}
-C.~Callison-Burch, M.~Osborne, and P.~Koehn.
-\newblock {Re-evaluating the Role of BLEU in Machine Translation Research}.
-\newblock In \emph{Proceedings of the European Association of Computational
-  Linguistics (EACL)}, pages 249--256, 2006.
-\newblock URL \url{http://www.aclweb.org/anthology/E/E06/E06-1032.pdf}.
+\bibitem[Buchholz and Marsi(2006)]{buchholz2006conll}
+S.~Buchholz and E.~Marsi.
+\newblock Conll-x shared task on multilingual dependency parsing.
+\newblock In \emph{Proceedings of the tenth conference on computational natural
+  language learning (CoNLL-X)}, pages 149--164, 2006.
 
 \bibitem[Conneau et~al.(2018)Conneau, Lample, Rinott, Williams, Bowman,
   Schwenk, and Stoyanov]{conneau2018xnli}
@@ -57,13 +55,6 @@ J.~Haji{\v{c}}, M.~Ciaramita, R.~Johansson, D.~Kawahara, M.~A. Mart{\'\i},
 D.~Jurafsky and J.~H. Martin.
 \newblock Speech and language processing (draft). october 2019.
 \newblock \emph{URL https://web. stanford. edu/\~{} jurafsky/slp3}, 2019.
-
-\bibitem[Koehn(2005)]{Koehn2005}
-P.~Koehn.
-\newblock {Europarl: A Parallel Corpus for Statistical Machine Translation}.
-\newblock In \emph{Proceedings of the MT Summit 2005}, pages 79--86, 2005.
-\newblock URL
-  \url{http://www.iccs.inf.ed.ac.uk/~pkoehn/publications/europarl-mtsummit05.pdf}.
 
 \bibitem[Lewis et~al.(2019)Lewis, O{\u{g}}uz, Rinott, Riedel, and
   Schwenk]{lewis2019mlqa}

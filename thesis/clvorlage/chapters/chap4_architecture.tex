@@ -43,22 +43,23 @@ This sentence has five verbs in it, \textit{wurde}, \textit{abgewiesen}, \textit
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
 \fig{images/exampleParzu2.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
 
-I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
+I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using a heuristic, relying on the token's POS tag that the parser predicts.
+The ParZu parser's default output follows the CoNLL sheme \citep{buchholz2006conll} which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) and fine-grained (POSTAG), where the POSTAG corresponds to the token's STTS tag \citep{schiller1999guidelines}.
 
 \begin{algorithm}
 \caption{Predicate finding algorithm}
 \label{alg:find-predicates}
 	\begin{algorithmic}[1]
 	\FORALL{token $t \in$ sentence}
-		\IF{POS $t \neq$ 'V'}
+		\IF{CPOSTAG $t \neq$ 'V'}
 			\STATE $t \leftarrow$ NOT\_PRED
 		\ELSE
-			\IF{STTS $t =$ 'VVFIN'}
+			\IF{POSTAG $t =$ 'VVFIN'}
 				\STATE $t \leftarrow$ PRED
 			\ELSE
 				\STATE FLAG $\leftarrow True$
 				\FORALL{token $u \neq t \in$ subclause \textbf{where} $t \in$ subclause}
-					\IF{POS $u =$ 'V' $\land$ $u$ dependent on $t$}
+					\IF{CPOSTAG $u =$ 'V' $\land$ $u$ dependent on $t$}
 						\STATE $t \leftarrow$ NOT\_PRED
 						\STATE FLAG $\leftarrow False$
 						\STATE \textbf{break}
