@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 JUL 2020 12:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 JUL 2020 15:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1200,11 +1200,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 ]
-<images/exampleParzu2.png, id=323, 809.27344pt x 350.05782pt>
+<images/exampleParzu2.png, id=323, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 44.
-(pdftex.def)             Requested size: 455.24408pt x 196.92305pt.
+(pdftex.def)             Requested size: 455.24408pt x 197.17987pt.
 
 Overfull \hbox (28.45274pt too wide) in paragraph at lines 44--44
  [] 
@@ -1270,7 +1270,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=380, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=384, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1369,13 +1369,20 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
 (./appendix/tables.aux) (./appendix/scripts.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
-Package rerunfilecheck Info: File `CLthesis.out' has not changed.
-(rerunfilecheck)             Checksum: 890D6C896EC1198D37095A1ACF4FF3E9;2149.
+
+
+Package rerunfilecheck Warning: File `CLthesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `CLthesis.out':
+(rerunfilecheck)             Before: 890D6C896EC1198D37095A1ACF4FF3E9;2149
+(rerunfilecheck)             After:  63758CBE106C289DA13E3CC4358CEDE4;2210.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 10901 strings out of 492982
- 168389 string characters out of 6134895
+ 10902 strings out of 492982
+ 168405 string characters out of 6134895
  376083 words of memory out of 5000000
  14043 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
@@ -1394,10 +1401,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (24 pages, 350889 bytes).
+Output written on CLthesis.pdf (24 pages, 352066 bytes).
 PDF statistics:
- 501 PDF objects out of 1000 (max. 8388607)
- 453 compressed objects within 5 object streams
- 121 named destinations out of 1000 (max. 500000)
+ 503 PDF objects out of 1000 (max. 8388607)
+ 455 compressed objects within 5 object streams
+ 122 named destinations out of 1000 (max. 500000)
  328 words of extra memory for PDF output out of 10000 (max. 10000000)
 
