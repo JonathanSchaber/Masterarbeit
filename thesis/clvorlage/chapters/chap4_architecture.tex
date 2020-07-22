@@ -8,15 +8,19 @@
 
 A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a given input text.\footnote{This may be one or multiple sentences.}
 
-State-of-the-art semantic role labellers (SRLs) are end-to-end models, implementing 
+State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often implementing deep learning techniques, like RNNs or attention, that render tedious feature engineering unnecessary.
 For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
 I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5 on the CoNLL'09 task \citep{hajivc2009conll}.
+However, their SRL needs as input not only the sentence, but also ``its predicate $w_p$ as input'' \citep{do2018flexible}.
 
 ``A major advantage of dependency grammars is their ability to deal with languages that are morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
 For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
 Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevant predicates in a sentence.
 This is not as straight forward as it seems on the first look.
-Consider the sentence 
+
+\subsection{Finding Predicates}
+
+Following \cite{foth2006umfassende}
 
 \begin{examples}
 	\label{ex:one-predicate}
@@ -25,22 +29,19 @@ Consider the sentence
 
 \begin{examples}
 	\label{ex:one-predicate-mod}
-	\item \gll Im tibetischen Buddhismus werden die Dharma-Lehrer/innen gewöhnlich als Lama bezeichnet.
-		   PREP ASD ASD ASD ASD ASD ASD ASD ASD ASD ASD ASD 
-		\glt 'This is the translation of this sentence.'
-	\glend
+	\item Im tibetischen Buddhismus werden die Dharma-Lehrer/innen gewöhnlich als Lama bezeichnet.
 \end{examples}
 
 \begin{examples}
 	\label{ex:multiple-predicates}
-	\item Die Pakete werden einzeln weitergeleitet, was manchmal zu unterschiedlichen Pfaden und einer fehlerhaften Übertragung führt.
+	\item Die Klage wurde abgewiesen, was als Sieg beschrieben werden kann.
 \end{examples}
 
 whose dependency parse tree is shown in \reffig{fig:example-parzu}:
-This sentence has three verbs in it, \textit{werden}, \textit{weitergeleitet}, and \textit{führt}, but only the last two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
+This sentence has five verbs in it, \textit{wurde}, \textit{abgewiesen}, \textit{beschrieben}, \textit{werden}, and \textit{kann} (POS-tag ``V'' in the second row), but only two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-\fig{images/exampleParzu.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{ParZu}
+\fig{images/exampleParzu2.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
 
 I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using a heuristic, mostly relying on the STTS-tags \citep{schiller1999guidelines} of the parser's output:
 

@@ -22,17 +22,18 @@
 \BOOKMARK [0][-]{chapter.4}{Architecture}{}% 22
 \BOOKMARK [1][-]{section.4.1}{Overview}{chapter.4}% 23
 \BOOKMARK [1][-]{section.4.2}{Semantic Role Labeller}{chapter.4}% 24
-\BOOKMARK [1][-]{section.4.3}{German BERT}{chapter.4}% 25
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 26
-\BOOKMARK [1][-]{section.5.1}{BLEU Scores}{chapter.5}% 27
-\BOOKMARK [1][-]{section.5.2}{Evaluation}{chapter.5}% 28
-\BOOKMARK [2][-]{subsection.5.2.1}{More evaluation}{section.5.2}% 29
-\BOOKMARK [1][-]{section.5.3}{Citations}{chapter.5}% 30
-\BOOKMARK [1][-]{section.5.4}{Graphics}{chapter.5}% 31
-\BOOKMARK [1][-]{section.5.5}{Some Linguistics}{chapter.5}% 32
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 33
-\BOOKMARK [0][-]{section*.14}{Glossary}{}% 34
-\BOOKMARK [0][-]{section*.16}{References}{}% 35
-\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 36
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 37
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 38
+\BOOKMARK [2][-]{subsection.4.2.1}{Finding Predicates}{section.4.2}% 25
+\BOOKMARK [1][-]{section.4.3}{German BERT}{chapter.4}% 26
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 27
+\BOOKMARK [1][-]{section.5.1}{BLEU Scores}{chapter.5}% 28
+\BOOKMARK [1][-]{section.5.2}{Evaluation}{chapter.5}% 29
+\BOOKMARK [2][-]{subsection.5.2.1}{More evaluation}{section.5.2}% 30
+\BOOKMARK [1][-]{section.5.3}{Citations}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.4}{Graphics}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.5}{Some Linguistics}{chapter.5}% 33
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 34
+\BOOKMARK [0][-]{section*.14}{Glossary}{}% 35
+\BOOKMARK [0][-]{section*.16}{References}{}% 36
+\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 37
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 38
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 39
