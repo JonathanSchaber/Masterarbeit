@@ -30,18 +30,18 @@
 \contentsline {subsection}{\numberline {4.2.1}Finding Predicates}{4}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}DAMESRL}{6}{subsection.4.2.2}
 \contentsline {section}{\numberline {4.3}German BERT}{6}{section.4.3}
-\contentsline {chapter}{\numberline {5}Results}{7}{chapter.5}
-\contentsline {section}{\numberline {5.1}BLEU Scores}{7}{section.5.1}
-\contentsline {section}{\numberline {5.2}Evaluation}{7}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}More evaluation}{7}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}Citations}{7}{section.5.3}
-\contentsline {section}{\numberline {5.4}Graphics}{8}{section.5.4}
-\contentsline {section}{\numberline {5.5}Some Linguistics}{9}{section.5.5}
-\contentsline {chapter}{\numberline {6}Conclusion}{10}{chapter.6}
-\contentsline {chapter}{Glossary}{11}{section*.14}
-\contentsline {chapter}{References}{12}{section*.16}
-\contentsline {chapter}{Lebenslauf}{14}{section*.18}
+\contentsline {chapter}{\numberline {5}Results}{8}{chapter.5}
+\contentsline {section}{\numberline {5.1}BLEU Scores}{8}{section.5.1}
+\contentsline {section}{\numberline {5.2}Evaluation}{8}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}More evaluation}{8}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}Citations}{8}{section.5.3}
+\contentsline {section}{\numberline {5.4}Graphics}{9}{section.5.4}
+\contentsline {section}{\numberline {5.5}Some Linguistics}{10}{section.5.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{11}{chapter.6}
+\contentsline {chapter}{Glossary}{12}{section*.14}
+\contentsline {chapter}{References}{13}{section*.16}
+\contentsline {chapter}{Lebenslauf}{15}{section*.18}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{15}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{16}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{16}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{17}{appendix.B}

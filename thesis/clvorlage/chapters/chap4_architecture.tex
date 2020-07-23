@@ -20,6 +20,8 @@ This is not as straight forward as it seems on the first look.
 
 \subsection{Finding Predicates}
 
+It is a known problem in the analysis of semantic roles that a proper procedure for predicate identification is a hard to tackle problem, consider e.g. the discussion concerning so called light verbs: \cite{wittenberg2016light}.
+
 Following \cite{foth2006umfassende}
 
 \begin{examples}
@@ -41,10 +43,10 @@ whose dependency parse tree is shown in \reffig{fig:example-parzu}:
 This sentence has five verbs in it, \textit{wurde}, \textit{abgewiesen}, \textit{beschrieben}, \textit{werden}, and \textit{kann} (POS-tag ``V'' in the second row), but only two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-\fig{images/exampleParzu2.png}{fig:example-parzu}{Example sentence with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
+\fig{images/exampleParzu2.png}{fig:example-parzu}{Example dependency parse tree for a sentence with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
 
 I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using a heuristic, relying on the token's POS tag that the parser predicts.
-The ParZu parser's default output follows the CoNLL sheme \citep{buchholz2006conll} which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) and fine-grained (POSTAG), where the POSTAG corresponds to the token's STTS tag \citep{schiller1999guidelines}.
+The ParZu parser's default output follows the CoNLL scheme \citep{buchholz2006conll} which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) and fine-grained (POSTAG), where the POSTAG corresponds to the token's STTS tag \citep{schiller1999guidelines}.
 
 \begin{algorithm}
 \caption{Predicate finding algorithm}
