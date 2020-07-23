@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  23 JUL 2020 14:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  23 JUL 2020 15:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -726,6 +726,30 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@algorithm=\toks25
 \c@algorithm=\count111
 )
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.sty
+Package: csquotes 2018/02/11 v5.2c context-sensitive quotations (JAW)
+
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2018/02/11 v2.5e e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count112
+)
+\csq@reset=\count113
+\csq@gtype=\count114
+\csq@glevel=\count115
+\csq@qlevel=\count116
+\csq@maxlvl=\count117
+\csq@tshold=\count118
+\csq@ltx@everypar=\toks26
+
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.def
+File: csquotes.def 2018/02/11 v5.2c csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.cfg
+File: csquotes.cfg 
+))
 (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
@@ -758,16 +782,16 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cftbeforefigskip=\skip171
 \cftfigindent=\skip172
 \cftfignumwidth=\skip173
-\c@lofdepth=\count112
-\c@lotdepth=\count113
+\c@lofdepth=\count119
+\c@lotdepth=\count120
 \cftbeforelottitleskip=\skip174
 \cftafterlottitleskip=\skip175
 \cftbeforetabskip=\skip176
 \cfttabindent=\skip177
 \cfttabnumwidth=\skip178
 )
-\c@myfigure=\count114
-\c@mytable=\count115
+\c@myfigure=\count121
+\c@mytable=\count122
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
 Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
@@ -823,7 +847,6 @@ Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
 Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
 Package: xcolor-patch 2016/05/16 xcolor patch
 Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
-Package atveryend Info: \enddocument detected (standard20110627).
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
@@ -838,15 +861,15 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen127
-\Hy@linkcounter=\count116
-\Hy@pagecounter=\count117
+\Hy@linkcounter=\count123
+\Hy@pagecounter=\count124
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count118
+\Hy@SavedSpaceFactor=\count125
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -859,7 +882,7 @@ Package hyperref Info: Plain pages OFF on input line 4524.
 Package hyperref Info: Backreferencing OFF on input line 4529.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4762.
-\c@Hy@tempcnt=\count119
+\c@Hy@tempcnt=\count126
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
@@ -867,7 +890,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5115.
 \XeTeXLinkMargin=\dimen128
-\Fld@menulength=\count120
+\Fld@menulength=\count127
 \Field@Width=\dimen129
 \Fld@charsize=\dimen130
 Package hyperref Info: Hyper figures OFF on input line 6369.
@@ -879,15 +902,15 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6394.
 Package hyperref Info: PDF/A mode OFF on input line 6399.
 LaTeX Info: Redefining \ref on input line 6439.
 LaTeX Info: Redefining \pageref on input line 6443.
-\Hy@abspage=\count121
-\c@Item=\count122
+\Hy@abspage=\count128
+\c@Item=\count129
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
-\Fld@listcount=\count123
-\c@bookmark@seq@number=\count124
+\Fld@listcount=\count130
+\c@bookmark@seq@number=\count131
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -899,7 +922,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 Package hyperref Warning: Invalid value `000'
 (hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 51.
+(hyperref)                Option setting is ignored on input line 52.
 
 
 Class scrreprt Warning: Usage of package `fancyhdr' together
@@ -913,7 +936,7 @@ Class scrreprt Warning: Usage of package `fancyhdr' together
 (scrreprt)              `\addtokomafont' for the page style elements need
 (scrreprt)              explicite user intervention to work.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `fancyhdr' on input line 68.
+(scrreprt)              package `fancyhdr' on input line 69.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
@@ -928,9 +951,9 @@ s
 \f@nch@O@olf=\skip187
 \f@nch@O@orf=\skip188
 )
-\c@myfootnote=\count125
-\@float@every@example=\toks26
-\c@example=\count126
+\c@myfootnote=\count132
+\@float@every@example=\toks27
+\c@example=\count133
 
 (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
@@ -940,7 +963,7 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/supertabular/supertabular.sty
 Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count127
+\c@tracingst=\count134
 \ST@wd=\dimen131
 \ST@rightskip=\skip189
 \ST@leftskip=\skip190
@@ -957,6 +980,11 @@ Package: supertabular 2004/02/20 v4.1e the supertabular environment
 \ST@dimen=\dimen141
 \ST@pbox=\box61
 )
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'english'.
+
 (./CLthesis.aux (./chapters/titlepage_phil.aux) (./chapters/abstract.aux)
 (./chapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
 (./chapters/chap1_introduction.aux) (./chapters/chap2_semantic_roles.aux)
@@ -983,17 +1011,17 @@ LaTeX Font Info:    ... okay on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count128
+\scratchcounter=\count135
 \scratchdimen=\dimen142
 \scratchbox=\box62
-\nofMPsegments=\count129
-\nofMParguments=\count130
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count131
+\nofMPsegments=\count136
+\nofMParguments=\count137
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count138
 \MPscratchDim=\dimen143
-\MPnumerator=\count132
-\makeMPintoPDFobject=\count133
-\everyMPtoPDFconversion=\toks28
+\MPnumerator=\count139
+\makeMPintoPDFobject=\count140
+\everyMPtoPDFconversion=\toks29
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -1020,7 +1048,7 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count134
+\c@section@level=\count141
 )
 LaTeX Info: Redefining \ref on input line 3.
 LaTeX Info: Redefining \pageref on input line 3.
@@ -1126,7 +1154,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 (./chapters/acronyms.tex
-Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--33
+Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--34
 [] 
  []
 
@@ -1200,19 +1228,22 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 ]
-<images/exampleParzu2.png, id=331, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=338, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
-Package pdftex.def Info: images/exampleParzu2.png  used on input line 49.
+Package pdftex.def Info: images/exampleParzu2.png  used on input line 60.
 (pdftex.def)             Requested size: 455.24408pt x 197.17987pt.
 
-Overfull \hbox (28.45274pt too wide) in paragraph at lines 49--49
+Overfull \hbox (28.45274pt too wide) in paragraph at lines 60--60
  [] 
  []
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 55.
-[5 <./images/exampleParzu2.png (PNG copy)>] [6]) [7]
+put line 66.
+[5]) [6 <./images/exampleParzu2.png (PNG copy)>] [7]
 \openout2 = `chapters/chap5_results.aux'.
 
 
@@ -1271,7 +1302,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=398, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=408, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1372,16 +1403,15 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 63758CBE106C289DA13E3CC4358CEDE4;2210.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 10912 strings out of 492982
- 168648 string characters out of 6134895
- 376142 words of memory out of 5000000
- 14050 multiletter control sequences out of 15000+600000
+ 11781 strings out of 492982
+ 181498 string characters out of 6134895
+ 403130 words of memory out of 5000000
+ 14904 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 49i,12n,68p,8847b,868s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,12n,68p,8847b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
@@ -1395,10 +1425,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (25 pages, 354220 bytes).
+Output written on CLthesis.pdf (25 pages, 356822 bytes).
 PDF statistics:
- 518 PDF objects out of 1000 (max. 8388607)
- 469 compressed objects within 5 object streams
- 125 named destinations out of 1000 (max. 500000)
+ 529 PDF objects out of 1000 (max. 8388607)
+ 480 compressed objects within 5 object streams
+ 128 named destinations out of 1000 (max. 500000)
  336 words of extra memory for PDF output out of 10000 (max. 10000000)
 

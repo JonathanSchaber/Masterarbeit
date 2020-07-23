@@ -1,9 +1,14 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aepli(2018)]{aepli2018parsing}
+N.~Aepli.
+\newblock \emph{Parsing Approaches for Swiss German}.
+\newblock PhD thesis, University of Zurich, 2018.
 
 \bibitem[Artetxe et~al.(2019)Artetxe, Ruder, and Yogatama]{artetxe2019cross}
 M.~Artetxe, S.~Ruder, and D.~Yogatama.
@@ -40,6 +45,18 @@ Q.~N.~T. Do, A.~Leeuwenberg, G.~Heyman, and M.~F. Moens.
 K.~A. Foth.
 \newblock Eine umfassende constraint-dependenz-grammatik des deutschen.
 \newblock 2006.
+
+\bibitem[Gildea and Jurafsky(2002)]{gildea2002automatic}
+D.~Gildea and D.~Jurafsky.
+\newblock Automatic labeling of semantic roles.
+\newblock \emph{Computational linguistics}, 28\penalty0 (3):\penalty0 245--288,
+  2002.
+
+\bibitem[Gro{\ss} and Osborne(2015)]{gross2015dependency}
+T.~Gro{\ss} and T.~Osborne.
+\newblock The dependency status of function words: Auxiliaries.
+\newblock In \emph{Proceedings of the Third International Conference on
+  Dependency Linguistics (Depling 2015)}, pages 111--120, 2015.
 
 \bibitem[Haji{\v{c}} et~al.(2009)Haji{\v{c}}, Ciaramita, Johansson, Kawahara,
   Mart{\'\i}, M{\`a}rquez, Meyers, Nivre, Pad{\'o}, {\v{S}}tep{\'a}nek,
