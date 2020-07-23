@@ -23,7 +23,9 @@ This is not as straight forward as it seems on the first look.
 It is a known problem in the analysis of semantic roles that a proper procedure for predicate identification is a hard to tackle problem, consider e.g. the discussion concerning so called light verbs: \cite{wittenberg2016light}.
 
 ``First, the predicates which assign semantic roles to the constituents are identified prior to semantic role labelling proper. They are usually identified as the main verbs which head clauses.'' \citep[p.~74]{samardzic2013dynamics}
-However, dependency analyses of different languages are 
+In a dependency framework like USD \citep{de2014universal}, which explicitely sets the content verb as root, identification of the relevant predicate is straight-forward:
+One has simply to look at the dependency parse tree of a given sentence and select the heads --- i.e. roots --- of the clauses.
+However, the ParZu parser builds on the Pro3Gres parser \citep{schneider2008hybrid} which 
 
 ``In a constituency parse, the finite verb is the head of a verb phrase or rather sentence.
 A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore finite verbs are usuallynot the head of the sentence.
@@ -34,6 +36,8 @@ According to the USD, function words are subordinated to content words, which me
 This is an accordance with the view that XXXXXXXXXX
 However, there is a ``substantial amount of evidence [that] delivers a strong argument for the \textelp{} approach, which subordinates full verbs to auxiliaries'' \cite{gross2015dependency}.
 
+``The parsing scheme that USD advocates takes the division between function word and content word as its guiding principle.
+One major difficulty with doing this is that the dividing line between function word and content word is often not clear.'' \cite{gross2015dependency}
 
 
 Following \cite{foth2006umfassende}

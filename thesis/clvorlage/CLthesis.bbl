@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{21}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -27,6 +27,13 @@ A.~Conneau, G.~Lample, R.~Rinott, A.~Williams, S.~R. Bowman, H.~Schwenk, and
   V.~Stoyanov.
 \newblock Xnli: Evaluating cross-lingual sentence representations.
 \newblock \emph{arXiv preprint arXiv:1809.05053}, 2018.
+
+\bibitem[De~Marneffe et~al.(2014)De~Marneffe, Dozat, Silveira, Haverinen,
+  Ginter, Nivre, and Manning]{de2014universal}
+M.-C. De~Marneffe, T.~Dozat, N.~Silveira, K.~Haverinen, F.~Ginter, J.~Nivre,
+  and C.~D. Manning.
+\newblock Universal stanford dependencies: A cross-linguistic typology.
+\newblock In \emph{LREC}, volume~14, pages 4585--4592, 2014.
 
 \bibitem[Devlin et~al.(2018)Devlin, Chang, Lee, and Toutanova]{devlin2018bert}
 J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova.
@@ -98,6 +105,11 @@ M.~S{\"a}nger, U.~Leser, S.~Kemmerer, P.~Adolphs, and R.~Klinger.
 A.~Schiller, S.~Teufel, C.~St{\"o}ckert, and C.~Thielen.
 \newblock Guidelines f{\"u}r das tagging deutscher textcorpora.
 \newblock \emph{University of Stuttgart/University of T{\"u}bingen}, 1999.
+
+\bibitem[Schneider(2008)]{schneider2008hybrid}
+G.~Schneider.
+\newblock \emph{Hybrid long-distance functional dependency parsing}.
+\newblock PhD thesis, University of Zurich, 2008.
 
 \bibitem[Sennrich et~al.(2013)Sennrich, Volk, and
   Schneider]{sennrich2013exploiting}
