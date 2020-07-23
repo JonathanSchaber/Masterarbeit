@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 JUL 2020 18:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  23 JUL 2020 14:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1126,7 +1126,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 (./chapters/acronyms.tex
-Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--30
+Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--33
 [] 
  []
 
@@ -1200,18 +1200,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 ]
-<images/exampleParzu2.png, id=330, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=331, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
-Package pdftex.def Info: images/exampleParzu2.png  used on input line 46.
+Package pdftex.def Info: images/exampleParzu2.png  used on input line 49.
 (pdftex.def)             Requested size: 455.24408pt x 197.17987pt.
 
-Overfull \hbox (28.45274pt too wide) in paragraph at lines 46--46
+Overfull \hbox (28.45274pt too wide) in paragraph at lines 49--49
  [] 
  []
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 52.
+put line 55.
 [5 <./images/exampleParzu2.png (PNG copy)>] [6]) [7]
 \openout2 = `chapters/chap5_results.aux'.
 
@@ -1271,7 +1271,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=395, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=398, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1375,10 +1375,10 @@ Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 10908 strings out of 492982
- 168535 string characters out of 6134895
- 376113 words of memory out of 5000000
- 14047 multiletter control sequences out of 15000+600000
+ 10912 strings out of 492982
+ 168648 string characters out of 6134895
+ 376142 words of memory out of 5000000
+ 14050 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,868s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1395,10 +1395,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (25 pages, 353486 bytes).
+Output written on CLthesis.pdf (25 pages, 354220 bytes).
 PDF statistics:
- 515 PDF objects out of 1000 (max. 8388607)
- 466 compressed objects within 5 object streams
- 124 named destinations out of 1000 (max. 500000)
+ 518 PDF objects out of 1000 (max. 8388607)
+ 469 compressed objects within 5 object streams
+ 125 named destinations out of 1000 (max. 500000)
  336 words of extra memory for PDF output out of 10000 (max. 10000000)
 

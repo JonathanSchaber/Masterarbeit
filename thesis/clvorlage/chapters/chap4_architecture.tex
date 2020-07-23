@@ -10,7 +10,7 @@ A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic 
 
 State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often implementing deep learning techniques, like RNNs or attention, that render tedious feature engineering unnecessary.
 For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
-I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5 on the CoNLL'09 task \citep{hajivc2009conll}.
+I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5\% on the CoNLL'09 task \citep{hajivc2009conll}.
 However, their SRL needs as input not only the sentence, but also ``its predicate $w_p$ as input'' \citep{do2018flexible}.
 
 ``A major advantage of dependency grammars is their ability to deal with languages that are morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
@@ -21,6 +21,9 @@ This is not as straight forward as it seems on the first look.
 \subsection{Finding Predicates}
 
 It is a known problem in the analysis of semantic roles that a proper procedure for predicate identification is a hard to tackle problem, consider e.g. the discussion concerning so called light verbs: \cite{wittenberg2016light}.
+
+``First, the predicates which assign semantic roles to the constituents are identified prior to semantic role labelling proper. They are usually identified as the main verbs which head clauses.'' \citep[p.~74]{samardzic2013dynamics}
+
 
 Following \cite{foth2006umfassende}
 

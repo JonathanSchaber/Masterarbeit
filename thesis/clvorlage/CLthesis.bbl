@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -61,6 +61,12 @@ D.~Jurafsky and J.~H. Martin.
 P.~Lewis, B.~O{\u{g}}uz, R.~Rinott, S.~Riedel, and H.~Schwenk.
 \newblock Mlqa: Evaluating cross-lingual extractive question answering.
 \newblock \emph{arXiv preprint arXiv:1910.07475}, 2019.
+
+\bibitem[Samardzic(2013)]{samardzic2013dynamics}
+T.~Samardzic.
+\newblock \emph{Dynamics, causation, duration in the predicate-argument
+  structure of verbs: a computational approach based on parallel corpora}.
+\newblock PhD thesis, University of Geneva, 2013.
 
 \bibitem[S{\"a}nger et~al.(2016)S{\"a}nger, Leser, Kemmerer, Adolphs, and
   Klinger]{sanger2016scare}

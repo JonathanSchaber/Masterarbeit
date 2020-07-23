@@ -28,8 +28,8 @@
 \contentsline {section}{\numberline {4.1}Overview}{4}{section.4.1}
 \contentsline {section}{\numberline {4.2}Semantic Role Labeller}{4}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Finding Predicates}{4}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}DAMESRL}{6}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}German BERT}{6}{section.4.3}
+\contentsline {subsection}{\numberline {4.2.2}DAMESRL}{7}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}German BERT}{7}{section.4.3}
 \contentsline {chapter}{\numberline {5}Results}{8}{chapter.5}
 \contentsline {section}{\numberline {5.1}BLEU Scores}{8}{section.5.1}
 \contentsline {section}{\numberline {5.2}Evaluation}{8}{section.5.2}
