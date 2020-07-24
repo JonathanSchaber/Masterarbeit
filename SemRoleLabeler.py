@@ -129,18 +129,24 @@ def predict_semRoles(dsrl, dsrl_obj):
         list of lists of str
     """
     srl_list = []
-    sem_roles = dsrl.predict(dsrl_obj)
+    try:
+        sem_roles = dsrl.predict(dsrl_obj)
+    except IndexError:
+        for i in range(len(dsrl_obj)):
+            srl_list.append([len(dsrl_obj[i])*"O"])
+        return srl_list
+
     for sent in sem_roles:
         sent_list = []
         for predicate in sent.get_predicates():
            sent_list.append(predicate.arguments) 
            if not predicate:
-               sent_list.append([])
+               sent_list.append([len(sent)*"O"])
         srl_list.append(sent_list)
     return srl_list
 
 
-def pretty_print(srl_list, parse_text):
+def pretty_print(dsrl, parser, text):
     """prints pretty predicted semantic roles for a given sentence.
     Args:
         param1: list of lists of lists of strings
@@ -148,8 +154,10 @@ def pretty_print(srl_list, parse_text):
     Returns:
         None
     """
+    srl_list = predict_semRoles(dsrl, process_text(parser, text))
+    parsed_text = parse_text(parser, text)
     pretty_print_list = []
-    for i, sentence in enumerate(parse_text):
+    for i, sentence in enumerate(parsed_text):
         for j, token in enumerate(sentence):
             pretty_print_list.append("\t".join(token) + "\t" + "\t".join(semrole_item[j] for semrole_item in srl_list[i]))
         pretty_print_list.append("\n")
@@ -162,7 +170,7 @@ def main(text):
     ParZu_parser = create_ParZu_parser()
     dsrl_obj = process_text(ParZu_parser, text)
     sem_roles = predict_semRoles(dsrl, dsrl_obj)
-    pretty_print(sem_roles, parse_text(ParZu_parser, text))
+    pretty_print(dsrl, ParZu_parser, text)
     import pdb; pdb.set_trace()
     
 
