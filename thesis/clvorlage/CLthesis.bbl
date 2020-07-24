@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -52,6 +52,13 @@ Q.~N.~T. Do, A.~Leeuwenberg, G.~Heyman, and M.~F. Moens.
 K.~A. Foth.
 \newblock Eine umfassende constraint-dependenz-grammatik des deutschen.
 \newblock 2006.
+
+\bibitem[Gerdes and Kahane(2001)]{gerdes2001word}
+K.~Gerdes and S.~Kahane.
+\newblock Word order in german: A formal dependency grammar using a topological
+  hierarchy.
+\newblock In \emph{Proceedings of the 39th annual meeting of the Association
+  for Computational Linguistics}, pages 220--227, 2001.
 
 \bibitem[Gildea and Jurafsky(2002)]{gildea2002automatic}
 D.~Gildea and D.~Jurafsky.

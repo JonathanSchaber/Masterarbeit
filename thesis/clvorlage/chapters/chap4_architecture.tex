@@ -23,12 +23,14 @@ This is not as straight forward as it seems on the first look.
 It is a known problem in the analysis of semantic roles that a proper procedure for predicate identification is a hard to tackle problem, consider e.g. the discussion concerning so called light verbs: \cite{wittenberg2016light}.
 
 ``First, the predicates which assign semantic roles to the constituents are identified prior to semantic role labelling proper. They are usually identified as the main verbs which head clauses.'' \citep[p.~74]{samardzic2013dynamics}
-In a dependency framework like USD \citep{de2014universal}, which explicitely sets the content verb as root, identification of the relevant predicate is straight-forward:
+In a dependency framework like USD \citep{de2014universal}, which explicitly sets the content verb as root, identification of the relevant predicate is straight-forward:
 One has simply to look at the dependency parse tree of a given sentence and select the heads --- i.e. roots --- of the clauses.
-However, the ParZu parser builds on the Pro3Gres parser \citep{schneider2008hybrid} which 
+However, the ParZu parser models not content words as heads but function words.\footnote{This follows general dependency frameworks proposed for German, e.g. \cite{gerdes2001word, gross2015dependency}.}
+
+(interestingly, this stands in contrast to the Pro3Gres parser \citep{schneider2008hybrid} which 
 
 ``In a constituency parse, the finite verb is the head of a verb phrase or rather sentence.
-A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore finite verbs are usuallynot the head of the sentence.
+A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore finite verbs are usually not the head of the sentence.
 Hence, the head of a sentence typically is the verb containing the meaning.
 In that sense, dependency structures are closer to the semantics of a sentence.'' \citep[p.~6f.]{aepli2018parsing}
 
