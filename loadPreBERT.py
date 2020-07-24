@@ -1,7 +1,12 @@
-from transformers import BertTokenizer, BertForMaskedLM
+from transformers import (
+        BertTokenizer,
+        BertModel,
+        BertForQuestionAnswering
+        )
 
 
-def create_model_and_tokenizer():
+
+def create_model_and_tokenizer(path_to_model):
     """Create respective classes and return them
     Args:
         param1: str
@@ -9,7 +14,7 @@ def create_model_and_tokenizer():
         transformer classes 
     """
     tokenizer = BertTokenizer.from_pretrained(path_to_model)
-    model = BertForMaskedLM.from_pretrained(path_to_model)
+    model = BertModel.from_pretrained(path_to_model)
 
     return tokenizer, model
 
@@ -24,9 +29,17 @@ def prepare_sentences(sentences, max_len):
     """
     torch_sentences = []
     for sentence in sentences:
-        torch_sentences.append(tokenizer.encode(sentence, add_special_tokens = True, max_length = max_len, pad_to_max_length = True, return_tensors = 'pt')
+        torch_sentences.append(tokenizer.encode(sentence, add_special_tokens = True, max_length = max_len, pad_to_max_length = True, return_tensors = 'pt'))
     torch_sentences = torch.cat(torch_sentences, dim=0)
 
     return torch_sentences
 
+def main():
+    # path = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/bert-base-german-cased-pytorch_model.bin"
+    path = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/"
+    tokenizer, model = create_model_and_tokenizer(path)
+    import pdb; pdb.set_trace()
 
+
+if __name__ == "__main__":
+    main()
