@@ -1,3 +1,4 @@
+import torch
 from transformers import (
         BertTokenizer,
         BertModel,
@@ -14,16 +15,17 @@ def create_model_and_tokenizer(path_to_model):
         transformer classes 
     """
     tokenizer = BertTokenizer.from_pretrained(path_to_model)
-    model = BertModel.from_pretrained(path_to_model)
+    model = BertModel.from_pretrained(path_to_model, output_hidden_states=True)
 
     return tokenizer, model
 
 
-def prepare_sentences(sentences, max_len):
+def prepare_sentences(sentences, max_len, tokenizer):
     """Tokenize, pad, add special tokens
     Args:
         param1: list of strs
         param2: int
+        param3: transformers tokenizer class object
     Returns:
         list of torch.Tensor
     """
@@ -34,8 +36,15 @@ def prepare_sentences(sentences, max_len):
 
     return torch_sentences
 
+
+def combine_srl_embs_bert_embs():
+    """
+    """
+    comb_tensor = torch.cat((srl_tensor, bert_tensor), 0)
+    pass
+
+
 def main():
-    # path = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/bert-base-german-cased-pytorch_model.bin"
     path = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/"
     tokenizer, model = create_model_and_tokenizer(path)
     import pdb; pdb.set_trace()
