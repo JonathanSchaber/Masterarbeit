@@ -40,7 +40,7 @@ def prepare_sentences(sentences, max_len, tokenizer):
 def combine_srl_embs_bert_embs():
     """
     """
-    comb_tensor = torch.cat((srl_tensor, bert_tensor), 0)
+    comb_tensor = torch.cat((bert_tensor, srl_tensor), 0)
     pass
 
 
