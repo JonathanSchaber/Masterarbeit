@@ -133,7 +133,7 @@ def predict_semRoles(dsrl, dsrl_obj):
         sem_roles = dsrl.predict(dsrl_obj)
     except IndexError:
         for i in range(len(dsrl_obj)):
-            srl_list.append([len(dsrl_obj[i])*"O"])
+            srl_list.append([["O"]*len(dsrl_obj[i])])
         return srl_list
 
     for sent in sem_roles:
@@ -141,7 +141,7 @@ def predict_semRoles(dsrl, dsrl_obj):
         for predicate in sent.get_predicates():
            sent_list.append(predicate.arguments) 
            if not predicate:
-               sent_list.append([len(sent)*"O"])
+               sent_list.append([["O"]*len(sent)])
         srl_list.append(sent_list)
     return srl_list
 
