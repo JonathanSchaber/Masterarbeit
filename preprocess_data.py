@@ -14,7 +14,8 @@ def read_data(path):
     json_data = json.loads(file)
     return json_data
 
-def preprocess_MLQA_v1(json_data, dsrl, parser):
+
+def preprocess_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
     """processes json data, predicts sem_roles, writes to new file
     Args:
         param1: json data
@@ -36,17 +37,24 @@ def preprocess_MLQA_v1(json_data, dsrl, parser):
                 failed_texts.append((i, j))
     print("The following texts were not processed\n:")
     for indices in failed_texts:
-        print("json['data'][{}]['paragraphs'][{}]['context']".format(indices[0], indices[1]))
-    import pdb; pdb.set_trace()
+        print("json_data['data'][{}]['paragraphs'][{}]['context']".format(indices[0], indices[1]))
+
+    write_obj = json.dumps(json_data)
+    try:
+        with open(path_to_new_file, "w", encoding="utf8") as f:
+            f.write(write_obj)
+    except:
+        import pdb; pdb.set_trace()
 
 
 def main():
     argument_model_config = "../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
     path_to_data = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de.json"
+    path_to_outfile = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de_srl.json"
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
     json_data = read_data(path_to_data)
-    preprocess_MLQA_v1(json_data, dsrl, ParZu_parser)
+    preprocess_MLQA_v1(json_data, dsrl, ParZu_parser, path_to_outfile)
     
 
 if __name__ == "__main__":
