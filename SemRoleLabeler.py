@@ -171,7 +171,7 @@ def main(text):
     dsrl_obj = process_text(ParZu_parser, text)
     sem_roles = predict_semRoles(dsrl, dsrl_obj)
     pretty_print(dsrl, ParZu_parser, text)
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
     
 
 if __name__ == "__main__":
