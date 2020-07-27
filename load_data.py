@@ -1,4 +1,5 @@
 import csv
+import torch
 
 from SemRoleLabeler import *
 
@@ -24,6 +25,28 @@ def load_XNLI(path):
     return xnli_data, y_mapping
 
 
+def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
+    """Return tensor for training
+    Args:
+        param1: list of tuples of strs
+        param2: dict
+    Returns
+        tensor
+    """
+    max_len = 200
+    x_tensor_list = []
+    y_tensor_list = []
+    for example in xnli_data:
+        label, sentence1, sentence2, = example
+        x_tensor_list.append(tokenizer.encode(sentence1, sentence2, add_special_tokens = True, max_length = max_len, pad_to_max_length = True, return_tensors = 'pt'))
+        y_tensor_list.append(y_mapping[label])
+    
+    y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
+    x_tensor = torch.cat(tuple(x_tensor_list), dim=1) 
+    import pdb; pdb.set_trace()
+    return torch.cat(tuple(x_tensor_list), dim=1), torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
+
+
 def SRL_XNLI(xnli_data, dsrl, parser):
     """predict semantic roles of xnli data and return new object
     Args:
@@ -39,7 +62,7 @@ def SRL_XNLI(xnli_data, dsrl, parser):
         if i % 100 == 0:
             print("processed the {}th example out of {}...".format(i, num_examples))
         label, sentence1, sentence2 = example
-        srl_xnli.append((label, sentence1, predict_semRoles(dsrl, process_text(parser, sentence1)), sentence2, predict_semRoles(dsrl, processed(parser, sentence2))))
+        srl_xnli.append((label, sentence1, sentence2, predict_semRoles(dsrl, process_text(parser, sentence1)), predict_semRoles(dsrl, process_text(parser, sentence2))))
 
     return srl_xnli
 
