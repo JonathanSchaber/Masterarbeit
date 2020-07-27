@@ -1,10 +1,24 @@
 import torch
+
+from torch import nn
 from transformers import (
         BertTokenizer,
         BertModel,
         BertForQuestionAnswering
         )
 
+class BertBinaryClassifier(nn.Module):
+    def __init__(self, path, dropout=0.1):
+        super(BertBinaryClassifier, self).__init__()
+        self.bert = BertModel.from_pretrained(path)
+        self.linear = nn.Linear(768, 1)
+        self.sigmoid = nn.Sigmoid()
+    
+    def forward(self, tokens):
+        _, pooled_output = self.bert(tokens)
+        linear_output = self.linear(dropout_output)
+        proba = self.sigmoid(linear_output)
+        return proba
 
 
 def create_model_and_tokenizer(path_to_model):
@@ -20,7 +34,7 @@ def create_model_and_tokenizer(path_to_model):
     return tokenizer, model
 
 
-def prepare_sentences(sentences, max_len, tokenizer):
+def prepare_sentences(sentences, tokenizer, max_len=100):
     """Tokenize, pad, add special tokens
     Args:
         param1: list of strs
