@@ -42,7 +42,7 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
         y_tensor_list.append(y_mapping[label])
     
     y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
-    x_tensor = torch.cat(tuple(x_tensor_list), dim=1) 
+    x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
     import pdb; pdb.set_trace()
     return torch.cat(tuple(x_tensor_list), dim=1), torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
 
