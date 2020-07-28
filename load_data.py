@@ -57,7 +57,7 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
     return x_tensor, y_tensor
 
 
-def dataloader_XNLI(path, tokenizer):
+def dataloader_XNLI(path, tokenizer, batch_size):
     """Make XNLI data ready to be passed to transformer dataloader
     Args:
         param1: str
@@ -83,6 +83,7 @@ def dataloader_XNLI(path, tokenizer):
             sampler = RandomSampler(train_dataset), 
             batch_size = batch_size 
         ) 
+    return train_dataloader, test_dataloader
 
 
 def SRL_XNLI(xnli_data, dsrl, parser):
