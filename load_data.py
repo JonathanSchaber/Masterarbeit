@@ -69,7 +69,7 @@ def dataloader_XNLI(path, tokenizer):
     data, ys = load_XNLI(path)
     x_tensor, y_tensor = load_torch_XNLI(data, ys, tokenizer)
 
-    dataset = TensorDataset(data, labels)
+    dataset = TensorDataset(x_tensor, y_tensor)
     train_size = int(0.9 * len(dataset))
     test_size = len(dataset) - train_size
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
