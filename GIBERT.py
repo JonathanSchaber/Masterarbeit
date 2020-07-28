@@ -1,3 +1,5 @@
+import time
+import datetime
 import json
 import argparse
 import torch
@@ -14,7 +16,8 @@ from transformers import (
         BertTokenizer,
         BertModel,
         BertForQuestionAnswering,
-        AdamW
+        AdamW,
+        get_linear_schedule_with_warmup
         )
 
 def parse_cmd_args():
@@ -104,7 +107,12 @@ def flat_accuracy(preds, labels):
     return np.sum(pred_flat == labels_flat) / len(labels_flat)
 
 
-def fine_tune_BERT(model, data, labels, config):
+def format_time(elapsed):
+    elapsed_rounded = int(round((elapsed)))
+    return str(datetime.timedelta(seconds=elapsed_rounded))
+
+
+def fine_tune_BERT(model, data, labels, cmnfig):
     """define fine-tuning procedure, write results to file.
     Args:
         param1: nn.Model (BERT-model)
@@ -116,6 +124,7 @@ def fine_tune_BERT(model, data, labels, config):
     epochs = config["epochs"]
     gpu = config["gpu"]
     batch_size = config["batch_size"]
+    criterion = nn.NLLLoss()
     print(6*"-" + "Checking which device to use..." + 6*"-")
     if torch.cuda.is_available():
         device = torch.device("cuda")
@@ -148,6 +157,29 @@ def fine_tune_BERT(model, data, labels, config):
             num_warmup_steps = 0,
             num_training_steps = total_steps
         )
+    training_stats = []
+    total_t0 = time.time()
+    for epoch_i in range(0, epochs):
+        print("")
+        print('======== Epoch {:} / {:} ========'.format(epoch_i + 1, epochs))
+        print('Training...')
+        t0 = time.time()
+        total_train_loss = 0
+        model.train()
+        for step, batch in enumerate(train_dataloader):
+            if step % 40 == 0 and not step == 0:
+                # Calculate elapsed time in minutes.
+                elapsed = format_time(time.time() - t0)
+            
+                # Report progress.
+                print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_dataloader), elapsed))
+            b_input_ids = batch[0].to(device)
+            b_labels = batch[1].to(device)
+            model.zero_grad()
+            output = model(b_input_ids)
+            loss = criterion(outputs, b_labels)
+    
+    
 
 
 def main():
