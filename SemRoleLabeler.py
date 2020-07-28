@@ -1,5 +1,4 @@
 #import tensorflow as tf
-import nltk
 
 from liir.dame.core.representation.Sentence import Sentence
 from liir.dame.core.representation.Text import Text
