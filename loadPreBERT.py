@@ -1,9 +1,14 @@
+import json
+import argparse
 import torch
 
 from torch import nn
 from torch.utils.data import (
-        TensorDataset, random_split
-        DataLoader, RandomSampler, SequentialSampler
+        TensorDataset,
+        random_split,
+        DataLoader,
+        RandomSampler,
+        SequentialSampler
         )
 from transformers import (
         BertTokenizer,
@@ -11,6 +16,22 @@ from transformers import (
         BertForQuestionAnswering,
         AdamW
         )
+
+def parse_cmd_args():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-l', '--location', type=str, help='"local", "midgard" or "rattle". '
+                                                           'Indicate which paths will be used.')
+    parser.add_argument("-c", "--config", type=str, help="Path to hyperparamter/config file (json).")
+    return parser.parse_args()
+
+
+def load_json(file_path):
+    with open(file_path, "r") as f:
+        f = f.read()
+        data = json.loads(f)
+    return data
+
 
 class BertBinaryClassifier(nn.Module):
     def __init__(self, path, dropout=0.1):
@@ -98,7 +119,7 @@ def fine_tune_BERT(model, data, labels, config):
     print(6*"-" + "Checking which device to use..." + 6*"-")
     if torch.cuda.is_available():
         device = torch.device("cuda")
-        print("device set to: CUDA -> using GPU #{}".format(gpu)A)
+        print("device set to: CUDA -> using GPU #{}".format(gpu))
     else:
         device = torch.device("cpu")
         print("device set to: CPU")
@@ -124,13 +145,15 @@ def fine_tune_BERT(model, data, labels, config):
 
     total_steps = len(train_dataloader) * epochs
     scheduler = get_linear_schedule_with_warmup(optimizer, 
-            num_warmup_steps = 0, # Default value in run_glue.py
+            num_warmup_steps = 0,
             num_training_steps = total_steps
         )
 
 
 def main():
-    path = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/"
+    args = parse_cmd_args()
+    import pdb; pdb.set_trace()
+    data = load_json(args.config)
     tokenizer, model = create_model_and_tokenizer(path)
     import pdb; pdb.set_trace()
 
