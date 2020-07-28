@@ -20,6 +20,9 @@ from transformers import (
         get_linear_schedule_with_warmup
         )
 
+from load_data import dataloader_XNLI
+
+
 def parse_cmd_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser()
@@ -112,7 +115,7 @@ def format_time(elapsed):
     return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
-def fine_tune_BERT(model, data, labels, cmnfig):
+def fine_tune_BERT(model, tokenizer, config):
     """define fine-tuning procedure, write results to file.
     Args:
         param1: nn.Model (BERT-model)
@@ -128,31 +131,18 @@ def fine_tune_BERT(model, data, labels, cmnfig):
     print(6*"-" + "Checking which device to use..." + 6*"-")
     if torch.cuda.is_available():
         device = torch.device("cuda")
+        model.cuda()
         print("device set to: CUDA -> using GPU #{}".format(gpu))
     else:
         device = torch.device("cpu")
         print("device set to: CPU")
-    dataset = TensorDataset(data, labels)
-    train_size = int(0.9 * len(dataset))
-    test_size = len(dataset) - train_size
-    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
-    train_dataloader = DataLoader(
-            train_dataset,
-            sampler = RandomSampler(train_dataset),
-            batch_size = batch_size
-        ) 
-    test_dataloader = DataLoader(
-            test_dataset,
-            sampler = RandomSampler(train_dataset), 
-            batch_size = batch_size 
-        ) 
-
+    train_data, test_data = dataloader_XNLI(config[location]["path_XNLI"], tokenizer, config["batch_size"])
     optimizer = AdamW(model.parameters(),
             lr = 2e-5,
             eps = 1e-8
         )
 
-    total_steps = len(train_dataloader) * epochs
+    total_steps = len(train_data) * epochs
     scheduler = get_linear_schedule_with_warmup(optimizer, 
             num_warmup_steps = 0,
             num_training_steps = total_steps
@@ -166,17 +156,18 @@ def fine_tune_BERT(model, data, labels, cmnfig):
         t0 = time.time()
         total_train_loss = 0
         model.train()
-        for step, batch in enumerate(train_dataloader):
+        for step, batch in enumerate(train_data):
             if step % 40 == 0 and not step == 0:
                 # Calculate elapsed time in minutes.
                 elapsed = format_time(time.time() - t0)
             
                 # Report progress.
-                print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_dataloader), elapsed))
+                print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_data), elapsed))
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             model.zero_grad()
-            output = model(b_input_ids)
+            outputs = model(b_input_ids)
+            import pdb; pdb.set_trace()
             loss = criterion(outputs, b_labels)
     
     
@@ -184,10 +175,12 @@ def fine_tune_BERT(model, data, labels, cmnfig):
 
 def main():
     args = parse_cmd_args()
-    import pdb; pdb.set_trace()
-    data = load_json(args.config)
-    tokenizer, model = create_model_and_tokenizer(path)
-    import pdb; pdb.set_trace()
+    global location
+    location = args.location
+    config = load_json(args.config)
+    tokenizer, model = create_model_and_tokenizer(config[location]["path_BERT"])
+    fine_tune_BERT(model, tokenizer, config)
+    
 
 
 if __name__ == "__main__":
