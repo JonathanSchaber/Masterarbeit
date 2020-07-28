@@ -178,7 +178,8 @@ def main():
     global location
     location = args.location
     config = load_json(args.config)
-    tokenizer, model = create_model_and_tokenizer(config[location]["path_BERT"])
+    tokenizer = BertTokenizer.from_pretrained(path_to_model)
+    model = BertEntailmentClassifier(config[location]["path_BERT"])
     fine_tune_BERT(model, tokenizer, config)
     
 
