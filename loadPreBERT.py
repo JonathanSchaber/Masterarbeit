@@ -8,7 +8,8 @@ from torch.utils.data import (
 from transformers import (
         BertTokenizer,
         BertModel,
-        BertForQuestionAnswering
+        BertForQuestionAnswering,
+        AdamW
         )
 
 class BertBinaryClassifier(nn.Module):
@@ -76,16 +77,31 @@ def combine_srl_embs_bert_embs():
     pass
 
 
-def fine_tune_BERT(model, data, labels, batch_size=32):
+def flat_accuracy(preds, labels):
+    pred_flat = np.argmax(preds, axis=1).flatten()
+    labels_flat = labels.flatten()
+    return np.sum(pred_flat == labels_flat) / len(labels_flat)
+
+
+def fine_tune_BERT(model, data, labels, config):
     """define fine-tuning procedure, write results to file.
     Args:
         param1: nn.Model (BERT-model)
         param2: torch.tensor
-        param3: torch.tensor
-        param4: int
+        param3: dict
     Returns:
         None
     """
+    epochs = config["epochs"]
+    gpu = config["gpu"]
+    batch_size = config["batch_size"]
+    print(6*"-" + "Checking which device to use..." + 6*"-")
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+        print("device set to: CUDA -> using GPU #{}".format(gpu)A)
+    else:
+        device = torch.device("cpu")
+        print("device set to: CPU")
     dataset = TensorDataset(data, labels)
     train_size = int(0.9 * len(dataset))
     test_size = len(dataset) - train_size
@@ -100,6 +116,17 @@ def fine_tune_BERT(model, data, labels, batch_size=32):
             sampler = RandomSampler(train_dataset), 
             batch_size = batch_size 
         ) 
+
+    optimizer = AdamW(model.parameters(),
+            lr = 2e-5,
+            eps = 1e-8
+        )
+
+    total_steps = len(train_dataloader) * epochs
+    scheduler = get_linear_schedule_with_warmup(optimizer, 
+            num_warmup_steps = 0, # Default value in run_glue.py
+            num_training_steps = total_steps
+        )
 
 
 def main():
