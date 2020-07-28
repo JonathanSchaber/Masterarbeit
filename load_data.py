@@ -3,12 +3,22 @@ import torch
 
 from SemRoleLabeler import *
 
+from torch.utils.data import (
+        TensorDataset,
+        random_split,
+        DataLoader,
+        RandomSampler,
+        SequentialSampler
+        )
+
+
 def load_XNLI(path):
     """loads the data from XNLI data set
     Args:
         param1: str
     Returns:
-        list of tuples of str, mapping of y
+        list of tuples of str
+        mapping of y
     """
     xnli_data = []
     y_mapping = {}
@@ -32,6 +42,7 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
         param2: dict
     Returns
         tensor
+        tensor
     """
     max_len = 200
     x_tensor_list = []
@@ -43,8 +54,35 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
     
     y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
     x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
-    import pdb; pdb.set_trace()
-    return torch.cat(tuple(x_tensor_list), dim=1), torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
+    return x_tensor, y_tensor
+
+
+def dataloader_XNLI(path, tokenizer):
+    """Make XNLI data ready to be passed to transformer dataloader
+    Args:
+        param1: str
+        param2: transformer Tokenizer object
+    Returns:
+        Dataloader object (train)
+        Dataloader object (test)
+    """
+    data, ys = load_XNLI(path)
+    x_tensor, y_tensor = load_torch_XNLI(data, ys, tokenizer)
+
+    dataset = TensorDataset(data, labels)
+    train_size = int(0.9 * len(dataset))
+    test_size = len(dataset) - train_size
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+    train_dataloader = DataLoader(
+            train_dataset,
+            sampler = RandomSampler(train_dataset),
+            batch_size = batch_size
+        ) 
+    test_dataloader = DataLoader(
+            test_dataset,
+            sampler = RandomSampler(train_dataset), 
+            batch_size = batch_size 
+        ) 
 
 
 def SRL_XNLI(xnli_data, dsrl, parser):
