@@ -41,6 +41,21 @@ def load_json(file_path):
     return data
 
 
+def sigmoid(x):
+       return 1/(1+np.exp(-x))
+
+
+def swish(x):
+        return x * sigmoid(x)
+
+
+def Swish(batch):
+    swish_tensors = []
+    for tensor in batch:
+        swish.tensors.append(torch.tensor(list(map(swish, tensor))))
+    return torch.stack(tuple(batch))
+
+
 class BertBinaryClassifier(nn.Module):
     def __init__(self, path, dropout=0.1):
         super(BertBinaryClassifier, self).__init__()
@@ -56,15 +71,16 @@ class BertBinaryClassifier(nn.Module):
 
 
 class BertEntailmentClassifier(nn.Module):
-    def __init__(self, path, out_classes=3, dropout=0.1):
+    def __init__(self, path, num_classes=3, dropout=0.1):
         super(BertEntailmentClassifier, self).__init__()
         self.bert = BertModel.from_pretrained(path)
+        self.Swish = Swish()
         self.lin_layer = nn.Sequential(
             nn.Dropout(dropout),
-            nn.Linear(768, out_classes),
-            nn.ReLU(inplace=True),
-            nn.Dropout(dropout),
-            nn.Linear(inbetw_lin_size, out_lin_size),
+            nn.Linear(768, num_classes),
+            #nn.ReLU(inplace=True),
+            #nn.Dropout(dropout),
+            #nn.Linear(768, num_classes),
         )
         self.softmax = nn.LogSoftmax(dim=-1)
     
@@ -73,14 +89,6 @@ class BertEntailmentClassifier(nn.Module):
         linear_output = self.lin_layer(pooled_output)
         proba = self.softmax(linear_output)
         return proba
-
-
-def sigmoid(x):
-       return 1/(1+np.exp(-x))
-
-
-def swish(x):
-        return x * sigmoid(x)
 
 
 def create_model_and_tokenizer(path_to_model):
@@ -154,6 +162,9 @@ def fine_tune_BERT(model, tokenizer, config):
     batch_size = config["batch_size"]
     criterion = nn.NLLLoss()
 
+    train_data, test_data, num_classes = dataloader_XNLI(config[location]["path_XNLI"], tokenizer, config["batch_size"])
+    model = BertEntailmentClassifier(config[location]["path_BERT"], num_classes)
+
     print("")
     print(8*"=" + " Checking which device to use... " + 8*"=")
     if torch.cuda.is_available():
@@ -165,7 +176,6 @@ def fine_tune_BERT(model, tokenizer, config):
         device = torch.device("cpu")
         print("")
         print(">>      device set to: CPU")
-    train_data, test_data = dataloader_XNLI(config[location]["path_XNLI"], tokenizer, config["batch_size"])
     optimizer = AdamW(model.parameters(),
             lr = 2e-5,
             eps = 1e-8
@@ -261,7 +271,6 @@ def main():
     location = args.location
     config = load_json(args.config)
     tokenizer = BertTokenizer.from_pretrained(config[location]["path_BERT"])
-    model = BertEntailmentClassifier(config[location]["path_BERT"])
     fine_tune_BERT(model, tokenizer, config)
     
 

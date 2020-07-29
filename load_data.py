@@ -35,7 +35,7 @@ def load_XNLI(path):
     return xnli_data, y_mapping
 
 
-def load_torch_XNLI(xnli_data, y_mapping, tokenizer, max_len=100):
+def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
     """Return tensor for training
     Args:
         param1: list of tuples of strs
@@ -46,6 +46,7 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer, max_len=100):
     """
     x_tensor_list = []
     y_tensor_list = []
+    max_len = len(tokenizer.tokenize(max(max(sent for sent in xnli_data))))
     for example in xnli_data:
         label, sentence1, sentence2, = example
         #x_tensor = tokenizer.encode(sentence1, sentence2, add_special_tokens = True, truncation=True, return_tensors = 'pt')
@@ -60,7 +61,7 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer, max_len=100):
     #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
     y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
     x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
-    return x_tensor, y_tensor
+    return x_tensor, y_tensor, len(y_mapping)
 
 
 def dataloader_XNLI(path, tokenizer, batch_size=32):
@@ -72,7 +73,7 @@ def dataloader_XNLI(path, tokenizer, batch_size=32):
         Dataloader object (train)
         Dataloader object (test)
     """
-    data, ys = load_XNLI(path)
+    data, ys, num_classes = load_XNLI(path)
     x_tensor, y_tensor = load_torch_XNLI(data, ys, tokenizer)
 
     dataset = TensorDataset(x_tensor, y_tensor)
@@ -89,7 +90,7 @@ def dataloader_XNLI(path, tokenizer, batch_size=32):
             sampler = RandomSampler(test_dataset), 
             batch_size = batch_size 
         ) 
-    return train_dataloader, test_dataloader
+    return train_dataloader, test_dataloader, num_classes
 
 
 #def SRL_XNLI(xnli_data, dsrl, parser):
