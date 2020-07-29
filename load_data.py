@@ -49,7 +49,8 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
     y_tensor_list = []
     for example in xnli_data:
         label, sentence1, sentence2, = example
-        x_tensor = tokenizer.encode(sentence1, sentence2, add_special_tokens = True, max_length = max_len, pad_to_max_length = True, return_tensors = 'pt')
+        #x_tensor = tokenizer.encode(sentence1, sentence2, add_special_tokens = True, truncation=True, return_tensors = 'pt')
+        x_tensor = tokenizer.encode(sentence1, sentence2, add_special_tokens = True, max_length = max_len, pad_to_max_length = True, truncation=True, return_tensors = 'pt')
         x_tensor_list.append(x_tensor)
 #        default_y = torch.tensor([0]*len(y_mapping))
 #        default_y[y_mapping[label]] = 1
