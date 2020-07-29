@@ -48,7 +48,7 @@ class BertBinaryClassifier(nn.Module):
     
     def forward(self, tokens):
         _, pooled_output = self.bert(tokens)
-        linear_output = self.linear(dropout_output)
+        linear_output = self.linear(pooled_output)
         proba = self.sigmoid(linear_output)
         return proba
 
@@ -62,7 +62,7 @@ class BertEntailmentClassifier(nn.Module):
     
     def forward(self, tokens):
         _, pooled_output = self.bert(tokens)
-        linear_output = self.linear(dropout_output)
+        linear_output = self.linear(pooled_output)
         proba = self.softmax(linear_output)
         return proba
 
@@ -167,10 +167,62 @@ def fine_tune_BERT(model, tokenizer, config):
             b_labels = batch[1].to(device)
             model.zero_grad()
             outputs = model(b_input_ids)
-            import pdb; pdb.set_trace()
+
             loss = criterion(outputs, b_labels)
-    
-    
+            total_train_loss += loss.item()
+            loss.backward()
+            # This is to help prevent the "exploding gradients" problem. (Maybe not necessary?)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            optimizer.step()
+            scheduler.step()
+        avg_train_loss = total_train_loss / len(train_dataloader)
+        training_time = format_time(time.time() - t0)
+
+        print("")
+        print("  Average training loss: {0:.2f}".format(avg_train_loss))
+        print("  Training epcoh took: {:}".format(training_time))
+
+        print("")
+        print("Running Validation...")
+
+        t0 = time.time()
+        model.eval()
+
+        total_eval_accuracy = 0
+        total_eval_loss = 0
+        nb_eval_steps = 0
+
+        for batch in validation_dataloader:
+            b_input_ids = batch[0].to(device)
+            b_labels = batch[2].to(device)
+
+            with torch.no_grad():
+                outputs = model(b_input_ids)
+                loss = criterion(outputs, b_labels)
+            total_eval_loss += loss.item()
+
+            total_eval_accuracy += flat_accuracy(logits, label_ids)
+        avg_val_accuracy = total_eval_accuracy / len(validation_dataloader)
+        print("  Accuracy: {0:.2f}".format(avg_val_accuracy))
+        avg_val_loss = total_eval_loss / len(validation_dataloader)
+        validation_time = format_time(time.time() - t0)
+
+        print("  Validation Loss: {0:.2f}".format(avg_val_loss))
+        print("  Validation took: {:}".format(validation_time))
+        training_stats.append(
+            {
+                'epoch': epoch_i + 1,
+                'Training Loss': avg_train_loss,
+                'Valid. Loss': avg_val_loss,
+                'Valid. Accur.': avg_val_accuracy,
+                'Training Time': training_time,
+                'Validation Time': validation_time
+            }
+        )
+    print("")
+    print("Training complete!")
+    print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
+
 
 
 def main():
@@ -178,7 +230,7 @@ def main():
     global location
     location = args.location
     config = load_json(args.config)
-    tokenizer = BertTokenizer.from_pretrained(path_to_model)
+    tokenizer = BertTokenizer.from_pretrained(config[location]["path_BERT"])
     model = BertEntailmentClassifier(config[location]["path_BERT"])
     fine_tune_BERT(model, tokenizer, config)
     
