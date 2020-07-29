@@ -4,6 +4,8 @@ import json
 import argparse
 import torch
 
+import numpy as np
+
 from torch import nn
 from torch.utils.data import (
         TensorDataset,
@@ -57,14 +59,28 @@ class BertEntailmentClassifier(nn.Module):
     def __init__(self, path, out_classes=3, dropout=0.1):
         super(BertEntailmentClassifier, self).__init__()
         self.bert = BertModel.from_pretrained(path)
-        self.linear = nn.Linear(768, out_classes)
+        self.lin_layer = nn.Sequential(
+            nn.Dropout(dropout),
+            nn.Linear(768, out_classes),
+            nn.ReLU(inplace=True),
+            nn.Dropout(dropout),
+            nn.Linear(inbetw_lin_size, out_lin_size),
+        )
         self.softmax = nn.LogSoftmax(dim=-1)
     
     def forward(self, tokens):
         _, pooled_output = self.bert(tokens)
-        linear_output = self.linear(pooled_output)
+        linear_output = self.lin_layer(pooled_output)
         proba = self.softmax(linear_output)
         return proba
+
+
+def sigmoid(x):
+       return 1/(1+np.exp(-x))
+
+
+def swish(x):
+        return x * sigmoid(x)
 
 
 def create_model_and_tokenizer(path_to_model):
