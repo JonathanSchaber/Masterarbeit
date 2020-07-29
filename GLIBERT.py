@@ -76,11 +76,14 @@ class BertEntailmentClassifier(nn.Module):
         self.bert = BertModel.from_pretrained(path)
         self.lin_layer = nn.Sequential(
             nn.Dropout(dropout),
-            nn.Linear(768, num_classes),
+            nn.Linear(768, 100),
             nn.ReLU(inplace=True),
+            nn.Linear(100, num_classes),
+            #nn.ReLU(inplace=True),
             #nn.Dropout(dropout),
             #nn.Linear(768, num_classes),
         )
+        self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
     
     def forward(self, tokens):
