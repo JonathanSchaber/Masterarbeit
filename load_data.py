@@ -35,7 +35,7 @@ def load_XNLI(path):
     return xnli_data, y_mapping
 
 
-def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
+def load_torch_XNLI(xnli_data, y_mapping, tokenizer, max_len=100):
     """Return tensor for training
     Args:
         param1: list of tuples of strs
@@ -44,7 +44,6 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
         tensor
         tensor
     """
-    max_len = 200
     x_tensor_list = []
     y_tensor_list = []
     for example in xnli_data:
