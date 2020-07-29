@@ -132,8 +132,8 @@ def fine_tune_BERT(model, tokenizer, config):
     print("")
     print(8*"=" + " Checking which device to use... " + 8*"=")
     if torch.cuda.is_available():
-        device = torch.device("cuda")
-        model.cuda()
+        device = torch.device("cuda:{}".format(gpu))
+        model.cuda(device)
         print("")
         print(">>      device set to: CUDA -> using GPU #{}".format(gpu))
     else:
@@ -184,7 +184,7 @@ def fine_tune_BERT(model, tokenizer, config):
 
         print("")
         print("  Average training loss: {0:.2f}".format(avg_train_loss))
-        print("  Training epcoh took: {:}".format(training_time))
+        print("  Training epoch took: {:}".format(training_time))
 
         print("")
         print("Running Validation...")
@@ -197,6 +197,7 @@ def fine_tune_BERT(model, tokenizer, config):
         nb_eval_steps = 0
 
         for batch in test_data:
+            import pdb; pdb.set_trace()
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
 
