@@ -1,4 +1,6 @@
 import json
+import os
+
 from SemRoleLabeler import *
 
 def read_data(path):
@@ -15,7 +17,7 @@ def read_data(path):
     return json_data
 
 
-def preprocess_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
+def SRL_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
     """processes json data, predicts sem_roles, writes to new file
     Args:
         param1: json data
@@ -45,6 +47,18 @@ def preprocess_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
             f.write(write_obj)
     except:
         import pdb; pdb.set_trace()
+
+
+def preprocess_SCARE(path, path_to_new_file):
+    """Merge all TSV files, write text and label to new file
+    Args:
+        param1: str
+        param2: str
+    Returns:
+        None
+    """
+    os.chdir(path)
+    text_list = [file for file in os.listdir() if file.endswith(".txt")]
 
 
 def main():
