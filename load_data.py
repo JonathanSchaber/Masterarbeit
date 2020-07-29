@@ -86,7 +86,7 @@ def dataloader_XNLI(path, tokenizer, batch_size=32):
         ) 
     test_dataloader = DataLoader(
             test_dataset,
-            sampler = RandomSampler(train_dataset), 
+            sampler = RandomSampler(test_dataset), 
             batch_size = batch_size 
         ) 
     return train_dataloader, test_dataloader
