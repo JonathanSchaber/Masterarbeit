@@ -46,7 +46,12 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
     """
     x_tensor_list = []
     y_tensor_list = []
-    max_len = len(tokenizer.tokenize(max(max(sent for sent in xnli_data))))
+    longest_sent = max(max(sent for sent in xnli_data))
+    max_len = len(tokenizer.tokenize(longest_sent))
+    print("")
+    print("======== Longest sentence in data: ========")
+    print("{}".format(longest_sent))
+    print("length (tokenized): {}".format(max_len))
     for example in xnli_data:
         label, sentence1, sentence2, = example
         #x_tensor = tokenizer.encode(sentence1, sentence2, add_special_tokens = True, truncation=True, return_tensors = 'pt')
@@ -73,8 +78,8 @@ def dataloader_XNLI(path, tokenizer, batch_size=32):
         Dataloader object (train)
         Dataloader object (test)
     """
-    data, ys, num_classes = load_XNLI(path)
-    x_tensor, y_tensor = load_torch_XNLI(data, ys, tokenizer)
+    data, ys = load_XNLI(path)
+    x_tensor, y_tensor, num_classes = load_torch_XNLI(data, ys, tokenizer)
 
     dataset = TensorDataset(x_tensor, y_tensor)
     train_size = int(0.9 * len(dataset))
