@@ -104,15 +104,24 @@ def combine_srl_embs_bert_embs():
     pass
 
 
-def flat_accuracy(preds, labels):
-    pred_flat = np.argmax(preds, axis=1).flatten()
-    labels_flat = labels.flatten()
-    return np.sum(pred_flat == labels_flat) / len(labels_flat)
-
-
 def format_time(elapsed):
     elapsed_rounded = int(round((elapsed)))
     return str(datetime.timedelta(seconds=elapsed_rounded))
+
+
+def compute_acc(preds, labels):
+    """computes the accordance of two lists
+    Args:
+        param1: list
+        param2: list
+    Returns:
+        float
+    """
+    correct = 0
+    assert len(preds) == len(labels)
+    for pred, lab in zip(preds, labels):
+        if pred == lab: correct += 1
+    return correct / len(preds)
 
 
 def fine_tune_BERT(model, tokenizer, config):
@@ -165,7 +174,6 @@ def fine_tune_BERT(model, tokenizer, config):
                 # Calculate elapsed time in minutes.
                 elapsed = format_time(time.time() - t0)
             
-                # Report progress.
                 print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_data), elapsed))
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
@@ -197,16 +205,17 @@ def fine_tune_BERT(model, tokenizer, config):
         nb_eval_steps = 0
 
         for batch in test_data:
-            import pdb; pdb.set_trace()
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
 
             with torch.no_grad():
                 outputs = model(b_input_ids)
+                value_index = [tensor.max(0) for tensor in outputs]
+                acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                 loss = criterion(outputs, b_labels)
             total_eval_loss += loss.item()
+            total_eval_accuracy += acc
 
-            total_eval_accuracy += flat_accuracy(logits, label_ids)
         avg_val_accuracy = total_eval_accuracy / len(test_data)
         print("  Accuracy: {0:.2f}".format(avg_val_accuracy))
         avg_val_loss = total_eval_loss / len(test_data)
