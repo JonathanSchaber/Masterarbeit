@@ -104,23 +104,6 @@ def create_model_and_tokenizer(path_to_model):
     return tokenizer, model
 
 
-def prepare_sentences(sentences, tokenizer, max_len=100):
-    """Tokenize, pad, add special tokens
-    Args:
-        param1: list of strs
-        param2: int
-        param3: transformers tokenizer class object
-    Returns:
-        list of torch.Tensor
-    """
-    torch_sentences = []
-    for sentence in sentences:
-        torch_sentences.append(tokenizer.encode(sentence, add_special_tokens = True, max_length = max_len, pad_to_max_length = True, return_tensors = 'pt'))
-    torch_sentences = torch.cat(torch_sentences, dim=0)
-
-    return torch_sentences
-
-
 def combine_srl_embs_bert_embs():
     """
     """
