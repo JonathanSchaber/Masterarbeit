@@ -58,7 +58,7 @@ class BertEntailmentClassifier(nn.Module):
         super(BertEntailmentClassifier, self).__init__()
         self.bert = BertModel.from_pretrained(path)
         self.linear = nn.Linear(768, out_classes)
-        self.softmax = nn.LogSoftmax()
+        self.softmax = nn.LogSoftmax(dim=-1)
     
     def forward(self, tokens):
         _, pooled_output = self.bert(tokens)
@@ -128,14 +128,18 @@ def fine_tune_BERT(model, tokenizer, config):
     gpu = config["gpu"]
     batch_size = config["batch_size"]
     criterion = nn.NLLLoss()
-    print(6*"-" + "Checking which device to use..." + 6*"-")
+
+    print("")
+    print(8*"=" + " Checking which device to use... " + 8*"=")
     if torch.cuda.is_available():
         device = torch.device("cuda")
         model.cuda()
-        print("device set to: CUDA -> using GPU #{}".format(gpu))
+        print("")
+        print(">>      device set to: CUDA -> using GPU #{}".format(gpu))
     else:
         device = torch.device("cpu")
-        print("device set to: CPU")
+        print("")
+        print(">>      device set to: CPU")
     train_data, test_data = dataloader_XNLI(config[location]["path_XNLI"], tokenizer, config["batch_size"])
     optimizer = AdamW(model.parameters(),
             lr = 2e-5,
@@ -175,7 +179,7 @@ def fine_tune_BERT(model, tokenizer, config):
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             scheduler.step()
-        avg_train_loss = total_train_loss / len(train_dataloader)
+        avg_train_loss = total_train_loss / len(train_data)
         training_time = format_time(time.time() - t0)
 
         print("")
@@ -192,9 +196,9 @@ def fine_tune_BERT(model, tokenizer, config):
         total_eval_loss = 0
         nb_eval_steps = 0
 
-        for batch in validation_dataloader:
+        for batch in test_data:
             b_input_ids = batch[0].to(device)
-            b_labels = batch[2].to(device)
+            b_labels = batch[1].to(device)
 
             with torch.no_grad():
                 outputs = model(b_input_ids)
@@ -202,9 +206,9 @@ def fine_tune_BERT(model, tokenizer, config):
             total_eval_loss += loss.item()
 
             total_eval_accuracy += flat_accuracy(logits, label_ids)
-        avg_val_accuracy = total_eval_accuracy / len(validation_dataloader)
+        avg_val_accuracy = total_eval_accuracy / len(test_data)
         print("  Accuracy: {0:.2f}".format(avg_val_accuracy))
-        avg_val_loss = total_eval_loss / len(validation_dataloader)
+        avg_val_loss = total_eval_loss / len(test_data)
         validation_time = format_time(time.time() - t0)
 
         print("  Validation Loss: {0:.2f}".format(avg_val_loss))
