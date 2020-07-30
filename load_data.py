@@ -185,7 +185,7 @@ def dataloader(config, location, data_set):
         train_dataloader, test_dataloader = dataloader_torch(xnli.x_tensor, xnli.y_tensor, xnli.batch_size)
         num_classes = len(xnli.y_mapping)
         mapping = xnli.y_mapping
-        tokeinzer = xnli.tokenizer
+        tokenizer = xnli.tokenizer
     elif data_set == "SCARE":
         scare = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
         scare.load_SCARE()
