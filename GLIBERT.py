@@ -152,8 +152,10 @@ def fine_tune_BERT(config):
     batch_size = config["batch_size"]
     criterion = nn.NLLLoss()
 
-    train_data, test_data, num_classes = dataloader(config, location, data_set)
+    tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
+    train_data, test_data, num_classes, mapping = dataloader(config, location, data_set)
     model = BertEntailmentClassifier(config[location]["BERT"], num_classes)
+    mapping = {value : key for (key, value) in mapping.items()}
 
     print("")
     print(8*"=" + " Checking which device to use... " + 8*"=")
@@ -181,21 +183,25 @@ def fine_tune_BERT(config):
     total_t0 = time.time()
     for epoch_i in range(0, epochs):
         print("")
-        print('======== Epoch {:} / {:} ========'.format(epoch_i + 1, epochs))
-        print('Training...')
+        print("======== Epoch {:} / {:} ========".format(epoch_i + 1, epochs))
+        print("Training...")
         t0 = time.time()
         total_train_loss = 0
         model.train()
         for step, batch in enumerate(train_data):
-            if step % 40 == 0 and not step == 0:
-                # Calculate elapsed time in minutes.
-                elapsed = format_time(time.time() - t0)
-            
-                print('  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.'.format(step, len(train_data), elapsed))
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             model.zero_grad()
             outputs = model(b_input_ids)
+            if step % 40 == 0 and not step == 0:
+                # Calculate elapsed time in minutes.
+                elapsed = format_time(time.time() - t0)
+                print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
+                print("")
+                print("  Last prediction: ")
+                print("    Text:   {}".format(tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
+                print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
+                print("    True Label:  {}".format(mapping[b_labels[-1].max(0).indices.item()]))
 
             loss = criterion(outputs, b_labels)
             total_train_loss += loss.item()
@@ -242,12 +248,12 @@ def fine_tune_BERT(config):
         print("  Validation took: {:}".format(validation_time))
         training_stats.append(
             {
-                'epoch': epoch_i + 1,
-                'Training Loss': avg_train_loss,
-                'Valid. Loss': avg_val_loss,
-                'Valid. Accur.': avg_val_accuracy,
-                'Training Time': training_time,
-                'Validation Time': validation_time
+                "epoch": epoch_i + 1,
+                "Training Loss": avg_train_loss,
+                "Valid. Loss": avg_val_loss,
+                "Valid. Accur.": avg_val_accuracy,
+                "Training Time": training_time,
+                "Validation Time": validation_time
             }
         )
     print("")
