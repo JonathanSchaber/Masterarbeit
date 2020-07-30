@@ -12,5 +12,6 @@
 	"epochs": 4,
 	"batch_size": 32,
 	"max_len": 100,
-	"gpu": 2
+	"gpu": 2,
+	"print_stats": 40
 }

@@ -150,14 +150,15 @@ def fine_tune_BERT(config):
     epochs = config["epochs"]
     gpu = config["gpu"]
     batch_size = config["batch_size"]
+    print_stats = config["print_stats"]
     criterion = nn.NLLLoss()
 
     train_data, test_data, num_classes, mapping, tokenizer = dataloader(config, location, data_set)
     model = BertEntailmentClassifier(config[location]["BERT"], num_classes)
-    mapping = {value : key for (key, value) in mapping.items()}
+    mapping = {value: key for (key, value) in mapping.items()}
 
     print("")
-    print(8*"=" + " Checking which device to use... " + 8*"=")
+    print("======== Checking which device to use... ========")
     if torch.cuda.is_available():
         device = torch.device("cuda:{}".format(gpu))
         model.cuda(device)
@@ -192,15 +193,15 @@ def fine_tune_BERT(config):
             b_labels = batch[1].to(device)
             model.zero_grad()
             outputs = model(b_input_ids)
-            if step % 40 == 0 and not step == 0:
+            if step % print_stats == 0 and not step == 0:
                 # Calculate elapsed time in minutes.
                 elapsed = format_time(time.time() - t0)
                 print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
-                print("")
                 print("  Last prediction: ")
                 print("    Text:   {}".format(tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
                 print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
                 print("    True Label:  {}".format(mapping[b_labels[-1].max(0).indices.item()]))
+                print("")
 
             loss = criterion(outputs, b_labels)
             total_train_loss += loss.item()
