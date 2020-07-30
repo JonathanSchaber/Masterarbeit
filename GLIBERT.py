@@ -28,9 +28,26 @@ from load_data import dataloader_XNLI
 def parse_cmd_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('-l', '--location', type=str, help='"local", "midgard" or "rattle". '
-                                                           'Indicate which paths will be used.')
-    parser.add_argument("-c", "--config", type=str, help="Path to hyperparamter/config file (json).")
+    parser.add_argument(
+            "-c", 
+            "--config", 
+            type=str, 
+            help="Path to hyperparamter/config file (json)."
+            )
+    parser.add_argument(
+            "-d", 
+            "--data_set", 
+            type=str, 
+            help="Indicate on which data set model should be trained.",
+            choices=["XNLI", "SCARE"]
+            )
+    parser.add_argument(
+            "-l", 
+            "--location", 
+            type=str, 
+            help="Indicate where model will be trained.",
+            choices=["local", "rattle"]
+            )
     return parser.parse_args()
 
 
@@ -94,19 +111,6 @@ class BertEntailmentClassifier(nn.Module):
         return proba
 
 
-def create_model_and_tokenizer(path_to_model):
-    """Create respective classes and return them
-    Args:
-        param1: str
-    Returns:
-        transformer classes 
-    """
-    tokenizer = BertTokenizer.from_pretrained(path_to_model)
-    model = BertModel.from_pretrained(path_to_model, output_hidden_states=True)
-
-    return tokenizer, model
-
-
 def combine_srl_embs_bert_embs():
     """
     """
@@ -148,9 +152,13 @@ def fine_tune_BERT(config):
     batch_size = config["batch_size"]
     criterion = nn.NLLLoss()
 
-    tokenizer = BertTokenizer.from_pretrained(config[location]["path_BERT"])
-    train_data, test_data, num_classes = dataloader_XNLI(config[location]["path_XNLI"], tokenizer, config["batch_size"])
-    model = BertEntailmentClassifier(config[location]["path_BERT"], num_classes)
+    tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
+    train_data, test_data, num_classes = dataloader_XNLI(
+                                            config[location][data_set], 
+                                            tokenizer, 
+                                            config["batch_size"]
+                                            )
+    model = BertEntailmentClassifier(config[location]["BERT"], num_classes)
 
     print("")
     print(8*"=" + " Checking which device to use... " + 8*"=")
@@ -257,6 +265,8 @@ def main():
     args = parse_cmd_args()
     global location
     location = args.location
+    global data_set
+    data_set = args.data_set
     config = load_json(args.config)
     fine_tune_BERT(config)
     
