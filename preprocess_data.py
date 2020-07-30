@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 
@@ -93,15 +94,12 @@ def preprocess_SCARE(path, path_to_new_file):
     with open(path + "annotations.txt", "r") as f:
         ids_texts = [example.split("\t") for example in f.read().split("\n")]
     with open(path + "annotations.csv", "r") as f:
+        rows = f.read().split("\n")
         ids_labels = []
-        for row in csv.reader(f):
-            try:
-                entity, review_id, left, right, string, phrase_id, polarity, relation = row[0].split("\t")
+        for row in rows:
+            if row != "":
+                entity, review_id, left, right, string, phrase_id, polarity, relation = row.split("\t")
                 ids_labels.append([review_id, polarity])
-            except IndexError:
-                continue
-            except ValueError:
-                continue
 
     ids_texts.pop()
     for id, text in ids_texts:
