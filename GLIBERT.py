@@ -22,7 +22,7 @@ from transformers import (
         get_linear_schedule_with_warmup
         )
 
-from load_data import dataloader_XNLI
+from load_data import *
 
 
 def parse_cmd_args():
@@ -152,11 +152,7 @@ def fine_tune_BERT(config):
     batch_size = config["batch_size"]
     criterion = nn.NLLLoss()
 
-    train_data, test_data, num_classes = dataloader_XNLI(
-                                            config[location][data_set], 
-                                            config[location]["BERT"], 
-                                            config["batch_size"]
-                                            )
+    train_data, test_data, num_classes = dataloader(config, location, data_set)
     model = BertEntailmentClassifier(config[location]["BERT"], num_classes)
 
     print("")

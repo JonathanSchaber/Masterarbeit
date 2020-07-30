@@ -16,7 +16,8 @@ from transformers import BertTokenizer
 ######## S C A R E ########
 
 class SCARE_dataloader:
-    def __init__(self, path_data, path_tokenizer):
+    def __init__(self, path_data, path_tokenizer, batch_size):
+        self.batch_size = batch_size
         self.path = path_data
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.data = None
@@ -38,8 +39,8 @@ class SCARE_dataloader:
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                label, sentence1, sentence2 = row[1], row[6], row[7]
-                data.append((label, sentence1, sentence2))
+                review, label = row[0], row[1]
+                data.append((label, review))
                 if label not in y_mapping:
                     y_mapping[label] = counter
                     counter += 1
@@ -60,17 +61,16 @@ class SCARE_dataloader:
         """
         x_tensor_list = []
         y_tensor_list = []
-        longest_sent = max(max(sent for sent in self.data))
+        longest_sent = max(sent[1] for sent in self.data)
         max_len = len(self.tokenizer.tokenize(longest_sent))
         print("")
         print("======== Longest sentence in data: ========")
         print("{}".format(longest_sent))
         print("length (tokenized): {}".format(max_len))
         for example in self.data:
-            label, sentence1, sentence2, = example
+            label, review = example
             x_tensor = self.tokenizer.encode(
-                                        sentence1, 
-                                        sentence2, 
+                                        review, 
                                         add_special_tokens = True, 
                                         max_length = max_len, 
                                         pad_to_max_length = True, 
@@ -92,7 +92,8 @@ class SCARE_dataloader:
 ######## X N L I #######
 
 class XNLI_dataloader:
-    def __init__(self, path_data, path_tokenizer):
+    def __init__(self, path_data, path_tokenizer, batch_size):
+        self.batch_size = batch_size
         self.path = path_data
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.data = None
@@ -143,7 +144,7 @@ class XNLI_dataloader:
         print("{}".format(longest_sent))
         print("length (tokenized): {}".format(max_len))
         for example in self.data:
-            label, sentence1, sentence2, = example
+            label, sentence1, sentence2 = example
             x_tensor = self.tokenizer.encode(
                                         sentence1, 
                                         sentence2, 
@@ -166,7 +167,7 @@ class XNLI_dataloader:
 
 #####################################################################################
 
-def dataloader_XNLI(path_data, path_tokenizer, batch_size):
+def dataloader(config, location, data_set):
     """Make XNLI data ready to be passed to transformer dataloader
     Args:
         param1: str
@@ -177,12 +178,39 @@ def dataloader_XNLI(path_data, path_tokenizer, batch_size):
         Dataloader object (test)
         int
     """
-    xnli = XNLI_dataloader(path_data, path_tokenizer)
-    xnli.load_XNLI()
-    xnli.load_torch_XNLI()
-    train_dataloader, test_dataloader = dataloader_torch(xnli.x_tensor, xnli.y_tensor, batch_size)
+    if data_set == "XNLI":
+        xnli = XNLI_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        xnli.load_XNLI()
+        xnli.load_torch_XNLI()
+        train_dataloader, test_dataloader = dataloader_torch(xnli.x_tensor, xnli.y_tensor, xnli.batch_size)
+        num_classes = len(xnli.y_mapping)
+    elif data_set == "SCARE":
+        scare = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        scare.load_SCARE()
+        scare.load_torch_SCARE()
+        train_dataloader, test_dataloader = dataloader_torch(scare.x_tensor, scare.y_tensor, scare.batch_size)
+        num_classes = len(scare.y_mapping)
 
-    return train_dataloader, test_dataloader, len(xnli.y_mapping)
+    return train_dataloader, test_dataloader, num_classes
+
+
+def dataloader_SCARE(path_data, path_tokenizer, batch_size):
+    """Make SCARE data ready to be passed to transformer dataloader
+    Args:
+        param1: str
+        param2: str
+        param3: int
+    Returns:
+        Dataloader object (train)
+        Dataloader object (test)
+        int
+    """
+    scare = SCARE_dataloader(path_data, path_tokenizer, batch_size)
+    scare.load_SCARE()
+    scare.load_torch_SCARE()
+    train_dataloader, test_dataloader = dataloader_torch(scare.x_tensor, scare.y_tensor, scare.batch_size)
+
+    return train_dataloader, test_dataloader, len(scare.y_mapping)
 
 
 def dataloader_torch(x_tensor, y_tensor, batch_size):
