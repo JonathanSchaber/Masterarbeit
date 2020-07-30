@@ -152,8 +152,7 @@ def fine_tune_BERT(config):
     batch_size = config["batch_size"]
     criterion = nn.NLLLoss()
 
-    tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
-    train_data, test_data, num_classes, mapping = dataloader(config, location, data_set)
+    train_data, test_data, num_classes, mapping, tokenizer = dataloader(config, location, data_set)
     model = BertEntailmentClassifier(config[location]["BERT"], num_classes)
     mapping = {value : key for (key, value) in mapping.items()}
 

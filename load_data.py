@@ -184,33 +184,18 @@ def dataloader(config, location, data_set):
         xnli.load_torch_XNLI()
         train_dataloader, test_dataloader = dataloader_torch(xnli.x_tensor, xnli.y_tensor, xnli.batch_size)
         num_classes = len(xnli.y_mapping)
+        mapping = xnli.y_mapping
+        tokeinzer = xnli.tokenizer
     elif data_set == "SCARE":
         scare = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
         scare.load_SCARE()
         scare.load_torch_SCARE()
         train_dataloader, test_dataloader = dataloader_torch(scare.x_tensor, scare.y_tensor, scare.batch_size)
         num_classes = len(scare.y_mapping)
+        mapping = scare.y_mapping
+        tokenizer = scare.tokenizer
 
-    return train_dataloader, test_dataloader, num_classes
-
-
-def dataloader_SCARE(path_data, path_tokenizer, batch_size):
-    """Make SCARE data ready to be passed to transformer dataloader
-    Args:
-        param1: str
-        param2: str
-        param3: int
-    Returns:
-        Dataloader object (train)
-        Dataloader object (test)
-        int
-    """
-    scare = SCARE_dataloader(path_data, path_tokenizer, batch_size)
-    scare.load_SCARE()
-    scare.load_torch_SCARE()
-    train_dataloader, test_dataloader = dataloader_torch(scare.x_tensor, scare.y_tensor, scare.batch_size)
-
-    return train_dataloader, test_dataloader, len(scare.y_mapping)
+    return train_dataloader, test_dataloader, num_classes, mapping, tokenizer
 
 
 def dataloader_torch(x_tensor, y_tensor, batch_size):
