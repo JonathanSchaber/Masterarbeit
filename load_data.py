@@ -40,9 +40,11 @@ def load_torch_XNLI(xnli_data, y_mapping, tokenizer):
     Args:
         param1: list of tuples of strs
         param2: dict
+        param3: torch Tokenizer object
     Returns
         tensor
         tensor
+        int
     """
     x_tensor_list = []
     y_tensor_list = []
@@ -74,13 +76,28 @@ def dataloader_XNLI(path, tokenizer, batch_size=32):
     Args:
         param1: str
         param2: transformer Tokenizer object
+        param3: int
     Returns:
         Dataloader object (train)
         Dataloader object (test)
+        int
     """
     data, ys = load_XNLI(path)
     x_tensor, y_tensor, num_classes = load_torch_XNLI(data, ys, tokenizer)
+    train_dataloader, test_dataloader = dataloader_torch(x_tensor, y_tensor)
 
+    return train_dataloader, test_dataloader, num_classes
+
+
+def dataloader_torch(x_tensor, y_tensor):
+    """creates dataloader torch objects
+    Args:
+        param1: torch tensor
+        param2: torch tensor
+    Returns:
+        torch Dataloader object 
+        torch Dataloader object 
+    """
     dataset = TensorDataset(x_tensor, y_tensor)
     train_size = int(0.9 * len(dataset))
     test_size = len(dataset) - train_size
@@ -95,7 +112,8 @@ def dataloader_XNLI(path, tokenizer, batch_size=32):
             sampler = RandomSampler(test_dataset), 
             batch_size = batch_size 
         ) 
-    return train_dataloader, test_dataloader, num_classes
+    return train_dataloader, test_dataloader
+
 
 
 #def SRL_XNLI(xnli_data, dsrl, parser):
