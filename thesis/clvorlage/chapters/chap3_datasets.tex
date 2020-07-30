@@ -20,7 +20,24 @@ As \cite{troiano2019crowdsourcing} write in their
 
 \subsection{SCARE}
 
-\cite{sanger2016scare}
+The The Sentiment Corpus of App Reviews with Fine-grained Annotations in German \cite{sanger2016scare} is hand-annotated corpus that asserts so called polarities to reviews of apps.
+What is interesting about it is, that the annotations are very fine-grained:
+Not the whole review gets labelled for a certain polarity --- i.e. \textit{positive}, \textit{negative}, or \textit{neutral} --- but aspects and subjective (sub-phrases).
+This means that in a given review, let's say ``guter wecker... || vom prinzip her echt gut...aber grade was die sprachausgabe betrifft noch etwas buggy....'' there are the following annotations:
+
+Three aspects
+\begin{itemize}
+	\item Wecker --- neutral
+	\item Prinzip --- neutral
+	\item Sprachausgabe --- neutral
+\end{itemize}
+
+Three subjectives
+\begin{itemize}
+	\item guter --- positive
+	\item echt gut --- positive
+	\item etwas buggy --- negative
+\end{itemize}
 
 \subsection{XNLI}
 
