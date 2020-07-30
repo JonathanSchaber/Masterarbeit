@@ -118,7 +118,7 @@ def preprocess_SCARE(path, path_to_new_file):
     
     for id, feat in id_text_labels.items():
         polarity, majority, num_labels = get_majority_label(feat["labels"])
-        text_label.append([id, polarity])
+        text_label.append([feat["text"], polarity])
         if polarity == "Neutral": count_non_maj += 1 
         if not majority: count_close += 1 
         count_all += num_labels
@@ -132,7 +132,7 @@ def preprocess_SCARE(path, path_to_new_file):
 
     with open(path_to_new_file, "w") as f:
         for element in text_label:
-            csv.writer(f).writerow(element)
+            csv.writer(f, delimiter="\t").writerow(element)
 
 
 def main():
