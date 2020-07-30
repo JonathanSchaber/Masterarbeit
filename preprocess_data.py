@@ -49,8 +49,29 @@ def SRL_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
         import pdb; pdb.set_trace()
 
 
-def get_majority_label(sentiments, labels):
-    pass
+def get_majority_label(labels):
+    pos = 0
+    neg = 0
+    num = len(labels)
+
+    for label in labels:
+        if label.strip() == "Positive":
+            pos += 1
+        elif label.strip() == "Negative":
+            neg += 1
+        else:
+            continue
+
+    if pos == neg:
+        return ("Neutral", 0, num)
+    elif pos > neg:
+        margin = int(((pos -neg)**2)**0.5)
+        return ("Positive", True, num) if margin > 1 else ("Positive", False, num)
+    else:
+        margin = int(((pos -neg)**2)**0.5)
+        return ("Negative", True, num) if margin > 1 else ("Negative", False, num)
+
+
 
 
 def preprocess_SCARE(path, path_to_new_file):
@@ -62,7 +83,6 @@ def preprocess_SCARE(path, path_to_new_file):
     Returns:
         None
     """
-    sentiments = ["Positive", "Negative", "Neutral"]
     id_text_labels = {}
     text_label = []
 
@@ -86,17 +106,33 @@ def preprocess_SCARE(path, path_to_new_file):
     ids_texts.pop()
     for id, text in ids_texts:
         if id in id_text_labels:
-            raise ERRRRRRORRRRRRR
+            raise Error
         else:
             id_text_labels[id] = {"text": text, "labels": []}
 
     for id, label in ids_labels:
         if id not in id_text_labels:
-            raise ERRRRRRRRRRRRRRRROR
+            raise Error
         else:
             id_text_labels[id]["labels"].append(label)
-    #TODO: in .csv get all polarities for id, then majority decision what whole text gets labeled
-    return id_text_labels
+    
+    for id, feat in id_text_labels.items():
+        polarity, majority, num_labels = get_majority_label(feat["labels"])
+        text_label.append([id, polarity])
+        if polarity == "Neutral": count_non_maj += 1 
+        if not majority: count_close += 1 
+        count_all += num_labels
+    
+    print("")
+    print("======== Stats ========")
+    print("{:.2f}% of votes were non-majority".format(count_non_maj/count_all*100))
+    print("{:.2f}% of votes were close (label difference of 1)".format(count_close/count_all*100))
+    print("")
+    print("======== Writing to file: {} ========".format(path_to_new_file))
+
+    with open(path_to_new_file, "w") as f:
+        for element in text_label:
+            csv.writer(f).writerow(element)
 
 
 def main():
