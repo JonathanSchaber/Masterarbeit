@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -66,6 +66,12 @@ D.~Gildea and D.~Jurafsky.
 \newblock \emph{Computational linguistics}, 28\penalty0 (3):\penalty0 245--288,
   2002.
 
+\bibitem[Go et~al.(2009)Go, Bhayani, and Huang]{go2009twitter}
+A.~Go, R.~Bhayani, and L.~Huang.
+\newblock Twitter sentiment classification using distant supervision.
+\newblock \emph{CS224N project report, Stanford}, 1\penalty0 (12):\penalty0
+  2009, 2009.
+
 \bibitem[Gro{\ss} and Osborne(2015)]{gross2015dependency}
 T.~Gro{\ss} and T.~Osborne.
 \newblock The dependency status of function words: Auxiliaries.
@@ -125,6 +131,15 @@ R.~Sennrich, M.~Volk, and G.~Schneider.
   parsing, pos-tagging, and morphological analysis.
 \newblock In \emph{Proceedings of the International Conference Recent Advances
   in Natural Language Processing RANLP 2013}, pages 601--609, 2013.
+
+\bibitem[Socher et~al.(2013)Socher, Perelygin, Wu, Chuang, Manning, Ng, and
+  Potts]{socher2013recursive}
+R.~Socher, A.~Perelygin, J.~Wu, J.~Chuang, C.~D. Manning, A.~Y. Ng, and
+  C.~Potts.
+\newblock Recursive deep models for semantic compositionality over a sentiment
+  treebank.
+\newblock In \emph{Proceedings of the 2013 conference on empirical methods in
+  natural language processing}, pages 1631--1642, 2013.
 
 \bibitem[Troiano et~al.(2019)Troiano, Pad{\'o}, and
   Klinger]{troiano2019crowdsourcing}

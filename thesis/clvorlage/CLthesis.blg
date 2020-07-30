@@ -23,45 +23,45 @@ Warning--I didn't find a database entry for "Callison-Burch2006"
 Warning--I didn't find a database entry for "Koehn2005"
 Warning--empty journal in foth2006umfassende
 Warning--empty journal in hajivc2009conll
-You've used 22 entries,
+You've used 24 entries,
             2773 wiz_defined-function locations,
-            722 strings with 9407 characters,
-and the built_in function-call counts, 11067 in all, are:
-= -- 958
-> -- 730
-< -- 19
-+ -- 247
-- -- 225
-* -- 853
-:= -- 1695
-add.period$ -- 66
-call.type$ -- 22
-change.case$ -- 136
-chr.to.int$ -- 22
-cite$ -- 46
-duplicate$ -- 518
-empty$ -- 828
-format.name$ -- 257
-if$ -- 2329
+            732 strings with 9878 characters,
+and the built_in function-call counts, 12393 in all, are:
+= -- 1072
+> -- 826
+< -- 20
++ -- 279
+- -- 255
+* -- 969
+:= -- 1890
+add.period$ -- 72
+call.type$ -- 24
+change.case$ -- 152
+chr.to.int$ -- 24
+cite$ -- 50
+duplicate$ -- 574
+empty$ -- 923
+format.name$ -- 289
+if$ -- 2612
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 20
-newline$ -- 118
-num.names$ -- 88
-pop$ -- 300
+missing$ -- 22
+newline$ -- 128
+num.names$ -- 96
+pop$ -- 333
 preamble$ -- 1
-purify$ -- 118
+purify$ -- 132
 quote$ -- 0
-skip$ -- 445
+skip$ -- 495
 stack$ -- 0
-substring$ -- 309
-swap$ -- 96
-text.length$ -- 9
+substring$ -- 365
+swap$ -- 110
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 237
+type$ -- 259
 warning$ -- 2
-while$ -- 89
+while$ -- 99
 width$ -- 0
-write$ -- 282
+write$ -- 308
 (There were 4 warnings)
