@@ -49,16 +49,54 @@ def SRL_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
         import pdb; pdb.set_trace()
 
 
+def get_majority_label(sentiments, labels):
+    pass
+
+
 def preprocess_SCARE(path, path_to_new_file):
-    """Merge all TSV files, write text and label to new file
+    """merge all TSV files, write text and label to new file
+    ATTENTION: path points to directory, not files!
     Args:
         param1: str
         param2: str
     Returns:
         None
     """
-    os.chdir(path)
-    text_list = [file for file in os.listdir() if file.endswith(".txt")]
+    sentiments = ["Positive", "Negative", "Neutral"]
+    id_text_labels = {}
+    text_label = []
+
+    count_non_maj = 0
+    count_close = 0
+    count_all = 0
+
+    with open(path + "annotations.txt", "r") as f:
+        ids_texts = [example.split("\t") for example in f.read().split("\n")]
+    with open(path + "annotations.csv", "r") as f:
+        ids_labels = []
+        for row in csv.reader(f):
+            try:
+                entity, review_id, left, right, string, phrase_id, polarity, relation = row[0].split("\t")
+                ids_labels.append([review_id, polarity])
+            except IndexError:
+                continue
+            except ValueError:
+                continue
+
+    ids_texts.pop()
+    for id, text in ids_texts:
+        if id in id_text_labels:
+            raise ERRRRRRORRRRRRR
+        else:
+            id_text_labels[id] = {"text": text, "labels": []}
+
+    for id, label in ids_labels:
+        if id not in id_text_labels:
+            raise ERRRRRRRRRRRRRRRROR
+        else:
+            id_text_labels[id]["labels"].append(label)
+    #TODO: in .csv get all polarities for id, then majority decision what whole text gets labeled
+    return id_text_labels
 
 
 def main():
