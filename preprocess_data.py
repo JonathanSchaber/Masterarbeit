@@ -18,7 +18,7 @@ def read_data(path):
     return json_data
 
 
-def SRL_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
+def SRL_MLQA_v1(json_data, dsrl, parser, path_outfile):
     """processes json data, predicts sem_roles, writes to new file
     Args:
         param1: json data
@@ -44,7 +44,7 @@ def SRL_MLQA_v1(json_data, dsrl, parser, path_to_new_file):
 
     write_obj = json.dumps(json_data)
     try:
-        with open(path_to_new_file, "w", encoding="utf8") as f:
+        with open(path_outfile, "w", encoding="utf8") as f:
             f.write(write_obj)
     except:
         import pdb; pdb.set_trace()
@@ -63,7 +63,9 @@ def get_majority_label(labels):
         else:
             continue
 
-    if pos == neg:
+    if len(labels) == 0:
+        return ("Neutral", False, num)
+    elif pos == neg:
         return ("Neutral", 0, num)
     elif pos > neg:
         margin = int(((pos -neg)**2)**0.5)
@@ -75,8 +77,8 @@ def get_majority_label(labels):
 
 
 
-def preprocess_SCARE(path, path_to_new_file):
-    """merge all TSV files, write text and label to new file
+def preprocess_SCARE(path, path_outfile):
+    """read in merged TSVs, write text and label to new file
     ATTENTION: path points to directory, not files!
     Args:
         param1: str
@@ -88,8 +90,11 @@ def preprocess_SCARE(path, path_to_new_file):
     text_label = []
 
     count_non_maj = 0
+    count_no_labels = 0
     count_close = 0
     count_all = 0
+
+    #TODO: check what is wrong with this!!!!!!!!!
 
     with open(path + "annotations.txt", "r") as f:
         ids_texts = [example.split("\t") for example in f.read().split("\n")]
@@ -102,33 +107,61 @@ def preprocess_SCARE(path, path_to_new_file):
                 ids_labels.append([review_id, polarity])
 
     ids_texts.pop()
-    for id, text in ids_texts:
-        if id in id_text_labels:
+    for review_id, text in ids_texts:
+        if review_id in id_text_labels:
             raise Error
         else:
-            id_text_labels[id] = {"text": text, "labels": []}
+            id_text_labels[review_id] = {"text": text, "labels": []}
 
-    for id, label in ids_labels:
-        if id not in id_text_labels:
+    for review_id, label in ids_labels:
+        if review_id not in id_text_labels:
             raise Error
         else:
-            id_text_labels[id]["labels"].append(label)
-    
-    for id, feat in id_text_labels.items():
+            id_text_labels[review_id]["labels"].append(label)
+
+    for review_id, feat in id_text_labels.items():
         polarity, majority, num_labels = get_majority_label(feat["labels"])
         text_label.append([feat["text"], polarity])
         if polarity == "Neutral": count_non_maj += 1 
         if not majority: count_close += 1 
-        count_all += num_labels
+        if num_labels == 0:
+            count_no_labels += 1
+        else:
+            count_all += num_labels 
     
     print("")
     print("======== Stats ========")
+    print("{:.2f} reviews had no labels".format(count_no_labels))
     print("{:.2f}% of votes were non-majority".format(count_non_maj/count_all*100))
     print("{:.2f}% of votes were close (label difference of 1)".format(count_close/count_all*100))
     print("")
-    print("======== Writing to file: {} ========".format(path_to_new_file))
+    print("======== Writing to file: {} ========".format(path_outfile))
 
-    with open(path_to_new_file, "w") as f:
+    with open(path_outfile, "w") as f:
+        for element in text_label:
+            csv.writer(f, delimiter="\t").writerow(element)
+
+
+def preprocess_SCARE_reviews(path, path_outfile):
+    """read in review, write to outfile
+    Args:
+        param1: str
+        param2: str
+    Returns:
+        None
+    """
+    text_label = []
+
+    with open(path, "r") as f:
+        rows = f.read().split("\n")
+    rows_split = [row.split("\t") for row in rows]
+
+    for item in rows_split:
+        if item != "":
+            application, rating, title, text, date = item
+            text_label.append([title.rstrip() + " || " + text.lstrip(), rating])
+
+    with open(path_outfile, "w") as f:
         for element in text_label:
             csv.writer(f, delimiter="\t").writerow(element)
 
@@ -136,11 +169,11 @@ def preprocess_SCARE(path, path_to_new_file):
 def main():
     argument_model_config = "../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
     path_to_data = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de.json"
-    path_to_outfile = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de_srl.json"
+    path_outfile = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de_srl.json"
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
     json_data = read_data(path_to_data)
-    preprocess_MLQA_v1(json_data, dsrl, ParZu_parser, path_to_outfile)
+    preprocess_MLQA_v1(json_data, dsrl, ParZu_parser, path_outfile)
     
 
 if __name__ == "__main__":
