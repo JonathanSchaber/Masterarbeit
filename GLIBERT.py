@@ -87,13 +87,13 @@ class BertBinaryClassifier(nn.Module):
         return proba
 
 
-class BertEntailmentClassifier(nn.Module):
+class BertEntailmentClassifierCLS(nn.Module):
     def __init__(self, path, num_classes, dropout=0.1):
         super(BertEntailmentClassifier, self).__init__()
         self.bert = BertModel.from_pretrained(path)
         self.lin_layer = nn.Sequential(
             nn.Dropout(dropout),
-            nn.Linear(768, 100),
+            nn.Linear(768, 128),
             nn.ReLU(inplace=True),
             nn.Linear(100, num_classes),
             #nn.ReLU(inplace=True),
@@ -106,6 +106,30 @@ class BertEntailmentClassifier(nn.Module):
     def forward(self, tokens):
         _, pooler_output = self.bert(tokens)
         linear_output = self.lin_layer(pooler_output)
+        #non_linear_output = Swish(linear_output)
+        proba = self.softmax(linear_output)
+        return proba
+
+
+class BertEntailmentClassifierAllHidden(nn.Module):
+    def __init__(self, path, num_classes, max_len, dropout=0.1):
+        super(BertEntailmentClassifier, self).__init__()
+        self.bert = BertModel.from_pretrained(path)
+        self.lin_layer = nn.Sequential(
+            nn.Dropout(dropout),
+            nn.Linear(max_len*768, 512),
+            nn.ReLU(inplace=True),
+            nn.Linear(512, num_classes),
+            #nn.ReLU(inplace=True),
+            #nn.Dropout(dropout),
+            #nn.Linear(768, num_classes),
+        )
+        self.linear = nn.Linear(768, num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
+    
+    def forward(self, tokens):
+        last_hidden_state, _ = self.bert(tokens)
+        linear_output = self.lin_layer(last_hidden_state)
         #non_linear_output = Swish(linear_output)
         proba = self.softmax(linear_output)
         return proba
@@ -153,8 +177,8 @@ def fine_tune_BERT(config):
     print_stats = config["print_stats"]
     criterion = nn.NLLLoss()
 
-    train_data, test_data, num_classes, mapping, tokenizer = dataloader(config, location, data_set)
-    model = BertEntailmentClassifier(config[location]["BERT"], num_classes)
+    train_data, test_data, num_classes, max_len, mapping, tokenizer = dataloader(config, location, data_set)
+    model = BertEntailmentClassifierCLS(config[location]["BERT"], num_classes)
     mapping = {value: key for (key, value) in mapping.items()}
 
     print("")
