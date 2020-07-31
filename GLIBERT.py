@@ -200,7 +200,7 @@ def fine_tune_BERT(config):
                 print("  Last prediction: ")
                 print("    Text:   {}".format(tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
                 print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
-                print("    True Label:  {}".format(mapping[b_labels[-1].max(0).indices.item()]))
+                print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
                 print("")
 
             loss = criterion(outputs, b_labels)
