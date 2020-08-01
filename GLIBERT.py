@@ -6,6 +6,8 @@ import torch
 
 import numpy as np
 
+#from datetime import datetime
+
 from torch import nn
 from torch.utils.data import (
         TensorDataset,
@@ -32,21 +34,27 @@ def parse_cmd_args():
             "-c", 
             "--config", 
             type=str, 
-            help="Path to hyperparamter/config file (json)."
+            help="Path to hyperparamter/config file (json)"
             )
     parser.add_argument(
             "-d", 
             "--data_set", 
             type=str, 
-            help="Indicate on which data set model should be trained.",
+            help="Indicate on which data set model should be trained",
             choices=["XNLI", "SCARE"]
             )
     parser.add_argument(
             "-l", 
             "--location", 
             type=str, 
-            help="Indicate where model will be trained.",
+            help="Indicate where model will be trained",
             choices=["local", "rattle"]
+            )
+    parser.add_argument(
+            "-s", 
+            "--stats_file", 
+            type=str, 
+            help="Specify file for writing stats to",
             )
     return parser.parse_args()
 
@@ -89,7 +97,7 @@ class BertBinaryClassifier(nn.Module):
 
 class BertEntailmentClassifierCLS(nn.Module):
     def __init__(self, path, num_classes, dropout=0.1):
-        super(BertEntailmentClassifier, self).__init__()
+        super(BertEntailmentClassifierCLS, self).__init__()
         self.bert = BertModel.from_pretrained(path)
         self.lin_layer = nn.Sequential(
             nn.Dropout(dropout),
@@ -113,7 +121,7 @@ class BertEntailmentClassifierCLS(nn.Module):
 
 class BertEntailmentClassifierAllHidden(nn.Module):
     def __init__(self, path, num_classes, max_len, dropout=0.1):
-        super(BertEntailmentClassifier, self).__init__()
+        super(BertEntailmentClassifierAllHidden, self).__init__()
         self.bert = BertModel.from_pretrained(path)
         self.lin_layer = nn.Sequential(
             nn.Dropout(dropout),
@@ -129,7 +137,11 @@ class BertEntailmentClassifierAllHidden(nn.Module):
     
     def forward(self, tokens):
         last_hidden_state, _ = self.bert(tokens)
-        linear_output = self.lin_layer(last_hidden_state)
+        reshaped_last_hidden = torch.reshape(
+                last_hidden_state, 
+                (last_hidden_state.shape[0], last_hidden_state.shape[1]*last_hidden_state.shape[2])
+                )
+        linear_output = self.lin_layer(reshaped_last_hidden)
         #non_linear_output = Swish(linear_output)
         proba = self.softmax(linear_output)
         return proba
@@ -162,7 +174,25 @@ def compute_acc(preds, labels):
     return correct / len(preds)
 
 
-def fine_tune_BERT(config):
+def write_stats(stats_file, training_stats):
+    """checks if outfile specified, if yes, writes stats to it
+    Args:
+        prarm1: str
+    Returns:
+        None
+    """
+    if stats_file is not None:
+        stamp = datetime.datetime.now().strftime("--%d-%m-%Y_%H-%M-%S")
+        if "." in stats_file:
+            name, ext = stats_file.split(".")
+            stats_file = name + stamp + ext
+        else:
+            stats_file = stats_file + stamp + ".txt"
+        with open(stats_file, "w") as outfile:
+            outfile.write(json.dumps(training_stats))
+
+
+def fine_tune_BERT(config, stats_file=None):
     """define fine-tuning procedure, write results to file.
     Args:
         param1: nn.Model (BERT-model)
@@ -178,8 +208,9 @@ def fine_tune_BERT(config):
     criterion = nn.NLLLoss()
 
     train_data, test_data, num_classes, max_len, mapping, tokenizer = dataloader(config, location, data_set)
-    model = BertEntailmentClassifierCLS(config[location]["BERT"], num_classes)
+    model = BertEntailmentClassifierAllHidden(config[location]["BERT"], num_classes, max_len)
     mapping = {value: key for (key, value) in mapping.items()}
+
 
     print("")
     print("======== Checking which device to use... ========")
@@ -280,6 +311,8 @@ def fine_tune_BERT(config):
                 "Validation Time": validation_time
             }
         )
+
+    if stats_file: write_stats(stats_file, training_stats)
     print("")
     print("Training complete!")
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
@@ -292,8 +325,9 @@ def main():
     location = args.location
     global data_set
     data_set = args.data_set
+    stats_file = args.stats_file
     config = load_json(args.config)
-    fine_tune_BERT(config)
+    fine_tune_BERT(config, stats_file)
     
 
 
