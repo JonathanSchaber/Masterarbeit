@@ -79,7 +79,7 @@ def get_majority_label(labels):
 
 def preprocess_SCARE(path, path_outfile):
     """read in merged TSVs, write text and label to new file
-    ATTENTION: path points to directory, not files!
+    ATTENTION: path points to directory, not input file!
     Args:
         param1: str
         param2: str
@@ -157,7 +157,7 @@ def preprocess_SCARE_reviews(path, path_outfile):
     rows_split = [row.split("\t") for row in rows]
 
     for item in rows_split:
-        if item != "":
+        if item[0] != "":
             application, rating, title, text, date = item
             text_label.append([title.rstrip() + " || " + text.lstrip(), rating])
 
