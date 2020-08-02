@@ -67,6 +67,7 @@ Since there exist mostly multiple annotations for each review in this data set, 
 To generate the review-label, I simply carry out an majority class decision:
 The label that is most often annotated for a given review, regardless if it is an aspect or a subjective, is then also the review-label.
 If there is no majority label, the review-label is set to ``neutral''.
+This is also the chosen strategy for 51 reviews that had no labels at all (e.g. ``Ich bin die erfuinderin | | Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!'').
 
 \subsection{XNLI}
 
