@@ -21,6 +21,7 @@ class SCARE_dataloader:
         self.path = path_data
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.data = None
+        self.max_len = None
         self.y_mapping = None
         self.x_tensor = None
         self.y_tensor = None
@@ -62,17 +63,17 @@ class SCARE_dataloader:
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max(sent[1] for sent in self.data)
-        max_len = len(self.tokenizer.tokenize(longest_sent))
+        self.max_len = len(self.tokenizer.tokenize(longest_sent))
         print("")
         print("======== Longest sentence in data: ========")
         print("{}".format(longest_sent))
-        print("length (tokenized): {}".format(max_len))
+        print("length (tokenized): {}".format(self.max_len))
         for example in self.data:
             label, review = example
             x_tensor = self.tokenizer.encode(
                                         review, 
                                         add_special_tokens = True, 
-                                        max_length = max_len, 
+                                        max_length = self.max_len, 
                                         pad_to_max_length = True, 
                                         truncation=True, 
                                         return_tensors = 'pt'
@@ -97,6 +98,7 @@ class XNLI_dataloader:
         self.path = path_data
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.data = None
+        self.max_len = None
         self.y_mapping = None
         self.x_tensor = None
         self.y_tensor = None
@@ -138,18 +140,18 @@ class XNLI_dataloader:
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max(max(sent for sent in self.data))
-        max_len = len(self.tokenizer.tokenize(longest_sent))
+        self.max_len = len(self.tokenizer.tokenize(longest_sent))
         print("")
         print("======== Longest sentence in data: ========")
         print("{}".format(longest_sent))
-        print("length (tokenized): {}".format(max_len))
+        print("length (tokenized): {}".format(self.max_len))
         for example in self.data:
             label, sentence1, sentence2 = example
             x_tensor = self.tokenizer.encode(
                                         sentence1, 
                                         sentence2, 
                                         add_special_tokens = True, 
-                                        max_length = max_len, 
+                                        max_length = self.max_len, 
                                         pad_to_max_length = True, 
                                         truncation=True, 
                                         return_tensors = 'pt'
@@ -186,6 +188,7 @@ def dataloader(config, location, data_set):
         num_classes = len(xnli.y_mapping)
         mapping = xnli.y_mapping
         tokenizer = xnli.tokenizer
+        max_len = xnli.max_len
     elif data_set == "SCARE":
         scare = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
         scare.load_SCARE()
@@ -194,8 +197,9 @@ def dataloader(config, location, data_set):
         num_classes = len(scare.y_mapping)
         mapping = scare.y_mapping
         tokenizer = scare.tokenizer
+        max_len = scare.max_len
 
-    return train_dataloader, test_dataloader, num_classes, mapping, tokenizer
+    return train_dataloader, test_dataloader, num_classes, max_len, mapping, tokenizer
 
 
 def dataloader_torch(x_tensor, y_tensor, batch_size):
