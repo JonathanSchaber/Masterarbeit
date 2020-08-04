@@ -139,7 +139,9 @@ class BertEntailmentClassifierAllHidden(nn.Module):
         last_hidden_state, _ = self.bert(tokens)
         reshaped_last_hidden = torch.reshape(
                 last_hidden_state, 
-                (last_hidden_state.shape[0], last_hidden_state.shape[1]*last_hidden_state.shape[2])
+                (
+                    last_hidden_state.shape[0], 
+                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
                 )
         linear_output = self.lin_layer(reshaped_last_hidden)
         #non_linear_output = Swish(linear_output)
