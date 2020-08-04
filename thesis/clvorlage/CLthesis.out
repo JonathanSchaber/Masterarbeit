@@ -17,25 +17,27 @@
 \BOOKMARK [2][-]{subsection.3.2.2}{MLQA\137V1}{section.3.2}% 17
 \BOOKMARK [2][-]{subsection.3.2.3}{PAWS-X}{section.3.2}% 18
 \BOOKMARK [2][-]{subsection.3.2.4}{SCARE}{section.3.2}% 19
-\BOOKMARK [3][-]{subsubsection.3.2.4.1}{Preprocessing}{subsection.3.2.4}% 20
-\BOOKMARK [2][-]{subsection.3.2.5}{XNLI}{section.3.2}% 21
-\BOOKMARK [2][-]{subsection.3.2.6}{XQuAD}{section.3.2}% 22
-\BOOKMARK [0][-]{chapter.4}{Architecture}{}% 23
-\BOOKMARK [1][-]{section.4.1}{Overview}{chapter.4}% 24
-\BOOKMARK [1][-]{section.4.2}{Semantic Role Labeller}{chapter.4}% 25
-\BOOKMARK [2][-]{subsection.4.2.1}{Finding Predicates}{section.4.2}% 26
-\BOOKMARK [2][-]{subsection.4.2.2}{DAMESRL}{section.4.2}% 27
-\BOOKMARK [1][-]{section.4.3}{German BERT}{chapter.4}% 28
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 29
-\BOOKMARK [1][-]{section.5.1}{BLEU Scores}{chapter.5}% 30
-\BOOKMARK [1][-]{section.5.2}{Evaluation}{chapter.5}% 31
-\BOOKMARK [2][-]{subsection.5.2.1}{More evaluation}{section.5.2}% 32
-\BOOKMARK [1][-]{section.5.3}{Citations}{chapter.5}% 33
-\BOOKMARK [1][-]{section.5.4}{Graphics}{chapter.5}% 34
-\BOOKMARK [1][-]{section.5.5}{Some Linguistics}{chapter.5}% 35
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 36
-\BOOKMARK [0][-]{section*.14}{Glossary}{}% 37
-\BOOKMARK [0][-]{section*.16}{References}{}% 38
-\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 39
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 40
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 41
+\BOOKMARK [3][-]{subsubsection.3.2.4.1}{SCARE normal}{subsection.3.2.4}% 20
+\BOOKMARK [3][-]{subsubsection.3.2.4.2}{SCARE reviews}{subsection.3.2.4}% 21
+\BOOKMARK [3][-]{subsubsection.3.2.4.3}{Preprocessing}{subsection.3.2.4}% 22
+\BOOKMARK [2][-]{subsection.3.2.5}{XNLI}{section.3.2}% 23
+\BOOKMARK [2][-]{subsection.3.2.6}{XQuAD}{section.3.2}% 24
+\BOOKMARK [0][-]{chapter.4}{Architecture}{}% 25
+\BOOKMARK [1][-]{section.4.1}{Overview}{chapter.4}% 26
+\BOOKMARK [1][-]{section.4.2}{Semantic Role Labeller}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.2.1}{Finding Predicates}{section.4.2}% 28
+\BOOKMARK [2][-]{subsection.4.2.2}{DAMESRL}{section.4.2}% 29
+\BOOKMARK [1][-]{section.4.3}{German BERT}{chapter.4}% 30
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 31
+\BOOKMARK [1][-]{section.5.1}{BLEU Scores}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.2}{Evaluation}{chapter.5}% 33
+\BOOKMARK [2][-]{subsection.5.2.1}{More evaluation}{section.5.2}% 34
+\BOOKMARK [1][-]{section.5.3}{Citations}{chapter.5}% 35
+\BOOKMARK [1][-]{section.5.4}{Graphics}{chapter.5}% 36
+\BOOKMARK [1][-]{section.5.5}{Some Linguistics}{chapter.5}% 37
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 38
+\BOOKMARK [0][-]{section*.14}{Glossary}{}% 39
+\BOOKMARK [0][-]{section*.16}{References}{}% 40
+\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 41
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 42
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 43
