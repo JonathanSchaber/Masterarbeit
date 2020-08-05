@@ -136,41 +136,46 @@ class BertEntailmentClassifierAllHidden(nn.Module):
         self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
-    def reconstruct_word_level(self, batch):
+    def reconstruct_word_level(self, batch, ids):
         word_level_batch = []
-        for sentence in batch:
+        for j, sentence in enumerate(batch):
             word_level_sentence = []
             for i, token in enumerate(sentence):
-                decode_token = self.tokenizer.decode([token])
+                decode_token = self.tokenizer.decode([ids[j][i]])
                 if decode_token.startswith("##"):
                     continue
                 elif decode_token == "[PAD]":
+                    word_level_sentence.append(token)
                     break
                 elif i + 1 == len(sentence):
                     word_level_sentence.append(token)
-                elif not self.tokenizer.decode([sentence[i+1]]).startswith("##"):
+                elif not self.tokenizer.decode([ids[j][i+1]]).startswith("##"):
                     word_level_sentence.append(token)
+                    print("normal emb size: {}".format(token.shape))
                 else:
                     current_word = [token]
-                    for subtoken in sentence[i+1:]:
-                        decode_subtoken = self.tokenizer.decode([subtoken])
+                    for k, subtoken in enumerate(sentence[i+1:]):
+                        decode_subtoken = self.tokenizer.decode([ids[j][i+k+1]])
                         if decode_subtoken.startswith("##"):
                             current_word.append(subtoken)
                         else:
                             break
-                current_word = torch.stack(tuple(current_word))
-                mean_embs_word = torch.mean(current_word, 1, True)
-                word_level_sentence.append(mean_embs_word)
-        word_level_batch.append(word_level_sentence)
+                    current_word = torch.stack(tuple(current_word))
+                    mean_embs_word = torch.mean(current_word, 0)
+                    word_level_sentence.append(mean_embs_word)
+            pad_token = sentence[-1]
+            while len(word_level_sentence) < len(sentence):
+                word_level_sentence.append(pad_token)
+            word_level_batch.append(torch.stack(tuple(word_level_sentence)))
         return_batch = torch.stack(tuple(word_level_batch))
         
         return return_batch
     
     def forward(self, tokens):
         last_hidden_state, _ = self.bert(tokens)
-        import pdb; pdb.set_trace()
+        full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         reshaped_last_hidden = torch.reshape(
-                last_hidden_state, 
+                full_word_hidden_state, 
                 (
                     last_hidden_state.shape[0], 
                     last_hidden_state.shape[1]*last_hidden_state.shape[2])
