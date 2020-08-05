@@ -123,6 +123,7 @@ class BertEntailmentClassifierAllHidden(nn.Module):
     def __init__(self, path, num_classes, max_len, dropout=0.1):
         super(BertEntailmentClassifierAllHidden, self).__init__()
         self.bert = BertModel.from_pretrained(path)
+        self.tokenizer = BertTokenizer.from_pretrained(path)
         self.lin_layer = nn.Sequential(
             nn.Dropout(dropout),
             nn.Linear(max_len*768, 512),
@@ -134,9 +135,40 @@ class BertEntailmentClassifierAllHidden(nn.Module):
         )
         self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
+
+    def reconstruct_word_level(self, batch):
+        word_level_batch = []
+        for sentence in batch:
+            word_level_sentence = []
+            for i, token in enumerate(sentence):
+                decode_token = self.tokenizer.decode([token])
+                if decode_token.startswith("##"):
+                    continue
+                elif decode_token == "[PAD]":
+                    break
+                elif i + 1 == len(sentence):
+                    word_level_sentence.append(token)
+                elif not self.tokenizer.decode([sentence[i+1]]).startswith("##"):
+                    word_level_sentence.append(token)
+                else:
+                    current_word = [token]
+                    for subtoken in sentence[i+1:]:
+                        decode_subtoken = self.tokenizer.decode([subtoken])
+                        if decode_subtoken.startswith("##"):
+                            current_word.append(subtoken)
+                        else:
+                            break
+                current_word = torch.stack(tuple(current_word))
+                mean_embs_word = torch.mean(current_word, 1, True)
+                word_level_sentence.append(mean_embs_word)
+        word_level_batch.append(word_level_sentence)
+        return_batch = torch.stack(tuple(word_level_batch))
+        
+        return return_batch
     
     def forward(self, tokens):
         last_hidden_state, _ = self.bert(tokens)
+        import pdb; pdb.set_trace()
         reshaped_last_hidden = torch.reshape(
                 last_hidden_state, 
                 (
@@ -209,7 +241,7 @@ def fine_tune_BERT(config, stats_file=None):
     print_stats = config["print_stats"]
     criterion = nn.NLLLoss()
 
-    train_data, test_data, num_classes, max_len, mapping, tokenizer = dataloader(config, location, data_set)
+    train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
     model = BertEntailmentClassifierAllHidden(config[location]["BERT"], num_classes, max_len)
     mapping = {value: key for (key, value) in mapping.items()}
 
@@ -255,7 +287,7 @@ def fine_tune_BERT(config, stats_file=None):
                 elapsed = format_time(time.time() - t0)
                 print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
                 print("  Last prediction: ")
-                print("    Text:   {}".format(tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
+                print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
                 print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
                 print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
                 print("")
