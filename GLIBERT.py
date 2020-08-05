@@ -225,7 +225,7 @@ def write_stats(stats_file, training_stats):
             name, ext = stats_file.split(".")
             stats_file = name + stamp + ext
         else:
-            stats_file = stats_file + stamp + ".txt"
+            stats_file = stats_file + stamp + ".json"
         with open(stats_file, "w") as outfile:
             outfile.write(json.dumps(training_stats))
 
@@ -354,7 +354,7 @@ def fine_tune_BERT(config, stats_file=None):
         if avg_train_loss < avg_val_loss:
             if OVERFITTING:
                 print("")
-                print("  OVERFITTING: train loss: {}, validation loss: {}".format(
+                print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
                                                                             avg_train_loss,
                                                                             avg_val_loss
                                                                             ))
@@ -362,7 +362,7 @@ def fine_tune_BERT(config, stats_file=None):
                 break
             else:
                 print("")
-                print("  Attention: train loss: {}, validation loss: {}".format(
+                print("  Attention: train loss: {:.3f}, validation loss: {:.3f}".format(
                                                                             avg_train_loss,
                                                                             avg_val_loss
                                                                             ))
