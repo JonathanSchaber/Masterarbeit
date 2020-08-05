@@ -275,6 +275,7 @@ def fine_tune_BERT(config, stats_file=None):
     training_stats = []
     total_t0 = time.time()
     OVERFITTING = False
+
     for epoch_i in range(0, epochs):
         print("")
         print("======== Epoch {:} / {:} ========".format(epoch_i + 1, epochs))
