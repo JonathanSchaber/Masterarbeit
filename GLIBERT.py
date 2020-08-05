@@ -151,7 +151,6 @@ class BertEntailmentClassifierAllHidden(nn.Module):
                     word_level_sentence.append(token)
                 elif not self.tokenizer.decode([ids[j][i+1]]).startswith("##"):
                     word_level_sentence.append(token)
-                    print("normal emb size: {}".format(token.shape))
                 else:
                     current_word = [token]
                     for k, subtoken in enumerate(sentence[i+1:]):
@@ -173,9 +172,9 @@ class BertEntailmentClassifierAllHidden(nn.Module):
     
     def forward(self, tokens):
         last_hidden_state, _ = self.bert(tokens)
-        full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        #full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         reshaped_last_hidden = torch.reshape(
-                full_word_hidden_state, 
+                last_hidden_state, 
                 (
                     last_hidden_state.shape[0], 
                     last_hidden_state.shape[1]*last_hidden_state.shape[2])
@@ -275,6 +274,7 @@ def fine_tune_BERT(config, stats_file=None):
         )
     training_stats = []
     total_t0 = time.time()
+    OVERFITTING = False
     for epoch_i in range(0, epochs):
         print("")
         print("======== Epoch {:} / {:} ========".format(epoch_i + 1, epochs))
@@ -350,6 +350,25 @@ def fine_tune_BERT(config, stats_file=None):
                 "Validation Time": validation_time
             }
         )
+
+        if avg_train_loss < avg_val_loss:
+            if OVERFITTING:
+                print("")
+                print("  OVERFITTING: train loss: {}, validation loss: {}".format(
+                                                                            avg_train_loss,
+                                                                            avg_val_loss
+                                                                            ))
+                print("  Stopping fine-tuning!")
+                break
+            else:
+                print("")
+                print("  Attention: train loss: {}, validation loss: {}".format(
+                                                                            avg_train_loss,
+                                                                            avg_val_loss
+                                                                            ))
+                print("  if trend continues, early stopping will be invoked!")
+                OVERFITTING = True
+
 
     if stats_file: write_stats(stats_file, training_stats)
     print("")
