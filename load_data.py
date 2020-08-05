@@ -187,7 +187,6 @@ def dataloader(config, location, data_set):
         train_dataloader, test_dataloader = dataloader_torch(xnli.x_tensor, xnli.y_tensor, xnli.batch_size)
         num_classes = len(xnli.y_mapping)
         mapping = xnli.y_mapping
-        tokenizer = xnli.tokenizer
         max_len = xnli.max_len
     elif data_set == "SCARE":
         scare = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
@@ -196,10 +195,9 @@ def dataloader(config, location, data_set):
         train_dataloader, test_dataloader = dataloader_torch(scare.x_tensor, scare.y_tensor, scare.batch_size)
         num_classes = len(scare.y_mapping)
         mapping = scare.y_mapping
-        tokenizer = scare.tokenizer
         max_len = scare.max_len
 
-    return train_dataloader, test_dataloader, num_classes, max_len, mapping, tokenizer
+    return train_dataloader, test_dataloader, num_classes, max_len, mapping
 
 
 def dataloader_torch(x_tensor, y_tensor, batch_size):
