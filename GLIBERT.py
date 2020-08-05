@@ -256,25 +256,26 @@ def fine_tune_BERT(config, stats_file=None):
         device = torch.device("cuda:{}".format(gpu))
         model.cuda(device)
         print("")
-        print(">>      device set to: CUDA -> using GPU #{}".format(gpu))
+        print(">>  device set to: CUDA -> using GPU #{}".format(gpu))
     else:
         device = torch.device("cpu")
         print("")
-        print(">>      device set to: CPU")
+        print(">>  device set to: CPU")
 
-    optimizer = AdamW(model.parameters(),
+    optimizer = AdamW(
+            model.parameters(),
             lr = 2e-5,
             eps = 1e-8
         )
 
     total_steps = len(train_data) * epochs
-    scheduler = get_linear_schedule_with_warmup(optimizer, 
+    scheduler = get_linear_schedule_with_warmup(
+            optimizer, 
             num_warmup_steps = 0,
             num_training_steps = total_steps
         )
     training_stats = []
     total_t0 = time.time()
-    OVERFITTING = False
 
     for epoch_i in range(0, epochs):
         print("")
@@ -353,23 +354,13 @@ def fine_tune_BERT(config, stats_file=None):
         )
 
         if avg_train_loss < avg_val_loss:
-            if OVERFITTING:
-                print("")
-                print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
-                                                                            avg_train_loss,
-                                                                            avg_val_loss
-                                                                            ))
-                print("  Stopping fine-tuning!")
-                break
-            else:
-                print("")
-                print("  Attention: train loss: {:.3f}, validation loss: {:.3f}".format(
-                                                                            avg_train_loss,
-                                                                            avg_val_loss
-                                                                            ))
-                print("  if trend continues, early stopping will be invoked!")
-                OVERFITTING = True
-
+            print("")
+            print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
+                                                                        avg_train_loss,
+                                                                        avg_val_loss
+                                                                        ))
+            print("  Stopping fine-tuning!")
+            break
 
     if stats_file: write_stats(stats_file, training_stats)
     print("")
