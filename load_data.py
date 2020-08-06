@@ -63,7 +63,7 @@ class SCARE_dataloader:
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max(sent[1] for sent in self.data)
-        self.max_len = len(self.tokenizer.tokenize(longest_sent))
+        self.max_len = len(self.tokenizer.tokenize(longest_sent)) + 1
         print("")
         print("======== Longest sentence in data: ========")
         print("{}".format(longest_sent))
@@ -73,7 +73,7 @@ class SCARE_dataloader:
             x_tensor = self.tokenizer.encode(
                                         review, 
                                         add_special_tokens = True, 
-                                        max_length = self.max_len + 1,
+                                        max_length = self.max_len,
                                         pad_to_max_length = True, 
                                         truncation=True, 
                                         return_tensors = 'pt'
@@ -140,7 +140,7 @@ class XNLI_dataloader:
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max(max(sent for sent in self.data))
-        self.max_len = len(self.tokenizer.tokenize(longest_sent))
+        self.max_len = len(self.tokenizer.tokenize(longest_sent)) + 1
         print("")
         print("======== Longest sentence in data: ========")
         print("{}".format(longest_sent))
@@ -151,7 +151,7 @@ class XNLI_dataloader:
                                         sentence1, 
                                         sentence2, 
                                         add_special_tokens = True, 
-                                        max_length = self.max_len + 1,
+                                        max_length = self.max_len,
                                         pad_to_max_length = True, 
                                         truncation=True, 
                                         return_tensors = 'pt'
