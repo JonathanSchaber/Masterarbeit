@@ -13,6 +13,88 @@ from torch.utils.data import (
 
 from transformers import BertTokenizer
 
+
+######## P A W S - X ########
+
+class PAWS_X_dataloader:
+    def __init__(self, path_data, path_tokenizer, batch_size):
+        self.batch_size = batch_size
+        self.path = path_data
+        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
+        self.data = None
+        self.max_len = None
+        self.y_mapping = None
+        self.x_tensor = None
+        self.y_tensor = None
+
+    def load_PAWS_X(self):
+        """loads the data from PAWS_X data set
+        Args:
+            param1: str
+        Returns:
+            list of tuples of str
+            mapping of y
+        """
+        data = []
+        y_mapping = {}
+        with open(self.path, "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            counter = 0
+            for row in f_reader:
+                para_id, sentence_1, sentence_2, label = row[0], row[1]
+                data.append((label, sentence_1, sentence_2))
+                if label not in y_mapping:
+                    y_mapping[label] = counter
+                    counter += 1
+    
+        self.data = data
+        self.y_mapping = y_mapping
+    
+    def load_torch_PAWS_X(self):
+        """Return tensor for training
+        Args:
+            param1: list of tuples of strs
+            param2: dict
+            param3: torch Tokenizer object
+        Returns
+            tensor
+            tensor
+            int
+        """
+        x_tensor_list = []
+        y_tensor_list = []
+        longest_sent = max(
+                [len(self.tokenizer.tokenize(sent[1])) for sent in self.data] + 
+                [len(self.tokenizer.tokenize(sent[2])) for sent in self.data]
+                )
+        self.max_len = longest_sent + 1
+        print("")
+        print("======== Longest sentence in data: ========")
+        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
+        print("length (tokenized): {}".format(self.max_len))
+        for example in self.data:
+            label, sentence_1, sentence_2 = example
+            x_tensor = self.tokenizer.encode(
+                                        sentence_1, 
+                                        sentence_2,
+                                        add_special_tokens = True, 
+                                        max_length = self.max_len,
+                                        pad_to_max_length = True, 
+                                        truncation=True, 
+                                        return_tensors = 'pt'
+                                        )
+            x_tensor_list.append(x_tensor)
+    #        default_y = torch.tensor([0]*len(self.y_mapping))
+    #        default_y[self.y_mapping[label]] = 1
+    #        y_tensor = default_y
+            y_tensor = torch.tensor(self.y_mapping[label])
+            y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+        
+        #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
+        self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
+        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
+
+#####################################
 ######## S C A R E ########
 
 class SCARE_dataloader:
@@ -62,11 +144,11 @@ class SCARE_dataloader:
         """
         x_tensor_list = []
         y_tensor_list = []
-        longest_sent = max(sent[1] for sent in self.data)
-        self.max_len = len(self.tokenizer.tokenize(longest_sent)) + 1
+        longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data])
+        self.max_len = longest_sent + 1
         print("")
         print("======== Longest sentence in data: ========")
-        print("{}".format(longest_sent))
+        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
         print("length (tokenized): {}".format(self.max_len))
         for example in self.data:
             label, review = example
@@ -117,8 +199,8 @@ class XNLI_dataloader:
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                label, sentence1, sentence2 = row[1], row[6], row[7]
-                data.append((label, sentence1, sentence2))
+                label, sentence_1, sentence_2 = row[1], row[6], row[7]
+                data.append((label, sentence_1, sentence_2))
                 if label not in y_mapping:
                     y_mapping[label] = counter
                     counter += 1
@@ -139,17 +221,20 @@ class XNLI_dataloader:
         """
         x_tensor_list = []
         y_tensor_list = []
-        longest_sent = max(max(sent for sent in self.data))
-        self.max_len = len(self.tokenizer.tokenize(longest_sent)) + 1
+        longest_sent = max(
+                [len(self.tokenizer.tokenize(sent[1])) for sent in self.data] + 
+                [len(self.tokenizer.tokenize(sent[2])) for sent in self.data]
+                )
+        self.max_len = longest_sent + 1
         print("")
         print("======== Longest sentence in data: ========")
-        print("{}".format(longest_sent))
+        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
         print("length (tokenized): {}".format(self.max_len))
         for example in self.data:
-            label, sentence1, sentence2 = example
+            label, sentence_1, sentence_2 = example
             x_tensor = self.tokenizer.encode(
-                                        sentence1, 
-                                        sentence2, 
+                                        sentence_1, 
+                                        sentence_2, 
                                         add_special_tokens = True, 
                                         max_length = self.max_len,
                                         pad_to_max_length = True, 
@@ -163,6 +248,7 @@ class XNLI_dataloader:
             y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
+        import ipdb; ipdb.set_trace()
         #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
         self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
@@ -241,8 +327,8 @@ def dataloader_torch(x_tensor, y_tensor, batch_size):
 #    for i, example in enumerate(data):
 #        if i % 100 == 0:
 #            print("processed the {}th example out of {}...".format(i, num_examples))
-#        label, sentence1, sentence2 = example
-#        srl_xnli.append((label, sentence1, sentence2, predict_semRoles(dsrl, process_text(parser, sentence1)), predict_semRoles(dsrl, process_text(parser, sentence2))))
+#        label, sentence_1, sentence_2 = example
+#        srl_xnli.append((label, sentence_1, sentence_2, predict_semRoles(dsrl, process_text(parser, sentence_1)), predict_semRoles(dsrl, process_text(parser, sentence_2))))
 #
 #    return srl_xnli
 
