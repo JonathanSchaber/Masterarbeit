@@ -59,9 +59,12 @@ There are the following annotations for the several aspects and subjective (sub-
 
 \end{multicols}
 
+
+stats: there are 1.760 fine-grained annotated reviews
+
 \subsubsection{SCARE reviews}
 
-Besides their carefully, hand-annotated corpus, the authours also provide a dataset comprising of XXX reviews along with the rating --- one to five stars ---, that were available in German on the Google Play Store.
+Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of 802.860 reviews along with the rating --- one to five stars ---, that were available in German on the Google Play Store.
 This data set is much larger than the annotated one.
 
 
@@ -75,7 +78,13 @@ Since there exist mostly multiple annotations for each review in this data set, 
 To generate the review-label, I simply carry out an majority class decision:
 The label that is most often annotated for a given review, regardless if it is an aspect or a subjective, is then also the review-label.
 If there is no majority label, the review-label is set to ``neutral''.
-This is also the chosen strategy for 51 reviews that had no labels at all (e.g. ``Ich bin die erfuinderin | | Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!'').
+This is also the chosen strategy for 51 reviews that had no labels at all (e.g. ``Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!'').
+
+2.90\% of reviews had no labels at all 
+
+2.99\% of votes were non-majority
+
+13.76\% of votes were close (label difference of 1)
 
 \subsection{XNLI}
 
