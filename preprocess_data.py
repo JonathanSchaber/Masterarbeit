@@ -94,8 +94,6 @@ def preprocess_SCARE(path, path_outfile):
     count_close = 0
     count_all = 0
 
-    #TODO: check what is wrong with this!!!!!!!!!
-
     with open(path + "annotations.txt", "r") as f:
         ids_texts = [example.split("\t") for example in f.read().split("\n")]
     with open(path + "annotations.csv", "r") as f:
@@ -131,7 +129,7 @@ def preprocess_SCARE(path, path_outfile):
     
     print("")
     print("======== Stats ========")
-    print("{:.2f} reviews had no labels".format(count_no_labels))
+    print("{} reviews had no labels".format(count_no_labels))
     print("{:.2f}% of votes were non-majority".format(count_non_maj/count_all*100))
     print("{:.2f}% of votes were close (label difference of 1)".format(count_close/count_all*100))
     print("")
