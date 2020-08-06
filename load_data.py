@@ -73,7 +73,7 @@ class SCARE_dataloader:
             x_tensor = self.tokenizer.encode(
                                         review, 
                                         add_special_tokens = True, 
-                                        max_length = self.max_len, 
+                                        max_length = self.max_len + 1,
                                         pad_to_max_length = True, 
                                         truncation=True, 
                                         return_tensors = 'pt'
@@ -151,7 +151,7 @@ class XNLI_dataloader:
                                         sentence1, 
                                         sentence2, 
                                         add_special_tokens = True, 
-                                        max_length = self.max_len, 
+                                        max_length = self.max_len + 1,
                                         pad_to_max_length = True, 
                                         truncation=True, 
                                         return_tensors = 'pt'
