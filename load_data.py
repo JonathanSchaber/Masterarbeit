@@ -67,7 +67,7 @@ class PAWS_X_dataloader:
                 [len(self.tokenizer.tokenize(sent[1])) for sent in self.data] + 
                 [len(self.tokenizer.tokenize(sent[2])) for sent in self.data]
                 )
-        self.max_len = longest_sent + 1
+        self.max_len = longest_sent + 1 if longest_sent < 200 else 200
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -145,7 +145,7 @@ class SCARE_dataloader:
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data])
-        self.max_len = longest_sent + 1
+        self.max_len = longest_sent + 1 if longest_sent < 200 else 200
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -225,7 +225,7 @@ class XNLI_dataloader:
                 [len(self.tokenizer.tokenize(sent[1])) for sent in self.data] + 
                 [len(self.tokenizer.tokenize(sent[2])) for sent in self.data]
                 )
-        self.max_len = longest_sent + 1
+        self.max_len = longest_sent + 1 if longest_sent < 200 else 200
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -248,7 +248,7 @@ class XNLI_dataloader:
             y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
         self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
