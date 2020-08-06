@@ -172,9 +172,9 @@ class BertEntailmentClassifierAllHidden(nn.Module):
     
     def forward(self, tokens):
         last_hidden_state, _ = self.bert(tokens)
-        #full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         reshaped_last_hidden = torch.reshape(
-                last_hidden_state, 
+                full_word_hidden_state, 
                 (
                     last_hidden_state.shape[0], 
                     last_hidden_state.shape[1]*last_hidden_state.shape[2])
@@ -356,9 +356,9 @@ def fine_tune_BERT(config, stats_file=None):
         if avg_train_loss < avg_val_loss:
             print("")
             print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
-                                                                        avg_train_loss,
-                                                                        avg_val_loss
-                                                                        ))
+                                                                                avg_train_loss,
+                                                                                avg_val_loss
+                                                                                ))
             print("  Stopping fine-tuning!")
             break
 
