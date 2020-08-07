@@ -67,7 +67,7 @@ class PAWS_X_dataloader:
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
         self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 200 else 200
         print("")
-        print("======== Longest sentence in data: ========")
+        print("======== Longest sentence pair in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
         print("length (tokenized): {}".format(self.max_len))
         for example in self.data:
