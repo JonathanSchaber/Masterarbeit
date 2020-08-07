@@ -292,6 +292,7 @@ def fine_tune_BERT(config, stats_file=None):
             num_training_steps = total_steps
         )
     training_stats = []
+    training_stats.append(config)
     total_t0 = time.time()
 
     for epoch_i in range(0, epochs):
