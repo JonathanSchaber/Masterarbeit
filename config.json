@@ -16,5 +16,6 @@
 	"max_len": 100,
 	"gpu": 2,
 	"print_stats": 40,
-	"merge_subtokens": true
+	"merge_subtokens": true,
+	"bert_head": "BertEntailmentClassifierAllHidden"
 }
