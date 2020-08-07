@@ -41,7 +41,7 @@ class PAWS_X_dataloader:
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                para_id, sentence_1, sentence_2, label = row[0], row[1]
+                para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
                 data.append((label, sentence_1, sentence_2))
                 if label not in y_mapping:
                     y_mapping[label] = counter
@@ -63,11 +63,9 @@ class PAWS_X_dataloader:
         """
         x_tensor_list = []
         y_tensor_list = []
-        longest_sent = max(
-                [len(self.tokenizer.tokenize(sent[1])) for sent in self.data] + 
-                [len(self.tokenizer.tokenize(sent[2])) for sent in self.data]
-                )
-        self.max_len = longest_sent + 1 if longest_sent < 200 else 200
+        longest_sent_1 = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
+        longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
+        self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 200 else 200
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -221,11 +219,9 @@ class XNLI_dataloader:
         """
         x_tensor_list = []
         y_tensor_list = []
-        longest_sent = max(
-                [len(self.tokenizer.tokenize(sent[1])) for sent in self.data] + 
-                [len(self.tokenizer.tokenize(sent[2])) for sent in self.data]
-                )
-        self.max_len = longest_sent + 1 if longest_sent < 200 else 200
+        longest_sent_1 = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
+        longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
+        self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 200 else 200
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -282,6 +278,14 @@ def dataloader(config, location, data_set):
         num_classes = len(scare.y_mapping)
         mapping = scare.y_mapping
         max_len = scare.max_len
+    elif data_set == "PAWS-X":
+        paws_x = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        paws_x.load_PAWS_X()
+        paws_x.load_torch_PAWS_X()
+        train_dataloader, test_dataloader = dataloader_torch(paws_x.x_tensor, paws_x.y_tensor, paws_x.batch_size)
+        num_classes = len(paws_x.y_mapping)
+        mapping = paws_x.y_mapping
+        max_len = paws_x.max_len
 
     return train_dataloader, test_dataloader, num_classes, max_len, mapping
 
