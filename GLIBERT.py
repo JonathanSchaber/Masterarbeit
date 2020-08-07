@@ -41,7 +41,7 @@ def parse_cmd_args():
             "--data_set", 
             type=str, 
             help="Indicate on which data set model should be trained",
-            choices=["XNLI", "SCARE"]
+            choices=["XNLI", "SCARE", "PAWS-X"]
             )
     parser.add_argument(
             "-l", 
@@ -96,14 +96,15 @@ class BertBinaryClassifier(nn.Module):
 
 
 class BertEntailmentClassifierCLS(nn.Module):
-    def __init__(self, path, num_classes, dropout=0.1):
+    def __init__(self, config, num_classes, max_len, dropout=0.1):
         super(BertEntailmentClassifierCLS, self).__init__()
-        self.bert = BertModel.from_pretrained(path)
-        self.lin_layer = nn.Sequential(
+        self.bert = BertModel.from_pretrained(config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
+        self.dense_layer = nn.Sequential(
             nn.Dropout(dropout),
             nn.Linear(768, 128),
             nn.ReLU(inplace=True),
-            nn.Linear(100, num_classes),
+            nn.Linear(128, num_classes),
             #nn.ReLU(inplace=True),
             #nn.Dropout(dropout),
             #nn.Linear(768, num_classes),
@@ -113,18 +114,19 @@ class BertEntailmentClassifierCLS(nn.Module):
     
     def forward(self, tokens):
         _, pooler_output = self.bert(tokens)
-        linear_output = self.lin_layer(pooler_output)
+        linear_output = self.dense_layer(pooler_output)
         #non_linear_output = Swish(linear_output)
         proba = self.softmax(linear_output)
         return proba
 
 
 class BertEntailmentClassifierAllHidden(nn.Module):
-    def __init__(self, path, num_classes, max_len, dropout=0.1):
+    def __init__(self, config, num_classes, max_len, dropout=0.1):
         super(BertEntailmentClassifierAllHidden, self).__init__()
-        self.bert = BertModel.from_pretrained(path)
-        self.tokenizer = BertTokenizer.from_pretrained(path)
-        self.lin_layer = nn.Sequential(
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.dense_layer = nn.Sequential(
             nn.Dropout(dropout),
             nn.Linear(max_len*768, 512),
             nn.ReLU(inplace=True),
@@ -137,6 +139,19 @@ class BertEntailmentClassifierAllHidden(nn.Module):
         self.softmax = nn.LogSoftmax(dim=-1)
 
     def reconstruct_word_level(self, batch, ids):
+        """method for joining subtokenized words back to word level
+        The idea is to average subtoken embeddings.
+        To preserve original length, append last subtoken-embedding (which
+        is per definition [PAD] since padding + 1 of max- length) until original
+        length is reached.
+
+        Args:
+            param1: torch.tensor embeddings of subtokens
+            param2: torch.tensor indices of subtokens
+        Returns:
+            torch.tensor of same input dimensions with averaged embeddings
+                        for subtokens
+        """
         word_level_batch = []
         for j, sentence in enumerate(batch):
             word_level_sentence = []
@@ -172,14 +187,15 @@ class BertEntailmentClassifierAllHidden(nn.Module):
     
     def forward(self, tokens):
         last_hidden_state, _ = self.bert(tokens)
-        full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        if self.config["merge_subtokens"] == True:
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         reshaped_last_hidden = torch.reshape(
-                full_word_hidden_state, 
+                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
                     last_hidden_state.shape[0], 
                     last_hidden_state.shape[1]*last_hidden_state.shape[2])
                 )
-        linear_output = self.lin_layer(reshaped_last_hidden)
+        linear_output = self.dense_layer(reshaped_last_hidden)
         #non_linear_output = Swish(linear_output)
         proba = self.softmax(linear_output)
         return proba
@@ -246,7 +262,7 @@ def fine_tune_BERT(config, stats_file=None):
     criterion = nn.NLLLoss()
 
     train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
-    model = BertEntailmentClassifierAllHidden(config[location]["BERT"], num_classes, max_len)
+    model = BertEntailmentClassifierAllHidden(config, num_classes, max_len)
     mapping = {value: key for (key, value) in mapping.items()}
 
 
