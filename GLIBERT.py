@@ -259,10 +259,11 @@ def fine_tune_BERT(config, stats_file=None):
     gpu = config["gpu"]
     batch_size = config["batch_size"]
     print_stats = config["print_stats"]
+    bert_head = eval(config["bert_head"])
     criterion = nn.NLLLoss()
 
     train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
-    model = BertEntailmentClassifierAllHidden(config, num_classes, max_len)
+    model = bert_head(config, num_classes, max_len)
     mapping = {value: key for (key, value) in mapping.items()}
 
 
