@@ -14,9 +14,7 @@ from torch.utils.data import (
 from transformers import BertTokenizer
 
 
-######## P A W S - X ########
-
-class PAWS_X_dataloader:
+class Dataloader:
     def __init__(self, path_data, path_tokenizer, batch_size):
         self.batch_size = batch_size
         self.path = path_data
@@ -27,6 +25,9 @@ class PAWS_X_dataloader:
         self.x_tensor = None
         self.y_tensor = None
 
+######## P A W S - X ########
+
+class PAWS_X_dataloader(Dataloader):
     def load_PAWS_X(self):
         """loads the data from PAWS_X data set
         Args:
@@ -95,17 +96,7 @@ class PAWS_X_dataloader:
 #####################################
 ######## S C A R E ########
 
-class SCARE_dataloader:
-    def __init__(self, path_data, path_tokenizer, batch_size):
-        self.batch_size = batch_size
-        self.path = path_data
-        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
-        self.data = None
-        self.max_len = None
-        self.y_mapping = None
-        self.x_tensor = None
-        self.y_tensor = None
-
+class SCARE_dataloader(Dataloader):
     def load_SCARE(self):
         """loads the data from SCARE data set
         Args:
@@ -172,17 +163,7 @@ class SCARE_dataloader:
 #####################################################################################
 ######## X N L I #######
 
-class XNLI_dataloader:
-    def __init__(self, path_data, path_tokenizer, batch_size):
-        self.batch_size = batch_size
-        self.path = path_data
-        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
-        self.data = None
-        self.max_len = None
-        self.y_mapping = None
-        self.x_tensor = None
-        self.y_tensor = None
-
+class XNLI_dataloader(Dataloader):
     def load_XNLI(self):
         """loads the data from XNLI data set
         Args:
