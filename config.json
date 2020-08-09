@@ -13,9 +13,12 @@
 	},
 	"epochs": 4,
 	"batch_size": 32,
-	"max_len": 100,
 	"gpu": 2,
 	"print_stats": 40,
 	"merge_subtokens": true,
-	"bert_head": "BertEntailmentClassifierAllHidden"
+	"bert_head": "BertEntailmentClassifierAllHidden",
+	"num_labels": 47,
+	"embedding_dim": 64,
+	"hidden_size": 128,
+	"num_layers": 2
 }
