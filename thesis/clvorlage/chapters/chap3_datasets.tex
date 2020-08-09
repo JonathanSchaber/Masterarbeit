@@ -16,7 +16,26 @@ As \cite{troiano2019crowdsourcing} write in their
 
 \subsection{PAWS-X}
 
-\cite{yang2019paws}
+The PAWS-X corpus \cite{yang2019paws} was compiled to provide a multilingual source for training models that address the problem of paraphrase identification. 
+Since most corpora for this task are available only in English, the authors compiled this corpus, by humanly translate a subset of the original PAWS corpus \cite{zhang2019paws}.
+
+\begin{examples}
+	\label{ex:paws-x}
+	\item Die Familie zog 1972 nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
+		
+	1972 zog die Familie nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
+\end{examples}
+
+The label for the sentence pair \ref{ex:paws-x}, of course, would be \textit{true}, since sentence one is a paraphrase of sentence two, and vice versa.
+
+
+stats
+
+4,000 examples in German (human translated)
+
+49,402 examples in German (machine translated)
+
+
 
 \subsection{SCARE}
 
@@ -59,13 +78,16 @@ There are the following annotations for the several aspects and subjective (sub-
 
 \end{multicols}
 
+As is clear from this example, in a given review there may be several claims or remarks concerning functionalities of the product, or personal views about an app in general.
+It is well possible, as in the provided example, that the sentiment of this ``micro-stances'' is not always the same; while all aspects in the example above are \textit{neutral}, there are two \textit{positive} and one \textit{negative} subjectives.
 
-stats: there are 1.760 fine-grained annotated reviews
+
+stats: there are 1,760 fine-grained annotated reviews
 
 \subsubsection{SCARE reviews}
 
-Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of 802.860 reviews along with the rating --- one to five stars ---, that were available in German on the Google Play Store.
-This data set is much larger than the annotated one.
+Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of 802,860 reviews along with the rating --- one to five stars ---, that were available in German on the Google Play Store.
+This data set is much larger than the annotated one: Due to the great expenses of generating those fine-grained annotations, the authors were able to annotate only 0.22\% of all reviews available.
 
 
 
@@ -89,6 +111,8 @@ This is also the chosen strategy for 51 reviews that had no labels at all (e.g. 
 \subsection{XNLI}
 
 \cite{conneau2018xnli}
+
+number of examples= 7,500
 
 \subsection{XQuAD}
 
