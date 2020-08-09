@@ -81,6 +81,28 @@ def Swish(batch):
     return torch.stack(tuple(batch))
 
 
+class SRL_Encoder(nn.Module):
+    def __init__(self, config):
+        super(SRL_Encoder, self).__init__()
+        self.config = config
+        self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
+        self.encoder = nn.GRU(
+                            input_size=self.config["embedding_dim"],
+                            hidden_size=self.config["hidden_size"],
+                            num_layers=self.config["num_layers"],
+                            bias=True,
+                            #batch_first,
+                            dropout=0.1,
+                            bidirectional=True
+                            )
+
+    def forward(self, tokens):
+        embeddings = self.embeddings(tokens)
+        #TODO: continue!!
+        output, h_n = self.encoder(embeddings)
+        return output, h_n
+
+
 class BertBinaryClassifier(nn.Module):
     def __init__(self, path, dropout=0.1):
         super(BertBinaryClassifier, self).__init__()
