@@ -171,7 +171,7 @@ def main():
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
     json_data = read_data(path_to_data)
-    preprocess_MLQA_v1(json_data, dsrl, ParZu_parser, path_outfile)
+    #preprocess_MLQA_v1(json_data, dsrl, ParZu_parser, path_outfile)
     
 
 if __name__ == "__main__":
