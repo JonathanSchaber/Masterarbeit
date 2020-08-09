@@ -30,4 +30,4 @@ To reproduce the results, download the data, store them locally, and run the com
 - SCARE (v1.0.0_data): cat all .csv files in the `reviews` folder into one file `reviews.csv`:
     - `$ cat *.csv > reviews.csv`
 - XNLI: cat the files `xnli.dev.de.tsv` and `xnli.test.de.tsv` in the folder `XNLI-1.0` into one file `xnli.de.tsv`:
-    _ `$ cat xnli.dev.de.tsv xnli.test.de.tsv > xnli.de.tsv`
+    - `$ cat xnli.dev.de.tsv xnli.test.de.tsv > xnli.de.tsv`
