@@ -98,8 +98,9 @@ class BertBinaryClassifier(nn.Module):
 class BertEntailmentClassifierCLS(nn.Module):
     def __init__(self, config, num_classes, max_len, dropout=0.1):
         super(BertEntailmentClassifierCLS, self).__init__()
-        self.bert = BertModel.from_pretrained(config[location]["BERT"])
-        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.dense_layer = nn.Sequential(
             nn.Dropout(dropout),
             nn.Linear(768, 128),
