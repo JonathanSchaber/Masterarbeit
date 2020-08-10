@@ -92,13 +92,13 @@ def preprocess_PAWS_X(path, path_outfile, argument_model_config="../SemRolLab/DA
 
     with open(path, "r") as f:
         f_reader = csv.reader(f, delimiter="\t")
-    for row in f_reader:
-        para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
-        dsrl_obj_1 = process_text(ParZu_parser, sentence_1)
-        sem_roles_1 = predict_semRoles(dsrl, dsrl_obj_1)
-        dsrl_obj_2 = process_text(ParZu_parser, sentence_2)
-        sem_roles_2 = predict_semRoles(dsrl, dsrl_obj_2)
-        label_text_feat.append([label, sentence_1, sentence_2, sem_roles_1, sem_roles_2])
+        for row in f_reader:
+            para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
+            dsrl_obj_1 = process_text(ParZu_parser, sentence_1)
+            sem_roles_1 = predict_semRoles(dsrl, dsrl_obj_1)
+            dsrl_obj_2 = process_text(ParZu_parser, sentence_2)
+            sem_roles_2 = predict_semRoles(dsrl, dsrl_obj_2)
+            label_text_feat.append([label, sentence_1, sentence_2, sem_roles_1, sem_roles_2])
 
     with open(path_outfile, "w") as f:
         for element in label_text_feat:
