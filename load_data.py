@@ -1,7 +1,7 @@
 import csv
 import torch
 
-#from SemRoleLabeler import *
+#from predict_SRL import *
 
 from torch.utils.data import (
         TensorDataset,
@@ -28,7 +28,7 @@ class Dataloader:
 ######## P A W S - X ########
 
 class PAWS_X_dataloader(Dataloader):
-    def load_PAWS_X(self):
+    def load(self):
         """loads the data from PAWS_X data set
         Args:
             param1: str
@@ -51,7 +51,7 @@ class PAWS_X_dataloader(Dataloader):
         self.data = data
         self.y_mapping = y_mapping
     
-    def load_torch_PAWS_X(self):
+    def load_torch(self):
         """Return tensor for training
         Args:
             param1: list of tuples of strs
@@ -97,7 +97,7 @@ class PAWS_X_dataloader(Dataloader):
 ######## S C A R E ########
 
 class SCARE_dataloader(Dataloader):
-    def load_SCARE(self):
+    def load(self):
         """loads the data from SCARE data set
         Args:
             param1: str
@@ -120,7 +120,7 @@ class SCARE_dataloader(Dataloader):
         self.data = data
         self.y_mapping = y_mapping
     
-    def load_torch_SCARE(self):
+    def load_torch(self):
         """Return tensor for training
         Args:
             param1: list of tuples of strs
@@ -164,7 +164,7 @@ class SCARE_dataloader(Dataloader):
 ######## X N L I #######
 
 class XNLI_dataloader(Dataloader):
-    def load_XNLI(self):
+    def load(self):
         """loads the data from XNLI data set
         Args:
             param1: str
@@ -187,7 +187,7 @@ class XNLI_dataloader(Dataloader):
         self.data = data
         self.y_mapping = y_mapping
     
-    def load_torch_XNLI(self):
+    def load_torch(self):
         """Return tensor for training
         Args:
             param1: list of tuples of strs
@@ -244,29 +244,22 @@ def dataloader(config, location, data_set):
         int
     """
     if data_set == "XNLI":
-        xnli = XNLI_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
-        xnli.load_XNLI()
-        xnli.load_torch_XNLI()
-        train_dataloader, test_dataloader = dataloader_torch(xnli.x_tensor, xnli.y_tensor, xnli.batch_size)
-        num_classes = len(xnli.y_mapping)
-        mapping = xnli.y_mapping
-        max_len = xnli.max_len
+        dataloader = XNLI_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
     elif data_set == "SCARE":
-        scare = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
-        scare.load_SCARE()
-        scare.load_torch_SCARE()
-        train_dataloader, test_dataloader = dataloader_torch(scare.x_tensor, scare.y_tensor, scare.batch_size)
-        num_classes = len(scare.y_mapping)
-        mapping = scare.y_mapping
-        max_len = scare.max_len
+        dataloader = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
     elif data_set == "PAWS-X":
-        paws_x = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
-        paws_x.load_PAWS_X()
-        paws_x.load_torch_PAWS_X()
-        train_dataloader, test_dataloader = dataloader_torch(paws_x.x_tensor, paws_x.y_tensor, paws_x.batch_size)
-        num_classes = len(paws_x.y_mapping)
-        mapping = paws_x.y_mapping
-        max_len = paws_x.max_len
+        dataloader = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+
+    dataloader.load()
+    dataloader.load_torch()
+    train_dataloader, test_dataloader = dataloader_torch(
+                                            dataloader.x_tensor,
+                                            dataloader.y_tensor,
+                                            dataloader.batch_size
+                                            )
+    num_classes = len(dataloader.y_mapping)
+    mapping = dataloader.y_mapping
+    max_len = dataloader.max_len
 
     return train_dataloader, test_dataloader, num_classes, max_len, mapping
 
