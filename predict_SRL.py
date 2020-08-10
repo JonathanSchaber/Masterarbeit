@@ -137,10 +137,11 @@ def predict_semRoles(dsrl, dsrl_obj):
 
     for sent in sem_roles:
         sent_list = []
-        for predicate in sent.get_predicates():
-           sent_list.append(predicate.arguments) 
-           if not predicate:
-               sent_list.append([["O"]*len(sent)])
+        if sent.get_predicates() == []:
+            sent_list.append(["O"]*len(sent))
+        else:
+            for predicate in sent.get_predicates():
+                sent_list.append(predicate.arguments) 
         srl_list.append(sent_list)
     return srl_list
 
