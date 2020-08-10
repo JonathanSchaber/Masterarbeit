@@ -2,7 +2,30 @@ import csv
 import json
 import os
 
+from pathlib import Path
 from predict_SRL import *
+
+argument_model_config = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
+
+
+def parse_cmd_args():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+            "-d", 
+            "--data_set", 
+            type=str, 
+            help="Indicate on which data set model should be trained",
+            choices=["XNLI", "SCARE", "PAWS-X"]
+            )
+    parser.add_argument(
+            "-p", 
+            "--path", 
+            type=str, 
+            help="Path to file ATTENTION in case of PAWS-X this points to the directory containing the files, not the files itself!",
+            )
+    return parser.parse_args()
+
 
 def read_data(path):
     """reads JSON from file
@@ -75,7 +98,7 @@ def get_majority_label(labels):
         return ("Negative", True, num) if margin > 1 else ("Negative", False, num)
 
 
-def preprocess_PAWS_X(path, path_outfile, argument_model_config="../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"):
+def preprocess_PAWS_X(path, argument_model_config):
     """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
     ATTENTION: path points to directory, not input file!
     Args:
@@ -86,6 +109,7 @@ def preprocess_PAWS_X(path, path_outfile, argument_model_config="../SemRolLab/DA
         None
     """
     label_text_feat = []
+    path_outfile = str(Path(path).parent) + "/paws-x_SRL.tsv"
 
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
@@ -105,7 +129,7 @@ def preprocess_PAWS_X(path, path_outfile, argument_model_config="../SemRolLab/DA
             csv.writer(f, delimiter="\t").writerow(element)
         
 
-def preprocess_SCARE(path, path_outfile, argument_model_config="../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"):
+def preprocess_SCARE(path, argument_model_config):
     """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
     ATTENTION: path points to directory, not input file!
     Args:
@@ -117,6 +141,7 @@ def preprocess_SCARE(path, path_outfile, argument_model_config="../SemRolLab/DAM
     """
     id_text_labels = {}
     label_text_feat = []
+    path_outfile = str(Path(path).parent) + "/annotations_SRL.tsv"
 
     count_non_maj = 0
     count_no_labels = 0
