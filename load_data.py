@@ -42,7 +42,7 @@ class PAWS_X_dataloader(Dataloader):
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
+                label, sentence_1, sentence_2, label = row[0], row[1], row[2]
                 data.append((label, sentence_1, sentence_2))
                 if label not in y_mapping:
                     y_mapping[label] = counter
@@ -111,7 +111,7 @@ class SCARE_dataloader(Dataloader):
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                review, label = row[0], row[1]
+                label, review = row[0], row[1]
                 data.append((label, review))
                 if label not in y_mapping:
                     y_mapping[label] = counter
