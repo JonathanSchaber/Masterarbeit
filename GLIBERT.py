@@ -90,10 +90,10 @@ class SRL_Encoder(nn.Module):
                             input_size=self.config["embedding_dim"],
                             hidden_size=self.config["hidden_size"],
                             num_layers=self.config["num_layers"],
-                            bias=True,
-                            #batch_first,
+                            bias=self.config["bias"],
+                            batch_first=True,
                             dropout=0.1,
-                            bidirectional=True
+                            bidirectional=self.config["bidirectional"]
                             )
 
     def forward(self, tokens):
