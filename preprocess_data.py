@@ -75,14 +75,43 @@ def get_majority_label(labels):
         return ("Negative", True, num) if margin > 1 else ("Negative", False, num)
 
 
-
-
-def preprocess_SCARE(path, path_outfile, argument_model_config="../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"):
-    """read in merged TSVs, write text and label to new file
+def preprocess_PAWS_X(path, path_outfile, argument_model_config="../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"):
+    """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
     ATTENTION: path points to directory, not input file!
     Args:
         param1: str
         param2: str
+        param3: str
+    Returns:
+        None
+    """
+    label_text_feat = []
+
+    dsrl = DSRL(argument_model_config)
+    ParZu_parser = create_ParZu_parser()
+
+    with open(path, "r") as f:
+        f_reader = csv.reader(f, delimiter="\t")
+    for row in f_reader:
+        para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
+        dsrl_obj_1 = process_text(ParZu_parser, sentence_1)
+        sem_roles_1 = predict_semRoles(dsrl, dsrl_obj_1)
+        dsrl_obj_2 = process_text(ParZu_parser, sentence_2)
+        sem_roles_2 = predict_semRoles(dsrl, dsrl_obj_2)
+        label_text_feat.append([label, sentence_1, sentence_2, sem_roles_1, sem_roles_2])
+
+    with open(path_outfile, "w") as f:
+        for element in label_text_feat:
+            csv.writer(f, delimiter="\t").writerow(element)
+        
+
+def preprocess_SCARE(path, path_outfile, argument_model_config="../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"):
+    """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
+    ATTENTION: path points to directory, not input file!
+    Args:
+        param1: str
+        param2: str
+        param3: str
     Returns:
         None
     """
