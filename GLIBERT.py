@@ -98,9 +98,8 @@ class SRL_Encoder(nn.Module):
 
     def forward(self, tokens):
         embeddings = self.embeddings(tokens)
-        #TODO: continue!!
-        output, h_n = self.encoder(embeddings)
-        return output, h_n
+        output, _ = self.encoder(embeddings)
+        return output
 
 
 class BertBinaryClassifier(nn.Module):
@@ -286,8 +285,10 @@ def fine_tune_BERT(config, stats_file=None):
     criterion = nn.NLLLoss()
 
     train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
-    model = bert_head(config, num_classes, max_len)
     mapping = {value: key for (key, value) in mapping.items()}
+
+    srl_encoder = SRL_Encoder(config)
+    model = bert_head(config, num_classes, max_len)
 
 
     print("")
