@@ -42,7 +42,7 @@ class PAWS_X_dataloader(Dataloader):
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                label, sentence_1, sentence_2, label = row[0], row[1], row[2]
+                label, sentence_1, sentence_2 = row[0], row[1], row[2]
                 data.append((label, sentence_1, sentence_2))
                 if label not in y_mapping:
                     y_mapping[label] = counter
