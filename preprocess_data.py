@@ -2,7 +2,7 @@ import csv
 import json
 import os
 
-from SemRoleLabeler import *
+from predict_SRL import *
 
 def read_data(path):
     """reads JSON from file
@@ -77,7 +77,7 @@ def get_majority_label(labels):
 
 
 
-def preprocess_SCARE(path, path_outfile):
+def preprocess_SCARE(path, path_outfile, argument_model_config="../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"):
     """read in merged TSVs, write text and label to new file
     ATTENTION: path points to directory, not input file!
     Args:
@@ -87,12 +87,15 @@ def preprocess_SCARE(path, path_outfile):
         None
     """
     id_text_labels = {}
-    text_label = []
+    label_text_feat = []
 
     count_non_maj = 0
     count_no_labels = 0
     count_close = 0
     count_all = 0
+
+    dsrl = DSRL(argument_model_config)
+    ParZu_parser = create_ParZu_parser()
 
     with open(path + "annotations.txt", "r") as f:
         ids_texts = [example.split("\t") for example in f.read().split("\n")]
@@ -119,7 +122,9 @@ def preprocess_SCARE(path, path_outfile):
 
     for review_id, feat in id_text_labels.items():
         polarity, majority, num_labels = get_majority_label(feat["labels"])
-        text_label.append([feat["text"], polarity])
+        dsrl_obj = process_text(ParZu_parser, feat["text"])
+        sem_roles = predict_semRoles(dsrl, dsrl_obj)
+        label_text_feat.append([polarity, feat["text"], sem_roles])
         if polarity == "Neutral": count_non_maj += 1 
         if not majority: count_close += 1 
         if num_labels == 0:
@@ -136,7 +141,7 @@ def preprocess_SCARE(path, path_outfile):
     print("======== Writing to file: {} ========".format(path_outfile))
 
     with open(path_outfile, "w") as f:
-        for element in text_label:
+        for element in label_text_feat:
             csv.writer(f, delimiter="\t").writerow(element)
 
 
