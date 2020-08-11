@@ -20,6 +20,9 @@ To reproduce the results, download the data, store them locally, and run the com
 
 ## Preparing the data
 
+- deISEAR:
+    1. substitute '...' with BERT special token '[MASK]' in file `deISEAR.tsv`:
+	- `$ sed 's/\.\.\./[MASK]/' deISEAR.tsv > deISEAR_GLIBERT.tsv`
 - PAWS-X: 
     1. cat the files `dev_2k.tsv` and `test_2k.tsv` without the first line in the folder `de` into one file `paws-x_de_2k.tsv`:
 	- `$ sed -s 1d dev_2k.tsv test_2k.tsv > paws-x_de_2k.tsv`
