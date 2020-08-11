@@ -25,7 +25,74 @@ class Dataloader:
         self.x_tensor = None
         self.y_tensor = None
 
-######## P A W S - X ########
+######## d e I S E A R ########
+
+class deISEAR_dataloader(Dataloader):
+    def load(self):
+        """loads the data from PAWS_X data set
+        Args:
+            param1: str
+        Returns:
+            list of tuples of str
+            mapping of y
+        """
+        data = []
+        y_mapping = {}
+        with open(self.path, "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            counter = 0
+            for row in f_reader:
+                emotion, sentence = row[1], row[2]
+                data.append((emotion, sentence))
+                if label not in y_mapping:
+                    y_mapping[label] = counter
+                    counter += 1
+    
+        self.data = data
+        self.y_mapping = y_mapping
+    
+    def load_torch(self):
+        """Return tensor for training
+        Args:
+            param1: list of tuples of strs
+            param2: dict
+            param3: torch Tokenizer object
+        Returns
+            tensor
+            tensor
+            int
+        """
+        x_tensor_list = []
+        y_tensor_list = []
+        longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
+        self.max_len = longest_sent + 1 if longest_sent < 200 else 200
+        print("")
+        print("======== Longest sentence pair in data: ========")
+        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
+        print("length (tokenized): {}".format(self.max_len))
+        for example in self.data:
+            emotion, sentence = example
+            x_tensor = self.tokenizer.encode(
+                                        sentence,
+                                        add_special_tokens = True, 
+                                        max_length = self.max_len,
+                                        pad_to_max_length = True, 
+                                        truncation=True, 
+                                        return_tensors = 'pt'
+                                        )
+            x_tensor_list.append(x_tensor)
+    #        default_y = torch.tensor([0]*len(self.y_mapping))
+    #        default_y[self.y_mapping[emotion]] = 1
+    #        y_tensor = default_y
+            y_tensor = torch.tensor(self.y_mapping[emotion])
+            y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+        
+        #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
+        self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
+        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
+
+####################################
+########### P A W S - X ############
 
 class PAWS_X_dataloader(Dataloader):
     def load(self):
@@ -249,6 +316,8 @@ def dataloader(config, location, data_set):
         dataloader = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
     elif data_set == "PAWS-X":
         dataloader = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+    elif data_set == "deISEAR":
+        dataloader = deISEAR_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
 
     dataloader.load()
     dataloader.load_torch()
