@@ -377,8 +377,10 @@ def fine_tune_BERT(config, stats_file=None):
                     print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
                     print("  Last prediction: ")
                     print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-                    print("    Prediction:  {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
-                    print("    True Label:  {} - {} ".format(b_labels[-1].select(0, 0).item(), b_labels[-1].select(0, 1).item()))
+                    print("    Prediction:  {}".format(" ".join(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True).split()[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1])))
+                    print("       Indices: {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
+                    print("    True Span:  {}".format(" ".join(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True).split()[b_labels[-1].select(0, 0).item():b_labels[-1].select(0, 1).item()+1])))
+                    print("      Indices: {} - {}".format(b_labels[-1].select(0, 0).item(), b_labels[-1].select(0, 1).item()))
                     print("")
                 start_loss = criterion(start_span, b_labels.select(1, 0))
                 end_loss = criterion(end_span, b_labels.select(1, 1))
@@ -417,7 +419,7 @@ def fine_tune_BERT(config, stats_file=None):
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
                 else:
-                    start_span, end_span = model
+                    start_span, end_span = model(b_input_ids)
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
                     start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
