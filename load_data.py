@@ -92,6 +92,67 @@ class deISEAR_dataloader(Dataloader):
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
 ####################################
+########### M L Q A ############
+
+class MLQA_dataloader(Dataloader):
+    def load(self):
+        """loads the data from MLQA data set
+        Args:
+            param1: str
+        Returns:
+            list of tuples of str
+            mapping of y
+        """
+        data = []
+        with open(self.path, "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            for row in f_reader:
+                start_span, end_span, context, question = row[0], row[1], row[2], row[3]
+                data.append((start_span, end_span, context, question))
+    
+        self.data = data
+    
+    def load_torch(self):
+        """Return tensor for training
+        Args:
+            param1: list of tuples of strs
+            param2: dict
+            param3: torch Tokenizer object
+        Returns
+            tensor
+            tensor
+            int
+        """
+        x_tensor_list = []
+        y_tensor_list = []
+        longest_sent_1 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
+        longest_sent_2 = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data]) 
+        self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 200 else 200
+        print("")
+        print("======== Longest sentence pair in data: ========")
+        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
+        print("length (tokenized): {}".format(self.max_len))
+        for example in self.data:
+            start_span, end_span, context, question = example
+            start_span = int(start_span)
+            end_span = int(end_span)
+            x_tensor = self.tokenizer.encode(
+                                        context, 
+                                        question,
+                                        add_special_tokens = True, 
+                                        max_length = self.max_len,
+                                        pad_to_max_length = True, 
+                                        truncation=True, 
+                                        return_tensors = 'pt'
+                                        )
+            x_tensor_list.append(x_tensor)
+            y_tensor = torch.tensor([start_span, end_span])
+            y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+        
+        self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
+        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
+
+####################################
 ########### P A W S - X ############
 
 class PAWS_X_dataloader(Dataloader):
@@ -310,14 +371,16 @@ def dataloader(config, location, data_set):
         Dataloader object (test)
         int
     """
-    if data_set == "XNLI":
-        dataloader = XNLI_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
-    elif data_set == "SCARE":
-        dataloader = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
-    elif data_set == "PAWS-X":
-        dataloader = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+    if data_set == "MLQA":
+        dataloader = MLQA_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
     elif data_set == "deISEAR":
         dataloader = deISEAR_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+    elif data_set == "PAWS-X":
+        dataloader = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+    elif data_set == "SCARE":
+        dataloader = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+    elif data_set == "XNLI":
+        dataloader = XNLI_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
 
     dataloader.load()
     dataloader.load_torch()
@@ -326,7 +389,7 @@ def dataloader(config, location, data_set):
                                             dataloader.y_tensor,
                                             dataloader.batch_size
                                             )
-    num_classes = len(dataloader.y_mapping)
+    num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
     mapping = dataloader.y_mapping
     max_len = dataloader.max_len
 
