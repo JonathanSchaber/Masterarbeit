@@ -114,7 +114,7 @@ def preprocess_MLQA(path, argument_model_config):
         None
     """
     spans_text_qas_srl = []
-    path_outfile = str(Path(path).parent) + "/paws-x_SRL.tsv"
+    path_outfile = path + "MLQA.tsv"
 
     file_paths = [path + "dev/dev-context-de-question-de.json", path + "test/test-context-de-question-de.json"]
 
@@ -125,13 +125,13 @@ def preprocess_MLQA(path, argument_model_config):
         
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
-                text = json["data"][i]["paragrahps"][i]["context"]
-                for k in json_data["data"][i]["paragraphs"][i]["qas"]:
-                    question = json_data["data"][i]["paragraphs"][i]["qas"]["question"]
-                    start_span = json_data["data"][i]["paragraphs"][i]["qas"]["answer_start"]
-                    spans_text_qas_srl.append(start_span, text, question)
+                text = json_data["data"][i]["paragraphs"][j]["context"]
+                for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
+                    question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
+                    start_span = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
+                    spans_text_qas_srl.append([start_span, text, question])
 
-    with open(path_outfile, "w"):
+    with open(path_outfile, "w") as f:
         for element in spans_text_qas_srl:
             csv.writer(f, delimiter="\t").writerow(element)
 
