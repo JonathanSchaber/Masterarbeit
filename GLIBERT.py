@@ -271,7 +271,6 @@ def compute_acc(preds, labels):
         float
     """
     correct = 0
-    import ipdb; ipdb.set_trace()
     assert len(preds) == len(labels)
     for pred, lab in zip(preds, labels):
         if pred == lab: correct += 1
@@ -412,10 +411,22 @@ def fine_tune_BERT(config, stats_file=None):
             b_labels = batch[1].to(device)
 
             with torch.no_grad():
-                outputs = model(b_input_ids)
-                value_index = [tensor.max(0) for tensor in outputs]
-                acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
-                loss = criterion(outputs, b_labels)
+                if not SPAN_FLAG:
+                    outputs = model(b_input_ids)
+                    value_index = [tensor.max(0) for tensor in outputs]
+                    acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
+                    loss = criterion(outputs, b_labels)
+                else:
+                    start_span, end_span = model
+                    start_value_index = [tensor.max(0) for tensor in start_span]
+                    end_value_index = [tensor.max(0) for tensor in end_span]
+                    start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
+                    end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
+                    acc = (start_acc + end_acc) / 2
+                    start_loss = criterion(start_span, b_labels.select(1, 0))
+                    end_loss = criterion(end_span, b_labels.select(1, 1))
+                    loss = (start_loss + end_loss) / 2
+
             total_eval_loss += loss.item()
             total_eval_accuracy += acc
 
