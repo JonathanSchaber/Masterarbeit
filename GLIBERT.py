@@ -41,7 +41,7 @@ def parse_cmd_args():
             "--data_set", 
             type=str, 
             help="Indicate on which data set model should be trained",
-            choices=["deISEAR", "XNLI", "SCARE", "PAWS-X"]
+            choices=["deISEAR", "XNLI", "MLQA", "SCARE", "PAWS-X"]
             )
     parser.add_argument(
             "-l", 
@@ -148,33 +148,53 @@ class GLIBert(nn.Module):
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        self.classification_layer = nn.Sequential(
-            nn.Dropout(dropout),
-            nn.Linear(max_len*768, self.config["head_hidden_size"]),
-            nn.ReLU(inplace=True),
-            nn.Linear(self.config["head_hidden_size"], num_classes),
-            #nn.ReLU(inplace=True),
-            #nn.Dropout(dropout),
-            #nn.Linear(768, num_classes),
-        )
-        self.linear = nn.Linear(768, num_classes)
-        self.softmax = nn.LogSoftmax(dim=-1)
-
-    def reconstruct_word_level(self, batch, ids):
-        """method for joining subtokenized words back to word level
-        The idea is to average subtoken embeddings.
-        To preserve original length, append last subtoken-embedding (which
-        is per definition [PAD] since padding + 1 of max- length) until original
-        length is reached.
-
-        Args:
-            param1: torch.tensor embeddings of subtokens
-            param2: torch.tensor indices of subtokens
-        Returns:
-            torch.tensor of same input dimensions with averaged embeddings
-                        for subtokens
-        """
-        word_level_batch = []
+        if not SPAN_FLAG:
+            self.head_layer = nn.Sequential(
+                nn.Dropout(dropout),
+                nn.Linear(max_len*768, self.config["head_hidden_size"]),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.config["head_hidden_size"], num_classes),
+                #nn.ReLU(inplace=True),
+                #nn.Dropout(dropout),
+                #nn.Linear(768, num_classes),
+            )
+        else:
+            self.start_span_layer = nn.Sequential(
+                nn.Dropout(dropout),
+                nn.Linear(max_len*768, self.config["head_hidden_size"]),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.config["head_hidden_size"], max_len),
+                #nn.ReLU(inplace=True),
+                #nn.Dropout(dropout),
+                #nn.Linear(768, num_classes),
+            )
+            self.end_span_layer = nn.Sequential(
+                nn.Dropout(dropout),
+                nn.Linear(max_len*768, self.config["head_hidden_size"]),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.config["head_hidden_size"], max_len),
+                #nn.ReLU(inplace=True),
+                #nn.Dropout(dropout),
+                #nn.Linear(768, num_classes),
+            )
+            self.linear = nn.Linear(768, num_classes)
+            self.softmax = nn.LogSoftmax(dim=-1)
+    
+        def reconstruct_word_level(self, batch, ids):
+            """method for joining subtokenized words back to word level
+            The idea is to average subtoken embeddings.
+            To preserve original length, append last subtoken-embedding (which
+            is per definition [PAD] since padding + 1 of max- length) until original
+            length is reached.
+    
+            Args:
+                param1: torch.tensor embeddings of subtokens
+                param2: torch.tensor indices of subtokens
+            Returns:
+                torch.tensor of same input dimensions with averaged embeddings
+                            for subtokens
+            """
+            word_level_batch = []
         for j, sentence in enumerate(batch):
             word_level_sentence = []
             for i, token in enumerate(sentence):
@@ -217,10 +237,17 @@ class GLIBert(nn.Module):
                     last_hidden_state.shape[0], 
                     last_hidden_state.shape[1]*last_hidden_state.shape[2])
                 )
-        linear_output = self.classification_layer(reshaped_last_hidden)
-        #non_linear_output = Swish(linear_output)
-        proba = self.softmax(linear_output)
-        return proba
+        if not SPAN_FLAG:
+            output = self.head_layer(reshaped_last_hidden)
+            #non_output = Swish(output)
+            proba = self.softmax(output)
+            return proba
+        else:
+            start_span_output = self.start_span_layer(reshaped_last_hidden)
+            end_span_output = self.end_span_layer(reshaped_last_hidden)
+            start_span_proba = self.softmax(start_span_output)
+            end_span_proba = self.softmax(end_span_output)
+            return start_span_proba, end_span_proba
 
 
 def combine_srl_embs_bert_embs():
@@ -285,7 +312,7 @@ def fine_tune_BERT(config, stats_file=None):
     criterion = nn.NLLLoss()
 
     train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
-    mapping = {value: key for (key, value) in mapping.items()}
+    mapping = {value: key for (key, value) in mapping.items()} if mapping else None
 
     srl_encoder = SRL_Encoder(config)
     model = bert_head(config, num_classes, max_len)
@@ -330,18 +357,33 @@ def fine_tune_BERT(config, stats_file=None):
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             model.zero_grad()
-            outputs = model(b_input_ids)
-            if step % print_stats == 0 and not step == 0:
-                # Calculate elapsed time in minutes.
-                elapsed = format_time(time.time() - t0)
-                print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
-                print("  Last prediction: ")
-                print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-                print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
-                print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
-                print("")
-
-            loss = criterion(outputs, b_labels)
+            if not SPAN_FLAG:
+                outputs = model(b_input_ids)
+                if step % print_stats == 0 and not step == 0:
+                    # Calculate elapsed time in minutes.
+                    elapsed = format_time(time.time() - t0)
+                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
+                    print("  Last prediction: ")
+                    print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
+                    print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
+                    print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
+                    print("")
+    
+                loss = criterion(outputs, b_labels)
+            else:
+                start_span, end_span = model(b_input_ids)
+                if step % print_stats == 0 and not step == 0:
+                    # Calculate elapsed time in minutes.
+                    elapsed = format_time(time.time() - t0)
+                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
+                    print("  Last prediction: ")
+                    print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
+                    print("    Prediction:  {} - {}".format(start_span[-1].max(0).item(), end_span[-1].max(0).item()))
+                    print("    True Label:  {} - {} ".format(b_labels[-1].select(1, 0), b_labels[-1].select(1, 1)))
+                    print("")
+                start_loss = criterion(start_span, b_labels.select(1, 0))
+                end_loss = criterion(end_span, b_labels.select(1, 1))
+                loss = (start_loss + end_loss) / 2
             total_train_loss += loss.item()
             loss.backward()
             # This is to help prevent the "exploding gradients" problem. (Maybe not necessary?)
@@ -417,6 +459,8 @@ def main():
     location = args.location
     global data_set
     data_set = args.data_set
+    global SPAN_FLAG
+    SPAN_FLAG = False if data_set not in ["MLQA", "XQuAD"] else True
     stats_file = args.stats_file
     config = load_json(args.config)
     fine_tune_BERT(config, stats_file)
