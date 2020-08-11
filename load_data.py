@@ -47,7 +47,6 @@ class deISEAR_dataloader(Dataloader):
                 if emotion not in y_mapping:
                     y_mapping[emotion] = counter
                     counter += 1
-    
         self.data = data
         self.y_mapping = y_mapping
     
@@ -67,7 +66,7 @@ class deISEAR_dataloader(Dataloader):
         longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
         self.max_len = longest_sent + 1 if longest_sent < 512 else 512
         print("")
-        print("======== Longest sentence pair in data: ========")
+        print("======== Longest sentence ir in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
         print("length (tokenized): {}".format(self.max_len))
         for example in self.data:
@@ -364,7 +363,6 @@ class XNLI_dataloader(Dataloader):
             y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
-        #import ipdb; ipdb.set_trace()
         #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
         self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
@@ -382,10 +380,10 @@ def dataloader(config, location, data_set):
         Dataloader object (test)
         int
     """
-    if data_set == "MLQA":
-        dataloader = MLQA_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
-    elif data_set == "deISEAR":
+    if data_set == "deISEAR":
         dataloader = deISEAR_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+    elif data_set == "MLQA":
+        dataloader = MLQA_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
     elif data_set == "PAWS-X":
         dataloader = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
     elif data_set == "SCARE":
