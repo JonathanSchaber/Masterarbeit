@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  10 AUG 2020 14:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  11 AUG 2020 09:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1264,18 +1264,18 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 56.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 72.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 72.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 56.
+(Font)              <7> on input line 72.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 56.
+(Font)              <5> on input line 72.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 72.
  [4] [5] [6])
 [7]
 \openout2 = `chapters/chap4_architecture.aux'.
@@ -1287,7 +1287,7 @@ chapter 4.
 
 
 ] [9]
-<images/exampleParzu2.png, id=428, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=432, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1358,7 +1358,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=484, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=488, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1455,10 +1455,10 @@ Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 4D764DF5D5BC709654E693414134DE9E;2534.
  ) 
 Here is how much of TeX's memory you used:
- 11952 strings out of 492982
- 184194 string characters out of 6134895
- 406286 words of memory out of 5000000
- 15048 multiletter control sequences out of 15000+600000
+ 11958 strings out of 492982
+ 184244 string characters out of 6134895
+ 406368 words of memory out of 5000000
+ 15051 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1475,10 +1475,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (30 pages, 372303 bytes).
+Output written on CLthesis.pdf (30 pages, 373466 bytes).
 PDF statistics:
- 613 PDF objects out of 1000 (max. 8388607)
- 558 compressed objects within 6 object streams
- 152 named destinations out of 1000 (max. 500000)
+ 617 PDF objects out of 1000 (max. 8388607)
+ 562 compressed objects within 6 object streams
+ 155 named destinations out of 1000 (max. 500000)
  368 words of extra memory for PDF output out of 10000 (max. 10000000)
 

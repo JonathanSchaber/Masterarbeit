@@ -25,7 +25,7 @@
 \contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{4}{subsubsection.3.2.4.1}
 \contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{5}{subsubsection.3.2.4.2}
 \contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{5}{subsubsection.3.2.4.3}
-\contentsline {subsection}{\numberline {3.2.5}XNLI}{5}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.5}XNLI}{6}{subsection.3.2.5}
 \contentsline {subsection}{\numberline {3.2.6}XQuAD}{6}{subsection.3.2.6}
 \contentsline {chapter}{\numberline {4}Architecture}{8}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{8}{section.4.1}
