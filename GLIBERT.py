@@ -88,7 +88,7 @@ class SRL_Encoder(nn.Module):
         self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
         self.encoder = nn.GRU(
                             input_size=self.config["embedding_dim"],
-                            hidden_size=self.config["hidden_size"],
+                            gru_hidden_size=self.config["gru_hidden_size"],
                             num_layers=self.config["num_layers"],
                             bias=self.config["bias"],
                             batch_first=True,
@@ -142,17 +142,17 @@ class BertEntailmentClassifierCLS(nn.Module):
         return proba
 
 
-class BertEntailmentClassifierAllHidden(nn.Module):
+class GLIBert(nn.Module):
     def __init__(self, config, num_classes, max_len, dropout=0.1):
-        super(BertEntailmentClassifierAllHidden, self).__init__()
+        super(GLIBert, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        self.dense_layer = nn.Sequential(
+        self.classification_layer = nn.Sequential(
             nn.Dropout(dropout),
-            nn.Linear(max_len*768, 512),
+            nn.Linear(max_len*768, self.config["head_hidden_size"]),
             nn.ReLU(inplace=True),
-            nn.Linear(512, num_classes),
+            nn.Linear(self.config["head_hidden_size"], num_classes),
             #nn.ReLU(inplace=True),
             #nn.Dropout(dropout),
             #nn.Linear(768, num_classes),
@@ -217,7 +217,7 @@ class BertEntailmentClassifierAllHidden(nn.Module):
                     last_hidden_state.shape[0], 
                     last_hidden_state.shape[1]*last_hidden_state.shape[2])
                 )
-        linear_output = self.dense_layer(reshaped_last_hidden)
+        linear_output = self.classification_layer(reshaped_last_hidden)
         #non_linear_output = Swish(linear_output)
         proba = self.softmax(linear_output)
         return proba
