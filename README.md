@@ -21,8 +21,8 @@ To reproduce the results, download the data, store them locally, and run the com
 ## Preparing the data
 
 - deISEAR:
-    1. cat `dev` and `val` files and substitute '...' with BERT special token '[MASK]' in file `deISEAR.tsv`:
-	- `$ cat deISEAR.tsv deISEAR_validation.tsv > GLIBERT_deISEAR.tsv && sed -i 's/\.\.\./[MASK]/' GLIBERT_deISEAR.tsv`
+    1. substitute '...' with BERT special token '[MASK]' in file `deISEAR.tsv`:
+	- `$ sed -s 1d deISEAR.tsv GLIBERT_deISEAR.tsv && sed -i 's/\.\.\./[MASK]/' GLIBERT_deISEAR.tsv`
 - PAWS-X: 
     1. cat the files `dev_2k.tsv` and `test_2k.tsv` without the first line in the folder `de` into one file `paws-x_de_2k.tsv`:
 	- `$ sed -s 1d dev_2k.tsv test_2k.tsv > paws-x_de_2k.tsv`
