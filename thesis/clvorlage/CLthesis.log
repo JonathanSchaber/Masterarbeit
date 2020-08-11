@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  9 AUG 2020 18:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  10 AUG 2020 14:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1203,7 +1203,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 (./chapters/acronyms.tex
-Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--34
+Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--35
 [] 
  []
 
@@ -1276,18 +1276,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 56.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
- [4] [5]) [6]
+ [4] [5] [6])
+[7]
 \openout2 = `chapters/chap4_architecture.aux'.
 
-
-(./chapters/chap4_architecture.tex
+ (./chapters/chap4_architecture.tex
 chapter 4.
-[7
+[8
 
 
 
-] [8]
-<images/exampleParzu2.png, id=414, 827.34094pt x 358.33875pt>
+] [9]
+<images/exampleParzu2.png, id=428, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1299,31 +1299,32 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 66--66
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 72.
-[9 <./images/exampleParzu2.png (PNG copy)>]) [10]
+[10 <./images/exampleParzu2.png (PNG copy)>]) [11]
 \openout2 = `chapters/chap5_results.aux'.
 
- (./chapters/chap5_results.tex
+
+(./chapters/chap5_results.tex
 chapter 5.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 9.49997pt on input line 18.
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 11 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 12 undefined on i
 nput line 33.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 11 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 12 undefined on i
 nput line 34.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 11 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 12 undefined on input line
  36.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 11 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 12 undefined on input line
  37.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 11 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 12 undefined on input line
  37.
 
 
@@ -1332,19 +1333,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--38
  []
 
 
-Package natbib Warning: Citation `Koehn2005' on page 11 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 12 undefined on input line
  39.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 11 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 12 undefined on input line
  39.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 11 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 12 undefined on i
 nput line 40.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 11 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 12 undefined on i
 nput line 41.
 
 
@@ -1352,12 +1353,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
  []
 
-[11
+[12
 
 
 
 ]
-<images/Rosetta_Stone.jpg, id=471, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=484, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1367,7 +1368,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
  []
 
-[12 <./images/Rosetta_Stone.jpg>]) [13]
+[13 <./images/Rosetta_Stone.jpg>]) [14]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
@@ -1377,14 +1378,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [14
+) [15
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [15
+ (./chapters/glossary.tex) [16
 
 
 
@@ -1392,11 +1393,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [16
+(./CLthesis.bbl [17
 
 
 
-] [17])) [18]
+] [18])) [19]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -1409,7 +1410,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [19
+) [20
 
 
 
@@ -1422,7 +1423,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 27.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.49997pt on input line 27.
-[20
+[21
 
 
 
@@ -1431,7 +1432,7 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
  (./appendix/scripts.tex
 chapter B.
-[21
+[22
 
 
 
@@ -1454,10 +1455,10 @@ Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 4D764DF5D5BC709654E693414134DE9E;2534.
  ) 
 Here is how much of TeX's memory you used:
- 11942 strings out of 492982
- 184119 string characters out of 6134895
- 406204 words of memory out of 5000000
- 15046 multiletter control sequences out of 15000+600000
+ 11952 strings out of 492982
+ 184194 string characters out of 6134895
+ 406286 words of memory out of 5000000
+ 15048 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1474,10 +1475,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (29 pages, 369630 bytes).
+Output written on CLthesis.pdf (30 pages, 372303 bytes).
 PDF statistics:
- 597 PDF objects out of 1000 (max. 8388607)
- 543 compressed objects within 6 object streams
- 144 named destinations out of 1000 (max. 500000)
+ 613 PDF objects out of 1000 (max. 8388607)
+ 558 compressed objects within 6 object streams
+ 152 named destinations out of 1000 (max. 500000)
  368 words of extra memory for PDF output out of 10000 (max. 10000000)
 

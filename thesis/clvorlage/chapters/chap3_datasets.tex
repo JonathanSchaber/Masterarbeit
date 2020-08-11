@@ -112,9 +112,32 @@ This is also the chosen strategy for 51 reviews that had no labels at all (e.g. 
 
 \cite{conneau2018xnli}
 
+\begin{examples}
+	\label{ex:xnli}
+	\item Ich wusste nicht was ich vorhatte oder so, ich musste mich an einen bestimmten Ort in Washington melden.
+
+        Ich war noch nie in Washington, deshalb habe ich mich auf der Suche nach dem Ort verirrt, als ich dahin entsandt wurde.
+\end{examples}
+
+The label for example \ref{ex:xnli} is \textit{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
 number of examples= 7,500
 
 \subsection{XQuAD}
+
+\begin{examples}
+	\label{ex:xquad}
+	\item Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft als integraler Bestandteil der aristotelischen Kosmologie. Nach Ansicht von Aristoteles enthält die irdische Sphäre vier Elemente, die an verschiedenen „natürlichen Orten“ darin zur Ruhe kommen. Aristoteles glaubte, dass bewegungslose Objekte auf der Erde, die hauptsächlich aus den Elementen Erde und Wasser bestehen, an ihrem natürlichen Ort auf dem Boden liegen und dass sie so bleiben würden, wenn man sie in Ruhe lässt. Er unterschied zwischen der angeborenen Tendenz von Objekten, ihren „natürlichen Ort“ zu finden (z. B. dass schwere Körper fallen), was eine „natürliche Bewegung“ darstellt und unnatürlichen oder erzwungenen Bewegungen, die den fortwährenden Einsatz einer Kraft erfordern. Diese Theorie, die auf der alltäglichen Erfahrung basiert, wie sich Objekte bewegen, wie z. B. die ständige Anwendung einer Kraft, die erforderlich ist, um einen Wagen in Bewegung zu halten, hatte konzeptionelle Schwierigkeiten, das Verhalten von Projektilen, wie beispielsweise den Flug von Pfeilen, zu erklären. Der Ort, an dem der Bogenschütze den Pfeil bewegt, liegt am Anfang des Fluges und während der Pfeil durch die Luft gleitet, wirkt keine erkennbare effiziente Ursache darauf ein. Aristoteles war sich dieses Problems bewusst und vermutete, dass die durch den Flugweg des Projektils verdrängte Luft das Projektil zu seinem Ziel trägt. Diese Erklärung erfordert ein Kontinuum wie Luft zur Veränderung des Ortes im Allgemeinen.
+\end{examples}
+
+The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the data set are the following:
+
+\begin{enumerate}
+	\item Wer leitete eine philosophische Diskussion über Kraft? $\rightarrow$ Aristoteles
+	\item Wovon war das Konzept der Kraft ein integraler Bestandteil? $\rightarrow$ aristotelischen Kosmologie
+	\item Aus wie vielen Elementen besteht die irdische Sphäre nach Ansicht des Aristoteles? $\rightarrow$ vier
+	\item Wo vermutete Aristoteles den natürlichen Ort für Erd- und Wasserelemente? $\rightarrow$ auf dem Boden
+	\item Was bezeichnete Aristoteles als erzwungene Bewegung? $\rightarrow$ unnatürlichen
+\end{enumerate}
 
 \cite{artetxe2019cross}
 
