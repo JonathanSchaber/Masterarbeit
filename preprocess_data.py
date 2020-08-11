@@ -1,3 +1,4 @@
+import argparse
 import csv
 import json
 import os
@@ -22,7 +23,7 @@ def parse_cmd_args():
             "--data_set", 
             type=str, 
             help="Indicate on which data set model should be trained",
-            choices=["XNLI", "SCARE", "PAWS-X"]
+            choices=["XNLI", "SCARE", "PAWS-X", "MLQA"]
             )
     parser.add_argument(
             "-p", 
@@ -128,8 +129,9 @@ def preprocess_MLQA(path, argument_model_config):
                 text = json_data["data"][i]["paragraphs"][j]["context"]
                 for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
                     question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
-                    start_span = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
-                    spans_text_qas_srl.append([start_span, text, question])
+                    start_span = len(text[:json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]].split())
+                    end_span = start_span + (len(json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"].split()) - 1)
+                    spans_text_qas_srl.append([start_span, end_span, text, question])
 
     with open(path_outfile, "w") as f:
         for element in spans_text_qas_srl:
@@ -269,10 +271,9 @@ def main():
         argument_model_config = args.argument_model_config 
     data_set = args.data_set
     path = args.path
-    dsrl = DSRL(argument_model_config)
-    ParZu_parser = create_ParZu_parser()
-    #json_data = read_data(path_to_data)
-    if data_set == "PAWS-X":
+    if data_set == "MLQA":
+        preprocess_MLQA(path, argument_model_config)
+    elif data_set == "PAWS-X":
         preprocess_SCARE(path, argument_model_config)
     elif data_set == "SCARE":
         preprocess_PAWS_X(path, argument_model_config)
