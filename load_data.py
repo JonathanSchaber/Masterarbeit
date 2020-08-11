@@ -44,8 +44,8 @@ class deISEAR_dataloader(Dataloader):
             for row in f_reader:
                 emotion, sentence = row[1], row[2]
                 data.append((emotion, sentence))
-                if label not in y_mapping:
-                    y_mapping[label] = counter
+                if emotion not in y_mapping:
+                    y_mapping[emotion] = counter
                     counter += 1
     
         self.data = data
