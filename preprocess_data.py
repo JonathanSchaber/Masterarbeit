@@ -12,6 +12,12 @@ def parse_cmd_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
+            "-a", 
+            "--argument_model_config", 
+            type=str, 
+            help="Argument model config for DAMESRL",
+            )
+    parser.add_argument(
             "-d", 
             "--data_set", 
             type=str, 
@@ -91,10 +97,10 @@ def get_majority_label(labels):
     elif pos == neg:
         return ("Neutral", 0, num)
     elif pos > neg:
-        margin = int(((pos -neg)**2)**0.5)
+        margin = int(((pos - neg)**2)**0.5)
         return ("Positive", True, num) if margin > 1 else ("Positive", False, num)
     else:
-        margin = int(((pos -neg)**2)**0.5)
+        margin = int(((pos - neg)**2)**0.5)
         return ("Negative", True, num) if margin > 1 else ("Negative", False, num)
 
 
@@ -224,13 +230,22 @@ def preprocess_SCARE_reviews(path, path_outfile):
 
 
 def main():
-    argument_model_config = "../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
-    path_to_data = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de.json"
-    path_outfile = "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA_V1/dev/dev-context-de-question-de_srl.json"
+    args = parse_cmd_args()
+    global argument_model_config
+    argument_model_config = args.argument_model_config if args.argument_model_config
+    data_set = args.data_set
+    path = args.path
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
-    json_data = read_data(path_to_data)
-    #preprocess_MLQA_v1(json_data, dsrl, ParZu_parser, path_outfile)
+    #json_data = read_data(path_to_data)
+    if data_set == "PAWS-X":
+        preprocess_SCARE(path, argument_model_config)
+    elif data_set == "SCARE":
+        preprocess_PAWS_X(path, argument_model_config)
+    elif data_set == "XNLI":
+        preprocess_PAWS_X(path, argument_model_config)
+    elif data_set == "XQuAD":
+        preprocess_PAWS_X(path, argument_model_config)
     
 
 if __name__ == "__main__":
