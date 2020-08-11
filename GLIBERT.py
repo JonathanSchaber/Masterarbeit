@@ -148,6 +148,8 @@ class GLIBert(nn.Module):
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        #self.linear = nn.Linear(768, num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
         if not SPAN_FLAG:
             self.head_layer = nn.Sequential(
                 nn.Dropout(dropout),
@@ -177,24 +179,22 @@ class GLIBert(nn.Module):
                 #nn.Dropout(dropout),
                 #nn.Linear(768, num_classes),
             )
-            self.linear = nn.Linear(768, num_classes)
-            self.softmax = nn.LogSoftmax(dim=-1)
     
-        def reconstruct_word_level(self, batch, ids):
-            """method for joining subtokenized words back to word level
-            The idea is to average subtoken embeddings.
-            To preserve original length, append last subtoken-embedding (which
-            is per definition [PAD] since padding + 1 of max- length) until original
-            length is reached.
-    
-            Args:
-                param1: torch.tensor embeddings of subtokens
-                param2: torch.tensor indices of subtokens
-            Returns:
-                torch.tensor of same input dimensions with averaged embeddings
-                            for subtokens
-            """
-            word_level_batch = []
+    def reconstruct_word_level(self, batch, ids):
+        """method for joining subtokenized words back to word level
+        The idea is to average subtoken embeddings.
+        To preserve original length, append last subtoken-embedding (which
+        is per definition [PAD] since padding + 1 of max- length) until original
+        length is reached.
+
+        Args:
+            param1: torch.tensor embeddings of subtokens
+            param2: torch.tensor indices of subtokens
+        Returns:
+            torch.tensor of same input dimensions with averaged embeddings
+                        for subtokens
+        """
+        word_level_batch = []
         for j, sentence in enumerate(batch):
             word_level_sentence = []
             for i, token in enumerate(sentence):
@@ -271,6 +271,7 @@ def compute_acc(preds, labels):
         float
     """
     correct = 0
+    import ipdb; ipdb.set_trace()
     assert len(preds) == len(labels)
     for pred, lab in zip(preds, labels):
         if pred == lab: correct += 1
@@ -368,7 +369,6 @@ def fine_tune_BERT(config, stats_file=None):
                     print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
                     print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
                     print("")
-    
                 loss = criterion(outputs, b_labels)
             else:
                 start_span, end_span = model(b_input_ids)
@@ -378,8 +378,8 @@ def fine_tune_BERT(config, stats_file=None):
                     print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
                     print("  Last prediction: ")
                     print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-                    print("    Prediction:  {} - {}".format(start_span[-1].max(0).item(), end_span[-1].max(0).item()))
-                    print("    True Label:  {} - {} ".format(b_labels[-1].select(1, 0), b_labels[-1].select(1, 1)))
+                    print("    Prediction:  {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
+                    print("    True Label:  {} - {} ".format(b_labels[-1].select(0, 0).item(), b_labels[-1].select(0, 1).item()))
                     print("")
                 start_loss = criterion(start_span, b_labels.select(1, 0))
                 end_loss = criterion(end_span, b_labels.select(1, 1))
