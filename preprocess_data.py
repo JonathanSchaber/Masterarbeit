@@ -104,6 +104,39 @@ def get_majority_label(labels):
         return ("Negative", True, num) if margin > 1 else ("Negative", False, num)
 
 
+def preprocess_MLQA(path, argument_model_config):
+    """Preprocess MLQA data
+    ATTENTION: path to root directory, not file(s)!
+    Args:
+        param1: str
+        param2: str
+    Returns:
+        None
+    """
+    spans_text_qas_srl = []
+    path_outfile = str(Path(path).parent) + "/paws-x_SRL.tsv"
+
+    file_paths = [path + "dev/dev-context-de-question-de.json", path + "test/test-context-de-question-de.json"]
+
+    for path in file_paths:
+        with open(path, "r") as f:
+            file = f.read()
+            json_data = json.loads(file)
+        
+        for i in range(len(json_data["data"])):
+            for j in range(len(json_data["data"][i]["paragraphs"])):
+                text = json["data"][i]["paragrahps"][i]["context"]
+                for k in json_data["data"][i]["paragraphs"][i]["qas"]:
+                    question = json_data["data"][i]["paragraphs"][i]["qas"]["question"]
+                    start_span = json_data["data"][i]["paragraphs"][i]["qas"]["answer_start"]
+                    spans_text_qas_srl.append(start_span, text, question)
+
+    with open(path_outfile, "w"):
+        for element in spans_text_qas_srl:
+            csv.writer(f, delimiter="\t").writerow(element)
+
+
+
 def preprocess_PAWS_X(path, argument_model_config):
     """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
     ATTENTION: path points to directory, not input file!
@@ -231,8 +264,9 @@ def preprocess_SCARE_reviews(path, path_outfile):
 
 def main():
     args = parse_cmd_args()
-    global argument_model_config
-    argument_model_config = args.argument_model_config if args.argument_model_config
+    if args.argument_model_config:
+        global argument_model_config
+        argument_model_config = args.argument_model_config 
     data_set = args.data_set
     path = args.path
     dsrl = DSRL(argument_model_config)
