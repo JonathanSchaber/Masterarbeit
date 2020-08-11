@@ -22,7 +22,7 @@ To reproduce the results, download the data, store them locally, and run the com
 
 - PAWS-X: 
     1. cat the files `dev_2k.tsv` and `test_2k.tsv` without the first line in the folder `de` into one file `paws-x_de_2k.tsv`:
-        - `$ sed -s 1d dev_2k.tsv test_2k.tsv > paws-x_de_2k.tsv`
+	- `$ sed -s 1d dev_2k.tsv test_2k.tsv > paws-x_de_2k.tsv`
     2. run the `preprocess_data.py` script on it:
 	- `$ python preprocess_data.py XXXXXXXXXXXXX`
 - SCARE (v1.0.0): cat all .txt-files in the `annotations` folder into one file `annotations.txt` and cat all .csv-files in the `annotations` folder into one file `annotations.csv`:
