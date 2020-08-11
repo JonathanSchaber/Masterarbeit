@@ -41,7 +41,7 @@ def parse_cmd_args():
             "--data_set", 
             type=str, 
             help="Indicate on which data set model should be trained",
-            choices=["XNLI", "SCARE", "PAWS-X"]
+            choices=["deISEAR", "XNLI", "SCARE", "PAWS-X"]
             )
     parser.add_argument(
             "-l", 
@@ -88,7 +88,7 @@ class SRL_Encoder(nn.Module):
         self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
         self.encoder = nn.GRU(
                             input_size=self.config["embedding_dim"],
-                            gru_hidden_size=self.config["gru_hidden_size"],
+                            hidden_size=self.config["gru_hidden_size"],
                             num_layers=self.config["num_layers"],
                             bias=self.config["bias"],
                             batch_first=True,
