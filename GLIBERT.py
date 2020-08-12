@@ -355,6 +355,7 @@ def fine_tune_BERT(config, stats_file=None):
     training_stats = []
     training_stats.append(config)
     total_t0 = time.time()
+    PATIENCE = 0
 
     for epoch_i in range(0, epochs):
         print("")
@@ -364,8 +365,8 @@ def fine_tune_BERT(config, stats_file=None):
         total_train_loss = 0
         model.train()
         for step, batch in enumerate(train_data):
-            b_input_ids = batch[1].to(device)
-            b_labels = batch[0].to(device)
+            b_input_ids = batch[0].to(device)
+            b_labels = batch[1].to(device)
             model.zero_grad()
             if not SPAN_FLAG:
                 outputs = model(b_input_ids)
@@ -486,15 +487,22 @@ def fine_tune_BERT(config, stats_file=None):
             }
         )
 
-        if config["stop_overfitting"]:
-            if avg_train_loss < avg_val_loss:
-                print("")
-                print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
-                                                                                    avg_train_loss,
-                                                                                    avg_val_loss
-                                                                                    ))
-                print("  Stopping fine-tuning!")
-                break
+        if config["early_stopping"]:
+            if epoch_i > 1:
+                if training_stats[-2]["Valid. Loss"] > training_stats[-1]["Valid. Loss"]:
+                    if PATIENCE > 4:
+                        print("")
+                        print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
+                                                                                            avg_train_loss,
+                                                                                            avg_val_loss
+                                                                                            ))
+                        print("  Stopping fine-tuning!")
+                        break
+                    PATIENCE += 1
+                    print("")
+                    print("Attention: Validation loss decreased for the {} time in series...")
+                else:
+                    PATIENCE = 4
 
     if stats_file: write_stats(stats_file, training_stats)
     print("")
