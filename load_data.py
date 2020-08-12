@@ -95,7 +95,7 @@ class deISEAR_dataloader(Dataloader):
 ####################################
 ########### M L Q A ############
 
-class MLQA_dataloader(Dataloader):
+class MLQA_XQuAD_dataloader(Dataloader):
     def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
         self.batch_size = batch_size
         self.merge_subtokens = merge_subtokens
@@ -188,8 +188,8 @@ class MLQA_dataloader(Dataloader):
             start_span = int(start_span) + 1
             end_span = int(end_span) + 1
             x_tensor = self.tokenizer.encode(
-                                        context, 
-                                        question,
+                                        question, 
+                                        context,
                                         add_special_tokens = True, 
                                         max_length = self.max_len,
                                         pad_to_max_length = True, 
@@ -433,8 +433,8 @@ def dataloader(config, location, data_set):
                             config[location]["BERT"],
                             config["batch_size"],
                             )
-    elif data_set == "MLQA":
-        dataloader = MLQA_dataloader(
+    elif data_set == "MLQA" or data_set == "XQuAD":
+        dataloader = MLQA_XQuAD_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
@@ -509,14 +509,13 @@ def dataloader_torch(x_tensor, y_tensor, batch_size):
 #    Returns:
 #        list of tuples of strs
 #    """
-#    srl_xnli = []
-#    num_examples = len(data)
-#    for i, example in enumerate(data):
-#        if i % 100 == 0:
-#            print("processed the {}th example out of {}...".format(i, num_examples))
-#        label, sentence_1, sentence_2 = example
-#        srl_xnli.append((label, sentence_1, sentence_2, predict_semRoles(dsrl, process_text(parser, sentence_1)), predict_semRoles(dsrl, process_text(parser, sentence_2))))
+##    srl_xnli = []
+##    num_examples = len(data)
+##    for i, example in enumerate(data):
+##        if i % 100 == 0:
+##            print("processed the {}th example out of {}...".format(i, num_examples))
+##        label, sentence_1, sentence_2 = example
+##        srl_xnli.append((label, sentence_1, sentence_2, predict_semRoles(dsrl, process_text(parser, sentence_1)), predict_semRoles(dsrl, process_text(parser, sentence_2))))
+##
+##    return srl_xnli
 #
-#    return srl_xnli
-
-
