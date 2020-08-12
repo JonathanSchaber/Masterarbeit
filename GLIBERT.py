@@ -449,7 +449,13 @@ def fine_tune_BERT(config, stats_file=None):
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
                 else:
-                    start_span, end_span = model(b_input_ids)
+                    b_attention_mask = batch[2].to(device)
+                    b_token_type_ids = batch[3].to(device)
+                    start_span, end_span = model(
+                                        b_input_ids,
+                                        attention_mask=b_attention_mask,
+                                        token_type_ids=b_token_type_ids
+                                        )
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
                     start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
