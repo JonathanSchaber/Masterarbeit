@@ -148,13 +148,19 @@ class MLQA_XQuAD_dataloader(Dataloader):
                 start_index, text, context, question = row[0], row[1], row[2], row[3]
                 start_index = int(start_index)
                 if not self.merge_subtokens:
+                    len_question = len(self.tokenizer.tokenize(question))
                     tokenized_context = self.tokenizer.tokenize(context[:start_index])
                     start_span = len(tokenized_context)
                     end_span = start_span + len(self.tokenizer.tokenize(text)) - 1
+                    start_span += len_question + 1
+                    end_span += len_question + 1
                 else:
+                    len_question = len(self.merge_subs(self.tokenizer.tokenize(question)))
                     tokenized_context = self.tokenizer.tokenize(context[:start_index])
                     start_span = len(self.merge_subs(tokenized_context))
                     end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
+                    start_span += len_question + 1
+                    end_span += len_question + 1
 
                 data.append((start_span, end_span, context, question))
     
