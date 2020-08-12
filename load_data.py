@@ -96,6 +96,42 @@ class deISEAR_dataloader(Dataloader):
 ########### M L Q A ############
 
 class MLQA_dataloader(Dataloader):
+    def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
+        self.batch_size = batch_size
+        self.merge_subtokens = merge_subtokens
+        self.path = path_data
+        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
+        self.data = None
+        self.max_len = None
+        self.y_mapping = None
+        self.x_tensor = None
+        self.y_tensor = None
+
+    def merge_subs(subtoken_list): 
+        """merges a sub-tokenized sentence back to token level (without special tokens).
+        Args:
+            param1: list
+        Returns:
+            list
+        """
+        token_list = [] 
+        for i, token in enumerate(subtoken_list): 
+            if token.startswith("##"): 
+                continue 
+            elif i + 1 == len(subtoken_list): 
+                token_list.append(token) 
+            elif not subtoken_list[i+1].startswith("##"): 
+                token_list.append(token) 
+            else: 
+                current_word = [token] 
+                for subtoken in subtoken_list[i+1:]: 
+                    if subtoken.startswith("##"): 
+                        current_word.append(subtoken.lstrip("##")) 
+                    else: 
+                        break 
+                token_list.append("".join(current_word)) 
+        return token_list  
+
     def load(self):
         """loads the data from MLQA data set
         Args:
@@ -108,8 +144,9 @@ class MLQA_dataloader(Dataloader):
         with open(self.path, "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             for row in f_reader:
-                start_span, end_span, context, question = row[0], row[1], row[2], row[3]
-                data.append((start_span, end_span, context, question))
+                start_index, context, question = row[0], row[1], row[2]
+                if 
+                data.append((start_index, context, question))
     
         self.data = data
     
@@ -381,15 +418,36 @@ def dataloader(config, location, data_set):
         int
     """
     if data_set == "deISEAR":
-        dataloader = deISEAR_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        dataloader = deISEAR_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            )
     elif data_set == "MLQA":
-        dataloader = MLQA_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        dataloader = MLQA_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
     elif data_set == "PAWS-X":
-        dataloader = PAWS_X_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        dataloader = PAWS_X_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"]
+                            )
     elif data_set == "SCARE":
-        dataloader = SCARE_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        dataloader = SCARE_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"]
+                            )
     elif data_set == "XNLI":
-        dataloader = XNLI_dataloader(config[location][data_set], config[location]["BERT"], config["batch_size"])
+        dataloader = XNLI_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            )
 
     dataloader.load()
     dataloader.load_torch()
