@@ -93,7 +93,7 @@ class SRL_Encoder(nn.Module):
                             num_layers=self.config["num_layers"],
                             bias=self.config["bias"],
                             batch_first=True,
-                            dropout=0.1,
+                            dropout=self.config["gru_dropout"],
                             bidirectional=self.config["bidirectional"]
                             )
 
@@ -144,7 +144,7 @@ class BertEntailmentClassifierCLS(nn.Module):
 
 
 class GLIBert(nn.Module):
-    def __init__(self, config, num_classes, max_len, dropout=0.1):
+    def __init__(self, config, num_classes, max_len):
         super(GLIBert, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
@@ -153,7 +153,7 @@ class GLIBert(nn.Module):
         self.softmax = nn.LogSoftmax(dim=-1)
         if not SPAN_FLAG:
             self.head_layer = nn.Sequential(
-                nn.Dropout(dropout),
+                nn.Dropout(self.config["dropout"]),
                 nn.Linear(max_len*768, self.config["head_hidden_size"]),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.config["head_hidden_size"], num_classes),
@@ -163,7 +163,7 @@ class GLIBert(nn.Module):
             )
         else:
             self.start_span_layer = nn.Sequential(
-                nn.Dropout(dropout),
+                nn.Dropout(self.config["dropout"]),
                 nn.Linear(max_len*768, self.config["head_hidden_size"]),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.config["head_hidden_size"], max_len),
@@ -172,7 +172,7 @@ class GLIBert(nn.Module):
                 #nn.Linear(768, num_classes),
             )
             self.end_span_layer = nn.Sequential(
-                nn.Dropout(dropout),
+                nn.Dropout(self.config["dropout"]),
                 nn.Linear(max_len*768, self.config["head_hidden_size"]),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.config["head_hidden_size"], max_len),
