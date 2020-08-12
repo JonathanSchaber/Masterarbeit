@@ -17,9 +17,9 @@
 		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/de/paws-x_SRL.tsv",
 		"XQuAD": "/srv/scratch3/jschab_jgoldz/MA/data/XQuAD/XQuAD.tsv"
 	},
-	"epochs": 4,
-	"batch_size": 8,
-	"gpu": 2,
+	"epochs": 20,
+	"batch_size": 32,
+	"gpu": 0,
 	"print_stats": 40,
 	"merge_subtokens": true,
 	"bert_head": "GLIBert",
@@ -30,5 +30,7 @@
 	"num_layers": 2,
 	"bias": true,
 	"bidirectional": true,
-	"stop_overfitting": false
+	"early_stopping": true,
+	"dropout": 0.1,
+	"gru_dropout": 0.1
 }
