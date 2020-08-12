@@ -33,8 +33,8 @@ class Dataloader:
         max_length = 0
         for sent_length in sent_lengths:
             max_length += sent_length
-    max_length = max_length += to_add
-    return max_length if max_length < 513 else 512
+        max_length += to_add
+        return max_length if max_length < 513 else 512
 
 ######## d e I S E A R ########
 
@@ -76,7 +76,6 @@ class deISEAR_dataloader(Dataloader):
         y_tensor_list = []
         longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
         self.max_len = self.check_max_length(longest_sent)
-        #self.max_len = longest_sent + 1 if longest_sent < 512 else 512
         print("")
         print("======== Longest sentence ir in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -198,8 +197,7 @@ class MLQA_XQuAD_dataloader(Dataloader):
 
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data]) 
-        self.max_len = self.check_max_length(longest_sent1, longest_sent2)
-        #self.max_len = longest_sent_1 + longest_sent_2 + 3 if longest_sent_1 + longest_sent_2 + 3 < 513 else 512
+        self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
         print("")
         print("======== Longest sentence pair in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -276,7 +274,6 @@ class PAWS_X_dataloader(Dataloader):
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
         self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
-        #self.max_len = longest_sent_1 + longest_sent_2 + 3 if longest_sent_1 + longest_sent_2 < 512 else 512
         print("")
         print("======== Longest sentence pair in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -347,7 +344,6 @@ class SCARE_dataloader(Dataloader):
         y_tensor_list = []
         longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data])
         self.max_len = self.check_max_length(longest_sent)
-        #self.max_len = longest_sent + 1 if longest_sent < 512 else 512
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -418,7 +414,6 @@ class XNLI_dataloader(Dataloader):
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
         self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
-        #self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 512 else 512
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
