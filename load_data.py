@@ -27,6 +27,15 @@ class Dataloader:
         self.x_tensor = None
         self.y_tensor = None
 
+    @staticmethod
+    def check_max_length(*sent_lengths):
+        to_add = 2 if len(sent_lengths) == 1 else 3
+        max_length = 0
+        for sent_length in sent_lengths:
+            max_length += sent_length
+    max_length = max_length += to_add
+    return max_length if max_length < 513 else 512
+
 ######## d e I S E A R ########
 
 class deISEAR_dataloader(Dataloader):
@@ -66,7 +75,8 @@ class deISEAR_dataloader(Dataloader):
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
-        self.max_len = longest_sent + 1 if longest_sent < 512 else 512
+        self.max_len = self.check_max_length(longest_sent)
+        #self.max_len = longest_sent + 1 if longest_sent < 512 else 512
         print("")
         print("======== Longest sentence ir in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -188,7 +198,8 @@ class MLQA_XQuAD_dataloader(Dataloader):
 
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data]) 
-        self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 513 else 512
+        self.max_len = self.check_max_length(longest_sent1, longest_sent2)
+        #self.max_len = longest_sent_1 + longest_sent_2 + 3 if longest_sent_1 + longest_sent_2 + 3 < 513 else 512
         print("")
         print("======== Longest sentence pair in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -264,7 +275,8 @@ class PAWS_X_dataloader(Dataloader):
         y_tensor_list = []
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
-        self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 512 else 512
+        self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
+        #self.max_len = longest_sent_1 + longest_sent_2 + 3 if longest_sent_1 + longest_sent_2 < 512 else 512
         print("")
         print("======== Longest sentence pair in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -334,7 +346,8 @@ class SCARE_dataloader(Dataloader):
         x_tensor_list = []
         y_tensor_list = []
         longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data])
-        self.max_len = longest_sent + 1 if longest_sent < 512 else 512
+        self.max_len = self.check_max_length(longest_sent)
+        #self.max_len = longest_sent + 1 if longest_sent < 512 else 512
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -404,7 +417,8 @@ class XNLI_dataloader(Dataloader):
         y_tensor_list = []
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
-        self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 512 else 512
+        self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
+        #self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 512 else 512
         print("")
         print("======== Longest sentence in data: ========")
         #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
@@ -481,8 +495,8 @@ def dataloader(config, location, data_set):
     dataloader.load()
     dataloader.load_torch()
     train_dataloader, test_dataloader = dataloader_torch(
-                                            dataloader.y_tensor,
                                             dataloader.x_tensor,
+                                            dataloader.y_tensor,
                                             attention_mask=dataloader.attention_mask,
                                             token_type_ids=dataloader.token_type_ids,
                                             batch_size=dataloader.batch_size
@@ -494,7 +508,7 @@ def dataloader(config, location, data_set):
     return train_dataloader, test_dataloader, num_classes, max_len, mapping
 
 
-def dataloader_torch(y_tensor, x_tensor, attention_mask=None, token_type_ids=None, batch_size=None):
+def dataloader_torch(x_tensor, y_tensor, attention_mask=None, token_type_ids=None, batch_size=None):
     """creates dataloader torch objects
     Args:
         param1: torch tensor
@@ -504,9 +518,9 @@ def dataloader_torch(y_tensor, x_tensor, attention_mask=None, token_type_ids=Non
         torch Dataloader object 
     """
     if token_type_ids == None:
-        dataset = TensorDataset(y_tensor, x_tensor)
+        dataset = TensorDataset(x_tensor, y_tensor)
     else:
-        dataset = TensorDataset(y_tensor, x_tensor, attention_mask, token_type_ids)
+        dataset = TensorDataset(x_tensor, y_tensor, attention_mask, token_type_ids)
     train_size = int(0.9 * len(dataset))
     test_size = len(dataset) - train_size
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
