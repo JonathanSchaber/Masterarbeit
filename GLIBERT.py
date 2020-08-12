@@ -25,6 +25,7 @@ from transformers import (
         )
 
 from load_data import *
+merge_subs = MLQA_dataloader.merge_subs
 
 
 def parse_cmd_args():
@@ -381,19 +382,17 @@ def fine_tune_BERT(config, stats_file=None):
                     if not merge_subtokens:
                         sentence = model.tokenizer.tokenize(
                                             model.tokenizer.decode(
-                                                b_input_ids[-1],
-                                                skip_special_tokens=True
+                                                b_input_ids[-1]
                                                 )
                                             )
                     else:
                         sentence = merge_subs(model.tokenizer.tokenize(
                                             model.tokenizer.decode(
-                                                b_input_ids[-1],
-                                                skip_special_tokens=True
+                                                b_input_ids[-1]
                                                 )
-                                            )
-                    prediction = sentence[start_span[-1].max(0).indices.item()-1:end_span[-1].max(0).indices.item()] 
-                    true_span = sentence[b_labels[-1].select(0, 0).item()-1:b_labels[-1].select(0, 1).item()-1]
+                                            ))
+                    prediction = sentence[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1] 
+                    true_span = sentence[b_labels[-1].select(0, 0).item():b_labels[-1].select(0, 1).item()+1]
                     print("    Prediction:  {}".format(" ".join(prediction)))
                     #print("       Indices: {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
                     print("    True Span:  {}".format(" ".join(true_span)))
