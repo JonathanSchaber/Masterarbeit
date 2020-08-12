@@ -107,6 +107,7 @@ class MLQA_dataloader(Dataloader):
         self.x_tensor = None
         self.y_tensor = None
 
+    @staticmethod
     def merge_subs(subtoken_list): 
         """merges a sub-tokenized sentence back to token level (without special tokens).
         Args:
@@ -144,12 +145,15 @@ class MLQA_dataloader(Dataloader):
         with open(self.path, "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             for row in f_reader:
-                start_index, text, context, question = row[0], row[1], row[2]
+                start_index, text, context, question = row[0], row[1], row[2], row[3]
+                start_index = int(start_index)
                 if not self.merge_subtokens:
-                    start_span = len(self.tokenizer.tokenize(context[:start_index])) + 1
+                    tokenized_context = self.tokenizer.tokenize(context[:start_index])
+                    start_span = len(tokenized_context)
                     end_span = start_span + len(self.tokenizer.tokenize(text)) - 1
                 else:
-                    start_span = len(self.merge_subs(self.tokenizer.tokenize(context[:start_index]))) + 1
+                    tokenized_context = self.tokenizer.tokenize(context[:start_index])
+                    start_span = len(self.merge_subs(tokenized_context))
                     end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
 
                 data.append((start_span, end_span, context, question))
