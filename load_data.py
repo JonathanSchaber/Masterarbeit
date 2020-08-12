@@ -21,6 +21,8 @@ class Dataloader:
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.data = None
         self.max_len = None
+        self.attention_mask = None
+        self.token_type_ids = None
         self.y_mapping = None
         self.x_tensor = None
         self.y_tensor = None
@@ -105,6 +107,8 @@ class MLQA_XQuAD_dataloader(Dataloader):
         self.max_len = None
         self.y_mapping = None
         self.x_tensor = None
+        self.attention_mask = None
+        self.token_type_ids = None
         self.y_tensor = None
 
     @staticmethod
@@ -177,8 +181,11 @@ class MLQA_XQuAD_dataloader(Dataloader):
             tensor
             int
         """
-        x_tensor_list = []
+        input_ids = []
+        attention_mask = []
+        token_type_ids = []
         y_tensor_list = []
+
         longest_sent_1 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
         longest_sent_2 = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data]) 
         self.max_len = longest_sent_1 + longest_sent_2 + 1 if longest_sent_1 + longest_sent_2 < 513 else 512
@@ -193,26 +200,26 @@ class MLQA_XQuAD_dataloader(Dataloader):
             # Since [CLS] is not part of the sentence, indices must be increased by 1
             start_span = int(start_span) + 1
             end_span = int(end_span) + 1
-            x_tensor = self.tokenizer.encode(
+            encoded_dict = self.tokenizer.encode_plus(
                                         question, 
                                         context,
                                         add_special_tokens = True, 
                                         max_length = self.max_len,
                                         pad_to_max_length = True, 
-                                        truncation=True, 
-                                        return_tensors = 'pt'
+                                        truncation = True, 
+                                        return_tensors = 'pt',
+                                        return_token_type_ids = True,
+                                        return_attention_mask = True
                                         )
-            attention_mask = torch.tensor([1 if self.tokenizer.convert_ids_to_tokens(token.item()) != "[PAD]" else 0 for token in x_tensor[0]])
-            sep_index = x_tensor[0].tolist().index(self.tokenizer.sep_token_id)
-            num_0 = sep_index + 1
-            num_1 = self.max_len - num_0
-            token_type_ids = torch.tensor([0]*num_0 + [1]*num_1)
-            import ipdb; ipdb.set_trace()
-            x_tensor_list.append(x_tensor)
+            input_ids.append(encoded_dict["input_ids"])
+            attention_mask.append(encoded_dict["attention_mask"])
+            token_type_ids.append(encoded_dict["token_type_ids"])
             y_tensor = torch.tensor([start_span, end_span])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
-        self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
+        self.x_tensor = torch.cat(input_ids, dim=0)
+        self.attention_mask = torch.cat(attention_mask, dim=0)
+        self.token_type_ids = torch.cat(token_type_ids, dim=0)
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
 ####################################
@@ -445,7 +452,7 @@ def dataloader(config, location, data_set):
                             config[location]["BERT"],
                             config["batch_size"],
                             )
-    elif data_set == "MLQA" or data_set == "XQuAD":
+    elif data_set in ["MLQA", "XQuAD"]:
         dataloader = MLQA_XQuAD_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
@@ -474,9 +481,11 @@ def dataloader(config, location, data_set):
     dataloader.load()
     dataloader.load_torch()
     train_dataloader, test_dataloader = dataloader_torch(
-                                            dataloader.x_tensor,
                                             dataloader.y_tensor,
-                                            dataloader.batch_size
+                                            dataloader.x_tensor,
+                                            attention_mask=dataloader.attention_mask,
+                                            token_type_ids=dataloader.token_type_ids,
+                                            batch_size=dataloader.batch_size
                                             )
     num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
     mapping = dataloader.y_mapping
@@ -485,7 +494,7 @@ def dataloader(config, location, data_set):
     return train_dataloader, test_dataloader, num_classes, max_len, mapping
 
 
-def dataloader_torch(x_tensor, y_tensor, batch_size):
+def dataloader_torch(y_tensor, x_tensor, attention_mask=None, token_type_ids=None, batch_size=None):
     """creates dataloader torch objects
     Args:
         param1: torch tensor
@@ -494,7 +503,10 @@ def dataloader_torch(x_tensor, y_tensor, batch_size):
         torch Dataloader object 
         torch Dataloader object 
     """
-    dataset = TensorDataset(x_tensor, y_tensor)
+    if token_type_ids == None:
+        dataset = TensorDataset(y_tensor, x_tensor)
+    else:
+        dataset = TensorDataset(y_tensor, x_tensor, attention_mask, token_type_ids)
     train_size = int(0.9 * len(dataset))
     test_size = len(dataset) - train_size
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
