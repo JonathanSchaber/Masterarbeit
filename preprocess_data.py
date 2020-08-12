@@ -22,8 +22,8 @@ def parse_cmd_args():
             "-d", 
             "--data_set", 
             type=str, 
-            help="Indicate on which data set model should be trained",
-            choices=["XNLI", "SCARE", "PAWS-X", "MLQA"]
+            help="Indicate on which data set model should be preprocessed",
+            choices=["XNLI", "SCARE", "PAWS-X", "MLQA", "XQuAD"]
             )
     parser.add_argument(
             "-p", 
@@ -137,6 +137,34 @@ def preprocess_MLQA(path, argument_model_config):
         for element in spans_text_qas_srl:
             csv.writer(f, delimiter="\t").writerow(element)
 
+
+def preprocess_XQuAD(path, argument_model_config):
+    """Preprocess XQuAD data
+    Args:
+        param1: str
+        param2: str
+    Returns:
+        None
+    """
+    spans_text_qas_srl = []
+    path_outfile = str(Path(path).parent) + "/XQuAD.tsv"
+
+    with open(path, "r") as f:
+        file = f.read()
+        json_data = json.loads(file)
+    
+    for i in range(len(json_data["data"])):
+        for j in range(len(json_data["data"][i]["paragraphs"])):
+            context = json_data["data"][i]["paragraphs"][j]["context"]
+            for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
+                question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
+                start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
+                text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
+                spans_text_qas_srl.append([start_index, text, context, question])
+
+    with open(path_outfile, "w") as f:
+        for element in spans_text_qas_srl:
+            csv.writer(f, delimiter="\t").writerow(element)
 
 
 def preprocess_PAWS_X(path, argument_model_config):
@@ -274,13 +302,13 @@ def main():
     if data_set == "MLQA":
         preprocess_MLQA(path, argument_model_config)
     elif data_set == "PAWS-X":
-        preprocess_SCARE(path, argument_model_config)
+        preprocess_PAWS_X(path, argument_model_config)
     elif data_set == "SCARE":
-        preprocess_PAWS_X(path, argument_model_config)
+        preprocess_SCARE(path, argument_model_config)
     elif data_set == "XNLI":
-        preprocess_PAWS_X(path, argument_model_config)
+        preprocess_XNLI(path, argument_model_config)
     elif data_set == "XQuAD":
-        preprocess_PAWS_X(path, argument_model_config)
+        preprocess_XQuAD(path, argument_model_config)
     
 
 if __name__ == "__main__":
