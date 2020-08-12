@@ -202,6 +202,12 @@ class MLQA_XQuAD_dataloader(Dataloader):
                                         truncation=True, 
                                         return_tensors = 'pt'
                                         )
+            attention_mask = torch.tensor([1 if self.tokenizer.convert_ids_to_tokens(token.item()) != "[PAD]" else 0 for token in x_tensor[0]])
+            sep_index = x_tensor[0].tolist().index(self.tokenizer.sep_token_id)
+            num_0 = sep_index + 1
+            num_1 = self.max_len - num_0
+            token_type_ids = torch.tensor([0]*num_0 + [1]*num_1)
+            import ipdb; ipdb.set_trace()
             x_tensor_list.append(x_tensor)
             y_tensor = torch.tensor([start_span, end_span])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
