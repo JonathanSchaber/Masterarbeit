@@ -5,7 +5,8 @@
 		"MLQA": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA/MLQA.tsv",
 		"PAWS-X": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/PAWS-X/de/paws-x_SRL.tsv",
 		"SCARE": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/SCARE/scare_v1.0.0/annotations/annotations_SRL.tsv",
-		"XNLI": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/XNLI/XNLI-1.0/xnli.de.tsv"
+		"XNLI": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/XNLI/XNLI-1.0/xnli.de.tsv",
+		"XQuAD": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/XQuAD/xquad/XQuAD.tsv"
 	},
 	"rattle": {
 		"BERT": "/srv/scratch3/jschab_jgoldz/MA/models/germanBERT/",
@@ -13,11 +14,12 @@
 		"deISEAR": "/srv/scratch3/jschab_jgoldz/MA/data/deISEARenISEAR/deISEAR_GLIBERT.tsv",
 		"XNLI": "/srv/scratch3/jschab_jgoldz/MA/data/XNLI/xnli.de.tsv",
 		"SCARE": "/srv/scratch3/jschab_jgoldz/MA/data/SCARE/scare_v1.0.0/annotations/annotations_GLIBERT_v2.tsv",
-		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/de/paws-x_SRL.tsv"
+		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/de/paws-x_SRL.tsv",
+		"XQuAD": "/srv/scratch3/jschab_jgoldz/MA/data/XQuAD/XQuAD.tsv"
 	},
 	"epochs": 4,
-	"batch_size": 32,
-	"gpu": 0,
+	"batch_size": 8,
+	"gpu": 2,
 	"print_stats": 40,
 	"merge_subtokens": true,
 	"bert_head": "GLIBert",
@@ -27,5 +29,6 @@
 	"head_hidden_size": 256,
 	"num_layers": 2,
 	"bias": true,
-	"bidirectional": true
+	"bidirectional": true,
+	"stop_overfitting": false
 }
