@@ -157,9 +157,6 @@ class GLIBert(nn.Module):
                 nn.Linear(max_len*768, self.config["head_hidden_size"]),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.config["head_hidden_size"], num_classes),
-                #nn.ReLU(inplace=True),
-                #nn.Dropout(dropout),
-                #nn.Linear(768, num_classes),
             )
         else:
             self.start_span_layer = nn.Sequential(
@@ -167,18 +164,12 @@ class GLIBert(nn.Module):
                 nn.Linear(max_len*768, self.config["head_hidden_size"]),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.config["head_hidden_size"], max_len),
-                #nn.ReLU(inplace=True),
-                #nn.Dropout(dropout),
-                #nn.Linear(768, num_classes),
             )
             self.end_span_layer = nn.Sequential(
                 nn.Dropout(self.config["dropout"]),
                 nn.Linear(max_len*768, self.config["head_hidden_size"]),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.config["head_hidden_size"], max_len),
-                #nn.ReLU(inplace=True),
-                #nn.Dropout(dropout),
-                #nn.Linear(768, num_classes),
             )
     
     def reconstruct_word_level(self, batch, ids):
@@ -409,9 +400,7 @@ def fine_tune_BERT(config, stats_file=None):
                     prediction = sentence[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1] 
                     true_span = sentence[b_labels[-1].select(0, 0).item():b_labels[-1].select(0, 1).item()+1]
                     print("    Prediction:  {}".format(" ".join(prediction)))
-                    #print("       Indices: {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
                     print("    True Span:  {}".format(" ".join(true_span)))
-                    #print("      Indices: {} - {}".format(b_labels[-1].select(0, 0).item(), b_labels[-1].select(0, 1).item()))
                     print("")
                 start_loss = criterion(start_span, b_labels.select(1, 0))
                 end_loss = criterion(end_span, b_labels.select(1, 1))
@@ -492,17 +481,14 @@ def fine_tune_BERT(config, stats_file=None):
                 if training_stats[-2]["Valid. Loss"] < training_stats[-1]["Valid. Loss"]:
                     if PATIENCE > 4:
                         print("")
-                        print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
-                                                                                            avg_train_loss,
-                                                                                            avg_val_loss
-                                                                                            ))
+                        print("  !!! OVERFITTING !!!")
                         print("  Stopping fine-tuning!")
                         break
                     PATIENCE += 1
                     print("")
                     print("Attention: Validation loss increased for the {} time in series...".format(PATIENCE))
                 else:
-                    PATIENCE = 4
+                    PATIENCE = 0
 
     if stats_file: write_stats(stats_file, training_stats)
     print("")
