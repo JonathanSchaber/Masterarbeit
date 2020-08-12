@@ -356,8 +356,8 @@ def fine_tune_BERT(config, stats_file=None):
         total_train_loss = 0
         model.train()
         for step, batch in enumerate(train_data):
-            b_input_ids = batch[0].to(device)
-            b_labels = batch[1].to(device)
+            b_input_ids = batch[1].to(device)
+            b_labels = batch[0].to(device)
             model.zero_grad()
             if not SPAN_FLAG:
                 outputs = model(b_input_ids)
@@ -372,7 +372,9 @@ def fine_tune_BERT(config, stats_file=None):
                     print("")
                 loss = criterion(outputs, b_labels)
             else:
-                start_span, end_span = model(b_input_ids)
+                b_attention_mask = batch[2].to(device)
+                b_token_type_ids = batch[3].to(device)
+                start_span, end_span = model(b_input_ids, b_attention_mask, b_token_type_ids)
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
