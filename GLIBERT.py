@@ -228,8 +228,16 @@ class GLIBert(nn.Module):
         
         return return_batch
     
-    def forward(self, tokens):
-        last_hidden_state, _ = self.bert(tokens)
+    def forward(self, tokens, attention_mask=None, token_type_ids=None):
+        if not SPAN_FLAG:
+            last_hidden_state, _ = self.bert(tokens)
+        else:
+            last_hidden_state, _ = self.bert(
+                                        tokens,
+                                        attention_mask=attention_mask,
+                                        token_type_ids=token_type_ids
+                                        )
+
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         reshaped_last_hidden = torch.reshape(
@@ -374,7 +382,11 @@ def fine_tune_BERT(config, stats_file=None):
             else:
                 b_attention_mask = batch[2].to(device)
                 b_token_type_ids = batch[3].to(device)
-                start_span, end_span = model(b_input_ids, b_attention_mask, b_token_type_ids)
+                start_span, end_span = model(
+                                        b_input_ids,
+                                        attention_mask=b_attention_mask,
+                                        token_type_ids=b_token_type_ids
+                                        )
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
