@@ -93,9 +93,6 @@ class deISEAR_dataloader(Dataloader):
                                         return_tensors = 'pt'
                                         )
             x_tensor_list.append(x_tensor)
-    #        default_y = torch.tensor([0]*len(self.y_mapping))
-    #        default_y[self.y_mapping[emotion]] = 1
-    #        y_tensor = default_y
             y_tensor = torch.tensor(self.y_mapping[emotion])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
@@ -292,9 +289,6 @@ class PAWS_X_dataloader(Dataloader):
                                         return_tensors = 'pt'
                                         )
             x_tensor_list.append(x_tensor)
-    #        default_y = torch.tensor([0]*len(self.y_mapping))
-    #        default_y[self.y_mapping[label]] = 1
-    #        y_tensor = default_y
             y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
@@ -361,9 +355,6 @@ class SCARE_dataloader(Dataloader):
                                         return_tensors = 'pt'
                                         )
             x_tensor_list.append(x_tensor)
-    #        default_y = torch.tensor([0]*len(self.y_mapping))
-    #        default_y[self.y_mapping[label]] = 1
-    #        y_tensor = default_y
             y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
@@ -432,9 +423,6 @@ class XNLI_dataloader(Dataloader):
                                         return_tensors = 'pt'
                                         )
             x_tensor_list.append(x_tensor)
-    #        default_y = torch.tensor([0]*len(self.y_mapping))
-    #        default_y[self.y_mapping[label]] = 1
-    #        y_tensor = default_y
             y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
@@ -531,24 +519,3 @@ def dataloader_torch(x_tensor, y_tensor, attention_mask=None, token_type_ids=Non
         ) 
     return train_dataloader, test_dataloader
 
-
-
-#def SRL_XNLI(data, dsrl, parser):
-#    """predict semantic roles of xnli data and return new object
-#    Args:
-#        param1: list of tuples of strs
-#        param2: DSRL object
-#        param*: ParZu object
-#    Returns:
-#        list of tuples of strs
-#    """
-##    srl_xnli = []
-##    num_examples = len(data)
-##    for i, example in enumerate(data):
-##        if i % 100 == 0:
-##            print("processed the {}th example out of {}...".format(i, num_examples))
-##        label, sentence_1, sentence_2 = example
-##        srl_xnli.append((label, sentence_1, sentence_2, predict_semRoles(dsrl, process_text(parser, sentence_1)), predict_semRoles(dsrl, process_text(parser, sentence_2))))
-##
-##    return srl_xnli
-#
