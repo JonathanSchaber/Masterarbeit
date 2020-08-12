@@ -126,11 +126,12 @@ def preprocess_MLQA(path, argument_model_config):
         
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
-                text = json_data["data"][i]["paragraphs"][j]["context"]
+                context = json_data["data"][i]["paragraphs"][j]["context"]
                 for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
                     question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
                     start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
-                    spans_text_qas_srl.append([start_index, text, question])
+                    text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
+                    spans_text_qas_srl.append([start_index, text, context, question])
 
     with open(path_outfile, "w") as f:
         for element in spans_text_qas_srl:
