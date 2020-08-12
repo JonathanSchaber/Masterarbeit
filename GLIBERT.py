@@ -25,7 +25,7 @@ from transformers import (
         )
 
 from load_data import *
-merge_subs = MLQA_dataloader.merge_subs
+merge_subs = MLQA_XQuAD_dataloader.merge_subs
 
 
 def parse_cmd_args():
@@ -42,7 +42,7 @@ def parse_cmd_args():
             "--data_set", 
             type=str, 
             help="Indicate on which data set model should be trained",
-            choices=["deISEAR", "XNLI", "MLQA", "SCARE", "PAWS-X"]
+            choices=["deISEAR", "XNLI", "MLQA", "SCARE", "PAWS-X", "XQuAD"]
             )
     parser.add_argument(
             "-l", 
@@ -466,14 +466,15 @@ def fine_tune_BERT(config, stats_file=None):
             }
         )
 
-        if avg_train_loss < avg_val_loss:
-            print("")
-            print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
-                                                                                avg_train_loss,
-                                                                                avg_val_loss
-                                                                                ))
-            print("  Stopping fine-tuning!")
-            break
+        if config["stop_overfitting"]:
+            if avg_train_loss < avg_val_loss:
+                print("")
+                print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
+                                                                                    avg_train_loss,
+                                                                                    avg_val_loss
+                                                                                    ))
+                print("  Stopping fine-tuning!")
+                break
 
     if stats_file: write_stats(stats_file, training_stats)
     print("")
