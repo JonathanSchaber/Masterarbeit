@@ -13,7 +13,7 @@
 		"deISEAR": "/srv/scratch3/jschab_jgoldz/MA/data/deISEARenISEAR/deISEAR_GLIBERT.tsv",
 		"XNLI": "/srv/scratch3/jschab_jgoldz/MA/data/XNLI/xnli.de.tsv",
 		"SCARE": "/srv/scratch3/jschab_jgoldz/MA/data/SCARE/scare_v1.0.0/annotations/annotations_GLIBERT_v2.tsv",
-		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/de/paws-x_de_2k.tsv"
+		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/de/paws-x_SRL.tsv"
 	},
 	"epochs": 4,
 	"batch_size": 32,
