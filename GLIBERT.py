@@ -489,7 +489,7 @@ def fine_tune_BERT(config, stats_file=None):
 
         if config["early_stopping"]:
             if epoch_i > 1:
-                if training_stats[-2]["Valid. Loss"] > training_stats[-1]["Valid. Loss"]:
+                if training_stats[-2]["Valid. Loss"] < training_stats[-1]["Valid. Loss"]:
                     if PATIENCE > 4:
                         print("")
                         print("  OVERFITTING: train loss: {:.3f}, validation loss: {:.3f}".format(
@@ -500,7 +500,7 @@ def fine_tune_BERT(config, stats_file=None):
                         break
                     PATIENCE += 1
                     print("")
-                    print("Attention: Validation loss decreased for the {} time in series...")
+                    print("Attention: Validation loss increased for the {} time in series...".format(PATIENCE))
                 else:
                     PATIENCE = 4
 
