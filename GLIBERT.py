@@ -310,6 +310,7 @@ def fine_tune_BERT(config, stats_file=None):
     print_stats = config["print_stats"]
     bert_head = eval(config["bert_head"])
     criterion = nn.NLLLoss()
+    merge_subtokens = config["merge_subtokens"]
 
     train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
     mapping = {value: key for (key, value) in mapping.items()} if mapping else None
@@ -377,10 +378,26 @@ def fine_tune_BERT(config, stats_file=None):
                     print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
                     print("  Last prediction: ")
                     print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-                    print("    Prediction:  {}".format(" ".join(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True).split()[start_span[-1].max(0).indices.item()-1:end_span[-1].max(0).indices.item()])))
-                    print("       Indices: {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
-                    print("    True Span:  {}".format(" ".join(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True).split()[b_labels[-1].select(0, 0).item()-1:b_labels[-1].select(0, 1).item()])))
-                    print("      Indices: {} - {}".format(b_labels[-1].select(0, 0).item(), b_labels[-1].select(0, 1).item()))
+                    if not merge_subtokens:
+                        sentence = model.tokenizer.tokenize(
+                                            model.tokenizer.decode(
+                                                b_input_ids[-1],
+                                                skip_special_tokens=True
+                                                )
+                                            )
+                    else:
+                        sentence = merge_subs(model.tokenizer.tokenize(
+                                            model.tokenizer.decode(
+                                                b_input_ids[-1],
+                                                skip_special_tokens=True
+                                                )
+                                            )
+                    prediction = sentence[start_span[-1].max(0).indices.item()-1:end_span[-1].max(0).indices.item()] 
+                    true_span = sentence[b_labels[-1].select(0, 0).item()-1:b_labels[-1].select(0, 1).item()-1]
+                    print("    Prediction:  {}".format(" ".join(prediction)))
+                    #print("       Indices: {} - {}".format(start_span[-1].max(0).indices.item(), end_span[-1].max(0).indices.item()))
+                    print("    True Span:  {}".format(" ".join(true_span)))
+                    #print("      Indices: {} - {}".format(b_labels[-1].select(0, 0).item(), b_labels[-1].select(0, 1).item()))
                     print("")
                 start_loss = criterion(start_span, b_labels.select(1, 0))
                 end_loss = criterion(end_span, b_labels.select(1, 1))
