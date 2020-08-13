@@ -25,7 +25,7 @@ def create_ParZu_parser():
     Returns:
         ParZu-parser object
     """
-    options = parzu.process_arguments()
+    options = parzu.process_arguments(commandline=False)
     ParZu = parzu.Parser(options)
     return ParZu
 
@@ -162,18 +162,3 @@ def pretty_print(dsrl, parser, text):
             pretty_print_list.append("\t".join(token) + "\t" + "\t".join(semrole_item[j] for semrole_item in srl_list[i]))
         pretty_print_list.append("\n")
     print("\n".join(pretty_print_list))
-
-
-def main(text):
-    argument_model_config = "../SemRolLab/DAMESRL/server_configs/srl_char_att_ger_infer.ini"
-    dsrl = DSRL(argument_model_config)
-    ParZu_parser = create_ParZu_parser()
-    dsrl_obj = process_text(ParZu_parser, text)
-    sem_roles = predict_semRoles(dsrl, dsrl_obj)
-    pretty_print(dsrl, ParZu_parser, text)
-    #import pdb; pdb.set_trace()
-    
-
-if __name__ == "__main__":
-    main("Einer von Tanaghrissons Männern erzählte Contrecoeur, dass Jumonville durch britisches Musketenfeuer getötet worden war.")
-    
