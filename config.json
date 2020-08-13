@@ -1,8 +1,8 @@
 {
 	"local": {
 		"BERT": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/",
-		"deISEAR": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/deISEARenISEAR/deISEAR_GLIBERT.tsv",
-		"MLQA": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA/MLQA.tsv",
+		"deISEAR": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/deISEARenISEAR/",
+		"MLQA": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA/",
 		"PAWS-X": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/PAWS-X/de/paws-x_SRL.tsv",
 		"SCARE": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/SCARE/scare_v1.0.0/annotations/annotations_SRL.tsv",
 		"XNLI": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/XNLI/XNLI-1.0/xnli.de.tsv",
@@ -10,15 +10,15 @@
 	},
 	"rattle": {
 		"BERT": "/srv/scratch3/jschab_jgoldz/MA/models/germanBERT/",
-		"MLQA": "/srv/scratch3/jschab_jgoldz/MA/data/MLQA/MLQA.tsv",
-		"deISEAR": "/srv/scratch3/jschab_jgoldz/MA/data/deISEARenISEAR/deISEAR_GLIBERT.tsv",
+		"MLQA": "/srv/scratch3/jschab_jgoldz/MA/data/MLQA/",
+		"deISEAR": "/srv/scratch3/jschab_jgoldz/MA/data/deISEARenISEAR/",
 		"XNLI": "/srv/scratch3/jschab_jgoldz/MA/data/XNLI/xnli.de.tsv",
 		"SCARE": "/srv/scratch3/jschab_jgoldz/MA/data/SCARE/scare_v1.0.0/annotations/annotations_GLIBERT_v2.tsv",
 		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/de/paws-x_SRL.tsv",
 		"XQuAD": "/srv/scratch3/jschab_jgoldz/MA/data/XQuAD/XQuAD.tsv"
 	},
 	"epochs": 20,
-	"batch_size": 32,
+	"batch_size": 16,
 	"gpu": 0,
 	"print_stats": 40,
 	"merge_subtokens": true,
