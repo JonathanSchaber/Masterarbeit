@@ -12,6 +12,7 @@ from torch.utils.data import (
         )
 
 from transformers import BertTokenizer
+from pathlib import Path
 
 
 class Dataloader:
@@ -103,19 +104,27 @@ class deISEAR_dataloader(Dataloader):
 ####################################
 ########### M L Q A ############
 
-class MLQA_XQuAD_dataloader(Dataloader):
+class MLQA_dataloader(Dataloader):
     def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
         self.batch_size = batch_size
         self.merge_subtokens = merge_subtokens
-        self.path = path_data
+        self.path_dev = str(Path(path_data)) + "/dev/dev-context-de-question-de.tsv"
+        self.path_test = str(Path(path_data)) + "/test/test-context-de-question-de.tsv"
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
-        self.data = None
+        self.data_dev = None
+        self.data_test = None
         self.max_len = None
         self.y_mapping = None
-        self.x_tensor = None
-        self.attention_mask = None
-        self.token_type_ids = None
-        self.y_tensor = None
+        self.attention_mask_dev = None
+        self.attention_mask_test = None
+        self.token_type_ids_dev = None
+        self.token_type_ids_test = None
+        self.x_tensor_dev = None
+        self.x_tensor_test = None
+        self.y_tensor_dev = None
+        self.y_tensor_test = None
+        self.dataset_dev = None
+        self.dataset_test = None
 
     @staticmethod
     def merge_subs(subtoken_list): 
@@ -143,16 +152,9 @@ class MLQA_XQuAD_dataloader(Dataloader):
                 token_list.append("".join(current_word)) 
         return token_list  
 
-    def load(self):
-        """loads the data from MLQA data set
-        Args:
-            param1: str
-        Returns:
-            list of tuples of str
-            mapping of y
-        """
-        data = []
-        with open(self.path, "r") as f:
+    def load_data(self, data):
+        with open(data) as f:
+            data = []
             f_reader = csv.reader(f, delimiter="\t")
             for row in f_reader:
                 start_index, text, context, question = row[0], row[1], row[2], row[3]
@@ -173,33 +175,25 @@ class MLQA_XQuAD_dataloader(Dataloader):
                     end_span += len_question + 1
 
                 data.append((start_span, end_span, context, question))
-    
-        self.data = data
-    
-    def load_torch(self):
-        """Return tensor for training
-        Args:
-            param1: list of tuples of strs
-            param2: dict
-            param3: torch Tokenizer object
-        Returns
-            tensor
-            tensor
-            int
-        """
+        return data
+
+    def get_max_len(self):
+        longest_context_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
+        longest_question_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
+        longest_context_test = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_test]) 
+        longest_question_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
+        longest_context = max(longest_context_dev, longest_context_test)
+        longest_question = max(longest_question_dev, longest_question_test)
+        return self.check_max_length(longest_context, longest_question)
+
+    def load_torch_data(self, data):
         input_ids = []
         attention_mask = []
         token_type_ids = []
         y_tensor_list = []
 
-        longest_sent_1 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
-        longest_sent_2 = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data]) 
-        self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
-        print("")
-        print("======== Longest sentence pair in data: ========")
-        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
-        print("length (tokenized): {}".format(self.max_len))
-        for example in self.data:
+        self.max_len = self.get_max_len()
+        for example in data:
             start_span, end_span, context, question = example
             if len(self.tokenizer.tokenize(context)) + len(self.tokenizer.tokenize(question)) + 1 > 512:
                 continue
@@ -223,10 +217,42 @@ class MLQA_XQuAD_dataloader(Dataloader):
             y_tensor = torch.tensor([start_span, end_span])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
-        self.x_tensor = torch.cat(input_ids, dim=0)
-        self.attention_mask = torch.cat(attention_mask, dim=0)
-        self.token_type_ids = torch.cat(token_type_ids, dim=0)
-        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
+        return torch.cat(input_ids, dim=0), \
+                torch.cat(attention_mask, dim=0), \
+                torch.cat(token_type_ids, dim=0), \
+                torch.cat(tuple(y_tensor_list), dim=0) 
+
+    def load(self):
+        self.data_dev = self.load_data(self.path_dev)
+        self.data_test = self.load_data(self.path_test)
+    
+    def load_torch(self):
+        self.x_tensor_dev, \
+        self.attention_mask_dev, \
+        self.token_type_ids_dev, \
+        self.y_tensor_dev = self.load_torch_data(self.data_dev)
+
+        self.x_tensor_test, \
+        self.attention_mask_test, \
+        self.token_type_ids_test, \
+        self.y_tensor_test = self.load_torch_data(self.data_test)
+
+        print("")
+        print("======== Longest sentence pair in data: ========")
+        print("length (tokenized): {}".format(self.max_len))
+
+        self.dataset_dev = TensorDataset(
+                                self.x_tensor_dev,
+                                self.y_tensor_dev,
+                                self.attention_mask_dev,
+                                self.token_type_ids_dev
+                                )
+        self.dataset_test = TensorDataset(
+                                self.x_tensor_test,
+                                self.y_tensor_test,
+                                self.attention_mask_test,
+                                self.token_type_ids_test
+                                )
 
 ####################################
 ########### P A W S - X ############
@@ -450,7 +476,7 @@ def dataloader(config, location, data_set):
                             config["batch_size"],
                             )
     elif data_set in ["MLQA", "XQuAD"]:
-        dataloader = MLQA_XQuAD_dataloader(
+        dataloader = MLQA_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
@@ -477,18 +503,28 @@ def dataloader(config, location, data_set):
 
     dataloader.load()
     dataloader.load_torch()
-    train_dataloader, test_dataloader = dataloader_torch(
-                                            dataloader.x_tensor,
-                                            dataloader.y_tensor,
-                                            attention_mask=dataloader.attention_mask,
-                                            token_type_ids=dataloader.token_type_ids,
-                                            batch_size=dataloader.batch_size
-                                            )
+    dev_dataloader = DataLoader(
+            dataloader.dataset_dev,
+            sampler = RandomSampler(dataloader.dataset_dev),
+            batch_size = dataloader.batch_size
+        ) 
+    test_dataloader = DataLoader(
+            dataloader.dataset_test,
+            sampler = RandomSampler(dataloader.dataset_test),
+            batch_size = dataloader.batch_size
+        ) 
+#    train_dataloader, test_dataloader = dataloader_torch(
+#                                            dataloader.x_tensor,
+#                                            dataloader.y_tensor,
+#                                            attention_mask=dataloader.attention_mask,
+#                                            token_type_ids=dataloader.token_type_ids,
+#                                            batch_size=dataloader.batch_size
+#                                            )
     num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
     mapping = dataloader.y_mapping
     max_len = dataloader.max_len
 
-    return train_dataloader, test_dataloader, num_classes, max_len, mapping
+    return dev_dataloader, test_dataloader, num_classes, max_len, mapping
 
 
 def dataloader_torch(x_tensor, y_tensor, attention_mask=None, token_type_ids=None, batch_size=None):
@@ -518,4 +554,132 @@ def dataloader_torch(x_tensor, y_tensor, attention_mask=None, token_type_ids=Non
             batch_size = batch_size 
         ) 
     return train_dataloader, test_dataloader
+
+####################################
+########### X Q u A D ############
+
+class XQuAD_dataloader(Dataloader):
+    def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
+        self.batch_size = batch_size
+        self.merge_subtokens = merge_subtokens
+        self.path = path_data
+        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
+        self.data = None
+        self.max_len = None
+        self.y_mapping = None
+        self.x_tensor = None
+        self.attention_mask = None
+        self.token_type_ids = None
+        self.y_tensor = None
+
+    @staticmethod
+    def merge_subs(subtoken_list): 
+        """merges a sub-tokenized sentence back to token level (without special tokens).
+        Args:
+            param1: list
+        Returns:
+            list
+        """
+        token_list = [] 
+        for i, token in enumerate(subtoken_list): 
+            if token.startswith("##"): 
+                continue 
+            elif i + 1 == len(subtoken_list): 
+                token_list.append(token) 
+            elif not subtoken_list[i+1].startswith("##"): 
+                token_list.append(token) 
+            else: 
+                current_word = [token] 
+                for subtoken in subtoken_list[i+1:]: 
+                    if subtoken.startswith("##"): 
+                        current_word.append(subtoken.lstrip("##")) 
+                    else: 
+                        break 
+                token_list.append("".join(current_word)) 
+        return token_list  
+
+    def load(self):
+        """loads the data from MLQA data set
+        Args:
+            param1: str
+        Returns:
+            list of tuples of str
+            mapping of y
+        """
+        data = []
+        with open(self.path, "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            for row in f_reader:
+                start_index, text, context, question = row[0], row[1], row[2], row[3]
+                start_index = int(start_index)
+                if not self.merge_subtokens:
+                    len_question = len(self.tokenizer.tokenize(question))
+                    tokenized_context = self.tokenizer.tokenize(context[:start_index])
+                    start_span = len(tokenized_context)
+                    end_span = start_span + len(self.tokenizer.tokenize(text)) - 1
+                    start_span += len_question + 1
+                    end_span += len_question + 1
+                else:
+                    len_question = len(self.merge_subs(self.tokenizer.tokenize(question)))
+                    tokenized_context = self.tokenizer.tokenize(context[:start_index])
+                    start_span = len(self.merge_subs(tokenized_context))
+                    end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
+                    start_span += len_question + 1
+                    end_span += len_question + 1
+
+                data.append((start_span, end_span, context, question))
+    
+        self.data = data
+    
+    def load_torch(self):
+        """Return tensor for training
+        Args:
+            param1: list of tuples of strs
+            param2: dict
+            param3: torch Tokenizer object
+        Returns
+            tensor
+            tensor
+            int
+        """
+        input_ids = []
+        attention_mask = []
+        token_type_ids = []
+        y_tensor_list = []
+
+        longest_sent_1 = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
+        longest_sent_2 = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data]) 
+        self.max_len = self.check_max_length(longest_sent_1, longest_sent_2)
+        print("")
+        print("======== Longest sentence pair in data: ========")
+        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
+        print("length (tokenized): {}".format(self.max_len))
+        for example in self.data:
+            start_span, end_span, context, question = example
+            if len(self.tokenizer.tokenize(context)) + len(self.tokenizer.tokenize(question)) + 1 > 512:
+                continue
+            # Since [CLS] is not part of the sentence, indices must be increased by 1
+            start_span = int(start_span) + 1
+            end_span = int(end_span) + 1
+            encoded_dict = self.tokenizer.encode_plus(
+                                        question, 
+                                        context,
+                                        add_special_tokens = True, 
+                                        max_length = self.max_len,
+                                        pad_to_max_length = True, 
+                                        truncation = True, 
+                                        return_tensors = 'pt',
+                                        return_token_type_ids = True,
+                                        return_attention_mask = True
+                                        )
+            input_ids.append(encoded_dict["input_ids"])
+            attention_mask.append(encoded_dict["attention_mask"])
+            token_type_ids.append(encoded_dict["token_type_ids"])
+            y_tensor = torch.tensor([start_span, end_span])
+            y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+        
+        self.x_tensor = torch.cat(input_ids, dim=0)
+        self.attention_mask = torch.cat(attention_mask, dim=0)
+        self.token_type_ids = torch.cat(token_type_ids, dim=0)
+        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
