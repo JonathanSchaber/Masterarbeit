@@ -78,6 +78,7 @@ def preprocess_deISEAR(path, argument_model_config):
 
     with open(file_path, "r") as f:
         f_reader = csv.reader(f, delimiter="\t")
+        next(f_reader)
         for i, row in enumerate(f_reader):
             emotion, sentence = row[1], row[2]
             dsrl_obj = process_text(ParZu_parser, sentence)
@@ -85,8 +86,9 @@ def preprocess_deISEAR(path, argument_model_config):
             if i % 50 == 0 and i != 0:
                 print("")
                 print("Senstence: {}".format(sentence))
-                for element in sem_roles[0]:
-                    print("Predicted SRLs: {}".format(element))
+                for sentence in sem_roles:
+                    for sem_roles in sentence:
+                        print("Predicted SRLs: {}".format(element))
             emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
     
     len_dev = int(len(emotion_sentence_srl)*0.9)
@@ -113,8 +115,9 @@ def preprocess_MLQA(path, argument_model_config):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/MLQA/, not file!"
     path = str(path)
     file_paths = [path + "/dev/dev-context-de-question-de.json", path + "/test/test-context-de-question-de.json"]
+    outfile_paths = [path + "/dev/GLIBERT_dev-context-de-question-de.json", path + "/test/GLIBERT_test-context-de-question-de.json"]
 
-    for file_path in file_paths:
+    for h, file_path in enumerate(file_paths):
         spans_text_qas_srl = []
         with open(file_path, "r") as f:
             file = f.read()
@@ -123,14 +126,34 @@ def preprocess_MLQA(path, argument_model_config):
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
                 context = json_data["data"][i]["paragraphs"][j]["context"]
+                dsrl_obj = process_text(ParZu_parser, context)
+                sem_roles_context = predict_semRoles(dsrl, dsrl_obj)
                 for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
                     question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
                     start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
-                    spans_text_qas_srl.append([start_index, text, context, question])
+                    dsrl_obj = process_text(ParZu_parser, question)
+                    sem_roles_question = predict_semRoles(dsrl, dsrl_obj)
+                    if i % 20 == 0:
+                        print("")
+                        print("Context: {}".format(context))
+                        for sentence in sem_roles_context:
+                            for sem_roles in sentence:
+                                print("Predicted SRLs: {}".format(element))
+                        print("Question: {}".format(text))
+                        for sentence in sem_roles_question:
+                            for sem_roles in sentence:
+                                print("Predicted SRLs: {}".format(element))
+                    spans_text_qas_srl.append([
+                                            start_index,
+                                            text, context,
+                                            question,
+                                            sem_roles_context,
+                                            sem_roles_question
+                                            ])
 
         path_outfile = file_path.rstrip("json") + "tsv"
-        with open(path_outfile, "w") as f:
+        with open(outfile_paths[hh], "w") as f:
             for element in spans_text_qas_srl:
                 csv.writer(f, delimiter="\t").writerow(element)
 
