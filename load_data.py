@@ -16,17 +16,32 @@ from pathlib import Path
 
 
 class Dataloader:
-    def __init__(self, path_data, path_tokenizer, batch_size):
+    def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
+        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
+        self.merge_subtokens = merge_subtokens
         self.batch_size = batch_size
         self.path = path_data
-        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
+        self.path_dev = None
+        self.path_test = None
         self.data = None
+        self.data_dev = None
+        self.data_test = None
         self.max_len = None
         self.attention_mask = None
+        self.attention_mask_dev = None
+        self.attention_mask_test = None
         self.token_type_ids = None
+        self.token_type_ids_dev = None
+        self.token_type_ids_test = None
         self.y_mapping = None
         self.x_tensor = None
+        self.x_tensor_dev = None
+        self.x_tensor_test = None
         self.y_tensor = None
+        self.y_tensor_dev = None
+        self.y_tensor_test = None
+        self.dataset_dev = None
+        self.dataset_test = None
 
     @staticmethod
     def check_max_length(*sent_lengths):
@@ -36,6 +51,41 @@ class Dataloader:
             max_length += sent_length
         max_length += to_add
         return max_length if max_length < 513 else 512
+
+    @staticmethod
+    def merge_subs(subtoken_list): 
+        """merges a sub-tokenized sentence back to token level (without special tokens).
+        Args:
+            param1: list
+        Returns:
+            list
+        """
+        token_list = [] 
+        for i, token in enumerate(subtoken_list): 
+            if token.startswith("##"): 
+                continue 
+            elif i + 1 == len(subtoken_list): 
+                token_list.append(token) 
+            elif not subtoken_list[i+1].startswith("##"): 
+                token_list.append(token) 
+            else: 
+                current_word = [token] 
+                for subtoken in subtoken_list[i+1:]: 
+                    if subtoken.startswith("##"): 
+                        current_word.append(subtoken.lstrip("##")) 
+                    else: 
+                        break 
+                token_list.append("".join(current_word)) 
+        return token_list  
+
+    def split_dataset(self):
+        """if there is no split in original dataset, we create one ourselves
+        ratio dev:test = 90:10
+        """
+        dataset = TensorDataset(self.x_tensor, self.y_tensor)
+        dev_size = int(0.9 * len(dataset))
+        test_size = len(dataset) - dev_size
+        self.dataset_dev, self.dataset_test = random_split(dataset, [dev_size, test_size])
 
 ######## d e I S E A R ########
 
@@ -50,7 +100,7 @@ class deISEAR_dataloader(Dataloader):
         """
         data = []
         y_mapping = {}
-        with open(self.path, "r") as f:
+        with open(str(Path(self.path)) + "/deISEAR_GLIBERT.tsv", "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
@@ -101,57 +151,12 @@ class deISEAR_dataloader(Dataloader):
         self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
+        self.split_dataset()
+
 ####################################
 ########### M L Q A ############
 
 class MLQA_dataloader(Dataloader):
-    def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
-        self.batch_size = batch_size
-        self.merge_subtokens = merge_subtokens
-        self.path_dev = str(Path(path_data)) + "/dev/dev-context-de-question-de.tsv"
-        self.path_test = str(Path(path_data)) + "/test/test-context-de-question-de.tsv"
-        self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
-        self.data_dev = None
-        self.data_test = None
-        self.max_len = None
-        self.y_mapping = None
-        self.attention_mask_dev = None
-        self.attention_mask_test = None
-        self.token_type_ids_dev = None
-        self.token_type_ids_test = None
-        self.x_tensor_dev = None
-        self.x_tensor_test = None
-        self.y_tensor_dev = None
-        self.y_tensor_test = None
-        self.dataset_dev = None
-        self.dataset_test = None
-
-    @staticmethod
-    def merge_subs(subtoken_list): 
-        """merges a sub-tokenized sentence back to token level (without special tokens).
-        Args:
-            param1: list
-        Returns:
-            list
-        """
-        token_list = [] 
-        for i, token in enumerate(subtoken_list): 
-            if token.startswith("##"): 
-                continue 
-            elif i + 1 == len(subtoken_list): 
-                token_list.append(token) 
-            elif not subtoken_list[i+1].startswith("##"): 
-                token_list.append(token) 
-            else: 
-                current_word = [token] 
-                for subtoken in subtoken_list[i+1:]: 
-                    if subtoken.startswith("##"): 
-                        current_word.append(subtoken.lstrip("##")) 
-                    else: 
-                        break 
-                token_list.append("".join(current_word)) 
-        return token_list  
-
     def load_data(self, data):
         with open(data) as f:
             data = []
@@ -223,6 +228,8 @@ class MLQA_dataloader(Dataloader):
                 torch.cat(tuple(y_tensor_list), dim=0) 
 
     def load(self):
+        self.path_dev = str(Path(self.path)) + "/dev/dev-context-de-question-de.tsv"
+        self.path_test = str(Path(self.path)) + "/test/test-context-de-question-de.tsv"
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
     
@@ -456,105 +463,6 @@ class XNLI_dataloader(Dataloader):
         self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
-#####################################################################################
-
-def dataloader(config, location, data_set):
-    """Make XNLI data ready to be passed to transformer dataloader
-    Args:
-        param1: str
-        param2: str
-        param3: int
-    Returns:
-        Dataloader object (train)
-        Dataloader object (test)
-        int
-    """
-    if data_set == "deISEAR":
-        dataloader = deISEAR_dataloader(
-                            config[location][data_set],
-                            config[location]["BERT"],
-                            config["batch_size"],
-                            )
-    elif data_set in ["MLQA", "XQuAD"]:
-        dataloader = MLQA_dataloader(
-                            config[location][data_set],
-                            config[location]["BERT"],
-                            config["batch_size"],
-                            config["merge_subtokens"]
-                            )
-    elif data_set == "PAWS-X":
-        dataloader = PAWS_X_dataloader(
-                            config[location][data_set],
-                            config[location]["BERT"],
-                            config["batch_size"]
-                            )
-    elif data_set == "SCARE":
-        dataloader = SCARE_dataloader(
-                            config[location][data_set],
-                            config[location]["BERT"],
-                            config["batch_size"]
-                            )
-    elif data_set == "XNLI":
-        dataloader = XNLI_dataloader(
-                            config[location][data_set],
-                            config[location]["BERT"],
-                            config["batch_size"],
-                            )
-
-    dataloader.load()
-    dataloader.load_torch()
-    dev_dataloader = DataLoader(
-            dataloader.dataset_dev,
-            sampler = RandomSampler(dataloader.dataset_dev),
-            batch_size = dataloader.batch_size
-        ) 
-    test_dataloader = DataLoader(
-            dataloader.dataset_test,
-            sampler = RandomSampler(dataloader.dataset_test),
-            batch_size = dataloader.batch_size
-        ) 
-#    train_dataloader, test_dataloader = dataloader_torch(
-#                                            dataloader.x_tensor,
-#                                            dataloader.y_tensor,
-#                                            attention_mask=dataloader.attention_mask,
-#                                            token_type_ids=dataloader.token_type_ids,
-#                                            batch_size=dataloader.batch_size
-#                                            )
-    num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
-    mapping = dataloader.y_mapping
-    max_len = dataloader.max_len
-
-    return dev_dataloader, test_dataloader, num_classes, max_len, mapping
-
-
-def dataloader_torch(x_tensor, y_tensor, attention_mask=None, token_type_ids=None, batch_size=None):
-    """creates dataloader torch objects
-    Args:
-        param1: torch tensor
-        param2: torch tensor
-    Returns:
-        torch Dataloader object 
-        torch Dataloader object 
-    """
-    if token_type_ids == None:
-        dataset = TensorDataset(x_tensor, y_tensor)
-    else:
-        dataset = TensorDataset(x_tensor, y_tensor, attention_mask, token_type_ids)
-    train_size = int(0.9 * len(dataset))
-    test_size = len(dataset) - train_size
-    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
-    train_dataloader = DataLoader(
-            train_dataset,
-            sampler = RandomSampler(train_dataset),
-            batch_size = batch_size
-        ) 
-    test_dataloader = DataLoader(
-            test_dataset,
-            sampler = RandomSampler(test_dataset), 
-            batch_size = batch_size 
-        ) 
-    return train_dataloader, test_dataloader
-
 ####################################
 ########### X Q u A D ############
 
@@ -683,3 +591,114 @@ class XQuAD_dataloader(Dataloader):
         self.token_type_ids = torch.cat(token_type_ids, dim=0)
         self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
+
+#####################################################################################
+
+def dataloader(config, location, data_set):
+    """Make XNLI data ready to be passed to transformer dataloader
+    Args:
+        param1: str
+        param2: str
+        param3: int
+    Returns:
+        Dataloader object (train)
+        Dataloader object (test)
+        int
+    """
+    if data_set == "deISEAR":
+        dataloader = deISEAR_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
+    elif data_set == "MLQA":
+        dataloader = MLQA_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
+    elif data_set == "PAWS-X":
+        dataloader = PAWS_X_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
+    elif data_set == "SCARE":
+        dataloader = SCARE_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
+    elif data_set == "XNLI":
+        dataloader = XNLI_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
+    elif data_set == "XQuAD":
+        dataloader = XQuAD_dataloader(
+                            config[location][data_set],
+                            config[location]["BERT"],
+                            config["batch_size"],
+                            config["merge_subtokens"]
+                            )
+
+    dataloader.load()
+    dataloader.load_torch()
+    dev_dataloader = DataLoader(
+            dataloader.dataset_dev,
+            sampler = RandomSampler(dataloader.dataset_dev),
+            batch_size = dataloader.batch_size
+        ) 
+    test_dataloader = DataLoader(
+            dataloader.dataset_test,
+            sampler = RandomSampler(dataloader.dataset_test),
+            batch_size = dataloader.batch_size
+        ) 
+#    train_dataloader, test_dataloader = dataloader_torch(
+#                                            dataloader.x_tensor,
+#                                            dataloader.y_tensor,
+#                                            attention_mask=dataloader.attention_mask,
+#                                            token_type_ids=dataloader.token_type_ids,
+#                                            batch_size=dataloader.batch_size
+#                                            )
+    num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
+    mapping = dataloader.y_mapping
+    max_len = dataloader.max_len
+
+    return dev_dataloader, test_dataloader, num_classes, max_len, mapping
+
+
+#def dataloader_torch(x_tensor, y_tensor, attention_mask=None, token_type_ids=None, batch_size=None):
+#    """creates dataloader torch objects
+#    Args:
+#        param1: torch tensor
+#        param2: torch tensor
+#    Returns:
+#        torch Dataloader object 
+#        torch Dataloader object 
+#    """
+#    if token_type_ids == None:
+#        dataset = TensorDataset(x_tensor, y_tensor)
+#    else:
+#        dataset = TensorDataset(x_tensor, y_tensor, attention_mask, token_type_ids)
+#    train_size = int(0.9 * len(dataset))
+#    test_size = len(dataset) - train_size
+#    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+#    train_dataloader = DataLoader(
+#            train_dataset,
+#            sampler = RandomSampler(train_dataset),
+#            batch_size = batch_size
+#        ) 
+#    test_dataloader = DataLoader(
+#            test_dataset,
+#            sampler = RandomSampler(test_dataset), 
+#            batch_size = batch_size 
+#        ) 
+#    return train_dataloader, test_dataloader
+#
