@@ -174,8 +174,6 @@ def preprocess_PAWS_X(path, argument_model_config):
     outfile_paths = [path + "/de/paws_x_dev.tsv", path + "/de/paws_x_test.tsv"]
 
     label_text_feat = []
-    path_outfile = str(Path(path).parent) + "/paws-x_SRL.tsv"
-
     dsrl = DSRL(argument_model_config)
     ParZu_parser = create_ParZu_parser()
 
@@ -195,6 +193,41 @@ def preprocess_PAWS_X(path, argument_model_config):
             for element in label_text_feat:
                 csv.writer(f, delimiter="\t").writerow(element)
         
+def preprocess_XNLI(path, argument_model_config):
+    """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
+    ATTENTION: path points to directory, not input file!
+    Args:
+        param1: str
+        param2: str
+        param3: str
+    Returns:
+        None
+    """
+    path = Path(path)
+    assert path.is_dir(), "Path must point to root directory /<path>/<to>/XNLI/, not file!"
+    path = str(path)
+    file_paths = [path + "/XNLI-1.0/xnli.dev.de.tsv", path + "/XNLI-1.0/xnli.test.de.tsv"]
+    outfile_paths = [path + "/XNLI-1.0/GLIBERT_xnli.dev.de.tsv", path + "/XNLI-1.0/GLIBERT_xnli.test.de.tsv"]
+
+    label_text_feat = []
+    dsrl = DSRL(argument_model_config)
+    ParZu_parser = create_ParZu_parser()
+
+    for i, file_path in enumerate(file_paths):
+        with open(file_path, "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            next(f_reader)
+            for row in f_reader:
+                sentence_1, sentence_2, label = row[1], row[6], row[7]
+                dsrl_obj_1 = process_text(ParZu_parser, sentence_1)
+                sem_roles_1 = predict_semRoles(dsrl, dsrl_obj_1)
+                dsrl_obj_2 = process_text(ParZu_parser, sentence_2)
+                sem_roles_2 = predict_semRoles(dsrl, dsrl_obj_2)
+                label_text_feat.append([label, sentence_1, sentence_2, sem_roles_1, sem_roles_2])
+    
+        with open(outfile_paths[i], "w") as f:
+            for element in label_text_feat:
+                csv.writer(f, delimiter="\t").writerow(element)
 
 def preprocess_SCARE(path, argument_model_config):
     """read in merged TSVs, predict SRLs, write label, text and SRLs to new file
