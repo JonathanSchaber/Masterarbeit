@@ -34,50 +34,36 @@ def parse_cmd_args():
     return parser.parse_args()
 
 
-def read_data(path):
-    """reads JSON from file
-    Args:
-        param1: str
-    Returns:
-        JSON object
-    """
-    with open(path, "r") as f:
-        file = f.read()
-
-    json_data = json.loads(file)
-    return json_data
-
-
-def SRL_MLQA_v1(json_data, dsrl, parser, path_outfile):
-    """processes json data, predicts sem_roles, writes to new file
-    Args:
-        param1: json data
-        param2: DAMESRL object
-        param3: ParZu parser object
-    Returns:
-        None
-    """
-    failed_texts = []
-    for i in range(len(json_data["data"])):
-        if i % 20 == 0:
-            print("Processed the {}th element...".format(i))
-        for j in range(len(json_data["data"][i]["paragraphs"])):
-            try:
-                srl_context = predict_semRoles(dsrl, process_text(parser, json_data["data"][i]["paragraphs"][j]["context"]))
-                json_data["data"][i]["paragraphs"][j]["srl_context"] = srl_context
-            except:
-                print(json_data["data"][i]["paragraphs"][j]["context"])
-                failed_texts.append((i, j))
-    print("The following texts were not processed\n:")
-    for indices in failed_texts:
-        print("json_data['data'][{}]['paragraphs'][{}]['context']".format(indices[0], indices[1]))
-
-    write_obj = json.dumps(json_data)
-    try:
-        with open(path_outfile, "w", encoding="utf8") as f:
-            f.write(write_obj)
-    except:
-        import pdb; pdb.set_trace()
+# def SRL_MLQA_v1(json_data, dsrl, parser, path_outfile):
+#     """processes json data, predicts sem_roles, writes to new file
+#     Args:
+#         param1: json data
+#         param2: DAMESRL object
+#         param3: ParZu parser object
+#     Returns:
+#         None
+#     """
+#     failed_texts = []
+#     for i in range(len(json_data["data"])):
+#         if i % 20 == 0:
+#             print("Processed the {}th element...".format(i))
+#         for j in range(len(json_data["data"][i]["paragraphs"])):
+#             try:
+#                 srl_context = predict_semRoles(dsrl, process_text(parser, json_data["data"][i]["paragraphs"][j]["context"]))
+#                 json_data["data"][i]["paragraphs"][j]["srl_context"] = srl_context
+#             except:
+#                 print(json_data["data"][i]["paragraphs"][j]["context"])
+#                 failed_texts.append((i, j))
+#     print("The following texts were not processed\n:")
+#     for indices in failed_texts:
+#         print("json_data['data'][{}]['paragraphs'][{}]['context']".format(indices[0], indices[1]))
+# 
+#     write_obj = json.dumps(json_data)
+#     try:
+#         with open(path_outfile, "w", encoding="utf8") as f:
+#             f.write(write_obj)
+#     except:
+#         import pdb; pdb.set_trace()
 
 
 def get_majority_label(labels):
@@ -114,13 +100,14 @@ def preprocess_MLQA(path, argument_model_config):
     Returns:
         None
     """
-    spans_text_qas_srl = []
-    path_outfile = path + "MLQA.tsv"
+    path = Path(path)
+    assert path.is_dir(), "Path must point to root directory /<path>/<to>/MLQA/, not file!"
+    path = str(path)
+    file_paths = [path + "/dev/dev-context-de-question-de.json", path + "/test/test-context-de-question-de.json"]
 
-    file_paths = [path + "dev/dev-context-de-question-de.json", path + "test/test-context-de-question-de.json"]
-
-    for path in file_paths:
-        with open(path, "r") as f:
+    for file_path in file_paths:
+        spans_text_qas_srl = []
+        with open(file_path, "r") as f:
             file = f.read()
             json_data = json.loads(file)
         
@@ -133,9 +120,10 @@ def preprocess_MLQA(path, argument_model_config):
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     spans_text_qas_srl.append([start_index, text, context, question])
 
-    with open(path_outfile, "w") as f:
-        for element in spans_text_qas_srl:
-            csv.writer(f, delimiter="\t").writerow(element)
+        path_outfile = file_path.rstrip("json") + "tsv"
+        with open(path_outfile, "w") as f:
+            for element in spans_text_qas_srl:
+                csv.writer(f, delimiter="\t").writerow(element)
 
 
 def preprocess_XQuAD(path, argument_model_config):
@@ -146,6 +134,8 @@ def preprocess_XQuAD(path, argument_model_config):
     Returns:
         None
     """
+    path = Path(path)
+    assert path.is_dir(), "Path must point to root directory /<path>/<to>/MLQA/, not file!"
     spans_text_qas_srl = []
     path_outfile = str(Path(path).parent) + "/XQuAD.tsv"
 
