@@ -169,34 +169,6 @@ class Dataloader:
             longest_sent = max([len(self.tokenizer.tokenize(sent[ind_1])) for sent in self.data]) 
             return self.check_max_length(longest_sent)
 
-
-
-###############################
-######## d e I S E A R ########
-
-class deISEAR_dataloader(Dataloader):
-    def load(self):
-        """loads the data from deISEAR data set
-        Args:
-            param1: str
-        Returns:
-            list of tuples of str
-            mapping of y
-        """
-        data = []
-        y_mapping = {}
-        with open(str(Path(self.path)) + "/deISEAR_GLIBERT.tsv", "r") as f:
-            f_reader = csv.reader(f, delimiter="\t")
-            counter = 0
-            for row in f_reader:
-                emotion, sentence = row[1], row[2]
-                data.append((emotion, sentence))
-                if emotion not in y_mapping:
-                    y_mapping[emotion] = counter
-                    counter += 1
-        self.data = data
-        self.y_mapping = y_mapping
-    
     def load_torch(self):
         """Return tensor for training
         Args:
@@ -237,6 +209,35 @@ class deISEAR_dataloader(Dataloader):
 
         self.make_and_split_datasets()
 
+
+
+
+###############################
+######## d e I S E A R ########
+
+class deISEAR_dataloader(Dataloader):
+    def load(self):
+        """loads the data from deISEAR data set
+        Args:
+            param1: str
+        Returns:
+            list of tuples of str
+            mapping of y
+        """
+        data = []
+        y_mapping = self.y_mapping
+        with open(str(Path(self.path)) + "/deISEAR_GLIBERT.tsv", "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            counter = 0
+            for row in f_reader:
+                emotion, sentence = row[1], row[2]
+                data.append((emotion, sentence))
+                if emotion not in y_mapping:
+                    y_mapping[emotion] = counter
+                    counter += 1
+        self.data = data
+        self.y_mapping = y_mapping
+    
 ####################################
 ########### M L Q A ############
 
@@ -324,18 +325,6 @@ class MLQA_dataloader(Dataloader):
         print("length (tokenized): {}".format(self.max_len))
 
         self.make_datasets()
-#        self.dataset_dev = TensorDataset(
-#                                self.x_tensor_dev,
-#                                self.y_tensor_dev,
-#                                self.attention_mask_dev,
-#                                self.token_type_ids_dev
-#                                )
-#        self.dataset_test = TensorDataset(
-#                                self.x_tensor_test,
-#                                self.y_tensor_test,
-#                                self.attention_mask_test,
-#                                self.token_type_ids_test
-#                                )
 
 ####################################
 ########### P A W S - X ############
@@ -433,8 +422,8 @@ class SCARE_dataloader(Dataloader):
             mapping of y
         """
         data = []
-        y_mapping = {}
-        with open(self.path, "r") as f:
+        y_mapping = self.y_mapping
+        with open(Path(self.path)) + "/annotations/annotations_GLIBERT.tsv", "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
@@ -446,45 +435,6 @@ class SCARE_dataloader(Dataloader):
     
         self.data = data
         self.y_mapping = y_mapping
-    
-    def load_torch(self):
-        """Return tensor for training
-        Args:
-            param1: list of tuples of strs
-            param2: dict
-            param3: torch Tokenizer object
-        Returns
-            tensor
-            tensor
-            int
-        """
-        x_tensor_list = []
-        y_tensor_list = []
-        longest_sent = max([len(self.tokenizer.tokenize(sent[1])) for sent in self.data])
-        self.max_len = self.check_max_length(longest_sent)
-        print("")
-        print("======== Longest sentence in data: ========")
-        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
-        print("length (tokenized): {}".format(self.max_len))
-        for example in self.data:
-            label, review = example
-            if len(self.tokenizer.tokenize(review)) + 1 > 512:
-                continue
-            x_tensor = self.tokenizer.encode(
-                                        review, 
-                                        add_special_tokens = True, 
-                                        max_length = self.max_len,
-                                        pad_to_max_length = True, 
-                                        truncation=True, 
-                                        return_tensors = 'pt'
-                                        )
-            x_tensor_list.append(x_tensor)
-            y_tensor = torch.tensor(self.y_mapping[label])
-            y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
-        
-        #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
-        self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
-        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
 
 #####################################################################################
 ######## X N L I #######
