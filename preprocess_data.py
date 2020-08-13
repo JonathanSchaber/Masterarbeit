@@ -3,6 +3,7 @@ import csv
 import json
 import os
 
+from random import shuffle
 from pathlib import Path
 from predict_SRL import *
 
@@ -93,6 +94,7 @@ def preprocess_deISEAR(path, argument_model_config):
     
     len_dev = int(len(emotion_sentence_srl)*0.9)
     len_test = len(emotion_sentence_srl) - len_dev
+    shuffle(emotion_sentence_srl)
 
     with open(outfile_paths[0], "w") as f:
         for element in emotion_sentence_srl[:len_dev]:
@@ -115,7 +117,8 @@ def preprocess_MLQA(path, argument_model_config):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/MLQA/, not file!"
     path = str(path)
     file_paths = [path + "/dev/dev-context-de-question-de.json", path + "/test/test-context-de-question-de.json"]
-    outfile_paths = [path + "/dev/GLIBERT_dev-context-de-question-de.json", path + "/test/GLIBERT_test-context-de-question-de.json"]
+    outfile_paths = [path + "/dev/GLIBERT_dev-context-de-question-de.tsv", path + "/test/GLIBERT_test-context-de-question-de.tsv"]
+    too_long_contexts = []
 
     for h, file_path in enumerate(file_paths):
         spans_text_qas_srl = []
@@ -126,24 +129,28 @@ def preprocess_MLQA(path, argument_model_config):
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
                 context = json_data["data"][i]["paragraphs"][j]["context"]
-                dsrl_obj = process_text(ParZu_parser, context)
-                sem_roles_context = predict_semRoles(dsrl, dsrl_obj)
+                try:
+                    dsrl_obj = process_text(ParZu_parser, context)
+                    sem_roles_context = predict_semRoles(dsrl, dsrl_obj)
+                except:
+                    too_long_contexts.append(context)
+                    continue
                 for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
                     question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
                     start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     dsrl_obj = process_text(ParZu_parser, question)
                     sem_roles_question = predict_semRoles(dsrl, dsrl_obj)
-                    if i % 20 == 0:
+                    if i % 50 == 0:
                         print("")
                         print("Context: {}".format(context))
                         for sentence in sem_roles_context:
                             for sem_roles in sentence:
-                                print("Predicted SRLs: {}".format(element))
-                        print("Question: {}".format(text))
+                                print("Predicted SRLs: {}".format(sem_roles))
+                        print("Question: {}".format(question))
                         for sentence in sem_roles_question:
                             for sem_roles in sentence:
-                                print("Predicted SRLs: {}".format(element))
+                                print("Predicted SRLs: {}".format(sem_roles))
                     spans_text_qas_srl.append([
                                             start_index,
                                             text, context,
@@ -152,10 +159,12 @@ def preprocess_MLQA(path, argument_model_config):
                                             sem_roles_question
                                             ])
 
-        path_outfile = file_path.rstrip("json") + "tsv"
-        with open(outfile_paths[hh], "w") as f:
+        with open(outfile_paths[h], "w") as f:
             for element in spans_text_qas_srl:
                 csv.writer(f, delimiter="\t").writerow(element)
+    with open("too_long.txt", "w") as f:
+        for context in too_long_contexts:
+            f.write(context)
 
 
 def preprocess_XQuAD(path, argument_model_config):
