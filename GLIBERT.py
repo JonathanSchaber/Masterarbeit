@@ -25,7 +25,7 @@ from transformers import (
         )
 
 from load_data import *
-merge_subs = MLQA_XQuAD_dataloader.merge_subs
+merge_subs = MLQA_dataloader.merge_subs
 
 
 def parse_cmd_args():
@@ -312,7 +312,7 @@ def fine_tune_BERT(config, stats_file=None):
     criterion = nn.NLLLoss()
     merge_subtokens = config["merge_subtokens"]
 
-    train_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
+    dev_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
     mapping = {value: key for (key, value) in mapping.items()} if mapping else None
 
     srl_encoder = SRL_Encoder(config)
@@ -337,7 +337,7 @@ def fine_tune_BERT(config, stats_file=None):
             eps = 1e-8
         )
 
-    total_steps = len(train_data) * epochs
+    total_steps = len(dev_data) * epochs
     scheduler = get_linear_schedule_with_warmup(
             optimizer, 
             num_warmup_steps = 0,
@@ -355,7 +355,7 @@ def fine_tune_BERT(config, stats_file=None):
         t0 = time.time()
         total_train_loss = 0
         model.train()
-        for step, batch in enumerate(train_data):
+        for step, batch in enumerate(dev_data):
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             model.zero_grad()
@@ -364,7 +364,7 @@ def fine_tune_BERT(config, stats_file=None):
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
-                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
+                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
                     print("  Last prediction: ")
                     print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
                     print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
@@ -382,7 +382,7 @@ def fine_tune_BERT(config, stats_file=None):
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
-                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(train_data), elapsed))
+                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
                     print("  Last prediction: ")
                     print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
                     if not merge_subtokens:
@@ -411,7 +411,7 @@ def fine_tune_BERT(config, stats_file=None):
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             scheduler.step()
-        avg_train_loss = total_train_loss / len(train_data)
+        avg_train_loss = total_train_loss / len(dev_data)
         training_time = format_time(time.time() - t0)
 
         print("")
