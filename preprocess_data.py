@@ -23,7 +23,7 @@ def parse_cmd_args():
             "--data_set", 
             type=str, 
             help="Indicate on which data set model should be preprocessed",
-            choices=["XNLI", "SCARE", "PAWS-X", "MLQA", "XQuAD"]
+            choices=["deISEAR", "XNLI", "SCARE", "PAWS-X", "MLQA", "XQuAD"]
             )
     parser.add_argument(
             "-p", 
@@ -32,38 +32,6 @@ def parse_cmd_args():
             help="Path to file ATTENTION in case of PAWS-X this points to the directory containing the files, not the files itself!",
             )
     return parser.parse_args()
-
-
-# def SRL_MLQA_v1(json_data, dsrl, parser, path_outfile):
-#     """processes json data, predicts sem_roles, writes to new file
-#     Args:
-#         param1: json data
-#         param2: DAMESRL object
-#         param3: ParZu parser object
-#     Returns:
-#         None
-#     """
-#     failed_texts = []
-#     for i in range(len(json_data["data"])):
-#         if i % 20 == 0:
-#             print("Processed the {}th element...".format(i))
-#         for j in range(len(json_data["data"][i]["paragraphs"])):
-#             try:
-#                 srl_context = predict_semRoles(dsrl, process_text(parser, json_data["data"][i]["paragraphs"][j]["context"]))
-#                 json_data["data"][i]["paragraphs"][j]["srl_context"] = srl_context
-#             except:
-#                 print(json_data["data"][i]["paragraphs"][j]["context"])
-#                 failed_texts.append((i, j))
-#     print("The following texts were not processed\n:")
-#     for indices in failed_texts:
-#         print("json_data['data'][{}]['paragraphs'][{}]['context']".format(indices[0], indices[1]))
-# 
-#     write_obj = json.dumps(json_data)
-#     try:
-#         with open(path_outfile, "w", encoding="utf8") as f:
-#             f.write(write_obj)
-#     except:
-#         import pdb; pdb.set_trace()
 
 
 def get_majority_label(labels):
@@ -89,6 +57,47 @@ def get_majority_label(labels):
     else:
         margin = int(((pos - neg)**2)**0.5)
         return ("Negative", True, num) if margin > 1 else ("Negative", False, num)
+
+
+def preprocess_deISEAR(path, argument_model_config):
+    """Preprocess deISEAR data
+    ATTENTION: path to root directory, not file(s)!
+    Args:
+        param1: str
+        param2: str
+    Returns:
+        None
+    """
+    path = Path(path)
+    assert path.is_dir(), "Path must point to root directory /<path>/<to>/deISEAR/, not file!"
+    path = str(path)
+    file_path = path + "/deISEAR.tsv"
+    outfile_paths = [path + "/GLIBERT_deISEAR_dev.tsv", path + "/GLIBERT_deISEAR_test.tsv"]
+
+    emotion_sentence_srl = []
+
+    with open(file_path, "r") as f:
+        f_reader = csv.reader(f, delimiter="\t")
+        for i, row in enumerate(f_reader):
+            emotion, sentence = row[1], row[2]
+            dsrl_obj = process_text(ParZu_parser, sentence)
+            sem_roles = predict_semRoles(dsrl, dsrl_obj)
+            if i % 50 == 0 and i != 0:
+                print("")
+                print("Senstence: {}".format(sentence))
+                for element in sem_roles[0]:
+                    print("Predicted SRLs: {}".format(element))
+            emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
+    
+    len_dev = int(len(emotion_sentence_srl)*0.9)
+    len_test = len(emotion_sentence_srl) - len_dev
+
+    with open(outfile_paths[0], "w") as f:
+        for element in emotion_sentence_srl[:len_dev]:
+            csv.writer(f, delimiter="\t").writerow(element)
+    with open(outfile_paths[1], "w") as f:
+        for element in emotion_sentence_srl[-len_test:]:
+            csv.writer(f, delimiter="\t").writerow(element)
 
 
 def preprocess_MLQA(path, argument_model_config):
@@ -174,8 +183,6 @@ def preprocess_PAWS_X(path, argument_model_config):
     outfile_paths = [path + "/de/paws_x_dev.tsv", path + "/de/paws_x_test.tsv"]
 
     label_text_feat = []
-    dsrl = DSRL(argument_model_config)
-    ParZu_parser = create_ParZu_parser()
 
     for i, file_path in enumerate(file_paths):
         with open(file_path, "r") as f:
@@ -325,12 +332,15 @@ def preprocess_SCARE_reviews(path, path_outfile):
 
 def main():
     args = parse_cmd_args()
-    if args.argument_model_config:
-        global argument_model_config
-        argument_model_config = args.argument_model_config 
     data_set = args.data_set
+    global dsrl 
+    dsrl = DSRL(argument_model_config)
+    global ParZu_parser
+    ParZu_parser = create_ParZu_parser()
     path = args.path
-    if data_set == "MLQA":
+    if data_set == "deISEAR":
+        preprocess_deISEAR(path, argument_model_config)
+    elif data_set == "MLQA":
         preprocess_MLQA(path, argument_model_config)
     elif data_set == "PAWS-X":
         preprocess_PAWS_X(path, argument_model_config)
