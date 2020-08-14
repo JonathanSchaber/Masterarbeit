@@ -359,9 +359,10 @@ def fine_tune_BERT(config, stats_file=None):
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
+            b_token_type_ids = batch[3].to(device)
             model.zero_grad()
             if not SPAN_FLAG:
-                outputs = model(b_input_ids)
+                outputs = model(b_input_ids, attention_mask=b_attention_mask)
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
@@ -373,7 +374,6 @@ def fine_tune_BERT(config, stats_file=None):
                     print("")
                 loss = criterion(outputs, b_labels)
             else:
-                b_token_type_ids = batch[3].to(device)
                 start_span, end_span = model(
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
@@ -431,6 +431,8 @@ def fine_tune_BERT(config, stats_file=None):
         for batch in test_data:
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
+            b_attention_mask = batch[2].to(device)
+            b_token_type_ids = batch[3].to(device)
 
             with torch.no_grad():
                 if not SPAN_FLAG:
@@ -439,8 +441,6 @@ def fine_tune_BERT(config, stats_file=None):
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
                 else:
-                    b_attention_mask = batch[2].to(device)
-                    b_token_type_ids = batch[3].to(device)
                     start_span, end_span = model(
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
