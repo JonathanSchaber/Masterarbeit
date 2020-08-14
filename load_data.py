@@ -88,6 +88,8 @@ class Dataloader:
                     label, blank, sentence_1, sentence_2 = row[0], row[1], row[2], row[3]
                     data.append((label, blank, sentence_1, sentence_2))
                 elif self.type == "qa":
+                    start_index, text, context, question, = row[0], row[1], row[2], row[3]
+                    start_index = int(start_index)
                     tokenized_context = self.tokenizer.tokenize(context[:start_index])
                     if not self.merge_subtokens:
                         len_question = len(self.tokenizer.tokenize(question))
@@ -99,11 +101,12 @@ class Dataloader:
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
                     start_span += len_question + 1
                     end_span += len_question + 1
+                    data.append((start_span, end_span, question, context))
 
-
-                if label not in y_mapping:
-                    y_mapping[label] = counter
-                    counter += 1
+                if self.type != "qa":
+                    if label not in y_mapping:
+                        y_mapping[label] = counter
+                        counter += 1
     
         self.y_mapping = y_mapping
         return data
@@ -209,9 +212,15 @@ class Dataloader:
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         elif self.type == "qa":
             for example in data:
-                start_span, end_span, context, question = example
+                start_span, end_span, question, context = example
                 start_span = int(start_span) + 1
                 end_span = int(end_span) + 1
+                if len(self.tokenizer.tokenize(question)) + len(self.tokenizer.tokenize(context)) + 3 > 512:
+                    print("")
+                    print("ATTENTION: example too long!")
+                    print("question: {}".format(question))
+                    print("context: {}".format(context))
+                    continue
                 encoded_dict = self.tokenizer.encode_plus(
                                             question, 
                                             context, 
@@ -226,13 +235,13 @@ class Dataloader:
                 input_ids.append(encoded_dict["input_ids"])
                 attention_mask.append(encoded_dict["attention_mask"])
                 token_type_ids.append(encoded_dict["token_type_ids"])
-                y_tensor = torch.tensor(self.y_mapping[label])
+                y_tensor = torch.tensor([start_span, end_span])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
             
-            return torch.cat(input_ids, dim=0), \
-                    torch.cat(attention_mask, dim=0), \
-                    torch.cat(token_type_ids, dim=0), \
-                    torch.cat(tuple(y_tensor_list), dim=0) 
+        return torch.cat(input_ids, dim=0), \
+                torch.cat(attention_mask, dim=0), \
+                torch.cat(token_type_ids, dim=0), \
+                torch.cat(tuple(y_tensor_list), dim=0) 
 
     def load_torch(self):
         self.x_tensor_dev, \
@@ -290,6 +299,7 @@ class PAWS_X_dataloader(Dataloader):
 
 class SCARE_dataloader(Dataloader):
     def load(self):
+        self.type = 1
         self.path_dev = str(Path(self.path)) + "/scare_v1.0.0/annotations/GLIBERT_annotations_dev.tsv"
         self.path_test = str(Path(self.path)) + "/scare_v1.0.0/annotations/GLIBERT_annotations_test.tsv"
         self.data_dev = self.load_data(self.path_dev)
@@ -300,6 +310,7 @@ class SCARE_dataloader(Dataloader):
 
 class XNLI_dataloader(Dataloader):
     def load(self):
+        self.type = 2
         self.path_dev = str(Path(self.path)) + "/XNLI-1.0/GLIBERT_xnli.dev.de.tsv"
         self.path_test = str(Path(self.path)) + "/XNLI-1.0/GLIBERT_xnli.test.de.tsv"
         self.data_dev = self.load_data(self.path_dev)
@@ -310,6 +321,7 @@ class XNLI_dataloader(Dataloader):
 
 class XQuAD_dataloader(Dataloader):
     def load(self):
+        self.type = "qa"
         self.path_dev = str(Path(self.path)) + "/xquad/GLIBERT_xquad_dev.tsv"
         self.path_test = str(Path(self.path)) + "/xquad/GLIBERT_xquad_test.tsv"
         self.data_dev = self.load_data(self.path_dev)
