@@ -81,12 +81,6 @@ def preprocess_deISEAR(path):
         for i, row in enumerate(f_reader):
             emotion, sentence = row[1], row[2]
             sem_roles = srl_predictor.predict_semRoles(sentence)
-            if i % 50 == 0 and i != 0:
-                print("")
-                print("Senstence: {}".format(sentence))
-                for sentence in sem_roles:
-                    for sem_roles in sentence:
-                        print("Predicted SRLs: {}".format(element))
             emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
     
     len_dev = int(len(emotion_sentence_srl)*0.9)
@@ -123,6 +117,7 @@ def preprocess_MLQA(path):
             path + "/dev/GLIBERT_dev-context-de-question-de.tsv",
             path + "/test/GLIBERT_test-context-de-question-de.tsv"
             ]
+
     too_long_contexts = []
 
     for h, file_path in enumerate(file_paths):
@@ -144,16 +139,6 @@ def preprocess_MLQA(path):
                     start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     sem_roles_question = srl_predictor.predict_semRoles(question)
-                    if i % 50 == 0:
-                        print("")
-                        print("Context: {}".format(context))
-                        for sentence in sem_roles_context:
-                            for sem_roles in sentence:
-                                print("Predicted SRLs: {}".format(sem_roles))
-                        print("Question: {}".format(question))
-                        for sentence in sem_roles_question:
-                            for sem_roles in sentence:
-                                print("Predicted SRLs: {}".format(sem_roles))
                     spans_text_qas_srl.append([
                                             start_index,
                                             text, context,
@@ -162,13 +147,13 @@ def preprocess_MLQA(path):
                                             sem_roles_question
                                             ])
 
-        print("======== Writing to file: {}========".format(outfile_paths[h]))
+        print("======== Writing to file: {} ========".format(outfile_paths[h]))
 
         with open(outfile_paths[h], "w") as f:
             for element in spans_text_qas_srl:
                 csv.writer(f, delimiter="\t").writerow(element)
 
-    with open("too_long.txt", "w") as f:
+    with open(path + "/too_long.txt", "w") as f:
         for context in too_long_contexts:
             f.write(context + "\n")
 
@@ -201,7 +186,7 @@ def preprocess_PAWS_X(path):
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
-        print("======== Writing to file: {}========".format(outfile_paths[i]))
+        print("======== Writing to file: {} ========".format(outfile_paths[i]))
 
         with open(outfile_paths[i], "w") as f:
             for element in label_text_feat:
@@ -378,6 +363,7 @@ def preprocess_XQuAD(path):
     path = str(path)
     outfile_paths = [path + "/xquad/GLIBERT_xquad_dev.tsv", path + "/xquad/GLIBERT_xquad_test.test.de.tsv"]
 
+    too_long_contexts = []
     spans_text_qas_srl = []
 
     with open(path + "/xquad/xquad.de.json", "r") as f:
@@ -387,7 +373,11 @@ def preprocess_XQuAD(path):
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
                 context = json_data["data"][i]["paragraphs"][j]["context"]
-                sem_roles_context = srl_predictor.predict_semRoles(context)
+                try:
+                    sem_roles_context = srl_predictor.predict_semRoles(context)
+                except:
+                    too_long_contexts.append(context)
+                    continue
                 for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
                     question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
                     sem_roles_question = srl_predictor.predict_semRoles(question)
@@ -413,6 +403,10 @@ def preprocess_XQuAD(path):
     with open(outfile_paths[1], "w") as f:
         for element in spans_text_qas_srl[-len_test:]:
             csv.writer(f, delimiter="\t").writerow(element)
+
+    with open(path + "/too_long.txt", "w") as f:
+        for context in too_long_contexts:
+            f.write(context + "\n")
 
 
 def main():
