@@ -361,7 +361,7 @@ def preprocess_XQuAD(path):
     path = Path(path)
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/XQUAD/, not file!"
     path = str(path)
-    outfile_paths = [path + "/xquad/GLIBERT_xquad_dev.tsv", path + "/xquad/GLIBERT_xquad_test.test.de.tsv"]
+    outfile_paths = [path + "/xquad/GLIBERT_xquad_dev.tsv", path + "/xquad/GLIBERT_xquad_test.tsv"]
 
     too_long_contexts = []
     spans_text_qas_srl = []
