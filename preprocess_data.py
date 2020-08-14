@@ -339,12 +339,12 @@ def preprocess_XNLI(path):
             f_reader = csv.reader(f, delimiter="\t")
             next(f_reader)
             for row in f_reader:
-                sentence_1, sentence_2, label = row[1], row[6], row[7]
+                label, sentence_1, sentence_2 = row[1], row[6], row[7]
                 sem_roles_1 = srl_predictor.predict_semRoles(sentence_1)
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
-        print("======== Writing to file: {}========".format(outfile_paths[i]))
+        print("======== Writing to file: {} ========".format(outfile_paths[i]))
 
         with open(outfile_paths[i], "w") as f:
             for element in label_text_feat:
