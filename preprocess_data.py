@@ -227,16 +227,14 @@ def preprocess_SCARE(path):
     count_all = 0
 
     with open(path + "/scare_v1.0.0/annotations/annotations.txt", "r") as f:
-        ids_texts = [example.split("\t") for example in f.read().split("\n")]
+        ids_texts = [example for example in csv.reader(f, delimiter="\t")]
     with open(path + "/scare_v1.0.0/annotations/annotations.csv", "r") as f:
-        rows = f.read().split("\n")
+        rows = csv.reader(f, delimiter="\t")
         ids_labels = []
         for row in rows:
-            if row != "":
-                entity, review_id, left, right, string, phrase_id, polarity, relation = row.split("\t")
-                ids_labels.append([review_id, polarity])
+            entity, review_id, left, right, string, phrase_id, polarity, relation = row
+            ids_labels.append([review_id, polarity])
 
-    ids_texts.pop()
     for review_id, text in ids_texts:
         if review_id in id_text_labels:
             raise Error
@@ -266,16 +264,16 @@ def preprocess_SCARE(path):
     print("{:.2f}% of votes were non-majority".format(count_non_maj/count_all*100))
     print("{:.2f}% of votes were close (label difference of 1)".format(count_close/count_all*100))
     print("")
-    print("======== Writing to file: {} ========".format(path_outfile))
+    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
 
     len_dev = int(len(label_text_feat)*0.9)
     len_test = len(label_text_feat) - len_dev
     shuffle(label_text_feat)
 
-    with open(outfile_path[0], "w") as f:
+    with open(outfile_paths[0], "w") as f:
         for element in label_text_feat[:len_dev]:
             csv.writer(f, delimiter="\t").writerow(element)
-    with open(outfile_path[1], "w") as f:
+    with open(outfile_paths[1], "w") as f:
         for element in label_text_feat[-len_test:]:
             csv.writer(f, delimiter="\t").writerow(element)
 
@@ -311,8 +309,15 @@ def preprocess_SCARE_reviews(path, path_outfile):
             sem_roles = srl_predictor.predict_semRoles(review)
             text_label.append([rating, "", review, sem_roles])
 
-    with open(path_outfile, "w") as f:
-        for element in text_label:
+    len_dev = int(len(rating_text_srl)*0.9)
+    len_test = len(rating_text_srl) - len_dev
+    shuffle(rating_text_srl)
+
+    with open(outfile_paths[0], "w") as f:
+        for element in rating_text_srl[:len_dev]:
+            csv.writer(f, delimiter="\t").writerow(element)
+    with open(outfile_paths[1], "w") as f:
+        for element in rating_text_srl[-len_test:]:
             csv.writer(f, delimiter="\t").writerow(element)
 
 
@@ -342,7 +347,7 @@ def preprocess_XNLI(path):
                 sentence_1, sentence_2, label = row[1], row[6], row[7]
                 sem_roles_1 = srl_predictor.predict_semRoles(sentence_1)
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
-                label_text_feat.append([label, sentence_1, sentence_2, sem_roles_1, sem_roles_2])
+                label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
         with open(outfile_paths[i], "w") as f:
             for element in label_text_feat:
