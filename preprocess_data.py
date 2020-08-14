@@ -93,6 +93,8 @@ def preprocess_deISEAR(path):
     len_test = len(emotion_sentence_srl) - len_dev
     shuffle(emotion_sentence_srl)
 
+    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
+
     with open(outfile_paths[0], "w") as f:
         for element in emotion_sentence_srl[:len_dev]:
             csv.writer(f, delimiter="\t").writerow(element)
@@ -160,9 +162,12 @@ def preprocess_MLQA(path):
                                             sem_roles_question
                                             ])
 
+        print("======== Writing to file: {}========".format(outfile_paths[h]))
+
         with open(outfile_paths[h], "w") as f:
             for element in spans_text_qas_srl:
                 csv.writer(f, delimiter="\t").writerow(element)
+
     with open("too_long.txt", "w") as f:
         for context in too_long_contexts:
             f.write(context + "\n")
@@ -196,6 +201,8 @@ def preprocess_PAWS_X(path):
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
+        print("======== Writing to file: {}========".format(outfile_paths[i]))
+
         with open(outfile_paths[i], "w") as f:
             for element in label_text_feat:
                 csv.writer(f, delimiter="\t").writerow(element)
@@ -313,6 +320,8 @@ def preprocess_SCARE_reviews(path, path_outfile):
     len_test = len(rating_text_srl) - len_dev
     shuffle(rating_text_srl)
 
+    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
+
     with open(outfile_paths[0], "w") as f:
         for element in rating_text_srl[:len_dev]:
             csv.writer(f, delimiter="\t").writerow(element)
@@ -349,6 +358,8 @@ def preprocess_XNLI(path):
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
+        print("======== Writing to file: {}========".format(outfile_paths[i]))
+
         with open(outfile_paths[i], "w") as f:
             for element in label_text_feat:
                 csv.writer(f, delimiter="\t").writerow(element)
@@ -393,6 +404,8 @@ def preprocess_XQuAD(path):
         len_dev = int(len(spans_text_qas_srl)*0.9)
         len_test = len(spans_text_qas_srl) - len_dev
         shuffle(spans_text_qas_srl)
+
+    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
 
     with open(outfile_paths[0], "w") as f:
         for element in spans_text_qas_srl[:len_dev]:
