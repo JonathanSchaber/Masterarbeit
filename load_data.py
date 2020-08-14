@@ -23,21 +23,17 @@ class Dataloader:
         self.path = path_data
         self.path_dev = None
         self.path_test = None
-        self.data = None
         self.data_dev = None
         self.data_test = None
         self.max_len = None
-        self.attention_mask = None
+        self.num_sents = None
         self.attention_mask_dev = None
         self.attention_mask_test = None
-        self.token_type_ids = None
         self.token_type_ids_dev = None
         self.token_type_ids_test = None
         self.y_mapping = {}
-        self.x_tensor = None
         self.x_tensor_dev = None
         self.x_tensor_test = None
-        self.y_tensor = None
         self.y_tensor_dev = None
         self.y_tensor_test = None
         self.dataset_dev = None
@@ -78,37 +74,26 @@ class Dataloader:
                 token_list.append("".join(current_word)) 
         return token_list  
 
-    def make_and_split_datasets(self):
-        """if there is no split in original dataset, we create one ourselves
-        ratio dev:test = 90:10
-        """
-        if self.token_type_ids is not None:
-            print("")
-            print("BERT info: Using attention masks and token type ids!")
-            dataset = TensorDataset(
-                            self.x_tensor,
-                            self.y_tensor,
-                            self.attention_mask,
-                            self.token_type_ids
-                            )
-        elif self.attention_mask is not None:
-            print("")
-            print("BERT info: Using attention masks!")
-            dataset = TensorDataset(
-                            self.x_tensor,
-                            self.y_tensor,
-                            self.attention_mask
-                            )
-        else:
-            print("")
-            print("BERT info: Using plain ids!")
-            dataset = TensorDataset(
-                            self.x_tensor,
-                            self.y_tensor
-                            )
-        dev_size = int(0.9 * len(dataset))
-        test_size = len(dataset) - dev_size
-        self.dataset_dev, self.dataset_test = random_split(dataset, [dev_size, test_size])
+    def load_data(self, path):
+        data = []
+        y_mapping = self.y_mapping
+        with open(path, "r") as f:
+            f_reader = csv.reader(f, delimiter="\t")
+            counter = 0
+            for row in f_reader:
+                if self.num_sents == 2:
+                    label, blank, sentence_1, sentence_2 = row[0], row[1], row[2], row[3]
+                    data.append((label, blank, sentence_1, sentence_2))
+                elif self.num_sents == 1:
+                    label, blank, sentence = row[0], row[1], row[2]
+                    data.append((label, blank, sentence, ""))
+
+                if label not in y_mapping:
+                    y_mapping[label] = counter
+                    counter += 1
+    
+        self.y_mapping = y_mapping
+        return data
 
     def make_datasets(self):
         """if there are already splits, make datasets from them
@@ -153,63 +138,67 @@ class Dataloader:
                                     self.y_tensor_test
                                     )
 
-    def get_max_len(self, *indices):
-        if len(indices) > 1:
-            ind_1 = indices[0]
-            ind_2 = indices[1]
-            longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[ind_1])) for sent in self.data_dev]) 
-            longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[ind_2])) for sent in self.data_dev]) 
-            longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[ind_1])) for sent in self.data_test]) 
-            longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[ind_2])) for sent in self.data_test]) 
+    def get_max_len(self):
+        if type(self.data_dev[3]) != list:
+            longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
+            longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
+            longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_test]) 
+            longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
             longest_sentence_1 = max(longest_sentence_1_dev, longest_sentence_1_test)
             longest_sentence_2 = max(longest_sentence_2_dev, longest_sentence_2_test)
             return self.check_max_length(longest_sentence_1, longest_sentence_2)
         else:
-            ind_1 = indices[0]
-            longest_sent = max([len(self.tokenizer.tokenize(sent[ind_1])) for sent in self.data]) 
+            longest_sent = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
             return self.check_max_length(longest_sent)
 
-    def load_torch(self):
-        """Return tensor for training
-        Args:
-            param1: list of tuples of strs
-            param2: dict
-            param3: torch Tokenizer object
-        Returns
-            tensor
-            tensor
-            int
-        """
-        x_tensor_list = []
+    def load_torch_data(self, data):
+        input_ids = []
+        attention_mask = []
+        token_type_ids = []
         y_tensor_list = []
-        self.max_len = self.get_max_len(1)
-        print("")
-        print("======== Longest sentence in data: ========")
-        #print("{}".format(self.tokenizer.decode(self.tokenizer.convert_tokens_to_ids(longest_sent))))
-        print("length (tokenized): {}".format(self.max_len))
-        for example in self.data:
-            emotion, sentence = example
-            if len(self.tokenizer.tokenize(sentence)) + 1 > 512:
-                continue
-            x_tensor = self.tokenizer.encode(
-                                        sentence,
+
+        self.max_len = self.get_max_len()
+
+        for example in data:
+            label, _, sentence_1, sentence_2 = example
+            encoded_dict = self.tokenizer.encode_plus(
+                                        sentence_1, 
+                                        sentence_2,
                                         add_special_tokens = True, 
                                         max_length = self.max_len,
                                         pad_to_max_length = True, 
-                                        truncation=True, 
-                                        return_tensors = 'pt'
+                                        truncation = True, 
+                                        return_tensors = 'pt',
+                                        return_token_type_ids = True,
+                                        return_attention_mask = True
                                         )
-            x_tensor_list.append(x_tensor)
-            y_tensor = torch.tensor(self.y_mapping[emotion])
+            input_ids.append(encoded_dict["input_ids"])
+            attention_mask.append(encoded_dict["attention_mask"])
+            token_type_ids.append(encoded_dict["token_type_ids"])
+            y_tensor = torch.tensor(self.y_mapping[label])
             y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
         
-        #y_tensor = torch.unsqueeze(torch.tensor(y_tensor_list), dim=1)
-        self.x_tensor = torch.cat(tuple(x_tensor_list), dim=0) 
-        self.y_tensor = torch.cat(tuple(y_tensor_list), dim=0) 
+        return torch.cat(input_ids, dim=0), \
+                torch.cat(attention_mask, dim=0), \
+                torch.cat(token_type_ids, dim=0), \
+                torch.cat(tuple(y_tensor_list), dim=0) 
 
-        self.make_and_split_datasets()
+    def load_torch(self):
+        self.x_tensor_dev, \
+        self.attention_mask_dev, \
+        self.token_type_ids_dev, \
+        self.y_tensor_dev = self.load_torch_data(self.data_dev)
 
+        self.x_tensor_test, \
+        self.attention_mask_test, \
+        self.token_type_ids_test, \
+        self.y_tensor_test = self.load_torch_data(self.data_test)
 
+        print("")
+        print("======== Longest sentence pair in data: ========")
+        print("length (tokenized): {}".format(self.max_len))
+
+        self.make_datasets()
 
 
 ###############################
@@ -217,26 +206,11 @@ class Dataloader:
 
 class deISEAR_dataloader(Dataloader):
     def load(self):
-        """loads the data from deISEAR data set
-        Args:
-            param1: str
-        Returns:
-            list of tuples of str
-            mapping of y
-        """
-        data = []
-        y_mapping = self.y_mapping
-        with open(str(Path(self.path)) + "/deISEAR_GLIBERT.tsv", "r") as f:
-            f_reader = csv.reader(f, delimiter="\t")
-            counter = 0
-            for row in f_reader:
-                emotion, sentence = row[1], row[2]
-                data.append((emotion, sentence))
-                if emotion not in y_mapping:
-                    y_mapping[emotion] = counter
-                    counter += 1
-        self.data = data
-        self.y_mapping = y_mapping
+        self.num_sents = 1
+        self.path_dev = self.path + "GLIBERT_deISEAR_dev.tsv"
+        self.path_test = self.path + "GLIBERT_deISEAR_test.tsv"
+        self.data_dev = self.load_data(self.path_dev)
+        self.data_test = self.load_data(self.path_test)
     
 ####################################
 ########### M L Q A ############
@@ -330,28 +304,28 @@ class MLQA_dataloader(Dataloader):
 ########### P A W S - X ############
 
 class PAWS_X_dataloader(Dataloader):
-    def load_data(self, path):
-        """loads the data from PAWS_X data set
-        Args:
-            param1: str
-        Returns:
-            list of tuples of str
-            mapping of y
-        """
-        data = []
-        y_mapping = self.y_mapping
-        with open(path, "r") as f:
-            f_reader = csv.reader(f, delimiter="\t")
-            counter = 0
-            for row in f_reader:
-                label, sentence_1, sentence_2 = row[0], row[1], row[2]
-                data.append((label, sentence_1, sentence_2))
-                if label not in y_mapping:
-                    y_mapping[label] = counter
-                    counter += 1
-    
-        self.y_mapping = y_mapping
-        return data
+#    def load_data(self, path):
+#        """loads the data from PAWS_X data set
+#        Args:
+#            param1: str
+#        Returns:
+#            list of tuples of str
+#            mapping of y
+#        """
+#        data = []
+#        y_mapping = self.y_mapping
+#        with open(path, "r") as f:
+#            f_reader = csv.reader(f, delimiter="\t")
+#            counter = 0
+#            for row in f_reader:
+#                label, sentence_1, sentence_2 = row[0], row[1], row[2]
+#                data.append((label, sentence_1, sentence_2))
+#                if label not in y_mapping:
+#                    y_mapping[label] = counter
+#                    counter += 1
+#    
+#        self.y_mapping = y_mapping
+#        return data
 
     def load(self):
         self.path_dev = str(Path(self.path)) + "/de/paws_x_dev.tsv"
@@ -423,7 +397,7 @@ class SCARE_dataloader(Dataloader):
         """
         data = []
         y_mapping = self.y_mapping
-        with open(Path(self.path)) + "/annotations/annotations_GLIBERT.tsv", "r") as f:
+        with open(Path(self.path) + "/annotations/annotations_GLIBERT.tsv", "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
@@ -454,7 +428,7 @@ class XNLI_dataloader(Dataloader):
             f_reader = csv.reader(f, delimiter="\t")
             counter = 0
             for row in f_reader:
-                label, sentence_1, sentence_2 = row[1], row[6], row[7]
+                label, sentence_1, sentence_2 = row[0], row[1], row[2]
                 data.append((label, sentence_1, sentence_2))
                 if label not in y_mapping:
                     y_mapping[label] = counter
@@ -701,13 +675,6 @@ def dataloader(config, location, data_set):
             sampler = RandomSampler(dataloader.dataset_test),
             batch_size = dataloader.batch_size
         ) 
-#    train_dataloader, test_dataloader = dataloader_torch(
-#                                            dataloader.x_tensor,
-#                                            dataloader.y_tensor,
-#                                            attention_mask=dataloader.attention_mask,
-#                                            token_type_ids=dataloader.token_type_ids,
-#                                            batch_size=dataloader.batch_size
-#                                            )
     num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
     mapping = dataloader.y_mapping
     max_len = dataloader.max_len
