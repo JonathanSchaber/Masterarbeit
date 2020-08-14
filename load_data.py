@@ -88,20 +88,17 @@ class Dataloader:
                     label, blank, sentence_1, sentence_2 = row[0], row[1], row[2], row[3]
                     data.append((label, blank, sentence_1, sentence_2))
                 elif self.type == "qa":
+                    tokenized_context = self.tokenizer.tokenize(context[:start_index])
                     if not self.merge_subtokens:
                         len_question = len(self.tokenizer.tokenize(question))
-                        tokenized_context = self.tokenizer.tokenize(context[:start_index])
                         start_span = len(tokenized_context)
                         end_span = start_span + len(self.tokenizer.tokenize(text)) - 1
-                        start_span += len_question + 1
-                        end_span += len_question + 1
                     else:
                         len_question = len(self.merge_subs(self.tokenizer.tokenize(question)))
-                        tokenized_context = self.tokenizer.tokenize(context[:start_index])
                         start_span = len(self.merge_subs(tokenized_context))
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
-                        start_span += len_question + 1
-                        end_span += len_question + 1
+                    start_span += len_question + 1
+                    end_span += len_question + 1
 
 
                 if label not in y_mapping:
@@ -112,8 +109,6 @@ class Dataloader:
         return data
 
     def make_datasets(self):
-        """if there are already splits, make datasets from them
-        """
         if self.token_type_ids_dev is not None and self.token_type_ids_test is not None:
             print("")
             print("BERT info: Using attention masks and token type ids!")
@@ -274,8 +269,8 @@ class deISEAR_dataloader(Dataloader):
 class MLQA_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_dev = str(Path(self.path)) + "/dev/dev-context-de-question-de.tsv"
-        self.path_test = str(Path(self.path)) + "/test/test-context-de-question-de.tsv"
+        self.path_dev = str(Path(self.path)) + "/dev/GLIBERT_dev-context-de-question-de.tsv"
+        self.path_test = str(Path(self.path)) + "/test/GLIBERT_test-context-de-question-de.tsv"
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -284,8 +279,9 @@ class MLQA_dataloader(Dataloader):
 
 class PAWS_X_dataloader(Dataloader):
     def load(self):
-        self.path_dev = str(Path(self.path)) + "/de/paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/de/paws_x_test.tsv"
+        self.type = 2
+        self.path_dev = str(Path(self.path)) + "/de/GLIBERT_paws_x_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/de/GLIBERT_paws_x_test.tsv"
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -294,8 +290,8 @@ class PAWS_X_dataloader(Dataloader):
 
 class SCARE_dataloader(Dataloader):
     def load(self):
-        self.path_dev = str(Path(self.path)) + "/scare/paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/de/paws_x_test.tsv"
+        self.path_dev = str(Path(self.path)) + "/scare_v1.0.0/annotations/GLIBERT_annotations_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/scare_v1.0.0/annotations/GLIBERT_annotations_test.tsv"
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -304,8 +300,8 @@ class SCARE_dataloader(Dataloader):
 
 class XNLI_dataloader(Dataloader):
     def load(self):
-        self.path_dev = str(Path(self.path)) + "/scare/paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/de/paws_x_test.tsv"
+        self.path_dev = str(Path(self.path)) + "/XNLI-1.0/GLIBERT_xnli.dev.de.tsv"
+        self.path_test = str(Path(self.path)) + "/XNLI-1.0/GLIBERT_xnli.test.de.tsv"
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -314,8 +310,8 @@ class XNLI_dataloader(Dataloader):
 
 class XQuAD_dataloader(Dataloader):
     def load(self):
-        self.path_dev = str(Path(self.path)) + "/scare/paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/de/paws_x_test.tsv"
+        self.path_dev = str(Path(self.path)) + "/xquad/GLIBERT_xquad_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/xquad/GLIBERT_xquad_test.tsv"
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
