@@ -363,25 +363,42 @@ def preprocess_XQuAD(path):
         None
     """
     path = Path(path)
-    assert path.is_dir(), "Path must point to root directory /<path>/<to>/MLQA/, not file!"
-    spans_text_qas_srl = []
-    path_outfile = str(Path(path).parent) + "/XQuAD.tsv"
+    assert path.is_dir(), "Path must point to root directory /<path>/<to>/XQUAD/, not file!"
+    path = str(path)
+    outfile_paths = [path + "/xquad/GLIBERT_xquad_dev.tsv", path + "/xquad/GLIBERT_xquad_test.test.de.tsv"]
 
-    with open(path, "r") as f:
+    spans_text_qas_srl = []
+
+    with open(path + "/xquad/xquad.de.json", "r") as f:
         file = f.read()
         json_data = json.loads(file)
     
-    for i in range(len(json_data["data"])):
-        for j in range(len(json_data["data"][i]["paragraphs"])):
-            context = json_data["data"][i]["paragraphs"][j]["context"]
-            for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
-                question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
-                start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
-                text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
-                spans_text_qas_srl.append([start_index, text, context, question])
+        for i in range(len(json_data["data"])):
+            for j in range(len(json_data["data"][i]["paragraphs"])):
+                context = json_data["data"][i]["paragraphs"][j]["context"]
+                sem_roles_context = srl_predictor.predict_semRoles(context)
+                for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
+                    question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
+                    sem_roles_question = srl_predictor.predict_semRoles(question)
+                    start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
+                    text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
+                    spans_text_qas_srl.append([
+                                        start_index,
+                                        text, context,
+                                        question,
+                                        sem_roles_context,
+                                        sem_roles_question
+                                        ])
 
-    with open(path_outfile, "w") as f:
-        for element in spans_text_qas_srl:
+        len_dev = int(len(spans_text_qas_srl)*0.9)
+        len_test = len(spans_text_qas_srl) - len_dev
+        shuffle(spans_text_qas_srl)
+
+    with open(outfile_paths[0], "w") as f:
+        for element in spans_text_qas_srl[:len_dev]:
+            csv.writer(f, delimiter="\t").writerow(element)
+    with open(outfile_paths[1], "w") as f:
+        for element in spans_text_qas_srl[-len_test:]:
             csv.writer(f, delimiter="\t").writerow(element)
 
 
