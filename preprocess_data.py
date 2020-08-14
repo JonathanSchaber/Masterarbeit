@@ -141,7 +141,8 @@ def preprocess_MLQA(path):
                     sem_roles_question = srl_predictor.predict_semRoles(question)
                     spans_text_qas_srl.append([
                                             start_index,
-                                            text, context,
+                                            text,
+                                            context,
                                             question,
                                             sem_roles_context,
                                             sem_roles_question
