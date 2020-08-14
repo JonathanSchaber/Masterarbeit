@@ -156,7 +156,7 @@ def preprocess_MLQA(path):
 
     with open(path + "/too_long.txt", "w") as f:
         for context in too_long_contexts:
-            f.write(context + "\n")
+            f.write(context + "\n\n")
 
 
 def preprocess_PAWS_X(path):
@@ -407,7 +407,7 @@ def preprocess_XQuAD(path):
 
     with open(path + "/too_long.txt", "w") as f:
         for context in too_long_contexts:
-            f.write(context + "\n")
+            f.write(context + "\n\n")
 
 
 def main():
