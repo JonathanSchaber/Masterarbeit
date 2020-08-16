@@ -18,22 +18,6 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 
 To reproduce the results, download the data, store them locally, and run the commands under [Preparing the Data](#preparing-the-data)
 
-## Preparing the data
-
-- deISEAR:
-    1. substitute '...' with BERT special token '[MASK]' in file `deISEAR.tsv`:
-	- `$ sed -s 1d deISEAR.tsv GLIBERT_deISEAR.tsv && sed -i 's/\.\.\./[MASK]/' GLIBERT_deISEAR.tsv`
-- PAWS-X: 
-    1. cat the files `dev_2k.tsv` and `test_2k.tsv` without the first line in the folder `de` into one file `paws-x_de_2k.tsv`:
-	- `$ sed -s 1d dev_2k.tsv test_2k.tsv > paws-x_de_2k.tsv`
-    2. run the `preprocess_data.py` script on it:
-	- `$ python preprocess_data.py XXXXXXXXXXXXX`
-- SCARE (v1.0.0): cat all .txt-files in the `annotations` folder into one file `annotations.txt` and cat all .csv-files in the `annotations` folder into one file `annotations.csv`:
-    - `$ cat *.txt > annotations.txt && cat *.csv > annotations.csv`
-- SCARE (v1.0.0_data): cat all .csv files in the `reviews` folder into one file `reviews.csv`:
-    - `$ cat *.csv > reviews.csv`
-- XNLI: cat the files `xnli.dev.de.tsv` and `xnli.test.de.tsv` in the folder `XNLI-1.0` into one file `xnli.de.tsv`:
-    - `$ cat xnli.dev.de.tsv xnli.test.de.tsv > xnli.de.tsv`
 
 # SRL Resources
 
