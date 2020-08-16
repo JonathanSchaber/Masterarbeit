@@ -1,4 +1,4 @@
-\begin{thebibliography}{25}
+\begin{thebibliography}{26}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -112,6 +112,13 @@ M.~S{\"a}nger, U.~Leser, S.~Kemmerer, P.~Adolphs, and R.~Klinger.
   annotations in german.
 \newblock In \emph{Proceedings of the Tenth International Conference on
   Language Resources and Evaluation (LREC'16)}, pages 1114--1121, 2016.
+
+\bibitem[Scherer and Wallbott(1994)]{scherer1994evidence}
+K.~R. Scherer and H.~G. Wallbott.
+\newblock Evidence for universality and cultural variation of differential
+  emotion response patterning.
+\newblock \emph{Journal of personality and social psychology}, 66\penalty0
+  (2):\penalty0 310, 1994.
 
 \bibitem[Schiller et~al.(1999)Schiller, Teufel, St{\"o}ckert, and
   Thielen]{schiller1999guidelines}

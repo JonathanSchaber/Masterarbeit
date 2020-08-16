@@ -8,14 +8,27 @@
 
 \subsection{deISEAR}
 
-As \cite{troiano2019crowdsourcing} write in their 
+\subsubsection{Task}
+
+This data set addresses the task of Emotion recognition, a sub-task of Sentiment Analysis.
+Following by the original study ``International Survey on Emotion Antecedents and Reactions'' \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed their data set for German:
+In a first step, the authors presented annotators with one of seven emotions, and asked them to come up with a textual description of an event in which they felt that emotion.
+The task was formulated as a sentence completion, so the annotators, which were recruited via an crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte {emotion}, als/weil...''.
+Seven emotions were given for which the descriptions had to be constructed:
+Traurigkeit, Ekel, Schuld, Wut, Angst, Scham, Freude.
+For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, for the other emotions there are 143.
 
 \begin{examples}
 	\label{ex:deisear}
 	\item Ich fühlte ..., als mein Laptop kaputt ging und die Garantie schon abgelaufen war.
 \end{examples}
 
-The searched emotion is \textit{Traurigkeit} in example \ref{ex:deisear}.
+The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
+
+Since the authors provide the data set without predefined splits, I created my own development and test splits using a 9:1 ratio, resulting in 900 examples in the first and 101 examples in latter set.
+The distribution of labels in each set is shown in figure \ref{fig:deISEAR-devtest}.
+
+\fig{images/deISEAR_devtest.png}{fig:deISEAR-devtest}{Distribution of emotions in dev set (left) and test set (right).}{10}{deISEAR statistics}
 
 \subsection{MLQA}
 
@@ -44,7 +57,7 @@ Since most corpora for this task are available only in English the authors compi
 	1972 zog die Familie nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
 \end{examples}
 
-The label for the sentence pair \ref{ex:paws-x}, of course, would be \textit{true}, since sentence one is a paraphrase of sentence two, and vice versa.
+The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence one is a paraphrase of sentence two, and vice versa.
 
 
 stats
@@ -62,10 +75,10 @@ stats
 The Sentiment Corpus of App Reviews with Fine-grained Annotations in German \cite{sanger2016scare} is a hand-annotated corpus that asserts so sentiment to German mobile app reviews stemming from the Google Play Store.
 Since there are many users of 
 In contrast to other data sets, e.g. \citep{socher2013recursive, go2009twitter}, that attributes one sentiment label to a whole text (may it be a review, a tweet, etc.), \cite{sanger2016scare} annotated their data set on a lower textual level:
-Not each review gets labelled for a certain polarity --- i.e. \textit{positive}, \textit{negative}, or \textit{neutral} --- but what the authors call \textit{aspects} and \textit{subjective (sub-)phrases}.
+Not each review gets labelled for a certain polarity --- i.e. \emph{positive}, \emph{negative}, or \emph{neutral} --- but what the authors call \emph{aspects} and \emph{subjective (sub-)phrases}.
 An aspect is ``part of an app or related to it'', while a subjective (sub-)phrase ``express opinions and statements of a
 personal evaluation regarding the app or a part of it, that are not based on (objective) facts but on individual opinions of the reviewers'' \citep[p.~1116]{sanger2016scare}.
-The authors therefore draw a distinction between objective facts regarding an app or parts of it and the sentiment connected to it (``functionality \textit{X} is not working'' $\rightarrow$ negative), and subjective user meanings concerning an app or parts of it (``I really like the color of \textit{X}'' $\rightarrow$ positive).
+The authors therefore draw a distinction between objective facts regarding an app or parts of it and the sentiment connected to it (``functionality \emph{X} is not working'' $\rightarrow$ negative), and subjective user meanings concerning an app or parts of it (``I really like the color of \emph{X}'' $\rightarrow$ positive).
 This fine level of annotations leads often to several annotations per review, the sentiment of which may not always match.
 As illustration, consider the following review:
 
@@ -97,7 +110,7 @@ There are the following annotations for the several aspects and subjective (sub-
 \end{multicols}
 
 As is clear from this example, in a given review there may be several claims or remarks concerning functionalities of the product, or personal views about an app in general.
-It is well possible, as in the provided example, that the sentiment of this ``micro-stances'' is not always the same; while all aspects in the example above are \textit{neutral}, there are two \textit{positive} and one \textit{negative} subjectives.
+It is well possible, as in the provided example, that the sentiment of this ``micro-stances'' is not always the same; while all aspects in the example above are \emph{neutral}, there are two \emph{positive} and one \emph{negative} subjectives.
 
 
 stats: there are 1,760 fine-grained annotated reviews
@@ -137,7 +150,7 @@ This is also the chosen strategy for 51 reviews that had no labels at all (e.g. 
         Ich war noch nie in Washington, deshalb habe ich mich auf der Suche nach dem Ort verirrt, als ich dahin entsandt wurde.
 \end{examples}
 
-The label for example \ref{ex:xnli} is \textit{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
+The label for example \ref{ex:xnli} is \emph{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
 number of examples= 7,500
 
 \subsection{XQuAD}
