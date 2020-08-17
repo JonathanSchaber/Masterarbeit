@@ -112,45 +112,18 @@ class Dataloader:
         return data
 
     def make_datasets(self):
-        if self.token_type_ids_dev is not None and self.token_type_ids_test is not None:
-            print("")
-            print("BERT info: Using attention masks and token type ids!")
-            self.dataset_dev = TensorDataset(
-                                    self.x_tensor_dev,
-                                    self.y_tensor_dev,
-                                    self.attention_mask_dev,
-                                    self.token_type_ids_dev
-                                    )
-            self.dataset_test = TensorDataset(
-                                    self.x_tensor_test,
-                                    self.y_tensor_test,
-                                    self.attention_mask_test,
-                                    self.token_type_ids_test
-                                    )
-        elif self.attention_mask_dev is not None and self.attention_mask_test is not None:
-            print("")
-            print("BERT info: Using attention masks!")
-            self.dataset_dev = TensorDataset(
-                                    self.x_tensor_dev,
-                                    self.y_tensor_dev,
-                                    self.attention_mask_dev
-                                    )
-            self.dataset_test = TensorDataset(
-                                    self.x_tensor_test,
-                                    self.y_tensor_test,
-                                    self.attention_mask_test
-                                    )
-        else:
-            print("")
-            print("BERT info: Using plain ids!")
-            self.dataset_dev = TensorDataset(
-                                    self.x_tensor_dev,
-                                    self.y_tensor_dev
-                                    )
-            self.dataset_test = TensorDataset(
-                                    self.x_tensor_test,
-                                    self.y_tensor_test
-                                    )
+        self.dataset_dev = TensorDataset(
+                                self.x_tensor_dev,
+                                self.y_tensor_dev,
+                                self.attention_mask_dev,
+                                self.token_type_ids_dev
+                                )
+        self.dataset_test = TensorDataset(
+                                self.x_tensor_test,
+                                self.y_tensor_test,
+                                self.attention_mask_test,
+                                self.token_type_ids_test
+                                )
 
     def get_max_len(self):
         if type(self.data_dev[3]) != list:
@@ -389,6 +362,7 @@ def dataloader(config, location, data_set):
     num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
     mapping = dataloader.y_mapping
     max_len = dataloader.max_len
+    data_type = dataloader.type
 
-    return dev_dataloader, test_dataloader, num_classes, max_len, mapping
+    return dev_dataloader, test_dataloader, num_classes, max_len, mapping, data_type
 
