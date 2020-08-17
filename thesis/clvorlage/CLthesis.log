@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  16 AUG 2020 16:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  17 AUG 2020 13:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1259,15 +1259,11 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 9.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 9.
-
-LaTeX Warning: Reference `fig:deISEAR_devtest' on page 3 undefined on input lin
-e 29.
-
-<images/deISEAR_devtest.png, id=314, 925.20656pt x 347.04657pt>
+<images/deISEAR_devtest.png, id=317, 925.20656pt x 347.04657pt>
 File: images/deISEAR_devtest.png Graphic file (type png)
 <use images/deISEAR_devtest.png>
-Package pdftex.def Info: images/deISEAR_devtest.png  used on input line 31.
-(pdftex.def)             Requested size: 284.52756pt x 106.72545pt.
+Package pdftex.def Info: images/deISEAR_devtest.png  used on input line 32.
+(pdftex.def)             Requested size: 398.33858pt x 149.41774pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1275,21 +1271,27 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-] [4 <./images/deISEAR_devtest.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 87.
+]
+<images/PAWS-X_devtest.png, id=335, 925.20656pt x 347.04657pt>
+File: images/PAWS-X_devtest.png Graphic file (type png)
+<use images/PAWS-X_devtest.png>
+Package pdftex.def Info: images/PAWS-X_devtest.png  used on input line 64.
+(pdftex.def)             Requested size: 398.33858pt x 149.41774pt.
+ [4 <./images/deISEAR_devtest.png>] [5 <./images/PAWS-X_devtest.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 89.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 87.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 89.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 87.
+(Font)              <7> on input line 89.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 87.
+(Font)              <5> on input line 89.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 87.
- [5] [6] [7]) [8]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 89.
+ [6] [7]) [8]
 \openout2 = `chapters/chap4_architecture.aux'.
 
 
@@ -1300,7 +1302,7 @@ chapter 4.
 
 
 ] [10]
-<images/exampleParzu2.png, id=449, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=455, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1371,7 +1373,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=505, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=511, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1466,16 +1468,12 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 95F54FBE35CD0BDAFF683C074D239349;2596.
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 11973 strings out of 492982
- 184594 string characters out of 6134895
- 406454 words of memory out of 5000000
- 15061 multiletter control sequences out of 15000+600000
+ 11979 strings out of 492982
+ 184740 string characters out of 6134895
+ 406495 words of memory out of 5000000
+ 15065 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1492,10 +1490,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (31 pages, 443972 bytes).
+Output written on CLthesis.pdf (31 pages, 468673 bytes).
 PDF statistics:
- 636 PDF objects out of 1000 (max. 8388607)
- 578 compressed objects within 6 object streams
- 159 named destinations out of 1000 (max. 500000)
- 381 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 642 PDF objects out of 1000 (max. 8388607)
+ 582 compressed objects within 6 object streams
+ 160 named destinations out of 1000 (max. 500000)
+ 386 words of extra memory for PDF output out of 10000 (max. 10000000)
 

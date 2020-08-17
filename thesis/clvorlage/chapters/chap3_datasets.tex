@@ -11,6 +11,7 @@
 \subsubsection{Task}
 
 This data set addresses the task of Emotion recognition, a sub-task of Sentiment Analysis.
+Technically, it is a sequence classification problem: Given a sequqnce of tokens, predict the correct label from a fixed set of emotions.
 Following by the original study ``International Survey on Emotion Antecedents and Reactions'' \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed their data set for German:
 In a first step, the authors presented annotators with one of seven emotions, and asked them to come up with a textual description of an event in which they felt that emotion.
 The task was formulated as a sentence completion, so the annotators, which were recruited via an crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte {emotion}, als/weil...''.
@@ -28,7 +29,7 @@ The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
 Since the authors provide the data set without predefined splits, I created my own development and test splits using a 9:1 ratio, resulting in 900 examples in the first and 101 examples in latter set.
 The distribution of labels in each set is shown in figure \ref{fig:deISEAR-devtest}.
 
-\fig{images/deISEAR_devtest.png}{fig:deISEAR-devtest}{Distribution of emotions in dev set (left) and test set (right).}{10}{deISEAR statistics}
+\fig{images/deISEAR_devtest.png}{fig:deISEAR-devtest}{Distribution of emotions in dev set (left) and test set (right).}{14}{deISEAR statistics}
 
 \subsection{MLQA}
 
@@ -60,6 +61,7 @@ Since most corpora for this task are available only in English the authors compi
 The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence one is a paraphrase of sentence two, and vice versa.
 
 
+\fig{images/PAWS-X_devtest.png}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in dev set (left) and test set (right).}{14}{PAWS-X statistics}
 stats
 
 4,000 examples in German (human translated)
