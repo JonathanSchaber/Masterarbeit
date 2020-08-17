@@ -68,7 +68,7 @@ def preprocess_deISEAR(path):
         None
     """
     path = Path(path)
-    assert path.is_dir(), "Path must point to root directory /<path>/<to>/deISEAR/, not file!"
+    assert path.is_dir(), "Path must point to root directory /<path>/<to>/deISEARenISEAR/, not file!"
     path = str(path)
     file_path = path + "/deISEAR.tsv"
     outfile_paths = [path + "/GLIBERT_deISEAR_dev.tsv", path + "/GLIBERT_deISEAR_test.tsv"]
