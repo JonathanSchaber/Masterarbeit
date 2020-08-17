@@ -82,25 +82,25 @@ def Swish(batch):
     return torch.stack(tuple(batch))
 
 
-class SRL_Encoder(nn.Module):
-    def __init__(self, config):
-        super(SRL_Encoder, self).__init__()
-        self.config = config
-        self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
-        self.encoder = nn.GRU(
-                            input_size=self.config["embedding_dim"],
-                            hidden_size=self.config["gru_hidden_size"],
-                            num_layers=self.config["num_layers"],
-                            bias=self.config["bias"],
-                            batch_first=True,
-                            dropout=self.config["gru_dropout"],
-                            bidirectional=self.config["bidirectional"]
-                            )
-
-    def forward(self, tokens):
-        embeddings = self.embeddings(tokens)
-        output, _ = self.encoder(embeddings)
-        return output
+# class SRL_Encoder(nn.Module):
+#     def __init__(self, config):
+#         super(SRL_Encoder, self).__init__()
+#         self.config = config
+#         self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
+#         self.encoder = nn.GRU(
+#                             input_size=self.config["embedding_dim"],
+#                             hidden_size=self.config["gru_hidden_size"],
+#                             num_layers=self.config["num_layers"],
+#                             bias=self.config["bias"],
+#                             batch_first=True,
+#                             dropout=self.config["gru_dropout"],
+#                             bidirectional=self.config["bidirectional"]
+#                             )
+# 
+#     def forward(self, tokens):
+#         embeddings = self.embeddings(tokens)
+#         output, _ = self.encoder(embeddings)
+#         return output
 
 
 class BertBinaryClassifier(nn.Module):
@@ -219,14 +219,17 @@ class GLIBert(nn.Module):
         
         return return_batch
     
-    def forward(self, tokens, attention_mask=None, token_type_ids=None):
-        if not SPAN_FLAG:
-            last_hidden_state, _ = self.bert(tokens)
-        else:
+    def forward(self, tokens, attention_mask=None, token_type_ids=None, data_type=None):
+        if data_type == 2:
             last_hidden_state, _ = self.bert(
                                         tokens,
                                         attention_mask=attention_mask,
                                         token_type_ids=token_type_ids
+                                        )
+        else:
+            last_hidden_state, _ = self.bert(
+                                        tokens,
+                                        attention_mask=attention_mask
                                         )
 
         if self.config["merge_subtokens"] == True:
@@ -295,7 +298,7 @@ def write_stats(stats_file, training_stats):
             outfile.write(json.dumps(training_stats))
 
 
-def fine_tune_BERT(config, stats_file=None):
+def fine_tune_BERT(config):
     """define fine-tuning procedure, write results to file.
     Args:
         param1: nn.Model (BERT-model)
@@ -312,10 +315,15 @@ def fine_tune_BERT(config, stats_file=None):
     criterion = nn.NLLLoss()
     merge_subtokens = config["merge_subtokens"]
 
-    dev_data, test_data, num_classes, max_len, mapping = dataloader(config, location, data_set)
+    dev_data, \
+    test_data, \
+    num_classes, \
+    max_len, \
+    mapping, \
+    data_type = dataloader(config, location, data_set)
     mapping = {value: key for (key, value) in mapping.items()} if mapping else None
 
-    srl_encoder = SRL_Encoder(config)
+    # srl_encoder = SRL_Encoder(config)
     model = bert_head(config, num_classes, max_len)
 
 
@@ -362,7 +370,12 @@ def fine_tune_BERT(config, stats_file=None):
             b_token_type_ids = batch[3].to(device)
             model.zero_grad()
             if not SPAN_FLAG:
-                outputs = model(b_input_ids, attention_mask=b_attention_mask)
+                outputs = model(
+                            b_input_ids, 
+                            attention_mask=b_attention_mask,
+                            token_type_ids=b_token_type_ids,
+                            data_type=data_type
+                            )
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
@@ -377,7 +390,8 @@ def fine_tune_BERT(config, stats_file=None):
                 start_span, end_span = model(
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
-                                        token_type_ids=b_token_type_ids
+                                        token_type_ids=b_token_type_ids,
+                                        data_type=data_type
                                         )
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
@@ -436,7 +450,12 @@ def fine_tune_BERT(config, stats_file=None):
 
             with torch.no_grad():
                 if not SPAN_FLAG:
-                    outputs = model(b_input_ids)
+                    outputs = model(
+                                b_input_ids,
+                                attention_mask=b_attention_mask,
+                                token_type_ids=b_token_type_ids,
+                                data_type=data_type
+                                )
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
@@ -444,7 +463,8 @@ def fine_tune_BERT(config, stats_file=None):
                     start_span, end_span = model(
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
-                                        token_type_ids=b_token_type_ids
+                                        token_type_ids=b_token_type_ids,
+                                        data_type=data_type
                                         )
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
@@ -505,9 +525,10 @@ def main():
     data_set = args.data_set
     global SPAN_FLAG
     SPAN_FLAG = False if data_set not in ["MLQA", "XQuAD"] else True
+    global stats_file
     stats_file = args.stats_file
     config = load_json(args.config)
-    fine_tune_BERT(config, stats_file)
+    fine_tune_BERT(config)
     
 
 
