@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  17 AUG 2020 13:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  17 AUG 2020 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1259,11 +1259,12 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 9.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 9.
-<images/deISEAR_devtest.png, id=317, 925.20656pt x 347.04657pt>
-File: images/deISEAR_devtest.png Graphic file (type png)
-<use images/deISEAR_devtest.png>
-Package pdftex.def Info: images/deISEAR_devtest.png  used on input line 32.
-(pdftex.def)             Requested size: 398.33858pt x 149.41774pt.
+<images/deISEAR_devtest_new.png, id=321, 916.92563pt x 347.04657pt>
+File: images/deISEAR_devtest_new.png Graphic file (type png)
+<use images/deISEAR_devtest_new.png>
+Package pdftex.def Info: images/deISEAR_devtest_new.png  used on input line 32.
+
+(pdftex.def)             Requested size: 426.79134pt x 161.53384pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1271,16 +1272,15 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-]
-<images/PAWS-X_devtest.png, id=335, 925.20656pt x 347.04657pt>
-File: images/PAWS-X_devtest.png Graphic file (type png)
-<use images/PAWS-X_devtest.png>
-Package pdftex.def Info: images/PAWS-X_devtest.png  used on input line 64.
-(pdftex.def)             Requested size: 398.33858pt x 149.41774pt.
- [4 <./images/deISEAR_devtest.png>] [5 <./images/PAWS-X_devtest.png>]
+] [4 <./images/deISEAR_devtest_new.png>]
+<images/PAWS-X_devtest_new.png, id=351, 934.24031pt x 347.04657pt>
+File: images/PAWS-X_devtest_new.png Graphic file (type png)
+<use images/PAWS-X_devtest_new.png>
+Package pdftex.def Info: images/PAWS-X_devtest_new.png  used on input line 64.
+(pdftex.def)             Requested size: 426.79134pt x 158.54189pt.
+ [5 <./images/PAWS-X_devtest_new.png>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 89.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
@@ -1291,18 +1291,37 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 89.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 89.
- [6] [7]) [8]
+<images/SCARE_star_stats.png, id=371, 723.4227pt x 346.896pt>
+File: images/SCARE_star_stats.png Graphic file (type png)
+<use images/SCARE_star_stats.png>
+Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 125.
+(pdftex.def)             Requested size: 341.43306pt x 163.72395pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6]
+<images/SCARE_label_stats.png, id=379, 702.4644pt x 346.896pt>
+File: images/SCARE_label_stats.png Graphic file (type png)
+<use images/SCARE_label_stats.png>
+Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 142.
+(pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[7 <./images/SCARE_star_stats.png>] [8 <./images/SCARE_label_stats.png>])
+[9]
 \openout2 = `chapters/chap4_architecture.aux'.
 
-
-(./chapters/chap4_architecture.tex
+ (./chapters/chap4_architecture.tex
 chapter 4.
-[9
+[10
 
 
 
-] [10]
-<images/exampleParzu2.png, id=455, 827.34094pt x 358.33875pt>
+] [11]
+<images/exampleParzu2.png, id=469, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1314,7 +1333,7 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 66--66
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 72.
-[11 <./images/exampleParzu2.png (PNG copy)>]) [12]
+[12 <./images/exampleParzu2.png (PNG copy)>]) [13]
 \openout2 = `chapters/chap5_results.aux'.
 
 
@@ -1323,23 +1342,23 @@ chapter 5.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 9.49997pt on input line 18.
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 13 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 14 undefined on i
 nput line 33.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 13 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 14 undefined on i
 nput line 34.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 13 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 14 undefined on input line
  36.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 13 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 14 undefined on input line
  37.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 13 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 14 undefined on input line
  37.
 
 
@@ -1348,19 +1367,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--38
  []
 
 
-Package natbib Warning: Citation `Koehn2005' on page 13 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 14 undefined on input line
  39.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 13 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 14 undefined on input line
  39.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 13 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 14 undefined on i
 nput line 40.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 13 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 14 undefined on i
 nput line 41.
 
 
@@ -1368,12 +1387,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
  []
 
-[13
+[14
 
 
 
 ]
-<images/Rosetta_Stone.jpg, id=511, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=524, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1383,7 +1402,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
  []
 
-[14 <./images/Rosetta_Stone.jpg>]) [15]
+[15 <./images/Rosetta_Stone.jpg>]) [16]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
@@ -1393,14 +1412,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [16
+) [17
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [17
+ (./chapters/glossary.tex) [18
 
 
 
@@ -1408,11 +1427,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [18
+(./CLthesis.bbl [19
 
 
 
-] [19])) [20]
+] [20])) [21]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -1425,7 +1444,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [21
+) [22
 
 
 
@@ -1438,7 +1457,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 27.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.49997pt on input line 27.
-[22
+[23
 
 
 
@@ -1447,7 +1466,7 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
  (./appendix/scripts.tex
 chapter B.
-[23
+[24
 
 
 
@@ -1470,10 +1489,10 @@ Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 95F54FBE35CD0BDAFF683C074D239349;2596.
  ) 
 Here is how much of TeX's memory you used:
- 11979 strings out of 492982
- 184740 string characters out of 6134895
- 406495 words of memory out of 5000000
- 15065 multiletter control sequences out of 15000+600000
+ 11995 strings out of 492982
+ 185156 string characters out of 6134895
+ 406589 words of memory out of 5000000
+ 15075 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,12n,68p,8847b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1490,10 +1509,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (31 pages, 468673 bytes).
+Output written on CLthesis.pdf (32 pages, 498142 bytes).
 PDF statistics:
- 642 PDF objects out of 1000 (max. 8388607)
- 582 compressed objects within 6 object streams
- 160 named destinations out of 1000 (max. 500000)
- 386 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 656 PDF objects out of 1000 (max. 8388607)
+ 591 compressed objects within 6 object streams
+ 164 named destinations out of 1000 (max. 500000)
+ 396 words of extra memory for PDF output out of 10000 (max. 10000000)
 

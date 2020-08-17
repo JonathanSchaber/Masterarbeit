@@ -27,26 +27,26 @@
 \contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{6}{subsubsection.3.2.4.2}
 \contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{6}{subsubsection.3.2.4.3}
 \contentsline {subsection}{\numberline {3.2.5}XNLI}{7}{subsection.3.2.5}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{7}{subsection.3.2.6}
-\contentsline {chapter}{\numberline {4}Architecture}{9}{chapter.4}
-\contentsline {section}{\numberline {4.1}Overview}{9}{section.4.1}
-\contentsline {section}{\numberline {4.2}Semantic Role Labeller}{9}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Finding Predicates}{9}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}DAMESRL}{12}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}German BERT}{12}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Merging of subtokens back to token level}{12}{subsection.4.3.1}
-\contentsline {chapter}{\numberline {5}Results}{13}{chapter.5}
-\contentsline {section}{\numberline {5.1}BLEU Scores}{13}{section.5.1}
-\contentsline {section}{\numberline {5.2}Evaluation}{13}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}More evaluation}{13}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}Citations}{13}{section.5.3}
-\contentsline {section}{\numberline {5.4}Graphics}{14}{section.5.4}
-\contentsline {section}{\numberline {5.5}Some Linguistics}{15}{section.5.5}
-\contentsline {chapter}{\numberline {6}Conclusion}{16}{chapter.6}
-\contentsline {chapter}{Glossary}{17}{section*.14}
-\contentsline {chapter}{References}{18}{section*.16}
-\contentsline {chapter}{Lebenslauf}{21}{section*.18}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{8}{subsection.3.2.6}
+\contentsline {chapter}{\numberline {4}Architecture}{10}{chapter.4}
+\contentsline {section}{\numberline {4.1}Overview}{10}{section.4.1}
+\contentsline {section}{\numberline {4.2}Semantic Role Labeller}{10}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Finding Predicates}{10}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}DAMESRL}{13}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}German BERT}{13}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Merging of subtokens back to token level}{13}{subsection.4.3.1}
+\contentsline {chapter}{\numberline {5}Results}{14}{chapter.5}
+\contentsline {section}{\numberline {5.1}BLEU Scores}{14}{section.5.1}
+\contentsline {section}{\numberline {5.2}Evaluation}{14}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}More evaluation}{14}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}Citations}{14}{section.5.3}
+\contentsline {section}{\numberline {5.4}Graphics}{15}{section.5.4}
+\contentsline {section}{\numberline {5.5}Some Linguistics}{16}{section.5.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{17}{chapter.6}
+\contentsline {chapter}{Glossary}{18}{section*.14}
+\contentsline {chapter}{References}{19}{section*.16}
+\contentsline {chapter}{Lebenslauf}{22}{section*.18}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{22}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{23}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{23}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{24}{appendix.B}
