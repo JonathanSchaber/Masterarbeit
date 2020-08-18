@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="architecture.svg">
+   sodipodi:docname="architecture.svg"
+   inkscape:export-filename="/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Masterarbeit/thesis/clvorlage/images/architecture.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <marker
@@ -1123,7 +1126,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1510,7 +1513,7 @@
          id="tspan11838"
          x="-24.054256"
          y="361.4213"
-         style="stroke-width:0.26458332"></tspan></text>
+         style="stroke-width:0.26458332" /></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot11850"
@@ -3170,7 +3173,7 @@
            height="133.34013"
            x="-505.07626"
            y="148.73264" /></flowRegion><flowPara
-         id="flowPara21656"></flowPara></flowRoot>    <text
+         id="flowPara21656" /></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-144.44052"
@@ -4388,5 +4391,29 @@
        id="path43323-0-7-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-  </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot43315-5"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,-480.82379,-495.73099)"><flowRegion
+         id="flowRegion43317-7"><rect
+           id="rect43319-0"
+           width="509.11688"
+           height="210.11172"
+           x="2339.5132"
+           y="1300.3065" /></flowRegion><flowPara
+         id="flowPara43321-8"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">...</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot43315-4"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,-480.82379,221.8192)"><flowRegion
+         id="flowRegion43317-9"><rect
+           id="rect43319-02"
+           width="509.11688"
+           height="210.11172"
+           x="2339.5132"
+           y="1300.3065" /></flowRegion><flowPara
+         id="flowPara43321-0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">...</flowPara></flowRoot>  </g>
 </svg>
