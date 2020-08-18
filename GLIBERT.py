@@ -149,7 +149,7 @@ class GLIBert(nn.Module):
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        #self.linear = nn.Linear(768, num_classes)
+        self.linear = nn.Linear(768, 2)
         self.softmax = nn.LogSoftmax(dim=-1)
         if not SPAN_FLAG:
             self.head_layer = nn.Sequential(
@@ -198,7 +198,7 @@ class GLIBert(nn.Module):
         """method for joining subtokenized words back to word level
         The idea is to average subtoken embeddings.
         To preserve original length, append last subtoken-embedding (which
-        is per definition [PAD] since padding + 1 of max- length) until original
+        is per definition [PAD] since padding + 1 of max-length) until original
         length is reached.
 
         Args:
@@ -241,8 +241,15 @@ class GLIBert(nn.Module):
         
         return return_batch
     
-    def forward(self, tokens, attention_mask=None, token_type_ids=None, data_type=None, device=torch.device("cpu")):
-        if data_type == 2:
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        if data_type == 2 or data_type == "qa":
             last_hidden_state, _ = self.bert(
                                         tokens,
                                         attention_mask=attention_mask,
@@ -268,6 +275,7 @@ class GLIBert(nn.Module):
             proba = self.softmax(output)
             return proba
         else:
+            output = self.span_layer(reshaped_last_hidden)
             start_span_output = self.start_span_layer(reshaped_last_hidden)
             end_span_output = self.end_span_layer(reshaped_last_hidden)
             start_span_proba = self.softmax(start_span_output)
@@ -277,7 +285,7 @@ class GLIBert(nn.Module):
                                         end_span_proba, 
                                         device
                                         )
-            return start_span_proba, end_span_proba
+            return start_span_proba, new_end_span_proba
 
 
 def combine_srl_embs_bert_embs():
