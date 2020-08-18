@@ -173,7 +173,7 @@ class GLIBert(nn.Module):
             )
     
     @staticmethod
-    def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor):
+    def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
         """Set all probabilities up to start span to -inf for end spans.
         Args:
             param1: tensor[tensor]
@@ -184,9 +184,13 @@ class GLIBert(nn.Module):
         new_batch_tensor = []
         
         for i, end_tensor in enumerate(batch_end_tensor):
-            start_index = batch_start_tensor[i].max(0).indices.index()
-            end_tensor[:start_index] = float("-inf")
-            new_batch_tensor.append(end_tensor)
+            start_index = batch_start_tensor[i].max(0).indices.item()
+            new_end_tensor = torch.cat(
+                                tuple([
+                                    torch.tensor([float("-inf")]*start_index).to(device),
+                                    end_tensor[start_index:]])
+                                )
+            new_batch_tensor.append(new_end_tensor)
 
         return torch.stack(new_batch_tensor)
 
@@ -237,7 +241,7 @@ class GLIBert(nn.Module):
         
         return return_batch
     
-    def forward(self, tokens, attention_mask=None, token_type_ids=None, data_type=None):
+    def forward(self, tokens, attention_mask=None, token_type_ids=None, data_type=None, device=torch.device("cpu")):
         if data_type == 2:
             last_hidden_state, _ = self.bert(
                                         tokens,
@@ -268,11 +272,11 @@ class GLIBert(nn.Module):
             end_span_output = self.end_span_layer(reshaped_last_hidden)
             start_span_proba = self.softmax(start_span_output)
             end_span_proba = self.softmax(end_span_output)
-            new_end_span_prabo = self.ensure_end_span_behind_start_span(
+            new_end_span_proba = self.ensure_end_span_behind_start_span(
                                         start_span_proba,
-                                        end_span_proba
+                                        end_span_proba, 
+                                        device
                                         )
-            import ipdb; ipdb.set_trace()
             return start_span_proba, end_span_proba
 
 
@@ -397,7 +401,8 @@ def fine_tune_BERT(config):
                             b_input_ids, 
                             attention_mask=b_attention_mask,
                             token_type_ids=b_token_type_ids,
-                            data_type=data_type
+                            data_type=data_type,
+                            device=device
                             )
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
@@ -414,7 +419,8 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
-                                        data_type=data_type
+                                        data_type=data_type,
+                                        device=device
                                         )
                 if step % print_stats == 0 and not step == 0:
                     # Calculate elapsed time in minutes.
@@ -476,7 +482,8 @@ def fine_tune_BERT(config):
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
                                 token_type_ids=b_token_type_ids,
-                                data_type=data_type
+                                data_type=data_type,
+                                device=device
                                 )
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
@@ -486,7 +493,8 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
-                                        data_type=data_type
+                                        data_type=data_type,
+                                        device=device
                                         )
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
