@@ -34,6 +34,13 @@ def parse_cmd_args():
 
 
 def get_majority_label(labels):
+    """function for exctracting majority label out of n labels.
+    Used for SCARE data set preprocessing
+    Args:
+        param1: list[str]
+    Returns:
+        tuple[str, bool, int)
+    """
     pos = 0
     neg = 0
     num = len(labels)
@@ -60,10 +67,10 @@ def get_majority_label(labels):
 
 def preprocess_deISEAR(path):
     """Preprocess deISEAR data
-    ATTENTION: path to root directory, not file(s)!
+    Preprocesses the deISEAR data set.
+    Writes dev and test files.
     Args:
-        param1: str
-        param2: str
+        param1: self
     Returns:
         None
     """
@@ -99,10 +106,10 @@ def preprocess_deISEAR(path):
 
 def preprocess_MLQA(path):
     """Preprocess MLQA data
-    ATTENTION: path to root directory, not file(s)!
+    Preprocesses the MLQA data set.
+    Writes dev and test files.
     Args:
         param1: str
-        param2: str
     Returns:
         None
     """
