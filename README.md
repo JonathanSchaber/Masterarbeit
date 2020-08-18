@@ -18,9 +18,6 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 
 To reproduce the results, download the data, store them locally, and run the commands under [Preparing the Data](#preparing-the-data)
 
-
-# SRL Resources
-
 | Data Set | NLP Task | ML Task | \# examples | splits |
 | -------- | -------- | ------- | ----------- | ------ |
 | deISEAR |  Emotion Detection | Sequence Classification  | XYZ | - |
@@ -30,3 +27,6 @@ To reproduce the results, download the data, store them locally, and run the com
 | SCARE Reviews |  Sentiment Analysis | Sequence Classification | XYZ | - |
 | XNLI | Natural Language Inference | Sequence Classification |  XYZ | dev/test |
 | XQuAD | Question Answering | Span Prediction | XYZ | - |
+
+
+# SRL Resources
