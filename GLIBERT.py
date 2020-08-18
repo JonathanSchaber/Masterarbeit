@@ -172,6 +172,24 @@ class GLIBert(nn.Module):
                 nn.Linear(self.config["head_hidden_size"], max_len),
             )
     
+    @staticmethod
+    def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor):
+        """Set all probabilities up to start span to -inf for end spans.
+        Args:
+            param1: tensor[tensor]
+            param2: tensor[tensor]
+        Returns:
+            tensor[tensor]
+        """
+        new_batch_tensor = []
+        
+        for i, end_tensor in enumerate(batch_end_tensor):
+            start_index = batch_start_tensor[i].max(0).indices.index()
+            end_tensor[:start_index] = float("-inf")
+            new_batch_tensor.append(end_tensor)
+
+        return torch.stack(new_batch_tensor)
+
     def reconstruct_word_level(self, batch, ids):
         """method for joining subtokenized words back to word level
         The idea is to average subtoken embeddings.
@@ -250,6 +268,11 @@ class GLIBert(nn.Module):
             end_span_output = self.end_span_layer(reshaped_last_hidden)
             start_span_proba = self.softmax(start_span_output)
             end_span_proba = self.softmax(end_span_output)
+            new_end_span_prabo = self.ensure_end_span_behind_start_span(
+                                        start_span_proba,
+                                        end_span_proba
+                                        )
+            import ipdb; ipdb.set_trace()
             return start_span_proba, end_span_proba
 
 
@@ -440,7 +463,6 @@ def fine_tune_BERT(config):
 
         total_eval_accuracy = 0
         total_eval_loss = 0
-        nb_eval_steps = 0
 
         for batch in test_data:
             b_input_ids = batch[0].to(device)
