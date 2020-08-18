@@ -21,4 +21,12 @@ To reproduce the results, download the data, store them locally, and run the com
 
 # SRL Resources
 
-To 
+| Data Set | NLP Task | ML Task | \# examples | splits |
+| -------- | -------- | ------- | ----------- | ------ |
+| deISEAR |  Emotion Detection | Sequence Classification  | XYZ | - |
+| MLQA | Question Answering | Span Prediction | XYZ | dev/test |
+| PAWS-X | Paraphrase Identification | Sequence Classification | XYZ | dev/test |
+| SCARE | Sentiment Analysis | Sequence Classifiaction | XYZ | - |
+| SCARE Reviews |  Sentiment Analysis | Sequence Classification | XYZ | - |
+| XNLI | Natural Language Inference | Sequence Classification |  XYZ | dev/test |
+| XQuAD | Question Answering | Span Prediction | XYZ | - |
