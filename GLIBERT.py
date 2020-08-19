@@ -276,7 +276,7 @@ class GLIBert(nn.Module):
             proba = self.softmax(output)
             return proba
         else:
-            output = self.span_layer(reshaped_last_hidden)
+            #output = self.span_layer(reshaped_last_hidden)
             start_span_output = self.start_span_layer(reshaped_last_hidden)
             end_span_output = self.end_span_layer(reshaped_last_hidden)
             start_span_proba = self.softmax(start_span_output)
@@ -334,104 +334,37 @@ def write_stats(stats_file, training_stats):
             outfile.write(json.dumps(training_stats))
 
 
-def compute_outputs(
-        model,
-        input_ids,
-        attention_mask,
-        token_type_ids,
-        device,
-        step):
-    outputs = model(
-                input_ids, 
-                attention_mask=attention_mask,
-                token_type_ids=token_type_ids,
-                data_type=data_type,
-                device=device
-                )
+def print_preds(model, example, prediction, true_label, mapping, step, len_data, elapsed, merge):
     if not SPAN_FLAG:
-        if step % print_stats == 0 and not step == 0:
-            # Calculate elapsed time in minutes.
-            elapsed = format_time(time.time() - t0)
-            print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
-            print("  Last prediction: ")
-            print("    Text:   {}".format(model.tokenizer.decode(input_ids[-1], skip_special_tokens=True)))
-            print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
-            print("    True Label:  {}".format(mapping[labels[-1].item()]))
-            print("")
+        print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
+        print("  Last prediction: ")
+        print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
+        print("    Prediction:  {}".format(mapping[prediction.max(0).indices.item()]))
+        print("    True Label:  {}".format(mapping[true_label.item()]))
+        print("")
     else:
-        if step % print_stats == 0 and not step == 0:
-            # Calculate elapsed time in minutes.
-            elapsed = format_time(time.time() - t0)
-            print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
-            print("  Last prediction: ")
-            print("    Text:   {}".format(model.tokenizer.decode(input_ids[-1], skip_special_tokens=True)))
-            if not merge_subtokens:
-                sentence = model.tokenizer.tokenize(
-                                    model.tokenizer.decode(
-                                        input_ids[-1]
-                                        )
+        start_span, end_span = prediction
+        print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
+        print("  Last prediction: ")
+        print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
+        if not merge:
+            sentence = model.tokenizer.tokenize(
+                                model.tokenizer.decode(
+                                    example
                                     )
-            else:
-                sentence = merge_subs(model.tokenizer.tokenize(
-                                    model.tokenizer.decode(
-                                        input_ids[-1]
-                                        )
-                                    ))
-            prediction = sentence[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1] 
-            true_span = sentence[labels[-1].select(0, 0).item():labels[-1].select(0, 1).item()+1]
-            print("    Prediction:  {}".format(" ".join(prediction)))
-            print("    True Span:  {}".format(" ".join(true_span)))
-            print("")
-        return outputs
-    else:
-
-
-
-def forward_pass(
-        model, 
-        input_ids,
-        labels,
-        attention_mask,
-        token_type_ids,
-        device,
-        step,
-        print_stats,
-        mode)
-        ):
-        outputs = compute_outputs(
-                    model,
-                    input_ids,
-                    attention_mask,
-                    token_type_ids,
-                    device,
-                    step
-                    )
-        if SPAN_FLAG:
-            start_span, end_span = outputs
-
-        if mode == "train":
-            if not SPAN_FLAG:
-                loss = criterion(outputs, labels) 
-            else:
-                start_loss = criterion(start_span, labels.select(1, 0))
-                end_loss = criterion(end_span, labels.select(1, 1))
-                loss = (start_loss + end_loss) / 2
-            return loss
+                                )
         else:
-            if not SPAN_FLAG:
-                value_index = [tensor.max(0) for tensor in outputs]
-                acc = compute_acc([maxs.indices for maxs in value_index], labels)
-                loss = criterion(outputs, labels)
-            else:
-                start_value_index = [tensor.max(0) for tensor in start_span]
-                end_value_index = [tensor.max(0) for tensor in end_span]
-                start_acc = compute_acc([maxs.indices for maxs in start_value_index], labels.select(1, 0))
-                end_acc = compute_acc([maxs.indices for maxs in end_value_index], labels.select(1, 1))
-                acc = (start_acc + end_acc) / 2
-                start_loss = criterion(start_span, labels.select(1, 0))
-                end_loss = criterion(end_span, labels.select(1, 1))
-                loss = (start_loss + end_loss) / 2
-            return loss, acc
+            sentence = merge_subs(model.tokenizer.tokenize(
+                                model.tokenizer.decode(
+                                    example
+                                    )
+                                ))
+        prediction = sentence[start_span.max(0).indices.item():end_span.max(0).indices.item()+1] 
+        true_span = sentence[true_label.select(0, 0).item():true_label.select(0, 1).item()+1]
+        print("    Prediction:  {}".format(" ".join(prediction)))
+        print("    True Span:  {}".format(" ".join(true_span)))
+        print("")
+
 
 
 def fine_tune_BERT(config):
@@ -505,67 +438,53 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             model.zero_grad()
-            loss = forward_pass(
-                    model,
-                    b_input_ids,
-                    b_attention_mask,
-                    b_token_type_ids,
-                    device,
-                    step,
-                    print_stats,
-                    mode="train")
-#            if not SPAN_FLAG:
-#                outputs = model(
-#                            b_input_ids, 
-#                            attention_mask=b_attention_mask,
-#                            token_type_ids=b_token_type_ids,
-#                            data_type=data_type,
-#                            device=device
-#                            )
-#                if step % print_stats == 0 and not step == 0:
-#                    # Calculate elapsed time in minutes.
-#                    elapsed = format_time(time.time() - t0)
-#                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
-#                    print("  Last prediction: ")
-#                    print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-#                    print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
-#                    print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
-#                    print("")
-#                loss = criterion(outputs, b_labels)
-#            else:
-#                start_span, end_span = model(
-#                                        b_input_ids,
-#                                        attention_mask=b_attention_mask,
-#                                        token_type_ids=b_token_type_ids,
-#                                        data_type=data_type,
-#                                        device=device
-#                                        )
-#                if step % print_stats == 0 and not step == 0:
-#                    # Calculate elapsed time in minutes.
-#                    elapsed = format_time(time.time() - t0)
-#                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
-#                    print("  Last prediction: ")
-#                    print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-#                    if not merge_subtokens:
-#                        sentence = model.tokenizer.tokenize(
-#                                            model.tokenizer.decode(
-#                                                b_input_ids[-1]
-#                                                )
-#                                            )
-#                    else:
-#                        sentence = merge_subs(model.tokenizer.tokenize(
-#                                            model.tokenizer.decode(
-#                                                b_input_ids[-1]
-#                                                )
-#                                            ))
-#                    prediction = sentence[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1] 
-#                    true_span = sentence[b_labels[-1].select(0, 0).item():b_labels[-1].select(0, 1).item()+1]
-#                    print("    Prediction:  {}".format(" ".join(prediction)))
-#                    print("    True Span:  {}".format(" ".join(true_span)))
-#                    print("")
-#                start_loss = criterion(start_span, b_labels.select(1, 0))
-#                end_loss = criterion(end_span, b_labels.select(1, 1))
-#                loss = (start_loss + end_loss) / 2
+            if not SPAN_FLAG:
+                outputs = model(
+                            b_input_ids, 
+                            attention_mask=b_attention_mask,
+                            token_type_ids=b_token_type_ids,
+                            data_type=data_type,
+                            device=device
+                            )
+                if step % print_stats == 0 and not step == 0:
+                    # Calculate elapsed time in minutes.
+                    elapsed = format_time(time.time() - t0)
+                    print_preds(
+                            model,
+                            b_input_ids[-1],
+                            outputs[-1],
+                            b_labels[-1],
+                            mapping,
+                            step,
+                            len(dev_data),
+                            elapsed,
+                            merge_subtokens
+                            )
+                loss = criterion(outputs, b_labels)
+            else:
+                start_span, end_span = model(
+                                        b_input_ids,
+                                        attention_mask=b_attention_mask,
+                                        token_type_ids=b_token_type_ids,
+                                        data_type=data_type,
+                                        device=device
+                                        )
+                if step % print_stats == 0 and not step == 0:
+                    # Calculate elapsed time in minutes.
+                    elapsed = format_time(time.time() - t0)
+                    print_preds(
+                            model,
+                            b_input_ids[-1],
+                            (start_span[-1], end_span[-1]),
+                            b_labels[-1],
+                            mapping, step,
+                            len(dev_data),
+                            elapsed,
+                            merge_subtokens
+                            )
+                start_loss = criterion(start_span, b_labels.select(1, 0))
+                end_loss = criterion(end_span, b_labels.select(1, 1))
+                loss = (start_loss + end_loss) / 2
             total_train_loss += loss.item()
             loss.backward()
             # This is to help prevent the "exploding gradients" problem. (Maybe not necessary?)
@@ -595,42 +514,33 @@ def fine_tune_BERT(config):
             b_token_type_ids = batch[3].to(device)
 
             with torch.no_grad():
-                loss, acc = forward_pass(
-                                model,
+                if not SPAN_FLAG:
+                    outputs = model(
                                 b_input_ids,
-                                b_attention_mask,
-                                b_token_type_ids,
-                                device,
-                                step,
-                                print_stats,
-                                mode="eval")
-#                if not SPAN_FLAG:
-#                    outputs = model(
-#                                b_input_ids,
-#                                attention_mask=b_attention_mask,
-#                                token_type_ids=b_token_type_ids,
-#                                data_type=data_type,
-#                                device=device
-#                                )
-#                    value_index = [tensor.max(0) for tensor in outputs]
-#                    acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
-#                    loss = criterion(outputs, b_labels)
-#                else:
-#                    start_span, end_span = model(
-#                                        b_input_ids,
-#                                        attention_mask=b_attention_mask,
-#                                        token_type_ids=b_token_type_ids,
-#                                        data_type=data_type,
-#                                        device=device
-#                                        )
-#                    start_value_index = [tensor.max(0) for tensor in start_span]
-#                    end_value_index = [tensor.max(0) for tensor in end_span]
-#                    start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
-#                    end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
-#                    acc = (start_acc + end_acc) / 2
-#                    start_loss = criterion(start_span, b_labels.select(1, 0))
-#                    end_loss = criterion(end_span, b_labels.select(1, 1))
-#                    loss = (start_loss + end_loss) / 2
+                                attention_mask=b_attention_mask,
+                                token_type_ids=b_token_type_ids,
+                                data_type=data_type,
+                                device=device
+                                )
+                    value_index = [tensor.max(0) for tensor in outputs]
+                    acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
+                    loss = criterion(outputs, b_labels)
+                else:
+                    start_span, end_span = model(
+                                        b_input_ids,
+                                        attention_mask=b_attention_mask,
+                                        token_type_ids=b_token_type_ids,
+                                        data_type=data_type,
+                                        device=device
+                                        )
+                    start_value_index = [tensor.max(0) for tensor in start_span]
+                    end_value_index = [tensor.max(0) for tensor in end_span]
+                    start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
+                    end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
+                    acc = (start_acc + end_acc) / 2
+                    start_loss = criterion(start_span, b_labels.select(1, 0))
+                    end_loss = criterion(end_span, b_labels.select(1, 1))
+                    loss = (start_loss + end_loss) / 2
 
             total_eval_loss += loss.item()
             total_eval_accuracy += acc
