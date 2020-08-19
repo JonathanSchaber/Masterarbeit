@@ -1,8 +1,6 @@
 import csv
 import torch
 
-#from predict_SRL import *
-
 from torch.utils.data import (
         TensorDataset,
         random_split,
@@ -31,11 +29,12 @@ class Dataloader:
         self.attention_mask_test = None
         self.token_type_ids_dev = None
         self.token_type_ids_test = None
-        self.y_mapping = {}
         self.x_tensor_dev = None
         self.x_tensor_test = None
         self.y_tensor_dev = None
         self.y_tensor_test = None
+        self.y_mapping = {}
+        self.dataset_train = None
         self.dataset_dev = None
         self.dataset_test = None
 
