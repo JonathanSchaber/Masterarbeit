@@ -118,7 +118,7 @@ class BertBinaryClassifier(nn.Module):
 
 
 class BertEntailmentClassifierCLS(nn.Module):
-    def __init__(self, config, num_classes, max_len, dropout=0.1):
+    def __init__(self, config, num_classes, max_len):
         super(BertEntailmentClassifierCLS, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
@@ -334,12 +334,65 @@ def write_stats(stats_file, training_stats):
             outfile.write(json.dumps(training_stats))
 
 
+def compute_outputs(
+        model,
+        input_ids,
+        attention_mask,
+        token_type_ids,
+        device,
+        step):
+    outputs = model(
+                input_ids, 
+                attention_mask=attention_mask,
+                token_type_ids=token_type_ids,
+                data_type=data_type,
+                device=device
+                )
+    if not SPAN_FLAG:
+        if step % print_stats == 0 and not step == 0:
+            # Calculate elapsed time in minutes.
+            elapsed = format_time(time.time() - t0)
+            print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
+            print("  Last prediction: ")
+            print("    Text:   {}".format(model.tokenizer.decode(input_ids[-1], skip_special_tokens=True)))
+            print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
+            print("    True Label:  {}".format(mapping[labels[-1].item()]))
+            print("")
+    else:
+        if step % print_stats == 0 and not step == 0:
+            # Calculate elapsed time in minutes.
+            elapsed = format_time(time.time() - t0)
+            print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
+            print("  Last prediction: ")
+            print("    Text:   {}".format(model.tokenizer.decode(input_ids[-1], skip_special_tokens=True)))
+            if not merge_subtokens:
+                sentence = model.tokenizer.tokenize(
+                                    model.tokenizer.decode(
+                                        input_ids[-1]
+                                        )
+                                    )
+            else:
+                sentence = merge_subs(model.tokenizer.tokenize(
+                                    model.tokenizer.decode(
+                                        input_ids[-1]
+                                        )
+                                    ))
+            prediction = sentence[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1] 
+            true_span = sentence[labels[-1].select(0, 0).item():labels[-1].select(0, 1).item()+1]
+            print("    Prediction:  {}".format(" ".join(prediction)))
+            print("    True Span:  {}".format(" ".join(true_span)))
+            print("")
+        return outputs
+    else:
+
+
+
 def forward_pass(
         model, 
-        b_input_ids,
-        b_labels,
-        b_attention_mask,
-        b_token_type_ids,
+        input_ids,
+        labels,
+        attention_mask,
+        token_type_ids,
         device,
         step,
         print_stats,
@@ -347,57 +400,26 @@ def forward_pass(
         ):
         if mode == "train":
             if not SPAN_FLAG:
-                outputs = model(
-                            b_input_ids, 
-                            attention_mask=b_attention_mask,
-                            token_type_ids=b_token_type_ids,
-                            data_type=data_type,
-                            device=device
+                outputs = compute_outputs(
+                            model,
+                            input_ids,
+                            attention_mask,
+                            token_type_ids,
+                            device, step
                             )
-                if step % print_stats == 0 and not step == 0:
-                    # Calculate elapsed time in minutes.
-                    elapsed = format_time(time.time() - t0)
-                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
-                    print("  Last prediction: ")
-                    print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-                    print("    Prediction:  {}".format(mapping[outputs[-1].max(0).indices.item()]))
-                    print("    True Label:  {}".format(mapping[b_labels[-1].item()]))
-                    print("")
-                loss = criterion(outputs, b_labels)
+                loss = criterion(outputs, labels)
             else:
-                start_span, end_span = model(
-                                        b_input_ids,
-                                        attention_mask=b_attention_mask,
-                                        token_type_ids=b_token_type_ids,
-                                        data_type=data_type,
-                                        device=device
-                                        )
-                if step % print_stats == 0 and not step == 0:
-                    # Calculate elapsed time in minutes.
-                    elapsed = format_time(time.time() - t0)
-                    print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len(dev_data), elapsed))
-                    print("  Last prediction: ")
-                    print("    Text:   {}".format(model.tokenizer.decode(b_input_ids[-1], skip_special_tokens=True)))
-                    if not merge_subtokens:
-                        sentence = model.tokenizer.tokenize(
-                                            model.tokenizer.decode(
-                                                b_input_ids[-1]
-                                                )
+                start_span, end_span = compute_outputs(
+                                            model,
+                                            input_ids,
+                                            attention_mask,
+                                            token_type_ids,
+                                            device, step
                                             )
-                    else:
-                        sentence = merge_subs(model.tokenizer.tokenize(
-                                            model.tokenizer.decode(
-                                                b_input_ids[-1]
-                                                )
-                                            ))
-                    prediction = sentence[start_span[-1].max(0).indices.item():end_span[-1].max(0).indices.item()+1] 
-                    true_span = sentence[b_labels[-1].select(0, 0).item():b_labels[-1].select(0, 1).item()+1]
-                    print("    Prediction:  {}".format(" ".join(prediction)))
-                    print("    True Span:  {}".format(" ".join(true_span)))
-                    print("")
-                start_loss = criterion(start_span, b_labels.select(1, 0))
-                end_loss = criterion(end_span, b_labels.select(1, 1))
+                start_loss = criterion(start_span, labels.select(1, 0))
+                end_loss = criterion(end_span, labels.select(1, 1))
                 loss = (start_loss + end_loss) / 2
+
 
 def fine_tune_BERT(config):
     """define fine-tuning procedure, write results to file.
