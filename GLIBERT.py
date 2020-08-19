@@ -492,20 +492,75 @@ def fine_tune_BERT(config):
             optimizer.step()
             scheduler.step()
         avg_train_loss = total_train_loss / len(dev_data)
-        training_time = format_time(time.time() - t0)
+        train_time = format_time(time.time() - t0)
 
         print("")
         print("  Average training loss: {0:.2f}".format(avg_train_loss))
-        print("  Training epoch took: {:}".format(training_time))
+        print("  Training epoch took: {:}".format(train_time))
+
+        ### Dev Run ###
 
         print("")
-        print("Running Validation...")
-
+        print("Running Development Set evaluation...")
         t0 = time.time()
         model.eval()
 
-        total_eval_accuracy = 0
-        total_eval_loss = 0
+        total_dev_accuracy = 0
+        total_dev_loss = 0
+
+        for batch in dev_data:
+            b_input_ids = batch[0].to(device)
+            b_labels = batch[1].to(device)
+            b_attention_mask = batch[2].to(device)
+            b_token_type_ids = batch[3].to(device)
+
+            with torch.no_grad():
+                if not SPAN_FLAG:
+                    outputs = model(
+                                b_input_ids,
+                                attention_mask=b_attention_mask,
+                                token_type_ids=b_token_type_ids,
+                                data_type=data_type,
+                                device=device
+                                )
+                    value_index = [tensor.max(0) for tensor in outputs]
+                    acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
+                    loss = criterion(outputs, b_labels)
+                else:
+                    start_span, end_span = model(
+                                        b_input_ids,
+                                        attention_mask=b_attention_mask,
+                                        token_type_ids=b_token_type_ids,
+                                        data_type=data_type,
+                                        device=device
+                                        )
+                    start_value_index = [tensor.max(0) for tensor in start_span]
+                    end_value_index = [tensor.max(0) for tensor in end_span]
+                    start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
+                    end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
+                    acc = (start_acc + end_acc) / 2
+                    start_loss = criterion(start_span, b_labels.select(1, 0))
+                    end_loss = criterion(end_span, b_labels.select(1, 1))
+                    loss = (start_loss + end_loss) / 2
+
+            total_dev_loss += loss.item()
+            total_dev_accuracy += acc
+
+        avg_dev_accuracy = total_dev_accuracy / len(dev_data)
+        print("  Development Accuracy: {0:.2f}".format(avg_val_accuracy))
+        avg_dev_loss = total_dev_loss / len(dev_data)
+        dev_time = format_time(time.time() - t0)
+        print("  Dev Loss: {0:.2f}".format(avg_val_loss))
+        print("  Dev took: {:}".format(validation_time))
+
+        ### Test Run ###
+        print("")
+        print("Running Test Set evaluation...")
+
+        t0 = time.time()
+
+        total_test_accuracy = 0
+        total_test_loss = 0
 
         for batch in test_data:
             b_input_ids = batch[0].to(device)
@@ -542,24 +597,27 @@ def fine_tune_BERT(config):
                     end_loss = criterion(end_span, b_labels.select(1, 1))
                     loss = (start_loss + end_loss) / 2
 
-            total_eval_loss += loss.item()
-            total_eval_accuracy += acc
+            total_test_loss += loss.item()
+            total_test_accuracy += acc
 
-        avg_val_accuracy = total_eval_accuracy / len(test_data)
-        print("  Accuracy: {0:.2f}".format(avg_val_accuracy))
-        avg_val_loss = total_eval_loss / len(test_data)
-        validation_time = format_time(time.time() - t0)
+        avg_test_accuracy = total_test_accuracy / len(test_data)
+        print("  Test Accuracy: {0:.2f}".format(avg_val_accuracy))
+        avg_test_loss = total_test_loss / len(test_data)
+        test_time = format_time(time.time() - t0)
+        print("  Test Loss: {0:.2f}".format(avg_val_loss))
+        print("  Test took: {:}".format(validation_time))
 
-        print("  Validation Loss: {0:.2f}".format(avg_val_loss))
-        print("  Validation took: {:}".format(validation_time))
         training_stats.append(
             {
                 "epoch": epoch_i + 1,
-                "Training Loss": avg_train_loss,
-                "Valid. Loss": avg_val_loss,
-                "Valid. Accur.": avg_val_accuracy,
-                "Training Time": training_time,
-                "Validation Time": validation_time
+                "Train Loss": avg_train_loss,
+                "Dev Loss": avg_dev_loss,
+                "Test Loss": avg_val_loss,
+                "Dev Accur.": avg_dev_accuracy,
+                "Test Accur.": avg_val_accuracy,
+                "Train Time": train_time,
+                "Dev Time": dev_time,
+                "Test Time": test_time
             }
         )
 
