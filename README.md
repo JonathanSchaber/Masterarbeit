@@ -22,7 +22,7 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 
 To reproduce the results, download the data, store them locally, and run the commands under [Preparing the Data](#preparing-the-data)
 
-| Data Set | NLP Task | ML Task | \# examples | splits |
+| Data Set | NLP Task | ML Task | \# Examples | Splits |
 | -------- | -------- | ------- | ----------- | ------ |
 | deISEAR |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
 | MLQA | Question Answering | Span Prediction | 509/4 499 | dev/test |
