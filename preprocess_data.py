@@ -28,9 +28,47 @@ def parse_cmd_args():
             "-p", 
             "--path", 
             type=str, 
-            help="Path to file ATTENTION in case of PAWS-X this points to the directory containing the files, not the files itself!",
+            help="Path to directory containing the files",
             )
     return parser.parse_args()
+
+
+def write_to_files(data, files):
+    len_train = int(len(data)*0.7)
+    len_dev = int(len(data)*0.15)
+    shuffle(data)
+
+    print("======== Writing to files: ========")
+    print("{}\n{}\n{}".format(files[0], files[1], files[1]))
+
+    with open(files[0], "w") as f:
+        for element in data[:len_train]:
+            csv.writer(f, delimiter="\t").writerow(element)
+    with open(files[1], "w") as f:
+        for element in data[len_train:len_train+len_dev]:
+            csv.writer(f, delimiter="\t").writerow(element)
+    with open(files[2], "w") as f:
+        for element in data[len_train+len_dev:]:
+            csv.writer(f, delimiter="\t").writerow(element)
+
+
+def splitted_write_to_files(data, files, i):
+    if i == 0:
+        len_train = int(len(data)*0.85)
+
+        print("======== Writing to file: {} ========".format(files[0]))
+        with open(files[0], "w") as f:
+            for element in data[:len_train]:
+                csv.writer(f, delimiter="\t").writerow(element)
+        print("======== Writing to file: {} ========".format(files[1]))
+        with open(files[1], "w") as f:
+            for element in data[len_train:]:
+                csv.writer(f, delimiter="\t").writerow(element)
+    else:
+        print("======== Writing to file: {} ========".format(files[i]))
+        with open(files[2], "w") as f:
+            for element in data:
+                csv.writer(f, delimiter="\t").writerow(element)
 
 
 def get_majority_label(labels):
@@ -70,7 +108,7 @@ def preprocess_deISEAR(path):
     Preprocesses the deISEAR data set.
     Writes dev and test files.
     Args:
-        param1: self
+        param1: str
     Returns:
         None
     """
@@ -78,7 +116,11 @@ def preprocess_deISEAR(path):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/deISEARenISEAR/, not file!"
     path = str(path)
     file_path = path + "/deISEAR.tsv"
-    outfile_paths = [path + "/GLIBERT_deISEAR_dev.tsv", path + "/GLIBERT_deISEAR_test.tsv"]
+    outfile_paths = [
+            path + "/GLIBERT_deISEAR_train.tsv",
+            path + "/GLIBERT_deISEAR_dev.tsv",
+            path + "/GLIBERT_deISEAR_test.tsv"
+            ]
 
     emotion_sentence_srl = []
 
@@ -90,18 +132,8 @@ def preprocess_deISEAR(path):
             sem_roles = srl_predictor.predict_semRoles(sentence)
             emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
     
-    len_dev = int(len(emotion_sentence_srl)*0.9)
-    len_test = len(emotion_sentence_srl) - len_dev
-    shuffle(emotion_sentence_srl)
 
-    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
-
-    with open(outfile_paths[0], "w") as f:
-        for element in emotion_sentence_srl[:len_dev]:
-            csv.writer(f, delimiter="\t").writerow(element)
-    with open(outfile_paths[1], "w") as f:
-        for element in emotion_sentence_srl[-len_test:]:
-            csv.writer(f, delimiter="\t").writerow(element)
+    write_to_files(emotion_sentence_srl, outfile_paths)
 
 
 def preprocess_MLQA(path):
@@ -121,8 +153,9 @@ def preprocess_MLQA(path):
             path + "/test/test-context-de-question-de.json"
             ]
     outfile_paths = [
-            path + "/dev/GLIBERT_dev-context-de-question-de.tsv",
-            path + "/test/GLIBERT_test-context-de-question-de.tsv"
+            path + "/GLIBERT_train-context-de-question-de.tsv",
+            path + "/GLIBERT_dev-context-de-question-de.tsv",
+            path + "/GLIBERT_test-context-de-question-de.tsv"
             ]
 
     too_long_contexts = []
@@ -155,11 +188,7 @@ def preprocess_MLQA(path):
                                             sem_roles_question
                                             ])
 
-        print("======== Writing to file: {} ========".format(outfile_paths[h]))
-
-        with open(outfile_paths[h], "w") as f:
-            for element in spans_text_qas_srl:
-                csv.writer(f, delimiter="\t").writerow(element)
+        splitted_write_to_files(spans_text_qas_srl, outfile_paths, h)
 
     with open(path + "/too_long.txt", "w") as f:
         for context in too_long_contexts:
@@ -180,7 +209,11 @@ def preprocess_PAWS_X(path):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/PAWS-X/, not file!"
     path = str(path)
     file_paths = [path + "/de/dev_2k.tsv", path + "/de/test_2k.tsv"]
-    outfile_paths = [path + "/de/GLIBERT_paws_x_dev.tsv", path + "/de/GLIBERT_paws_x_test.tsv"]
+    outfile_paths = [
+            path + "/GLIBERT_paws_x_train.tsv",
+            path + "/GLIBERT_paws_x_dev.tsv",
+            path + "/GLIBERT_paws_x_test.tsv"
+            ]
 
     label_text_feat = []
 
@@ -194,11 +227,7 @@ def preprocess_PAWS_X(path):
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
-        print("======== Writing to file: {} ========".format(outfile_paths[i]))
-
-        with open(outfile_paths[i], "w") as f:
-            for element in label_text_feat:
-                csv.writer(f, delimiter="\t").writerow(element)
+        splitted_write_to_files(label_text_feat, outfile_paths, i)
 
 
 def preprocess_SCARE(path):
@@ -217,8 +246,9 @@ def preprocess_SCARE(path):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/scare_v1.0.0/annotations/GLIBERT_annotations_dev.tsv",
-            path + "/scare_v1.0.0/annotations/GLIBERT_annotations_test.tsv"
+            path + "/annotations/GLIBERT_annotations_train.tsv",
+            path + "/annotations/GLIBERT_annotations_dev.tsv",
+            path + "/annotations/GLIBERT_annotations_test.tsv"
             ]
 
     count_non_maj = 0
@@ -263,19 +293,8 @@ def preprocess_SCARE(path):
     print("{} reviews had no labels".format(count_no_labels))
     print("{:.2f}% of votes were non-majority".format(count_non_maj/count_all*100))
     print("{:.2f}% of votes were close (label difference of 1)".format(count_close/count_all*100))
-    print("")
-    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
 
-    len_dev = int(len(label_text_feat)*0.9)
-    len_test = len(label_text_feat) - len_dev
-    shuffle(label_text_feat)
-
-    with open(outfile_paths[0], "w") as f:
-        for element in label_text_feat[:len_dev]:
-            csv.writer(f, delimiter="\t").writerow(element)
-    with open(outfile_paths[1], "w") as f:
-        for element in label_text_feat[-len_test:]:
-            csv.writer(f, delimiter="\t").writerow(element)
+    write_to_files(label_text_feat, outfile_paths)
 
 
 def preprocess_SCARE_reviews(path, path_outfile):
@@ -292,8 +311,9 @@ def preprocess_SCARE_reviews(path, path_outfile):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/scare_v1.0.0_data/GLIBERT_annotations_dev.tsv",
-            path + "/scare_v1.0.0_data/GLIBERT_annotations_test.tsv"
+            path + "/GLIBERT_reviews_train.tsv",
+            path + "/GLIBERT_reviews_dev.tsv",
+            path + "/GLIBERT_reviews_test.tsv"
             ]
 
     rating_text_srl = []
@@ -309,18 +329,7 @@ def preprocess_SCARE_reviews(path, path_outfile):
             sem_roles = srl_predictor.predict_semRoles(review)
             text_label.append([rating, "", review, sem_roles])
 
-    len_dev = int(len(rating_text_srl)*0.9)
-    len_test = len(rating_text_srl) - len_dev
-    shuffle(rating_text_srl)
-
-    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
-
-    with open(outfile_paths[0], "w") as f:
-        for element in rating_text_srl[:len_dev]:
-            csv.writer(f, delimiter="\t").writerow(element)
-    with open(outfile_paths[1], "w") as f:
-        for element in rating_text_srl[-len_test:]:
-            csv.writer(f, delimiter="\t").writerow(element)
+    write_to_files(rating_text_srl, outfile_paths)
 
 
 def preprocess_XNLI(path):
@@ -337,7 +346,11 @@ def preprocess_XNLI(path):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/XNLI/, not file!"
     path = str(path)
     file_paths = [path + "/XNLI-1.0/xnli.dev.de.tsv", path + "/XNLI-1.0/xnli.test.de.tsv"]
-    outfile_paths = [path + "/XNLI-1.0/GLIBERT_xnli.dev.de.tsv", path + "/XNLI-1.0/GLIBERT_xnli.test.de.tsv"]
+    outfile_paths = [
+            path + "/GLIBERT_xnli.train.de.tsv",
+            path + "/GLIBERT_xnli.dev.de.tsv",
+            path + "/GLIBERT_xnli.test.de.tsv"
+            ]
 
     label_text_feat = []
 
@@ -351,11 +364,7 @@ def preprocess_XNLI(path):
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
-        print("======== Writing to file: {} ========".format(outfile_paths[i]))
-
-        with open(outfile_paths[i], "w") as f:
-            for element in label_text_feat:
-                csv.writer(f, delimiter="\t").writerow(element)
+        splitted_write_to_files(label_text_feat, outfile_paths, i)
 
 
 def preprocess_XQuAD(path):
@@ -369,7 +378,11 @@ def preprocess_XQuAD(path):
     path = Path(path)
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/XQUAD/, not file!"
     path = str(path)
-    outfile_paths = [path + "/xquad/GLIBERT_xquad_dev.tsv", path + "/xquad/GLIBERT_xquad_test.tsv"]
+    outfile_paths = [
+            path + "/GLIBERT_xquad_train.tsv",
+            path + "/GLIBERT_xquad_dev.tsv",
+            path + "/GLIBERT_xquad_test.tsv"
+            ]
 
     too_long_contexts = []
     spans_text_qas_srl = []
@@ -399,22 +412,7 @@ def preprocess_XQuAD(path):
                                         sem_roles_question
                                         ])
 
-        len_dev = int(len(spans_text_qas_srl)*0.9)
-        len_test = len(spans_text_qas_srl) - len_dev
-        shuffle(spans_text_qas_srl)
-
-    print("======== Writing to files: {}, {} ========".format(outfile_paths[0], outfile_paths[1]))
-
-    with open(outfile_paths[0], "w") as f:
-        for element in spans_text_qas_srl[:len_dev]:
-            csv.writer(f, delimiter="\t").writerow(element)
-    with open(outfile_paths[1], "w") as f:
-        for element in spans_text_qas_srl[-len_test:]:
-            csv.writer(f, delimiter="\t").writerow(element)
-
-    with open(path + "/too_long.txt", "w") as f:
-        for context in too_long_contexts:
-            f.write(context + "\n\n")
+        write_to_files(spans_text_qas_srl, outfile_paths)
 
 
 def main():
