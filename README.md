@@ -2,6 +2,10 @@
 
 This repository contains all code files relating to my master's thesis.
 
+# Architecture
+
+![GLIBERT Architecture](/thesis/clvorlage/images/architecture.png)
+
 # Data
 
 The data sets that were used in the experiments, can be obtained from the following sources:
