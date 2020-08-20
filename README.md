@@ -54,7 +54,7 @@ To reproduce the results, download the data, store them locally, and run the com
 
 Run the following bash commands to prepare the Data Sets for the python scripts:
 
-##### SCARE
+#### SCARE
 
 When you obtained the .txt files, move them to the folder «annotations», where the other file (.csv etc.) lie.
 
@@ -62,11 +62,19 @@ cd into the folder «annotations»:
 
 `$ cd /<path>/<to>/SCARE/scare_v1.0.0/annotations/`
 
-cat all the .txt and .csv files into one big file, respectively:
+cat all the .txt and .csv files into one file, respectively:
 
 `$ cat *.txt > annotations.txt && cat *.csv > annotations.csv`
 
+#### SCARE Reviews
 
+cd into the folder «reviews»:
+
+`$ cd /<path>/<to>/SCARE/scare_v1.0.0_data/reviews/`
+
+cat all the .csv files into one .csv files:
+
+`$ cat *.csv > reviews.csv`
 
 
 # SRL Resources
