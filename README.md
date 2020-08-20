@@ -33,10 +33,12 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 | XNLI | Natural Language Inference | Multi-Class Classification |  2 489/7 498 | dev/test |
 | XQuAD | Question Answering | Span Prediction |  1 192 | - |
 
+# Results
+
 # Preparing the Data
 
 
-Download the data and create the following folder structure:
+Download the data and adhere to the following folder structure (it is important that the names of the root directory names are exactly the same as below; e.g. «deISEAR» and not «deISEARenISEAR» etc.):
 
 	/<path>/<to>/deISEAR/  
 			..deISEAR.tsv
