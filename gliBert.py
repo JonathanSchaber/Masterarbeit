@@ -6,7 +6,7 @@ import torch
 
 import numpy as np
 
-from load_data import dataloader
+from load_data import Dataloader, dataloader
 from torch import nn
 from transformers import (
         AdamW,
@@ -15,8 +15,15 @@ from transformers import (
         get_linear_schedule_with_warmup
         )
 
-merge_subs = MLQA_dataloader.merge_subs
+merge_subs = Dataloader.merge_subs
 
+blue = "\033[94m"
+
+green = "\033[92m"
+
+red = "\033[93m"
+
+end = "\033[0m"
 
 def parse_cmd_args():
     """Parse command line arguments."""
@@ -93,75 +100,9 @@ def Swish(batch):
 #         return output
 
 
-class BertBinaryClassifier(nn.Module):
-    def __init__(self, path, dropout=0.1):
-        super(BertBinaryClassifier, self).__init__()
-        self.bert = BertModel.from_pretrained(path)
-        self.linear = nn.Linear(768, 1)
-        self.sigmoid = nn.Sigmoid()
-    
-    def forward(self, tokens):
-        _, pooled_output = self.bert(tokens)
-        linear_output = self.linear(pooled_output)
-        proba = self.sigmoid(linear_output)
-        return proba
-
-
-class BertEntailmentClassifierCLS(nn.Module):
+class BertBase(nn.Module):
     def __init__(self, config, num_classes, max_len):
-        super(BertEntailmentClassifierCLS, self).__init__()
-        self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        self.linear = nn.Linear(768, num_classes)
-        self.softmax = nn.LogSoftmax(dim=-1)
-    
-    def forward(
-            self,
-            tokens,
-            attention_mask=None,
-            token_type_ids=None,
-            data_type=None,
-            device=torch.device("cpu")
-            ):
-        _, pooler_output = self.bert(
-                                tokens,
-                                attention_mask,
-                                token_type_ids
-                                )
-        linear_output = self.linear(pooler_output)
-        proba = self.softmax(linear_output)
-        return proba
-
-
-class GLIBert(nn.Module):
-    def __init__(self, config, num_classes, max_len):
-        super(GLIBert, self).__init__()
-        self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        self.linear = nn.Linear(768, 2)
-        self.softmax = nn.LogSoftmax(dim=-1)
-        if not SPAN_FLAG:
-            self.head_layer = nn.Sequential(
-                nn.Dropout(self.config["dropout"]),
-                nn.Linear(max_len*768, self.config["head_hidden_size"]),
-                nn.ReLU(inplace=True),
-                nn.Linear(self.config["head_hidden_size"], num_classes),
-            )
-        else:
-            self.start_span_layer = nn.Sequential(
-                nn.Dropout(self.config["dropout"]),
-                nn.Linear(max_len*768, self.config["head_hidden_size"]),
-                nn.ReLU(inplace=True),
-                nn.Linear(self.config["head_hidden_size"], max_len),
-            )
-            self.end_span_layer = nn.Sequential(
-                nn.Dropout(self.config["dropout"]),
-                nn.Linear(max_len*768, self.config["head_hidden_size"]),
-                nn.ReLU(inplace=True),
-                nn.Linear(self.config["head_hidden_size"], max_len),
-            )
+        super(nn.Module, self).__init__()
     
     @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
@@ -231,6 +172,63 @@ class GLIBert(nn.Module):
         return_batch = torch.stack(tuple(word_level_batch))
         
         return return_batch
+
+
+class BertClassifierCLS(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear(768, num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
+    
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        _, pooler_output = self.bert(
+                                tokens,
+                                attention_mask,
+                                token_type_ids
+                                )
+        linear_output = self.linear(pooler_output)
+        proba = self.softmax(linear_output)
+        return proba
+
+
+class gliBert(nn.Module):
+    def __init__(self, config, num_classes, max_len):
+        super(GLIBert, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear(768, 2)
+        self.softmax = nn.LogSoftmax(dim=-1)
+        if not SPAN_FLAG:
+            self.head_layer = nn.Sequential(
+                nn.Dropout(self.config["dropout"]),
+                nn.Linear(max_len*768, self.config["head_hidden_size"]),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.config["head_hidden_size"], num_classes),
+            )
+        else:
+            self.start_span_layer = nn.Sequential(
+                nn.Dropout(self.config["dropout"]),
+                nn.Linear(max_len*768, self.config["head_hidden_size"]),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.config["head_hidden_size"], max_len),
+            )
+            self.end_span_layer = nn.Sequential(
+                nn.Dropout(self.config["dropout"]),
+                nn.Linear(max_len*768, self.config["head_hidden_size"]),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.config["head_hidden_size"], max_len),
+            )
     
     def forward(
             self,
@@ -419,7 +417,7 @@ def fine_tune_BERT(config):
     for epoch_i in range(0, epochs):
         print("")
         print("======== Epoch {:} / {:} ========".format(epoch_i + 1, epochs))
-        print("Training...")
+        print(blue + "Training..." + end)
         t0 = time.time()
         total_train_loss = 0
 
@@ -451,7 +449,7 @@ def fine_tune_BERT(config):
                             b_labels[-1],
                             mapping,
                             step,
-                            len(dev_data),
+                            len(train_data),
                             elapsed,
                             merge_subtokens
                             )
@@ -473,7 +471,7 @@ def fine_tune_BERT(config):
                             (start_span[-1], end_span[-1]),
                             b_labels[-1],
                             mapping, step,
-                            len(dev_data),
+                            len(train_data),
                             elapsed,
                             merge_subtokens
                             )
@@ -497,7 +495,7 @@ def fine_tune_BERT(config):
         ### Dev Run ###
 
         print("")
-        print("Running Development Set evaluation...")
+        print(green + "Running Development Set evaluation..." + end)
         t0 = time.time()
         model.eval()
 
@@ -543,17 +541,17 @@ def fine_tune_BERT(config):
             total_dev_accuracy += acc
 
         avg_dev_accuracy = total_dev_accuracy / len(dev_data)
-        print("  Development Accuracy: {0:.2f}".format(avg_val_accuracy))
+        print("  Development Accuracy: {0:.2f}".format(avg_dev_accuracy))
         avg_dev_loss = total_dev_loss / len(dev_data)
         dev_time = format_time(time.time() - t0)
-        print("  Dev Loss: {0:.2f}".format(avg_val_loss))
-        print("  Dev took: {:}".format(validation_time))
+        print("  Dev Loss: {0:.2f}".format(avg_dev_loss))
+        print("  Dev took: {:}".format(dev_time))
 
         ################
         ### Test Run ###
 
         print("")
-        print("Running Test Set evaluation...")
+        print(green + "Running Test Set evaluation..." + end)
 
         t0 = time.time()
 
@@ -599,20 +597,20 @@ def fine_tune_BERT(config):
             total_test_accuracy += acc
 
         avg_test_accuracy = total_test_accuracy / len(test_data)
-        print("  Test Accuracy: {0:.2f}".format(avg_val_accuracy))
+        print("  Test Accuracy: {0:.2f}".format(avg_test_accuracy))
         avg_test_loss = total_test_loss / len(test_data)
         test_time = format_time(time.time() - t0)
-        print("  Test Loss: {0:.2f}".format(avg_val_loss))
-        print("  Test took: {:}".format(validation_time))
+        print("  Test Loss: {0:.2f}".format(avg_test_loss))
+        print("  Test took: {:}".format(test_time))
 
         training_stats.append(
             {
                 "epoch": epoch_i + 1,
                 "Train Loss": avg_train_loss,
                 "Dev Loss": avg_dev_loss,
-                "Test Loss": avg_val_loss,
+                "Test Loss": avg_test_loss,
                 "Dev Accur.": avg_dev_accuracy,
-                "Test Accur.": avg_val_accuracy,
+                "Test Accur.": avg_test_accuracy,
                 "Train Time": train_time,
                 "Dev Time": dev_time,
                 "Test Time": test_time
@@ -621,15 +619,19 @@ def fine_tune_BERT(config):
 
         if config["early_stopping"]:
             if epoch_i > 1:
-                if training_stats[-2]["Valid. Loss"] < training_stats[-1]["Valid. Loss"]:
+                if training_stats[-2]["Dev Loss"] < training_stats[-1]["Dev Loss"]:
                     if PATIENCE > 4:
                         print("")
-                        print("  !!! OVERFITTING !!!")
-                        print("  Stopping fine-tuning!")
+                        print(red + "  !!! OVERFITTING !!!" + end)
+                        print(red + "  Stopping fine-tuning!" + end)
                         break
                     PATIENCE += 1
                     print("")
-                    print("Attention: Validation loss increased for the {} time in series...".format(PATIENCE))
+                    print(
+                        red + \
+                        "Attention: Validation loss increased for the {} time in series...".format(PATIENCE) + \
+                        end
+                        )
                 else:
                     PATIENCE = 0
 
