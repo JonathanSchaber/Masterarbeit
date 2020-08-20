@@ -34,7 +34,7 @@ To reproduce the results, download the data, store them locally, and run the com
 
 # Preparing the Data
 
-/<path>/<to>/deISEARenISEAR/
+/\<path\>/\<to\>/deISEARenISEAR/
 		..deISEAR.tsv
 
 /<path>/<to>/MLQA/
