@@ -38,7 +38,7 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 
 Download the data and create the following folder structure:
 
-	/<path>/<to>/deISEARenISEAR/  
+	/<path>/<to>/deISEAR/  
 			..deISEAR.tsv
 	
 	
@@ -74,6 +74,14 @@ Download the data and create the following folder structure:
 ## Pre-Preprocessing
 
 Run the following bash commands to prepare the data sets for the python scripts:
+
+
+## Preprocessing
+
+For each data set, run the following command:
+
+`python preprocess_data.py -d <data set> -p /<path>/<to>/<data set>/ -a /<path>/<to>/DAMESRL/server_configs/srl_char_att_ger_infer.ini`
+`
 
 #### SCARE
 
