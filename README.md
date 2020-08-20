@@ -27,7 +27,7 @@ To reproduce the results, download the data, store them locally, and run the com
 | deISEAR |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
 | MLQA | Question Answering | Span Prediction | 509/4 499 | dev/test |
 | PAWS-X | Paraphrase Identification | Binary Classification | 2 000/4 000 | dev/test |
-| SCARE | Sentiment Analysis | Multi-Class Classifiaction | 1 760 | - |
+| SCARE | Sentiment Analysis | Multi-Class Classification | 1 760 | - |
 | SCARE Reviews |  Sentiment Analysis | Multi-Class Classification | 802 860 | - |
 | XNLI | Natural Language Inference | Multi-Class Classification |  2 489/7 498 | dev/test |
 | XQuAD | Question Answering | Span Prediction |  1 192 | - |
@@ -35,7 +35,7 @@ To reproduce the results, download the data, store them locally, and run the com
 # Preparing the Data
 
 
-Download the Data and create the folloing folder structure:
+Download the Data and create the following folder structure:
 
 	/<path>/<to>/deISEARenISEAR/  
 			..deISEAR.tsv
