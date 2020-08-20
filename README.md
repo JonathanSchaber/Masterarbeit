@@ -54,7 +54,7 @@ To reproduce the results, download the data, store them locally, and run the com
 
 Run the following bash commands to prepare the Data Sets for the python scripts:
 
-### SCARE
+##### SCARE
 
 When you obtained the .txt files, move them to the folder «annotations», where the other file (.csv etc.) lie.
 
