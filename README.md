@@ -35,21 +35,37 @@ To reproduce the results, download the data, store them locally, and run the com
 # Preparing the Data
 
 
-	/\<path\>/\<to\>/deISEARenISEAR/  
-		..deISEAR.tsv
-
-
-/<path>/<to>/MLQA/
-		../dev/dev-context-de-question-de.tsv
-		../test/test-context-de-question-de.json
-
-/<path>/<to>/PAWS-X/
-		../de/
-			../dev_2k.tsv
-			../test_2k.tsv	
-
-/<path>/<to>/SCARE/
-		../scare_v1.0.0/annotations/
+	/<path>/<to>/deISEARenISEAR/  
+			..deISEAR.tsv
+	
+	
+	/<path>/<to>/MLQA/
+			../dev/dev-context-de-question-de.tsv
+			../test/test-context-de-question-de.json
+	
+	/<path>/<to>/PAWS-X/
+			../de/
+				../dev_2k.tsv
+				../test_2k.tsv	
+	
+	/<path>/<to>/SCARE/
+			../scare_v1.0.0/annotations/
+				../alarm_clocks.csv
+				../alarm_clocks.rel
+				../alarm_clocks.txt
+				../...
+			../scare_v1.0.0_data/reviews/
+				../alarm_clocks.csv
+				../...
+	
+	/<path>/<to>/XNLI/
+			../XNLI-1.0/
+				../xnli.dev.de.tsv
+				../xnli.test.de.tsv
+	
+	/<path>/<to>/XQuAD/
+			../xquad/
+				../xquad.de.json
 
 
 ## Pre-Preprocessing
