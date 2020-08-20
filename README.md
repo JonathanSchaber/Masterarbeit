@@ -34,4 +34,39 @@ To reproduce the results, download the data, store them locally, and run the com
 
 # Preparing the Data
 
+/<path>/<to>/deISEARenISEAR/
+		..deISEAR.tsv
+
+/<path>/<to>/MLQA/
+		../dev/dev-context-de-question-de.tsv
+		../test/test-context-de-question-de.json
+
+/<path>/<to>/PAWS-X/
+		../de/
+			../dev_2k.tsv
+			../test_2k.tsv	
+
+/<path>/<to>/SCARE/
+		../scare_v1.0.0/annotations/
+
+
+## Pre-Preprocessing
+
+Run the following bash commands to prepare the Data Sets for the python scripts:
+
+### SCARE
+
+When you obtained the .txt files, move them to the folder «annotations», where the other file (.csv etc.) lie.
+
+cd into the folder «annotations»:
+
+`$ cd /<path>/<to>/SCARE/scare_v1.0.0/annotations/`
+
+cat all the .txt and .csv files into one big file, respectively:
+
+`$ cat *.txt > annotations.txt && cat *.csv > annotations.csv`
+
+
+
+
 # SRL Resources
