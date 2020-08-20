@@ -137,7 +137,7 @@ class Dataloader:
                                 )
 
     def get_max_len(self):
-        if type(self.data_train[3]) != list:
+        if self.type == 2 or self.type == "qa":
             longest_sentence_1_train = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_train]) 
             longest_sentence_2_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
             longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
@@ -379,6 +379,11 @@ def dataloader(config, location, data_set):
 
     dataloader.load()
     dataloader.load_torch()
+    train_dataloader = DataLoader(
+            dataloader.dataset_train,
+            sampler = RandomSampler(dataloader.dataset_train),
+            batch_size = dataloader.batch_size
+        ) 
     dev_dataloader = DataLoader(
             dataloader.dataset_dev,
             sampler = RandomSampler(dataloader.dataset_dev),
@@ -394,5 +399,11 @@ def dataloader(config, location, data_set):
     max_len = dataloader.max_len
     data_type = dataloader.type
 
-    return dev_dataloader, test_dataloader, num_classes, max_len, mapping, data_type
+    return train_dataloader, 
+            dev_dataloader,
+            test_dataloader,
+            num_classes,
+            max_len,
+            mapping,
+            data_type
 

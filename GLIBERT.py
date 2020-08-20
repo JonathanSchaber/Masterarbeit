@@ -9,22 +9,14 @@ import numpy as np
 #from datetime import datetime
 
 from torch import nn
-from torch.utils.data import (
-        TensorDataset,
-        random_split,
-        DataLoader,
-        RandomSampler,
-        SequentialSampler
-        )
 from transformers import (
         BertTokenizer,
         BertModel,
-        BertForQuestionAnswering,
         AdamW,
         get_linear_schedule_with_warmup
         )
 
-from load_data import *
+from load_data import dataloader
 merge_subs = MLQA_dataloader.merge_subs
 
 
@@ -384,6 +376,7 @@ def fine_tune_BERT(config):
     criterion = nn.NLLLoss()
     merge_subtokens = config["merge_subtokens"]
 
+    train_data, \
     dev_data, \
     test_data, \
     num_classes, \
@@ -431,8 +424,11 @@ def fine_tune_BERT(config):
         print("Training...")
         t0 = time.time()
         total_train_loss = 0
+
+        ### Train Run ###
+
         model.train()
-        for step, batch in enumerate(dev_data):
+        for step, batch in enumerate(train_data):
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
