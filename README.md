@@ -20,7 +20,7 @@ XNLI: [https://cims.nyu.edu/~sbowman/xnli/](https://cims.nyu.edu/~sbowman/xnli/)
 
 XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 
-To reproduce the results, download the data, store them locally, and run the commands under [Preparing the Data](#preparing-the-data)
+To reproduce the results, run the commands under [Preparing the Data](#preparing-the-data)
 
 | Data Set | NLP Task | ML Task | \# Examples | Splits |
 | -------- | -------- | ------- | ----------- | ------ |
