@@ -75,14 +75,6 @@ Download the data and create the following folder structure:
 
 Run the following bash commands to prepare the data sets for the python scripts:
 
-
-## Preprocessing
-
-For each data set, run the following command:
-
-`python preprocess_data.py -d <data set> -p /<path>/<to>/<data set>/ -a /<path>/<to>/DAMESRL/server_configs/srl_char_att_ger_infer.ini`
-`
-
 #### SCARE
 
 When you obtained the .txt files, move them to the folder «annotations», where the other file (.csv etc.) lie.
@@ -105,5 +97,14 @@ cat all the .csv files into one .csv files:
 
 `$ cat *.csv > reviews.csv`
 
+## Preprocessing
+
+For each data set, run the following command:
+
+	python preprocess_data.py \
+		-d <data set> \
+		-p /<path>/<to>/<data set>/ \
+		-a /<path>/<to>/DAMESRL/server_configs/srl_char_att_ger_infer.ini
+`
 
 # SRL Resources
