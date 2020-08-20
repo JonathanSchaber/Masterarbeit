@@ -34,8 +34,10 @@ To reproduce the results, download the data, store them locally, and run the com
 
 # Preparing the Data
 
+`
 /\<path\>/\<to\>/deISEARenISEAR/  
 		..deISEAR.tsv
+`
 
 /<path>/<to>/MLQA/
 		../dev/dev-context-de-question-de.tsv
