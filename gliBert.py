@@ -1,22 +1,20 @@
-import time
+import argparse
 import datetime
 import json
-import argparse
+import time
 import torch
 
 import numpy as np
 
-#from datetime import datetime
-
+from load_data import dataloader
 from torch import nn
 from transformers import (
-        BertTokenizer,
-        BertModel,
         AdamW,
+        BertModel,
+        BertTokenizer,
         get_linear_schedule_with_warmup
         )
 
-from load_data import dataloader
 merge_subs = MLQA_dataloader.merge_subs
 
 
@@ -425,6 +423,7 @@ def fine_tune_BERT(config):
         t0 = time.time()
         total_train_loss = 0
 
+        #################
         ### Train Run ###
 
         model.train()
@@ -494,6 +493,7 @@ def fine_tune_BERT(config):
         print("  Average training loss: {0:.2f}".format(avg_train_loss))
         print("  Training epoch took: {:}".format(train_time))
 
+        ###############
         ### Dev Run ###
 
         print("")
@@ -549,7 +549,9 @@ def fine_tune_BERT(config):
         print("  Dev Loss: {0:.2f}".format(avg_val_loss))
         print("  Dev took: {:}".format(validation_time))
 
+        ################
         ### Test Run ###
+
         print("")
         print("Running Test Set evaluation...")
 

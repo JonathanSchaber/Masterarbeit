@@ -3,9 +3,9 @@ import csv
 import json
 import os
 
-from random import shuffle
 from pathlib import Path
 from predict_SRL import SRL_predictor
+from random import shuffle
 
 
 def parse_cmd_args():
@@ -117,9 +117,9 @@ def preprocess_deISEAR(path):
     path = str(path)
     file_path = path + "/deISEAR.tsv"
     outfile_paths = [
-            path + "/GLIBERT_deISEAR_train.tsv",
-            path + "/GLIBERT_deISEAR_dev.tsv",
-            path + "/GLIBERT_deISEAR_test.tsv"
+            path + "/gliBert_deISEAR_train.tsv",
+            path + "/gliBert_deISEAR_dev.tsv",
+            path + "/gliBert_deISEAR_test.tsv"
             ]
 
     emotion_sentence_srl = []
@@ -153,9 +153,9 @@ def preprocess_MLQA(path):
             path + "/test/test-context-de-question-de.json"
             ]
     outfile_paths = [
-            path + "/GLIBERT_train-context-de-question-de.tsv",
-            path + "/GLIBERT_dev-context-de-question-de.tsv",
-            path + "/GLIBERT_test-context-de-question-de.tsv"
+            path + "/gliBert_mlqa_train.tsv",
+            path + "/gliBert_mlqa_dev.tsv",
+            path + "/gliBert_mlqa_test.tsv"
             ]
 
     too_long_contexts = []
@@ -210,9 +210,9 @@ def preprocess_PAWS_X(path):
     path = str(path)
     file_paths = [path + "/de/dev_2k.tsv", path + "/de/test_2k.tsv"]
     outfile_paths = [
-            path + "/GLIBERT_paws_x_train.tsv",
-            path + "/GLIBERT_paws_x_dev.tsv",
-            path + "/GLIBERT_paws_x_test.tsv"
+            path + "/gliBert_paws_x_train.tsv",
+            path + "/gliBert_paws_x_dev.tsv",
+            path + "/gliBert_paws_x_test.tsv"
             ]
 
     label_text_feat = []
@@ -246,9 +246,9 @@ def preprocess_SCARE(path):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/annotations/GLIBERT_annotations_train.tsv",
-            path + "/annotations/GLIBERT_annotations_dev.tsv",
-            path + "/annotations/GLIBERT_annotations_test.tsv"
+            path + "/annotations/gliBert_scare_annotations_train.tsv",
+            path + "/annotations/gliBert_scare_annotations_dev.tsv",
+            path + "/annotations/gliBert_scare_annotations_test.tsv"
             ]
 
     count_non_maj = 0
@@ -311,9 +311,9 @@ def preprocess_SCARE_reviews(path, path_outfile):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/GLIBERT_reviews_train.tsv",
-            path + "/GLIBERT_reviews_dev.tsv",
-            path + "/GLIBERT_reviews_test.tsv"
+            path + "/gliBert_scare_reviews_train.tsv",
+            path + "/gliBert_scare_reviews_dev.tsv",
+            path + "/gliBert_scare_reviews_test.tsv"
             ]
 
     rating_text_srl = []
@@ -347,9 +347,9 @@ def preprocess_XNLI(path):
     path = str(path)
     file_paths = [path + "/XNLI-1.0/xnli.dev.de.tsv", path + "/XNLI-1.0/xnli.test.de.tsv"]
     outfile_paths = [
-            path + "/GLIBERT_xnli.train.de.tsv",
-            path + "/GLIBERT_xnli.dev.de.tsv",
-            path + "/GLIBERT_xnli.test.de.tsv"
+            path + "/gliBert_xnli_train.tsv",
+            path + "/gliBert_xnli_dev.tsv",
+            path + "/gliBert_xnli_test.tsv"
             ]
 
     label_text_feat = []
@@ -379,9 +379,9 @@ def preprocess_XQuAD(path):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/XQUAD/, not file!"
     path = str(path)
     outfile_paths = [
-            path + "/GLIBERT_xquad_train.tsv",
-            path + "/GLIBERT_xquad_dev.tsv",
-            path + "/GLIBERT_xquad_test.tsv"
+            path + "/gliBert_xquad_train.tsv",
+            path + "/gliBert_xquad_dev.tsv",
+            path + "/gliBert_xquad_test.tsv"
             ]
 
     too_long_contexts = []
