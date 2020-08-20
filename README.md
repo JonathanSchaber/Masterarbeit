@@ -35,7 +35,7 @@ To reproduce the results, download the data, store them locally, and run the com
 # Preparing the Data
 
 
-Download the Data and create the following folder structure:
+Download the data and create the following folder structure:
 
 	/<path>/<to>/deISEARenISEAR/  
 			..deISEAR.tsv
@@ -72,7 +72,7 @@ Download the Data and create the following folder structure:
 
 ## Pre-Preprocessing
 
-Run the following bash commands to prepare the Data Sets for the python scripts:
+Run the following bash commands to prepare the data sets for the python scripts:
 
 #### SCARE
 
