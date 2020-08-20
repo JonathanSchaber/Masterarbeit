@@ -19,18 +19,24 @@ class Dataloader:
         self.merge_subtokens = merge_subtokens
         self.batch_size = batch_size
         self.path = path_data
+        self.path_train = None
         self.path_dev = None
         self.path_test = None
+        self.data_train = None
         self.data_dev = None
         self.data_test = None
         self.max_len = None
         self.type = None
+        self.attention_mask_train = None
         self.attention_mask_dev = None
         self.attention_mask_test = None
+        self.token_type_ids_train = None
         self.token_type_ids_dev = None
         self.token_type_ids_test = None
+        self.x_tensor_train = None
         self.x_tensor_dev = None
         self.x_tensor_test = None
+        self.y_tensor_train = None
         self.y_tensor_dev = None
         self.y_tensor_test = None
         self.y_mapping = {}
@@ -111,6 +117,12 @@ class Dataloader:
         return data
 
     def make_datasets(self):
+        self.dataset_train = TensorDataset(
+                                self.x_tensor_train,
+                                self.y_tensor_train,
+                                self.attention_mask_train,
+                                self.token_type_ids_train
+                                )
         self.dataset_dev = TensorDataset(
                                 self.x_tensor_dev,
                                 self.y_tensor_dev,
@@ -125,13 +137,15 @@ class Dataloader:
                                 )
 
     def get_max_len(self):
-        if type(self.data_dev[3]) != list:
+        if type(self.data_train[3]) != list:
+            longest_sentence_1_train = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_train]) 
+            longest_sentence_2_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
             longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
             longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
             longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_test]) 
             longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
-            longest_sentence_1 = max(longest_sentence_1_dev, longest_sentence_1_test)
-            longest_sentence_2 = max(longest_sentence_2_dev, longest_sentence_2_test)
+            longest_sentence_1 = max(longest_sentence_1_train, longest_sentence_1_dev, longest_sentence_1_test)
+            longest_sentence_2 = max(longest_sentence_2_train, longest_sentence_2_dev, longest_sentence_2_test)
             return self.check_max_length(longest_sentence_1, longest_sentence_2)
         else:
             longest_sent = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
@@ -216,6 +230,11 @@ class Dataloader:
                 torch.cat(tuple(y_tensor_list), dim=0) 
 
     def load_torch(self):
+        self.x_tensor_train, \
+        self.attention_mask_train, \
+        self.token_type_ids_train, \
+        self.y_tensor_train = self.load_torch_data(self.data_train)
+
         self.x_tensor_dev, \
         self.attention_mask_dev, \
         self.token_type_ids_dev, \
@@ -239,8 +258,10 @@ class Dataloader:
 class deISEAR_dataloader(Dataloader):
     def load(self):
         self.type = 1
+        self.path_train = self.path + "GLIBERT_deISEAR_train.tsv"
         self.path_dev = self.path + "GLIBERT_deISEAR_dev.tsv"
         self.path_test = self.path + "GLIBERT_deISEAR_test.tsv"
+        self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
     
@@ -250,8 +271,10 @@ class deISEAR_dataloader(Dataloader):
 class MLQA_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_dev = str(Path(self.path)) + "/dev/GLIBERT_dev-context-de-question-de.tsv"
-        self.path_test = str(Path(self.path)) + "/test/GLIBERT_test-context-de-question-de.tsv"
+        self.path_train = str(Path(self.path)) + "/GLIBERT_train-context-de-question-de.tsv"
+        self.path_dev = str(Path(self.path)) + "/GLIBERT_dev-context-de-question-de.tsv"
+        self.path_test = str(Path(self.path)) + "/GLIBERT_test-context-de-question-de.tsv"
+        self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -261,8 +284,10 @@ class MLQA_dataloader(Dataloader):
 class PAWS_X_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_dev = str(Path(self.path)) + "/de/GLIBERT_paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/de/GLIBERT_paws_x_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GLIBERT_paws_x_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GLIBERT_paws_x_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GLIBERT_paws_x_test.tsv"
+        self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -272,8 +297,10 @@ class PAWS_X_dataloader(Dataloader):
 class SCARE_dataloader(Dataloader):
     def load(self):
         self.type = 1
-        self.path_dev = str(Path(self.path)) + "/scare_v1.0.0/annotations/GLIBERT_annotations_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/scare_v1.0.0/annotations/GLIBERT_annotations_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GLIBERT_annotations_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GLIBERT_annotations_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GLIBERT_annotations_test.tsv"
+        self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -283,8 +310,10 @@ class SCARE_dataloader(Dataloader):
 class XNLI_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_dev = str(Path(self.path)) + "/XNLI-1.0/GLIBERT_xnli.dev.de.tsv"
-        self.path_test = str(Path(self.path)) + "/XNLI-1.0/GLIBERT_xnli.test.de.tsv"
+        self.path_train = str(Path(self.path)) + "/GLIBERT_xnli.dev.de.tsv"
+        self.path_dev = str(Path(self.path)) + "/GLIBERT_xnli.dev.de.tsv"
+        self.path_test = str(Path(self.path)) + "/GLIBERT_xnli.test.de.tsv"
+        self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
@@ -294,8 +323,10 @@ class XNLI_dataloader(Dataloader):
 class XQuAD_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_dev = str(Path(self.path)) + "/xquad/GLIBERT_xquad_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/xquad/GLIBERT_xquad_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GLIBERT_xquad_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GLIBERT_xquad_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GLIBERT_xquad_test.tsv"
+        self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
 
