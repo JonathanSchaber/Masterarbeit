@@ -5,9 +5,9 @@ from pathlib import Path
 from torch.utils.data import (
         DataLoader,
         RandomSampler,
-        SequentialSampler
+        SequentialSampler,
         TensorDataset,
-        random_split,
+        random_split
         )
 from transformers import BertTokenizer
 
@@ -147,8 +147,10 @@ class Dataloader:
             longest_sentence_2 = max(longest_sentence_2_train, longest_sentence_2_dev, longest_sentence_2_test)
             return self.check_max_length(longest_sentence_1, longest_sentence_2)
         else:
-            longest_sent = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data]) 
-            return self.check_max_length(longest_sent)
+            longest_sent_train = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_train]) 
+            longest_sent_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
+            longest_sent_test = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_test]) 
+            return self.check_max_length(max(longest_sent_train, longest_sent_dev, longest_sent_test))
 
     def load_torch_data(self, data):
         input_ids = []
@@ -270,9 +272,9 @@ class deISEAR_dataloader(Dataloader):
 class MLQA_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_train = str(Path(self.path)) + "/gliBert_train-context-de-question-de.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_dev-context-de-question-de.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_test-context-de-question-de.tsv"
+        self.path_train = str(Path(self.path)) + "/gliBert_mlqa_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/gliBert_mlqa_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/gliBert_mlq_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -296,9 +298,9 @@ class PAWS_X_dataloader(Dataloader):
 class SCARE_dataloader(Dataloader):
     def load(self):
         self.type = 1
-        self.path_train = str(Path(self.path)) + "/gliBert_annotations_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_annotations_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_annotations_test.tsv"
+        self.path_train = str(Path(self.path)) + "/gliBert_scare_annotations_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/gliBert_scare_annotations_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/gliBert_scare_annotations_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -398,11 +400,11 @@ def dataloader(config, location, data_set):
     max_len = dataloader.max_len
     data_type = dataloader.type
 
-    return train_dataloader, 
-            dev_dataloader,
-            test_dataloader,
-            num_classes,
-            max_len,
-            mapping,
+    return train_dataloader, \
+            dev_dataloader, \
+            test_dataloader, \
+            num_classes, \
+            max_len, \
+            mapping, \
             data_type
 
