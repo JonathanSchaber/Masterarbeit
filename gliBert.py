@@ -101,8 +101,9 @@ def Swish(batch):
 
 
 class BertBase(nn.Module):
-    def __init__(self, config, num_classes, max_len):
-        super(nn.Module, self).__init__()
+    #def __init__(self, config, num_classes, max_len):
+        #super(nn.Module, self).__init__()
+        #self
     
     @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
@@ -197,6 +198,77 @@ class BertClassifierCLS(BertBase):
                                 token_type_ids
                                 )
         linear_output = self.linear(pooler_output)
+        proba = self.softmax(linear_output)
+        return proba
+
+
+class BertClassifierLastHiddenStateAll(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear(768*max_len, num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
+    
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        last_hidden_state, _ = self.bert(
+                                tokens,
+                                attention_mask,
+                                token_type_ids
+                                )
+        if self.config["merge_subtokens"] == True:
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        reshaped_last_hidden = torch.reshape(
+                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
+                (
+                    last_hidden_state.shape[0], 
+                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
+                )
+        linear_output = self.linear(reshaped_last_hidden)
+        proba = self.softmax(linear_output)
+        return proba
+
+
+class BertClassifierLastHiddenStateNoCLS(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear(768*(max_len-1), num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
+    
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        last_hidden_state, _ = self.bert(
+                                tokens,
+                                attention_mask,
+                                token_type_ids
+                                )
+        last_hidden_state = last_hidden_state[:, 1:, :]
+        if self.config["merge_subtokens"] == True:
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        reshaped_last_hidden = torch.reshape(
+                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
+                (
+                    last_hidden_state.shape[0], 
+                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
+                )
+        linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
         return proba
 
@@ -629,7 +701,7 @@ def fine_tune_BERT(config):
                     print("")
                     print(
                         red + \
-                        "Attention: Validation loss increased for the {} time in series...".format(PATIENCE) + \
+                        "Attention: Development loss increased for the {} time in series...".format(PATIENCE) + \
                         end
                         )
                 else:
