@@ -246,9 +246,9 @@ def preprocess_SCARE(path):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/annotations/gliBert_scare_annotations_train.tsv",
-            path + "/annotations/gliBert_scare_annotations_dev.tsv",
-            path + "/annotations/gliBert_scare_annotations_test.tsv"
+            path + "/gliBert_scare_annotations_train.tsv",
+            path + "/gliBert_scare_annotations_dev.tsv",
+            path + "/gliBert_scare_annotations_test.tsv"
             ]
 
     count_non_maj = 0
