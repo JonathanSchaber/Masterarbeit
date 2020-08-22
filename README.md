@@ -38,7 +38,7 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 # Preparing the Data
 
 
-Download the data and adhere to the following folder structure (it is important that the names of the directories are exactly the same as below; e.g. «deISEAR» and not «deISEARenISEAR» as it is named when downloaded etc. The structure if the downloaded data sets is not changed, so naming the root directory correctly is the main thing to follow):
+Download the data and adhere to the following folder structure (it is important that the names of the directories are exactly the same as below; e.g. «deISEAR» and not «deISEARenISEAR» as it is named when downloaded etc. The structure of the downloaded data sets is not changed, so naming the root directory correctly is the main thing to follow):
 
 	/<path>/<to>/deISEAR/  
 			..deISEAR.tsv
