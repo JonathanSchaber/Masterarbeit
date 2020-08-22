@@ -280,7 +280,7 @@ def preprocess_SCARE(path):
     for review_id, feat in id_text_labels.items():
         polarity, majority, num_labels = get_majority_label(feat["labels"])
         sem_roles = srl_predictor.predict_semRoles(feat["text"])
-        label_text_feat.append([polarity, feat["text"], sem_roles])
+        label_text_feat.append([polarity, "", feat["text"], sem_roles])
         if polarity == "Neutral": count_non_maj += 1 
         if not majority: count_close += 1 
         if num_labels == 0:
