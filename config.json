@@ -1,7 +1,7 @@
 {
 	"local": {
 		"BERT": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/",
-		"deISEAR": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/deISEARenISEAR/",
+		"deISEAR": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/deISEAR",
 		"MLQA": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA/",
 		"PAWS-X": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/PAWS-X/",
 		"SCARE": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/SCARE/",
@@ -11,18 +11,19 @@
 	"rattle": {
 		"BERT": "/srv/scratch3/jschab_jgoldz/MA/models/germanBERT/",
 		"MLQA": "/srv/scratch3/jschab_jgoldz/MA/data/MLQA/",
-		"deISEAR": "/srv/scratch3/jschab_jgoldz/MA/data/deISEARenISEAR/",
+		"deISEAR": "/srv/scratch3/jschab_jgoldz/MA/data/deISEAR/",
 		"XNLI": "/srv/scratch3/jschab_jgoldz/MA/data/XNLI/",
 		"SCARE": "/srv/scratch3/jschab_jgoldz/MA/data/SCARE/",
 		"PAWS-X": "/srv/scratch3/jschab_jgoldz/MA/data/PAWS-X/",
 		"XQuAD": "/srv/scratch3/jschab_jgoldz/MA/data/XQuAD/"
 	},
+	"comment": "only hidden states of tokens after [CLS]",
 	"epochs": 20,
 	"batch_size": 16,
-	"gpu": 0,
-	"print_stats": 40,
-	"merge_subtokens": true,
-	"bert_head": "GLIBert",
+	"gpu": 2,
+	"print_stats": 20,
+	"merge_subtokens": false,
+	"bert_head": "BertClassifierLastHiddenState",
 	"num_labels": 47,
 	"embedding_dim": 64,
 	"gru_hidden_size": 128,
