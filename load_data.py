@@ -266,7 +266,7 @@ class deISEAR_dataloader(Dataloader):
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
     
-####################################
+################################
 ########### M L Q A ############
 
 class MLQA_dataloader(Dataloader):
@@ -274,7 +274,7 @@ class MLQA_dataloader(Dataloader):
         self.type = "qa"
         self.path_train = str(Path(self.path)) + "/gliBert_mlqa_train.tsv"
         self.path_dev = str(Path(self.path)) + "/gliBert_mlqa_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_mlq_test.tsv"
+        self.path_test = str(Path(self.path)) + "/gliBert_mlqa_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -311,9 +311,9 @@ class SCARE_dataloader(Dataloader):
 class XNLI_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_train = str(Path(self.path)) + "/gliBert_xnli.dev.de.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_xnli.dev.de.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_xnli.test.de.tsv"
+        self.path_train = str(Path(self.path)) + "/gliBert_xnli_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/gliBert_xnli_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/gliBert_xnli_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
