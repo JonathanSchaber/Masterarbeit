@@ -273,6 +273,37 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
         return proba
 
 
+class BertSpanPrediction(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear(768, 2)
+        self.softmax = nn.LogSoftmax(dim=-1)
+    
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        last_hidden_state, _ = self.bert(
+                                tokens,
+                                attention_mask,
+                                token_type_ids
+                                )
+        if self.config["merge_subtokens"] == True:
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        linear_output = self.linear(last_hidden_state)
+        start_logits, end_logits = linear_output.split(1, dim=-1)
+        import ipdb; ipdb.set_trace()
+        proba = self.softmax(linear_output)
+        return proba
+
+
 class gliBert(nn.Module):
     def __init__(self, config, num_classes, max_len):
         super(GLIBert, self).__init__()
