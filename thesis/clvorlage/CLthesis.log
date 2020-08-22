@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  17 AUG 2020 20:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 AUG 2020 18:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1259,12 +1259,12 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 9.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 9.
-<images/deISEAR_devtest_new.png, id=328, 916.92563pt x 347.04657pt>
-File: images/deISEAR_devtest_new.png Graphic file (type png)
-<use images/deISEAR_devtest_new.png>
-Package pdftex.def Info: images/deISEAR_devtest_new.png  used on input line 32.
-
-(pdftex.def)             Requested size: 426.79134pt x 161.53384pt.
+<images/deISEAR_traindevtest.png, id=330, 1129.97156pt x 347.04657pt>
+File: images/deISEAR_traindevtest.png Graphic file (type png)
+<use images/deISEAR_traindevtest.png>
+Package pdftex.def Info: images/deISEAR_traindevtest.png  used on input line 32
+.
+(pdftex.def)             Requested size: 426.79134pt x 131.07944pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -1272,15 +1272,21 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-] [4 <./images/deISEAR_devtest_new.png>]
-<images/PAWS-X_devtest_new.png, id=358, 934.24031pt x 347.04657pt>
-File: images/PAWS-X_devtest_new.png Graphic file (type png)
-<use images/PAWS-X_devtest_new.png>
-Package pdftex.def Info: images/PAWS-X_devtest_new.png  used on input line 64.
-(pdftex.def)             Requested size: 426.79134pt x 158.54189pt.
- [5 <./images/PAWS-X_devtest_new.png>]
+]
+<images/PAWS-X_traindevtest.png, id=348, 1147.28625pt x 347.04657pt>
+File: images/PAWS-X_traindevtest.png Graphic file (type png)
+<use images/PAWS-X_traindevtest.png>
+Package pdftex.def Info: images/PAWS-X_traindevtest.png  used on input line 64.
+
+(pdftex.def)             Requested size: 426.79134pt x 129.09892pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4 <./images/deISEAR_traindevtest.png>] [5 <./images/PAWS-X_traindevtest.png>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 89.
- (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
@@ -1291,7 +1297,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 89.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 89.
-<images/SCARE_star_stats.png, id=378, 723.4227pt x 346.896pt>
+<images/SCARE_star_stats.png, id=380, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
 Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 125.
@@ -1301,31 +1307,30 @@ Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 125.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [6]
-<images/SCARE_label_stats.png, id=386, 702.4644pt x 346.896pt>
+<images/SCARE_label_stats.png, id=388, 702.4644pt x 346.896pt>
 File: images/SCARE_label_stats.png Graphic file (type png)
 <use images/SCARE_label_stats.png>
 Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 142.
 (pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<images/XNLI_devtest.png, id=389, 898.85812pt x 347.04657pt>
+ [7 <./images/SCARE_star_stats.png> <./images/SCARE_label_stats.png>]
+<images/XNLI_devtest.png, id=398, 898.85812pt x 347.04657pt>
 File: images/XNLI_devtest.png Graphic file (type png)
 <use images/XNLI_devtest.png>
 Package pdftex.def Info: images/XNLI_devtest.png  used on input line 153.
 (pdftex.def)             Requested size: 426.79134pt x 164.77998pt.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[7 <./images/SCARE_star_stats.png>] [8 <./images/SCARE_label_stats.png>]
+[8 <./images/XNLI_devtest.png>]
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 9.49997pt on input line 198.
 
+Overfull \hbox (4.41711pt too wide) in paragraph at lines 198--198
+ [] 
+ []
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [9 <./images/XNLI_devtest.png>] [10]
+) [9] [10]
 \openout2 = `chapters/chap4_architecture.aux'.
 
  (./chapters/chap4_architecture.tex
@@ -1335,7 +1340,7 @@ chapter 4.
 
 
 ] [12]
-<images/exampleParzu2.png, id=483, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=484, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1404,7 +1409,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
 
 ]
-<images/Rosetta_Stone.jpg, id=538, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=539, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1499,15 +1504,11 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 2946DDE6218699A04421DA108EB19EB1;2658.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  12007 strings out of 492982
- 185382 string characters out of 6134895
- 406630 words of memory out of 5000000
+ 185392 string characters out of 6134895
+ 406670 words of memory out of 5000000
  15082 multiletter control sequences out of 15000+600000
  22572 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1525,10 +1526,10 @@ cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (33 pages, 537338 bytes).
+Output written on CLthesis.pdf (33 pages, 566166 bytes).
 PDF statistics:
- 671 PDF objects out of 1000 (max. 8388607)
- 602 compressed objects within 7 object streams
+ 672 PDF objects out of 1000 (max. 8388607)
+ 603 compressed objects within 7 object streams
  168 named destinations out of 1000 (max. 500000)
  409 words of extra memory for PDF output out of 10000 (max. 10000000)
 

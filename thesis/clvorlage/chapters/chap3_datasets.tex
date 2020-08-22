@@ -29,7 +29,7 @@ The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
 Since the authors provide the data set without predefined splits, I created my own development and test splits using a 9:1 ratio, resulting in 900 examples in the first and 101 examples in latter set.
 The distribution of labels in each set is shown in figure \ref{fig:deISEAR-devtest}.
 
-\fig{images/deISEAR_devtest_new.png}{fig:deISEAR-devtest}{Distribution of emotions in development and test set.}{15}{deISEAR statistics}
+\fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR data set.}{15}{deISEAR statistics}
 
 \subsection{MLQA}
 
@@ -61,7 +61,7 @@ Since most corpora for this task are available only in English the authors compi
 The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence one is a paraphrase of sentence two, and vice versa.
 
 
-\fig{images/PAWS-X_devtest_new.png}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in development and test set.}{15}{PAWS-X statistics}
+\fig{images/PAWS-X_traindevtest.png}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
 stats
 
 4,000 examples in German (human translated)
@@ -184,7 +184,7 @@ The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the
 \subsection{Overview}
 
 \tab{tab:data-set-overview}{Overview over collected data sets and tasks.}
-{\begin{tabular}{l|lll}
+{\begin{tabular}{l|llll}
 	Data Set & NLP Task  & ML Task  & \# examples & splits \\
 	\hline
 	deISEAR &  Emotion Detection & Sequence Classification  & XYZ & - \\
