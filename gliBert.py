@@ -280,7 +280,7 @@ class BertSpanPrediction(BertBase):
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.linear = nn.Linear(768, 2)
-        self.softmax = nn.LogSoftmax(dim=-1)
+        self.softmax = nn.LogSoftmax(dim=-2)
     
     def forward(
             self,
@@ -299,9 +299,9 @@ class BertSpanPrediction(BertBase):
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         linear_output = self.linear(last_hidden_state)
         start_logits, end_logits = linear_output.split(1, dim=-1)
-        #start_span = self.softmax(start_logits)
-        #end_span = self.softmax(end_logits)
-        return start_logits, end_logits
+        start_span = self.softmax(start_logits)
+        end_span = self.softmax(end_logits)
+        return start_span, end_span
 
 
 class gliBert(nn.Module):
@@ -472,7 +472,7 @@ def fine_tune_BERT(config):
     batch_size = config["batch_size"]
     print_stats = config["print_stats"]
     bert_head = eval(config["bert_head"])
-    criterion = nn.NLLLoss() if SPAN_FLAG else nn.CrossEntropyLoss()
+    criterion = nn.NLLLoss()
     merge_subtokens = config["merge_subtokens"]
 
     train_data, \
