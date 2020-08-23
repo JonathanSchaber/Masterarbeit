@@ -299,9 +299,9 @@ class BertSpanPrediction(BertBase):
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         linear_output = self.linear(last_hidden_state)
         start_logits, end_logits = linear_output.split(1, dim=-1)
-        import ipdb; ipdb.set_trace()
-        proba = self.softmax(linear_output)
-        return proba
+        #start_span = self.softmax(start_logits)
+        #end_span = self.softmax(end_logits)
+        return start_logits, end_logits
 
 
 class gliBert(nn.Module):
@@ -472,7 +472,7 @@ def fine_tune_BERT(config):
     batch_size = config["batch_size"]
     print_stats = config["print_stats"]
     bert_head = eval(config["bert_head"])
-    criterion = nn.NLLLoss()
+    criterion = nn.NLLLoss() if SPAN_FLAG else nn.CrossEntropyLoss()
     merge_subtokens = config["merge_subtokens"]
 
     train_data, \
@@ -578,8 +578,8 @@ def fine_tune_BERT(config):
                             elapsed,
                             merge_subtokens
                             )
-                start_loss = criterion(start_span, b_labels.select(1, 0))
-                end_loss = criterion(end_span, b_labels.select(1, 1))
+                start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
+                end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                 loss = (start_loss + end_loss) / 2
             total_train_loss += loss.item()
             loss.backward()
@@ -636,8 +636,8 @@ def fine_tune_BERT(config):
                     start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
                     end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
                     acc = (start_acc + end_acc) / 2
-                    start_loss = criterion(start_span, b_labels.select(1, 0))
-                    end_loss = criterion(end_span, b_labels.select(1, 1))
+                    start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
+                    end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
 
             total_dev_loss += loss.item()
@@ -692,8 +692,8 @@ def fine_tune_BERT(config):
                     start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
                     end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
                     acc = (start_acc + end_acc) / 2
-                    start_loss = criterion(start_span, b_labels.select(1, 0))
-                    end_loss = criterion(end_span, b_labels.select(1, 1))
+                    start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
+                    end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
 
             total_test_loss += loss.item()
