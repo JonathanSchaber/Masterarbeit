@@ -112,4 +112,5 @@ For each data set, run the following command:
 # SRL Resources
 
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
+
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/ParZu"`
