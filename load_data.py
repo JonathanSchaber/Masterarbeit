@@ -172,12 +172,14 @@ class Dataloader:
         attention_mask = []
         token_type_ids = []
         y_tensor_list = []
+        srl_1 = []
+        srl_2 = []
 
         self.max_len = self.get_max_len()
 
         if self.type == 1:
             for example in data:
-                label, _, sentence, _ = example
+                label, _, sentence, _ , srl_sentence, _ = example
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence, 
                                             add_special_tokens = True, 
@@ -193,9 +195,10 @@ class Dataloader:
                 token_type_ids.append(encoded_dict["token_type_ids"])
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+                srl_1.append(srl_sentence)
         elif self.type == 2:
             for example in data:
-                label, _, sentence_1, sentence_2 = example
+                label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence_1, 
                                             sentence_2,
@@ -212,9 +215,11 @@ class Dataloader:
                 token_type_ids.append(encoded_dict["token_type_ids"])
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+                srl_1.append(srl_sentence_1)
+                srl_2.append(srl_sentence_2)
         elif self.type == "qa":
             for example in data:
-                start_span, end_span, question, context = example
+                start_span, end_span, question, context, srl_question, srl_context = example
                 start_span = int(start_span) + 1
                 end_span = int(end_span) + 1
                 if len(self.tokenizer.tokenize(question)) + len(self.tokenizer.tokenize(context)) + 3 > 512:
@@ -239,6 +244,8 @@ class Dataloader:
                 token_type_ids.append(encoded_dict["token_type_ids"])
                 y_tensor = torch.tensor([start_span, end_span])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
+                srl_1.append(srl_question)
+                srl_2.append(srl_context)
             
         return torch.cat(input_ids, dim=0), \
                 torch.cat(attention_mask, dim=0), \
@@ -249,17 +256,23 @@ class Dataloader:
         self.x_tensor_train, \
         self.attention_mask_train, \
         self.token_type_ids_train, \
-        self.y_tensor_train = self.load_torch_data(self.data_train)
+        self.y_tensor_train, \
+        srl_1, \
+        srl_2 = self.load_torch_data(self.data_train)
 
         self.x_tensor_dev, \
         self.attention_mask_dev, \
         self.token_type_ids_dev, \
-        self.y_tensor_dev = self.load_torch_data(self.data_dev)
+        self.y_tensor_dev, \
+        srl_1, \
+        srl_2 = self.load_torch_data(self.data_dev)
 
         self.x_tensor_test, \
         self.attention_mask_test, \
         self.token_type_ids_test, \
-        self.y_tensor_test = self.load_torch_data(self.data_test)
+        self.y_tensor_test, \
+        srl_1, \
+        srl_2 = self.load_torch_data(self.data_test)
 
         print("")
         print("======== Longest example in data: ========")
