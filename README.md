@@ -14,7 +14,7 @@ Overview of the data sets used in the experiments.
 
 | Data Set | NLP Task | ML Task | \# Examples | Splits |
 | -------- | -------- | ------- | ----------- | ------ |
-| [deISEAR](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/deisear/)) |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
+| [deISEAR](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/deisear/) |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
 | [MLQA](https://github.com/facebookresearch/MLQA) | Question Answering | Span Prediction | 509/4 499 | dev/test |
 | [PAWS-X](https://github.com/google-research-datasets/paws/tree/master/pawsx) | Paraphrase Identification | Binary Classification | 2 000/4 000 | dev/test |
 | [SCARE](http://romanklinger.de/scare/) | Sentiment Analysis | Multi-Class Classification | 1 760 | - |
