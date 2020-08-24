@@ -7,6 +7,7 @@ import torch
 import numpy as np
 
 from load_data import Dataloader, dataloader
+from random import shuffle
 from torch import nn
 from transformers import (
         AdamW,
@@ -457,6 +458,16 @@ def print_preds(model, example, prediction, true_label, mapping, step, len_data,
         print("")
 
 
+def batch_idcs(len_dataset, batch_size):
+    batch_idcs = []
+    current_idx = 0
+    while len_dataset > current_idx:
+        batch_idcs.append((current_idx, current_idx + batch_size))
+        current_idx += batch_size
+
+    shuffle(batch_idcs)
+    return batch_idcs
+
 
 def fine_tune_BERT(config):
     """define fine-tuning procedure, write results to file.
@@ -486,7 +497,9 @@ def fine_tune_BERT(config):
 
     # srl_encoder = SRL_Encoder(config)
     model = bert_head(config, num_classes, max_len)
-
+    train_idcs = batch_idcs(len(train_data), batch_size)
+    dev_idcs = batch_idcs(len(dev_data), batch_size)
+    test_idcs = batch_idcs(len(test_data), batch_size)
 
     print("")
     print("======== Checking which device to use... ========")
@@ -528,7 +541,8 @@ def fine_tune_BERT(config):
         ### Train Run ###
 
         model.train()
-        for step, batch in enumerate(train_data):
+        for step, idcs in enumerate(train_idcs):
+            batch = train_data[idcs[0]:idcs[1]]
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
@@ -543,7 +557,6 @@ def fine_tune_BERT(config):
                             device=device
                             )
                 if step % print_stats == 0 and not step == 0:
-                    # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
                     print_preds(
                             model,
@@ -552,7 +565,7 @@ def fine_tune_BERT(config):
                             b_labels[-1],
                             mapping,
                             step,
-                            len(train_data),
+                            len(train_idcs),
                             elapsed,
                             merge_subtokens
                             )
@@ -566,7 +579,6 @@ def fine_tune_BERT(config):
                                         device=device
                                         )
                 if step % print_stats == 0 and not step == 0:
-                    # Calculate elapsed time in minutes.
                     elapsed = format_time(time.time() - t0)
                     print_preds(
                             model,
@@ -574,7 +586,7 @@ def fine_tune_BERT(config):
                             (start_span[-1], end_span[-1]),
                             b_labels[-1],
                             mapping, step,
-                            len(train_data),
+                            len(train_idcs),
                             elapsed,
                             merge_subtokens
                             )
@@ -605,11 +617,14 @@ def fine_tune_BERT(config):
         total_dev_accuracy = 0
         total_dev_loss = 0
 
-        for batch in dev_data:
+        for idcs in dev_idcs:
+            batch = dev_data[idcs[0]:idcs[1]]
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
+            #b_srl_1 = batch[4].to(device)
+            #b_srl_2 = batch[5].to(device)
 
             with torch.no_grad():
                 if not SPAN_FLAG:
@@ -643,7 +658,7 @@ def fine_tune_BERT(config):
             total_dev_loss += loss.item()
             total_dev_accuracy += acc
 
-        avg_dev_accuracy = total_dev_accuracy / len(dev_data)
+        avg_dev_accuracy = total_dev_accuracy / len(dev_idcs)
         print("  Development Accuracy: {0:.2f}".format(avg_dev_accuracy))
         avg_dev_loss = total_dev_loss / len(dev_data)
         dev_time = format_time(time.time() - t0)
@@ -661,7 +676,8 @@ def fine_tune_BERT(config):
         total_test_accuracy = 0
         total_test_loss = 0
 
-        for batch in test_data:
+        for idcs in test_idcs:
+            batch = test_data[idcs[0]:idcs[1]]
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
@@ -699,7 +715,7 @@ def fine_tune_BERT(config):
             total_test_loss += loss.item()
             total_test_accuracy += acc
 
-        avg_test_accuracy = total_test_accuracy / len(test_data)
+        avg_test_accuracy = total_test_accuracy / len(test_idcs)
         print("  Test Accuracy: {0:.2f}".format(avg_test_accuracy))
         avg_test_loss = total_test_loss / len(test_data)
         test_time = format_time(time.time() - t0)
