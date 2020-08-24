@@ -86,14 +86,29 @@ class Dataloader:
             counter = 0
             for row in f_reader:
                 if self.type == 1:
-                    label, blank, sentence = row[0], row[1], row[2]
-                    data.append((label, blank, sentence, ""))
+                    label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3]
+                    srl_sentence = eval(srl_sentence)
+                    data.append((label, blank, sentence, "", srl_sentence, ""))
                 elif self.type == 2:
-                    label, blank, sentence_1, sentence_2 = row[0], row[1], row[2], row[3]
-                    data.append((label, blank, sentence_1, sentence_2))
+                    label, \
+                    blank, \
+                    sentence_1, \
+                    sentence_2, \
+                    srl_sentence_1, \
+                    srl_sentence_2 = row[0], row[1], row[2], row[3], row[4], row[5]
+                    srl_sentence_1 = eval()srl_sentence_1)
+                    srl_sentence_2 = eval()srl_sentence_2)
+                    data.append((label, blank, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2))
                 elif self.type == "qa":
-                    start_index, text, context, question, = row[0], row[1], row[2], row[3]
+                    start_index, \
+                    text, \
+                    context, \
+                    question, \
+                    srl_context, \
+                    srl_question = row[0], row[1], row[2], row[3]
                     start_index = int(start_index)
+                    srl_context = eval(srl_context)
+                    srl_question = eval(srl_question)
                     tokenized_context = self.tokenizer.tokenize(context[:start_index])
                     if not self.merge_subtokens:
                         len_question = len(self.tokenizer.tokenize(question))
@@ -105,7 +120,7 @@ class Dataloader:
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
                     start_span += len_question + 1
                     end_span += len_question + 1
-                    data.append((start_span, end_span, question, context))
+                    data.append((start_span, end_span, question, context, srl_question, srl_context))
 
                 if self.type != "qa":
                     if label not in y_mapping:
