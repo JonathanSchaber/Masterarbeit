@@ -2,12 +2,7 @@ import csv
 import torch
 
 from pathlib import Path
-from torch.utils.data import (
-        DataLoader,
-        RandomSampler,
-        SequentialSampler,
-        Dataset
-        )
+from torch.utils.data import Dataset
 from transformers import BertTokenizer
 
 
