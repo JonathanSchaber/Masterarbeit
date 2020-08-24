@@ -10,28 +10,17 @@ To reproduce the results, run the commands under [Preparing the Data](#preparing
 
 # Data
 
-The data sets that were used in the experiments, can be obtained from the following sources:
-
-MLQA: [https://github.com/facebookresearch/MLQA](https://github.com/facebookresearch/MLQA)
-
-PAWS-X: [https://github.com/google-research-datasets/paws/tree/master/pawsx](https://github.com/google-research-datasets/paws/tree/master/pawsx)
-
-SCARE: [http://romanklinger.de/scare/](http://romanklinger.de/scare/)
-
-XNLI: [https://cims.nyu.edu/~sbowman/xnli/](https://cims.nyu.edu/~sbowman/xnli/)
-
-XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
-
+Overview of the data sets used in the experiments.
 
 | Data Set | NLP Task | ML Task | \# Examples | Splits |
 | -------- | -------- | ------- | ----------- | ------ |
-| deISEAR |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
-| MLQA | Question Answering | Span Prediction | 509/4 499 | dev/test |
-| PAWS-X | Paraphrase Identification | Binary Classification | 2 000/4 000 | dev/test |
-| SCARE | Sentiment Analysis | Multi-Class Classification | 1 760 | - |
-| SCARE Reviews |  Sentiment Analysis | Multi-Class Classification | 802 860 | - |
-| XNLI | Natural Language Inference | Multi-Class Classification |  2 489/7 498 | dev/test |
-| XQuAD | Question Answering | Span Prediction |  1 192 | - |
+| [deISEAR](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/deisear/)) |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
+| [MLQA](https://github.com/facebookresearch/MLQA) | Question Answering | Span Prediction | 509/4 499 | dev/test |
+| [PAWS-X](https://github.com/google-research-datasets/paws/tree/master/pawsx) | Paraphrase Identification | Binary Classification | 2 000/4 000 | dev/test |
+| [SCARE](http://romanklinger.de/scare/) | Sentiment Analysis | Multi-Class Classification | 1 760 | - |
+| [SCARE Reviews](http://romanklinger.de/scare/) |  Sentiment Analysis | Multi-Class Classification | 802 860 | - |
+| [XNLI](https://cims.nyu.edu/~sbowman/xnli/) | Natural Language Inference | Multi-Class Classification |  2 489/7 498 | dev/test |
+| [XQuAD](https://github.com/deepmind/xquad) | Question Answering | Span Prediction |  1 192 | - |
 
 # Results
 
@@ -41,7 +30,7 @@ XQuAD: [https://github.com/deepmind/xquad](https://github.com/deepmind/xquad)
 Download the data and adhere to the following folder structure (it is important that the names of the directories are exactly the same as below; e.g. «deISEAR» and not «deISEARenISEAR» as it is named when downloaded etc. The structure of the downloaded data sets is not changed, so naming the root directory correctly is the main thing to follow):
 
 	/<path>/<to>/deISEAR/  
-			..deISEAR.tsv
+			../deISEAR.tsv
 	
 	
 	/<path>/<to>/MLQA/
