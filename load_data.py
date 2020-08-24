@@ -431,21 +431,6 @@ def dataloader(config, location, data_set):
 
     dataloader.load()
     dataloader.load_torch()
-    train_dataloader = DataLoader(
-            dataloader.dataset_train,
-            sampler = RandomSampler(dataloader.dataset_train),
-            batch_size = dataloader.batch_size
-        ) 
-    dev_dataloader = DataLoader(
-            dataloader.dataset_dev,
-            sampler = RandomSampler(dataloader.dataset_dev),
-            batch_size = dataloader.batch_size
-        ) 
-    test_dataloader = DataLoader(
-            dataloader.dataset_test,
-            sampler = RandomSampler(dataloader.dataset_test),
-            batch_size = dataloader.batch_size
-        ) 
     num_classes = len(dataloader.y_mapping) if dataloader.y_mapping else dataloader.max_len
 
     return dataloader.dataset_train, \
