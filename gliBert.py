@@ -18,6 +18,7 @@ from transformers import (
 
 merge_subs = Dataloader.merge_subs
 
+
 blue = "\033[94m"
 
 green = "\033[92m"
@@ -25,6 +26,7 @@ green = "\033[92m"
 red = "\033[93m"
 
 end = "\033[0m"
+
 
 def parse_cmd_args():
     """Parse command line arguments."""
