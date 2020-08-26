@@ -1,9 +1,9 @@
 #import tensorflow as tf
 
+from liir.dame.core.representation.Predicate import Predicate
 from liir.dame.core.representation.Sentence import Sentence
 from liir.dame.core.representation.Text import Text
 from liir.dame.core.representation.Word import Word
-from liir.dame.core.representation.Predicate import Predicate
 from liir.dame.srl.DSRL import DSRL
 
 import parzu_class as parzu
