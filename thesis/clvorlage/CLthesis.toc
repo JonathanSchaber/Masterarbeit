@@ -24,11 +24,11 @@
 \contentsline {subsection}{\numberline {3.2.3}PAWS-X}{4}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}SCARE}{5}{subsection.3.2.4}
 \contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{5}{subsubsection.3.2.4.1}
-\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{6}{subsubsection.3.2.4.2}
-\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{6}{subsubsection.3.2.4.3}
+\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{7}{subsubsection.3.2.4.2}
+\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{7}{subsubsection.3.2.4.3}
 \contentsline {subsection}{\numberline {3.2.5}XNLI}{8}{subsection.3.2.5}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{8}{subsection.3.2.6}
-\contentsline {subsection}{\numberline {3.2.7}Overview}{9}{subsection.3.2.7}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{9}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.7}Overview}{10}{subsection.3.2.7}
 \contentsline {chapter}{\numberline {4}Architecture}{11}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{11}{section.4.1}
 \contentsline {section}{\numberline {4.2}Semantic Role Labeller}{11}{section.4.2}

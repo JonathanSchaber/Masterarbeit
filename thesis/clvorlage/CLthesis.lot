@@ -7,13 +7,15 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {1}{\ignorespaces Overview data sets}}{10}{table.3.1}
+\contentsline {table}{\numberline {1}{\ignorespaces Example SCARE .csv}}{6}{table.3.1}
+\contentsline {table}{\numberline {2}{\ignorespaces Example SCARE .rel}}{7}{table.3.2}
+\contentsline {table}{\numberline {3}{\ignorespaces Overview data sets}}{10}{table.3.3}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2}{\ignorespaces ABC BLEU scores}}{15}{table.5.1}
+\contentsline {table}{\numberline {4}{\ignorespaces ABC BLEU scores}}{15}{table.5.1}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3}{\ignorespaces Some large table}}{24}{table.A.1}
+\contentsline {table}{\numberline {5}{\ignorespaces Some large table}}{24}{table.A.1}
 \addvspace {10\p@ }
