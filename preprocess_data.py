@@ -263,7 +263,9 @@ def preprocess_SCARE(path):
         ids_labels = []
         for row in rows:
             entity, review_id, left, right, string, phrase_id, polarity, relation = row
-            ids_labels.append([review_id, polarity])
+            # since aspects are always neutral, we can ignore them
+            if entity == "subjective":
+                ids_labels.append([review_id, polarity])
 
     for review_id, text in ids_texts:
         if review_id in id_text_labels:
