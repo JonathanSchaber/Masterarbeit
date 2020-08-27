@@ -2,7 +2,67 @@
 \newchap{Data Sets}
 \label{chap:5_dataset}
 
-\section{Why create an own corpus?}
+\section{gliGLUE}
+
+Following \cite{wang2018glue}, 
+
+\tab{tab:original-GLUE}{Original GLUE data sets and tasks}
+{\begin{tabular}{l|llll}
+	Data Set & NLP Task & ML Task & \# Examples & Splits \\
+	\hhline{=|====}
+	& \multicolumn{4}{|c}{Single-Sentence Tasks} \\
+	CoLA &  Acceptability & Binary Classification & 8.5k/1k & train/test \\
+	SST-2 & Sentiment Analysis & Binary Classification & 67k/1.8k & train/test \\
+	\hline
+	& \multicolumn{4}{|c}{Similarity and Paraphrase Tasks} \\
+	MRPC & Paraphrase Identification & Binary Classification & 3.7k/1.7k & train/test \\
+	STS-B & Sentence Similarity & Regression (1 --- 5)& 7k/1.4k & train/test \\
+	QQP & Paraphrase Identification & Binary Classification &  364k/391k & train/test \\
+	\hline
+	& \multicolumn{4}{|c}{Inference Tasks} \\
+	MNLI & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
+	QNLI & Question Answering & Binary Classification\footnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task:
+	They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
+	RTE & Natural Language Inference & Binary Classification\footnote{\cite{wang2018glue} combine several data sets into RTE; for data sets that have three labels --- \emph{entailment}, \emph{neutral}, and \emph{contradiction} --- they collapse the latter two into one label \emph{not\_entailment}.} &  2.5k/3k & train/test \\
+	WNLI & Coreference Resolution & Binary Classification\footnote{In the original Winograd Schema Challenge CITE, the task is to choose the correct referent of a pronoun from a list. \cite{wang2018glue} reformulate this to a sentence pair classification task, where the original sentence is paired with the original sentence with each pronoun substituted from the list and then predicting whether the substituted sentence is entailed by the original one.} &  634/146 & train/test \\
+\end{tabular}
+}{GLUE}
+
+
+\tab{tab:overview-data-sets}{Overview of gliGLUE}
+{\begin{tabular}{l|llll}
+	Data Set & NLP Task & ML Task & \# Examples & Splits \\
+	\hhline{=|====}
+	& \multicolumn{4}{|c}{Single-Sentence Tasks} \\
+	deISEAR &  Emotion Detection & Multi-Class Classification  & 1 001 & - \\
+	SCARE & Sentiment Analysis & Multi-Class Classification & 1 760 & - \\
+	\hline
+	& \multicolumn{4}{|c}{Paraphrase and Inference Tasks} \\
+	PAWS-X & Paraphrase Identification & Binary Classification & 2 000/4 000 & dev/test \\
+	XNLI & Natural Language Inference & Multi-Class Classification &  2 489/7 498 & dev/test \\
+	\hline
+	& \multicolumn{4}{|c}{Span Prediction Tasks} \\
+	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
+	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
+	XQuAD & Question Answering & Span Prediction &  1 192 & - \\
+\end{tabular}
+}{gliGLUE}
+
+\subsection{General Issues}
+
+There are a few remarks and strategies that apply to all collected corpora:
+
+(1) Most of the data sets are not monolingual, i.e. German, sources, but bi- or multilingual corpora.
+To compile a German GLUE corpus I only use the German subset of those corpora.
+For example, the MLQA data set provides all 49 combinations of the languages it contains:
+Context in Arabic, question in Hindi; context in English, question in Spanish, etc.
+Also in this case, I choose only the German-German part of the data set for my corpus.
+
+(2) The data sets I chose for my little GLUE corpus are being provided in different approaches.
+While three of the corpora, namely MLQA, PAWS-X, and XNLI, come with a predefined split, the others are made available without splits.
+In the latter case, I split the data sets into train, development, and test splits using a 0.7, 0.15, and 0.15 portion, respectively.
+Interestingly, the data sets that come with splits, only provide a development and test portion.
+To ensure that my results are comparable with those that the authors of the different data sets report, I leave the test split as it is, and split the development set into a train and development set, implementing a 85:15 ratio.
 
 \section{Corpora}
 
@@ -45,6 +105,21 @@ The distribution of labels in each set is shown in figure \ref{fig:deISEAR-devte
 \cite{lewis2019mlqa} compiled
 
 PROBLEM: 231 out of 5,029 exceed tokenized length of 512 $\rightarrow$ ignore? 4.6%
+
+stats:
+
+average length train answer: 3.9 (5.6) \\
+average length dev answer: 3.7 (5.2) \\
+average length test answer: 4.0 (5.6)
+
+average length train question: 9.4 (11.4) \\
+average length dev question: 8.6 (10.6) \\
+average length test question: 9.1 (11.2)
+
+average length train context: 127.0 (162.7) \\
+average length dev context: 124.3 (159.4) \\
+average length test context: 129.3 (165.5)
+
 
 \subsection{PAWS-X}
 
@@ -111,7 +186,7 @@ Example from .csv file:
 
 \tab{tab:scare-csv-example}{An example from the alarm\_clocks.csv file.}
 {\begin{tabular}{llllllll}
-	Class & Review-ID & Left Offset & Right Offset & Text & Aspect-ID / Subj-ID & Polarity & Relation  \\
+	Class & ID & Left & Right & Text & Aspect- / Subj-ID & Polarity & Relation  \\
 	\hline
 	subjective & 7000 & 0 & 15 & Alles wieder ok & 7000-subjective2 & Positive & Related \\
 	aspect & 7000 & 21 & 27 & Update & 7000-aspect1 & Neutral & Related \\
@@ -210,7 +285,7 @@ The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the
 
 \tab{tab:data-set-overview}{Overview over collected data sets and tasks.}
 {\begin{tabular}{l|llll}
-	Data Set & NLP Task  & ML Task  & \# examples & splits \\
+	Data Set & NLP Task  & ML Task  & \# Examples & Splits \\
 	\hline
 	deISEAR &  Emotion Detection & Sequence Classification  & XYZ & - \\
 	MLQA & Question Answering & Span Prediction & XYZ & dev/test \\

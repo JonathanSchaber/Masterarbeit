@@ -7,15 +7,17 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {1}{\ignorespaces Example SCARE .csv}}{6}{table.3.1}
-\contentsline {table}{\numberline {2}{\ignorespaces Example SCARE .rel}}{7}{table.3.2}
-\contentsline {table}{\numberline {3}{\ignorespaces Overview data sets}}{10}{table.3.3}
+\contentsline {table}{\numberline {1}{\ignorespaces GLUE}}{3}{table.3.1}
+\contentsline {table}{\numberline {2}{\ignorespaces gliGLUE}}{4}{table.3.2}
+\contentsline {table}{\numberline {3}{\ignorespaces Example SCARE .csv}}{8}{table.3.3}
+\contentsline {table}{\numberline {4}{\ignorespaces Example SCARE .rel}}{9}{table.3.4}
+\contentsline {table}{\numberline {5}{\ignorespaces Overview data sets}}{12}{table.3.5}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4}{\ignorespaces ABC BLEU scores}}{15}{table.5.1}
+\contentsline {table}{\numberline {6}{\ignorespaces ABC BLEU scores}}{17}{table.5.1}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5}{\ignorespaces Some large table}}{24}{table.A.1}
+\contentsline {table}{\numberline {7}{\ignorespaces Some large table}}{26}{table.A.1}
 \addvspace {10\p@ }

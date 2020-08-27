@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  26 AUG 2020 16:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  27 AUG 2020 15:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -753,30 +753,37 @@ Package csquotes Info: ... configuration file loaded successfully.
 (/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.cfg
 File: csquotes.cfg 
 ))
+(/usr/share/texlive/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box61
+\fn@width=\dimen127
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/hhline.sty
+Package: hhline 2014/10/28 v2.03 Table rule package (DPC)
+)
 (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2017/04/11 v1.8q multicolumn formatting (FMi)
 \c@tracingmulticols=\count119
-\mult@box=\box61
-\multicol@leftmargin=\dimen127
+\mult@box=\box62
+\multicol@leftmargin=\dimen128
 \c@unbalance=\count120
 \c@collectmore=\count121
 \doublecol@number=\count122
 \multicoltolerance=\count123
 \multicolpretolerance=\count124
-\full@width=\dimen128
-\page@free=\dimen129
-\premulticols=\dimen130
-\postmulticols=\dimen131
+\full@width=\dimen129
+\page@free=\dimen130
+\premulticols=\dimen131
+\postmulticols=\dimen132
 \multicolsep=\skip145
 \multicolbaselineskip=\skip146
-\partial@page=\box62
-\last@line=\box63
-\maxbalancingoverflow=\dimen132
-\mult@rightbox=\box64
-\mult@grightbox=\box65
-\mult@gfirstbox=\box66
-\mult@firstbox=\box67
-\@tempa=\box68
+\partial@page=\box63
+\last@line=\box64
+\maxbalancingoverflow=\dimen133
+\mult@rightbox=\box65
+\mult@grightbox=\box66
+\mult@gfirstbox=\box67
+\mult@firstbox=\box68
 \@tempa=\box69
 \@tempa=\box70
 \@tempa=\box71
@@ -793,13 +800,14 @@ Package: multicol 2017/04/11 v1.8q multicolumn formatting (FMi)
 \@tempa=\box82
 \@tempa=\box83
 \@tempa=\box84
+\@tempa=\box85
 \c@columnbadness=\count125
 \c@finalcolumnbadness=\count126
-\last@try=\dimen133
-\multicolovershoot=\dimen134
-\multicolundershoot=\dimen135
-\mult@nat@firstbox=\box85
-\colbreak@box=\box86
+\last@try=\dimen134
+\multicolovershoot=\dimen135
+\multicolundershoot=\dimen136
+\mult@nat@firstbox=\box86
+\colbreak@box=\box87
 \mc@col@check@num=\count127
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
@@ -912,7 +920,7 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
-\@linkdim=\dimen136
+\@linkdim=\dimen137
 \Hy@linkcounter=\count132
 \Hy@pagecounter=\count133
 
@@ -941,10 +949,10 @@ Package hyperref Info: Bookmarks ON on input line 4762.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5115.
-\XeTeXLinkMargin=\dimen137
+\XeTeXLinkMargin=\dimen138
 \Fld@menulength=\count136
-\Field@Width=\dimen138
-\Fld@charsize=\dimen139
+\Field@Width=\dimen139
+\Fld@charsize=\dimen140
 Package hyperref Info: Hyper figures OFF on input line 6369.
 Package hyperref Info: Link nesting OFF on input line 6374.
 Package hyperref Info: Hyper index ON on input line 6377.
@@ -974,7 +982,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 Package hyperref Warning: Invalid value `000'
 (hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 53.
+(hyperref)                Option setting is ignored on input line 58.
 
 
 Class scrreprt Warning: Usage of package `fancyhdr' together
@@ -988,7 +996,7 @@ Class scrreprt Warning: Usage of package `fancyhdr' together
 (scrreprt)              `\addtokomafont' for the page style elements need
 (scrreprt)              explicite user intervention to work.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `fancyhdr' on input line 70.
+(scrreprt)              package `fancyhdr' on input line 75.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
@@ -1016,21 +1024,21 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 (/usr/share/texlive/texmf-dist/tex/latex/supertabular/supertabular.sty
 Package: supertabular 2004/02/20 v4.1e the supertabular environment
 \c@tracingst=\count143
-\ST@wd=\dimen140
+\ST@wd=\dimen141
 \ST@rightskip=\skip191
 \ST@leftskip=\skip192
 \ST@parfillskip=\skip193
-\ST@pageleft=\dimen141
-\ST@headht=\dimen142
-\ST@tailht=\dimen143
-\ST@pagesofar=\dimen144
-\ST@pboxht=\dimen145
-\ST@lineht=\dimen146
-\ST@stretchht=\dimen147
-\ST@prevht=\dimen148
-\ST@toadd=\dimen149
-\ST@dimen=\dimen150
-\ST@pbox=\box87
+\ST@pageleft=\dimen142
+\ST@headht=\dimen143
+\ST@tailht=\dimen144
+\ST@pagesofar=\dimen145
+\ST@pboxht=\dimen146
+\ST@lineht=\dimen147
+\ST@stretchht=\dimen148
+\ST@prevht=\dimen149
+\ST@toadd=\dimen150
+\ST@dimen=\dimen151
+\ST@pbox=\box88
 )
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
@@ -1068,13 +1076,13 @@ LaTeX Font Info:    ... okay on input line 3.
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count144
-\scratchdimen=\dimen151
-\scratchbox=\box88
+\scratchdimen=\dimen152
+\scratchbox=\box89
 \nofMPsegments=\count145
 \nofMParguments=\count146
 \everyMPshowfont=\toks28
 \MPscratchCnt=\count147
-\MPscratchDim=\dimen152
+\MPscratchDim=\dimen153
 \MPnumerator=\count148
 \makeMPintoPDFobject=\count149
 \everyMPtoPDFconversion=\toks29
@@ -1095,7 +1103,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box89
+\AtBeginShipoutBox=\box90
 Package hyperref Info: Link coloring OFF on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -1117,7 +1125,7 @@ LaTeX Info: Redefining \nameref on input line 3.
 \openout2 = `chapters/titlepage_phil.aux'.
 
  (./chapters/titlepage_phil.tex
-<images/uzh_logo_d_pos.pdf, id=188, 142.5325pt x 49.18375pt>
+<images/uzh_logo_d_pos.pdf, id=192, 142.5325pt x 49.18375pt>
 File: images/uzh_logo_d_pos.pdf Graphic file (type pdf)
 <use images/uzh_logo_d_pos.pdf>
 Package pdftex.def Info: images/uzh_logo_d_pos.pdf  used on input line 2.
@@ -1262,92 +1270,107 @@ chapter 2.
 
  (./chapters/chap3_datasets.tex
 chapter 3.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 9.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 9.
-<images/deISEAR_traindevtest.png, id=334, 1129.97156pt x 347.04657pt>
-File: images/deISEAR_traindevtest.png Graphic file (type png)
-<use images/deISEAR_traindevtest.png>
-Package pdftex.def Info: images/deISEAR_traindevtest.png  used on input line 32
-.
-(pdftex.def)             Requested size: 426.79134pt x 131.07944pt.
+
+Package natbib Warning: Citation `wang2018glue' on page 3 undefined on input li
+ne 7.
+
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 9.49997pt on input line 29.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 29.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 29.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 29.
+
+Package natbib Warning: Citation `wang2018glue' on page 3 undefined on input li
+ne 29.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 3 undefined on input li
+ne 29.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 3 undefined on input li
+ne 29.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 51.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 13.67995pt on input line 51.
 [3
 
 
 
-]
-<images/PAWS-X_traindevtest.png, id=352, 1147.28625pt x 347.04657pt>
+] [4]
+<images/deISEAR_traindevtest.png, id=354, 1129.97156pt x 347.04657pt>
+File: images/deISEAR_traindevtest.png Graphic file (type png)
+<use images/deISEAR_traindevtest.png>
+Package pdftex.def Info: images/deISEAR_traindevtest.png  used on input line 92
+.
+(pdftex.def)             Requested size: 426.79134pt x 131.07944pt.
+ [5 <./images/deISEAR_traindevtest.png>]
+<images/PAWS-X_traindevtest.png, id=374, 1147.28625pt x 347.04657pt>
 File: images/PAWS-X_traindevtest.png Graphic file (type png)
 <use images/PAWS-X_traindevtest.png>
-Package pdftex.def Info: images/PAWS-X_traindevtest.png  used on input line 64.
-
+Package pdftex.def Info: images/PAWS-X_traindevtest.png  used on input line 139
+.
 (pdftex.def)             Requested size: 426.79134pt x 129.09892pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4 <./images/deISEAR_traindevtest.png>] [5 <./images/PAWS-X_traindevtest.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 95.
+[6] [7 <./images/PAWS-X_traindevtest.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 170.
+
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 95.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 95.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 95.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 170.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 95.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 127.
-
-Overfull \hbox (87.98119pt too wide) in paragraph at lines 127--127
- [] 
- []
-
-[6]
-<images/SCARE_star_stats.png, id=393, 723.4227pt x 346.896pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 170.
+ [8]
+<images/SCARE_star_stats.png, id=412, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
-Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 150.
+Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 225.
 (pdftex.def)             Requested size: 341.43306pt x 163.72395pt.
- [7 <./images/SCARE_star_stats.png>]
-<images/SCARE_label_stats.png, id=399, 702.4644pt x 346.896pt>
+ [9 <./images/SCARE_star_stats.png>]
+<images/SCARE_label_stats.png, id=418, 702.4644pt x 346.896pt>
 File: images/SCARE_label_stats.png Graphic file (type png)
 <use images/SCARE_label_stats.png>
-Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 167.
+Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 242.
 (pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
-<images/XNLI_devtest.png, id=402, 898.85812pt x 347.04657pt>
+<images/XNLI_devtest.png, id=421, 898.85812pt x 347.04657pt>
 File: images/XNLI_devtest.png Graphic file (type png)
 <use images/XNLI_devtest.png>
-Package pdftex.def Info: images/XNLI_devtest.png  used on input line 178.
+Package pdftex.def Info: images/XNLI_devtest.png  used on input line 253.
 (pdftex.def)             Requested size: 426.79134pt x 164.77998pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[8 <./images/SCARE_label_stats.png>] [9 <./images/XNLI_devtest.png>]
-Overfull \hbox (4.41711pt too wide) in paragraph at lines 223--223
+[10 <./images/SCARE_label_stats.png>] [11 <./images/XNLI_devtest.png>]
+Overfull \hbox (5.75653pt too wide) in paragraph at lines 298--298
  [] 
  []
 
-) [10]
+) [12]
 \openout2 = `chapters/chap4_architecture.aux'.
 
  (./chapters/chap4_architecture.tex
 chapter 4.
-[11
+[13
 
 
 
-] [12]
-<images/exampleParzu2.png, id=490, 827.34094pt x 358.33875pt>
+] [14]
+<images/exampleParzu2.png, id=509, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1359,30 +1382,30 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 66--66
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 72.
-[13 <./images/exampleParzu2.png (PNG copy)>]) [14]
+[15 <./images/exampleParzu2.png (PNG copy)>]) [16]
 \openout2 = `chapters/chap5_results.aux'.
 
 
 (./chapters/chap5_results.tex
 chapter 5.
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 15 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 17 undefined on i
 nput line 33.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 15 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 17 undefined on i
 nput line 34.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 15 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 17 undefined on input line
  36.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 15 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 17 undefined on input line
  37.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 15 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 17 undefined on input line
  37.
 
 
@@ -1391,19 +1414,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--38
  []
 
 
-Package natbib Warning: Citation `Koehn2005' on page 15 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 17 undefined on input line
  39.
 
 
-Package natbib Warning: Citation `Koehn2005' on page 15 undefined on input line
+Package natbib Warning: Citation `Koehn2005' on page 17 undefined on input line
  39.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 15 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 17 undefined on i
 nput line 40.
 
 
-Package natbib Warning: Citation `Callison-Burch2006' on page 15 undefined on i
+Package natbib Warning: Citation `Callison-Burch2006' on page 17 undefined on i
 nput line 41.
 
 
@@ -1411,12 +1434,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--42
 
  []
 
-[15
+[17
 
 
 
 ]
-<images/Rosetta_Stone.jpg, id=546, 175.857pt x 255.354pt>
+<images/Rosetta_Stone.jpg, id=566, 175.857pt x 255.354pt>
 File: images/Rosetta_Stone.jpg Graphic file (type jpg)
 <use images/Rosetta_Stone.jpg>
 Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
@@ -1426,7 +1449,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
  []
 
-[16 <./images/Rosetta_Stone.jpg>]) [17]
+[18 <./images/Rosetta_Stone.jpg>]) [19]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
@@ -1436,14 +1459,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [18
+) [20
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [19
+ (./chapters/glossary.tex) [21
 
 
 
@@ -1451,11 +1474,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [20
+(./CLthesis.bbl [22
 
 
 
-] [21])) [22]
+] [23])) [24]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -1468,7 +1491,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [23
+) [25
 
 
 
@@ -1481,7 +1504,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 27.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.49997pt on input line 27.
-[24
+[26
 
 
 
@@ -1490,7 +1513,7 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
  (./appendix/scripts.tex
 chapter B.
-[25
+[27
 
 
 
@@ -1510,37 +1533,39 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
-(rerunfilecheck)             Checksum: 2946DDE6218699A04421DA108EB19EB1;2658.
+(rerunfilecheck)             Checksum: AB17DEB57DAF8DE48CC856EE71614EB5;2708.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 12011 strings out of 492982
- 185728 string characters out of 6134895
- 407750 words of memory out of 5000000
- 15083 multiletter control sequences out of 15000+600000
- 22572 words of font info for 45 fonts, out of 8000000 for 9000
+ 12090 strings out of 492982
+ 186989 string characters out of 6134895
+ 409997 words of memory out of 5000000
+ 15149 multiletter control sequences out of 15000+600000
+ 24986 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 49i,12n,68p,8946b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,17n,68p,8946b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (33 pages, 568991 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/urw/helvetic/uhvr8a.pfb>
+Output written on CLthesis.pdf (35 pages, 597430 bytes).
 PDF statistics:
- 679 PDF objects out of 1000 (max. 8388607)
- 610 compressed objects within 7 object streams
- 170 named destinations out of 1000 (max. 500000)
- 409 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 705 PDF objects out of 1000 (max. 8388607)
+ 632 compressed objects within 7 object streams
+ 175 named destinations out of 1000 (max. 500000)
+ 417 words of extra memory for PDF output out of 10000 (max. 10000000)
 
