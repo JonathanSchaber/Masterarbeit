@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{27}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -154,6 +154,13 @@ E.~Troiano, S.~Pad{\'o}, and R.~Klinger.
 \newblock Crowdsourcing and validating event-focused emotion corpora for german
   and english.
 \newblock \emph{arXiv preprint arXiv:1905.13618}, 2019.
+
+\bibitem[Wang et~al.(2018)Wang, Singh, Michael, Hill, Levy, and
+  Bowman]{wang2018glue}
+A.~Wang, A.~Singh, J.~Michael, F.~Hill, O.~Levy, and S.~R. Bowman.
+\newblock Glue: A multi-task benchmark and analysis platform for natural
+  language understanding.
+\newblock \emph{arXiv preprint arXiv:1804.07461}, 2018.
 
 \bibitem[Wittenberg(2016)]{wittenberg2016light}
 E.~Wittenberg.
