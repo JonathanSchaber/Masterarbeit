@@ -6,7 +6,7 @@
 
 Following \cite{wang2018glue}, 
 
-\tab{tab:original-GLUE}{Original GLUE data sets and tasks}
+\tab{tab:original-GLUE}{Original GLUE data sets and tasks.}
 {\begin{tabular}{l|llll}
 	Data Set & NLP Task & ML Task & \# Examples & Splits \\
 	\hhline{=|====}
@@ -14,22 +14,19 @@ Following \cite{wang2018glue},
 	CoLA &  Acceptability & Binary Classification & 8.5k/1k & train/test \\
 	SST-2 & Sentiment Analysis & Binary Classification & 67k/1.8k & train/test \\
 	\hline
-	& \multicolumn{4}{|c}{Similarity and Paraphrase Tasks} \\
-	MRPC & Paraphrase Identification & Binary Classification & 3.7k/1.7k & train/test \\
-	STS-B & Sentence Similarity & Regression (1 --- 5)& 7k/1.4k & train/test \\
-	QQP & Paraphrase Identification & Binary Classification &  364k/391k & train/test \\
-	\hline
-	& \multicolumn{4}{|c}{Inference Tasks} \\
+	& \multicolumn{4}{|c}{Two-Sentence Tasks} \\
 	MNLI & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
-	QNLI & Question Answering & Binary Classification\footnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task:
-	They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
+	MRPC & Paraphrase Identification & Binary Classification & 3.7k/1.7k & train/test \\
+	QNLI & Question Answering & Binary Classification\footnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
+	QQP & Paraphrase Identification & Binary Classification &  364k/391k & train/test \\
 	RTE & Natural Language Inference & Binary Classification\footnote{\cite{wang2018glue} combine several data sets into RTE; for data sets that have three labels --- \emph{entailment}, \emph{neutral}, and \emph{contradiction} --- they collapse the latter two into one label \emph{not\_entailment}.} &  2.5k/3k & train/test \\
+	STS-B & Sentence Similarity & Regression (1 - 5) & 7k/1.4k & train/test \\
 	WNLI & Coreference Resolution & Binary Classification\footnote{In the original Winograd Schema Challenge CITE, the task is to choose the correct referent of a pronoun from a list. \cite{wang2018glue} reformulate this to a sentence pair classification task, where the original sentence is paired with the original sentence with each pronoun substituted from the list and then predicting whether the substituted sentence is entailed by the original one.} &  634/146 & train/test \\
 \end{tabular}
 }{GLUE}
 
 
-\tab{tab:overview-data-sets}{Overview of gliGLUE}
+\tab{tab:overview-data-sets}{gliGLUE data sets and tasks.}
 {\begin{tabular}{l|llll}
 	Data Set & NLP Task & ML Task & \# Examples & Splits \\
 	\hhline{=|====}
@@ -37,13 +34,11 @@ Following \cite{wang2018glue},
 	deISEAR &  Emotion Detection & Multi-Class Classification  & 1 001 & - \\
 	SCARE & Sentiment Analysis & Multi-Class Classification & 1 760 & - \\
 	\hline
-	& \multicolumn{4}{|c}{Paraphrase and Inference Tasks} \\
-	PAWS-X & Paraphrase Identification & Binary Classification & 2 000/4 000 & dev/test \\
-	XNLI & Natural Language Inference & Multi-Class Classification &  2 489/7 498 & dev/test \\
-	\hline
-	& \multicolumn{4}{|c}{Span Prediction Tasks} \\
+	& \multicolumn{4}{|c}{Two-Sentence Tasks} \\
 	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
 	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
+	PAWS-X & Paraphrase Identification & Binary Classification & 2 000/4 000 & dev/test \\
+	XNLI & Natural Language Inference & Multi-Class Classification &  2 489/7 498 & dev/test \\
 	XQuAD & Question Answering & Span Prediction &  1 192 & - \\
 \end{tabular}
 }{gliGLUE}
@@ -66,6 +61,9 @@ To ensure that my results are comparable with those that the authors of the diff
 
 \section{Corpora}
 
+In this section, I give a detailed description of the selected data sets in alphabetical order:
+What kind of task is addressed, what is the text variety, how looks the label distribution, etc.
+
 \subsection{deISEAR}
 
 \subsubsection{Task}
@@ -85,9 +83,6 @@ For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, f
 \end{examples}
 
 The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
-
-Since the authors provide the data set without predefined splits, I created my own development and test splits using a 9:1 ratio, resulting in 900 examples in the first and 101 examples in latter set.
-The distribution of labels in each set is shown in figure \ref{fig:deISEAR-devtest}.
 
 \fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR data set.}{15}{deISEAR statistics}
 
