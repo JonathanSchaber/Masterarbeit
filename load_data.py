@@ -125,7 +125,7 @@ class Dataloader:
                     context, \
                     question, \
                     srl_context, \
-                    srl_question = row[0], row[1], row[2], row[3]
+                    srl_question = row[0], row[1], row[2], row[3], row[4], row[5]
                     start_index = int(start_index)
                     srl_context = eval(srl_context)
                     srl_question = eval(srl_question)
