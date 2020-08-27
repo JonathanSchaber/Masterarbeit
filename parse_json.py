@@ -1,7 +1,7 @@
 import json
 import argparse
 
-from GLIBERT import load_json
+from gliBert import load_json
 
 
 def parse_cmd_args():
