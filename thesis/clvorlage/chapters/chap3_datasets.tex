@@ -59,6 +59,10 @@ In the latter case, I split the data sets into train, development, and test spli
 Interestingly, the data sets that come with splits, only provide a development and test portion.
 To ensure that my results are comparable with those that the authors of the different data sets report, I leave the test split as it is, and split the development set into a train and development set, implementing a 85:15 ratio.
 
+The following differences to the original GLUE corpus must be noted:
+
+(1) While \cite{wang2018glue} reformulate a multitude of tasks into inference tasks, I follow in my implementation \cite{zhang2019semantics} and approach the question answering tasks as \cite{devlin2018bert} in the original BERT implementation; i.e. as span prediction task.
+
 \section{Corpora}
 
 In this section, I give a detailed description of the selected data sets in alphabetical order:
@@ -103,7 +107,7 @@ PROBLEM: 231 out of 5,029 exceed tokenized length of 512 $\rightarrow$ ignore? 4
 
 stats:
 
-average length train answer: 3.9 (5.6) \\
+average length train answer: 4.0 (5.6) \\
 average length dev answer: 3.7 (5.2) \\
 average length test answer: 4.0 (5.6)
 
@@ -111,9 +115,9 @@ average length train question: 9.4 (11.4) \\
 average length dev question: 8.6 (10.6) \\
 average length test question: 9.1 (11.2)
 
-average length train context: 127.0 (162.7) \\
-average length dev context: 124.3 (159.4) \\
-average length test context: 129.3 (165.5)
+average length train context: 127.7 (162.7) \\
+average length dev context: 125.1 (159.4) \\
+average length test context: 129.9 (165.5)
 
 
 \subsection{PAWS-X}
@@ -245,7 +249,7 @@ This is also the chosen strategy for 51 reviews that had no labels at all; an ex
 
 \cite{conneau2018xnli}
 
-\fig{images/XNLI_devtest.png}{fig:XNLI-stats}{Distribution of labels in the XNLI data set.}{15}{XNLI label statistics}
+\fig{images/XNLI_traindevtest.png}{fig:XNLI-stats}{Distribution of labels in the XNLI data set.}{15}{XNLI label statistics}
 
 \begin{examples}
 	\label{ex:xnli}
@@ -275,6 +279,20 @@ The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the
 \end{enumerate}
 
 \cite{artetxe2019cross}
+
+stats:
+
+average length train answer: 3.2 (4.7) \\
+average length dev answer:  3.3 (5.2) \\
+average length test answer: 3.6 (5.7)
+
+average length train question: 11.3 (14.3)  \\
+average length dev question: 11.5 (14.3)  \\
+average length test question: 11.4 (14.5)
+
+average length train context: 151.3 (191.7)  \\
+average length dev context: 149.5 (190.7) \\
+average length test context: 144.3 (187.3) 
 
 \subsection{Overview}
 
