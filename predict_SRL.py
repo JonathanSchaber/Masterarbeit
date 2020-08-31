@@ -6,12 +6,15 @@ from liir.dame.core.representation.Text import Text
 from liir.dame.core.representation.Word import Word
 from liir.dame.srl.DSRL import DSRL
 
+from transformers import BertTokenizer
+
 import parzu_class as parzu
 
 
 class SRL_predictor:
-    def __init__(self, argument_model_config):
+    def __init__(self, argument_model_config, bert_path):
         self.dsrl = DSRL(argument_model_config)
+        self.tokenizer = BertTokenizer.from_pretrained(bert_path)
         self.parser = None
         # Was ist mit VVIMP VAFIN (ev. checks einbauen?)
         self.verb_fin_POS = ["VVFIN", "VVIMP"]
@@ -120,7 +123,27 @@ class SRL_predictor:
                         srl_sentence.append((token[1], "NOT_PRED"))
                 else:
                     srl_sentence.append((token[1], "NOT_PRED"))
-            tagged_tuple_list.append(srl_sentence)
+            #tagged_tuple_list.append(srl_sentence)
+
+            # since ParZu tokenizes slightly different then Bert,
+            # we tokenize Bert-like and only use the obtained information
+            # about what is a predicate
+            bert_tokenizer_list = self.merge_subtokens(
+                                        self.tokenizer.tokenize(
+                                            " ".join([x[0] for x in srl_sentence])
+                                            )
+                                        )
+            bert_srl_sentence = []
+            for token in bert_tokenizer_list:
+                append_flag = False
+                for tpl in srl_sentence:
+                    if token == tpl[0] and tpl[1] == "PRED":
+                        bert_srl_sentence.append((token, "PRED"))
+                        append_flag = True
+                if not append_flag:
+                    bert_srl_sentence.append((token, "NOT_PRED"))
+
+            tagged_tuple_list.append(bert_srl_sentence)
 
         return tagged_tuple_list
 
