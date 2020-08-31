@@ -18,6 +18,12 @@ def parse_cmd_args():
             help="Argument model config for DAMESRL",
             )
     parser.add_argument(
+            "-b", 
+            "--bert_path", 
+            type=str, 
+            help="Path to BERT model",
+            )
+    parser.add_argument(
             "-d", 
             "--data_set", 
             type=str, 
@@ -421,7 +427,7 @@ def main():
     args = parse_cmd_args()
     data_set = args.data_set
     global srl_predictor
-    srl_predictor = SRL_predictor(args.argument_model_config)
+    srl_predictor = SRL_predictor(args.argument_model_config, args.bert_path)
     path = args.path
     if data_set == "deISEAR":
         preprocess_deISEAR(path)
