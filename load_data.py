@@ -433,6 +433,5 @@ def dataloader(config, location, data_set):
             dataloader.dataset_test, \
             num_classes, \
             dataloader.max_len, \
-            dataloader.y_mapping, \
-            dataloader.type
+            dataloader.y_mapping
 
