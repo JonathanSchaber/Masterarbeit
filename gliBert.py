@@ -82,32 +82,75 @@ def Swish(batch):
     return torch.stack(tuple(batch))
 
 
-# class SRL_Encoder(nn.Module):
-#     def __init__(self, config):
-#         super(SRL_Encoder, self).__init__()
-#         self.config = config
-#         self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
-#         self.encoder = nn.GRU(
-#                             input_size=self.config["embedding_dim"],
-#                             hidden_size=self.config["gru_hidden_size"],
-#                             num_layers=self.config["num_layers"],
-#                             bias=self.config["bias"],
-#                             batch_first=True,
-#                             dropout=self.config["gru_dropout"],
-#                             bidirectional=self.config["bidirectional"]
-#                             )
-# 
-#     def forward(self, tokens):
-#         embeddings = self.embeddings(tokens)
-#         output, _ = self.encoder(embeddings)
-#         return output
+class SRL_Encoder(nn.Module):
+    def __init__(self, config):
+        super(SRL_Encoder, self).__init__()
+        self.config = config
+        self.dictionary = {
+            "B-A0": 0,
+            "B-V": 1,
+            "B-A3": 2,
+            "I-A3": 3,
+            "O": 4,
+            "B-A2": 5,
+            "I-A2": 6,
+            "I-A0": 7,
+            "B-A1": 8,
+            "I-A1": 9,
+            "B-C-A0": 10,
+            "I-C-A0": 11,
+            "B-C-A1": 12,
+            "I-C-A1": 13,
+            "B-C-A2": 14,
+            "I-C-A2": 15,
+            "B-A4": 16,
+            "I-A4": 17,
+            "B-C-A3": 18,
+            "I-C-A3": 19,
+            "B-A5": 20,
+            "I-A5": 21,
+            "B-A6": 22,
+            "I-A6": 23,
+            "B-A8": 24,
+            "B-A9": 25,
+            "I-A9": 26,
+            "B-C-A5": 27,
+            "I-C-A5": 28,
+            "B-C-A4": 29,
+            "I-C-A4": 30,
+            "B-C-C-A1": 31,
+            "I-C-C-A1": 32,
+            "I-A8": 33,
+            "B-A7": 34,
+            "I-A7": 35,
+            "B-C-A6": 36,
+            "I-C-A6": 37,
+            "B-C-C-A2": 38,
+            "B-C-A8": 39,
+            "I-C-A8": 40,
+            "B-C-A7": 41,
+            "I-C-A7": 42,
+            "B-C-C-A0": 43,
+            "I-C-C-A0": 44
+        }
+        self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
+        self.encoder = nn.GRU(
+                            input_size=self.config["embedding_dim"],
+                            hidden_size=self.config["gru_hidden_size"],
+                            num_layers=self.config["num_layers"],
+                            bias=self.config["bias"],
+                            batch_first=True,
+                            dropout=self.config["gru_dropout"],
+                            bidirectional=self.config["bidirectional"]
+                            )
+
+    def forward(self, tokens):
+        embeddings = self.embeddings(tokens)
+        output, _ = self.encoder(embeddings)
+        return output
 
 
 class BertBase(nn.Module):
-    #def __init__(self, config, num_classes, max_len):
-        #super(nn.Module, self).__init__()
-        #self
-    
     @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
         """Set all probabilities up to start span to -inf for end spans.
@@ -210,6 +253,7 @@ class BertClassifierLastHiddenStateAll(BertBase):
         super(BertBase, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.linear = nn.Linear(768*max_len, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
@@ -245,6 +289,7 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
         super(BertBase, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.linear = nn.Linear(768*(max_len-1), num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
@@ -281,6 +326,7 @@ class BertSpanPrediction(BertBase):
         super(BertBase, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.linear = nn.Linear(768, 2)
         self.softmax = nn.LogSoftmax(dim=-2)
@@ -549,6 +595,8 @@ def fine_tune_BERT(config):
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
+            b_srls = batch[4]
+            import ipdb; ipdb.set_trace()
             model.zero_grad()
             if not SPAN_FLAG:
                 outputs = model(
@@ -625,8 +673,7 @@ def fine_tune_BERT(config):
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
-            #b_srl_1 = batch[4].to(device)
-            #b_srl_2 = batch[5].to(device)
+            b_srls = batch[4]
 
             with torch.no_grad():
                 if not SPAN_FLAG:
@@ -684,6 +731,7 @@ def fine_tune_BERT(config):
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
+            b_srls = batch[4]
 
             with torch.no_grad():
                 if not SPAN_FLAG:
