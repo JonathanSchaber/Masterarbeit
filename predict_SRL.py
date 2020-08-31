@@ -40,6 +40,26 @@ class SRL_predictor:
 
         return dsrl_text
 
+    @staticmethod
+    def merge_subtokens(sentence):
+        merged_sent = []
+        for i, token in enumerate(sentence):
+            if token.startswith("##"):
+                continue
+            elif i+1 == len(sentence):
+                merged_sent.append(token)
+            elif not sentence[i+1].startswith("##"):
+                merged_sent.append(token)
+            else:
+                current_word = [token]
+                for subtoken in sentence[i+1:]:
+                    if subtoken.startswith("##"):
+                        current_word.append(subtoken.lstrip("##"))
+                    else:
+                        break
+                merged_sent.append("".join(current_word))
+        return merged_sent
+
     def create_ParZu_parser(self):
         """Create an ParZu-parser object
         Args:
