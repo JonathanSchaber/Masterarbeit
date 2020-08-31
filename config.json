@@ -24,7 +24,6 @@
 	"print_stats": 20,
 	"merge_subtokens": false,
 	"bert_head": "BertClassifierLastHiddenState",
-	"num_labels": 47,
 	"embedding_dim": 64,
 	"gru_hidden_size": 128,
 	"head_hidden_size": 256,
