@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  28 AUG 2020 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  31 AUG 2020 18:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1270,88 +1270,99 @@ chapter 2.
 
  (./chapters/chap3_datasets.tex
 chapter 3.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 26.
+(Font)              <7> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 26.
+(Font)              <5> on input line 9.
+
+Package natbib Warning: Citation `kracht2007introduction' on page 3 undefined o
+n input line 10.
+
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 26.
+(Font)              scaled to size 9.49997pt on input line 44.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 44.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 46.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 64.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 46.
+(Font)              scaled to size 13.67995pt on input line 64.
 [3
 
 
 
 ] [4]
-<images/deISEAR_traindevtest.png, id=369, 1122.44344pt x 291.33844pt>
+<images/deISEAR_traindevtest.png, id=370, 1122.44344pt x 291.33844pt>
 File: images/deISEAR_traindevtest.png Graphic file (type png)
 <use images/deISEAR_traindevtest.png>
-Package pdftex.def Info: images/deISEAR_traindevtest.png  used on input line 91
-.
+Package pdftex.def Info: images/deISEAR_traindevtest.png  used on input line 10
+9.
 (pdftex.def)             Requested size: 426.79134pt x 110.77643pt.
- [5 <./images/deISEAR_traindevtest.png>]
-<images/PAWS-X_traindevtest.png, id=389, 1145.78062pt x 293.59688pt>
-File: images/PAWS-X_traindevtest.png Graphic file (type png)
-<use images/PAWS-X_traindevtest.png>
-Package pdftex.def Info: images/PAWS-X_traindevtest.png  used on input line 138
-.
-(pdftex.def)             Requested size: 426.79134pt x 109.36385pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6] [7 <./images/PAWS-X_traindevtest.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 169.
+[5] [6 <./images/deISEAR_traindevtest.png>]
+<images/PAWS-X_traindevtest.png, id=400, 1145.78062pt x 293.59688pt>
+File: images/PAWS-X_traindevtest.png Graphic file (type png)
+<use images/PAWS-X_traindevtest.png>
+Package pdftex.def Info: images/PAWS-X_traindevtest.png  used on input line 156
+.
+(pdftex.def)             Requested size: 426.79134pt x 109.36385pt.
+ [7 <./images/PAWS-X_traindevtest.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 187.
 
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 169.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 169.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8]
-<images/SCARE_star_stats.png, id=427, 723.4227pt x 346.896pt>
+<images/SCARE_star_stats.png, id=429, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
-Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 224.
+Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 242.
 (pdftex.def)             Requested size: 341.43306pt x 163.72395pt.
- [9 <./images/SCARE_star_stats.png>]
-<images/SCARE_label_stats.png, id=434, 702.4644pt x 346.896pt>
-File: images/SCARE_label_stats.png Graphic file (type png)
-<use images/SCARE_label_stats.png>
-Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 241.
-(pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
-<images/XNLI_traindevtest.png, id=437, 1212.78094pt x 293.59688pt>
-File: images/XNLI_traindevtest.png Graphic file (type png)
-<use images/XNLI_traindevtest.png>
-Package pdftex.def Info: images/XNLI_traindevtest.png  used on input line 252.
-(pdftex.def)             Requested size: 426.79134pt x 103.32042pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[10 <./images/SCARE_label_stats.png>] [11 <./images/XNLI_traindevtest.png>]
-Overfull \hbox (5.75653pt too wide) in paragraph at lines 311--311
+[9]
+<images/SCARE_label_stats.png, id=435, 702.4644pt x 346.896pt>
+File: images/SCARE_label_stats.png Graphic file (type png)
+<use images/SCARE_label_stats.png>
+Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 259.
+(pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/XNLI_traindevtest.png, id=438, 1212.78094pt x 293.59688pt>
+File: images/XNLI_traindevtest.png Graphic file (type png)
+<use images/XNLI_traindevtest.png>
+Package pdftex.def Info: images/XNLI_traindevtest.png  used on input line 270.
+(pdftex.def)             Requested size: 426.79134pt x 103.32042pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[10 <./images/SCARE_star_stats.png>] [11 <./images/SCARE_label_stats.png> <./im
+ages/XNLI_traindevtest.png>] [12]
+Overfull \hbox (5.75653pt too wide) in paragraph at lines 329--329
  [] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) [12] [13]
+) [13]
 \openout2 = `chapters/chap4_architecture.aux'.
 
  (./chapters/chap4_architecture.tex
@@ -1361,7 +1372,7 @@ chapter 4.
 
 
 ] [15]
-<images/exampleParzu2.png, id=528, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=530, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1373,11 +1384,15 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 66--66
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 72.
-[16 <./images/exampleParzu2.png (PNG copy)>]) [17]
+[16 <./images/exampleParzu2.png (PNG copy)>]
+
+Package natbib Warning: Citation `wolf2019transformers' on page 17 undefined on
+ input line 115.
+
+) [17]
 \openout2 = `chapters/chap5_results.aux'.
 
-
-(./chapters/chap5_results.tex
+ (./chapters/chap5_results.tex
 chapter 5.
 
 Package natbib Warning: Citation `Callison-Burch2006' on page 18 undefined on i
@@ -1531,31 +1546,34 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 12096 strings out of 492982
- 187164 string characters out of 6134895
- 410152 words of memory out of 5000000
- 15153 multiletter control sequences out of 15000+600000
+ 12100 strings out of 492982
+ 187239 string characters out of 6134895
+ 410194 words of memory out of 5000000
+ 15156 multiletter control sequences out of 15000+600000
  24678 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,17n,68p,8946b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (36 pages, 610640 bytes).
+pdfTeX warning (dest): name{table.3.6} has been referenced but does not exist
+, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on CLthesis.pdf (36 pages, 610970 bytes).
 PDF statistics:
- 720 PDF objects out of 1000 (max. 8388607)
- 647 compressed objects within 7 object streams
- 178 named destinations out of 1000 (max. 500000)
+ 721 PDF objects out of 1000 (max. 8388607)
+ 648 compressed objects within 7 object streams
+ 179 named destinations out of 1000 (max. 500000)
  417 words of extra memory for PDF output out of 10000 (max. 10000000)
 

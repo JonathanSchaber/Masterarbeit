@@ -4,17 +4,35 @@
 
 \section{gliGLUE}
 
+Traditionally in linguistics, language is analyzed into different structural levels, where different tools for describing these levels, or strata, are used.
+In most theories, there are are four of these structural levels proposed:
+Beginning from the Bottom, there is the level of Phonetics and Phonology, followed by Morphology, then there is the level of Syntax, and the last one is Semantics.\footnote{Sometimes Pragmatics is conceptualized as an additional fifth layer on top, sometimes it is considered to form a field of its own; I follow the latter.}
+While the first three levels deal with the form of utterances of human language, semantics is concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduction}.
+
+% \tab{tab:levels-of-lang}{Levels of language analysis and description.}
+% {\begin{tabular}{|l|l|l|l|}
+% \hline
+% \multicolumn{2}{|c|}{Form}     & \multicolumn{2}{c|}{Meaning}     \\ \hline
+% 	% a & b & c & d \\ \hline
+% 	& \multicolumn{2}{c|}{Level} &                   \\ \hhline{====}
+%         Syntax  & \multicolumn{2}{l|}{Sentence} & \multirow{3}{*}{Semantics} \\ \cline{1-3}
+%         Morphology & \multicolumn{2}{l|}{Word} &                   \\ \cline{1-3}
+%         Phonology & \multicolumn{2}{l|}{Sound} &                   \\ \hline
+% \end{tabular}
+% }{Levels of language}
+
+
 Following \cite{wang2018glue}, 
 
 \tab{tab:original-GLUE}{Original GLUE data sets and tasks.}
 {\begin{tabular}{l|llll}
 	Data Set & NLP Task & ML Task & \# Examples & Splits \\
 	\hhline{=|====}
-	& \multicolumn{4}{|c}{Single-Sentence Tasks} \\
+	& \multicolumn{4}{c}{Single-Sentence Tasks} \\
 	CoLA &  Acceptability & Binary Classification & 8.5k/1k & train/test \\
 	SST-2 & Sentiment Analysis & Binary Classification & 67k/1.8k & train/test \\
 	\hline
-	& \multicolumn{4}{|c}{Two-Sentence Tasks} \\
+	& \multicolumn{4}{c}{Two-Sentence Tasks} \\
 	MNLI & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
 	MRPC & Paraphrase Identification & Binary Classification & 3.7k/1.7k & train/test \\
 	QNLI & Question Answering & Binary Classification\footnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
@@ -30,11 +48,11 @@ Following \cite{wang2018glue},
 {\begin{tabular}{l|llll}
 	Data Set & NLP Task & ML Task & \# Examples & Splits \\
 	\hhline{=|====}
-	& \multicolumn{4}{|c}{Single-Sentence Tasks} \\
+	& \multicolumn{4}{c}{Single-Sentence Tasks} \\
 	deISEAR &  Emotion Detection & Multi-Class Classification  & 1 001 & - \\
 	SCARE & Sentiment Analysis & Multi-Class Classification & 1 760 & - \\
 	\hline
-	& \multicolumn{4}{|c}{Two-Sentence Tasks} \\
+	& \multicolumn{4}{c}{Two-Sentence Tasks} \\
 	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
 	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
 	PAWS-X & Paraphrase Identification & Binary Classification & 2 000/4 000 & dev/test \\
