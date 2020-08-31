@@ -144,8 +144,8 @@ class SRL_Encoder(nn.Module):
                             bidirectional=self.config["bidirectional"]
                             )
 
-    def forward(self, tokens):
-        embeddings = self.embeddings(tokens)
+    def forward(self, token_ids):
+        embeddings = self.embeddings(token_ids)
         output, _ = self.encoder(embeddings)
         return output
 
