@@ -133,7 +133,7 @@ class SRL_Encoder(nn.Module):
             "B-C-C-A0": 43,
             "I-C-C-A0": 44
         }
-        self.embeddings = nn.Embedding(self.config["num_labels"], self.config["embedding_dim"])
+        self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
         self.encoder = nn.GRU(
                             input_size=self.config["embedding_dim"],
                             hidden_size=self.config["gru_hidden_size"],
