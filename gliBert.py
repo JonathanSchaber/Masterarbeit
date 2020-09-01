@@ -87,51 +87,51 @@ class SRL_Encoder(nn.Module):
         super(SRL_Encoder, self).__init__()
         self.config = config
         self.dictionary = {
-            "B-A0": 0,
-            "B-V": 1,
-            "B-A3": 2,
-            "I-A3": 3,
-            "O": 4,
-            "B-A2": 5,
-            "I-A2": 6,
-            "I-A0": 7,
-            "B-A1": 8,
-            "I-A1": 9,
-            "B-C-A0": 10,
-            "I-C-A0": 11,
-            "B-C-A1": 12,
-            "I-C-A1": 13,
-            "B-C-A2": 14,
-            "I-C-A2": 15,
-            "B-A4": 16,
-            "I-A4": 17,
-            "B-C-A3": 18,
-            "I-C-A3": 19,
-            "B-A5": 20,
-            "I-A5": 21,
-            "B-A6": 22,
-            "I-A6": 23,
-            "B-A8": 24,
-            "B-A9": 25,
-            "I-A9": 26,
-            "B-C-A5": 27,
-            "I-C-A5": 28,
-            "B-C-A4": 29,
-            "I-C-A4": 30,
-            "B-C-C-A1": 31,
-            "I-C-C-A1": 32,
-            "I-A8": 33,
-            "B-A7": 34,
-            "I-A7": 35,
-            "B-C-A6": 36,
-            "I-C-A6": 37,
-            "B-C-C-A2": 38,
-            "B-C-A8": 39,
-            "I-C-A8": 40,
-            "B-C-A7": 41,
-            "I-C-A7": 42,
-            "B-C-C-A0": 43,
-            "I-C-C-A0": 44
+            "B-A0":	0,
+            "B-A1":	1,
+            "B-A2":	2,
+            "B-A3":	3,
+            "B-A4":	4,
+            "B-A5":	5,
+            "B-A6":	6,
+            "B-A7":	7,
+            "B-A8":	8,
+            "B-A9":	9,
+            "B-C-A0":	10,
+            "B-C-A1":	11,
+            "B-C-A2":	12,
+            "B-C-A3":	13,
+            "B-C-A4":	14,
+            "B-C-A5":	15,
+            "B-C-A6":	16,
+            "B-C-A7":	17,
+            "B-C-A8":	18,
+            "B-C-C-A0":	19,
+            "B-C-C-A1":	20,
+            "B-C-C-A2":	21,
+            "B-V":	22,
+            "I-A0":	23,
+            "I-A1":	24,
+            "I-A2":	25,
+            "I-A3":	26,
+            "I-A4":	27,
+            "I-A5":	28,
+            "I-A6":	29,
+            "I-A7":	30,
+            "I-A8":	31,
+            "I-A9":	32,
+            "I-C-A0":	33,
+            "I-C-A1":	34,
+            "I-C-A2":	35,
+            "I-C-A3":	36,
+            "I-C-A4":	37,
+            "I-C-A5":	38,
+            "I-C-A6":	39,
+            "I-C-A7":	40,
+            "I-C-A8":	41,
+            "I-C-C-A0":	42,
+            "I-C-C-A1":	43,
+            "O":	44
         }
         self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
         self.encoder = nn.GRU(
@@ -273,7 +273,7 @@ class BertClassifierLastHiddenStateAll(BertBase):
                                 )
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-        import ipdb;ipdb.set_trace()
+        #import ipdb;ipdb.set_trace()
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
@@ -521,6 +521,16 @@ def batch_idcs(len_dataset, batch_size):
     return batch_idcs
 
 
+def convert_SRLs_to_idx(mapping, lst):
+    for batch in lst:
+        for AB in batch:
+            for sentence in AB:
+                for predicate in sentence:
+                    for i, srl in enumerate(predicate):
+                        predicate[i] = mapping[srl]
+    return lst
+
+
 def fine_tune_BERT(config):
     """define fine-tuning procedure, write results to file.
     Args:
@@ -597,7 +607,10 @@ def fine_tune_BERT(config):
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
-            b_srls = batch[4]
+            b_srls = convert_SRLs_to_idx(model.srl_model.dictionary, batch[4])
+            ###test
+            import ipdb; ipdb.set_trace()
+            ###test
             model.zero_grad()
             if not SPAN_FLAG:
                 outputs = model(
