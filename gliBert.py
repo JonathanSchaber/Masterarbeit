@@ -194,7 +194,7 @@ class BertBase(nn.Module):
                 decode_token = self.tokenizer.decode([ids[j][i]])
                 if decode_token.startswith("##"):
                     continue
-                elif decode_token == "[PAD]":
+                elif decode_token in ["[CLS]", "[SEP]", "[PAD]"]:
                     word_level_sentence.append(token)
                     break
                 elif i + 1 == len(sentence):
@@ -235,6 +235,7 @@ class BertClassifierCLS(BertBase):
             tokens,
             attention_mask=None,
             token_type_ids=None,
+            srls=None,
             device=torch.device("cpu")
             ):
         _, pooler_output = self.bert(
@@ -262,6 +263,7 @@ class BertClassifierLastHiddenStateAll(BertBase):
             tokens,
             attention_mask=None,
             token_type_ids=None,
+            srls=None,
             device=torch.device("cpu")
             ):
         last_hidden_state, _ = self.bert(
@@ -271,6 +273,7 @@ class BertClassifierLastHiddenStateAll(BertBase):
                                 )
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        import ipdb;ipdb.set_trace()
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
@@ -297,6 +300,7 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
             tokens,
             attention_mask=None,
             token_type_ids=None,
+            srls=None,
             device=torch.device("cpu")
             ):
         last_hidden_state, _ = self.bert(
@@ -333,6 +337,7 @@ class BertSpanPrediction(BertBase):
             tokens,
             attention_mask=None,
             token_type_ids=None,
+            srls=None,
             device=torch.device("cpu")
             ):
         last_hidden_state, _ = self.bert(
@@ -470,11 +475,14 @@ def write_stats(stats_file, training_stats):
             outfile.write(json.dumps(training_stats))
 
 
-def print_preds(model, example, prediction, true_label, mapping, step, len_data, elapsed, merge):
+def print_preds(model, example, srls, prediction, true_label, mapping, step, len_data, elapsed, merge):
+    first_srls = [sentence[0][0] for sentence in srls]
     if not SPAN_FLAG:
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
-        print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
+        #print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
+        print("    Text:   {}".format("\t".join(merge_subs([x for x in model.tokenizer.tokenize(model.tokenizer.decode(example, skip_special_tokens=True))]))))
+        print("    SRLs:  {}".format("\t".join([srl for ls in first_srls for srl in ls])))
         print("    Prediction:  {}".format(mapping[prediction.max(0).indices.item()]))
         print("    True Label:  {}".format(mapping[true_label.item()]))
         print("")
@@ -538,7 +546,6 @@ def fine_tune_BERT(config):
     mapping = dataloader(config, location, data_set)
     mapping = {value: key for (key, value) in mapping.items()} if mapping else None
 
-    # srl_encoder = SRL_Encoder(config)
     model = bert_head(config, num_classes, max_len)
     train_idcs = batch_idcs(len(train_data), batch_size)
     dev_idcs = batch_idcs(len(dev_data), batch_size)
@@ -591,13 +598,13 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
-            import ipdb; ipdb.set_trace()
             model.zero_grad()
             if not SPAN_FLAG:
                 outputs = model(
                             b_input_ids, 
                             attention_mask=b_attention_mask,
                             token_type_ids=b_token_type_ids,
+                            srls = b_srls,
                             device=device
                             )
                 if step % print_stats == 0 and not step == 0:
@@ -605,6 +612,7 @@ def fine_tune_BERT(config):
                     print_preds(
                             model,
                             b_input_ids[-1],
+                            b_srls[-1],
                             outputs[-1],
                             b_labels[-1],
                             mapping,
@@ -619,6 +627,7 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
+                                        srls = b_srls,
                                         device=device
                                         )
                 if step % print_stats == 0 and not step == 0:
@@ -626,6 +635,7 @@ def fine_tune_BERT(config):
                     print_preds(
                             model,
                             b_input_ids[-1],
+                            b_srls[-1],
                             (start_span[-1], end_span[-1]),
                             b_labels[-1],
                             mapping, step,
@@ -674,6 +684,7 @@ def fine_tune_BERT(config):
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
                                 token_type_ids=b_token_type_ids,
+                                srls = b_srls,
                                 device=device
                                 )
                     value_index = [tensor.max(0) for tensor in outputs]
@@ -684,6 +695,7 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
+                                        srls = b_srls,
                                         device=device
                                         )
                     start_value_index = [tensor.max(0) for tensor in start_span]
@@ -730,6 +742,7 @@ def fine_tune_BERT(config):
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
                                 token_type_ids=b_token_type_ids,
+                                srls = b_srls,
                                 device=device
                                 )
                     value_index = [tensor.max(0) for tensor in outputs]
@@ -740,6 +753,7 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
+                                        srls = b_srls,
                                         device=device
                                         )
                     start_value_index = [tensor.max(0) for tensor in start_span]
