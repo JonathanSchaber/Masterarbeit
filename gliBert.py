@@ -82,6 +82,19 @@ def Swish(batch):
     return torch.stack(tuple(batch))
 
 
+def pad_SRLs(batch, dummy, length):
+    """
+    Pad a batch of token SRLs to tokenized batch
+    """
+    new_batch = []
+    for example in batch:
+        lst = [example] + [dummy]*(length-len(example))
+        tens = torch.cat(tuple(lst), dim=0) 
+        new_batch.append(tens)
+
+    return torch.stack(new_batch)
+
+
 class SRL_Encoder(nn.Module):
     def __init__(self, config):
         super(SRL_Encoder, self).__init__()
@@ -303,21 +316,58 @@ class BertClassifierLastHiddenStateAll(BertBase):
                                 )
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-        if self.config["modus"] == "+SRL":
-            # for glueing srls AB together and padding. Has to be double since
-            # bi-directional. size batch:1:2*hidden_size
-            dummy_srl = torch.tensor([0.0]*2*self.config["gru_hidden_size"]).to(device)
-            dummy_srl = torch.unsqueeze(dummy_srl, dim=0)
-            dummy_batch = torch.stack([dummy_srl]*tokens.size(0))
-            if data_type != 1:
-                a_srls, b_srls = get_AB_SRLs(srls) 
-                a_emb = self.srl_model(a_srls)
-                b_emb = self.srl_model(b_srls)
-                srl_emb = [torch.cat(tuple([a_emb[i], dummy_srl, b_emb[i]]), dim=0) for i in range(len(a_srls))]
-            else:
-                srl_emb = self.srl_model(get_A_SRLs(srls))
+        reshaped_last_hidden = torch.reshape(
+                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
+                (
+                    last_hidden_state.shape[0], 
+                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
+                )
+        linear_output = self.linear(reshaped_last_hidden)
+        proba = self.softmax(linear_output)
+        return proba
 
-        #import ipdb; ipdb.set_trace()
+
+class gliBertClassifierLastHiddenStateAll(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
+        self.max_len = max_len
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear((768+2*self.config["gru_hidden_size"])*max_len, num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
+    
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            srls=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        last_hidden_state, _ = self.bert(
+                                tokens,
+                                attention_mask,
+                                token_type_ids
+                                )
+        if self.config["merge_subtokens"] == True:
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+        # for glueing srls AB together and padding. Has to be double since
+        # bi-directional. size batch:1:2*hidden_size
+        dummy_srl = torch.tensor([0.0]*2*self.config["gru_hidden_size"]).to(device)
+        dummy_srl = torch.unsqueeze(dummy_srl, dim=0)
+        if data_type != 1:
+            a_srls, b_srls = get_AB_SRLs(srls) 
+            a_emb = self.srl_model(a_srls)
+            b_emb = self.srl_model(b_srls)
+            srl_emb = [torch.cat(tuple([a_emb[i], dummy_srl, b_emb[i]]), dim=0) for i in range(len(a_srls))]
+        else:
+            srl_emb = self.srl_model(get_A_SRLs(srls))
+
+        srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len)
+        import ipdb; ipdb.set_trace()
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
