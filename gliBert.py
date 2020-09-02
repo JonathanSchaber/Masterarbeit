@@ -331,11 +331,11 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
         self.max_len = max_len
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        self.linear = nn.Linear((768+2*self.config["gru_hidden_size"])*max_len, num_classes)
+        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
+        self.linear = nn.Linear((768+2*config["gru_hidden_size"])*max_len, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
     
     def forward(
@@ -367,6 +367,8 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             srl_emb = self.srl_model(get_A_SRLs(srls))
 
         srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len)
+
+        combo_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         import ipdb; ipdb.set_trace()
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
