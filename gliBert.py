@@ -131,11 +131,13 @@ class SRL_Encoder(nn.Module):
             "I-C-A8":	41,
             "I-C-C-A0":	42,
             "I-C-C-A1":	43,
-            "O":	44
+            "O":	44,
+            "0":        45
         }
+        self.null_token = self.dictionary["O"]
         self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
         self.encoder = nn.GRU(
-                            input_size=self.config["embedding_dim"],
+                            input_size=3*self.config["embedding_dim"],
                             hidden_size=self.config["gru_hidden_size"],
                             num_layers=self.config["num_layers"],
                             bias=self.config["bias"],
@@ -145,9 +147,36 @@ class SRL_Encoder(nn.Module):
                             )
 
     def forward(self, tokens):
-        embeddings = self.embeddings(tokens)
-        output, _ = self.encoder(embeddings)
-        return output
+        """
+        forward pass, tokens come in shape: batch:sentence:predicate:ids
+        Args:
+            param1: list[list[list[list]]]
+
+        Returns:
+            list
+        """
+        batch_new = []
+        for batch in tokens:
+            sentences = []
+            for sentence in batch:
+                num_preds = len(sentence)
+                pred_1 = self.embeddings(sentence[0])
+                pred_2 = self.embeddings(sentence[1]) if num_preds > 1 else pred_1
+                pred_3 = self.embeddings(sentence[2]) if num_preds > 2 else pred_1
+                pred_merge = []
+                for i in range(len(pred_1)):
+                    tokens = [pred_1[i], pred_2[i], pred_3[i]]
+                    pred_merge.append(torch.cat(tuple(tokens), dim=0))
+                preds = torch.unsqueeze(torch.stack(pred_merge), dim=0)
+
+                output, _ = self.encoder(preds)
+                sentences.append(torch.squeeze(output, dim=0))
+            sequence = torch.cat(tuple(sentences), dim=0)
+            batch_new.append(sequence)
+
+        #torch.stack(batch_new)
+
+        return batch_new
 
 
 class BertBase(nn.Module):
@@ -264,6 +293,7 @@ class BertClassifierLastHiddenStateAll(BertBase):
             attention_mask=None,
             token_type_ids=None,
             srls=None,
+            data_type=None,
             device=torch.device("cpu")
             ):
         last_hidden_state, _ = self.bert(
@@ -273,7 +303,21 @@ class BertClassifierLastHiddenStateAll(BertBase):
                                 )
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-        #import ipdb;ipdb.set_trace()
+        if self.config["modus"] == "+SRL":
+            # for glueing srls AB together and padding. Has to be double since
+            # bi-directional. size batch:1:2*hidden_size
+            dummy_srl = torch.tensor([0.0]*2*self.config["gru_hidden_size"]).to(device)
+            dummy_srl = torch.unsqueeze(dummy_srl, dim=0)
+            dummy_batch = torch.stack([dummy_srl]*tokens.size(0))
+            if data_type != 1:
+                a_srls, b_srls = get_AB_SRLs(srls) 
+                a_emb = self.srl_model(a_srls)
+                b_emb = self.srl_model(b_srls)
+                srl_emb = [torch.cat(tuple([a_emb[i], dummy_srl, b_emb[i]]), dim=0) for i in range(len(a_srls))]
+            else:
+                srl_emb = self.srl_model(get_A_SRLs(srls))
+
+        #import ipdb; ipdb.set_trace()
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
@@ -301,6 +345,7 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
             attention_mask=None,
             token_type_ids=None,
             srls=None,
+            data_type=None,
             device=torch.device("cpu")
             ):
         last_hidden_state, _ = self.bert(
@@ -338,6 +383,7 @@ class BertSpanPrediction(BertBase):
             attention_mask=None,
             token_type_ids=None,
             srls=None,
+            data_type=None,
             device=torch.device("cpu")
             ):
         last_hidden_state, _ = self.bert(
@@ -476,13 +522,14 @@ def write_stats(stats_file, training_stats):
 
 
 def print_preds(model, example, srls, prediction, true_label, mapping, step, len_data, elapsed, merge):
-    first_srls = [sentence[0][0] for sentence in srls]
+    first_srls = [sentence[0][0].tolist() for sentence in srls]
+    reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
     if not SPAN_FLAG:
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
         #print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
         print("    Text:   {}".format("\t".join(merge_subs([x for x in model.tokenizer.tokenize(model.tokenizer.decode(example, skip_special_tokens=True))]))))
-        print("    SRLs:  {}".format("\t".join([srl for ls in first_srls for srl in ls])))
+        print("    SRLs:  {}".format("\t".join([reverse_dict[srl] for ls in first_srls for srl in ls])))
         print("    Prediction:  {}".format(mapping[prediction.max(0).indices.item()]))
         print("    True Label:  {}".format(mapping[true_label.item()]))
         print("")
@@ -521,14 +568,41 @@ def batch_idcs(len_dataset, batch_size):
     return batch_idcs
 
 
-def convert_SRLs_to_idx(mapping, lst):
+def convert_SRLs_to_tensor(mapping, lst, device="cpu"):
+    """
+    turns a nested list of SRLs into a list of tensors of indices of SRLs
+    Args:
+        param1: dict    mapping of SRLs to indices
+        prarm2: list[list[list[list[list]]]]    batch:AB:sentences:predicates:SRLs
+        param3: torch.device
+    Return:
+        list[list[list[list[torch.tensor]]]]
+    """
     for batch in lst:
         for AB in batch:
             for sentence in AB:
-                for predicate in sentence:
-                    for i, srl in enumerate(predicate):
-                        predicate[i] = mapping[srl]
+                for i, predicate in enumerate(sentence):
+                    for j, srl in enumerate(predicate):
+                        predicate[j] = mapping[srl]
+                    sentence.pop(i)
+                    predicate = torch.tensor(predicate).to(device)
+                    sentence.insert(i, predicate)
     return lst
+
+
+def get_AB_SRLs(lst):
+    a_lst, b_lst = ([] for i in range(2))
+    for batch in lst:
+        a_lst.append(batch[0])
+        b_lst.append(batch[1])
+    return a_lst, b_lst
+
+
+def get_A_SRLs(lst):
+    a_lst = []
+    for batch in lst:
+        a_lst.append(batch[0])
+    return a_lst
 
 
 def fine_tune_BERT(config):
@@ -553,7 +627,8 @@ def fine_tune_BERT(config):
     test_data, \
     num_classes, \
     max_len, \
-    mapping = dataloader(config, location, data_set)
+    mapping, \
+    data_type = dataloader(config, location, data_set)
     mapping = {value: key for (key, value) in mapping.items()} if mapping else None
 
     model = bert_head(config, num_classes, max_len)
@@ -607,25 +682,24 @@ def fine_tune_BERT(config):
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
-            b_srls = convert_SRLs_to_idx(model.srl_model.dictionary, batch[4])
-            ###test
-            import ipdb; ipdb.set_trace()
-            ###test
+            b_srls = batch[4]
+            b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
             model.zero_grad()
             if not SPAN_FLAG:
                 outputs = model(
                             b_input_ids, 
                             attention_mask=b_attention_mask,
                             token_type_ids=b_token_type_ids,
-                            srls = b_srls,
-                            device=device
+                            srls = b_srls_idx,
+                            device=device,
+                            data_type=data_type
                             )
                 if step % print_stats == 0 and not step == 0:
                     elapsed = format_time(time.time() - t0)
                     print_preds(
                             model,
                             b_input_ids[-1],
-                            b_srls[-1],
+                            b_srls_idx[-1],
                             outputs[-1],
                             b_labels[-1],
                             mapping,
@@ -640,15 +714,16 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
-                                        srls = b_srls,
-                                        device=device
+                                        srls = b_srls_idx,
+                                        device=device,
+                                        data_type=data_type
                                         )
                 if step % print_stats == 0 and not step == 0:
                     elapsed = format_time(time.time() - t0)
                     print_preds(
                             model,
                             b_input_ids[-1],
-                            b_srls[-1],
+                            b_srls_idx[-1],
                             (start_span[-1], end_span[-1]),
                             b_labels[-1],
                             mapping, step,
@@ -690,6 +765,7 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
+            b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
 
             with torch.no_grad():
                 if not SPAN_FLAG:
@@ -697,8 +773,9 @@ def fine_tune_BERT(config):
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
                                 token_type_ids=b_token_type_ids,
-                                srls = b_srls,
-                                device=device
+                                srls = b_srls_idx,
+                                device=device,
+                                data_type=data_type
                                 )
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
@@ -708,8 +785,9 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
-                                        srls = b_srls,
-                                        device=device
+                                        srls = b_srls_idx,
+                                        device=device,
+                                        data_type=data_type
                                         )
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
@@ -748,6 +826,7 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
+            b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
 
             with torch.no_grad():
                 if not SPAN_FLAG:
@@ -755,8 +834,9 @@ def fine_tune_BERT(config):
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
                                 token_type_ids=b_token_type_ids,
-                                srls = b_srls,
-                                device=device
+                                srls = b_srls_idx,
+                                device=device,
+                                data_type=data_type
                                 )
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
@@ -766,8 +846,9 @@ def fine_tune_BERT(config):
                                         b_input_ids,
                                         attention_mask=b_attention_mask,
                                         token_type_ids=b_token_type_ids,
-                                        srls = b_srls,
-                                        device=device
+                                        srls = b_srls_idx,
+                                        device=device,
+                                        data_type=data_type
                                         )
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
