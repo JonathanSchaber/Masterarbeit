@@ -361,7 +361,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             a_srls, b_srls = get_AB_SRLs(srls) 
             a_emb = self.srl_model(a_srls)
             b_emb = self.srl_model(b_srls)
-            srl_emb = [torch.cat(tuple([a_emb[i], dummy_srl, b_emb[i]]), dim=0) for i in range(len(a_srls))]
+            srl_emb = [torch.cat(tuple([dummy_srl, a_emb[i], dummy_srl, b_emb[i]]), dim=0) for i in range(len(a_srls))]
         else:
             srl_emb = self.srl_model(get_A_SRLs(srls))
 
