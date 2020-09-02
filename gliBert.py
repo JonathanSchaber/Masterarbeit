@@ -347,17 +347,16 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             data_type=None,
             device=torch.device("cpu")
             ):
+        # for glueing srls AB together and padding. Has to be double since
+        # bi-directional. size batch:1:2*hidden_size
+        dummy_srl = torch.tensor([0.0]*2*self.config["gru_hidden_size"]).to(device)
+        dummy_srl = torch.unsqueeze(dummy_srl, dim=0)
+
         last_hidden_state, _ = self.bert(
                                 tokens,
                                 attention_mask,
                                 token_type_ids
                                 )
-        if self.config["merge_subtokens"] == True:
-            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-        # for glueing srls AB together and padding. Has to be double since
-        # bi-directional. size batch:1:2*hidden_size
-        dummy_srl = torch.tensor([0.0]*2*self.config["gru_hidden_size"]).to(device)
-        dummy_srl = torch.unsqueeze(dummy_srl, dim=0)
         if data_type != 1:
             a_srls, b_srls = get_AB_SRLs(srls) 
             a_emb = self.srl_model(a_srls)
@@ -366,16 +365,18 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
         else:
             srl_emb = self.srl_model(get_A_SRLs(srls))
 
-        srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len)
+        if self.config["merge_subtokens"] == True:
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+            srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len)
+            combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
 
-        combo_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-        import ipdb; ipdb.set_trace()
         reshaped_last_hidden = torch.reshape(
-                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
+                combo_merge_batch if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
-                    last_hidden_state.shape[0], 
-                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
+                    combo_merge_batch.shape[0], 
+                    combo_merge_batch.shape[1]*combo_merge_batch.shape[2])
                 )
+        #import ipdb; ipdb.set_trace()
         linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
         return proba
@@ -630,16 +631,21 @@ def convert_SRLs_to_tensor(mapping, lst, device="cpu"):
     Return:
         list[list[list[list[torch.tensor]]]]
     """
+    new_lst = []
     for batch in lst:
+        new_batch = []
         for AB in batch:
+            new_AB = []
             for sentence in AB:
-                for i, predicate in enumerate(sentence):
-                    for j, srl in enumerate(predicate):
-                        predicate[j] = mapping[srl]
-                    sentence.pop(i)
-                    predicate = torch.tensor(predicate).to(device)
-                    sentence.insert(i, predicate)
-    return lst
+                new_sentence = []
+                for predicate in sentence:
+                    new_predicate = [mapping[srl] for srl in predicate]
+                    new_predicate = torch.tensor(new_predicate).to(device)
+                    new_sentence.append(new_predicate)
+                new_AB.append(new_sentence)
+            new_batch.append(new_AB)
+        new_lst.append(new_batch)
+    return new_lst
 
 
 def get_AB_SRLs(lst):
