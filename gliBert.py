@@ -361,7 +361,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             a_emb = self.srl_model(a_srls)
             b_emb = self.srl_model(b_srls)
             ab = lambda i: [dummy_srl, a_emb[i], dummy_srl, b_emb[i]]
-            srl_emb = [torch.cat(tuple(ab[i]), dim=0) for i in range(len(a_srls))]
+            srl_emb = [torch.cat(tuple(ab(i)), dim=0) for i in range(len(a_srls))]
         else:
             srl_emb = self.srl_model(get_A_SRLs(srls))
 
@@ -537,7 +537,7 @@ def compute_acc(preds, labels):
     return correct / len(preds)
 
 
-def write_stats(stats_file, training_stats):
+def write_stats(stats_file, training_stats, training_results):
     """checks if outfile specified, if yes, writes stats to it
     Args:
         prarm1: str
@@ -553,6 +553,10 @@ def write_stats(stats_file, training_stats):
             stats_file = stats_file + stamp + ".json"
         with open(stats_file, "w") as outfile:
             outfile.write(json.dumps(training_stats))
+
+        results_file = stats_file.rstrip(".json") + ".results.json"
+        with open(results_file, "w") as outfile:
+            outfile.write(json.dumps(training_results))
 
 
 def print_preds(model, example, srls, prediction, true_label, mapping, step, len_data, elapsed, merge):
@@ -701,6 +705,7 @@ def fine_tune_BERT(config):
         )
     training_stats = []
     training_stats.append(config)
+    results = []
     total_t0 = time.time()
     PATIENCE = 0
 
@@ -794,6 +799,12 @@ def fine_tune_BERT(config):
         t0 = time.time()
         model.eval()
 
+        dev_results = []
+        if epoch_i == 0:
+            results.append(
+                    {"RESULTS": "prediciont, gold, text"}
+            )
+
         total_dev_accuracy = 0
         total_dev_loss = 0
 
@@ -820,6 +831,14 @@ def fine_tune_BERT(config):
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
+
+                    preds = [mapping[maxs.indices.tolist()] for maxs in value_index]
+                    gold = [mapping[label] for label in b_labels.tolist()]
+                    text = [model.tokenizer.decode(example, skip_special_tokens=True) 
+                            for example in b_input_ids]
+                    for ex in zip(preds, gold, text):
+                        dev_results.append(ex)
+                    import ipdb; ipdb.set_trace()
                 else:
                     start_span, end_span = model(
                                         b_input_ids,
@@ -838,6 +857,7 @@ def fine_tune_BERT(config):
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
 
+
             total_dev_loss += loss.item()
             total_dev_accuracy += acc
 
@@ -855,6 +875,8 @@ def fine_tune_BERT(config):
         print(green + "Running Test Set evaluation..." + end)
 
         t0 = time.time()
+
+        test_results = []
 
         total_test_accuracy = 0
         total_test_loss = 0
@@ -881,6 +903,13 @@ def fine_tune_BERT(config):
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
+
+                    preds = [mapping[maxs.indices.tolist()] for maxs in value_index]
+                    gold = [mapping[label] for label in b_labels.tolist()]
+                    text = [model.tokenizer.decode(example, skip_special_tokens=True) 
+                            for example in b_input_ids]
+                    for ex in zip(preds, gold, text):
+                        test_results.append(ex)
                 else:
                     start_span, end_span = model(
                                         b_input_ids,
@@ -923,8 +952,17 @@ def fine_tune_BERT(config):
             }
         )
 
+        results.append(
+            {
+                epoch_i + 1: {
+                    "dev": dev_results,
+                    "test": test_results
+                    }
+            }
+        )
+
         if config["early_stopping"]:
-            if epoch_i > 1:
+            if epoch_i > 0:
                 if training_stats[-2]["Dev Loss"] < training_stats[-1]["Dev Loss"]:
                     if PATIENCE > 4:
                         print("")
@@ -941,7 +979,7 @@ def fine_tune_BERT(config):
                 else:
                     PATIENCE = 0
 
-    if stats_file: write_stats(stats_file, training_stats)
+    if stats_file: write_stats(stats_file, training_stats, results)
     print("")
     print("Training complete!")
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
