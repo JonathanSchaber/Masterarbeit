@@ -137,9 +137,8 @@ def preprocess_deISEAR(path):
         for i, row in enumerate(f_reader):
             emotion, sentence = row[1], row[2]
             sentence = re.sub("\.\.\.", "[MASK]", sentence)
-            sem_roles = srl_predictor.predict_semRoles(sentence)
+            sem_roles = srl_predictor.predict_semRoles(re.sub("[MASK]", "Angst", sentence))
             emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
-    
 
     write_to_files(emotion_sentence_srl, outfile_paths)
 
