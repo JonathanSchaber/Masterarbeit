@@ -510,82 +510,6 @@ class BertSpanPrediction(BertBase):
         return start_span, end_span
 
 
-#class gliBert(nn.Module):
-#    def __init__(self, config, num_classes, max_len):
-#        super(GLIBert, self).__init__()
-#        self.config = config
-#        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
-#        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-#        self.linear = nn.Linear(768, 2)
-#        self.softmax = nn.LogSoftmax(dim=-1)
-#        if not SPAN_FLAG:
-#            self.head_layer = nn.Sequential(
-#                nn.Dropout(self.config["dropout"]),
-#                nn.Linear(max_len*768, self.config["head_hidden_size"]),
-#                nn.ReLU(inplace=True),
-#                nn.Linear(self.config["head_hidden_size"], num_classes),
-#            )
-#        else:
-#            self.start_span_layer = nn.Sequential(
-#                nn.Dropout(self.config["dropout"]),
-#                nn.Linear(max_len*768, self.config["head_hidden_size"]),
-#                nn.ReLU(inplace=True),
-#                nn.Linear(self.config["head_hidden_size"], max_len),
-#            )
-#            self.end_span_layer = nn.Sequential(
-#                nn.Dropout(self.config["dropout"]),
-#                nn.Linear(max_len*768, self.config["head_hidden_size"]),
-#                nn.ReLU(inplace=True),
-#                nn.Linear(self.config["head_hidden_size"], max_len),
-#            )
-#    
-#    def forward(
-#            self,
-#            tokens,
-#            attention_mask=None,
-#            token_type_ids=None,
-#            data_type=None,
-#            device=torch.device("cpu")
-#            ):
-#        if data_type == 2 or data_type == "qa":
-#            last_hidden_state, _ = self.bert(
-#                                        tokens,
-#                                        attention_mask=attention_mask,
-#                                        token_type_ids=token_type_ids
-#                                        )
-#        else:
-#            last_hidden_state, _ = self.bert(
-#                                        tokens,
-#                                        attention_mask=attention_mask
-#                                        )
-#
-#        if self.config["merge_subtokens"] == True:
-#            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-#        reshaped_last_hidden = torch.reshape(
-#                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
-#                (
-#                    last_hidden_state.shape[0], 
-#                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
-#                )
-#        if not SPAN_FLAG:
-#            output = self.head_layer(reshaped_last_hidden)
-#            #non_output = Swish(output)
-#            proba = self.softmax(output)
-#            return proba
-#        else:
-#            #output = self.span_layer(reshaped_last_hidden)
-#            start_span_output = self.start_span_layer(reshaped_last_hidden)
-#            end_span_output = self.end_span_layer(reshaped_last_hidden)
-#            start_span_proba = self.softmax(start_span_output)
-#            end_span_proba = self.softmax(end_span_output)
-#            new_end_span_proba = self.ensure_end_span_behind_start_span(
-#                                        start_span_proba,
-#                                        end_span_proba, 
-#                                        device
-#                                        )
-#            return start_span_proba, new_end_span_proba
-
-
 def combine_srl_embs_bert_embs():
     """
     """
@@ -881,6 +805,7 @@ def fine_tune_BERT(config):
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
             b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
+
 
             with torch.no_grad():
                 if not SPAN_FLAG:
