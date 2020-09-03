@@ -147,7 +147,6 @@ class SRL_Encoder(nn.Module):
             "O":	44,
             "0":        45
         }
-        self.null_token = self.dictionary["O"]
         self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
         self.encoder = nn.GRU(
                             input_size=3*self.config["embedding_dim"],
@@ -236,7 +235,7 @@ class BertBase(nn.Module):
                 decode_token = self.tokenizer.decode([ids[j][i]])
                 if decode_token.startswith("##"):
                     continue
-                elif decode_token in ["[CLS]", "[SEP]", "[PAD]"]:
+                elif decode_token in ["[CLS]", "[SEP]", "[PAD]", "[UNK]"]:
                     word_level_sentence.append(token)
                     break
                 elif i + 1 == len(sentence):
@@ -457,13 +456,13 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             a_emb = self.srl_model(a_srls)
             b_emb = self.srl_model(b_srls)
             ab = lambda i: [a_emb[i], dummy_srl, b_emb[i]]
-            srl_emb = [torch.cat(tuple(ab[i]), dim=0) for i in range(len(a_srls))]
+            srl_emb = [torch.cat(tuple(ab(i)), dim=0) for i in range(len(a_srls))]
         else:
             srl_emb = self.srl_model(get_A_SRLs(srls))
 
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-            srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len)
+            srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len-1)
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
 
         reshaped_last_hidden = torch.reshape(
