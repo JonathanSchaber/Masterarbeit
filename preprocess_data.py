@@ -2,6 +2,7 @@ import argparse
 import csv
 import json
 import os
+import re
 
 from pathlib import Path
 from predict_SRL import SRL_predictor
@@ -135,6 +136,7 @@ def preprocess_deISEAR(path):
         next(f_reader)
         for i, row in enumerate(f_reader):
             emotion, sentence = row[1], row[2]
+            sentence = re.sub("\.\.\.", "[MASK]", sentence)
             sem_roles = srl_predictor.predict_semRoles(sentence)
             emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
     
