@@ -217,7 +217,7 @@ class Dataloader:
                 token_type_ids.append(encoded_dict["token_type_ids"])
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
-                srl.append(srl_sentence)
+                srl.append([srl_sentence])
         elif self.type == 2:
             for example in data:
                 label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
@@ -237,7 +237,7 @@ class Dataloader:
                 token_type_ids.append(encoded_dict["token_type_ids"])
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
-                srl.append((srl_sentence_1, srl_sentence_2))
+                srl.append([srl_sentence_1, srl_sentence_2])
         elif self.type == "qa":
             for example in data:
                 start_span, end_span, question, context, srl_question, srl_context = example
@@ -265,7 +265,7 @@ class Dataloader:
                 token_type_ids.append(encoded_dict["token_type_ids"])
                 y_tensor = torch.tensor([start_span, end_span])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
-                srl.append((srl_question, srl_context))
+                srl.append([srl_question, srl_context])
             
         return torch.cat(input_ids, dim=0), \
                 torch.cat(attention_mask, dim=0), \
@@ -433,5 +433,6 @@ def dataloader(config, location, data_set):
             dataloader.dataset_test, \
             num_classes, \
             dataloader.max_len, \
-            dataloader.y_mapping
+            dataloader.y_mapping, \
+            dataloader.type
 
