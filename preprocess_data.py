@@ -423,6 +423,10 @@ def preprocess_XQuAD(path):
 
         write_to_files(spans_text_qas_srl, outfile_paths)
 
+    with open(path + "/too_long.txt", "w") as f:
+        for context in too_long_contexts:
+            f.write(context + "\n\n")
+
 
 def main():
     args = parse_cmd_args()
