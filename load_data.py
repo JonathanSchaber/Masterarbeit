@@ -7,13 +7,14 @@ from transformers import BertTokenizer
 
 
 class gliBertDataset(Dataset):
-    def __init__(self, x_tensor, y_tensor, attention_masks, token_type_ids, srl):
+    def __init__(self, x_tensor, y_tensor, attention_masks, token_type_ids, srl, ids):
         assert all(len(obj) == len(x_tensor) for obj in [y_tensor, attention_masks, token_type_ids, srl])
         self.x_tensor = x_tensor
         self.y_tensor = y_tensor
         self.attention_masks = attention_masks
         self.token_type_ids = token_type_ids
         self.srl = srl
+        self.ids = ids
 
     def __len__(self):
         return len(self.x_tensor)
@@ -26,7 +27,8 @@ class gliBertDataset(Dataset):
                 self.y_tensor[idx], \
                 self.attention_masks[idx], \
                 self.token_type_ids[idx], \
-                self.srl[idx]
+                self.srl[idx], \
+                self.ids[idx]
 
 
 class Dataloader:
@@ -106,22 +108,29 @@ class Dataloader:
             counter = 0
             for row in f_reader:
                 if self.type == 1:
-                    id, label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3], row[4]
+                    instance_id, label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3], row[4]
                     srl_sentence = eval(srl_sentence)
-                    data.append((id, label, blank, sentence, "", srl_sentence, ""))
+                    data.append((instance_id, label, blank, sentence, "", srl_sentence, ""))
                 elif self.type == 2:
-                    id, \
+                    instance_id, \
                     label, \
                     blank, \
                     sentence_1, \
                     sentence_2, \
                     srl_sentence_1, \
-                    srl_sentence_3 = row[0], row[1], row[2], row[3], row[4], row[5], row[6]
+                    srl_sentence_2 = row[0], row[1], row[2], row[3], row[4], row[5], row[6]
                     srl_sentence_1 = eval(srl_sentence_1)
                     srl_sentence_2 = eval(srl_sentence_2)
-                    data.append((id, label, blank, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2))
+                    data.append((instance_id, \
+                                    label, \
+                                    blank, \
+                                    sentence_1, \
+                                    sentence_2, \
+                                    srl_sentence_1, \
+                                    srl_sentence_2
+                                    ))
                 elif self.type == "qa":
-                    id, \
+                    instance_id, \
                     start_index, \
                     text, \
                     context, \
@@ -142,7 +151,7 @@ class Dataloader:
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
                     start_span += len_question + 1
                     end_span += len_question + 1
-                    data.append((id, start_span, end_span, question, context, srl_question, srl_context))
+                    data.append((instance_id, start_span, end_span, question, context, srl_question, srl_context))
 
                 if self.type != "qa":
                     if label not in y_mapping:
@@ -158,38 +167,41 @@ class Dataloader:
                                 self.y_tensor_train,
                                 self.attention_mask_train,
                                 self.token_type_ids_train,
-                                self.srl_train
+                                self.srl_train,
+                                self.ids_train
                                 )
         self.dataset_dev = gliBertDataset(
                                 self.x_tensor_dev,
                                 self.y_tensor_dev,
                                 self.attention_mask_dev,
                                 self.token_type_ids_dev,
-                                self.srl_dev
+                                self.srl_dev,
+                                self.ids_dev
                                 )
         self.dataset_test = gliBertDataset(
                                 self.x_tensor_test,
                                 self.y_tensor_test,
                                 self.attention_mask_test,
                                 self.token_type_ids_test,
-                                self.srl_test
+                                self.srl_test,
+                                self.ids_test
                                 )
 
     def get_max_len(self):
         if self.type == 2 or self.type == "qa":
-            longest_sentence_1_train = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_train]) 
-            longest_sentence_2_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
-            longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
-            longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
-            longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_test]) 
-            longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
+            longest_sentence_1_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
+            longest_sentence_2_train = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_train]) 
+            longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
+            longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_dev]) 
+            longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
+            longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_test]) 
             longest_sentence_1 = max(longest_sentence_1_train, longest_sentence_1_dev, longest_sentence_1_test)
             longest_sentence_2 = max(longest_sentence_2_train, longest_sentence_2_dev, longest_sentence_2_test)
             return self.check_max_length(longest_sentence_1, longest_sentence_2)
         else:
-            longest_sent_train = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_train]) 
-            longest_sent_dev = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_dev]) 
-            longest_sent_test = max([len(self.tokenizer.tokenize(sent[2])) for sent in self.data_test]) 
+            longest_sent_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
+            longest_sent_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
+            longest_sent_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
             return self.check_max_length(max(longest_sent_train, longest_sent_dev, longest_sent_test))
 
     def load_torch_data(self, data):
@@ -204,7 +216,7 @@ class Dataloader:
 
         if self.type == 1:
             for example in data:
-                id, label, _, sentence, _ , srl_sentence, _ = example
+                instance_id, label, _, sentence, _ , srl_sentence, _ = example
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence, 
                                             add_special_tokens = True, 
@@ -221,10 +233,10 @@ class Dataloader:
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_sentence])
-                ids.append(id)
+                ids.append(instance_id)
         elif self.type == 2:
             for example in data:
-                id, label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
+                instance_id, label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence_1, 
                                             sentence_2,
@@ -242,10 +254,10 @@ class Dataloader:
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_sentence_1, srl_sentence_2])
-                ids.append(id)
+                ids.append(instance_id)
         elif self.type == "qa":
             for example in data:
-                id, start_span, end_span, question, context, srl_question, srl_context = example
+                instance_id, start_span, end_span, question, context, srl_question, srl_context = example
                 start_span = int(start_span) + 1
                 end_span = int(end_span) + 1
                 if len(self.tokenizer.tokenize(question)) + len(self.tokenizer.tokenize(context)) + 3 > 512:
@@ -271,7 +283,7 @@ class Dataloader:
                 y_tensor = torch.tensor([start_span, end_span])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_question, srl_context])
-                ids.append(id)
+                ids.append(instance_id)
             
         return torch.cat(input_ids, dim=0), \
                 torch.cat(attention_mask, dim=0), \
@@ -285,19 +297,22 @@ class Dataloader:
         self.attention_mask_train, \
         self.token_type_ids_train, \
         self.y_tensor_train, \
-        self.srl_train = self.load_torch_data(self.data_train)
+        self.srl_train, \
+        self.ids_train = self.load_torch_data(self.data_train)
 
         self.x_tensor_dev, \
         self.attention_mask_dev, \
         self.token_type_ids_dev, \
         self.y_tensor_dev, \
-        self.srl_dev = self.load_torch_data(self.data_dev)
+        self.srl_dev, \
+        self.ids_dev = self.load_torch_data(self.data_dev)
 
         self.x_tensor_test, \
         self.attention_mask_test, \
         self.token_type_ids_test, \
         self.y_tensor_test, \
-        self.srl_test = self.load_torch_data(self.data_test)
+        self.srl_test, \
+        self.ids_test = self.load_torch_data(self.data_test)
 
         print("")
         print("======== Longest example in data: ========")
