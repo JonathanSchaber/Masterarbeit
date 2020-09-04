@@ -559,10 +559,19 @@ def write_stats(stats_file, training_stats, training_results):
             outfile.write(json.dumps(training_results))
 
 
-def print_preds(model, example, srls, prediction, true_label, mapping, step, len_data, elapsed, merge):
+def print_preds(model, \
+                data_type, \
+                example, \
+                srls, \
+                prediction, \
+                true_label, \
+                mapping, \
+                step, \
+                len_data, \
+                elapsed, merge):
     first_srls = [sentence[0][0].tolist() for sentence in srls]
     reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
-    if not SPAN_FLAG:
+    if not data_type == "qa":
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
         #print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
@@ -729,7 +738,7 @@ def fine_tune_BERT(config):
             b_srls = batch[4]
             b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
             model.zero_grad()
-            if not SPAN_FLAG:
+            if not data_type == "qa":
                 outputs = model(
                             b_input_ids, 
                             attention_mask=b_attention_mask,
@@ -802,7 +811,7 @@ def fine_tune_BERT(config):
         dev_results = []
         if epoch_i == 0:
             results.append(
-                    {"RESULTS": "prediciont, gold, text"}
+                    {"RESULTS": "id, prediction, gold"}
             )
 
         total_dev_accuracy = 0
@@ -815,11 +824,12 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
+            b_ids = batch[5]
             b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
 
 
             with torch.no_grad():
-                if not SPAN_FLAG:
+                if not data_type = "qa":
                     outputs = model(
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
@@ -834,11 +844,9 @@ def fine_tune_BERT(config):
 
                     preds = [mapping[maxs.indices.tolist()] for maxs in value_index]
                     gold = [mapping[label] for label in b_labels.tolist()]
-                    text = [model.tokenizer.decode(example, skip_special_tokens=True) 
                             for example in b_input_ids]
-                    for ex in zip(preds, gold, text):
+                    for ex in zip(b_ids, preds, gold):
                         dev_results.append(ex)
-                    import ipdb; ipdb.set_trace()
                 else:
                     start_span, end_span = model(
                                         b_input_ids,
@@ -888,10 +896,11 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
+            b:ids = batch[5]
             b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
 
             with torch.no_grad():
-                if not SPAN_FLAG:
+                if not data_type == "qa":
                     outputs = model(
                                 b_input_ids,
                                 attention_mask=b_attention_mask,
@@ -906,9 +915,8 @@ def fine_tune_BERT(config):
 
                     preds = [mapping[maxs.indices.tolist()] for maxs in value_index]
                     gold = [mapping[label] for label in b_labels.tolist()]
-                    text = [model.tokenizer.decode(example, skip_special_tokens=True) 
                             for example in b_input_ids]
-                    for ex in zip(preds, gold, text):
+                    for ex in zip(b_ids, preds, gold):
                         test_results.append(ex)
                 else:
                     start_span, end_span = model(
@@ -992,8 +1000,6 @@ def main():
     location = args.location
     global data_set
     data_set = args.data_set
-    global SPAN_FLAG
-    SPAN_FLAG = False if data_set not in ["MLQA", "XQuAD"] else True
     global stats_file
     stats_file = args.stats_file
     config = load_json(args.config)
