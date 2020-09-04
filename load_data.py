@@ -106,26 +106,28 @@ class Dataloader:
             counter = 0
             for row in f_reader:
                 if self.type == 1:
-                    label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3]
+                    id, label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3], row[4]
                     srl_sentence = eval(srl_sentence)
-                    data.append((label, blank, sentence, "", srl_sentence, ""))
+                    data.append((id, label, blank, sentence, "", srl_sentence, ""))
                 elif self.type == 2:
+                    id, \
                     label, \
                     blank, \
                     sentence_1, \
                     sentence_2, \
                     srl_sentence_1, \
-                    srl_sentence_2 = row[0], row[1], row[2], row[3], row[4], row[5]
+                    srl_sentence_3 = row[0], row[1], row[2], row[3], row[4], row[5], row[6]
                     srl_sentence_1 = eval(srl_sentence_1)
                     srl_sentence_2 = eval(srl_sentence_2)
-                    data.append((label, blank, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2))
+                    data.append((id, label, blank, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2))
                 elif self.type == "qa":
+                    id, \
                     start_index, \
                     text, \
                     context, \
                     question, \
                     srl_context, \
-                    srl_question = row[0], row[1], row[2], row[3], row[4], row[5]
+                    srl_question = row[0], row[1], row[2], row[3], row[4], row[5], row[6]
                     start_index = int(start_index)
                     srl_context = eval(srl_context)
                     srl_question = eval(srl_question)
@@ -140,7 +142,7 @@ class Dataloader:
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
                     start_span += len_question + 1
                     end_span += len_question + 1
-                    data.append((start_span, end_span, question, context, srl_question, srl_context))
+                    data.append((id, start_span, end_span, question, context, srl_question, srl_context))
 
                 if self.type != "qa":
                     if label not in y_mapping:
@@ -196,12 +198,13 @@ class Dataloader:
         token_type_ids = []
         y_tensor_list = []
         srl = []
+        ids = []
 
         self.max_len = self.get_max_len()
 
         if self.type == 1:
             for example in data:
-                label, _, sentence, _ , srl_sentence, _ = example
+                id, label, _, sentence, _ , srl_sentence, _ = example
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence, 
                                             add_special_tokens = True, 
@@ -218,9 +221,10 @@ class Dataloader:
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_sentence])
+                ids.append(id)
         elif self.type == 2:
             for example in data:
-                label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
+                id, label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence_1, 
                                             sentence_2,
@@ -238,9 +242,10 @@ class Dataloader:
                 y_tensor = torch.tensor(self.y_mapping[label])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_sentence_1, srl_sentence_2])
+                ids.append(id)
         elif self.type == "qa":
             for example in data:
-                start_span, end_span, question, context, srl_question, srl_context = example
+                id, start_span, end_span, question, context, srl_question, srl_context = example
                 start_span = int(start_span) + 1
                 end_span = int(end_span) + 1
                 if len(self.tokenizer.tokenize(question)) + len(self.tokenizer.tokenize(context)) + 3 > 512:
@@ -266,12 +271,14 @@ class Dataloader:
                 y_tensor = torch.tensor([start_span, end_span])
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_question, srl_context])
+                ids.append(id)
             
         return torch.cat(input_ids, dim=0), \
                 torch.cat(attention_mask, dim=0), \
                 torch.cat(token_type_ids, dim=0), \
                 torch.cat(tuple(y_tensor_list), dim=0), \
-                srl
+                srl, \
+                ids
 
     def load_torch(self):
         self.x_tensor_train, \

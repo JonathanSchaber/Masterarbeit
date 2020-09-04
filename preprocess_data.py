@@ -41,6 +41,7 @@ def parse_cmd_args():
 
 
 def write_to_files(data, files):
+    id = 0
     len_train = int(len(data)*0.7)
     len_dev = int(len(data)*0.15)
     shuffle(data)
@@ -50,13 +51,15 @@ def write_to_files(data, files):
 
     with open(files[0], "w") as f:
         for element in data[:len_train]:
-            csv.writer(f, delimiter="\t").writerow(element)
+            csv.writer(f, delimiter="\t").writerow([i]+element)
+            i += 1
     with open(files[1], "w") as f:
         for element in data[len_train:len_train+len_dev]:
-            csv.writer(f, delimiter="\t").writerow(element)
+            csv.writer(f, delimiter="\t").writerow([i]+element)
+            i += 1
     with open(files[2], "w") as f:
         for element in data[len_train+len_dev:]:
-            csv.writer(f, delimiter="\t").writerow(element)
+            csv.writer(f, delimiter="\t").writerow([i]+element)
 
 
 def splitted_write_to_files(data, files, i):
