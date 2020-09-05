@@ -140,17 +140,24 @@ class SRL_predictor:
                                             " ".join([x[0] for x in srl_sentence])
                                             )
                                         )
+            start = 0
+            pred_dict = {}
             bert_srl_sentence = []
+
+            for token_label in srl_sentence:
+                for i, char in enumerate(token_label[0]):
+                    pred_dict[start+i] = token_label[1]
+                start += len(token_label[0])
+
+            start = 0
             for token in bert_tokenizer_list:
-                append_flag = False
-                for tpl in srl_sentence:
-                    if token == tpl[0] and tpl[1] == "PRED":
-                        bert_srl_sentence.append((token, "PRED"))
-                        append_flag = True
-                if not append_flag:
-                    bert_srl_sentence.append((token, "NOT_PRED"))
+                bert_srl_sentence.append((token, pred_dict[start]))
+                start += len(token)
 
             tagged_tuple_list.append(bert_srl_sentence)
+
+        len_bert_all = len(self.merge_subtokens(self.tokenizer.tokenize(text)))
+        assert sum([len(sent) for sent in tagged_tuple_list]) == len_bert_all
 
         return tagged_tuple_list
 
