@@ -135,29 +135,33 @@ class SRL_predictor:
             # since ParZu tokenizes slightly different then Bert,
             # we tokenize Bert-like, merge to token-level, and only use the obtained information
             # about what is a predicate from the ParZu-Parser output
-            bert_tokenizer_list = self.merge_subtokens(
-                                        self.tokenizer.tokenize(
-                                            " ".join([x[0] for x in srl_sentence])
-                                            )
-                                        )
-            start = 0
-            pred_dict = {}
+            #bert_tokenizer_list = self.merge_subtokens(
+            #                            self.tokenizer.tokenize(
+            #                                " ".join([x[0] for x in srl_sentence])
+            #                                )
+            #                            )
+            #start = 0
+            #pred_dict = {}
             bert_srl_sentence = []
 
             for token_label in srl_sentence:
-                for i, char in enumerate(token_label[0]):
-                    pred_dict[start+i] = token_label[1]
-                start += len(token_label[0])
+                for subtoken in self.merge_subtokens(self.tokenizer.tokenize(token_label[0])):
+                    bert_srl_sentence.append((subtoken, token_label[1]))
 
-            start = 0
-            for token in bert_tokenizer_list:
-                bert_srl_sentence.append((token, pred_dict[start]))
-                start += len(token)
+            #start = 0
+            #for token in bert_tokenizer_list:
+            #    try:
+            #        bert_srl_sentence.append((token, pred_dict[start]))
+            #    except:
+            #        import ipdb; ipdb.set_trace()
+            #    start += len(token)
 
             tagged_tuple_list.append(bert_srl_sentence)
 
         len_bert_all = len(self.merge_subtokens(self.tokenizer.tokenize(text)))
-        assert sum([len(sent) for sent in tagged_tuple_list]) == len_bert_all
+        if not  sum([len(sent) for sent in tagged_tuple_list]) == len_bert_all:
+            pass
+            #for i, item in [token for sent in tagged_tuple_list for token in sent]
 
         return tagged_tuple_list
 
@@ -202,11 +206,12 @@ class SRL_predictor:
         Returns:
             None
         """
-        srl_list = predict_semRoles(self.dsrl, process_text(self.parser, text))
-        parsed_text = parse_text(self.parser, text)
+        srl_list = self.predict_semRoles(text)
+        parsed_text = self.parse_text(text)
         pretty_print_list = []
-        for i, sentence in enumerate(parsed_text):
-            for j, token in enumerate(sentence):
-                pretty_print_list.append("\t".join(token) + "\t" + "\t".join(semrole_item[j] for semrole_item in srl_list[i]))
-            pretty_print_list.append("\n")
-        print("\n".join(pretty_print_list))
+
+        for sent in zip(srl_list, parsed_text):
+            for i, token in enumerate(sent[1]):
+                print(token[0] + "\t" + "\t".join(srl[i] for srl in sent[0]))
+            print("\n")
+                
