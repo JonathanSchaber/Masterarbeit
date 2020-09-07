@@ -1,4 +1,5 @@
 #import tensorflow as tf
+import nltk.data
 
 from liir.dame.core.representation.Predicate import Predicate
 from liir.dame.core.representation.Sentence import Sentence
@@ -24,6 +25,7 @@ class SRL_predictor:
         self.verb_inf_POS = ["VVINF", "VAINF", "VMINF", "VVPP", "VAPP", "VMPP", "VVIZU"]
         self.verb_aux_POS = ["VAFIN", "VMFIN", "VAIMP", "VMIMP"]
         self.subclause_marker = ["subjc", "objc", "rel"]
+        self.sent_detector = nltk.data.load('tokenizers/punkt/german.pickle')
         self.create_ParZu_parser()
 
     @staticmethod
@@ -106,6 +108,8 @@ class SRL_predictor:
         """
         tagged_tuple_list = []
 
+        bert_full_text = self.merge_subtokens(self.tokenizer.tokenize(text))
+
         sents = [sentence.rstrip().split("\n") for sentence in self.parser.main(text)]
         full_tagged_text = []
         for sentence in sents:
@@ -132,36 +136,61 @@ class SRL_predictor:
                     srl_sentence.append((token[1], "NOT_PRED"))
             #tagged_tuple_list.append(srl_sentence)
 
-            # since ParZu tokenizes slightly different then Bert,
-            # we tokenize Bert-like, merge to token-level, and only use the obtained information
-            # about what is a predicate from the ParZu-Parser output
-            #bert_tokenizer_list = self.merge_subtokens(
-            #                            self.tokenizer.tokenize(
-            #                                " ".join([x[0] for x in srl_sentence])
-            #                                )
-            #                            )
-            #start = 0
-            #pred_dict = {}
             bert_srl_sentence = []
 
             for token_label in srl_sentence:
                 for subtoken in self.merge_subtokens(self.tokenizer.tokenize(token_label[0])):
                     bert_srl_sentence.append((subtoken, token_label[1]))
 
-            #start = 0
-            #for token in bert_tokenizer_list:
-            #    try:
-            #        bert_srl_sentence.append((token, pred_dict[start]))
-            #    except:
-            #        import ipdb; ipdb.set_trace()
-            #    start += len(token)
-
             tagged_tuple_list.append(bert_srl_sentence)
 
-        len_bert_all = len(self.merge_subtokens(self.tokenizer.tokenize(text)))
-        if not  sum([len(sent) for sent in tagged_tuple_list]) == len_bert_all:
-            pass
-            #for i, item in [token for sent in tagged_tuple_list for token in sent]
+        offset = 0
+        if not  sum([len(sent) for sent in tagged_tuple_list]) == len(bert_full_text):
+            bert_sents = self.sent_detector.tokenize(text)
+            assert len(tagged_tuple_list) == len(bert_sents)
+            for i, sent in enumerate(tagged_tuple_list):
+                bert_sent = self.merge_subtokens(self.tokenizer.tokenize(bert_sents[i]))
+                if [token[0] for token in sent] != bert_sent:
+                    controlled_sent = []
+                    q = lambda x: 2 if x < 2 else x
+                    for j, token in enumerate(bert_sent):
+                        FLAG = False
+                        window = sent[q(j)-2:j+2]
+                        for word, label in window:
+                            if word == token and label == "PRED":
+                                controlled_sent.append((word, label))
+                                FLAG = True
+                                break
+                        if not FLAG:
+                            controlled_sent.append((word, "NOT_PRED"))
+                    if not len(controlled_sent) == len(bert_sent):
+                        import ipdb; ipdb.set_trace()
+                    tagged_tuple_list[i] = controlled_sent
+
+                #    offset += len(sent)
+                #elif len(sent) > len(bert_sent):
+                #    while len(sent) != len(bert_sent):
+                #        for i, token in enumerate(sent):
+                #            r = lambda x: 1 if x < 1 else x
+                #            q = lambda x: 2 if x < 2 else x
+                #            tuple_pattern = [token[0] for token in sent[r(i)-1:i+2]]
+                #            bert_window = bert_sent[q(i)-2:i+3]
+                #            if len(tuple_pattern) == 2:
+                #                bert_patterns = [bert_window[k:k+2] for k in range(len(bert_window))]
+                #            else:
+                #                bert_patterns = [bert_window[r(k)-1:k+2] for k in range(len(bert_window))]
+                #            if tuple_pattern not in bert_patterns:
+                #                print([x[0] for x in sent])
+                #                print("after deleting: {}".format(sent[i]))
+                #                del(sent[i])
+                #                print([x[0] for x in sent])
+                #                import ipdb; ipdb.set_trace()
+                #                break
+                #else:
+                #    import ipdb; ipdb.set_trace()
+
+        if not  sum([len(sent) for sent in tagged_tuple_list]) == len(bert_full_text):
+            import ipdb; ipdb.set_trace()
 
         return tagged_tuple_list
 
