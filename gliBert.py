@@ -240,6 +240,7 @@ class BertBase(nn.Module):
                             new_predicate.append(copy)
                     split_sentence.append(torch.stack(new_predicate))
                 split_example.append(split_sentence)
+                #import ipdb; ipdb.set_trace()
             split_srls.append(split_example)
 
         return split_srls
@@ -410,7 +411,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                                         device)
         if data_type != 1:
             a_srls, b_srls = get_AB_SRLs(srls) 
-            if self.config["merge_subtokens"] == True:
+            if self.config["merge_subtokens"] != True:
                 a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
                                 self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
             a_emb = self.srl_model(a_srls)
@@ -420,11 +421,12 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                             for i in range(len(a_srls))]
         else:
             srls = get_A_SRLs(srls)
-            if self.config["merge_subtokens"] == True:
+            if self.config["merge_subtokens"] != True:
                 srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
-            emb = self.slr_model(srls)
+            emb = self.srl_model(srls)
             srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
-                            for i in range(len(full_srls))]
+                            for i in range(len(srls))]
+            #import ipdb; ipdb.set_trace()
 
         srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
         if self.config["merge_subtokens"] == True:
