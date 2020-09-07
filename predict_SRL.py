@@ -155,7 +155,7 @@ class SRL_predictor:
                     q = lambda x: 2 if x < 2 else x
                     for j, token in enumerate(bert_sent):
                         FLAG = False
-                        window = sent[q(j)-2:j+2]
+                        window = sent[q(j)-2:j+3]
                         for word, label in window:
                             if word == token and label == "PRED":
                                 controlled_sent.append((word, label))
@@ -163,31 +163,14 @@ class SRL_predictor:
                                 break
                         if not FLAG:
                             controlled_sent.append((word, "NOT_PRED"))
-                    if not len(controlled_sent) == len(bert_sent):
-                        import ipdb; ipdb.set_trace()
-                    tagged_tuple_list[i] = controlled_sent
+                    assert len(controlled_sent) == len(bert_sent)
 
-                #    offset += len(sent)
-                #elif len(sent) > len(bert_sent):
-                #    while len(sent) != len(bert_sent):
-                #        for i, token in enumerate(sent):
-                #            r = lambda x: 1 if x < 1 else x
-                #            q = lambda x: 2 if x < 2 else x
-                #            tuple_pattern = [token[0] for token in sent[r(i)-1:i+2]]
-                #            bert_window = bert_sent[q(i)-2:i+3]
-                #            if len(tuple_pattern) == 2:
-                #                bert_patterns = [bert_window[k:k+2] for k in range(len(bert_window))]
-                #            else:
-                #                bert_patterns = [bert_window[r(k)-1:k+2] for k in range(len(bert_window))]
-                #            if tuple_pattern not in bert_patterns:
-                #                print([x[0] for x in sent])
-                #                print("after deleting: {}".format(sent[i]))
-                #                del(sent[i])
-                #                print([x[0] for x in sent])
-                #                import ipdb; ipdb.set_trace()
-                #                break
-                #else:
-                #    import ipdb; ipdb.set_trace()
+                    # Remove this after preprocessing, only for control ;-)
+                    if len([token for token in sent if token[1] == "PRED"]) != \
+                        len([token for token in controlled_sent if token[1] == "PRED"]):
+                        import ipdb; ipdb.set_trace()
+
+                    tagged_tuple_list[i] = controlled_sent
 
         if not  sum([len(sent) for sent in tagged_tuple_list]) == len(bert_full_text):
             import ipdb; ipdb.set_trace()
