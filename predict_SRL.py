@@ -101,6 +101,13 @@ class SRL_predictor:
 
     def parse_text(self, text):
         """parse sentence and return list of tuples with token and POS-tags
+        Problem: We have to make sure that the tokenization of ParZu matches
+        exactly the merged tokenization of BERT, since we need to align (sub-)
+        tokens correctly.
+        Solution: Parse sentence ParZu-like for finding predicates -> map the
+        predicates on a merged BERT-tokenization of this text -> feed this to
+        the DAMESRL.
+        TODO: check if performance drops through this!
         Args:
             param1: text to parse
         Returns:
