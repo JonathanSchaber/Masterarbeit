@@ -426,7 +426,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             emb = self.srl_model(srls)
             srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
                             for i in range(len(srls))]
-            #import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
 
         srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
         if self.config["merge_subtokens"] == True:
@@ -484,12 +484,13 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
         return proba
 
 
-class gliBertClassifierLastHiddenStateNoCLS(BertBase):
+class gliBertClassifierLastHiddenStateAll(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
+        self.dummy_srl = None
         self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.linear = nn.Linear((768+2*config["gru_hidden_size"])*(max_len-1), num_classes)
@@ -504,38 +505,46 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             data_type=None,
             device=torch.device("cpu")
             ):
-        # for glueing srls AB together and padding. Has to be double since
-        # bi-directional. size batch:1:2*hidden_size
-        dummy_srl = torch.tensor([0.0]*2*self.config["gru_hidden_size"]).to(device)
-        dummy_srl = torch.unsqueeze(dummy_srl, dim=0)
-
-        last_hidden_state, _ = self.bert(
-                                tokens,
-                                attention_mask,
-                                token_type_ids
-                                )
+        last_hidden_state, _ = self.bert(tokens,
+                                        attention_mask,
+                                        token_type_ids)
+        full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
+                                        tokens,
+                                        device)
         last_hidden_state = last_hidden_state[:, 1:, :]
+
         if data_type != 1:
             a_srls, b_srls = get_AB_SRLs(srls) 
+            if self.config["merge_subtokens"] != True:
+                a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                                self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
             a_emb = self.srl_model(a_srls)
             b_emb = self.srl_model(b_srls)
-            ab = lambda i: [a_emb[i], dummy_srl, b_emb[i]]
-            srl_emb = [torch.cat(tuple(ab(i)), dim=0) for i in range(len(a_srls))]
+            ab = lambda i: [a_emb[i], self.dummy_srl, b_emb[i]]
+            srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+                            for i in range(len(a_srls))]
         else:
-            srl_emb = self.srl_model(get_A_SRLs(srls))
+            srls = get_A_SRLs(srls)
+            if self.config["merge_subtokens"] != True:
+                srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
+            emb = self.srl_model(srls)
+            srl_emb = [torch.cat(tuple([emb[i]]), dim=0)
+                            for i in range(len(srls))]
+        #import ipdb; ipdb.set_trace()
 
+        srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
         if self.config["merge_subtokens"] == True:
-            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
-            srl_batch = pad_SRLs(srl_emb, dummy_srl, self.max_len-1)
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+        else:
+            combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
 
         reshaped_last_hidden = torch.reshape(
-                combo_merge_batch if self.config["merge_subtokens"] == True else last_hidden_state, 
+                combo_merge_batch,
                 (
                     combo_merge_batch.shape[0], 
                     combo_merge_batch.shape[1]*combo_merge_batch.shape[2])
                 )
-        #import ipdb; ipdb.set_trace()
+
         linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
         return proba
