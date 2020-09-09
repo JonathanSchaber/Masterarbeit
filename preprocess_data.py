@@ -141,6 +141,8 @@ def preprocess_deISEAR(path):
             emotion, sentence = row[1], row[2]
             sentence = re.sub("\.\.\.", "[MASK]", sentence)
             sem_roles = srl_predictor.predict_semRoles(re.sub("[MASK]", "Angst", sentence))
+            if sem_roles == False:
+                continue
             emotion_sentence_srl.append([emotion, "", sentence, sem_roles])
 
     write_to_files(emotion_sentence_srl, outfile_paths)
@@ -189,6 +191,8 @@ def preprocess_MLQA(path):
                     start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     sem_roles_question = srl_predictor.predict_semRoles(question)
+                    if sem_roles_question == False or sem_roles_context == False:
+                        continue
                     spans_text_qas_srl.append([
                                             start_index,
                                             text,
@@ -235,6 +239,8 @@ def preprocess_PAWS_X(path):
                 para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
                 sem_roles_1 = srl_predictor.predict_semRoles(sentence_1)
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
+                if sem_roles_1 == False or sem_roles_2 == False:
+                    continue
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
         splitted_write_to_files(label_text_feat, outfile_paths, i)
@@ -292,6 +298,8 @@ def preprocess_SCARE(path):
     for review_id, feat in id_text_labels.items():
         polarity, majority, num_labels = get_majority_label(feat["labels"])
         sem_roles = srl_predictor.predict_semRoles(feat["text"])
+        if sem_roles == False:
+            continue
         label_text_feat.append([polarity, "", feat["text"], sem_roles])
         if polarity == "Neutral": count_non_maj += 1 
         if not majority: count_close += 1 
@@ -339,6 +347,8 @@ def preprocess_SCARE_reviews(path, path_outfile):
             application, rating, title, text, date = item
             review = title.rstrip() + " || " + text.lstrip()
             sem_roles = srl_predictor.predict_semRoles(review)
+            if sem_roles == False:
+                continue
             text_label.append([rating, "", review, sem_roles])
 
     write_to_files(rating_text_srl, outfile_paths)
@@ -374,6 +384,8 @@ def preprocess_XNLI(path):
                 label, sentence_1, sentence_2 = row[1], row[6], row[7]
                 sem_roles_1 = srl_predictor.predict_semRoles(sentence_1)
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
+                if sem_roles_1 == False or sem_roles_2 == False:
+                    continue
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
     
         splitted_write_to_files(label_text_feat, outfile_paths, i)
@@ -414,6 +426,8 @@ def preprocess_XQuAD(path):
                 for k in range(len(json_data["data"][i]["paragraphs"][j]["qas"])):
                     question = json_data["data"][i]["paragraphs"][j]["qas"][k]["question"]
                     sem_roles_question = srl_predictor.predict_semRoles(question)
+                    if sem_roles_question == False or sem_roles_context == False:
+                        continue
                     start_index = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["answer_start"]
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     spans_text_qas_srl.append([

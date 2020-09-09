@@ -151,10 +151,10 @@ class SRL_predictor:
 
             tagged_tuple_list.append(bert_srl_sentence)
 
-        offset = 0
         if not  sum([len(sent) for sent in tagged_tuple_list]) == len(bert_full_text):
             bert_sents = self.sent_detector.tokenize(text)
-            assert len(tagged_tuple_list) == len(bert_sents)
+            if not len(tagged_tuple_list) == len(bert_sents):
+                return False
             for i, sent in enumerate(tagged_tuple_list):
                 bert_sent = self.merge_subtokens(self.tokenizer.tokenize(bert_sents[i]))
                 if [token[0] for token in sent] != bert_sent:
@@ -173,9 +173,9 @@ class SRL_predictor:
                     assert len(controlled_sent) == len(bert_sent)
 
                     # Remove this after preprocessing, only for control ;-)
-                    if len([token for token in sent if token[1] == "PRED"]) != \
-                        len([token for token in controlled_sent if token[1] == "PRED"]):
-                        import ipdb; ipdb.set_trace()
+                    #if len([token for token in sent if token[1] == "PRED"]) != \
+                    #    len([token for token in controlled_sent if token[1] == "PRED"]):
+                    #    import ipdb; ipdb.set_trace()
 
                     tagged_tuple_list[i] = controlled_sent
 
@@ -195,6 +195,11 @@ class SRL_predictor:
         srl_list = []
 
         parsed_text = self.parse_text(text)
+        if parsed_text == False:
+            print("ERROR:")
+            print("{}".format(text))
+            print("could not be processed. Skipping")
+            return False
         dsrl_obj = self.create_dsrl_repr(parsed_text)
 
         # if there are no predicates in all sentences, return empty-SRLs for
