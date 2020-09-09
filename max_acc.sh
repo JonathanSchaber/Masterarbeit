@@ -11,7 +11,7 @@ if [ -z "$MAX_DEV" ]
 then
 	echo "Old json file, grep manually..."
 else
-	jq '.' "$FILE" | grep -PA 1 "Dev Accur.*?${MAX_DEV},$"
+	jq '.' "$FILE" | grep -PC 4 "Dev Accur.*?${MAX_DEV},$"
 fi
 	
 
