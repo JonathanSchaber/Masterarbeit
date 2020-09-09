@@ -375,7 +375,7 @@ class BertClassifierLastHiddenStateAll(BertBase):
                                 token_type_ids
                                 )
         if self.config["merge_subtokens"] == True:
-            full_word_hidden_state, _ = self.reconstruct_word_level(last_hidden_state, tokens)
+            full_word_hidden_state, _ = self.reconstruct_word_level(last_hidden_state, tokens, device)
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
@@ -477,7 +477,7 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
                                 )
         last_hidden_state = last_hidden_state[:, 1:, :]
         if self.config["merge_subtokens"] == True:
-            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
         reshaped_last_hidden = torch.reshape(
                 full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
                 (
@@ -581,7 +581,7 @@ class BertSpanPrediction(BertBase):
                                 token_type_ids
                                 )
         if self.config["merge_subtokens"] == True:
-            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
+            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
         linear_output = self.linear(last_hidden_state)
         start_logits, end_logits = linear_output.split(1, dim=-1)
         start_span = self.softmax(start_logits)
@@ -1002,7 +1002,7 @@ def fine_tune_BERT(config):
 
                     preds = zip([x.indices.item() for x in start_value_index], \
                                 [x.indices.item() for x in end_value_index])
-                    gold = [tuple(x.tolist()) for x in b_labels]) 
+                    gold = [tuple(x.tolist()) for x in b_labels]
                     for ex in zip(b_ids, preds, gold):
                         dev_results.append(ex)
 
@@ -1078,7 +1078,7 @@ def fine_tune_BERT(config):
 
                     preds = zip([x.indices.item() for x in start_value_index], \
                                 [x.indices.item() for x in end_value_index])
-                    gold = [tuple(x.tolist()) for x in b_labels]) 
+                    gold = [tuple(x.tolist()) for x in b_labels]
                     for ex in zip(b_ids, preds, gold):
                         test_results.append(ex)
 
