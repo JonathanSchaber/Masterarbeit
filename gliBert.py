@@ -999,8 +999,12 @@ def fine_tune_BERT(config):
                     start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
-                    import ipdb; ipdb.set_trace()
-                    #for ex in zip(b_ids, )
+
+                    preds = zip([x.indices.item() for x in start_value_index], \
+                                [x.indices.item() for x in end_value_index])
+                    gold = [tuple(x.tolist()) for x in b_labels]) 
+                    for ex in zip(b_ids, preds, gold):
+                        dev_results.append(ex)
 
 
             total_dev_loss += loss.item()
@@ -1071,6 +1075,12 @@ def fine_tune_BERT(config):
                     start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
+
+                    preds = zip([x.indices.item() for x in start_value_index], \
+                                [x.indices.item() for x in end_value_index])
+                    gold = [tuple(x.tolist()) for x in b_labels]) 
+                    for ex in zip(b_ids, preds, gold):
+                        test_results.append(ex)
 
             total_test_loss += loss.item()
             total_test_accuracy += acc
