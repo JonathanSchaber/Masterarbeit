@@ -182,22 +182,6 @@ class SRL_Encoder(nn.Module):
 
 class BertBase(nn.Module):
     @staticmethod
-    def pad_SRLs(batch, dummy, length):
-        """
-        Pad a batch of token SRLs to tokenized batch
-        """
-        new_batch = []
-        for example in batch:
-            lst = [example] + [dummy]*(length-len(example))
-            tens = torch.cat(tuple(lst), dim=0) 
-            new_batch.append(tens)
-
-        import ipdb; ipdb.set_trace
-        new_batch = torch.stack(new_batch)
-
-        return new_batch
-
-    @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
         """Set all probabilities up to start span to -inf for end spans.
         Args:
@@ -230,7 +214,7 @@ class BertBase(nn.Module):
             sentence_idxs = []
             for sent in example[0]:
                 sentence_idxs.append(example[1][offset:offset+len(sent[0])])
-                offset += len(sent)
+                offset += len(sent[0])
             for sentence in zip(example[0], sentence_idxs):
                 split_sentence = []
                 for predicate in sentence[0]:
@@ -241,9 +225,10 @@ class BertBase(nn.Module):
                         copies = [srl]*sentence[1][i]
                         for copy in copies:
                             new_predicate.append(copy)
+                    if not len(new_predicate) == sum(sentence[1]):
+                        import ipdb; ipdb.set_trace()
                     split_sentence.append(torch.stack(new_predicate))
                 split_example.append(split_sentence)
-                #import ipdb; ipdb.set_trace()
             split_srls.append(split_example)
 
         return split_srls
@@ -252,6 +237,22 @@ class BertBase(nn.Module):
     def create_dummy_srl(self, device):
         dummy = torch.unsqueeze(torch.tensor([0.0]*2*self.config["gru_hidden_size"]), dim=0)
         self.dummy_srl = dummy.to(device)
+
+    def pad_SRLs(self, batch, dummy):
+        """
+        Pad a batch of token SRLs to tokenized batch
+        """
+        new_batch = []
+        for example in batch:
+            if not len(example) <= self.max_len:
+                import ipdb; ipdb.set_trace()
+            lst = [example] + [dummy]*(self.max_len-len(example))
+            tens = torch.cat(tuple(lst), dim=0) 
+            new_batch.append(tens)
+
+        new_batch = torch.stack(new_batch)
+
+        return new_batch
 
     def reconstruct_word_level(self, batch, ids, device="cpu"):
         """method for joining subtokenized words back to word level
@@ -431,7 +432,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                             for i in range(len(srls))]
         #import ipdb; ipdb.set_trace()
 
-        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
@@ -535,7 +536,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                             for i in range(len(srls))]
         #import ipdb; ipdb.set_trace()
 
-        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
@@ -626,7 +627,7 @@ class gliBertSpanPrediction(BertBase):
         srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
                         for i in range(len(a_srls))]
 
-        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
