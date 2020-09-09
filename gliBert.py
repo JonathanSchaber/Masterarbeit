@@ -484,7 +484,7 @@ class BertClassifierLastHiddenStateNoCLS(BertBase):
         return proba
 
 
-class gliBertClassifierLastHiddenStateAll(BertBase):
+class gliBertClassifierLastHiddenStateNoCLS(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -577,6 +577,58 @@ class BertSpanPrediction(BertBase):
         if self.config["merge_subtokens"] == True:
             full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens) 
         linear_output = self.linear(last_hidden_state)
+        start_logits, end_logits = linear_output.split(1, dim=-1)
+        start_span = self.softmax(start_logits)
+        end_span = self.softmax(end_logits)
+        return start_span, end_span
+
+
+class gliBertSpanPrediction(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
+        self.dummy_srl = None
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.linear = nn.Linear(768+2*config["gru_hidden_size"], 2)
+        self.softmax = nn.LogSoftmax(dim=-2)
+    
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            srls=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        last_hidden_state, _ = self.bert(
+                                tokens,
+                                attention_mask,
+                                token_type_ids
+                                )
+        full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
+                                        tokens,
+                                        device)
+
+        a_srls, b_srls = get_AB_SRLs(srls) 
+        if self.config["merge_subtokens"] != True:
+            a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                            self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+        a_emb = self.srl_model(a_srls)
+        b_emb = self.srl_model(b_srls)
+        ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+        srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+                        for i in range(len(a_srls))]
+
+        srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        if self.config["merge_subtokens"] == True:
+            combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+        else:
+            combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+
+        linear_output = self.linear(combo_merge_batch)
         start_logits, end_logits = linear_output.split(1, dim=-1)
         start_span = self.softmax(start_logits)
         end_span = self.softmax(end_logits)
