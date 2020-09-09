@@ -82,19 +82,6 @@ def Swish(batch):
     return torch.stack(tuple(batch))
 
 
-def pad_SRLs(batch, dummy, length):
-    """
-    Pad a batch of token SRLs to tokenized batch
-    """
-    new_batch = []
-    for example in batch:
-        lst = [example] + [dummy]*(length-len(example))
-        tens = torch.cat(tuple(lst), dim=0) 
-        new_batch.append(tens)
-
-    new_batch = torch.stack(new_batch)
-
-    return new_batch
 
 
 class SRL_Encoder(nn.Module):
@@ -194,6 +181,22 @@ class SRL_Encoder(nn.Module):
 
 
 class BertBase(nn.Module):
+    @staticmethod
+    def pad_SRLs(batch, dummy, length):
+        """
+        Pad a batch of token SRLs to tokenized batch
+        """
+        new_batch = []
+        for example in batch:
+            lst = [example] + [dummy]*(length-len(example))
+            tens = torch.cat(tuple(lst), dim=0) 
+            new_batch.append(tens)
+
+        import ipdb; ipdb.set_trace
+        new_batch = torch.stack(new_batch)
+
+        return new_batch
+
     @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
         """Set all probabilities up to start span to -inf for end spans.
@@ -428,7 +431,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                             for i in range(len(srls))]
         #import ipdb; ipdb.set_trace()
 
-        srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
@@ -532,7 +535,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                             for i in range(len(srls))]
         #import ipdb; ipdb.set_trace()
 
-        srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
@@ -590,6 +593,7 @@ class gliBertSpanPrediction(BertBase):
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
         self.dummy_srl = None
+        self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.linear = nn.Linear(768+2*config["gru_hidden_size"], 2)
         self.softmax = nn.LogSoftmax(dim=-2)
@@ -622,7 +626,7 @@ class gliBertSpanPrediction(BertBase):
         srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
                         for i in range(len(a_srls))]
 
-        srl_batch = pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
