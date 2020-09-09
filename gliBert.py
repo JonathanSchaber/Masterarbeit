@@ -238,15 +238,16 @@ class BertBase(nn.Module):
         dummy = torch.unsqueeze(torch.tensor([0.0]*2*self.config["gru_hidden_size"]), dim=0)
         self.dummy_srl = dummy.to(device)
 
-    def pad_SRLs(self, batch, dummy):
+    def pad_SRLs(self, batch, dummy, length=None):
         """
         Pad a batch of token SRLs to tokenized batch
         """
+        length = self.max_len if length == None else length
         new_batch = []
         for example in batch:
-            if not len(example) <= self.max_len:
+            if not len(example) <= length:
                 import ipdb; ipdb.set_trace()
-            lst = [example] + [dummy]*(self.max_len-len(example))
+            lst = [example] + [dummy]*(length-len(example))
             tens = torch.cat(tuple(lst), dim=0) 
             new_batch.append(tens)
 
@@ -516,6 +517,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                                         tokens,
                                         device)
         last_hidden_state = last_hidden_state[:, 1:, :]
+        full_word_hidden_state = full_word_hidden_state[:, 1:, :]
 
         if data_type != 1:
             a_srls, b_srls = get_AB_SRLs(srls) 
@@ -536,7 +538,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                             for i in range(len(srls))]
         #import ipdb; ipdb.set_trace()
 
-        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
+        srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len-1)
         if self.config["merge_subtokens"] == True:
             combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
         else:
@@ -997,6 +999,8 @@ def fine_tune_BERT(config):
                     start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
+                    import ipdb; ipdb.set_trace()
+                    #for ex in zip(b_ids, )
 
 
             total_dev_loss += loss.item()
