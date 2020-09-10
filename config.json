@@ -24,6 +24,7 @@
 	"print_stats": 20,
 	"merge_subtokens": true,
 	"bert_head": "gliBertClassifierLastHiddenStateAll",
+	"combine_SRLs": true,
 	"embedding_dim": 20,
 	"gru_hidden_size": 32,
 	"head_hidden_size": 256,
