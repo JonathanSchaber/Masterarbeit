@@ -589,6 +589,9 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             return proba
 
 
+class gliBertClassifierGRU(BertBase):
+    def __init__(self, config, num_classes, max_len):
+        super(BertBase, self).__init__()
 #class BertSpanPrediction(BertBase):
 #    def __init__(self, config, num_classes, max_len):
 #        super(BertBase, self).__init__()
@@ -707,6 +710,11 @@ def write_stats(stats_file, training_stats, training_results):
         results_file = stats_file.rstrip(".json") + ".results.json"
         with open(results_file, "w") as outfile:
             outfile.write(json.dumps(training_results))
+
+
+def format_time(elapsed):
+    elapsed_rounded = int(round((elapsed)))
+    return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
 def print_preds(model, \
@@ -865,6 +873,7 @@ def fine_tune_BERT(config):
             num_training_steps = total_steps
         )
     training_stats = []
+    training_stats.append({"data set": data_set})
     training_stats.append(config)
     results = []
     total_t0 = time.time()
