@@ -717,6 +717,21 @@ def format_time(elapsed):
     return str(datetime.timedelta(seconds=elapsed_rounded))
 
 
+def compute_acc(preds, labels):
+    """computes the accordance of two lists
+    Args:
+        param1: list
+        param2: list
+    Returns:
+        float
+    """
+    correct = 0
+    assert len(preds) == len(labels)
+    for pred, lab in zip(preds, labels):
+        if pred == lab: correct += 1
+    return correct / len(preds)
+
+
 def print_preds(model, \
                 data_type, \
                 example, \
