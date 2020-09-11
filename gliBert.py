@@ -599,7 +599,7 @@ class gliBertClassifierGRU(BertBase):
         self.gru = nn.GRU(
                 input_size=768+2*config["gru_hidden_size"] if config["combine_SRLs"] else 768,
                 hidden_size=config["head_hidden_size"],
-                num_layers=2,
+                num_layers=3,
                 bias=True,
                 batch_first=True,
                 dropout=0.1,
@@ -995,6 +995,7 @@ def fine_tune_BERT(config):
         print(blue + "Training..." + end)
         t0 = time.time()
         total_train_loss = 0
+        total_train_accuracy = 0
 
         #################
         ### Train Run ###
@@ -1035,6 +1036,8 @@ def fine_tune_BERT(config):
                             elapsed,
                             merge_subtokens
                             )
+                value_index = [tensor.max(0) for tensor in outputs]
+                acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                 loss = criterion(outputs, b_labels)
             else:
                 start_span, end_span = model(
@@ -1059,20 +1062,30 @@ def fine_tune_BERT(config):
                             elapsed,
                             merge_subtokens
                             )
+                start_value_index = [tensor.max(0) for tensor in start_span]
+                end_value_index = [tensor.max(0) for tensor in end_span]
+                start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
+                end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
+                acc = (start_acc + end_acc) / 2
                 start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
                 end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                 loss = (start_loss + end_loss) / 2
+
+            total_train_accuracy += acc
             total_train_loss += loss.item()
             loss.backward()
             # This is to help prevent the "exploding gradients" problem. (Maybe not necessary?)
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             scheduler.step()
-        avg_train_loss = total_train_loss / len(dev_data)
+
+        avg_train_accuracy = total_train_accuracy / len(train_idcs)
+        avg_train_loss = total_train_loss / len(train_idcs)
         train_time = format_time(time.time() - t0)
 
         print("")
-        print("  Average training loss: {0:.2f}".format(avg_train_loss))
+        print("  Average Train Accuracy: {0:.2f}".format(avg_train_accuracy))
+        print("  Average Train Loss: {0:.2f}".format(avg_train_loss))
         print("  Training epoch took: {:}".format(train_time))
 
         ###############
@@ -1150,11 +1163,11 @@ def fine_tune_BERT(config):
             total_dev_accuracy += acc
 
         avg_dev_accuracy = total_dev_accuracy / len(dev_idcs)
-        print("  Development Accuracy: {0:.2f}".format(avg_dev_accuracy))
-        avg_dev_loss = total_dev_loss / len(dev_data)
+        print("  Average Dev Accuracy: {0:.2f}".format(avg_dev_accuracy))
+        avg_dev_loss = total_dev_loss / len(dev_idcs)
         dev_time = format_time(time.time() - t0)
-        print("  Dev Loss: {0:.2f}".format(avg_dev_loss))
-        print("  Dev took: {:}".format(dev_time))
+        print("  Average Dev Loss: {0:.2f}".format(avg_dev_loss))
+        print("  Dev epoch took: {:}".format(dev_time))
 
         ################
         ### Test Run ###
@@ -1225,11 +1238,11 @@ def fine_tune_BERT(config):
             total_test_accuracy += acc
 
         avg_test_accuracy = total_test_accuracy / len(test_idcs)
-        print("  Test Accuracy: {0:.2f}".format(avg_test_accuracy))
-        avg_test_loss = total_test_loss / len(test_data)
+        print("  Average Test Accuracy: {0:.2f}".format(avg_test_accuracy))
+        avg_test_loss = total_test_loss / len(test_idcs)
         test_time = format_time(time.time() - t0)
-        print("  Test Loss: {0:.2f}".format(avg_test_loss))
-        print("  Test took: {:}".format(test_time))
+        print("  Average Test Loss: {0:.2f}".format(avg_test_loss))
+        print("  Test epoch took: {:}".format(test_time))
 
         training_stats.append(
             {
@@ -1237,6 +1250,7 @@ def fine_tune_BERT(config):
                 "Train Loss": avg_train_loss,
                 "Dev Loss": avg_dev_loss,
                 "Test Loss": avg_test_loss,
+                "Train Accur.": avg_train_accuracy,
                 "Dev Accur.": avg_dev_accuracy,
                 "Test Accur.": avg_test_accuracy,
                 "Train Time": train_time,
