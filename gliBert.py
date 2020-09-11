@@ -82,8 +82,6 @@ def Swish(batch):
     return torch.stack(tuple(batch))
 
 
-
-
 class SRL_Encoder(nn.Module):
     def __init__(self, config):
         super(SRL_Encoder, self).__init__()
@@ -145,7 +143,7 @@ class SRL_Encoder(nn.Module):
                             batch_first=True,
                             dropout=self.config["gru_dropout"],
                             bidirectional=self.config["bidirectional"]
-                            )
+                        )
 
     def forward(self, tokens):
         """
@@ -592,6 +590,103 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
 class gliBertClassifierGRU(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
+        self.config = config
+        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
+        self.dummy_srl = None
+        self.max_len = max_len
+        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.gru = nn.GRU(
+                input_size=768+2*config["gru_hidden_size"] if config["combine_SRLs"] else 768,
+                hidden_size=config["head_hidden_size"],
+                num_layers=2,
+                bias=True,
+                batch_first=True,
+                dropout=0.1,
+                bidirectional=True
+                )
+        self.linear = nn.Linear(2*config["head_hidden_size"], num_classes)
+        self.softmax = nn.LogSoftmax(dim=-1)
+
+    def forward(
+            self,
+            tokens,
+            attention_mask=None,
+            token_type_ids=None,
+            srls=None,
+            data_type=None,
+            device=torch.device("cpu")
+            ):
+        last_hidden_state, _ = self.bert(tokens,
+                                        attention_mask,
+                                        token_type_ids)
+        full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
+                                        tokens,
+                                        device)
+
+        if self.config["combine_SRLs"] == True:
+            if data_type != 1:
+                a_srls, b_srls = get_AB_SRLs(srls) 
+                if self.config["merge_subtokens"] != True:
+                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+                a_emb = self.srl_model(a_srls)
+                b_emb = self.srl_model(b_srls)
+                ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+                srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+                                for i in range(len(a_srls))]
+            else:
+                srls = get_A_SRLs(srls)
+                if self.config["merge_subtokens"] != True:
+                    srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
+                emb = self.srl_model(srls)
+                srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
+                                for i in range(len(srls))]
+
+            srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
+            if self.config["merge_subtokens"] == True:
+                combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+            else:
+                combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+
+            _, h_n = self.gru(combo_merge_batch)
+            hidden = h_n.view(3, 2, tokens.shape[0], self.config["head_hidden_size"])
+            last_hidden = hidden[-1]
+            last_hidden_fwd = last_hidden[0]
+            last_hidden_bwd = last_hidden[1]
+            comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
+            #fb_output = output.view(tokens.shape[0],
+            #                        tokens.shape[1],
+            #                        2,
+            #                        self.config["head_hidden_size"])
+            #f_output = fb_output[:, -1, 0, :]
+            #b_output = fb_output[:, 0, 1, :]
+            #comb = torch.stack(tuple([f_output, b_output]), dim=1)
+            linear_output = self.linear(comb)
+            proba = self.softmax(linear_output)
+            return proba
+        else:
+            if self.config["merge_subtokens"] == True:
+                _, h_n = self.gru(full_word_hidden_state)
+            else:
+                _, h_n = self.gru(last_hidden_state)
+            hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
+            last_hidden = hidden[-1]
+            last_hidden_fwd = last_hidden[0]
+            last_hidden_bwd = last_hidden[1]
+            comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
+            #fb_output = output.view(tokens.shape[0],
+            #                        tokens.shape[1],
+            #                        2,
+            #                        self.config["head_hidden_size"])
+            #f_output = fb_output[:, -1, 0, :]
+            #b_output = fb_output[:, 0, 1, :]
+            #comb = torch.cat(tuple([f_output, b_output]), dim=1)
+            linear_output = self.linear(comb)
+            proba = self.softmax(linear_output)
+            return proba
+
+
 #class BertSpanPrediction(BertBase):
 #    def __init__(self, config, num_classes, max_len):
 #        super(BertBase, self).__init__()
