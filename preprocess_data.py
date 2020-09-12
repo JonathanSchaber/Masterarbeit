@@ -41,7 +41,7 @@ def parse_cmd_args():
 
 
 def write_to_files(data, files):
-    id = 0
+    counter = 0
     len_train = int(len(data)*0.7)
     len_dev = int(len(data)*0.15)
     shuffle(data)
@@ -50,35 +50,43 @@ def write_to_files(data, files):
     print("{}\n{}\n{}".format(files[0], files[1], files[1]))
 
     with open(files[0], "w") as f:
-        for element in data[:len_train]:
+        for i, element in enumerate(data[:len_train]):
             csv.writer(f, delimiter="\t").writerow([i]+element)
-            i += 1
+        counter += i
     with open(files[1], "w") as f:
-        for element in data[len_train:len_train+len_dev]:
-            csv.writer(f, delimiter="\t").writerow([i]+element)
-            i += 1
+        for i, element in enumerate(data[len_train:len_train+len_dev]):
+            i += counter
+            csv.writer(f, delimiter="\t").writerow([i+counter]+element)
     with open(files[2], "w") as f:
-        for element in data[len_train+len_dev:]:
-            csv.writer(f, delimiter="\t").writerow([i]+element)
+        for i, element in enumerate(data[len_train+len_dev:]):
+            csv.writer(f, delimiter="\t").writerow([i+counter]+element)
 
 
 def splitted_write_to_files(data, files, i):
     if i == 0:
         len_train = int(len(data)*0.85)
+        counter = 0
 
         print("======== Writing to file: {} ========".format(files[0]))
         with open(files[0], "w") as f:
-            for element in data[:len_train]:
-                csv.writer(f, delimiter="\t").writerow(element)
+            for j, element in enumerate(data[:len_train]):
+                csv.writer(f, delimiter="\t").writerow([j]+element)
+            counter += j
         print("======== Writing to file: {} ========".format(files[1]))
         with open(files[1], "w") as f:
-            for element in data[len_train:]:
-                csv.writer(f, delimiter="\t").writerow(element)
+            for j, element in enumerate(data[len_train:]):
+                j += counter
+                csv.writer(f, delimiter="\t").writerow([j]+element)
     else:
         print("======== Writing to file: {} ========".format(files[i]))
+        with open(files[1], "r") as f:
+            lst = [x for x in csv.reader(f, delimiter="\t")]
+            counter = eval(lst[-1][0]) + 1
+
         with open(files[2], "w") as f:
-            for element in data:
-                csv.writer(f, delimiter="\t").writerow(element)
+            for j, element in enumerate(data):
+                j += counter
+                csv.writer(f, delimiter="\t").writerow([j]+element)
 
 
 def get_majority_label(labels):
@@ -432,7 +440,8 @@ def preprocess_XQuAD(path):
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     spans_text_qas_srl.append([
                                         start_index,
-                                        text, context,
+                                        text, 
+                                        context,
                                         question,
                                         sem_roles_context,
                                         sem_roles_question
