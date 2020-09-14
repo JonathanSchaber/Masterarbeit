@@ -230,16 +230,16 @@ def preprocess_PAWS_X(path):
     path = Path(path)
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/PAWS-X/, not file!"
     path = str(path)
-    file_paths = [path + "/de/dev_2k.tsv", path + "/de/test_2k.tsv"]
+    file_paths = [path + "/de/translated_train.tsv", path + "/de/dev_2k.tsv", path + "/de/test_2k.tsv"]
     outfile_paths = [
             path + "/gliBert_paws_x_train.tsv",
             path + "/gliBert_paws_x_dev.tsv",
             path + "/gliBert_paws_x_test.tsv"
             ]
 
-    label_text_feat = []
-
+    counter = 0
     for i, file_path in enumerate(file_paths):
+        label_text_feat = []
         with open(file_path, "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             next(f_reader)
@@ -249,9 +249,15 @@ def preprocess_PAWS_X(path):
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 if sem_roles_1 == False or sem_roles_2 == False:
                     continue
+                elif sentence_1 == "NS" or sentence_2 == "NS":
+                    print("Undefined Sentence found. Id: {}. Skipping.".format(para_id))
+                    continue
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
-    
-        splitted_write_to_files(label_text_feat, outfile_paths, i)
+
+                with open(outfile_paths[i], "w") as f:
+                    for j, element in enumerate(label_text_feat):
+                        csv.writer(f, delimiter="\t").writerow([j]+element)
+                    counter += j
 
 
 def preprocess_SCARE(path):
