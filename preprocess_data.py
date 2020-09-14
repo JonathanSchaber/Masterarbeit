@@ -245,21 +245,27 @@ def preprocess_PAWS_X(path):
             next(f_reader)
             for j, row in enumerate(f_reader):
                 if j % 100 == 0:
-                    print("Processing example {} out of {}.".format(j, len(f_reader)))
-                para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
+                    print("Processing example {} out of 49 400.".format(j))
+                try:
+                    para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
+                except:
+                    print("ERROR:")
+                    print("Could not parse line, Id: {}. Skipping.")
                 sem_roles_1 = srl_predictor.predict_semRoles(sentence_1)
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
                 if sem_roles_1 == False or sem_roles_2 == False:
                     continue
                 elif sentence_1 == "NS" or sentence_2 == "NS":
+                    print("ERROR:")
                     print("Undefined Sentence found. Id: {}. Skipping.".format(para_id))
                     continue
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
 
-                with open(outfile_paths[i], "w") as f:
-                    for j, element in enumerate(label_text_feat):
-                        csv.writer(f, delimiter="\t").writerow([j]+element)
-                    counter += j
+            with open(outfile_paths[i], "w") as f:
+                for j, element in enumerate(label_text_feat):
+                    j += counter
+                    csv.writer(f, delimiter="\t").writerow([j]+element)
+                counter += j
 
 
 def preprocess_SCARE(path):
