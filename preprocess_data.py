@@ -243,7 +243,9 @@ def preprocess_PAWS_X(path):
         with open(file_path, "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             next(f_reader)
-            for row in f_reader:
+            for j, row in enumerate(f_reader):
+                if j % 100 == 0:
+                    print("Processing example {} out of {}.".format(j, len(f_reader)))
                 para_id, sentence_1, sentence_2, label = row[0], row[1], row[2], row[3]
                 sem_roles_1 = srl_predictor.predict_semRoles(sentence_1)
                 sem_roles_2 = srl_predictor.predict_semRoles(sentence_2)
