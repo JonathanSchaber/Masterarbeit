@@ -55,7 +55,7 @@ Following \cite{wang2018glue},
 	& \multicolumn{4}{c}{Two-Sentence Tasks} \\
 	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
 	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
-	PAWS-X & Paraphrase Identification & Binary Classification & 2 000/4 000 & dev/test \\
+	PAWS-X & Paraphrase Identification & Binary Classification & 14 402/2 000/4 000 & train/dev/test \\
 	XNLI & Natural Language Inference & Multi-Class Classification &  2 489/7 498 & dev/test \\
 	XQuAD & Question Answering & Span Prediction &  1 192 & - \\
 \end{tabular}
@@ -156,11 +156,16 @@ The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}
 \fig{images/PAWS-X_traindevtest.png}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
 stats
 
-4,000 examples in German (human translated)
+\subsubsection{Preprocessing}
 
-49,402 examples in German (machine translated)
+During the preprocessing of this data set, the following considerations are taken into account:
 
+In the predefined development and test splits, there are some examples where one or both sentences consist
+only of the string ``NS''.
+I decided to not include this examples into the data used for training and evaluating my models, since
+those examples don't contribute any useful features for the model.\footnote{The authors don't comment on these obscure sentences, so I do not know what was the reasoning behind including these into the data sets.}
 
+Further, there are sentences XXXXX
 
 \subsection{SCARE}
 
