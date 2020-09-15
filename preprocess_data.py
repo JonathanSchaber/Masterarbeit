@@ -230,7 +230,11 @@ def preprocess_PAWS_X(path):
     path = Path(path)
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/PAWS-X/, not file!"
     path = str(path)
-    file_paths = [path + "/de/translated_train.tsv", path + "/de/dev_2k.tsv", path + "/de/test_2k.tsv"]
+    file_paths = [
+            path + "/de/translated_train.tsv",
+            path + "/de/dev_2k.tsv",
+            path + "/de/test_2k.tsv"
+            ]
     outfile_paths = [
             path + "/gliBert_paws_x_train.tsv",
             path + "/gliBert_paws_x_dev.tsv",
