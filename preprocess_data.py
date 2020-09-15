@@ -393,16 +393,18 @@ def preprocess_XNLI(path):
     path = Path(path)
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/XNLI/, not file!"
     path = str(path)
-    file_paths = [path + "/XNLI-1.0/xnli.dev.de.tsv", path + "/XNLI-1.0/xnli.test.de.tsv"]
+    file_paths = [
+            path + "/XNLI-1.0/xnli.dev.de.tsv",
+            path + "/XNLI-1.0/xnli.test.de.tsv"
+            ]
     outfile_paths = [
             path + "/gliBert_xnli_train.tsv",
             path + "/gliBert_xnli_dev.tsv",
             path + "/gliBert_xnli_test.tsv"
             ]
 
-    label_text_feat = []
-
     for i, file_path in enumerate(file_paths):
+        label_text_feat = []
         with open(file_path, "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
             next(f_reader)
