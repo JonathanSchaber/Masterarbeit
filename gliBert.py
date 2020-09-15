@@ -454,8 +454,6 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             proba = self.softmax(linear_output)
             return proba
         else:
-            if self.config["merge_subtokens"]:
-                full_word_hidden_state, _ = self.reconstruct_word_level(last_hidden_state, tokens, device)
             reshaped_last_hidden = torch.reshape(
                     full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state, 
                     (
@@ -575,8 +573,6 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             proba = self.softmax(linear_output)
             return proba
         else:
-            if self.config["merge_subtokens"]:
-                full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
             reshaped_last_hidden = torch.reshape(
                     full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state, 
                     (
