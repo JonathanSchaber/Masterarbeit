@@ -325,6 +325,7 @@ class BertClassifierCLS(BertBase):
         super(BertBase, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.srl_model = SRL_Encoder(config)
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
         self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
