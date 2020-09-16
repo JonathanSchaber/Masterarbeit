@@ -1054,6 +1054,12 @@ def fine_tune_BERT(config):
                 end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                 loss = (start_loss + end_loss) / 2
 
+            if step == 500:
+                print("")
+                print(red + "  >> Starting evaluating, train set is massive..." + end)
+                print("")
+                break
+
             total_train_accuracy += acc
             total_train_loss += loss.item()
             loss.backward()
@@ -1062,8 +1068,8 @@ def fine_tune_BERT(config):
             optimizer.step()
             scheduler.step()
 
-        avg_train_accuracy = total_train_accuracy / len(train_idcs)
-        avg_train_loss = total_train_loss / len(train_idcs)
+        avg_train_accuracy = total_train_accuracy / (step+1)
+        avg_train_loss = total_train_loss / (step+1)
         train_time = format_time(time.time() - t0)
 
         print("")
@@ -1146,9 +1152,11 @@ def fine_tune_BERT(config):
             total_dev_accuracy += acc
 
         avg_dev_accuracy = total_dev_accuracy / len(dev_idcs)
-        print("  Average Dev Accuracy: {0:.2f}".format(avg_dev_accuracy))
         avg_dev_loss = total_dev_loss / len(dev_idcs)
         dev_time = format_time(time.time() - t0)
+
+        print("")
+        print("  Average Dev Accuracy: {0:.2f}".format(avg_dev_accuracy))
         print("  Average Dev Loss: {0:.2f}".format(avg_dev_loss))
         print("  Dev epoch took: {:}".format(dev_time))
 
@@ -1172,7 +1180,7 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
-            b:ids = batch[5]
+            b_ids = batch[5]
             b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
 
             with torch.no_grad():
@@ -1221,9 +1229,11 @@ def fine_tune_BERT(config):
             total_test_accuracy += acc
 
         avg_test_accuracy = total_test_accuracy / len(test_idcs)
-        print("  Average Test Accuracy: {0:.2f}".format(avg_test_accuracy))
         avg_test_loss = total_test_loss / len(test_idcs)
         test_time = format_time(time.time() - t0)
+
+        print("")
+        print("  Average Test Accuracy: {0:.2f}".format(avg_test_accuracy))
         print("  Average Test Loss: {0:.2f}".format(avg_test_loss))
         print("  Test epoch took: {:}".format(test_time))
 
@@ -1238,7 +1248,8 @@ def fine_tune_BERT(config):
                 "Test Accur.": avg_test_accuracy,
                 "Train Time": train_time,
                 "Dev Time": dev_time,
-                "Test Time": test_time
+                "Test Time": test_time,
+                "patience": PATIENCE
             }
         )
 
