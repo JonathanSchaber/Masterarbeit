@@ -1,8 +1,6 @@
 import json
 import argparse
 
-from gliBert import load_json
-
 
 def parse_cmd_args():
     """Parse command line arguments."""
@@ -23,10 +21,31 @@ def read_in_json(file):
     Returns:
         json
     """
+    print_list = []
+    print_list.append([
+                "epoch",
+                "Tr-Loss",
+                "De-Loss",
+                "Te-Loss",
+                "Tr-Acc.",
+                "De-Acc.",
+                "Te-Acc."
+                ])
+
     with open(file, "r") as f:
-        file = f.read()
+        data = json.loads(f.read())
+    for epoch in data[2:]:
+        print_list.append(map(str, map(round, [epoch[elem] for elem in epoch][:8], [3]*7)))
+
+    print_string = "\n".join(["\t".join(elem) for elem in print_list])
+    print(print_string)
 
 
 def main():
     args = parse_cmd_args()
+    read_in_json(args.file)
+
+
+if __name__ == "__main__":
+    main()
     
