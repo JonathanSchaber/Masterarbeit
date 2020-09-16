@@ -59,6 +59,7 @@ def write_to_files(data, files):
             csv.writer(f, delimiter="\t").writerow([i+counter]+element)
     with open(files[2], "w") as f:
         for i, element in enumerate(data[len_train+len_dev:]):
+            i += counter
             csv.writer(f, delimiter="\t").writerow([i+counter]+element)
 
 
