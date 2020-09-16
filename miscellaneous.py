@@ -97,6 +97,7 @@ def plot_losses(log_file):
     plt.style.use("Solarize_Light2")
     plt.xlabel("Epochs")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    plt.suptitle(log_file)
     plt.show()
 
 
@@ -122,6 +123,7 @@ def plot_accuracy(log_file):
     plt.style.use("Solarize_Light2")
     plt.xlabel("Epochs")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    plt.suptitle(log_file)
     plt.show()
 
 
