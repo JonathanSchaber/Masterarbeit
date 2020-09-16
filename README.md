@@ -40,6 +40,7 @@ Download the data and adhere to the following folder structure (it is important 
 			../de/
 				../dev_2k.tsv
 				../test_2k.tsv	
+				../translated_train.tsv
 	
 	/<path>/<to>/SCARE/
 			../scare_v1.0.0/annotations/
