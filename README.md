@@ -14,13 +14,13 @@ Overview of the data sets used in the experiments.
 
 | Data Set | NLP Task | ML Task | \# Examples | Splits |
 | -------- | -------- | ------- | ----------- | ------ |
-| [deISEAR](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/deisear/) |  Emotion Detection | Multi-Class Classification  | 1 001 | - |
-| [MLQA](https://github.com/facebookresearch/MLQA) | Question Answering | Span Prediction | 509/4 499 | dev/test |
-| [PAWS-X](https://github.com/google-research-datasets/paws/tree/master/pawsx) | Paraphrase Identification | Binary Classification | 49 402/2 000/2 000 | train/dev/test |
-| [SCARE](http://romanklinger.de/scare/) | Sentiment Analysis | Multi-Class Classification | 1 760 | - |
-| [SCARE Reviews](http://romanklinger.de/scare/) |  Sentiment Analysis | Multi-Class Classification | 802 860 | - |
-| [XNLI](https://cims.nyu.edu/~sbowman/xnli/) | Natural Language Inference | Multi-Class Classification |  2 489/7 498 | dev/test |
-| [XQuAD](https://github.com/deepmind/xquad) | Question Answering | Span Prediction |  1 192 | - |
+| [deISEAR](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/deisear/) |  Emotion Detection | Multi-Class Classification  | 1,001 | - |
+| [MLQA](https://github.com/facebookresearch/MLQA) | Question Answering | Span Prediction | 509/4,499 | dev/test |
+| [PAWS-X](https://github.com/google-research-datasets/paws/tree/master/pawsx) | Paraphrase Identification | Binary Classification | 49,402/2,000/2,000 | train/dev/test |
+| [SCARE](http://romanklinger.de/scare/) | Sentiment Analysis | Multi-Class Classification | 1,760 | - |
+| [SCARE Reviews](http://romanklinger.de/scare/) |  Sentiment Analysis | Multi-Class Classification | 802,860 | - |
+| [XNLI](https://cims.nyu.edu/~sbowman/xnli/) | Natural Language Inference | Multi-Class Classification |  2,489/7,498 | dev/test |
+| [XQuAD](https://github.com/deepmind/xquad) | Question Answering | Span Prediction |  1,192 | - |
 
 # Results
 
