@@ -35,7 +35,16 @@ def read_in_json(file):
     with open(file, "r") as f:
         data = json.loads(f.read())
     for epoch in data[2:]:
-        print_list.append(map(str, map(round, [epoch[elem] for elem in epoch][:8], [3]*7)))
+        values =[
+                epoch["epoch"],
+                epoch["Train Loss"],
+                epoch["Dev Loss"],
+                epoch["Test Loss"],
+                epoch["Train Accur."],
+                epoch["Dev Accur."],
+                epoch["Test Loss"]
+                ]
+        print_list.append([str(values[0])] + map(str, map(round, values[1:], [3]*6)))
 
     print_string = "\n".join(["\t".join(elem) for elem in print_list])
     print(print_string)
