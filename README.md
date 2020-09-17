@@ -102,13 +102,12 @@ For each data set, run the following command:
 
 ## ParZu
 
-Clone the [repository] (https://github.com/rsennrich/ParZu/) and configure
+Clone the [repository](https://github.com/rsennrich/ParZu/) and configure
 config.ini file to run locally on your machine.
 
 ## DAMESRL
 
-Download the source code from [here]
-(https://liir.cs.kuleuven.be/software_pages/damesrl.php), and configure
+Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php), and configure
 `server_configs/charatt_ger_pred_infer.ini` to rn locally on your machine.
 
 
