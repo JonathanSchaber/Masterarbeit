@@ -96,7 +96,7 @@ For each data set, run the following command:
 		-d <data set> \
 		-p /<path>/<to>/<data set>/ \
 		-a /<path>/<to>/DAMESRL/server_configs/srl_char_att_ger_infer.ini
-`
+
 
 # SRL Resources
 
@@ -109,7 +109,6 @@ config.ini file to run locally on your machine.
 
 Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php), and configure
 `server_configs/charatt_ger_pred_infer.ini` to rn locally on your machine.
-
 
 
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
