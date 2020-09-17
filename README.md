@@ -107,8 +107,9 @@ config.ini file to run locally on your machine.
 
 ## DAMESRL
 
-Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php), and configure
-`server_configs/charatt_ger_pred_infer.ini` to rn locally on your machine.
+Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php)
+in a local folder DAMESRL``, and configure `server_configs/charatt_ger_pred_infer.ini` to run
+locally on your machine.
 
 
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
