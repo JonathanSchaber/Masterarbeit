@@ -100,6 +100,10 @@ For each data set, run the following command:
 
 # SRL Resources
 
+## [ParZu] (https://github.com/rsennrich/ParZu/)
+
+
+
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
 
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/ParZu"`
