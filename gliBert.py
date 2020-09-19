@@ -216,19 +216,16 @@ class BertBase(nn.Module):
             for sentence in zip(example[0], sentence_idxs):
                 split_sentence = []
                 for predicate in sentence[0]:
-                    if not len(predicate) == len(sentence[1]):
-                        import ipdb; ipdb.set_trace()
+                    assert len(predicate) == len(sentence[1])
                     new_predicate = []
                     for i, srl in enumerate(predicate):
                         copies = [srl]*sentence[1][i]
                         for copy in copies:
                             new_predicate.append(copy)
-                    if not len(new_predicate) == sum(sentence[1]):
-                        import ipdb; ipdb.set_trace()
+                    assert len(new_predicate) == sum(sentence[1])
                     split_sentence.append(torch.stack(new_predicate))
                 split_example.append(split_sentence)
             split_srls.append(split_example)
-
         return split_srls
 
 
@@ -421,8 +418,11 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             if data_type != 1:
                 a_srls, b_srls = get_AB_SRLs(srls) 
                 if self.config["merge_subtokens"] != True:
-                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+                    try:
+                        a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                                        self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+                    except:
+                        import ipdb; ipdb.set_trace()
                 a_emb = self.srl_model(a_srls)
                 b_emb = self.srl_model(b_srls)
                 ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
@@ -1054,11 +1054,11 @@ def fine_tune_BERT(config):
                 end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                 loss = (start_loss + end_loss) / 2
 
-            if step == 500:
-                print("")
-                print(red + "  >> Starting evaluating, train set is massive..." + end)
-                print("")
-                break
+            #if step == 500:
+            #    print("")
+            #    print(red + "  >> Starting evaluating, train set is massive..." + end)
+            #    print("")
+            #    break
 
             total_train_accuracy += acc
             total_train_loss += loss.item()
