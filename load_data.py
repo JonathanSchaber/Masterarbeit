@@ -37,6 +37,7 @@ class Dataloader:
         self.merge_subtokens = merge_subtokens
         self.batch_size = batch_size
         self.path = path_data
+        self.len_threshold = 200
         self.path_train = None
         self.path_dev = None
         self.path_test = None
@@ -66,15 +67,6 @@ class Dataloader:
         self.dataset_test = None
 
     @staticmethod
-    def check_max_length(*sent_lengths):
-        to_add = 2 if len(sent_lengths) == 1 else 3
-        max_length = 0
-        for sent_length in sent_lengths:
-            max_length += sent_length
-        max_length += to_add
-        return max_length if max_length < 513 else 512
-
-    @staticmethod
     def merge_subs(subtoken_list): 
         """merges a sub-tokenized sentence back to token level (without special tokens).
         Args:
@@ -99,6 +91,14 @@ class Dataloader:
                         break 
                 token_list.append("".join(current_word)) 
         return token_list  
+
+    def check_max_length(self, *sent_lengths):
+        to_add = 2 if len(sent_lengths) == 1 else 3
+        max_length = 0
+        for sent_length in sent_lengths:
+            max_length += sent_length
+        max_length += to_add
+        return max_length if max_length < self.threshold else self.threshold
 
     def load_data(self, path):
         data = []
@@ -237,6 +237,14 @@ class Dataloader:
         elif self.type == 2:
             for example in data:
                 instance_id, label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
+                if len(self.tokenizer.tokenize(sentence_1)) + \
+                        len(self.tokenizer.tokenize(sentence_2)) + \
+                        3 > self.threshold:
+                    print("")
+                    print("ATTENTION: example too long!")
+                    print("sentence 1: {}".format(sentence_1))
+                    print("sentence 2: {}".format(sentence_2))
+                    continue
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence_1, 
                                             sentence_2,
@@ -260,7 +268,9 @@ class Dataloader:
                 instance_id, start_span, end_span, question, context, srl_question, srl_context = example
                 start_span = int(start_span) + 1
                 end_span = int(end_span) + 1
-                if len(self.tokenizer.tokenize(question)) + len(self.tokenizer.tokenize(context)) + 3 > 512:
+                if len(self.tokenizer.tokenize(question)) + \
+                        len(self.tokenizer.tokenize(context)) + 
+                        3 > self.threshold:
                     print("")
                     print("ATTENTION: example too long!")
                     print("question: {}".format(question))
