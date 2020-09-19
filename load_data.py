@@ -217,6 +217,12 @@ class Dataloader:
         if self.type == 1:
             for example in data:
                 instance_id, label, _, sentence, _ , srl_sentence, _ = example
+                if len(self.tokenizer.tokenize(sentence)) + \
+                        2 > self.len_threshold:
+                    print("")
+                    print("ATTENTION: example too long!")
+                    print("sentence: {}".format(sentence))
+                    continue
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence, 
                                             add_special_tokens = True, 
