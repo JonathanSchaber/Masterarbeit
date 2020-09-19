@@ -98,7 +98,7 @@ class Dataloader:
         for sent_length in sent_lengths:
             max_length += sent_length
         max_length += to_add
-        return max_length if max_length < self.threshold else self.threshold
+        return max_length if max_length < self.len_threshold else self.len_threshold
 
     def load_data(self, path):
         data = []
@@ -239,7 +239,7 @@ class Dataloader:
                 instance_id, label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
                 if len(self.tokenizer.tokenize(sentence_1)) + \
                         len(self.tokenizer.tokenize(sentence_2)) + \
-                        3 > self.threshold:
+                        3 > self.len_threshold:
                     print("")
                     print("ATTENTION: example too long!")
                     print("sentence 1: {}".format(sentence_1))
@@ -269,8 +269,8 @@ class Dataloader:
                 start_span = int(start_span) + 1
                 end_span = int(end_span) + 1
                 if len(self.tokenizer.tokenize(question)) + \
-                        len(self.tokenizer.tokenize(context)) + 
-                        3 > self.threshold:
+                        len(self.tokenizer.tokenize(context)) + \
+                        3 > self.len_threshold:
                     print("")
                     print("ATTENTION: example too long!")
                     print("question: {}".format(question))
