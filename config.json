@@ -23,6 +23,7 @@
 	"gpu": 0,
 	"print_stats": 20,
 	"merge_subtokens": true,
+	"max_length": 200,
 	"bert_head": "gliBertClassifierLastHiddenStateAll",
 	"combine_SRLs": true,
 	"embedding_dim": 20,
