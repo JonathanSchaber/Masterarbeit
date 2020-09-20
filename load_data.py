@@ -32,12 +32,12 @@ class gliBertDataset(Dataset):
 
 
 class Dataloader:
-    def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens):
+    def __init__(self, path_data, path_tokenizer, batch_size, merge_subtokens, max_length):
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.merge_subtokens = merge_subtokens
         self.batch_size = batch_size
         self.path = path_data
-        self.len_threshold = 200
+        self.max_length = max_length
         self.path_train = None
         self.path_dev = None
         self.path_test = None
@@ -98,7 +98,7 @@ class Dataloader:
         for sent_length in sent_lengths:
             max_length += sent_length
         max_length += to_add
-        return max_length if max_length < self.len_threshold else self.len_threshold
+        return max_length if max_length < self.max_length else self.max_length
 
     def load_data(self, path):
         data = []
@@ -218,7 +218,7 @@ class Dataloader:
             for example in data:
                 instance_id, label, _, sentence, _ , srl_sentence, _ = example
                 if len(self.tokenizer.tokenize(sentence)) + \
-                        2 > self.len_threshold:
+                        2 > self.max_length:
                     print("")
                     print("ATTENTION: example too long!")
                     print("sentence: {}".format(sentence))
@@ -245,7 +245,7 @@ class Dataloader:
                 instance_id, label, _, sentence_1, sentence_2, srl_sentence_1, srl_sentence_2 = example
                 if len(self.tokenizer.tokenize(sentence_1)) + \
                         len(self.tokenizer.tokenize(sentence_2)) + \
-                        3 > self.len_threshold:
+                        3 > self.max_length:
                     print("")
                     print("ATTENTION: example too long!")
                     print("sentence 1: {}".format(sentence_1))
@@ -276,7 +276,7 @@ class Dataloader:
                 end_span = int(end_span) + 1
                 if len(self.tokenizer.tokenize(question)) + \
                         len(self.tokenizer.tokenize(context)) + \
-                        3 > self.len_threshold:
+                        3 > self.max_length:
                     print("")
                     print("ATTENTION: example too long!")
                     print("question: {}".format(question))
@@ -424,42 +424,48 @@ def dataloader(config, location, data_set):
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
-                            config["merge_subtokens"]
+                            config["merge_subtokens"],
+                            config["max_length"]
                             )
     elif data_set == "MLQA":
         dataloader = MLQA_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
-                            config["merge_subtokens"]
+                            config["merge_subtokens"],
+                            config["max_length"]
                             )
     elif data_set == "PAWS-X":
         dataloader = PAWS_X_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
-                            config["merge_subtokens"]
+                            config["merge_subtokens"],
+                            config["max_length"]
                             )
     elif data_set == "SCARE":
         dataloader = SCARE_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
-                            config["merge_subtokens"]
+                            config["merge_subtokens"],
+                            config["max_length"]
                             )
     elif data_set == "XNLI":
         dataloader = XNLI_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
-                            config["merge_subtokens"]
+                            config["merge_subtokens"],
+                            config["max_length"]
                             )
     elif data_set == "XQuAD":
         dataloader = XQuAD_dataloader(
                             config[location][data_set],
                             config[location]["BERT"],
                             config["batch_size"],
-                            config["merge_subtokens"]
+                            config["merge_subtokens"],
+                            config["max_length"]
                             )
 
     dataloader.load()
