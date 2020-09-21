@@ -22,13 +22,13 @@ def parse_cmd_args():
     return parser.parse_args()
 
 
-def make_pies(labels, values, colors, font_size=10, title=None):
-    fig, ax = plt.subplots()
-    a, b, _, = ax.pie(values, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
-    [ _.set_fontsize(font_size) for _ in b ]
-    if title:
-        plt.title(title, bbox={'facecolor':'0.8', 'pad':5})
-    plt.show()
+# def make_pies(labels, values, colors, font_size=10, title=None):
+#     fig, ax = plt.subplots()
+#     a, b, _, = ax.pie(values, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+#     [ _.set_fontsize(font_size) for _ in b ]
+#     if title:
+#         plt.title(title, bbox={'facecolor':'0.8', 'pad':5})
+#     plt.show()
     
 def make_pies(labels, values, colors, font_size=10, title=None):
       fig, ax = plt.subplots()
