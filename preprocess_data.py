@@ -264,6 +264,10 @@ def preprocess_PAWS_X(path):
                     print("ERROR:")
                     print("Undefined Sentence found. Id: {}. Skipping.".format(para_id))
                     continue
+                elif sentence_1 == "" or sentence_2 =="":
+                    print("ERROR:")
+                    print("Undefined Sentence found. Id: {}. Skipping.".format(para_id))
+                    continue
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
 
             with open(outfile_paths[i], "w") as f:
