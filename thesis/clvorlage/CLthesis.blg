@@ -19,49 +19,47 @@ A level-1 auxiliary file: chapters/cv.aux
 A level-1 auxiliary file: appendix/tables.aux
 A level-1 auxiliary file: appendix/scripts.aux
 Database file #1: biblio/thesis.bib
-Warning--I didn't find a database entry for "Callison-Burch2006"
-Warning--I didn't find a database entry for "Koehn2005"
 Warning--empty journal in foth2006umfassende
 Warning--empty journal in hajivc2009conll
-You've used 28 entries,
+You've used 33 entries,
             2773 wiz_defined-function locations,
-            752 strings with 10693 characters,
-and the built_in function-call counts, 14393 in all, are:
-= -- 1231
-> -- 1000
-< -- 21
-+ -- 338
-- -- 309
-* -- 1149
-:= -- 2217
-add.period$ -- 84
-call.type$ -- 28
-change.case$ -- 182
-chr.to.int$ -- 27
-cite$ -- 58
-duplicate$ -- 654
-empty$ -- 1052
-format.name$ -- 349
-if$ -- 3013
+            775 strings with 11773 characters,
+and the built_in function-call counts, 17290 in all, are:
+= -- 1482
+> -- 1210
+< -- 24
++ -- 409
+- -- 375
+* -- 1389
+:= -- 2658
+add.period$ -- 100
+call.type$ -- 33
+change.case$ -- 218
+chr.to.int$ -- 32
+cite$ -- 68
+duplicate$ -- 780
+empty$ -- 1260
+format.name$ -- 420
+if$ -- 3625
 int.to.chr$ -- 2
 int.to.str$ -- 1
-missing$ -- 26
-newline$ -- 148
-num.names$ -- 112
-pop$ -- 391
+missing$ -- 31
+newline$ -- 173
+num.names$ -- 132
+pop$ -- 468
 preamble$ -- 1
-purify$ -- 158
+purify$ -- 189
 quote$ -- 0
-skip$ -- 560
+skip$ -- 666
 stack$ -- 0
-substring$ -- 382
-swap$ -- 116
-text.length$ -- 10
+substring$ -- 475
+swap$ -- 141
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 303
+type$ -- 358
 warning$ -- 2
-while$ -- 112
+while$ -- 135
 width$ -- 0
-write$ -- 357
-(There were 4 warnings)
+write$ -- 421
+(There were 2 warnings)

@@ -165,8 +165,21 @@ In the predefined development and test splits, there are some examples where one
 only of the string ``NS''.
 I decided to not include this examples into the data used for training and evaluating my models, since
 those examples don't contribute any useful features for the model.\footnote{The authors don't comment on these obscure sentences, so I do not know what was the reasoning behind including these into the data sets.}
+Further, some examples consist of empty strings; I treat those the same way as the examples mentioned before.
 
 Further, there are sentences XXXXX
+
+\subsubsection{Statistics}
+
+Since the training data are solely machine-translated while the development and test data are human-translated, there needs to be some clarification as to how differently those sets are.
+One measure to capture similarities between sentences is the BLEU score \cite{papineni2002bleu}:
+This score measures the overlap of n-grams between two sentences, such that XXX
+
+Train: 0.553 \\
+Development: 0.373 \\
+Test: 0.384
+
+The training set contains 3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score of 1.0 --- which means they are identical.
 
 \subsection{SCARE}
 

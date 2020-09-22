@@ -1,4 +1,4 @@
-\begin{thebibliography}{28}
+\begin{thebibliography}{33}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -93,11 +93,37 @@ D.~Jurafsky and J.~H. Martin.
 \newblock Speech and language processing (draft). october 2019.
 \newblock \emph{URL https://web. stanford. edu/\~{} jurafsky/slp3}, 2019.
 
+\bibitem[Kracht(2007)]{kracht2007introduction}
+M.~Kracht.
+\newblock Introduction to linguistics.
+\newblock \emph{Departement of}, 2007.
+
 \bibitem[Lewis et~al.(2019)Lewis, O{\u{g}}uz, Rinott, Riedel, and
   Schwenk]{lewis2019mlqa}
 P.~Lewis, B.~O{\u{g}}uz, R.~Rinott, S.~Riedel, and H.~Schwenk.
 \newblock Mlqa: Evaluating cross-lingual extractive question answering.
 \newblock \emph{arXiv preprint arXiv:1910.07475}, 2019.
+
+\bibitem[Myagmar et~al.(2019)Myagmar, Li, and Kimura]{myagmar2019transferable}
+B.~Myagmar, J.~Li, and S.~Kimura.
+\newblock Transferable high-level representations of bert for cross-domain
+  sentiment classification.
+\newblock In \emph{Proceedings on the International Conference on Artificial
+  Intelligence (ICAI)}, pages 135--141. The Steering Committee of The World
+  Congress in Computer Science, Computer~…, 2019.
+
+\bibitem[Palmer et~al.(2010)Palmer, Gildea, and Xue]{palmer2010semantic}
+M.~Palmer, D.~Gildea, and N.~Xue.
+\newblock Semantic role labeling.
+\newblock \emph{Synthesis Lectures on Human Language Technologies}, 3\penalty0
+  (1):\penalty0 1--103, 2010.
+
+\bibitem[Papineni et~al.(2002)Papineni, Roukos, Ward, and
+  Zhu]{papineni2002bleu}
+K.~Papineni, S.~Roukos, T.~Ward, and W.-J. Zhu.
+\newblock Bleu: a method for automatic evaluation of machine translation.
+\newblock In \emph{Proceedings of the 40th annual meeting of the Association
+  for Computational Linguistics}, pages 311--318, 2002.
 
 \bibitem[Samardzic(2013)]{samardzic2013dynamics}
 T.~Samardzic.
@@ -167,6 +193,13 @@ E.~Wittenberg.
 \newblock \emph{With light verb constructions from syntax to concepts},
   volume~7.
 \newblock Universit{\"a}tsverlag Potsdam, 2016.
+
+\bibitem[Wolf et~al.(2019)Wolf, Debut, Sanh, Chaumond, Delangue, Moi, Cistac,
+  Rault, Louf, Funtowicz, et~al.]{wolf2019transformers}
+T.~Wolf, L.~Debut, V.~Sanh, J.~Chaumond, C.~Delangue, A.~Moi, P.~Cistac,
+  T.~Rault, R.~Louf, M.~Funtowicz, et~al.
+\newblock Transformers: State-of-the-art natural language processing.
+\newblock \emph{arXiv preprint arXiv:1910.03771}, 2019.
 
 \bibitem[Yang et~al.(2019)Yang, Zhang, Tar, and Baldridge]{yang2019paws}
 Y.~Yang, Y.~Zhang, C.~Tar, and J.~Baldridge.
