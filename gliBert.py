@@ -411,10 +411,6 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                         combo_merge_batch.shape[0], 
                         combo_merge_batch.shape[1]*combo_merge_batch.shape[2])
                     )
-
-            linear_output = self.linear(reshaped_last_hidden)
-            proba = self.softmax(linear_output)
-            return proba
         else:
             reshaped_last_hidden = torch.reshape(
                     hidden_state, 
@@ -422,9 +418,9 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                         hidden_state.shape[0], 
                         hidden_state.shape[1]*hidden_state.shape[2])
                     )
-            linear_output = self.linear(reshaped_last_hidden)
-            proba = self.softmax(linear_output)
-            return proba
+        linear_output = self.linear(reshaped_last_hidden)
+        proba = self.softmax(linear_output)
+        return proba
 
 
 class gliBertClassifierLastHiddenStateNoCLS(BertBase):
@@ -495,10 +491,6 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                         combo_merge_batch.shape[0], 
                         combo_merge_batch.shape[1]*combo_merge_batch.shape[2])
                     )
-
-            linear_output = self.linear(reshaped_last_hidden)
-            proba = self.softmax(linear_output)
-            return proba
         else:
             reshaped_last_hidden = torch.reshape(
                     hidden_state, 
@@ -506,9 +498,9 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                         hidden_state.shape[0], 
                         hidden_state.shape[1]*hidden_state.shape[2])
                     )
-            linear_output = self.linear(reshaped_last_hidden)
-            proba = self.softmax(linear_output)
-            return proba
+        linear_output = self.linear(reshaped_last_hidden)
+        proba = self.softmax(linear_output)
+        return proba
 
 
 class gliBertClassifierGRU(BertBase):
@@ -576,28 +568,28 @@ class gliBertClassifierGRU(BertBase):
             combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
-            hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
-            last_hidden = hidden[-1]
-            last_hidden_fwd = last_hidden[0]
-            last_hidden_bwd = last_hidden[1]
-            comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
-            linear_output = self.linear(comb)
-            proba = self.softmax(linear_output)
-            return proba
+            #hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
+            #last_hidden = hidden[-1]
+            #last_hidden_fwd = last_hidden[0]
+            #last_hidden_bwd = last_hidden[1]
+            #comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
+            #linear_output = self.linear(comb)
+            #proba = self.softmax(linear_output)
+            #return proba
         else:
             #if self.config["merge_subtokens"]:
             #    _, h_n = self.gru(full_word_hidden_state)
             #else:
             #    _, h_n = self.gru(last_hidden_state)
             _, h_n = self.gru(hidden_state)
-            hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
-            last_hidden = hidden[-1]
-            last_hidden_fwd = last_hidden[0]
-            last_hidden_bwd = last_hidden[1]
-            comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
-            linear_output = self.linear(comb)
-            proba = self.softmax(linear_output)
-            return proba
+        hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
+        last_hidden = hidden[-1]
+        last_hidden_fwd = last_hidden[0]
+        last_hidden_bwd = last_hidden[1]
+        comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
+        linear_output = self.linear(comb)
+        proba = self.softmax(linear_output)
+        return proba
 
 
 class gliBertSpanPrediction(BertBase):
@@ -653,18 +645,18 @@ class gliBertSpanPrediction(BertBase):
             combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             linear_output = self.linear(combo_merge_batch)
-            start_logits, end_logits = linear_output.split(1, dim=-1)
-            start_span = self.softmax(start_logits)
-            end_span = self.softmax(end_logits)
-            return start_span, end_span
+            #start_logits, end_logits = linear_output.split(1, dim=-1)
+            #start_span = self.softmax(start_logits)
+            #end_span = self.softmax(end_logits)
+            #return start_span, end_span
         else:
             #if self.config["merge_subtokens"]:
             #    full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
             linear_output = self.linear(hidden_state)
-            start_logits, end_logits = linear_output.split(1, dim=-1)
-            start_span = self.softmax(start_logits)
-            end_span = self.softmax(end_logits)
-            return start_span, end_span
+        start_logits, end_logits = linear_output.split(1, dim=-1)
+        start_span = self.softmax(start_logits)
+        end_span = self.softmax(end_logits)
+        return start_span, end_span
 
 
 def write_stats(stats_file, training_stats, training_results):
