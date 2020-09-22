@@ -62,6 +62,24 @@ Download the data and adhere to the following folder structure (it is important 
 				../xquad.de.json
 
 
+# SRL Resources
+
+## ParZu
+
+Clone the [repository](https://github.com/rsennrich/ParZu/) and configure
+config.ini file to run locally on your machine.
+
+## DAMESRL
+
+Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php)
+in a local folder `DAMESRL`, and configure `server_configs/charatt_ger_pred_infer.ini` to run
+locally on your machine.
+
+
+`$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
+
+`$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/ParZu"`
+
 ## Pre-Preprocessing
 
 Run the following bash commands to prepare the data sets for the python scripts:
@@ -98,20 +116,3 @@ For each data set, run the following command:
 		-a /<path>/<to>/DAMESRL/server_configs/srl_char_att_ger_infer.ini
 
 
-# SRL Resources
-
-## ParZu
-
-Clone the [repository](https://github.com/rsennrich/ParZu/) and configure
-config.ini file to run locally on your machine.
-
-## DAMESRL
-
-Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php)
-in a local folder DAMESRL``, and configure `server_configs/charatt_ger_pred_infer.ini` to run
-locally on your machine.
-
-
-`$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
-
-`$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/ParZu"`
