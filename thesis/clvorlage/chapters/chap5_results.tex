@@ -2,72 +2,157 @@
 \newchap{Results}
 \label{chap:5_results}
 
-\section{BLEU Scores}
-\label{sec:5_bleuscores}
+\section{SRL Evaluation}
 
-Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
-%\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
-\tab{bleuresults}{BLEU scores of different MT systems}
-{\begin{tabular}{ll|ccc|c}
-language pair		& ABC	& YYY	\\
-\hline
-EN$\rightarrow$DE	& 20.56	& 32.53 \\
-DE$\rightarrow$EN	& 43.35	& 52.53 \\
-\hline
-\end{tabular}
-}{ABC BLEU scores}
+\subsection{deISEAR}
 
-And we can reference the large table in the appendix as Table \ref{appendixTable}
+\subsubsection{Example 1}
 
-\section{Evaluation}
-\label{sec:5_evaluation}
-We saw in section \ref{sec:5_bleuscores} 
+\fig{images/SRLs_deISEAR_1.png}{fig:SRL-PAWS-X-1}{}{10}{}
 
-We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
+\subsubsection{Example 2}
 
-\subsection{More evaluation}
-\label{subsec:5_moreeval}
+\fig{images/SRLs_deISEAR_2.png}{fig:SRL-PAWS-X-1}{}{15}{}
+
+\subsection{PAWS-X}
+
+\begin{landscape}
+
+\subsubsection{Example 1}
+
+\textbf{Sentence 1}
+
+Im Gegenzug [\textsubscript{predicate} gab] Grimoald [\textsubscript{A1} seine Tochter zur Hochzeit] und gewährte ihm das Herzogtum Spoleto nach dem Tod von Atto.
+
+Im Gegenzug gab Grimoald [\textsubscript{A0} seine Tochter] zur Hochzeit und [\textsubscript{predicate} gewährte] [\textsubscript{A2} ihm] [\textsubscript{A1} das Herzogtum Spoleto nach dem Tod von Atto] .
+
+\textbf{Sentence 2}
+
+%[\textsubscript{O} Im Gegenzug] [\textsubscript{predicate} gab] [\textsubscript{O} Grimoald] [\textsubscript{A1} seine Tochter] [\textsubscript{A3} in die Ehe] [\textsubscript{O} und gewährte ihm das Herzogtum Spoleto nach dem Tod von Atto] [\textsubscript{O} .]
+Im Gegenzug [\textsubscript{predicate} gab] Grimoald [\textsubscript{A1} seine Tochter] [\textsubscript{A3} in die Ehe] und gewährte ihm das Herzogtum Spoleto nach dem Tod von Atto.
+
+%[\textsubscript{O} Im Gegenzug gab Grimoald] [\textsubscript{A0} seine Tochter] [\textsubscript{O} in die Ehe und] [\textsubscript{predicate} gewährte] [\textsubscript{A2} ihm] [\textsubscript{A1} das Herzogtum Spoleto nach dem Tod von Atto] [\textsubscript{O} .]
+Im Gegenzug gab Grimoald [\textsubscript{A0} seine Tochter] in die Ehe und [\textsubscript{predicate} gewährte] [\textsubscript{A2} ihm] [\textsubscript{A1} das Herzogtum Spoleto nach dem Tod von Atto] .
 
 
-\section{Citations}
-Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
-or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
+\fig{images/SRLs_PAWS-X_1.png}{fig:SRL-PAWS-X-1}{}{15}{}
 
-to cite: \cite[30-31]{Koehn2005} \\
-to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
+\subsubsection{Example 2}
 
-to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
-only the author(s): \citeauthor{Callison-Burch2006}\\
-only the year: \citeyear{Callison-Burch2006}\\
+\textbf{Sentence 1}
 
-\section{Graphics}
+Camm [\textsubscript{predicate} entschied] , [\textsubscript{A1} dass beide Motoren eingesetzt werden sollten: Der Tempest Mk 5 hatte den Napier Saber eingebaut, während der Tempest Mk 2 der Bristol Centaurus war] .
 
-To include a graphic that appears in the list of figures, use the predefined fig command:\\
-%\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-\fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
+Camm entschied, dass [\textsubscript{A1} beide Motoren] [\textsubscript{predicate} eingesetzt] werden sollten: [\textsubscript{A1} Der Tempest Mk 5 hatte den Napier Saber eingebaut, während] der Tempest Mk 2 der Bristol Centaurus war.
 
-%\reffig{#1: label}
-And then reference it as \reffig{fig:rosetta} is easy.
+Camm entschied, dass beide Motoren eingesetzt werden sollten: [\textsubscript{A0} Der Tempest Mk 5] hatte [\textsubscript{A3} den Napier Saber] [\textsubscript{predicate} eingebaut], während der Tempest Mk 2 der Bristol Centaurus war.
 
-\section{Some Linguistics}
+Camm entschied, dass beide Motoren eingesetzt werden sollten: Der Tempest Mk 5 hatte den Napier Saber eingebaut, während [\textsubscript{A1} der Tempest Mk 2 der Bristol Centaurus] [\textsubscript{predicate} war] .
 
-(With the package 'covington')\\
+\textbf{Sentence 2}
 
-Gloss:
+Camm [\textsubscript{predicate} entschied] , [\textsubscript{A1} dass beide Motoren eingesetz werden sollten: Der Tempest Mk 5 war mit dem Napier Saber ausgestattet, während der Tempest Mk 2 den Bristol Centaurus hatte] .
 
-\begin{examples}
- \item \gll The cat sits on the table.
-	    die Katze sitzt auf dem Tisch
-	\glt 'Die Katze sitzt auf dem Tisch.'
-    \glend
-\end{examples}
+Camm entschied, dass [\textsubscript{A1} beide Motoren] [\textsubscript{predicate} eingesetzt] werden sollten: [\textsubscript{A1} Der Tempest Mk 5 war mit dem Napier Saber ausgestattet, während der Tempest Mk 2 den Bristol Centaurus hatte] .
 
-Gloss with morphology:
+Camm entschied, dass beide Motoren eingesetzt werden sollten: [\textsubscript{A0} Der Tempest Mk 5] war [\textsubscript{A1} mit dem Napier Saber] [\textsubscript{predicate} ausgestattet] , während der Tempest Mk 2 den Bristol Centaurus hatte.
 
-\begin{examples}
- \item \gll La gata duerm -e en la cama.
-	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
-	\glt 'Die Katze schl\"aft im Bett.'
-    \glend
-\end{examples}
+Camm entschied, dass beide Motoren eingesetzt werden sollten: Der Tempest Mk 5 war mit dem Napier Saber ausgestattet, während [\textsubscript{A1} der Tempest Mk 2 den Bristol Centaurus] [\textsubscript{predicate} hatte] .
 
+\fig{images/SRLs_PAWS-X_2.png}{fig:SRL-PAWS-X-1}{}{15}{}
+
+\end{landscape}
+
+\subsubsection{Example 3}
+
+\fig{images/SRLs_PAWS-X_3.png}{fig:SRL-PAWS-X-1}{}{10}{}
+
+\subsubsection{Example 4}
+
+\fig{images/SRLs_PAWS-X_4.png}{fig:SRL-PAWS-X-1}{}{15}{}
+
+\subsubsection{Example 5}
+
+\fig{images/SRLs_PAWS-X_5.png}{fig:SRL-PAWS-X-1}{}{10}{}
+
+\subsubsection{Example 6}
+
+\fig{images/SRLs_PAWS-X_6.png}{fig:SRL-PAWS-X-1}{}{10}{}
+
+\subsubsection{Example 7}
+
+\fig{images/SRLs_PAWS-X_7.png}{fig:SRL-PAWS-X-1}{}{10}{}
+
+\subsubsection{Example 8}
+
+\fig{images/SRLs_PAWS-X_8.png}{fig:SRL-PAWS-X-1}{}{10}{}
+
+%\section{BLEU Scores}
+%\label{sec:5_bleuscores}
+%
+%Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
+%%\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
+%\tab{bleuresults}{BLEU scores of different MT systems}
+%{\begin{tabular}{ll|ccc|c}
+%language pair		& ABC	& YYY	\\
+%\hline
+%EN$\rightarrow$DE	& 20.56	& 32.53 \\
+%DE$\rightarrow$EN	& 43.35	& 52.53 \\
+%\hline
+%\end{tabular}
+%}{ABC BLEU scores}
+%
+%And we can reference the large table in the appendix as Table \ref{appendixTable}
+%
+%\section{Evaluation}
+%\label{sec:5_evaluation}
+%We saw in section \ref{sec:5_bleuscores} 
+%
+%We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
+%
+%\subsection{More evaluation}
+%\label{subsec:5_moreeval}
+%
+%
+%\section{Citations}
+%Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
+%or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
+%
+%to cite: \cite[30-31]{Koehn2005} \\
+%to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
+%
+%to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
+%only the author(s): \citeauthor{Callison-Burch2006}\\
+%only the year: \citeyear{Callison-Burch2006}\\
+%
+%\section{Graphics}
+%
+%To include a graphic that appears in the list of figures, use the predefined fig command:\\
+%%\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
+%\fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
+%
+%%\reffig{#1: label}
+%And then reference it as \reffig{fig:rosetta} is easy.
+%
+%\section{Some Linguistics}
+%
+%(With the package 'covington')\\
+%
+%Gloss:
+%
+%\begin{examples}
+% \item \gll The cat sits on the table.
+%	    die Katze sitzt auf dem Tisch
+%	\glt 'Die Katze sitzt auf dem Tisch.'
+%    \glend
+%\end{examples}
+%
+%Gloss with morphology:
+%
+%\begin{examples}
+% \item \gll La gata duerm -e en la cama.
+%	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
+%	\glt 'Die Katze schl\"aft im Bett.'
+%    \glend
+%\end{examples}
+%

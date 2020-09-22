@@ -106,7 +106,7 @@ For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, f
 
 The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
 
-\fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR data set.}{15}{deISEAR statistics}
+%\fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR data set.}{15}{deISEAR statistics}
 
 \subsection{MLQA}
 
@@ -153,7 +153,8 @@ Since most corpora for this task are available only in English the authors compi
 The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence one is a paraphrase of sentence two, and vice versa.
 
 
-\fig{images/PAWS-X_traindevtest.png}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
+% TODO: new stats figure!
+%\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
 stats
 
 \subsubsection{Preprocessing}
@@ -272,7 +273,8 @@ This is also the chosen strategy for 51 reviews that had no labels at all; an ex
 
 \cite{conneau2018xnli}
 
-\fig{images/XNLI_traindevtest.png}{fig:XNLI-stats}{Distribution of labels in the XNLI data set.}{15}{XNLI label statistics}
+% TODO: new stats figure!
+%\fig{}{fig:XNLI-stats}{Distribution of labels in the XNLI data set.}{15}{XNLI label statistics}
 
 \begin{examples}
 	\label{ex:xnli}
@@ -325,9 +327,9 @@ average length test context: 144.3 (187.3)
 	\hline
 	deISEAR &  Emotion Detection & Sequence Classification  & XYZ & - \\
 	MLQA & Question Answering & Span Prediction & XYZ & dev/test \\
-	PAWS-X & Paraphrase Identification & Sequence Classification & XYZ & dev/test \\
+	PAWS-X & Paraphrase Identification & Sequence Classification & XYZ & train/dev/test \\
 	SCARE & Sentiment Analysis & Sequence Classifiaction & XYZ & - \\
-	SCARE Reviews &  Sentiment Analysis & Sequence Classification & XYZ & - \\
+	SCARE Rev. &  Sentiment Analysis & Sequence Classification & XYZ & - \\
 	XNLI & Natural Language Inference & Sequence Classification &  XYZ & dev/test \\
 	XQuAD & Question Answering & Span Prediction & XYZ & - \\
 \end{tabular}

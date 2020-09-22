@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  31 AUG 2020 18:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 SEP 2020 12:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -810,6 +810,20 @@ Package: multicol 2017/04/11 v1.8q multicolumn formatting (FMi)
 \colbreak@box=\box87
 \mc@col@check@num=\count127
 )
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
+Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+))
 (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
@@ -882,7 +896,7 @@ Package ifluatex Info: LuaTeX not detected.
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
-Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
 Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
@@ -910,9 +924,6 @@ Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
-Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
@@ -982,7 +993,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 Package hyperref Warning: Invalid value `000'
 (hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 58.
+(hyperref)                Option setting is ignored on input line 59.
 
 
 Class scrreprt Warning: Usage of package `fancyhdr' together
@@ -996,7 +1007,7 @@ Class scrreprt Warning: Usage of package `fancyhdr' together
 (scrreprt)              `\addtokomafont' for the page style elements need
 (scrreprt)              explicite user intervention to work.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `fancyhdr' on input line 75.
+(scrreprt)              package `fancyhdr' on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
@@ -1052,8 +1063,35 @@ Package csquotes Info: Redefining alias 'default' -> 'english'.
 
 LaTeX Warning: Label `tab:scare-csv-example' multiply defined.
 
-) (./chapters/chap4_architecture.aux) (./chapters/chap5_results.aux)
-(./chapters/chap6_conclusion.aux) (./chapters/glossary.aux)
+) (./chapters/chap4_architecture.aux) (./chapters/chap5_results.aux
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+
+LaTeX Warning: Label `fig:SRL-PAWS-X-1' multiply defined.
+
+) (./chapters/chap6_conclusion.aux) (./chapters/glossary.aux)
 (./chapters/references.aux) (./chapters/cv.aux) (./appendix/tables.aux)
 (./appendix/scripts.aux))
 \openout1 = `CLthesis.aux'.
@@ -1125,7 +1163,7 @@ LaTeX Info: Redefining \nameref on input line 3.
 \openout2 = `chapters/titlepage_phil.aux'.
 
  (./chapters/titlepage_phil.tex
-<images/uzh_logo_d_pos.pdf, id=192, 142.5325pt x 49.18375pt>
+<images/uzh_logo_d_pos.pdf, id=229, 142.5325pt x 49.18375pt>
 File: images/uzh_logo_d_pos.pdf Graphic file (type pdf)
 <use images/uzh_logo_d_pos.pdf>
 Package pdftex.def Info: images/uzh_logo_d_pos.pdf  used on input line 2.
@@ -1261,6 +1299,10 @@ l.24 \include{chapters/chap1_introduction}
 
 (./chapters/chap2_semantic_roles.tex
 chapter 2.
+
+Package natbib Warning: Citation `palmer2010semantic' on page 2 undefined on in
+put line 12.
+
 ) [2
 
 
@@ -1283,6 +1325,11 @@ LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 6.64998pt on input line 44.
 
+Overfull \hbox (31.50038pt too wide) in paragraph at lines 62--62
+ [] 
+ []
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
@@ -1293,86 +1340,49 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
 
 
-] [4]
-<images/deISEAR_traindevtest.png, id=370, 1122.44344pt x 291.33844pt>
-File: images/deISEAR_traindevtest.png Graphic file (type png)
-<use images/deISEAR_traindevtest.png>
-Package pdftex.def Info: images/deISEAR_traindevtest.png  used on input line 10
-9.
-(pdftex.def)             Requested size: 426.79134pt x 110.77643pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5] [6 <./images/deISEAR_traindevtest.png>]
-<images/PAWS-X_traindevtest.png, id=400, 1145.78062pt x 293.59688pt>
-File: images/PAWS-X_traindevtest.png Graphic file (type png)
-<use images/PAWS-X_traindevtest.png>
-Package pdftex.def Info: images/PAWS-X_traindevtest.png  used on input line 156
-.
-(pdftex.def)             Requested size: 426.79134pt x 109.36385pt.
- [7 <./images/PAWS-X_traindevtest.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 187.
+] [4] [5] [6] [7]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 193.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 193.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 193.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8]
-<images/SCARE_star_stats.png, id=429, 723.4227pt x 346.896pt>
+<images/SCARE_star_stats.png, id=478, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
-Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 242.
+Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 248.
 (pdftex.def)             Requested size: 341.43306pt x 163.72395pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[9]
-<images/SCARE_label_stats.png, id=435, 702.4644pt x 346.896pt>
+ [9 <./images/SCARE_star_stats.png>]
+<images/SCARE_label_stats.png, id=485, 702.4644pt x 346.896pt>
 File: images/SCARE_label_stats.png Graphic file (type png)
 <use images/SCARE_label_stats.png>
-Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 259.
+Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 265.
 (pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<images/XNLI_traindevtest.png, id=438, 1212.78094pt x 293.59688pt>
-File: images/XNLI_traindevtest.png Graphic file (type png)
-<use images/XNLI_traindevtest.png>
-Package pdftex.def Info: images/XNLI_traindevtest.png  used on input line 270.
-(pdftex.def)             Requested size: 426.79134pt x 103.32042pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[10 <./images/SCARE_star_stats.png>] [11 <./images/SCARE_label_stats.png> <./im
-ages/XNLI_traindevtest.png>] [12]
-Overfull \hbox (5.75653pt too wide) in paragraph at lines 329--329
+ [10 <./images/SCARE_label_stats.png>]
+[11]
+Overfull \hbox (9.85071pt too wide) in paragraph at lines 336--336
  [] 
  []
 
-) [13]
+) [12]
 \openout2 = `chapters/chap4_architecture.aux'.
 
  (./chapters/chap4_architecture.tex
 chapter 4.
-[14
+[13
 
 
 
-] [15]
-<images/exampleParzu2.png, id=530, 827.34094pt x 358.33875pt>
+] [14]
+<images/exampleParzu2.png, id=574, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1384,78 +1394,98 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 66--66
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 72.
-[16 <./images/exampleParzu2.png (PNG copy)>]
+[15 <./images/exampleParzu2.png (PNG copy)>]
 
-Package natbib Warning: Citation `wolf2019transformers' on page 17 undefined on
+Package natbib Warning: Citation `wolf2019transformers' on page 16 undefined on
  input line 115.
 
-) [17]
+
+Package natbib Warning: Citation `myagmar2019transferable' on page 16 undefined
+ on input line 121.
+
+) [16]
 \openout2 = `chapters/chap5_results.aux'.
 
  (./chapters/chap5_results.tex
 chapter 5.
-
-Package natbib Warning: Citation `Callison-Burch2006' on page 18 undefined on i
-nput line 33.
-
-
-Package natbib Warning: Citation `Callison-Burch2006' on page 18 undefined on i
-nput line 34.
-
-
-Package natbib Warning: Citation `Koehn2005' on page 18 undefined on input line
- 36.
-
-
-Package natbib Warning: Citation `Koehn2005' on page 18 undefined on input line
- 37.
-
-
-Package natbib Warning: Citation `Koehn2005' on page 18 undefined on input line
- 37.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--38
-
- []
-
-
-Package natbib Warning: Citation `Koehn2005' on page 18 undefined on input line
- 39.
-
-
-Package natbib Warning: Citation `Koehn2005' on page 18 undefined on input line
- 39.
-
-
-Package natbib Warning: Citation `Callison-Burch2006' on page 18 undefined on i
-nput line 40.
-
-
-Package natbib Warning: Citation `Callison-Burch2006' on page 18 undefined on i
-nput line 41.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--42
-
- []
-
-[18
+<images/SRLs_deISEAR_1.png, id=618, 666.23906pt x 90.3375pt>
+File: images/SRLs_deISEAR_1.png Graphic file (type png)
+<use images/SRLs_deISEAR_1.png>
+Package pdftex.def Info: images/SRLs_deISEAR_1.png  used on input line 11.
+(pdftex.def)             Requested size: 284.52756pt x 38.58107pt.
+<images/SRLs_deISEAR_2.png, id=619, 2436.10126pt x 204.01219pt>
+File: images/SRLs_deISEAR_2.png Graphic file (type png)
+<use images/SRLs_deISEAR_2.png>
+Package pdftex.def Info: images/SRLs_deISEAR_2.png  used on input line 15.
+(pdftex.def)             Requested size: 426.79134pt x 35.74002pt.
+[17
 
 
 
-]
-<images/Rosetta_Stone.jpg, id=584, 175.857pt x 255.354pt>
-File: images/Rosetta_Stone.jpg Graphic file (type jpg)
-<use images/Rosetta_Stone.jpg>
-Package pdftex.def Info: images/Rosetta_Stone.jpg  used on input line 47.
-(pdftex.def)             Requested size: 284.52756pt x 413.17638pt.
+ <./images/SRLs_deISEAR_1.png> <./images/SRLs_deISEAR_2.png>]
+<images/SRLs_PAWS-X_1.png, id=627, 1247.41031pt x 218.31563pt>
+File: images/SRLs_PAWS-X_1.png Graphic file (type png)
+<use images/SRLs_PAWS-X_1.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_1.png  used on input line 38.
+(pdftex.def)             Requested size: 426.79134pt x 74.69269pt.
+ [18
 
-Underfull \hbox (badness 10000) in paragraph at lines 54--55
+ <./images/SRLs_PAWS-X_1.png>]
+<images/SRLs_PAWS-X_2.png, id=633, 1836.8625pt x 386.19281pt>
+File: images/SRLs_PAWS-X_2.png Graphic file (type png)
+<use images/SRLs_PAWS-X_2.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_2.png  used on input line 62.
+(pdftex.def)             Requested size: 426.79134pt x 89.72997pt.
 
- []
 
-[19 <./images/Rosetta_Stone.jpg>]) [20]
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[19] [20 <./images/SRLs_PAWS-X_2.png>]
+<images/SRLs_PAWS-X_3.png, id=643, 685.8122pt x 162.6075pt>
+File: images/SRLs_PAWS-X_3.png Graphic file (type png)
+<use images/SRLs_PAWS-X_3.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_3.png  used on input line 68.
+(pdftex.def)             Requested size: 284.52756pt x 67.46349pt.
+<images/SRLs_PAWS-X_4.png, id=644, 1456.69218pt x 174.6525pt>
+File: images/SRLs_PAWS-X_4.png Graphic file (type png)
+<use images/SRLs_PAWS-X_4.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_4.png  used on input line 72.
+(pdftex.def)             Requested size: 426.79134pt x 51.17026pt.
+<images/SRLs_PAWS-X_5.png, id=645, 721.19438pt x 201.75375pt>
+File: images/SRLs_PAWS-X_5.png Graphic file (type png)
+<use images/SRLs_PAWS-X_5.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_5.png  used on input line 76.
+(pdftex.def)             Requested size: 284.52756pt x 79.59488pt.
+<images/SRLs_PAWS-X_6.png, id=646, 1012.5328pt x 170.88844pt>
+File: images/SRLs_PAWS-X_6.png Graphic file (type png)
+<use images/SRLs_PAWS-X_6.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_6.png  used on input line 80.
+(pdftex.def)             Requested size: 284.52756pt x 48.02052pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/SRLs_PAWS-X_7.png, id=647, 786.68906pt x 201.75375pt>
+File: images/SRLs_PAWS-X_7.png Graphic file (type png)
+<use images/SRLs_PAWS-X_7.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_7.png  used on input line 84.
+(pdftex.def)             Requested size: 284.52756pt x 72.96992pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/SRLs_PAWS-X_8.png, id=648, 1044.90375pt x 201.75375pt>
+File: images/SRLs_PAWS-X_8.png Graphic file (type png)
+<use images/SRLs_PAWS-X_8.png>
+Package pdftex.def Info: images/SRLs_PAWS-X_8.png  used on input line 88.
+(pdftex.def)             Requested size: 284.52756pt x 54.936pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) [21
+
+ <./images/SRLs_PAWS-X_3.png> <./images/SRLs_PAWS-X_4.png> <./images/SRLs_PAWS-
+X_5.png>] [22 <./images/SRLs_PAWS-X_6.png> <./images/SRLs_PAWS-X_7.png> <./imag
+es/SRLs_PAWS-X_8.png>]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
@@ -1465,14 +1495,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [21
+) [23
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [22
+ (./chapters/glossary.tex) [24
 
 
 
@@ -1480,11 +1510,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [23
+(./CLthesis.bbl [25
 
 
 
-] [24])) [25]
+] [26])) [27]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -1497,7 +1527,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [26
+) [28
 
 
 
@@ -1510,7 +1540,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 27.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.49997pt on input line 27.
-[27
+[29
 
 
 
@@ -1519,7 +1549,7 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
  (./appendix/scripts.tex
 chapter B.
-[28
+[30
 
 
 
@@ -1539,41 +1569,38 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
-(rerunfilecheck)             Checksum: AB17DEB57DAF8DE48CC856EE71614EB5;2708.
+(rerunfilecheck)             Checksum: 8C362466CDA259E2975910888BC2AF92;3404.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 12100 strings out of 492982
- 187239 string characters out of 6134895
- 410194 words of memory out of 5000000
- 15156 multiletter control sequences out of 15000+600000
+ 12187 strings out of 492982
+ 189244 string characters out of 6134895
+ 410389 words of memory out of 5000000
+ 15216 multiletter control sequences out of 15000+600000
  24678 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,17n,68p,8946b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{table.3.6} has been referenced but does not exist
-, replaced by a fixed one
-
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (36 pages, 610970 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on CLthesis.pdf (38 pages, 703866 bytes).
 PDF statistics:
- 721 PDF objects out of 1000 (max. 8388607)
- 648 compressed objects within 7 object streams
- 179 named destinations out of 1000 (max. 500000)
- 417 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 795 PDF objects out of 1000 (max. 8388607)
+ 706 compressed objects within 8 object streams
+ 192 named destinations out of 1000 (max. 500000)
+ 519 words of extra memory for PDF output out of 10000 (max. 10000000)
 
