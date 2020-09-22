@@ -346,43 +346,6 @@ class BertClassifierCLS(BertBase):
         return proba
 
 
-#class BertClassifierLastHiddenStateAll(BertBase):
-#    def __init__(self, config, num_classes, max_len):
-#        super(BertBase, self).__init__()
-#        self.config = config
-#        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
-#        self.srl_model = SRL_Encoder(config)
-#        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-#        self.linear = nn.Linear(768*max_len, num_classes)
-#        self.softmax = nn.LogSoftmax(dim=-1)
-#    
-#    def forward(
-#            self,
-#            tokens,
-#            attention_mask=None,
-#            token_type_ids=None,
-#            srls=None,
-#            data_type=None,
-#            device=torch.device("cpu")
-#            ):
-#        last_hidden_state, _ = self.bert(
-#                                tokens,
-#                                attention_mask,
-#                                token_type_ids
-#                                )
-#        if self.config["merge_subtokens"] == True:
-#            full_word_hidden_state, _ = self.reconstruct_word_level(last_hidden_state, tokens, device)
-#        reshaped_last_hidden = torch.reshape(
-#                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
-#                (
-#                    last_hidden_state.shape[0], 
-#                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
-#                )
-#        linear_output = self.linear(reshaped_last_hidden)
-#        proba = self.softmax(linear_output)
-#        return proba
-
-
 class gliBertClassifierLastHiddenStateAll(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
@@ -413,16 +376,14 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
         full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
                                         tokens,
                                         device)
+        hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
             if data_type != 1:
                 a_srls, b_srls = get_AB_SRLs(srls) 
-                if self.config["merge_subtokens"] != True:
-                    try:
-                        a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                        self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
-                    except:
-                        import ipdb; ipdb.set_trace()
+                if not self.config["merge_subtokens"]:
+                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
                 a_emb = self.srl_model(a_srls)
                 b_emb = self.srl_model(b_srls)
                 ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
@@ -430,7 +391,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                                 for i in range(len(a_srls))]
             else:
                 srls = get_A_SRLs(srls)
-                if self.config["merge_subtokens"] != True:
+                if not self.config["merge_subtokens"]:
                     srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
                 emb = self.srl_model(srls)
                 srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
@@ -438,10 +399,11 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             #import ipdb; ipdb.set_trace()
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            if self.config["merge_subtokens"]:
-                combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            else:
-                combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            #if self.config["merge_subtokens"]:
+            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+            #else:
+            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             reshaped_last_hidden = torch.reshape(
                     combo_merge_batch,
@@ -463,44 +425,6 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             linear_output = self.linear(reshaped_last_hidden)
             proba = self.softmax(linear_output)
             return proba
-
-
-#class BertClassifierLastHiddenStateNoCLS(BertBase):
-#    def __init__(self, config, num_classes, max_len):
-#        super(BertBase, self).__init__()
-#        self.config = config
-#        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
-#        self.srl_model = SRL_Encoder(config)
-#        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-#        self.linear = nn.Linear(768*(max_len-1), num_classes)
-#        self.softmax = nn.LogSoftmax(dim=-1)
-#    
-#    def forward(
-#            self,
-#            tokens,
-#            attention_mask=None,
-#            token_type_ids=None,
-#            srls=None,
-#            data_type=None,
-#            device=torch.device("cpu")
-#            ):
-#        last_hidden_state, _ = self.bert(
-#                                tokens,
-#                                attention_mask,
-#                                token_type_ids
-#                                )
-#        last_hidden_state = last_hidden_state[:, 1:, :]
-#        if self.config["merge_subtokens"] == True:
-#            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
-#        reshaped_last_hidden = torch.reshape(
-#                full_word_hidden_state if self.config["merge_subtokens"] == True else last_hidden_state, 
-#                (
-#                    last_hidden_state.shape[0], 
-#                    last_hidden_state.shape[1]*last_hidden_state.shape[2])
-#                )
-#        linear_output = self.linear(reshaped_last_hidden)
-#        proba = self.softmax(linear_output)
-#        return proba
 
 
 class gliBertClassifierLastHiddenStateNoCLS(BertBase):
@@ -533,13 +457,15 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
         full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
                                         tokens,
                                         device)
-        last_hidden_state = last_hidden_state[:, 1:, :]
-        full_word_hidden_state = full_word_hidden_state[:, 1:, :]
+        hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
+        hidden_state = hidden_state[:, 1:, :]
+        #last_hidden_state = last_hidden_state[:, 1:, :]
+        #full_word_hidden_state = full_word_hidden_state[:, 1:, :]
 
         if self.config["combine_SRLs"]:
             if data_type != 1:
                 a_srls, b_srls = get_AB_SRLs(srls) 
-                if self.config["merge_subtokens"] != True:
+                if not self.config["merge_subtokens"]:
                     a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
                                     self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
                 a_emb = self.srl_model(a_srls)
@@ -549,7 +475,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                                 for i in range(len(a_srls))]
             else:
                 srls = get_A_SRLs(srls)
-                if self.config["merge_subtokens"] != True:
+                if not self.config["merge_subtokens"]:
                     srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
                 emb = self.srl_model(srls)
                 srl_emb = [torch.cat(tuple([emb[i]]), dim=0)
@@ -557,10 +483,11 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             #import ipdb; ipdb.set_trace()
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len-1)
-            if self.config["merge_subtokens"]:
-                combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            else:
-                combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            #if self.config["merge_subtokens"]:
+            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+            #else:
+            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             reshaped_last_hidden = torch.reshape(
                     combo_merge_batch,
@@ -620,11 +547,12 @@ class gliBertClassifierGRU(BertBase):
         full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
                                         tokens,
                                         device)
+        hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
             if data_type != 1:
                 a_srls, b_srls = get_AB_SRLs(srls) 
-                if self.config["merge_subtokens"] != True:
+                if not self.config["merge_subtokens"]:
                     a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
                                     self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
                 a_emb = self.srl_model(a_srls)
@@ -634,17 +562,18 @@ class gliBertClassifierGRU(BertBase):
                                 for i in range(len(a_srls))]
             else:
                 srls = get_A_SRLs(srls)
-                if self.config["merge_subtokens"] != True:
+                if not self.config["merge_subtokens"]:
                     srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
                 emb = self.srl_model(srls)
                 srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
                                 for i in range(len(srls))]
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            if self.config["merge_subtokens"]:
-                combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            else:
-                combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            #if self.config["merge_subtokens"]:
+            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+            #else:
+            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
             hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
@@ -656,10 +585,11 @@ class gliBertClassifierGRU(BertBase):
             proba = self.softmax(linear_output)
             return proba
         else:
-            if self.config["merge_subtokens"]:
-                _, h_n = self.gru(full_word_hidden_state)
-            else:
-                _, h_n = self.gru(last_hidden_state)
+            #if self.config["merge_subtokens"]:
+            #    _, h_n = self.gru(full_word_hidden_state)
+            #else:
+            #    _, h_n = self.gru(last_hidden_state)
+            _, h_n = self.gru(hidden_state)
             hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
             last_hidden = hidden[-1]
             last_hidden_fwd = last_hidden[0]
@@ -668,39 +598,6 @@ class gliBertClassifierGRU(BertBase):
             linear_output = self.linear(comb)
             proba = self.softmax(linear_output)
             return proba
-
-
-#class BertSpanPrediction(BertBase):
-#    def __init__(self, config, num_classes, max_len):
-#        super(BertBase, self).__init__()
-#        self.config = config
-#        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
-#        self.srl_model = SRL_Encoder(config)
-#        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-#        self.linear = nn.Linear(768, 2)
-#        self.softmax = nn.LogSoftmax(dim=-2)
-#    
-#    def forward(
-#            self,
-#            tokens,
-#            attention_mask=None,
-#            token_type_ids=None,
-#            srls=None,
-#            data_type=None,
-#            device=torch.device("cpu")
-#            ):
-#        last_hidden_state, _ = self.bert(
-#                                tokens,
-#                                attention_mask,
-#                                token_type_ids
-#                                )
-#        if self.config["merge_subtokens"] == True:
-#            full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
-#        linear_output = self.linear(last_hidden_state)
-#        start_logits, end_logits = linear_output.split(1, dim=-1)
-#        start_span = self.softmax(start_logits)
-#        end_span = self.softmax(end_logits)
-#        return start_span, end_span
 
 
 class gliBertSpanPrediction(BertBase):
@@ -735,10 +632,11 @@ class gliBertSpanPrediction(BertBase):
         full_word_hidden_state, split_idxs = self.reconstruct_word_level(last_hidden_state,
                                         tokens,
                                         device)
+        hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
             a_srls, b_srls = get_AB_SRLs(srls) 
-            if self.config["merge_subtokens"] != True:
+            if not self.config["merge_subtokens"]:
                 a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
                                 self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
             a_emb = self.srl_model(a_srls)
@@ -748,10 +646,11 @@ class gliBertSpanPrediction(BertBase):
                             for i in range(len(a_srls))]
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            if self.config["merge_subtokens"]:
-                combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            else:
-                combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            #if self.config["merge_subtokens"]:
+            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+            #else:
+            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             linear_output = self.linear(combo_merge_batch)
             start_logits, end_logits = linear_output.split(1, dim=-1)
@@ -759,9 +658,9 @@ class gliBertSpanPrediction(BertBase):
             end_span = self.softmax(end_logits)
             return start_span, end_span
         else:
-            if self.config["merge_subtokens"]:
-                full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
-            linear_output = self.linear(last_hidden_state)
+            #if self.config["merge_subtokens"]:
+            #    full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
+            linear_output = self.linear(hidden_state)
             start_logits, end_logits = linear_output.split(1, dim=-1)
             start_span = self.softmax(start_logits)
             end_span = self.softmax(end_logits)
