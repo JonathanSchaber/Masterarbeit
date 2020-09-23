@@ -1,13 +1,13 @@
 import argparse
 import datetime
 import json
+import random
 import time
 import torch
 
 import numpy as np
 
 from load_data import Dataloader, dataloader
-from random import shuffle
 from torch import nn
 from transformers import (
         AdamW,
@@ -17,7 +17,6 @@ from transformers import (
         )
 
 merge_subs = Dataloader.merge_subs
-
 
 blue = "\033[94m"
 
@@ -644,26 +643,10 @@ class gliBertClassifierCNN(BertBase):
                                 for i in range(len(srls))]
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            #if self.config["merge_subtokens"]:
-            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            #else:
-            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
             combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
-            #hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
-            #last_hidden = hidden[-1]
-            #last_hidden_fwd = last_hidden[0]
-            #last_hidden_bwd = last_hidden[1]
-            #comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
-            #linear_output = self.linear(comb)
-            #proba = self.softmax(linear_output)
-            #return proba
         else:
-            #if self.config["merge_subtokens"]:
-            #    _, h_n = self.gru(full_word_hidden_state)
-            #else:
-            #    _, h_n = self.gru(last_hidden_state)
             _, h_n = self.gru(hidden_state)
         hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
         last_hidden = hidden[-1]
@@ -836,7 +819,7 @@ def batch_idcs(len_dataset, batch_size):
         batch_idcs.append((current_idx, current_idx + batch_size))
         current_idx += batch_size
 
-    shuffle(batch_idcs)
+    random.shuffle(batch_idcs)
     return batch_idcs
 
 
