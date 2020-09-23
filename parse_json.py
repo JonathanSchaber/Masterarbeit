@@ -46,7 +46,7 @@ def read_in_json(file):
                 epoch["Dev Accur."],
                 epoch["Test Accur."]
                 ]
-        print_list.append(map(str, values[:2]) + map(str, map(round, values[2:], [3]*6)))
+        print_list.append(list(map(str, values[:2])) + list(map(str, map(round, values[2:], [3]*6))))
 
     print_string = "\n".join(["\t".join(elem) for elem in print_list])
     print(print_string)
