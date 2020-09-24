@@ -600,10 +600,12 @@ class gliBertClassifierCNN(BertBase):
         self.dummy_srl = None
         self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
-        self.cnn = nn.CNN(
-                #TODO:
+        self.cnn = nn.Sequential(
+                    nn.Conv1d(max_len, 1, kernel_size=20, stride=2, padding=20),
+                    nn.Tanh(),
+                    nn.MaxPool1d(kernel_size=2, stride=2)
                 )
-        self.linear = nn.Linear(2*config["head_hidden_size"], num_classes)
+        self.linear = nn.Linear(213, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
     def forward(
@@ -645,16 +647,12 @@ class gliBertClassifierCNN(BertBase):
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
-            _, h_n = self.gru(combo_merge_batch)
+            cnn_output = self.cnn(combo_merge_batch)
         else:
-            _, h_n = self.gru(hidden_state)
-        hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
-        last_hidden = hidden[-1]
-        last_hidden_fwd = last_hidden[0]
-        last_hidden_bwd = last_hidden[1]
-        comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
-        linear_output = self.linear(comb)
+            cnn_output = self.cnn(hidden_state)
+        linear_output = self.linear(cnn_output)
         proba = self.softmax(linear_output)
+        proba = torch.stack([torch.squeeze(tens) for tens in proba])
         return proba
 
 
