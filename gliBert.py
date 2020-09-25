@@ -320,9 +320,9 @@ class BertClassifierCLS(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
     
@@ -506,11 +506,11 @@ class gliBertClassifierGRU(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
         self.dummy_srl = None
         self.max_len = max_len
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.gru = nn.GRU(
                 input_size=768+2*config["gru_hidden_size"] if config["combine_SRLs"] else 768,
                 hidden_size=config["head_hidden_size"],
@@ -595,13 +595,19 @@ class gliBertClassifierCNN(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
         self.dummy_srl = None
         self.max_len = max_len
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.cnn = nn.Sequential(
-                    nn.Conv1d(max_len, 1, kernel_size=20, stride=2, padding=20),
+                    nn.Conv1d(
+                        768 if not config["merge_subtokens"] else 768+2*config["gru_hidden_size"],
+                        1,
+                        kernel_size=20,
+                        stride=2,
+                        padding=20
+                        ),
                     nn.Tanh(),
                     nn.MaxPool1d(kernel_size=2, stride=2)
                 )
@@ -660,11 +666,11 @@ class gliBertSpanPrediction(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
-        self.bert = BertModel.from_pretrained(self.config[location]["BERT"])
+        self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
         self.dummy_srl = None
         self.max_len = max_len
-        self.tokenizer = BertTokenizer.from_pretrained(self.config[location]["BERT"])
+        self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         if config["combine_SRLs"]:
             self.linear = nn.Linear(768+2*config["gru_hidden_size"], 2)
         else:
