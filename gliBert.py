@@ -604,14 +604,14 @@ class gliBertClassifierCNN(BertBase):
                     nn.Conv1d(
                         768 if not config["merge_subtokens"] else 768+2*config["gru_hidden_size"],
                         1,
-                        kernel_size=20,
-                        stride=2,
-                        padding=20
+                        kernel_size=10,
+                        stride=1,
+                        padding=10
                         ),
                     nn.Tanh(),
                     nn.MaxPool1d(kernel_size=2, stride=2)
                 )
-        self.linear = nn.Linear(213, num_classes)
+        self.linear = nn.Linear(105, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
     def forward(
@@ -630,6 +630,9 @@ class gliBertClassifierCNN(BertBase):
                                         tokens,
                                         device)
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
+
+        # swap dimensions, so embedding-dimension are input channels
+        hidden_state = hidden_state.permute(0, 2, 1)
 
         if self.config["combine_SRLs"]:
             if data_type != 1:
