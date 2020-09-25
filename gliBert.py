@@ -242,8 +242,8 @@ class BertBase(nn.Module):
             if not len(example) <= length:
                 import ipdb; ipdb.set_trace()
             lst = [example] + [dummy]*(length-len(example))
-            tens = torch.cat(tuple(lst), dim=0) 
-            new_batch.append(tens)
+            tensor = torch.cat(tuple(lst), dim=0) 
+            new_batch.append(tensor)
 
         new_batch = torch.stack(new_batch)
 
@@ -652,7 +652,7 @@ class gliBertClassifierCNN(BertBase):
             cnn_output = self.cnn(hidden_state)
         linear_output = self.linear(cnn_output)
         proba = self.softmax(linear_output)
-        proba = torch.stack([torch.squeeze(tens) for tens in proba])
+        proba = torch.stack([torch.squeeze(tensor) for tensor in proba])
         return proba
 
 
