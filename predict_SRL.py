@@ -179,8 +179,7 @@ class SRL_predictor:
 
                     tagged_tuple_list[i] = controlled_sent
 
-        if not  sum([len(sent) for sent in tagged_tuple_list]) == len(bert_full_text):
-            import ipdb; ipdb.set_trace()
+        assert sum([len(sent) for sent in tagged_tuple_list]) == len(bert_full_text)
 
         return tagged_tuple_list
 
