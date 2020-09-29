@@ -1,12 +1,12 @@
 {
 	"local": {
 		"BERT": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/germanBERT/",
-		"deISEAR": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/deISEAR",
-		"MLQA": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/MLQA/",
-		"PAWS-X": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/PAWS-X/",
-		"SCARE": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/SCARE/",
-		"XNLI": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/XNLI/",
-		"XQuAD": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Data/XQuAD/"
+		"deISEAR": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/data/deISEAR",
+		"MLQA": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/data/MLQA/",
+		"PAWS-X": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/data/PAWS-X/",
+		"SCARE": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/data/SCARE/",
+		"XNLI": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/data/XNLI/",
+		"XQuAD": "/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/data/XQuAD/"
 	},
 	"rattle": {
 		"BERT": "/srv/scratch3/jschab_jgoldz/MA/models/germanBERT/",
@@ -22,9 +22,9 @@
 	"batch_size": 16,
 	"gpu": 0,
 	"print_stats": 20,
-	"merge_subtokens": true,
+	"merge_subtokens": false,
 	"max_length": 200,
-	"bert_head": "gliBertClassifierLastHiddenStateAll",
+	"bert_head": "gliBertClassifierCNN",
 	"combine_SRLs": true,
 	"embedding_dim": 20,
 	"gru_hidden_size": 32,
