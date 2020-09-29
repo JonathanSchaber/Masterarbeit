@@ -611,7 +611,7 @@ class gliBertClassifierCNN(BertBase):
                     nn.Tanh(),
                     nn.MaxPool1d(kernel_size=2, stride=2)
                 )
-        self.linear = nn.Linear(105, num_classes)
+        self.linear = nn.Linear(65, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
     def forward(
@@ -631,8 +631,6 @@ class gliBertClassifierCNN(BertBase):
                                         device)
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
-        # swap dimensions, so embedding-dimension are input channels
-        hidden_state = hidden_state.permute(0, 2, 1)
 
         if self.config["combine_SRLs"]:
             if data_type != 1:
@@ -654,10 +652,16 @@ class gliBertClassifierCNN(BertBase):
                                 for i in range(len(srls))]
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
+
             combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
+
+            # swap dimensions, so embedding-dimension are input channels
+            combo_merge_batch = combo_merge_batch.permute(0, 2, 1)
 
             cnn_output = self.cnn(combo_merge_batch)
         else:
+            # swap dimensions, so embedding-dimension are input channels
+            hidden_state = hidden_state.permute(0, 2, 1)
             cnn_output = self.cnn(hidden_state)
         linear_output = self.linear(cnn_output)
         proba = self.softmax(linear_output)
