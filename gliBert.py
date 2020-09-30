@@ -602,7 +602,7 @@ class gliBertClassifierCNN(BertBase):
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.cnn = nn.Sequential(
                     nn.Conv1d(
-                        768 if not config["merge_subtokens"] else 768+2*config["gru_hidden_size"],
+                        768 if not config["combine_SRLs"] else 768+2*config["gru_hidden_size"],
                         1,
                         kernel_size=10,
                         stride=1,
