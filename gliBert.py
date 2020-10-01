@@ -395,13 +395,8 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                 emb = self.srl_model(srls)
                 srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
                                 for i in range(len(srls))]
-            #import ipdb; ipdb.set_trace()
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            #if self.config["merge_subtokens"]:
-            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            #else:
-            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
             combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
 
             reshaped_last_hidden = torch.reshape(
