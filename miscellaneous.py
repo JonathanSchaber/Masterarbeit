@@ -2,6 +2,10 @@ import argparse
 import json
 import matplotlib.pyplot as plt
 
+from predict_SRL import SRL_predictor
+
+merge_subtokens = SRL_predictor.merge_subtokens
+
 
 def parse_cmd_args():
     """Parse command line arguments."""
@@ -127,6 +131,21 @@ def plot_accuracy(log_file):
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
     plt.suptitle(log_file)
     plt.show()
+
+
+def compute_mean_stddev(sents: List[List[str]]) -> float, float :
+    """Computes the mean and standard deviation of tokenized sents.
+    Args:
+        sents: list of list of (sub-)tokens
+    Returns:
+        mean
+        standard deviation
+    """
+    mean = sum([len(x) for x in sents]) / len(sents)
+    std_dev = (sum([(len(x)-mean)**2 for x in sents])/(len(sents)-1))**(1/2)
+
+    return mean, std_dev
+    
 
 
 def main():
