@@ -67,11 +67,11 @@ def load_json(file_path):
 
 
 def sigmoid(x):
-       return 1/(1+np.exp(-x))
+    return 1/(1+np.exp(-x))
 
 
 def swish(x):
-        return x * sigmoid(x)
+    return x * sigmoid(x)
 
 
 def Swish(batch):
@@ -133,7 +133,7 @@ class SRL_Encoder(nn.Module):
             "O":	44,
             "0":        45
         }
-        self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
+        self.embeddings = nn.Embedding(len(set(self.dictionary.values())), self.config["embedding_dim"])
         self.encoder = nn.GRU(
                             input_size=3*self.config["embedding_dim"],
                             hidden_size=self.config["gru_hidden_size"],
