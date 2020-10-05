@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{38}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -88,6 +88,19 @@ J.~Haji{\v{c}}, M.~Ciaramita, R.~Johansson, D.~Kawahara, M.~A. Mart{\'\i},
   multiple languages.
 \newblock 2009.
 
+\bibitem[Jin et~al.(2019)Jin, Jin, Zhou, and Szolovits]{jin2019bert}
+D.~Jin, Z.~Jin, J.~T. Zhou, and P.~Szolovits.
+\newblock Is bert really robust? natural language attack on text classification
+  and entailment.
+\newblock \emph{arXiv preprint arXiv:1907.11932}, 2, 2019.
+
+\bibitem[Johnson(2009)]{johnson2009statistical}
+M.~Johnson.
+\newblock How the statistical revolution changes (computational) linguistics.
+\newblock In \emph{Proceedings of the EACL 2009 Workshop on the Interaction
+  between Linguistics and Computational Linguistics: Virtuous, Vicious or
+  Vacuous?}, pages 3--11, 2009.
+
 \bibitem[Jurafsky and Martin(2019)]{jurafsky2019speech}
 D.~Jurafsky and J.~H. Martin.
 \newblock Speech and language processing (draft). october 2019.
@@ -103,6 +116,14 @@ M.~Kracht.
 P.~Lewis, B.~O{\u{g}}uz, R.~Rinott, S.~Riedel, and H.~Schwenk.
 \newblock Mlqa: Evaluating cross-lingual extractive question answering.
 \newblock \emph{arXiv preprint arXiv:1910.07475}, 2019.
+
+\bibitem[Mikolov et~al.(2013)Mikolov, Sutskever, Chen, Corrado, and
+  Dean]{mikolov2013distributed}
+T.~Mikolov, I.~Sutskever, K.~Chen, G.~S. Corrado, and J.~Dean.
+\newblock Distributed representations of words and phrases and their
+  compositionality.
+\newblock In \emph{Advances in neural information processing systems}, pages
+  3111--3119, 2013.
 
 \bibitem[Myagmar et~al.(2019)Myagmar, Li, and Kimura]{myagmar2019transferable}
 B.~Myagmar, J.~Li, and S.~Kimura.
@@ -124,6 +145,16 @@ K.~Papineni, S.~Roukos, T.~Ward, and W.-J. Zhu.
 \newblock Bleu: a method for automatic evaluation of machine translation.
 \newblock In \emph{Proceedings of the 40th annual meeting of the Association
   for Computational Linguistics}, pages 311--318, 2002.
+
+\bibitem[Rajpurkar et~al.(2016)Rajpurkar, Zhang, Lopyrev, and
+  Liang]{rajpurkar2016squad}
+P.~Rajpurkar, J.~Zhang, K.~Lopyrev, and P.~Liang.
+\newblock Squad: 100,000+ questions for machine comprehension of text.
+\newblock \emph{arXiv preprint arXiv:1606.05250}, 2016.
+
+\bibitem[Rogers et~al.(2020)Rogers, Kovaleva, and Rumshisky]{rogers2020primer}
+A.~Rogers, O.~Kovaleva, and A.~Rumshisky.
+\newblock A primer in bertology: What we know about how bert works, 2020.
 
 \bibitem[Samardzic(2013)]{samardzic2013dynamics}
 T.~Samardzic.

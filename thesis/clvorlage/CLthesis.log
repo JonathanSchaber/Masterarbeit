@@ -1,12 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  1 OCT 2020 18:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  5 OCT 2020 17:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Masterar
-beit/thesis/clvorlage/CLthesis.tex
-
-(/home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Masterarb
-eit/thesis/clvorlage/CLthesis.tex
+**CLthesis.tex
+(./CLthesis.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 \@input{settings/preamble.aux}
@@ -1163,7 +1160,7 @@ LaTeX Info: Redefining \nameref on input line 3.
 \openout2 = `chapters/titlepage_phil.aux'.
 
  (./chapters/titlepage_phil.tex
-<images/uzh_logo_d_pos.pdf, id=241, 142.5325pt x 49.18375pt>
+<images/uzh_logo_d_pos.pdf, id=273, 142.5325pt x 49.18375pt>
 File: images/uzh_logo_d_pos.pdf Graphic file (type pdf)
 <use images/uzh_logo_d_pos.pdf>
 Package pdftex.def Info: images/uzh_logo_d_pos.pdf  used on input line 2.
@@ -1235,21 +1232,21 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 
-])
+] [4])
 \tf@toc=\write6
 \openout6 = `CLthesis.toc'.
 
- [4] (./CLthesis.lof)
+ [5] (./CLthesis.lof)
 \tf@lof=\write7
 \openout7 = `CLthesis.lof'.
 
- [5
+ [6
 
 ] (./CLthesis.lot)
 \tf@lot=\write8
 \openout8 = `CLthesis.lot'.
 
-) [6
+) [7
 
 ]
 \openout2 = `chapters/acronyms.aux'.
@@ -1260,7 +1257,7 @@ Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--36
 [] 
  []
 
-[7
+[8
 
 
 
@@ -1298,27 +1295,19 @@ l.38
 
 
 ]
-
-Package natbib Warning: Citation `johnson2009statistical' on page 2 undefined o
-n input line 50.
-
-
-Package natbib Warning: Citation `mikolov2013distributed' on page 2 undefined o
-n input line 58.
-
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 62.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 62.
- [2]) [3]
+ [2] [3])
+[4]
 \openout2 = `chapters/chap2_semantic_roles.aux'.
 
-
-(./chapters/chap2_semantic_roles.tex
+ (./chapters/chap2_semantic_roles.tex
 chapter 2.
-) [4
+) [5
 
 
 
@@ -1343,53 +1332,59 @@ Overfull \hbox (31.50038pt too wide) in paragraph at lines 62--62
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[5
+[6
 
 
 
-] [6] [7] [8] [9]
+] [7] [8] [9] [10] [11] [12]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 207.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[10]
-<images/SCARE_star_stats.png, id=510, 723.4227pt x 346.896pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 293.
+ [13] [14]
+<images/SCARE_star_stats.png, id=603, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
-Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 262.
+Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 348.
 (pdftex.def)             Requested size: 341.43306pt x 163.72395pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[11]
-<images/SCARE_label_stats.png, id=517, 702.4644pt x 346.896pt>
+<images/SCARE_label_stats.png, id=605, 702.4644pt x 346.896pt>
 File: images/SCARE_label_stats.png Graphic file (type png)
 <use images/SCARE_label_stats.png>
-Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 279.
+Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 365.
 (pdftex.def)             Requested size: 341.43306pt x 168.61487pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[12 <./images/SCARE_star_stats.png>] [13 <./images/SCARE_label_stats.png>]
-Overfull \hbox (9.85071pt too wide) in paragraph at lines 350--350
+[15 <./images/SCARE_star_stats.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 386--387
+
+ []
+
+[16 <./images/SCARE_label_stats.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 425--426
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 427--428
+
+ []
+
+[17] [18]
+Overfull \hbox (9.85071pt too wide) in paragraph at lines 478--478
  [] 
  []
 
-[14]) [15]
+) [19]
 \openout2 = `chapters/chap4_architecture.aux'.
 
  (./chapters/chap4_architecture.tex
 chapter 4.
-[16
+[20
 
 
 
-] [17]
-<images/exampleParzu2.png, id=611, 827.34094pt x 358.33875pt>
+] [21]
+<images/exampleParzu2.png, id=707, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 66.
@@ -1401,36 +1396,36 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 66--66
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 72.
-[18 <./images/exampleParzu2.png (PNG copy)>]) [19]
+[22 <./images/exampleParzu2.png (PNG copy)>]) [23]
 \openout2 = `chapters/chap5_results.aux'.
 
 
 (./chapters/chap5_results.tex
 chapter 5.
-<images/SRLs_deISEAR_1.png, id=661, 666.23906pt x 90.3375pt>
+<images/SRLs_deISEAR_1.png, id=758, 666.23906pt x 90.3375pt>
 File: images/SRLs_deISEAR_1.png Graphic file (type png)
 <use images/SRLs_deISEAR_1.png>
 Package pdftex.def Info: images/SRLs_deISEAR_1.png  used on input line 11.
 (pdftex.def)             Requested size: 284.52756pt x 38.58107pt.
-<images/SRLs_deISEAR_2.png, id=662, 2436.10126pt x 204.01219pt>
+<images/SRLs_deISEAR_2.png, id=759, 2436.10126pt x 204.01219pt>
 File: images/SRLs_deISEAR_2.png Graphic file (type png)
 <use images/SRLs_deISEAR_2.png>
 Package pdftex.def Info: images/SRLs_deISEAR_2.png  used on input line 15.
 (pdftex.def)             Requested size: 426.79134pt x 35.74002pt.
-[20
+[24
 
 
 
  <./images/SRLs_deISEAR_1.png> <./images/SRLs_deISEAR_2.png>]
-<images/SRLs_PAWS-X_1.png, id=669, 1247.41031pt x 218.31563pt>
+<images/SRLs_PAWS-X_1.png, id=766, 1247.41031pt x 218.31563pt>
 File: images/SRLs_PAWS-X_1.png Graphic file (type png)
 <use images/SRLs_PAWS-X_1.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_1.png  used on input line 38.
 (pdftex.def)             Requested size: 426.79134pt x 74.69269pt.
- [21
+ [25
 
  <./images/SRLs_PAWS-X_1.png>]
-<images/SRLs_PAWS-X_2.png, id=675, 1836.8625pt x 386.19281pt>
+<images/SRLs_PAWS-X_2.png, id=772, 1836.8625pt x 386.19281pt>
 File: images/SRLs_PAWS-X_2.png Graphic file (type png)
 <use images/SRLs_PAWS-X_2.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_2.png  used on input line 62.
@@ -1439,23 +1434,23 @@ Package pdftex.def Info: images/SRLs_PAWS-X_2.png  used on input line 62.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[22] [23 <./images/SRLs_PAWS-X_2.png>]
-<images/SRLs_PAWS-X_3.png, id=687, 685.8122pt x 162.6075pt>
+[26] [27 <./images/SRLs_PAWS-X_2.png>]
+<images/SRLs_PAWS-X_3.png, id=782, 685.8122pt x 162.6075pt>
 File: images/SRLs_PAWS-X_3.png Graphic file (type png)
 <use images/SRLs_PAWS-X_3.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_3.png  used on input line 68.
 (pdftex.def)             Requested size: 284.52756pt x 67.46349pt.
-<images/SRLs_PAWS-X_4.png, id=688, 1456.69218pt x 174.6525pt>
+<images/SRLs_PAWS-X_4.png, id=783, 1456.69218pt x 174.6525pt>
 File: images/SRLs_PAWS-X_4.png Graphic file (type png)
 <use images/SRLs_PAWS-X_4.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_4.png  used on input line 72.
 (pdftex.def)             Requested size: 426.79134pt x 51.17026pt.
-<images/SRLs_PAWS-X_5.png, id=689, 721.19438pt x 201.75375pt>
+<images/SRLs_PAWS-X_5.png, id=784, 721.19438pt x 201.75375pt>
 File: images/SRLs_PAWS-X_5.png Graphic file (type png)
 <use images/SRLs_PAWS-X_5.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_5.png  used on input line 76.
 (pdftex.def)             Requested size: 284.52756pt x 79.59488pt.
-<images/SRLs_PAWS-X_6.png, id=690, 1012.5328pt x 170.88844pt>
+<images/SRLs_PAWS-X_6.png, id=785, 1012.5328pt x 170.88844pt>
 File: images/SRLs_PAWS-X_6.png Graphic file (type png)
 <use images/SRLs_PAWS-X_6.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_6.png  used on input line 80.
@@ -1464,7 +1459,7 @@ Package pdftex.def Info: images/SRLs_PAWS-X_6.png  used on input line 80.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/SRLs_PAWS-X_7.png, id=691, 786.68906pt x 201.75375pt>
+<images/SRLs_PAWS-X_7.png, id=786, 786.68906pt x 201.75375pt>
 File: images/SRLs_PAWS-X_7.png Graphic file (type png)
 <use images/SRLs_PAWS-X_7.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_7.png  used on input line 84.
@@ -1472,7 +1467,7 @@ Package pdftex.def Info: images/SRLs_PAWS-X_7.png  used on input line 84.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/SRLs_PAWS-X_8.png, id=692, 1044.90375pt x 201.75375pt>
+<images/SRLs_PAWS-X_8.png, id=787, 1044.90375pt x 201.75375pt>
 File: images/SRLs_PAWS-X_8.png Graphic file (type png)
 <use images/SRLs_PAWS-X_8.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_8.png  used on input line 88.
@@ -1480,10 +1475,10 @@ Package pdftex.def Info: images/SRLs_PAWS-X_8.png  used on input line 88.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [24
+) [28
 
  <./images/SRLs_PAWS-X_3.png> <./images/SRLs_PAWS-X_4.png> <./images/SRLs_PAWS-
-X_5.png>] [25 <./images/SRLs_PAWS-X_6.png> <./images/SRLs_PAWS-X_7.png> <./imag
+X_5.png>] [29 <./images/SRLs_PAWS-X_6.png> <./images/SRLs_PAWS-X_7.png> <./imag
 es/SRLs_PAWS-X_8.png>]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
@@ -1494,14 +1489,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [26
+) [30
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [27
+ (./chapters/glossary.tex) [31
 
 
 
@@ -1509,11 +1504,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [28
+(./CLthesis.bbl [32
 
 
 
-] [29])) [30]
+] [33] [34])) [35]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -1526,7 +1521,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [31
+) [36
 
 
 
@@ -1539,7 +1534,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 27.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 9.49997pt on input line 27.
-[32
+[37
 
 
 
@@ -1548,18 +1543,15 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 
  (./appendix/scripts.tex
 chapter B.
-[33
+[38
 
 
 
 ])
-
-Package natbib Warning: There were undefined citations.
-
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
-(./CLthesis.aux (./chapters/titlepage_phil.aux) (./chapters/abstract.aux)
-(./chapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
+ (./CLthesis.aux (./chapters/titlepage_phil.aux) (./chapters/abstract.aux) (./c
+hapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
 (./chapters/chap1_introduction.aux) (./chapters/chap2_semantic_roles.aux)
 (./chapters/chap3_datasets.aux) (./chapters/chap4_architecture.aux)
 (./chapters/chap5_results.aux) (./chapters/chap6_conclusion.aux)
@@ -1567,21 +1559,27 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
 (./appendix/tables.aux) (./appendix/scripts.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
-Package rerunfilecheck Info: File `CLthesis.out' has not changed.
-(rerunfilecheck)             Checksum: 62CB6B753FA25A8D6B7D85776C8DDF34;3656.
 
+
+Package rerunfilecheck Warning: File `CLthesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `CLthesis.out':
+(rerunfilecheck)             Before: FEAC30EDFB54535D9DCC9A7361DD26A2;4218
+(rerunfilecheck)             After:  0BD41A050A087D6D2D7D083365AEC967;4360.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 12214 strings out of 492982
- 189875 string characters out of 6134895
- 410710 words of memory out of 5000000
- 15232 multiletter control sequences out of 15000+600000
+ 12258 strings out of 492982
+ 190492 string characters out of 6134895
+ 412017 words of memory out of 5000000
+ 15253 multiletter control sequences out of 15000+600000
  24678 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 49i,17n,68p,8946b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,17n,68p,8847b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
@@ -1596,10 +1594,10 @@ share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (41 pages, 712031 bytes).
+Output written on CLthesis.pdf (47 pages, 722459 bytes).
 PDF statistics:
- 839 PDF objects out of 1000 (max. 8388607)
- 747 compressed objects within 8 object streams
- 203 named destinations out of 1000 (max. 500000)
- 543 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 947 PDF objects out of 1000 (max. 8388607)
+ 848 compressed objects within 9 object streams
+ 227 named destinations out of 1000 (max. 500000)
+ 607 words of extra memory for PDF output out of 10000 (max. 10000000)
 

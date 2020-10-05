@@ -71,7 +71,7 @@ For example, the MLQA data set provides all 49 combinations of the languages it 
 Context in Arabic, question in Hindi; context in English, question in Spanish, etc.
 Also in this case, I choose only the German-German part of the data set for my corpus.
 
-(2) The data sets I chose for my little GLUE corpus are being provided in different approaches.
+(2) The data sets I chose for my little GLUE corpus are being provided in different modes.
 While three of the corpora, namely MLQA, PAWS-X, and XNLI, come with a predefined split, the others are made available without splits.
 In the latter case, I split the data sets into train, development, and test splits using a 0.7, 0.15, and 0.15 portion, respectively.
 Interestingly, the data sets that come with splits, only provide a development and test portion.
@@ -80,6 +80,12 @@ To ensure that my results are comparable with those that the authors of the diff
 The following differences to the original GLUE corpus must be noted:
 
 (1) While \cite{wang2018glue} reformulate a multitude of tasks into inference tasks, I follow in my implementation \cite{zhang2019semantics} and approach the question answering tasks as \cite{devlin2018bert} in the original BERT implementation; i.e. as span prediction task.
+
+(2) I tried to combine a multitude of different tasks into my GLUE dataset (single sentence tasks vs bi- or multiple sentence tasks, classifiaction vs. span detection, different semantic problems such as emotion detection, question answering etc.), I could not compile all tasks that appear in GLUE into my semantic dataset compilation.
+For exmample, there are data sets that concern linguistic acceptability in the original GLUE corpus, such as  e.g. CoLA \cite{warstadt2019neural}, or XXX .
+To disregard this task was not an intentional decision, but due to fact that there are simply not as many datasets available for German and apparently there are no datasets addressing linguistic acceptability in German.
+
+(3) Most datasets that I collected are not mono- but multilingual compilations, in which case I simply include the German subset of the corpus into my GLUE.
 
 \section{Corpora}
 
@@ -94,7 +100,7 @@ This data set addresses the task of Emotion recognition, a sub-task of Sentiment
 Technically, it is a sequence classification problem: Given a sequence of tokens, predict the correct label from a fixed set of emotions.
 Following by the original study ``International Survey on Emotion Antecedents and Reactions'' \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed their data set for German:
 In a first step, the authors presented annotators with one of seven emotions, and asked them to come up with a textual description of an event in which they felt that emotion.
-The task was formulated as a sentence completion, so the annotators, which were recruited via an crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte {emotion}, als/weil...''.
+The task was formulated as a sentence completion, so the annotators, which were recruited via an crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte \emph{emotion}, als/weil...''.
 Seven emotions were given for which the descriptions had to be constructed:
 Traurigkeit, Ekel, Schuld, Wut, Angst, Scham, Freude.
 For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, for the other emotions there are 143.
@@ -108,7 +114,34 @@ The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
 
 %\fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR data set.}{15}{deISEAR statistics}
 
+\subsubsection{Statistics}
+
+number of examples: \\
+train: 700 \\
+dev: 150 \\
+test: 151 
+
+\textbf{merged} \\
+average length train: 15.9 (sigma 6.6) \\
+average length dev: 17.9 (sigma 19.9) \\
+average length test: 17.1 (sigma 7.4)
+
+\textbf{subtokenized} \\
+average length train: 18.1 (sigma 7.9) \\
+average length dev: 20.7 (sigma 24.1) \\
+average length test: 19.5 (sigma 8.8)
+
+
+
+\subsubsection{SOTA}
+
+\cite{troiano2019crowdsourcing} train a maximum entropy classifier with L2 regularization with boolean unigram features on the original ISEAR corpus (7665 instances). 
+Since the original ISEAR study and data collection was carried out in English, they then machine translate the 1,001 deISEAR examples and evaluate on them.
+Using this strategy, the authors accomplish an average micro F$_1$ of 47.
+
 \subsection{MLQA}
+
+\subsubsection{Task}
 
 \begin{examples}
 	\label{ex:mlqa}
@@ -121,22 +154,49 @@ The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
 
 \cite{lewis2019mlqa} compiled
 
-PROBLEM: 231 out of 5,029 exceed tokenized length of 512 $\rightarrow$ ignore? 4.6\%
+PROBLEM: 231 out of 5,008 exceed tokenized length of 512 $\rightarrow$ ignore? 4.6\%
 
-stats:
+\subsubsection{Statistics}
 
-average length train answer: 4.0 (5.6) \\
-average length dev answer: 3.7 (5.2) \\
-average length test answer: 4.0 (5.6)
+number of examples: \\
+train: 432 \\
+dev: 77 \\
+test: 4,499
 
-average length train question: 9.4 (11.4) \\
-average length dev question: 8.6 (10.6) \\
-average length test question: 9.1 (11.2)
+\textbf{merged} \\
+average length train answer: 4.0 (sigma 4.9) \\
+average length dev answer: 3.7 (sigma 5.4) \\
+average length test answer: 4.0 (sigma 5.1)
 
-average length train context: 127.7 (162.7) \\
-average length dev context: 125.1 (159.4) \\
-average length test context: 129.9 (165.5)
+average length train question: 9.4 (sigma 3.7) \\
+average length dev question: 8.6 (sigma 3.4) \\
+average length test question: 9.1 (sigma 3.4)
 
+average length train context: 127.7 (sigma 110.0) \\
+average length dev context: 125.1 (sigma 116.7) \\
+average length test context: 129.9 (sigma 123.1)
+
+\textbf{subtokenized} \\
+average length train answer: 5.6 (sigma 6.6) \\
+average length dev answer: 5.2 (sigma 6.7) \\
+average length test answer: 5.6 (sigma 7.0)
+
+average length train question: 11.4 (sigma 4.5) \\
+average length dev question: 10.6 (sigma 4.3) \\
+average length test question: 11.2 (sigma 4.3)
+
+average length train context: 162.7 (sigma 139.0) \\
+average length dev context: 159.4 (sigma 145.6) \\
+average length test context: 165.5 (sigma 156.7)
+
+\subsubsection{SOTA}
+
+\cite{lewis2019mlqa} train their cross-lingual transfer model on the 100,000 instances of SQuAD \cite{rajpurkar2016squad} as training data.
+They use the English development set of MLQA for tuning.
+At test time, the model must extract the answer span in the target language.
+They report that XLM performs best for German, achieving a 47.6\% accuracy of exact matches, i.e. predicting the correct start and end span of the answer.
+
+The total of all instances in all languages in MLQA is 46,444.
 
 \subsection{PAWS-X}
 
@@ -180,7 +240,39 @@ Train: 0.553 \\
 Development: 0.373 \\
 Test: 0.384
 
+Number of instances: \\
+Train: 48,977 \\
+Dev: 1,932 \\
+Test: 1,967
+
+\textbf{merged} \\
+average lenght sentence 1 train: 21.0 (sigma 6.5) \\
+average length sentence 2 train: 21.0 (sigma 5.8)
+
+average length sentence 1 dev: 21.1 (sigma 6.0) \\
+average length sentence 2 dev: 21.1 (sigma 6.0)
+
+average length sentence 1 test: 21.4 (sigma 5.9) \\
+average length sentence 2 test: 21.3 (sigma 5.9)
+
+\textbf{subtokenized} \\
+average length sentence 1 train: 27.5 (sigma 9.0) \\
+average length sentence 2 train: 27.4 (sigma 8.2)
+
+average length sentence 1 dev: 27.6 (sigma 8.4) \\
+average length sentence 2 dev: 27.7 (sigma 8.4)
+
+average length sentence 1 test: 28.1 (sigma 8.4) \\
+average length sentence 2 test: 28.0 (sigma 8.4)
+
+
 The training set contains 3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score of 1.0 --- which means they are identical.
+
+
+\subsubsection{SOTA}
+
+\cite{yang2019paws} achieve their best result --- 89.2\% accuracy for German --- employing the following model architecture:
+They train a multilingual BERT on all languages, including the original English pairs and the machine-translated data in all other languages and evaluate on the individual languages.
 
 \subsection{SCARE}
 
@@ -283,6 +375,36 @@ This is also the chosen strategy for 51 reviews that had no labels at all; an ex
 
 13.8\% of votes were close (label difference of 1)
 
+\subsubsection{Statistics}
+
+Number of examples: \\
+Train: 1,232 \\
+Dev: 264 \\
+Test: 264
+
+\textbf{merged} \\
+average length train: 20.2 (sigma 21.6)
+
+average length dev: 19.2 (sigma 19.1)
+
+average length test: 20.6 (sigma 20.0)
+
+\textbf{subtokenized} \\
+
+average length train: 25.4 (sigma 28.2)
+
+average length dev: 24.0 (sigma 23.1)
+
+average length test: 26.1 (sigma 25.9)
+
+\subsubsection{SOTA}
+
+\cite{sanger2016scare} don't predict a sentiment for each instance, but predict fine-grained aspect and subjective phrase spans using a CRF-based model.
+They report results for exact matches as well as partial matches.
+For the aspects, they achieve an F1 score of 69\% and 80\% for aspect and subjective phrases, respectively.
+Since predicting fine-grained aspect and subjective phrase spans is much more difficult than etrapolating an overall sentiment of the same utterance, a comparison between the outcomes of the two tasks are not really comparable.
+Furthermore, 
+
 \subsection{XNLI}
 
 \cite{conneau2018xnli}
@@ -298,7 +420,19 @@ This is also the chosen strategy for 51 reviews that had no labels at all; an ex
 \end{examples}
 
 The label for example \ref{ex:xnli} is \emph{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
-number of examples= 7,500
+
+\subsubsection{Statistics}
+
+Number of Examples: \\
+Train: 2,115 \\
+Dev: 374 \\
+Test: 5,009
+
+\textbf{merged} \\
+
+\textbf{subtokenized} \\
+
+\subsubsection{SOTA}
 
 \subsection{XQuAD}
 

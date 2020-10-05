@@ -87,6 +87,36 @@ the BERTology \cite{rogers2020primer}.
 These embeddings have also proved to achieve state-of-the-art results on well-established data sets,
 such as, e.g., GLUE \cite{wang2018glue}.
 
+However, the many studies and experiments that have been carried out exploring the capabilities
+and mechanisms behind BERT quickly showed that nevertheless BERT performs on many tasks surprisingly well,
+even outperforming all models before it, there are situations, often trivial looking ones, where
+BERT desperately fails.
+
+\cite{jin2019bert}, for example, showed that by creating adversarial examples in the test set ---
+which were, of course, still valid ---, they could bring down the performance of BERT by a large
+margin.
+
+As I laid out before, in the past decades computational linguistics has undergone several ``revolutions''
+which, although some people might see this differently, can be described as moving from a strong
+emphasis on linguistics to a more data-driven computational discipline.
+
+Furthermore, the introduction of deep learning into computational linguistics has introduced a
+so called \emph{black box}; which means essentially that although the underlying formulas and the
+architecture of neural nets are well-known --- the mathematics behind them is rather simple ---, 
+it is nevertheless impossible to determine \emph{what exactly} those models learn from the data.
+
+One way to address the above outlined problems (1) the failure of very sophisticated models in 
+rather trivial situations and (2) the difficulties of the interpretation of their output lies
+in bringing back again the linguistics into the whole picture.
+
+Examples:
+
+\begin{itemize}
+	\item Zhang et al SemBERT
+	\item Goldberg Syntax to the rescue
+	\item ...
+\end{itemize}
+
 \section{Research Questions}
 
 The research questions that shall be answered in this thesis, are:
@@ -94,6 +124,9 @@ The research questions that shall be answered in this thesis, are:
  \item What do I do?
  \item How do I do it?
  \item And why?
+	\item Can I reproduce \cite{zhang2019semantics} for German?
+	\item Am I able to reach reported SOTAs of the data sets?
+	\item Is there a difference for different head architectures? And if yes, why?
 \end{enumerate}
 
 \section{Thesis Structure}
