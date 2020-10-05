@@ -3,6 +3,9 @@ import json
 import matplotlib.pyplot as plt
 
 from predict_SRL import SRL_predictor
+from typing import List
+from sklearn.metrics import f1_score, accuracy_score
+from gliBert import compute_acc
 
 merge_subtokens = SRL_predictor.merge_subtokens
 
@@ -133,7 +136,7 @@ def plot_accuracy(log_file):
     plt.show()
 
 
-def compute_mean_stddev(sents: List[List[str]]) -> float, float :
+def compute_mean_stddev(sents: List[List[str]]) -> float:
     """Computes the mean and standard deviation of tokenized sents.
     Args:
         sents: list of list of (sub-)tokens
@@ -145,6 +148,40 @@ def compute_mean_stddev(sents: List[List[str]]) -> float, float :
     std_dev = (sum([(len(x)-mean)**2 for x in sents])/(len(sents)-1))**(1/2)
 
     return mean, std_dev
+
+
+def compute_f1(path, epoch):
+    with open(path, "r") as f:
+        results = json.loads(f.read())
+
+    rel_epoch = results[epoch]
+    rel_epoch = rel_epoch[str(epoch)]
+    rel_epoch = rel_epoch["test"]
+    DICT = {}
+    COUNT = 0
+    pred, gold = [], []
+    for prediction in rel_epoch:
+        if not prediction[1] in DICT:
+            DICT[prediction[1]] = COUNT
+            COUNT += 1
+        pred.append(DICT[prediction[1]])
+        if not prediction[2] in DICT:
+            DICT[prediction[2]] = COUNT
+            COUNT += 1
+        gold.append(DICT[prediction[2]])
+
+    micro_f1 = f1_score(gold, pred, average="micro")
+    macro_f1 = f1_score(gold, pred, average="macro")
+    weighted_f1 = f1_score(gold, pred, average="weighted")
+    print("Micro F1: {0:.4f}".format(micro_f1))
+    print("Macro F1: {0:.4f}".format(macro_f1))
+    print("Weighted F1: {0:.4f}".format(weighted_f1))
+    
+    acc = accuracy_score(gold, pred)
+    acc_2 = compute_acc(pred, gold)
+    print("SK-Learn Acc: {0:.4f}".format(acc))
+    print("Own Acc: {0:.4f}".format(acc_2))
+
     
 
 
