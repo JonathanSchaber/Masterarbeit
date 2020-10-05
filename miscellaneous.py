@@ -136,13 +136,13 @@ def plot_accuracy(log_file):
     plt.show()
 
 
-def compute_mean_stddev(sents: List[List[str]]) -> float:
+def compute_mean_stddev(sents: List[List[str]]) -> Tuple[float, float]:
     """Computes the mean and standard deviation of tokenized sents.
     Args:
         sents: list of list of (sub-)tokens
     Returns:
-        mean
-        standard deviation
+        mean: average legtj of sentence
+        std_dev: standard deviation
     """
     mean = sum([len(x) for x in sents]) / len(sents)
     std_dev = (sum([(len(x)-mean)**2 for x in sents])/(len(sents)-1))**(1/2)
@@ -150,7 +150,12 @@ def compute_mean_stddev(sents: List[List[str]]) -> float:
     return mean, std_dev
 
 
-def compute_f1(path, epoch):
+def compute_f1(path: str, epoch: int) -> None:
+    """Takes a .results.json path and computes some metrics
+    Args:
+        path: path to results file
+        epoch: number of best dev epoch
+    """
     with open(path, "r") as f:
         results = json.loads(f.read())
 
