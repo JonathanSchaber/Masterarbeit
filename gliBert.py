@@ -15,6 +15,7 @@ from transformers import (
         BertTokenizer,
         get_linear_schedule_with_warmup
         )
+from typing import List
 
 merge_subs = Dataloader.merge_subs
 
@@ -134,6 +135,7 @@ class SRL_Encoder(nn.Module):
             "0":        45
         }
         self.embeddings = nn.Embedding(len(set(self.dictionary.values())), self.config["embedding_dim"])
+        #self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
         self.encoder = nn.GRU(
                             input_size=3*self.config["embedding_dim"],
                             hidden_size=self.config["gru_hidden_size"],
