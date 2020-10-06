@@ -13,5 +13,4 @@ then
 else
 	jq '.' "$FILE" | grep -P -C 5 "Dev Accur\..*?${MAX_DEV},$"
 fi
-	
 
