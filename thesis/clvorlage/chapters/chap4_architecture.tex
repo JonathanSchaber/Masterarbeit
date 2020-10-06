@@ -114,9 +114,31 @@ Since its publishing two years ago, BERT \citep{devlin2018bert} has often been c
 
 I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch through the hugging face library\cite{wolf2019transformers}.
 
-\subsection{Merging of subtokens back to token level}
+\subsection{Combining BERT encodings and SRLs}
+
+A crucial part in the overall architecture is the combining of the numeric representation of (sub-)words computed by the BERT network and the embedded SRLs.
+One difficulty lies in the fact that, as already mentioned above, BERT has its own tokenizer which implements a so-called sub-word or wordpiece \cite{wu2016google} encoding strategy:
+BERT has a fixed length of vocabulary it can hold, namely 30,000 tokens.
+The wordpiece tokenization approach is a balance between word and character tokenization in that that it ``gives a good balance between theflexibility of single characters and the efficiency of full words for decoding, and also sidesteps the need for special treatment of unknown words'' \citep[p.~2]{wu2016google}.
+As a consequence, BERT tokenizes a sentence quite differently than a traditional parser, since the latter adheres to the full tokens.
+Consider the following example:
+
+\begin{examples}
+	\label{ex:tokenization-diff}
+	\item Es ist der Sitz des Bezirks Zerendi in der Region Akmola.
+	\item ParZu: Es ist der Sitz des Bezirks Zerendi in der Region Akmola .
+	\item germanBERT: Es ist der Sitz des Bezirks Zer \#\#end \#\#i in der Region Ak \#\#mol \#\#a .
+\end{examples}
+
+
+A further challenge besides the alignment of traditional tokenization and wordpiece tokenization is the general difference in parsing a sentence that exist.
+
 
 \subsection{Final Layer}
+
+\subsubsection{Question Answering}
+
+\subsubsection{Classifiaction}
 
 As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final fully-connected feed forward layer produces fairly good results.
 

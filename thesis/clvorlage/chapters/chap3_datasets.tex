@@ -407,7 +407,13 @@ Furthermore,
 
 \subsection{XNLI}
 
-\cite{conneau2018xnli}
+\cite{conneau2018xnli} build the XNLI corpus by employing professional translators to tranlsate 7,500 English sentence pairs from the Multi-Genre Natural Language Inference (MultiNLI) corpus \cite{williams2017broad} into fifteen languages.
+First, they randomly sample 750 examples from each of the ten text source used in MultiNLI, which is in English, and then let the same MultiNLI worker pool generate three hypothesis for each sentence, one for each possible label (\emph{entailment}, \emph{contradicion}, \emph{neutral}).
+Each sentence pair was then assigned a gold label that was retrieved by carrying out a majority vote between the label that was assigned by the person who created the hypothesis and the labels that were assigend indepentently to the sentence pair by four other people.
+Finally, all the sentence pairs were translated into the different languages by tranlators.
+In addition, \cite{conneau2018xnli} carry out some tests to verify that the original gold label still holds in the translated sentences:
+They recruited two bilingual annotators to reevaluate 100 examples in English and French, i.e. they had to re-assign the labels given the sentence pairs.
+For tht English examples, the find a 85\% concesus on the gold labels, and for French a corresponding 83\%, from which they conclude that the overall semantic relationship between the two languages has been preserved.
 
 % TODO: new stats figure!
 %\fig{}{fig:XNLI-stats}{Distribution of labels in the XNLI data set.}{15}{XNLI label statistics}
@@ -434,7 +440,15 @@ Test: 5,009
 
 \subsubsection{SOTA}
 
+The best system \cite{conneau2018xnli} report for German on their XNLI data set is a model that relies heavily on translation:
+They train their BiLSTM on the MultiNLI data (432,702 instances) and translate the test set of the given language to English and predict on this data.
+Employing this startegy, the authors obtain an accuracy on the German test set of 68.7\%.
+
+
+
 \subsection{XQuAD}
+
+``XQuAD consists of a subset of 240 paragraphs and 1190 question-answer pairs from the development set of SQuAD v1.1 together with their translations into ten languages \textelp{} In order to facilitate easy annotations of answer spans, we choose the most frequent answer for each question and mark its beginning and end in the context paragraph using special symbols, instructing translators to keep these symbols in the relevant positions in their translations'' \cite{artetxe2019cross}.
 
 \begin{examples}
 	\label{ex:xquad}
@@ -453,6 +467,7 @@ The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the
 
 \cite{artetxe2019cross}
 
+\subsubsection{Statistics}
 stats:
 
 average length train answer: 3.2 (4.7) \\
@@ -465,11 +480,27 @@ average length test question: 11.4 (14.5)
 
 average length train context: 151.3 (191.7)  \\
 average length dev context: 149.5 (190.7) \\
-average length test context: 144.3 (187.3) 
+average length test context: 144.3 (187.3)
+
+\subsubsection{SOTA}
+
+Very peculiar architecture that consits in re-training a monolingual English BERT model on Wikipedia and transfer it to target language following these steps:
+
+\begin{enumerate}
+    \item Pre-train a monlingual BERT in English with original pretraining objectives
+    \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is freezed) with original pretraining objectives
+    \item Fine-tune transformer for downstream task in English (transformer body is freezed)
+    \item Zero-shot transfer this model to $L_2$ by swapping the English token embeddings with the $L_2$ embeddings
+\end{enumerate}
+
+The authors report the following results for the German part of XQuAD:
+F1: 73.6
+Accuracy (exact match): 57.6\%
+
 
 \subsection{Overview}
 
-\tab{tab:data-set-overview}{Overview over collected data sets and tasks.}
+\tab{tab:data-set-overview}{Overview of collected data sets and tasks.}
 {\begin{tabular}{l|llll}
 	Data Set & NLP Task  & ML Task  & \# Examples & Splits \\
 	\hline

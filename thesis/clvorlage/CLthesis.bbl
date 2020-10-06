@@ -1,4 +1,4 @@
-\begin{thebibliography}{38}
+\begin{thebibliography}{41}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -219,6 +219,16 @@ A.~Wang, A.~Singh, J.~Michael, F.~Hill, O.~Levy, and S.~R. Bowman.
   language understanding.
 \newblock \emph{arXiv preprint arXiv:1804.07461}, 2018.
 
+\bibitem[Warstadt et~al.(2019)Warstadt, Singh, and Bowman]{warstadt2019neural}
+A.~Warstadt, A.~Singh, and S.~R. Bowman.
+\newblock Neural network acceptability judgments, 2019.
+
+\bibitem[Williams et~al.(2017)Williams, Nangia, and Bowman]{williams2017broad}
+A.~Williams, N.~Nangia, and S.~R. Bowman.
+\newblock A broad-coverage challenge corpus for sentence understanding through
+  inference.
+\newblock \emph{arXiv preprint arXiv:1704.05426}, 2017.
+
 \bibitem[Wittenberg(2016)]{wittenberg2016light}
 E.~Wittenberg.
 \newblock \emph{With light verb constructions from syntax to concepts},
@@ -231,6 +241,14 @@ T.~Wolf, L.~Debut, V.~Sanh, J.~Chaumond, C.~Delangue, A.~Moi, P.~Cistac,
   T.~Rault, R.~Louf, M.~Funtowicz, et~al.
 \newblock Transformers: State-of-the-art natural language processing.
 \newblock \emph{arXiv preprint arXiv:1910.03771}, 2019.
+
+\bibitem[Wu et~al.(2016)Wu, Schuster, Chen, Le, Norouzi, Macherey, Krikun, Cao,
+  Gao, Macherey, et~al.]{wu2016google}
+Y.~Wu, M.~Schuster, Z.~Chen, Q.~V. Le, M.~Norouzi, W.~Macherey, M.~Krikun,
+  Y.~Cao, Q.~Gao, K.~Macherey, et~al.
+\newblock Google's neural machine translation system: Bridging the gap between
+  human and machine translation.
+\newblock \emph{arXiv preprint arXiv:1609.08144}, 2016.
 
 \bibitem[Yang et~al.(2019)Yang, Zhang, Tar, and Baldridge]{yang2019paws}
 Y.~Yang, Y.~Zhang, C.~Tar, and J.~Baldridge.
