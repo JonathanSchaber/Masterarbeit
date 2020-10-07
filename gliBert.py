@@ -29,7 +29,11 @@ end = "\033[0m"
 
 
 def parse_cmd_args():
-    """Parse command line arguments."""
+    """Parse command line arguments.
+
+    Returns:
+        parser: argparse object
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
             "-c", 
@@ -87,16 +91,16 @@ class SRL_Encoder(nn.Module):
         super(SRL_Encoder, self).__init__()
         self.config = config
         self.dictionary = {
-            "B-A0":	0,
-            "B-A1":	1,
-            "B-A2":	2,
-            "B-A3":	3,
-            "B-A4":	4,
-            "B-A5":	5,
-            "B-A6":	6,
-            "B-A7":	7,
-            "B-A8":	8,
-            "B-A9":	9,
+            "B-A0":   	0,
+            "B-A1":   	1,
+            "B-A2":   	2,
+            "B-A3":   	3,
+            "B-A4":   	4,
+            "B-A5":   	5,
+            "B-A6":   	6,
+            "B-A7":   	7,
+            "B-A8":   	8,
+            "B-A9":   	9,
             "B-C-A0":	10,
             "B-C-A1":	11,
             "B-C-A2":	12,
@@ -109,17 +113,17 @@ class SRL_Encoder(nn.Module):
             "B-C-C-A0":	19,
             "B-C-C-A1":	20,
             "B-C-C-A2":	21,
-            "B-V":	22,
-            "I-A0":	23,
-            "I-A1":	24,
-            "I-A2":	25,
-            "I-A3":	26,
-            "I-A4":	27,
-            "I-A5":	28,
-            "I-A6":	29,
-            "I-A7":	30,
-            "I-A8":	31,
-            "I-A9":	32,
+            "B-V":   	22,
+            "I-A0":  	23,
+            "I-A1":  	24,
+            "I-A2":  	25,
+            "I-A3":  	26,
+            "I-A4":  	27,
+            "I-A5":  	28,
+            "I-A6":  	29,
+            "I-A7":  	30,
+            "I-A8":  	31,
+            "I-A9":  	32,
             "I-C-A0":	33,
             "I-C-A1":	34,
             "I-C-A2":	35,
@@ -131,7 +135,7 @@ class SRL_Encoder(nn.Module):
             "I-C-A8":	41,
             "I-C-C-A0":	42,
             "I-C-C-A1":	43,
-            "O":	44,
+            "O":	    44,
             "0":        45
         }
         self.embeddings = nn.Embedding(len(set(self.dictionary.values())), self.config["embedding_dim"])
