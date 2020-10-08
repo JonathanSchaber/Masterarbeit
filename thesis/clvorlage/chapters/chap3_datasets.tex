@@ -401,13 +401,13 @@ average length test: 26.1 (sigma 25.9)
 
 \cite{sanger2016scare} don't predict a sentiment for each instance, but predict fine-grained aspect and subjective phrase spans using a CRF-based model.
 They report results for exact matches as well as partial matches.
-For the aspects, they achieve an F1 score of 69\% and 80\% for aspect and subjective phrases, respectively.
+For the aspects, they achieve an F1 score of 69\% and 80\% for subjective phrases, respectively.
 Since predicting fine-grained aspect and subjective phrase spans is much more difficult than etrapolating an overall sentiment of the same utterance, a comparison between the outcomes of the two tasks are not really comparable.
 Furthermore, 
 
 \subsection{XNLI}
 
-\cite{conneau2018xnli} build the XNLI corpus by employing professional translators to tranlsate 7,500 English sentence pairs from the Multi-Genre Natural Language Inference (MultiNLI) corpus \cite{williams2017broad} into fifteen languages.
+\cite{conneau2018xnli} built the XNLI corpus by employing professional translators to tranlsate 7,500 English sentence pairs from the Multi-Genre Natural Language Inference (MultiNLI) corpus \cite{williams2017broad} into fifteen languages.
 First, they randomly sample 750 examples from each of the ten text source used in MultiNLI, which is in English, and then let the same MultiNLI worker pool generate three hypothesis for each sentence, one for each possible label (\emph{entailment}, \emph{contradicion}, \emph{neutral}).
 Each sentence pair was then assigned a gold label that was retrieved by carrying out a majority vote between the label that was assigned by the person who created the hypothesis and the labels that were assigend indepentently to the sentence pair by four other people.
 Finally, all the sentence pairs were translated into the different languages by tranlators.
@@ -435,8 +435,25 @@ Dev: 374 \\
 Test: 5,009
 
 \textbf{merged} \\
+average length premise train: 20.8 (sigma 9.4) \\
+average length hypothesis train: 10.5 (sigma 4.0)
+
+average length premise dev: 20.9 (sigma 9.1) \\
+average length hypothesis dev: 11.9 (sigma 4.9)
+
+average length premise test: 21.2 (sigma 9.6) \\
+average length hypothesis test: 10.7 (sigma 4.1)
+
 
 \textbf{subtokenized} \\
+average length premise train: 25.8 (sigma 11.9) \\
+average length hypothesis train: 12.4 (sigma 4.7)
+
+average length premise dev: 26.3 (sigma 12.1) \\
+average length hypothesis dev: 14.3 (sigma 6.0)
+
+average length premise test: 26.1 (sigma 12.0) \\
+average length hypothesis test: 12.8 (sigma 5.0)
 
 \subsubsection{SOTA}
 
@@ -468,26 +485,46 @@ The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the
 \cite{artetxe2019cross}
 
 \subsubsection{Statistics}
-stats:
 
-average length train answer: 3.2 (4.7) \\
-average length dev answer:  3.3 (5.2) \\
-average length test answer: 3.6 (5.7)
+Number of examples: \\
+Train: 820
+Dev: 181
+Test: 178
 
-average length train question: 11.3 (14.3)  \\
-average length dev question: 11.5 (14.3)  \\
-average length test question: 11.4 (14.5)
+\textbf{merged}
+average length train answer: 3.3 (sigma 3.2) \\
+average length dev answer: 3.4 (sigma 3.4) \\
+average length test answer: 3.0 (sigma 3.3)
 
-average length train context: 151.3 (191.7)  \\
-average length dev context: 149.5 (190.7) \\
-average length test context: 144.3 (187.3)
+average length train context: 147.3 (sigma 68.7) \\
+average length dev context: 151.7 (sigma 74.1) \\
+average length test context: 162.0 (94.8)
+
+average length train question: 11.2 (sigma 3.8) \\
+average length dev question: 11.9 (sigma 4.3) \\
+average length test question: 11.0 (sigma 4.0)
+
+\textbf{subtokenized}
+average length train answer: 5.0 (sigma 4.5) \\
+average length dev answer: 5.0 (sigma 4.8) \\
+average length test answer: 4.5 (sigma 4.4)
+
+average length train context: 187.9 (85.8) \\
+average length dev context: 192.8 (sigma 90.1) \\
+average length test context: 205.1 (sigma 113.0)
+
+average length train question: 14.1 (sigma 4.9) \\
+average length dev question: 15.3 (sigma 5.3) \\
+average length test question: 13.9 (sigma 4.9)
+
+\fig{images/xquad_context_subtokenized.pdf}{fig:xquad-context}{Length of subtokenized Contexts.}{10}{XQuAD-Length}
 
 \subsubsection{SOTA}
 
 Very peculiar architecture that consits in re-training a monolingual English BERT model on Wikipedia and transfer it to target language following these steps:
 
 \begin{enumerate}
-    \item Pre-train a monlingual BERT in English with original pretraining objectives
+    \item Pre-train a monolingual BERT in English with original pretraining objectives
     \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is freezed) with original pretraining objectives
     \item Fine-tune transformer for downstream task in English (transformer body is freezed)
     \item Zero-shot transfer this model to $L_2$ by swapping the English token embeddings with the $L_2$ embeddings
@@ -497,6 +534,7 @@ The authors report the following results for the German part of XQuAD:
 F1: 73.6
 Accuracy (exact match): 57.6\%
 
+\begin{landscape}
 
 \subsection{Overview}
 
@@ -514,6 +552,8 @@ Accuracy (exact match): 57.6\%
 \end{tabular}
 }{Overview data sets}
 
+
+\end{landscape}
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}
 % 

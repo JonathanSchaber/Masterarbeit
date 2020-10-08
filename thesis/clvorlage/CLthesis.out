@@ -48,26 +48,29 @@
 \BOOKMARK [2][-]{subsection.4.2.2}{DAMESRL}{section.4.2}% 48
 \BOOKMARK [1][-]{section.4.3}{German BERT}{chapter.4}% 49
 \BOOKMARK [2][-]{subsection.4.3.1}{Combining BERT encodings and SRLs}{section.4.3}% 50
-\BOOKMARK [2][-]{subsection.4.3.2}{Final Layer}{section.4.3}% 51
-\BOOKMARK [3][-]{subsubsection.4.3.2.1}{Question Answering}{subsection.4.3.2}% 52
-\BOOKMARK [3][-]{subsubsection.4.3.2.2}{Classifiaction}{subsection.4.3.2}% 53
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 54
-\BOOKMARK [1][-]{section.5.1}{SRL Evaluation}{chapter.5}% 55
-\BOOKMARK [2][-]{subsection.5.1.1}{deISEAR}{section.5.1}% 56
-\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example 1}{subsection.5.1.1}% 57
-\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Example 2}{subsection.5.1.1}% 58
-\BOOKMARK [2][-]{subsection.5.1.2}{PAWS-X}{section.5.1}% 59
-\BOOKMARK [3][-]{subsubsection.5.1.2.1}{Example 1}{subsection.5.1.2}% 60
-\BOOKMARK [3][-]{subsubsection.5.1.2.2}{Example 2}{subsection.5.1.2}% 61
-\BOOKMARK [3][-]{subsubsection.5.1.2.3}{Example 3}{subsection.5.1.2}% 62
-\BOOKMARK [3][-]{subsubsection.5.1.2.4}{Example 4}{subsection.5.1.2}% 63
-\BOOKMARK [3][-]{subsubsection.5.1.2.5}{Example 5}{subsection.5.1.2}% 64
-\BOOKMARK [3][-]{subsubsection.5.1.2.6}{Example 6}{subsection.5.1.2}% 65
-\BOOKMARK [3][-]{subsubsection.5.1.2.7}{Example 7}{subsection.5.1.2}% 66
-\BOOKMARK [3][-]{subsubsection.5.1.2.8}{Example 8}{subsection.5.1.2}% 67
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 68
-\BOOKMARK [0][-]{section*.14}{Glossary}{}% 69
-\BOOKMARK [0][-]{section*.16}{References}{}% 70
-\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 71
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 72
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 73
+\BOOKMARK [2][-]{subsection.4.3.2}{Question Answering}{section.4.3}% 51
+\BOOKMARK [2][-]{subsection.4.3.3}{Classifiction}{section.4.3}% 52
+\BOOKMARK [3][-]{subsubsection.4.3.3.1}{[CLS]}{subsection.4.3.3}% 53
+\BOOKMARK [3][-]{subsubsection.4.3.3.2}{Fully-Connected Feed Forward}{subsection.4.3.3}% 54
+\BOOKMARK [3][-]{subsubsection.4.3.3.3}{GRU}{subsection.4.3.3}% 55
+\BOOKMARK [3][-]{subsubsection.4.3.3.4}{CNN}{subsection.4.3.3}% 56
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 57
+\BOOKMARK [1][-]{section.5.1}{SRL Evaluation}{chapter.5}% 58
+\BOOKMARK [2][-]{subsection.5.1.1}{deISEAR}{section.5.1}% 59
+\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example 1}{subsection.5.1.1}% 60
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Example 2}{subsection.5.1.1}% 61
+\BOOKMARK [2][-]{subsection.5.1.2}{PAWS-X}{section.5.1}% 62
+\BOOKMARK [3][-]{subsubsection.5.1.2.1}{Example 1}{subsection.5.1.2}% 63
+\BOOKMARK [3][-]{subsubsection.5.1.2.2}{Example 2}{subsection.5.1.2}% 64
+\BOOKMARK [3][-]{subsubsection.5.1.2.3}{Example 3}{subsection.5.1.2}% 65
+\BOOKMARK [3][-]{subsubsection.5.1.2.4}{Example 4}{subsection.5.1.2}% 66
+\BOOKMARK [3][-]{subsubsection.5.1.2.5}{Example 5}{subsection.5.1.2}% 67
+\BOOKMARK [3][-]{subsubsection.5.1.2.6}{Example 6}{subsection.5.1.2}% 68
+\BOOKMARK [3][-]{subsubsection.5.1.2.7}{Example 7}{subsection.5.1.2}% 69
+\BOOKMARK [3][-]{subsubsection.5.1.2.8}{Example 8}{subsection.5.1.2}% 70
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 71
+\BOOKMARK [0][-]{section*.14}{Glossary}{}% 72
+\BOOKMARK [0][-]{section*.16}{References}{}% 73
+\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 74
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 75
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 76

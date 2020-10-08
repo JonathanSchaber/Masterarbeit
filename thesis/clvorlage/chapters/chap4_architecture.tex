@@ -134,13 +134,64 @@ Consider the following example:
 A further challenge besides the alignment of traditional tokenization and wordpiece tokenization is the general difference in parsing a sentence that exist.
 
 
-\subsection{Final Layer}
+\subsection{Question Answering}
 
-\subsubsection{Question Answering}
+\subsection{Classifiction}
 
-\subsubsection{Classifiaction}
+While for question answering there was little tweeking needed to adapt to the extended BERT embeddings, for classification the situation looks a bit more complex.
+The standard BERT way of doing classification tasks runs as follows:
+
+\begin{itemize}
+  \item Prepare the data: add a [CLS] token at the beginning, a [SEP] token between the two sentences (if there are), and pad with the [PAD] token
+  \item Send the prepared examples through the BERT network
+  \item Select only the embedding for the first token  --- i.e. the [CLS] ---, send it through a dense layer with a softmax and predict the class for this example
+\end{itemize}
+
+\cite{devlin2018bert} visualize this as can be seen in figure \ref{fig:BERT-classification}.
+
+\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification.}{10}{BERT-Classification}
+
+
+The problem now is that in the above described standard implementation, there is no straigthforward way to enrich the BERT embeddings with SRLs, since the only embedding that is used for prediction is the [CLS] token;
+since this is a special BERT token it is not present in the original sentence and, therefore, it does not have a corresponding SRL.
+(And what should that be? Since it is a meta-token it rcan't really have a SRL?
+
+To tackle this problem, I remodeled the architecture from \cite{zhang2019semantics} on the one hand, and on the other hand tested several other final layer designs.
+
+\subsubsection{[CLS]}
+
+In their paper for SemBERT, \cite{zhang2019semantics} do not really address the issue laid out above.
+To the contrary, the differnt pieces of information they provide are rather conflicting, only after inspecting the code they released on \href{https://github.com/cooelf/SemBERT/}{GitHub}, the picture somewhat cleared:
+
+After predicitng the SRLs for a given input, they add pseudo-SRLs for the [CLS] and [SEP] tokens.
+In the look-up table of the BiGRU that consumes the SRLs, they then simply add the corresponding keys --- so that besides regular SRLs as ``B-V'' (beginning of predicate) or ``I-A0'' (inside or end of argument zero), there are also the labels ``[CLS]'' and ``[PRED]''.
+After sending this sequence through the BiGRU, they concatenate the two hidden states of the [CLS] SRL with the [CLS] BERT embedding and predict on that vector.
+% Applying this strategy, now there \emph{is} a SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended to its BERT embedding vector.
+
+In table XYZ I report the gains, losses this strategy yields for the four classifications data sets in my corpus.
+
+\subsubsection{Fully-Connected Feed Forward}
+
+While the approach implemented by \cite{zhang2019semantics} is able to improve the vanilla BERT approach, it does not lead to an improvement on others, or worse, brings the perormance down.
+I suspect a reason for this may lie in the manner of how the SRLs are processed in this approach.
+The information SRLs provide is, what I call, sub-sentence specific and cannot be represented as a single information piece.
+By this I mean that it does not suffice to know that given an utterance $x$ that there is a specific SR in it; rather the information \emph{where} is is is crucial.
+Consider the following example (the pseudo SRL [CLS] is added):
+
+[\textsubscript{[CLS]} ""] [\textsubscript{A-0} The man] [\textsubscript{predicate} hit] [\textsubscript{A-1} the dog] .
+
+After the subscripted SRLs were consumed by the BiGRU, there is some information about all SLRs in the hidden states of the [CLS] token.
+While there may be some information about there being a predicate, an argument zero, and an argument 1 present, it is completely impossibly to determine from which tokens these signals came.
+Especially in sentence pair tasks, such as paraphrase identification, this information is however absolutely crucial.
+As can be seen from results \ref{}, this hypothesis is also supported by the results:
+
 
 As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final fully-connected feed forward layer produces fairly good results.
+
+\subsubsection{GRU}
+
+\subsubsection{CNN}
+
 
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}
