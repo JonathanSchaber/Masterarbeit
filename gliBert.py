@@ -361,12 +361,7 @@ class gliBertClassifierCLS(BertBase):
             new_batch.append(new_sentence)
 
         return new_batch
-
-    def add_spec_srls(self, a_srls, b_srls):
-        new_batch = []
-        for batch in zip(a_srls, b_srls):
-            import ipdb; ipdb.set_trace()
-    
+ 
     def forward(
             self,
             tokens,
@@ -385,15 +380,19 @@ class gliBertClassifierCLS(BertBase):
         if self.config["combine_SRLs"]:
             if data_type != 1:
                 a_srls, b_srls = get_AB_SRLs(srls)
-                #spec_srls = self.add_spec_srls(a_srls, b_srls)
-                cls_srls = self.add_CLS_srl(a_srls)
-                #emb = self.srl_model(spec_srls)
-                emb = self.srl_model(cls_srls)
+                a_cls_srls = self.add_CLS_srl(a_srls)
+                a_emb = self.srl_model(a_cls_srls)
+                a_emb = torch.stack([batch[0,:] for batch in a_emb])
+                b_cls_srls = self.add_CLS_srl(b_srls)
+                b_emb = self.srl_model(b_cls_srls)
+                b_emb = torch.stack([batch[0,:] for batch in b_emb])
+                stack = torch.stack(tuple([a_emb, b_emb]))
+                emb = torch.mean(stack, dim=0)
             else:
                 srls = get_A_SRLs(srls)
                 cls_srls = self.add_CLS_srl(srls)
                 emb = self.srl_model(cls_srls)
-            emb = torch.stack([batch[0,:] for batch in emb])
+                emb = torch.stack([batch[0,:] for batch in emb])
 
             pooler_output = torch.cat(tuple([pooler_output, emb]), dim=-1)
             
