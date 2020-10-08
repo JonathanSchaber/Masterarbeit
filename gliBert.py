@@ -136,7 +136,9 @@ class SRL_Encoder(nn.Module):
             "I-C-C-A0":	42,
             "I-C-C-A1":	43,
             "O":	    44,
-            "0":        45
+            "0":        45,
+            "[CLS]":    46,
+            "[SEP]":    47
         }
         self.embeddings = nn.Embedding(len(set(self.dictionary.values())), self.config["embedding_dim"])
         #self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
@@ -210,7 +212,6 @@ class BertBase(nn.Module):
     def split_SRLs_to_subtokens(batch_srls, batch_idxs):
         split_srls = []
 
-        #for example in zip(batch_srls, batch_idxs):
         for example in zip(batch_srls, batch_idxs):
             split_example = []
             offset = 0
@@ -235,8 +236,17 @@ class BertBase(nn.Module):
 
 
     def create_dummy_srl(self, device):
+        # *2 because bi-GRU
         dummy = torch.unsqueeze(torch.tensor([0.0]*2*self.config["gru_hidden_size"]), dim=0)
         self.dummy_srl = dummy.to(device)
+
+    def create_cls_srl(self, device):
+        cls_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["[CLS]"]), dim=0)
+        self.cls_srl = cls_tensor.to(device)
+        
+    def create_sep_srl(self, device):
+        cls_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["[SEP]"]), dim=0)
+        self.cls_srl = cls_tensor.to(device)
 
     def pad_SRLs(self, batch, dummy, length=None):
         """
@@ -322,15 +332,40 @@ class BertBase(nn.Module):
         return return_batch, ab_batch_idx
 
 
-class BertClassifierCLS(BertBase):
+class gliBertClassifierCLS(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
         self.bert = BertModel.from_pretrained(config[location]["BERT"])
         self.srl_model = SRL_Encoder(config)
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
-        self.linear = nn.Linear(768, num_classes)
+        if config["combine_SRLs"]:
+            self.linear = nn.Linear((768+2*config["gru_hidden_size"]), num_classes)
+        else:
+            self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
+
+    def add_CLS_srl(self, srls):
+        new_batch = []
+        for batch in srls:
+            new_sentence = []
+            for i, sentence in enumerate(batch):
+                new_predicate = []
+                for predicate in sentence:
+                    if i == 0:
+                        new_pred = torch.cat(tuple([self.cls_srl, predicate]), dim=-1)
+                        new_predicate.append(new_pred)
+                    else:
+                        new_predicate.append(predicate)
+                new_sentence.append(new_predicate)
+            new_batch.append(new_sentence)
+
+        return new_batch
+
+    def add_spec_srls(self, a_srls, b_srls):
+        new_batch = []
+        for batch in zip(a_srls, b_srls):
+            import ipdb; ipdb.set_trace()
     
     def forward(
             self,
@@ -346,6 +381,22 @@ class BertClassifierCLS(BertBase):
                                 attention_mask,
                                 token_type_ids
                                 )
+                                
+        if self.config["combine_SRLs"]:
+            if data_type != 1:
+                a_srls, b_srls = get_AB_SRLs(srls)
+                #spec_srls = self.add_spec_srls(a_srls, b_srls)
+                cls_srls = self.add_CLS_srl(a_srls)
+                #emb = self.srl_model(spec_srls)
+                emb = self.srl_model(cls_srls)
+            else:
+                srls = get_A_SRLs(srls)
+                cls_srls = self.add_CLS_srl(srls)
+                emb = self.srl_model(cls_srls)
+            emb = torch.stack([batch[0,:] for batch in emb])
+
+            pooler_output = torch.cat(tuple([pooler_output, emb]), dim=-1)
+            
         linear_output = self.linear(pooler_output)
         proba = self.softmax(linear_output)
         return proba
@@ -921,6 +972,8 @@ def fine_tune_BERT(config):
         print(">>  device set to: CPU")
 
     model.create_dummy_srl(device)
+    model.create_cls_srl(device)
+    model.create_sep_srl(device)
 
     optimizer = AdamW(
             model.parameters(),
