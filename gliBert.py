@@ -180,8 +180,6 @@ class SRL_Encoder(nn.Module):
             sequence = torch.cat(tuple(sentences), dim=0)
             batch_outputs.append(sequence)
 
-        #torch.stack(batch_outputs)
-
         return batch_outputs
 
 
@@ -234,6 +232,50 @@ class BertBase(nn.Module):
             split_srls.append(split_example)
         return split_srls
 
+    @staticmethod
+    def concatenate_sents(srls):
+        new_batch = []
+        for batch in srls:
+            concat = []
+            concat.append(torch.cat([sent[0] for sent in batch], dim=0))
+            concat.append(torch.cat([sent[1] if len(sent) > 1 else sent[0] for sent in batch], dim=0))
+            concat.append(torch.cat([sent[2] if len(sent) > 2 else sent[0] for sent in batch], dim=0))
+            new_batch.append([concat])
+
+        return new_batch
+
+    @staticmethod
+    def concatenate_sent1_sent2(sent1, sent2):
+        new_batch = []
+        for batch in zip(sent1, sent2):
+            concat = []
+            concat.append(torch.cat((batch[0][0][0], batch[1][0][0]), dim=0))
+            concat.append(torch.cat((batch[0][0][1], batch[1][0][1]), dim=0))
+            concat.append(torch.cat((batch[0][0][2], batch[1][0][2]), dim=0))
+            new_batch.append([concat])
+
+        return new_batch
+        
+    def add_spec_srl(self, srls, spec):
+        new_batch = []
+        if spec == "[CLS]":
+            spec_srl = self.cls_srl
+        elif spec == "[SEP]":
+            spec_srl = self.sep_srl
+        for batch in srls:
+            new_sentence = []
+            for i, sentence in enumerate(batch):
+                new_predicate = []
+                for predicate in sentence:
+                    if i == 0:
+                        new_pred = torch.cat((spec_srl, predicate), dim=-1)
+                        new_predicate.append(new_pred)
+                    else:
+                        new_predicate.append(predicate)
+                new_sentence.append(new_predicate)
+            new_batch.append(new_sentence)
+
+        return new_batch
 
     def create_dummy_srl(self, device):
         # *2 because bi-GRU
@@ -246,7 +288,7 @@ class BertBase(nn.Module):
         
     def create_sep_srl(self, device):
         cls_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["[SEP]"]), dim=0)
-        self.cls_srl = cls_tensor.to(device)
+        self.sep_srl = cls_tensor.to(device)
 
     def pad_SRLs(self, batch, dummy, length=None):
         """
@@ -345,23 +387,6 @@ class gliBertClassifierCLS(BertBase):
             self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
-    def add_CLS_srl(self, srls):
-        new_batch = []
-        for batch in srls:
-            new_sentence = []
-            for i, sentence in enumerate(batch):
-                new_predicate = []
-                for predicate in sentence:
-                    if i == 0:
-                        new_pred = torch.cat(tuple([self.cls_srl, predicate]), dim=-1)
-                        new_predicate.append(new_pred)
-                    else:
-                        new_predicate.append(predicate)
-                new_sentence.append(new_predicate)
-            new_batch.append(new_sentence)
-
-        return new_batch
- 
     def forward(
             self,
             tokens,
@@ -380,21 +405,21 @@ class gliBertClassifierCLS(BertBase):
         if self.config["combine_SRLs"]:
             if data_type != 1:
                 a_srls, b_srls = get_AB_SRLs(srls)
-                a_cls_srls = self.add_CLS_srl(a_srls)
-                a_emb = self.srl_model(a_cls_srls)
-                a_emb = torch.stack([batch[0,:] for batch in a_emb])
-                b_cls_srls = self.add_CLS_srl(b_srls)
-                b_emb = self.srl_model(b_cls_srls)
-                b_emb = torch.stack([batch[0,:] for batch in b_emb])
-                stack = torch.stack(tuple([a_emb, b_emb]))
-                emb = torch.mean(stack, dim=0)
+                one_a = self.concatenate_sents(a_srls)
+                one_a = self.add_spec_srl(one_a, "[CLS]")
+                one_b = self.concatenate_sents(b_srls)
+                one_b = self.add_spec_srl(one_b, "[SEP]")
+                one_sent = self.concatenate_sent1_sent2(one_a, one_b)
+                emb = self.srl_model(one_sent)
+                emb = torch.stack([batch[0,:] for batch in emb])
             else:
                 srls = get_A_SRLs(srls)
-                cls_srls = self.add_CLS_srl(srls)
-                emb = self.srl_model(cls_srls)
+                one_sent = self.concatenate_sents(srls)
+                one_sent = self.add_spec_srl(one_sent, "[CLS]")
+                emb = self.srl_model(one_sent)
                 emb = torch.stack([batch[0,:] for batch in emb])
 
-            pooler_output = torch.cat(tuple([pooler_output, emb]), dim=-1)
+            pooler_output = torch.cat((pooler_output, emb), dim=-1)
             
         linear_output = self.linear(pooler_output)
         proba = self.softmax(linear_output)
@@ -533,7 +558,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
             #else:
             #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
-            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             reshaped_last_hidden = torch.reshape(
                     combo_merge_batch,
@@ -615,7 +640,7 @@ class gliBertClassifierGRU(BertBase):
             #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
             #else:
             #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
-            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
             #hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
@@ -636,7 +661,7 @@ class gliBertClassifierGRU(BertBase):
         last_hidden = hidden[-1]
         last_hidden_fwd = last_hidden[0]
         last_hidden_bwd = last_hidden[1]
-        comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
+        comb = torch.cat((last_hidden_fwd, last_hidden_bwd), dim=1)
         linear_output = self.linear(comb)
         proba = self.softmax(linear_output)
         return proba
@@ -704,7 +729,7 @@ class gliBertClassifierCNN(BertBase):
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
 
-            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             # swap dimensions, so embedding-dimension are input channels
             combo_merge_batch = combo_merge_batch.permute(0, 2, 1)
@@ -770,7 +795,7 @@ class gliBertSpanPrediction(BertBase):
             #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
             #else:
             #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
-            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             linear_output = self.linear(combo_merge_batch)
             #start_logits, end_logits = linear_output.split(1, dim=-1)
