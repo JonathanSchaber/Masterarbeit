@@ -277,6 +277,23 @@ class BertBase(nn.Module):
 
         return new_batch
 
+    def embed_srls(self, srls, data_type):
+        if data_type != 1:
+            a_srls, b_srls = get_AB_SRLs(srls)
+            one_a = self.concatenate_sents(a_srls)
+            one_a = self.add_spec_srl(one_a, "[CLS]")
+            one_b = self.concatenate_sents(b_srls)
+            one_b = self.add_spec_srl(one_b, "[SEP]")
+            one_sent = self.concatenate_sent1_sent2(one_a, one_b)
+            emb = self.srl_model(one_sent)
+        else:
+            srls = get_A_SRLs(srls)
+            one_sent = self.concatenate_sents(srls)
+            one_sent = self.add_spec_srl(one_sent, "[CLS]")
+            emb = self.srl_model(one_sent)
+
+        return emb
+
     def create_dummy_srl(self, device):
         # *2 because bi-GRU
         dummy = torch.unsqueeze(torch.tensor([0.0]*2*self.config["gru_hidden_size"]), dim=0)
@@ -403,21 +420,8 @@ class gliBertClassifierCLS(BertBase):
                                 )
                                 
         if self.config["combine_SRLs"]:
-            if data_type != 1:
-                a_srls, b_srls = get_AB_SRLs(srls)
-                one_a = self.concatenate_sents(a_srls)
-                one_a = self.add_spec_srl(one_a, "[CLS]")
-                one_b = self.concatenate_sents(b_srls)
-                one_b = self.add_spec_srl(one_b, "[SEP]")
-                one_sent = self.concatenate_sent1_sent2(one_a, one_b)
-                emb = self.srl_model(one_sent)
-                emb = torch.stack([batch[0,:] for batch in emb])
-            else:
-                srls = get_A_SRLs(srls)
-                one_sent = self.concatenate_sents(srls)
-                one_sent = self.add_spec_srl(one_sent, "[CLS]")
-                emb = self.srl_model(one_sent)
-                emb = torch.stack([batch[0,:] for batch in emb])
+            emb = self.embed_srls(srls, data_type)
+            emb = torch.stack([batch[0,:] for batch in emb])
 
             pooler_output = torch.cat((pooler_output, emb), dim=-1)
             
@@ -617,23 +621,24 @@ class gliBertClassifierGRU(BertBase):
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
-            if data_type != 1:
-                a_srls, b_srls = get_AB_SRLs(srls) 
-                if not self.config["merge_subtokens"]:
-                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
-                a_emb = self.srl_model(a_srls)
-                b_emb = self.srl_model(b_srls)
-                ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-                srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
-                                for i in range(len(a_srls))]
-            else:
-                srls = get_A_SRLs(srls)
-                if not self.config["merge_subtokens"]:
-                    srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
-                emb = self.srl_model(srls)
-                srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
-                                for i in range(len(srls))]
+            #if data_type != 1:
+                #a_srls, b_srls = get_AB_SRLs(srls) 
+                #if not self.config["merge_subtokens"]:
+                    #a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                                    #self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+                #a_emb = self.srl_model(a_srls)
+                #b_emb = self.srl_model(b_srls)
+                #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+                #srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+                                #for i in range(len(a_srls))]
+            #else:
+                #srls = get_A_SRLs(srls)
+                #if not self.config["merge_subtokens"]:
+                    #srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
+                #emb = self.srl_model(srls)
+                #srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
+                                #for i in range(len(srls))]
+            srl_emb = self.embed_srls(srls, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             #if self.config["merge_subtokens"]:
