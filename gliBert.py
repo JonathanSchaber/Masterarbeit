@@ -285,6 +285,9 @@ class BertBase(nn.Module):
             one_b = self.concatenate_sents(b_srls)
             one_b = self.add_spec_srl(one_b, "[SEP]")
             one_sent = self.concatenate_sent1_sent2(one_a, one_b)
+            #print(one_sent[0][0][0].tolist())
+            #print(one_sent[0][0][1].tolist())
+            #print(one_sent[0][0][2].tolist())
             emb = self.srl_model(one_sent)
         else:
             srls = get_A_SRLs(srls)
@@ -870,7 +873,7 @@ def print_preds(model, \
                 len_data, \
                 elapsed, merge):
     reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
-    first_srls = [sentence[0][0].tolist() for sentence in srls]
+    first_srls = [predicate[0].tolist() for sentence in srls for predicate in sentence]
     first_srls = [reverse_dict[srl] for ls in first_srls for srl in ls]
     tokens = model.tokenizer.tokenize(model.tokenizer.decode(example, skip_special_tokens=True))
     tokens = merge_subs(tokens)
