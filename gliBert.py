@@ -869,14 +869,21 @@ def print_preds(model, \
                 step, \
                 len_data, \
                 elapsed, merge):
-    first_srls = [sentence[0][0].tolist() for sentence in srls]
     reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
+    first_srls = [sentence[0][0].tolist() for sentence in srls]
+    first_srls = [reverse_dict[srl] for ls in first_srls for srl in ls]
+    tokens = model.tokenizer.tokenize(model.tokenizer.decode(example, skip_special_tokens=True))
+    tokens = merge_subs(tokens)
     if not data_type == "qa":
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
-        #print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
-        print("    Text:   {}".format("\t".join(merge_subs([x for x in model.tokenizer.tokenize(model.tokenizer.decode(example, skip_special_tokens=True))]))))
-        print("    SRLs:  {}".format("\t".join([reverse_dict[srl] for ls in first_srls for srl in ls])))
+        for elem in zip(tokens, first_srls):
+            if len(elem[0]) < 8:
+                print(elem[0] + "\t\t" + elem[1])
+            else:
+                print(elem[0] + "\t" + elem[1])
+        #print("    Text:   {}".format("\t".join(tokens)))
+        #print("    SRLs:  {}".format("\t".join(first_srls)))
         print("    Prediction:  {}".format(mapping[prediction.max(0).indices.item()]))
         print("    True Label:  {}".format(mapping[true_label.item()]))
         print("")
