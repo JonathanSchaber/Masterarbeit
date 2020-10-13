@@ -875,11 +875,18 @@ def print_preds(model, \
     reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
     first_srls = [predicate[0].tolist() for sentence in srls for predicate in sentence]
     first_srls = [reverse_dict[srl] for ls in first_srls for srl in ls]
-    tokens = model.tokenizer.tokenize(model.tokenizer.decode(example, skip_special_tokens=True))
+    second_srls = [predicate[1].tolist() if len(predicate) > 1 else predicate[0].tolist() for sentence in srls for predicate in sentence]
+    second_srls = [reverse_dict[srl] for ls in second_srls for srl in ls]
+    third_srls = [predicate[2].tolist() if len(predicate) > 2 else predicate[0].tolist() for sentence in srls for predicate in sentence]
+    third_srls = [reverse_dict[srl] for ls in third_srls for srl in ls]
+    tokens = model.tokenizer.tokenize(model.tokenizer.decode(example))
     tokens = merge_subs(tokens)
+    tokens = [tok for tok in tokens if tok not in ["[CLS]", "[SEP]", "[PAD]"]]
     if not data_type == "qa":
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
+        if not len(tokens) == len(first_srls):
+            import ipdb; ipdb.set_trace()
         for elem in zip(tokens, first_srls):
             if len(elem[0]) < 8:
                 print(elem[0] + "\t\t" + elem[1])
