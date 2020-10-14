@@ -167,8 +167,8 @@ class SRL_Encoder(nn.Module):
             for sentence in batch:
                 num_preds = len(sentence)
                 pred_1 = self.embeddings(sentence[0])
-                pred_2 = self.embeddings(sentence[1]) if num_preds > 1 else pred_1
-                pred_3 = self.embeddings(sentence[2]) if num_preds > 2 else pred_1
+                pred_2 = self.embeddings(sentence[1]) #if num_preds > 1 else pred_1
+                pred_3 = self.embeddings(sentence[2]) #if num_preds > 2 else pred_1
                 pred_merge = []
                 for i in range(len(pred_1)):
                     tokens = [pred_1[i], pred_2[i], pred_3[i]]
@@ -232,14 +232,24 @@ class BertBase(nn.Module):
             split_srls.append(split_example)
         return split_srls
 
-    @staticmethod
-    def concatenate_sents(srls):
+    def concatenate_sents(self, srls):
         new_batch = []
         for batch in srls:
             concat = []
             concat.append(torch.cat([sent[0] for sent in batch], dim=0))
-            concat.append(torch.cat([sent[1] if len(sent) > 1 else sent[0] for sent in batch], dim=0))
-            concat.append(torch.cat([sent[2] if len(sent) > 2 else sent[0] for sent in batch], dim=0))
+            #concat.append(torch.cat([sent[1] if len(sent) > 1 else sent[0] for sent in batch], dim=0))
+            #concat.append(torch.cat([sent[2] if len(sent) > 2 else sent[0] for sent in batch], dim=0))
+            # if less than 3 preds, simply add "0" SRLs
+            concat.append(torch.cat([sent[1]
+                                        if len(sent) > 1
+                                        else torch.squeeze(torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
+                                        for sent
+                                        in batch], dim=0))
+            concat.append(torch.cat([sent[2]
+                                        if len(sent) > 2
+                                        else torch.squeeze(torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
+                                        for sent
+                                        in batch], dim=0))
             new_batch.append([concat])
 
         return new_batch
@@ -309,6 +319,11 @@ class BertBase(nn.Module):
     def create_sep_srl(self, device):
         cls_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["[SEP]"]), dim=0)
         self.sep_srl = cls_tensor.to(device)
+
+    def create_zero_srl(self, device):
+        cls_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["0"]), dim=0)
+        self.zero_srl = cls_tensor.to(device)
+        
 
     def pad_SRLs(self, batch, dummy, length=None):
         """
@@ -466,26 +481,27 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
-            if data_type != 1:
-                a_srls, b_srls = get_AB_SRLs(srls) 
-                if not self.config["merge_subtokens"]:
-                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
-                a_emb = self.srl_model(a_srls)
-                b_emb = self.srl_model(b_srls)
-                ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-                srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
-                                for i in range(len(a_srls))]
-            else:
-                srls = get_A_SRLs(srls)
-                if not self.config["merge_subtokens"]:
-                    srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
-                emb = self.srl_model(srls)
-                srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
-                                for i in range(len(srls))]
+            #if data_type != 1:
+            #    a_srls, b_srls = get_AB_SRLs(srls) 
+            #    if not self.config["merge_subtokens"]:
+            #        a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+            #                        self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+            #    a_emb = self.srl_model(a_srls)
+            #    b_emb = self.srl_model(b_srls)
+            #    ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #                    for i in range(len(a_srls))]
+            #else:
+            #    srls = get_A_SRLs(srls)
+            #    if not self.config["merge_subtokens"]:
+            #        srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
+            #    emb = self.srl_model(srls)
+            #    srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
+            #                    for i in range(len(srls))]
+            srl_emb = self.embed_srls(srls, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            combo_merge_batch = torch.cat(tuple([hidden_state, srl_batch]), dim=-1)
+            combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             reshaped_last_hidden = torch.reshape(
                     combo_merge_batch,
@@ -541,30 +557,27 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
         #full_word_hidden_state = full_word_hidden_state[:, 1:, :]
 
         if self.config["combine_SRLs"]:
-            if data_type != 1:
-                a_srls, b_srls = get_AB_SRLs(srls) 
-                if not self.config["merge_subtokens"]:
-                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
-                a_emb = self.srl_model(a_srls)
-                b_emb = self.srl_model(b_srls)
-                ab = lambda i: [a_emb[i], self.dummy_srl, b_emb[i]]
-                srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
-                                for i in range(len(a_srls))]
-            else:
-                srls = get_A_SRLs(srls)
-                if not self.config["merge_subtokens"]:
-                    srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
-                emb = self.srl_model(srls)
-                srl_emb = [torch.cat(tuple([emb[i]]), dim=0)
-                                for i in range(len(srls))]
-            #import ipdb; ipdb.set_trace()
-
-            srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len-1)
-            #if self.config["merge_subtokens"]:
-            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
+            #if data_type != 1:
+            #    a_srls, b_srls = get_AB_SRLs(srls) 
+            #    if not self.config["merge_subtokens"]:
+            #        a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+            #                        self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+            #    a_emb = self.srl_model(a_srls)
+            #    b_emb = self.srl_model(b_srls)
+            #    ab = lambda i: [a_emb[i], self.dummy_srl, b_emb[i]]
+            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #                    for i in range(len(a_srls))]
             #else:
-            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
+            #    srls = get_A_SRLs(srls)
+            #    if not self.config["merge_subtokens"]:
+            #        srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
+            #    emb = self.srl_model(srls)
+            #    srl_emb = [torch.cat(tuple([emb[i]]), dim=0)
+            #                    for i in range(len(srls))]
+
+            srl_emb = self.embed_srls(srls, data_type)
+            srl_emb = [emb[0:,] for emb in srl_emb]
+            srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len-1)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             reshaped_last_hidden = torch.reshape(
@@ -644,10 +657,6 @@ class gliBertClassifierGRU(BertBase):
             srl_emb = self.embed_srls(srls, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            #if self.config["merge_subtokens"]:
-            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            #else:
-            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
@@ -695,7 +704,7 @@ class gliBertClassifierCNN(BertBase):
                     nn.Tanh(),
                     nn.MaxPool1d(kernel_size=2, stride=2)
                 )
-        self.linear = nn.Linear(65, num_classes)
+        self.linear = nn.Linear(105, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
     def forward(
@@ -717,23 +726,24 @@ class gliBertClassifierCNN(BertBase):
 
 
         if self.config["combine_SRLs"]:
-            if data_type != 1:
-                a_srls, b_srls = get_AB_SRLs(srls) 
-                if not self.config["merge_subtokens"]:
-                    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
-                a_emb = self.srl_model(a_srls)
-                b_emb = self.srl_model(b_srls)
-                ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-                srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
-                                for i in range(len(a_srls))]
-            else:
-                srls = get_A_SRLs(srls)
-                if not self.config["merge_subtokens"]:
-                    srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
-                emb = self.srl_model(srls)
-                srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
-                                for i in range(len(srls))]
+            #if data_type != 1:
+            #    a_srls, b_srls = get_AB_SRLs(srls) 
+            #    if not self.config["merge_subtokens"]:
+            #        a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+            #                        self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+            #    a_emb = self.srl_model(a_srls)
+            #    b_emb = self.srl_model(b_srls)
+            #    ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #                    for i in range(len(a_srls))]
+            #else:
+            #    srls = get_A_SRLs(srls)
+            #    if not self.config["merge_subtokens"]:
+            #        srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
+            #    emb = self.srl_model(srls)
+            #    srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
+            #                    for i in range(len(srls))]
+            srl_emb = self.embed_srls(srls, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
 
@@ -875,9 +885,9 @@ def print_preds(model, \
     reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
     first_srls = [predicate[0].tolist() for sentence in srls for predicate in sentence]
     first_srls = [reverse_dict[srl] for ls in first_srls for srl in ls]
-    second_srls = [predicate[1].tolist() if len(predicate) > 1 else predicate[0].tolist() for sentence in srls for predicate in sentence]
+    second_srls = [predicate[1].tolist() if len(predicate) > 1 else [45]*len(predicate[0]) for sentence in srls for predicate in sentence]
     second_srls = [reverse_dict[srl] for ls in second_srls for srl in ls]
-    third_srls = [predicate[2].tolist() if len(predicate) > 2 else predicate[0].tolist() for sentence in srls for predicate in sentence]
+    third_srls = [predicate[2].tolist() if len(predicate) > 2 else [45]*len(predicate[0]) for sentence in srls for predicate in sentence]
     third_srls = [reverse_dict[srl] for ls in third_srls for srl in ls]
     tokens = model.tokenizer.tokenize(model.tokenizer.decode(example))
     tokens = merge_subs(tokens)
@@ -887,11 +897,12 @@ def print_preds(model, \
         print("  Last prediction: ")
         if not len(tokens) == len(first_srls):
             import ipdb; ipdb.set_trace()
-        for elem in zip(tokens, first_srls):
-            if len(elem[0]) < 8:
-                print(elem[0] + "\t\t" + elem[1])
-            else:
-                print(elem[0] + "\t" + elem[1])
+        for elem in zip(tokens, first_srls, second_srls, third_srls):
+            print_tokens = []
+            for token in elem:
+                token = token + "\t\t" if len(token) < 8 else token + "\t"
+                print_tokens.append(token)
+            print("".join(print_tokens))
         #print("    Text:   {}".format("\t".join(tokens)))
         #print("    SRLs:  {}".format("\t".join(first_srls)))
         print("    Prediction:  {}".format(mapping[prediction.max(0).indices.item()]))
@@ -1020,6 +1031,7 @@ def fine_tune_BERT(config):
     model.create_dummy_srl(device)
     model.create_cls_srl(device)
     model.create_sep_srl(device)
+    model.create_zero_srl(device)
 
     optimizer = AdamW(
             model.parameters(),
@@ -1072,7 +1084,8 @@ def fine_tune_BERT(config):
                             device=device,
                             data_type=data_type
                             )
-                if step % print_stats == 0 and not step == 0:
+                # add #epoch to print condition for some variation in print output
+                if (step + epoch_i) % print_stats == 0 and not step == 0:
                     elapsed = format_time(time.time() - t0)
                     print_preds(
                             model,
