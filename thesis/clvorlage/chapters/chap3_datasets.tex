@@ -32,7 +32,7 @@ Following \cite{wang2018glue},
 	CoLA &  Acceptability & Binary Classification & 8.5k/1k & train/test \\
 	SST-2 & Sentiment Analysis & Binary Classification & 67k/1.8k & train/test \\
 	\hline
-	& \multicolumn{4}{c}{Two-Sentence Tasks} \\
+	& \multicolumn{4}{c}{Sentence Pair Tasks} \\
 	MNLI & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
 	MRPC & Paraphrase Identification & Binary Classification & 3.7k/1.7k & train/test \\
 	QNLI & Question Answering & Binary Classification\footnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
@@ -52,7 +52,7 @@ Following \cite{wang2018glue},
 	deISEAR &  Emotion Detection & Multi-Class Classification  & 1 001 & - \\
 	SCARE & Sentiment Analysis & Multi-Class Classification & 1 760 & - \\
 	\hline
-	& \multicolumn{4}{c}{Two-Sentence Tasks} \\
+	& \multicolumn{4}{c}{Sentence Pair Tasks} \\
 	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
 	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
 	PAWS-X & Paraphrase Identification & Binary Classification & 14 402/2 000/4 000 & train/dev/test \\
@@ -77,15 +77,15 @@ In the latter case, I split the data sets into train, development, and test spli
 Interestingly, the data sets that come with splits, only provide a development and test portion.
 To ensure that my results are comparable with those that the authors of the different data sets report, I leave the test split as it is, and split the development set into a train and development set, implementing a 85:15 ratio.
 
+(3) Most datasets that I collected are not mono- but multilingual compilations, in which case I simply include the German subset of the corpus into my GLUE.
+
 The following differences to the original GLUE corpus must be noted:
 
 (1) While \cite{wang2018glue} reformulate a multitude of tasks into inference tasks, I follow in my implementation \cite{zhang2019semantics} and approach the question answering tasks as \cite{devlin2018bert} in the original BERT implementation; i.e. as span prediction task.
 
-(2) I tried to combine a multitude of different tasks into my GLUE dataset (single sentence tasks vs bi- or multiple sentence tasks, classifiaction vs. span detection, different semantic problems such as emotion detection, question answering etc.), I could not compile all tasks that appear in GLUE into my semantic dataset compilation.
-For exmample, there are data sets that concern linguistic acceptability in the original GLUE corpus, such as  e.g. CoLA \cite{warstadt2019neural}, or XXX .
+(2) I tried to combine a multitude of different tasks into my GLUE dataset (single sentence tasks vs bi- or multiple sentence tasks, classification vs. span detection, different semantic problems such as emotion detection, question answering etc.), I could not compile all tasks that appear in GLUE into my semantic dataset compilation.
+For example, there are data sets that concern linguistic acceptability in the original GLUE corpus, such as  e.g. CoLA \cite{warstadt2019neural}, or XXX .
 To disregard this task was not an intentional decision, but due to fact that there are simply not as many datasets available for German and apparently there are no datasets addressing linguistic acceptability in German.
-
-(3) Most datasets that I collected are not mono- but multilingual compilations, in which case I simply include the German subset of the corpus into my GLUE.
 
 \section{Corpora}
 
@@ -130,6 +130,10 @@ average length test: 17.1 (sigma 7.4)
 average length train: 18.1 (sigma 7.9) \\
 average length dev: 20.7 (sigma 24.1) \\
 average length test: 19.5 (sigma 8.8)
+
+\fig{images/deISEAR_merged.pdf}{fig:deISEAR-context}{Length of merged Sentences.}{8}{deISEAR-Length}
+
+\fig{images/deISEAR_merged_all.pdf}{fig:deISEAR-context}{Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
 
 
 
@@ -454,6 +458,8 @@ average length hypothesis dev: 14.3 (sigma 6.0)
 
 average length premise test: 26.1 (sigma 12.0) \\
 average length hypothesis test: 12.8 (sigma 5.0)
+
+\fig{images/XNLI_premise_subtokenized.pdf}{fig:XNLI-premise-length}{Length of subtokenized premises.}{8}{XNLI-Length}
 
 \subsubsection{SOTA}
 

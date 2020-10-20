@@ -27,57 +27,59 @@
 \contentsline {subsubsection}{\numberline {3.2.1.3}SOTA}{9}{subsubsection.3.2.1.3}
 \contentsline {subsection}{\numberline {3.2.2}MLQA}{10}{subsection.3.2.2}
 \contentsline {subsubsection}{\numberline {3.2.2.1}Task}{10}{subsubsection.3.2.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2.2}Statistics}{10}{subsubsection.3.2.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.3}SOTA}{11}{subsubsection.3.2.2.3}
-\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{11}{subsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{11}{subsubsection.3.2.3.1}
-\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{12}{subsubsection.3.2.3.2}
-\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{13}{subsubsection.3.2.3.3}
-\contentsline {subsection}{\numberline {3.2.4}SCARE}{13}{subsection.3.2.4}
-\contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{13}{subsubsection.3.2.4.1}
-\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{15}{subsubsection.3.2.4.2}
-\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{15}{subsubsection.3.2.4.3}
-\contentsline {subsubsection}{\numberline {3.2.4.4}Statistics}{16}{subsubsection.3.2.4.4}
-\contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{17}{subsubsection.3.2.4.5}
-\contentsline {subsection}{\numberline {3.2.5}XNLI}{17}{subsection.3.2.5}
-\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{18}{subsubsection.3.2.5.1}
-\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{18}{subsubsection.3.2.5.2}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{19}{subsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{20}{subsubsection.3.2.6.1}
-\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{20}{subsubsection.3.2.6.2}
-\contentsline {subsection}{\numberline {3.2.7}Overview}{23}{subsection.3.2.7}
-\contentsline {chapter}{\numberline {4}Architecture}{24}{chapter.4}
-\contentsline {section}{\numberline {4.1}Overview}{24}{section.4.1}
-\contentsline {section}{\numberline {4.2}Semantic Role Labeller}{24}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Finding Predicates}{24}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}DAMESRL}{27}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}German BERT}{27}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Combining BERT encodings and SRLs}{27}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Question Answering}{28}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Classifiction}{28}{subsection.4.3.3}
-\contentsline {subsubsection}{\numberline {4.3.3.1}[CLS]}{29}{subsubsection.4.3.3.1}
-\contentsline {subsubsection}{\numberline {4.3.3.2}Fully-Connected Feed Forward}{29}{subsubsection.4.3.3.2}
-\contentsline {subsubsection}{\numberline {4.3.3.3}GRU}{30}{subsubsection.4.3.3.3}
-\contentsline {subsubsection}{\numberline {4.3.3.4}CNN}{30}{subsubsection.4.3.3.4}
-\contentsline {chapter}{\numberline {5}Results}{31}{chapter.5}
-\contentsline {section}{\numberline {5.1}SRL Evaluation}{31}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}deISEAR}{31}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Example 1}{31}{subsubsection.5.1.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.2}Example 2}{31}{subsubsection.5.1.1.2}
-\contentsline {subsection}{\numberline {5.1.2}PAWS-X}{31}{subsection.5.1.2}
-\contentsline {subsubsection}{\numberline {5.1.2.1}Example 1}{32}{subsubsection.5.1.2.1}
-\contentsline {subsubsection}{\numberline {5.1.2.2}Example 2}{32}{subsubsection.5.1.2.2}
-\contentsline {subsubsection}{\numberline {5.1.2.3}Example 3}{35}{subsubsection.5.1.2.3}
-\contentsline {subsubsection}{\numberline {5.1.2.4}Example 4}{35}{subsubsection.5.1.2.4}
-\contentsline {subsubsection}{\numberline {5.1.2.5}Example 5}{35}{subsubsection.5.1.2.5}
-\contentsline {subsubsection}{\numberline {5.1.2.6}Example 6}{35}{subsubsection.5.1.2.6}
-\contentsline {subsubsection}{\numberline {5.1.2.7}Example 7}{35}{subsubsection.5.1.2.7}
-\contentsline {subsubsection}{\numberline {5.1.2.8}Example 8}{35}{subsubsection.5.1.2.8}
-\contentsline {chapter}{\numberline {6}Conclusion}{37}{chapter.6}
-\contentsline {chapter}{Glossary}{38}{section*.14}
-\contentsline {chapter}{References}{39}{section*.16}
-\contentsline {chapter}{Lebenslauf}{43}{section*.18}
+\contentsline {subsubsection}{\numberline {3.2.2.2}Statistics}{11}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}SOTA}{12}{subsubsection.3.2.2.3}
+\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{12}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{13}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{13}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{14}{subsubsection.3.2.3.3}
+\contentsline {subsection}{\numberline {3.2.4}SCARE}{14}{subsection.3.2.4}
+\contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{14}{subsubsection.3.2.4.1}
+\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{16}{subsubsection.3.2.4.2}
+\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{16}{subsubsection.3.2.4.3}
+\contentsline {subsubsection}{\numberline {3.2.4.4}Statistics}{18}{subsubsection.3.2.4.4}
+\contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{18}{subsubsection.3.2.4.5}
+\contentsline {subsection}{\numberline {3.2.5}XNLI}{18}{subsection.3.2.5}
+\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{19}{subsubsection.3.2.5.1}
+\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{20}{subsubsection.3.2.5.2}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{21}{subsection.3.2.6}
+\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{22}{subsubsection.3.2.6.1}
+\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{22}{subsubsection.3.2.6.2}
+\contentsline {subsection}{\numberline {3.2.7}Overview}{25}{subsection.3.2.7}
+\contentsline {chapter}{\numberline {4}Architecture}{26}{chapter.4}
+\contentsline {section}{\numberline {4.1}Overview}{26}{section.4.1}
+\contentsline {section}{\numberline {4.2}BERT module}{27}{section.4.2}
+\contentsline {section}{\numberline {4.3}SRL Module}{27}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{28}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}DAMESRL}{31}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}GRU}{31}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Fusion Module}{31}{section.4.4}
+\contentsline {section}{\numberline {4.5}Head}{32}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Question Answering}{32}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Classifiction}{32}{subsection.4.5.2}
+\contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{33}{subsubsection.4.5.2.1}
+\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{33}{subsubsection.4.5.2.2}
+\contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{34}{subsubsection.4.5.2.3}
+\contentsline {subsubsection}{\numberline {4.5.2.4}CNN}{34}{subsubsection.4.5.2.4}
+\contentsline {chapter}{\numberline {5}Results}{35}{chapter.5}
+\contentsline {section}{\numberline {5.1}SRL Evaluation}{35}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}deISEAR}{35}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Example 1}{35}{subsubsection.5.1.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.2}Example 2}{35}{subsubsection.5.1.1.2}
+\contentsline {subsection}{\numberline {5.1.2}PAWS-X}{35}{subsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2.1}Example 1}{36}{subsubsection.5.1.2.1}
+\contentsline {subsubsection}{\numberline {5.1.2.2}Example 2}{36}{subsubsection.5.1.2.2}
+\contentsline {subsubsection}{\numberline {5.1.2.3}Example 3}{39}{subsubsection.5.1.2.3}
+\contentsline {subsubsection}{\numberline {5.1.2.4}Example 4}{39}{subsubsection.5.1.2.4}
+\contentsline {subsubsection}{\numberline {5.1.2.5}Example 5}{39}{subsubsection.5.1.2.5}
+\contentsline {subsubsection}{\numberline {5.1.2.6}Example 6}{39}{subsubsection.5.1.2.6}
+\contentsline {subsubsection}{\numberline {5.1.2.7}Example 7}{39}{subsubsection.5.1.2.7}
+\contentsline {subsubsection}{\numberline {5.1.2.8}Example 8}{39}{subsubsection.5.1.2.8}
+\contentsline {chapter}{\numberline {6}Conclusion}{41}{chapter.6}
+\contentsline {chapter}{Glossary}{42}{section*.14}
+\contentsline {chapter}{References}{43}{section*.16}
+\contentsline {chapter}{Lebenslauf}{47}{section*.18}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{44}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{45}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{48}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{49}{appendix.B}

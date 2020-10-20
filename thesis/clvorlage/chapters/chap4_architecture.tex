@@ -4,26 +4,57 @@
 
 \section{Overview}
 
-\section{Semantic Role Labeller}
+gliBERT is an architecture that combines different, pre-existing models and tools.
+The general way an input sequence is processed by gliBERT is depicted in figure \ref{fig:architecture}:
+
+
+``Throughout this work, a «sentence» can be an arbitrary span of contiguous text, rather than an actual linguistic sentence. A «sequence» refers to the input token sequence to BERT, which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
+
+
+\fig{images/general_architecture.png}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{16}{gliBERT Architecture}
+
+The core parts of the model are the following:
+
+\begin{itemize}
+	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence and sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
+  \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by ParZu to identify predicates. Second, the sequence with the information about which tokens are predicates is handed to the DAMESRL model which predicts actual SRLs. 
+  \item[\textbf{Fusion module}] To combine the BERT embeddings and SRLs, first there is the need to ensure that the tokenization of BERT and the SRL module are aligned, so the actual fusion of the two embeddings does not mix up word boundaries and the like.
+	Secondly, the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
+	Thirdly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
+	For this, there exist two approaches:
+	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
+	As last step, the aligned embeddings are concatenated and fed to the Head.
+  \item[\textbf{Head module}] At last, the combined representation of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
+\end{itemize}
+
+\section{BERT module}
+
+Since its publishing two years ago, BERT \citep{devlin2018bert} has often been called a ``turning-point'' in ML in NLP.
+
+I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch through the hugging face library\cite{wolf2019transformers}.
+
+\section{SRL Module}
 
 A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a given input text.\footnote{This may be one or multiple sentences.}
 
-State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often implementing deep learning techniques, like RNNs or attention, that render tedious feature engineering unnecessary.
+State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often implementing deep learning techniques, like RNNs or self-attention mechanisms, that render tedious feature engineering unnecessary.
 For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
 I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5\% on the CoNLL'09 task \citep{hajivc2009conll}.
 However, their SRL needs as input not only the sentence, but also ``its predicate $w_p$ as input'' \citep{do2018flexible}.
 
 ``A major advantage of dependency grammars is their ability to deal with languages that are morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
 For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
-Since one sentence can have multiple predicate-argument structures, I need to device an algorithm to extract the relevant predicates in a sentence.
-This is not as straight forward as it seems on the first look.
+Given the parsed sentence, I have to decide what tokens in it are predicates, and which are not.
+While this may seem like a straightforward task --- just find the verb as in a simple sentence like ``He \emph{ate} the apple.'' ---, there are actually a few caveats (predicates are emphasised):
+(1) There may be no predicates at all: ``What a day!''. (2) There might be more than one predicate: ``We \emph{saw} her \emph{leave} the room''. (3) Not all verbs might be predicates: ``I can \emph{hear} you''.
+In the following section, I will describe how I tackle these problems by making use of parsing information from ParZu.
 
 \subsection{Finding Predicates}
 
 It is a known problem in the analysis of semantic roles that a proper procedure for predicate identification is a hard to tackle problem, consider e.g. the discussion concerning so called light verbs: \cite{wittenberg2016light}.
 
 ``First, the predicates which assign semantic roles to the constituents are identified prior to semantic role labelling proper. They are usually identified as the main verbs which head clauses.'' \citep[p.~74]{samardzic2013dynamics}
-In a dependency framework like USD \citep{de2014universal}, which explicitly sets the content verb as root, identification of the relevant predicate is straight-forward:
+In a dependency framework like the Universal Stanford Dependencies (USD) \citep{de2014universal}, which explicitly sets the content verb as root, identification of the relevant predicate is straightforward:
 One has simply to look at the dependency parse tree of a given sentence and select the heads --- i.e. roots --- of the clauses.
 However, the ParZu parser models not content words as heads but function words.\footnote{This follows general dependency frameworks proposed for German, e.g. \cite{gerdes2001word, gross2015dependency}.}
 
@@ -34,7 +65,7 @@ A dependency parse, on the other hand, does not consider auxiliaries as heads an
 Hence, the head of a sentence typically is the verb containing the meaning.
 In that sense, dependency structures are closer to the semantics of a sentence.'' \citep[p.~6f.]{aepli2018parsing}
 
-According to the USD, function words are subordinated to content words, which means that in a sentence ``He was hit by a ball.'', \textit{hit} would be analysed as root, not the finitely inflected \textit{was}.
+According to the USD, function words are subordinated to content words, which means that in a sentence ``He was hit by a ball.'', the infinite participle \textit{hit} would be analysed as root, not the finitely inflected \textit{was}.
 This is an accordance with the view that XXXXXXXXXX
 However, there is a ``substantial amount of evidence [that] delivers a strong argument for the \textelp{} approach, which subordinates full verbs to auxiliaries'' \cite{gross2015dependency}.
 
@@ -108,13 +139,21 @@ Taking into account the above considerations, we see that although \textit{führ
 
 \subsection{DAMESRL}
 
-\section{German BERT}
+There are not too many SOTA SRL frameworks available for German that come with a pre-trained model, especially such ones that can be integrated in a pipeline in a pipeline of a bigger system.
 
-Since its publishing two years ago, BERT \citep{devlin2018bert} has often been called a ``turning-point'' in ML in NLP.
+\cite{do2018flexible} fill exactly this hole: They introduce DAMESRL, an SRL framework that implements SOTA architecture, namely self-attention mechanisms, similar to BERT's.
+They report an F1 score of 73.5 for their best model configuration on the German data set of CoNLL '09.
+This best configuration is based on word as well as character embeddings, self-attention and a softmax layer on top.
 
-I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch through the hugging face library\cite{wolf2019transformers}.
+The DAMSRL predictor receives the tokenized sentence along with the information which tokens in it are predicates (zero or more).
+For each token labelled as predicate in a sequence it predicts for each other token in the sequence its SRL.
 
-\subsection{Combining BERT encodings and SRLs}
+\subsection{GRU}
+
+Finally, the predicted SRLs need to be encoded in a numeric way similar to the BERT embeddings so that they can be combined and sent thorugh the final head network.
+Encoding a sequence is a typical seq2seq task, for which recurrent neural networks have proven to be effective mechanisms (CITE).
+
+\section{Fusion Module}
 
 A crucial part in the overall architecture is the combining of the numeric representation of (sub-)words computed by the BERT network and the embedded SRLs.
 One difficulty lies in the fact that, as already mentioned above, BERT has its own tokenizer which implements a so-called sub-word or wordpiece \cite{wu2016google} encoding strategy:
@@ -133,6 +172,7 @@ Consider the following example:
 
 A further challenge besides the alignment of traditional tokenization and wordpiece tokenization is the general difference in parsing a sentence that exist.
 
+\section{Head}
 
 \subsection{Question Answering}
 
@@ -178,7 +218,7 @@ The information SRLs provide is, what I call, sub-sentence specific and cannot b
 By this I mean that it does not suffice to know that given an utterance $x$ that there is a specific SR in it; rather the information \emph{where} is is is crucial.
 Consider the following example (the pseudo SRL [CLS] is added):
 
-[\textsubscript{[CLS]} ""] [\textsubscript{A-0} The man] [\textsubscript{predicate} hit] [\textsubscript{A-1} the dog] .
+[\textsubscript{[CLS]} ] [\textsubscript{A-0} The man] [\textsubscript{predicate} hit] [\textsubscript{A-1} the dog] .
 
 After the subscripted SRLs were consumed by the BiGRU, there is some information about all SLRs in the hidden states of the [CLS] token.
 While there may be some information about there being a predicate, an argument zero, and an argument 1 present, it is completely impossibly to determine from which tokens these signals came.
@@ -186,10 +226,15 @@ Especially in sentence pair tasks, such as paraphrase identification, this infor
 As can be seen from results \ref{}, this hypothesis is also supported by the results:
 
 
-As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final fully-connected feed forward layer produces fairly good results.
+As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final fully-connected feed forward layer produces fairly good results (in fact, it performs the best in the different architectures they tested for their task).
+
+Implementing a fully-connected feed forward network as final layer counters the problem of the information deprecation that is present in the [CLS] approach:
+Every token's BERT embedding gets concatenated with the token's SRL embeddding.
+The whole sequence is then flattened, i.e. all BERT+SRL vectors get concatenated into one large vector of size $\mathbbm{R}^{n\times768+XXX}$
 
 \subsubsection{GRU}
 
+While the fully-connected feed forward 
 \subsubsection{CNN}
 
 
