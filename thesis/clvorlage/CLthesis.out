@@ -46,33 +46,36 @@
 \BOOKMARK [1][-]{section.4.2}{BERT module}{chapter.4}% 46
 \BOOKMARK [1][-]{section.4.3}{SRL Module}{chapter.4}% 47
 \BOOKMARK [2][-]{subsection.4.3.1}{Finding Predicates}{section.4.3}% 48
-\BOOKMARK [2][-]{subsection.4.3.2}{DAMESRL}{section.4.3}% 49
-\BOOKMARK [2][-]{subsection.4.3.3}{GRU}{section.4.3}% 50
-\BOOKMARK [1][-]{section.4.4}{Fusion Module}{chapter.4}% 51
-\BOOKMARK [1][-]{section.4.5}{Head}{chapter.4}% 52
-\BOOKMARK [2][-]{subsection.4.5.1}{Question Answering}{section.4.5}% 53
-\BOOKMARK [2][-]{subsection.4.5.2}{Classifiction}{section.4.5}% 54
-\BOOKMARK [3][-]{subsubsection.4.5.2.1}{[CLS]}{subsection.4.5.2}% 55
-\BOOKMARK [3][-]{subsubsection.4.5.2.2}{Fully-Connected Feed Forward}{subsection.4.5.2}% 56
-\BOOKMARK [3][-]{subsubsection.4.5.2.3}{GRU}{subsection.4.5.2}% 57
-\BOOKMARK [3][-]{subsubsection.4.5.2.4}{CNN}{subsection.4.5.2}% 58
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 59
-\BOOKMARK [1][-]{section.5.1}{SRL Evaluation}{chapter.5}% 60
-\BOOKMARK [2][-]{subsection.5.1.1}{deISEAR}{section.5.1}% 61
-\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example 1}{subsection.5.1.1}% 62
-\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Example 2}{subsection.5.1.1}% 63
-\BOOKMARK [2][-]{subsection.5.1.2}{PAWS-X}{section.5.1}% 64
-\BOOKMARK [3][-]{subsubsection.5.1.2.1}{Example 1}{subsection.5.1.2}% 65
-\BOOKMARK [3][-]{subsubsection.5.1.2.2}{Example 2}{subsection.5.1.2}% 66
-\BOOKMARK [3][-]{subsubsection.5.1.2.3}{Example 3}{subsection.5.1.2}% 67
-\BOOKMARK [3][-]{subsubsection.5.1.2.4}{Example 4}{subsection.5.1.2}% 68
-\BOOKMARK [3][-]{subsubsection.5.1.2.5}{Example 5}{subsection.5.1.2}% 69
-\BOOKMARK [3][-]{subsubsection.5.1.2.6}{Example 6}{subsection.5.1.2}% 70
-\BOOKMARK [3][-]{subsubsection.5.1.2.7}{Example 7}{subsection.5.1.2}% 71
-\BOOKMARK [3][-]{subsubsection.5.1.2.8}{Example 8}{subsection.5.1.2}% 72
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 73
-\BOOKMARK [0][-]{section*.14}{Glossary}{}% 74
-\BOOKMARK [0][-]{section*.16}{References}{}% 75
-\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 76
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 77
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 78
+\BOOKMARK [2][-]{subsection.4.3.2}{Ensuring Tokenization Equivalence}{section.4.3}% 49
+\BOOKMARK [2][-]{subsection.4.3.3}{DAMESRL}{section.4.3}% 50
+\BOOKMARK [2][-]{subsection.4.3.4}{GRU}{section.4.3}% 51
+\BOOKMARK [1][-]{section.4.4}{Fusion Module}{chapter.4}% 52
+\BOOKMARK [2][-]{subsection.4.4.1}{Embedding the SRLs}{section.4.4}% 53
+\BOOKMARK [2][-]{subsection.4.4.2}{Aligning BERT with SRLs}{section.4.4}% 54
+\BOOKMARK [1][-]{section.4.5}{Head}{chapter.4}% 55
+\BOOKMARK [2][-]{subsection.4.5.1}{Question Answering}{section.4.5}% 56
+\BOOKMARK [2][-]{subsection.4.5.2}{Classifiction}{section.4.5}% 57
+\BOOKMARK [3][-]{subsubsection.4.5.2.1}{[CLS]}{subsection.4.5.2}% 58
+\BOOKMARK [3][-]{subsubsection.4.5.2.2}{Fully-Connected Feed Forward}{subsection.4.5.2}% 59
+\BOOKMARK [3][-]{subsubsection.4.5.2.3}{GRU}{subsection.4.5.2}% 60
+\BOOKMARK [3][-]{subsubsection.4.5.2.4}{CNN}{subsection.4.5.2}% 61
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 62
+\BOOKMARK [1][-]{section.5.1}{SRL Evaluation}{chapter.5}% 63
+\BOOKMARK [2][-]{subsection.5.1.1}{deISEAR}{section.5.1}% 64
+\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example 1}{subsection.5.1.1}% 65
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Example 2}{subsection.5.1.1}% 66
+\BOOKMARK [2][-]{subsection.5.1.2}{PAWS-X}{section.5.1}% 67
+\BOOKMARK [3][-]{subsubsection.5.1.2.1}{Example 1}{subsection.5.1.2}% 68
+\BOOKMARK [3][-]{subsubsection.5.1.2.2}{Example 2}{subsection.5.1.2}% 69
+\BOOKMARK [3][-]{subsubsection.5.1.2.3}{Example 3}{subsection.5.1.2}% 70
+\BOOKMARK [3][-]{subsubsection.5.1.2.4}{Example 4}{subsection.5.1.2}% 71
+\BOOKMARK [3][-]{subsubsection.5.1.2.5}{Example 5}{subsection.5.1.2}% 72
+\BOOKMARK [3][-]{subsubsection.5.1.2.6}{Example 6}{subsection.5.1.2}% 73
+\BOOKMARK [3][-]{subsubsection.5.1.2.7}{Example 7}{subsection.5.1.2}% 74
+\BOOKMARK [3][-]{subsubsection.5.1.2.8}{Example 8}{subsection.5.1.2}% 75
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 76
+\BOOKMARK [0][-]{section*.14}{Glossary}{}% 77
+\BOOKMARK [0][-]{section*.16}{References}{}% 78
+\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 79
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 80
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 81

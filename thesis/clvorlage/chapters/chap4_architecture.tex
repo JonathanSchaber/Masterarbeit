@@ -17,13 +17,13 @@ The core parts of the model are the following:
 
 \begin{itemize}
 	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence and sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
-  \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by ParZu to identify predicates. Second, the sequence with the information about which tokens are predicates is handed to the DAMESRL model which predicts actual SRLs. 
-  \item[\textbf{Fusion module}] To combine the BERT embeddings and SRLs, first there is the need to ensure that the tokenization of BERT and the SRL module are aligned, so the actual fusion of the two embeddings does not mix up word boundaries and the like.
-	Secondly, the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
-	Thirdly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
+  \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by ParZu to identify predicates.
+	Second, the sequence with the information about which tokens are predicates is handed to the DAMESRL model which predicts actual SRLs.
+	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as a list of tokens to DAMESRL.
+  \item[\textbf{Fusion module}] To combine the BERT embeddings and SRLs, first the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
+	secondly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
 	For this, there exist two approaches:
 	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
-	As last step, the aligned embeddings are concatenated and fed to the Head.
   \item[\textbf{Head module}] At last, the combined representation of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
 \end{itemize}
 
@@ -137,6 +137,8 @@ Without the above outlined constraint that only verbs in the same subclause poin
 This is obviously false.
 Taking into account the above considerations, we see that although \textit{führt} points to \textit{weitergeleitet}, its edge label is \textit{rel} --- which means that it's the head of a relative subclause --- therefore it is not anymore in the same subclause and \textit{weitergeleitet} gets labelled as predicate.
 
+\subsection{Ensuring Tokenization Equivalence}
+
 \subsection{DAMESRL}
 
 There are not too many SOTA SRL frameworks available for German that come with a pre-trained model, especially such ones that can be integrated in a pipeline in a pipeline of a bigger system.
@@ -154,6 +156,10 @@ Finally, the predicted SRLs need to be encoded in a numeric way similar to the B
 Encoding a sequence is a typical seq2seq task, for which recurrent neural networks have proven to be effective mechanisms (CITE).
 
 \section{Fusion Module}
+
+\subsection{Embedding the SRLs}
+
+\subsection{Aligning BERT with SRLs}
 
 A crucial part in the overall architecture is the combining of the numeric representation of (sub-)words computed by the BERT network and the embedded SRLs.
 One difficulty lies in the fact that, as already mentioned above, BERT has its own tokenizer which implements a so-called sub-word or wordpiece \cite{wu2016google} encoding strategy:
