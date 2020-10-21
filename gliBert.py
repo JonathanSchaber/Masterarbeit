@@ -810,7 +810,7 @@ class gliBertSpanPrediction(BertBase):
             #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
             #srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
             #                for i in range(len(a_srls))]
-            srl_emb = self.embed_srls(srls, data_tsrl_emb = self.embed_srls(srls, data_type)
+            srl_emb = self.embed_srls(srls, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
