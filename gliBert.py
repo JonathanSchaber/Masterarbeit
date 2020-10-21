@@ -242,12 +242,14 @@ class BertBase(nn.Module):
             # if less than 3 preds, simply add "0" SRLs
             concat.append(torch.cat([sent[1]
                                         if len(sent) > 1
-                                        else torch.squeeze(torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
+                                        else torch.squeeze(
+                                                torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
                                         for sent
                                         in batch], dim=0))
             concat.append(torch.cat([sent[2]
                                         if len(sent) > 2
-                                        else torch.squeeze(torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
+                                        else torch.squeeze(
+                                                torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
                                         for sent
                                         in batch], dim=0))
             new_batch.append([concat])
@@ -576,7 +578,8 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             #                    for i in range(len(srls))]
 
             srl_emb = self.embed_srls(srls, data_type)
-            srl_emb = [emb[0:,] for emb in srl_emb]
+            # ??? not necessary since line 557 takes care of that
+            #srl_emb = [emb[1:,] for emb in srl_emb]
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len-1)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
@@ -816,13 +819,7 @@ class gliBertSpanPrediction(BertBase):
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             linear_output = self.linear(combo_merge_batch)
-            #start_logits, end_logits = linear_output.split(1, dim=-1)
-            #start_span = self.softmax(start_logits)
-            #end_span = self.softmax(end_logits)
-            #return start_span, end_span
         else:
-            #if self.config["merge_subtokens"]:
-            #    full_word_hidden_state = self.reconstruct_word_level(last_hidden_state, tokens, device)
             linear_output = self.linear(hidden_state)
         start_logits, end_logits = linear_output.split(1, dim=-1)
         start_span = self.softmax(start_logits)
