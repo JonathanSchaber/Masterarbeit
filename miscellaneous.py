@@ -3,7 +3,7 @@ import json
 import matplotlib.pyplot as plt
 
 from predict_SRL import SRL_predictor
-from typing import List
+from typing import List, Tuple
 from sklearn.metrics import f1_score, accuracy_score
 from gliBert import compute_acc
 
