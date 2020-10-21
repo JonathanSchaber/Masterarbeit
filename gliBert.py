@@ -801,21 +801,18 @@ class gliBertSpanPrediction(BertBase):
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
-            a_srls, b_srls = get_AB_SRLs(srls) 
-            if not self.config["merge_subtokens"]:
-                a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
-            a_emb = self.srl_model(a_srls)
-            b_emb = self.srl_model(b_srls)
-            ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-            srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
-                            for i in range(len(a_srls))]
+            #a_srls, b_srls = get_AB_SRLs(srls) 
+            #if not self.config["merge_subtokens"]:
+            #    a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+            #                    self.split_SRLs_to_subtokens(b_srls, split_idxs[1])
+            #a_emb = self.srl_model(a_srls)
+            #b_emb = self.srl_model(b_srls)
+            #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+            #srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #                for i in range(len(a_srls))]
+            srl_emb = self.embed_srls(srls, data_tsrl_emb = self.embed_srls(srls, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
-            #if self.config["merge_subtokens"]:
-            #    combo_merge_batch = torch.cat(tuple([full_word_hidden_state, srl_batch]), dim=-1)
-            #else:
-            #    combo_merge_batch = torch.cat(tuple([last_hidden_state, srl_batch]), dim=-1)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             linear_output = self.linear(combo_merge_batch)
