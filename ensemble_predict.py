@@ -25,8 +25,8 @@ def parse_cmd_args():
     return parser.parse_args()
 
 
-def read_in_files(files: List[str])
-            -> List[Tuple[List[Dict[str, float]]], Tuple[List[Dict[str, float]]]]:
+#def read_in_files(files: List[str]) -> List[Tuple[List[Dict[str, float]]], Tuple[List[Dict[str, float]]]]:
+def read_in_files(files):
     """Reads in the files, return json-loaded objects
     Args:
         files: list of n stats-files
@@ -88,13 +88,13 @@ def get_best_epoch(stats_file):
     return best_epoch, best_dev, best_test
 
 
-def build_dicts(results: Tuple[List[List[str]]])
-            -> Tuple[Dict[str, List[str]], Dict[str, str]]:
+def build_dicts(results: Tuple[List[List[str]]], target_dict: Dict[str, List[str]], target_gold_dict: Dict[str, str]) -> None:
     """build dictionaries; one with all preds, one gold
     Args:
         results: dictionary of pred, golds of best epoch
+        target_dict: dictionary for collecting all predictions
+        target_gold_dict: dictionary for gold labels
     """
-    target_dict, target_gold_dict = {}, {}
     for element in results:
         if element[0] in target_dict:
             target_dict[element[0]].append(element[1])
@@ -117,6 +117,7 @@ def main():
         import ipdb; ipdb.set_trace()
 
     ensemble_results = []
+    dev_dict, dev_gold_dict, test_dict, test_gold_dict = {}, {}, {}, {}
     
     for i, file_pair in enumerate(jsons):
             stats_file, results_file = file_pair
@@ -137,8 +138,8 @@ def main():
     for results in ensemble_results:
         dev_res, test_res = results
 
-        dev_dict, dev_gold_dict = build_dicts(dev_res)
-        test_dict, test_gold_dict = build_dicts(test_res)
+        build_dicts(dev_res, dev_dict, dev_gold_dict)
+        build_dicts(test_res, test_dict, test_gold_dict)
         #for element in dev_res:
         #    if element[0] in dev_dict:
         #        dev_dict[element[0]].append(element[1])
