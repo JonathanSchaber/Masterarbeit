@@ -50,8 +50,8 @@ def read_in_files(files):
             json_files.append((stats_file, results_file))
         except FileNotFoundError:
             print("Results file locally not found. Trying to fetch...")
-            res_file = Path(res_file).name
-            result = subprocess.run(download_file.format(res_file).split(),
+            fetch_file = Path(res_file).name
+            result = subprocess.run(download_file.format(fetch_file).split(),
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE
                                 )
@@ -107,6 +107,26 @@ def build_dicts(results: Tuple[List[List[str]]], target_dict: Dict[str, List[str
     return target_dict, target_gold_dict
 
     
+def compute_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
+    """Compute the accuracy of the predictions
+
+    Args:
+        preds: predicitons dicitonary
+        gold: gold labels
+    Return:
+        accuracy
+    """
+    true, false = 0, 0
+
+    for key, value in preds.items():
+        if value == gold[key]:
+            true += 1
+        else:
+            false += 1
+
+    return true / (true + false)
+    
+ 
 def main():
     args = parse_cmd_args()
     files = args.result_files
@@ -122,6 +142,7 @@ def main():
     for i, file_pair in enumerate(jsons):
             stats_file, results_file = file_pair
             best_epoch, best_dev, best_test = get_best_epoch(stats_file)
+            print("")
             print("Info for file {}:".format(Path(files[i]).name))
             print("Best epoch: {}".format(best_epoch))
             print("Best dev accuracy: {0:.2f}".format(best_dev))
@@ -140,24 +161,19 @@ def main():
 
         build_dicts(dev_res, dev_dict, dev_gold_dict)
         build_dicts(test_res, test_dict, test_gold_dict)
-        #for element in dev_res:
-        #    if element[0] in dev_dict:
-        #        dev_dict[element[0]].append(element[1])
-        #        if not dev_gold_dict[element[0]] == element[2]:
-        #            import ipdb; ipdb.set_trace()
-        #    else:
-        #        dev_dict[element[0]] = [element[1]]
-        #        dev_gold_dict[element[0]] = element[2]
-        #for element in test_res:
-        #    if element[0] in test_dict:
-        #        test_dict[element[0]].append(element[1])
-        #        if not test_gold_dict[element[0]] == element[2]:
-        #            import ipdb; ipdb.set_trace()
-        #    else:
-        #        test_dict[element[0]] = [element[1]]
-        #        test_gold_dict[element[0]] = element[2]
-    import ipdb; ipdb.set_trace()
- 
+        
+    dev_ensemble = {key: max(value, key=value.count) for key, value in dev_dict.items()}
+    test_ensemble = {key: max(value, key=value.count) for key, value in test_dict.items()}
+
+    dev_accur = compute_acc(dev_ensemble, dev_gold_dict)
+    test_accur = compute_acc(test_ensemble, test_gold_dict)
+
+    print("")
+    print("==== ENSEMBLE PERFORMANCE ====")
+    print("")
+    print("dev accur: {0:.4f}".format(dev_accur))
+    print("test accur: {0:.4f}".format(test_accur))
+
      
 if __name__ == "__main__":
     main()
