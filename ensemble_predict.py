@@ -138,19 +138,28 @@ def main():
 
     ensemble_results = []
     dev_dict, dev_gold_dict, test_dict, test_gold_dict = {}, {}, {}, {}
+    mean_dev_accur, mean_test_accur = 0, 0
     
     for i, file_pair in enumerate(jsons):
             stats_file, results_file = file_pair
             best_epoch, best_dev, best_test = get_best_epoch(stats_file)
+            mean_dev_accur += best_dev
+            mean_test_accur += best_test
             print("")
             print("Info for file {}:".format(Path(files[i]).name))
             print("Best epoch: {}".format(best_epoch))
-            print("Best dev accuracy: {0:.2f}".format(best_dev))
-            print("Best test accuracy: {0:.2f}".format(best_test))
+            print("Best dev accuracy: {0:.4f}".format(best_dev))
+            print("Best test accuracy: {0:.4f}".format(best_test))
             print("")
             dev = results_file[best_epoch][str(best_epoch)]["dev"]    
             test = results_file[best_epoch][str(best_epoch)]["test"]
             ensemble_results.append((dev, test))
+
+    print("")
+    print("==== MEAN PERFORMANCE ====")
+    print("")
+    print("dev accur: {0:.4f}".format((mean_dev_accur / len(jsons))))
+    print("test accur: {0:.4f}".format((mean_test_accur / len(jsons))))
 
     if len(set([len(ensemble_results[i][j]) for i in range(len(files)) for j in range(2)])) > 2:
         print("Files differ, are you sure they come from the same model configuration? Aborting.")
@@ -173,6 +182,7 @@ def main():
     print("")
     print("dev accur: {0:.4f}".format(dev_accur))
     print("test accur: {0:.4f}".format(test_accur))
+    print("")
 
      
 if __name__ == "__main__":
