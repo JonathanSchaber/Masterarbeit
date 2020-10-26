@@ -6,7 +6,7 @@ To reproduce the results, run the commands under [Preparing the Data](#preparing
 
 # Architecture
 
-![GLIBERT Architecture](/thesis/clvorlage/images/architecture.png)
+![GLIBERT Architecture](architecture_grob.png)
 
 # Data
 
