@@ -8,3 +8,7 @@ tags
 __pycache__/
 thesis/clvorlage/images/
 thesis/clvorlage/appendix/
+.Rhistory
+.RData
+.Rhistory
+.RData
