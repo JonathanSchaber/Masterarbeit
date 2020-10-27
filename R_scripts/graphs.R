@@ -55,9 +55,9 @@ for (i in 3:length(results)) {test_acc = c(test_acc, results[[i]]$"Test Accur.")
 
 epoch = c(1:length(train_acc))
 
-results_df = data.frame(train_loss, dev_loss, test_loss, train_acc, dev_acc, test_acc)
+results_df = data.frame(train_loss, dev_loss, test_loss, train_acc, dev_acc, test_acc, epoch)
 
-results_df$epoch = epoch
+#results_df$epoch = epoch
 
 g_loss = ggplot(results_df, aes(x=epoch, y=train_loss)) +
     geom_line(aes(color="Train")) +
