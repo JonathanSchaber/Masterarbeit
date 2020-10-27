@@ -1,6 +1,10 @@
 #!/usr/bin/env Rscript
 # -*- coding: utf-8 -*-
 
+# synopsis: Rscript --vanilla /<path>/<to>/graphs.R <stats-file.json>
+
+# prints out two PDFs: one for loss over epochs one for accuracy over epochs
+
 library(ggh4x)
 library(ggplot2)
 library(reshape2)
@@ -21,9 +25,9 @@ post_process = function(tex_file) {
     no_ext_name <- gsub("\\.tex", "", tex_file)
     pdf_file <- paste0(no_ext_name, ".pdf")
     texi2pdf(tex_file,
-           clean = TRUE,
-           texi2dvi = Sys.which("lualatex")
-           )
+        clean = TRUE,
+        texi2dvi = Sys.which("lualatex")
+        )
     file.remove(tex_file)
     ## file.rename(pdf_file, paste0("./img/", pdf_file))
     unlink(paste0(no_ext_name, "*.png"))
@@ -56,18 +60,18 @@ results_df = data.frame(train_loss, dev_loss, test_loss, train_acc, dev_acc, tes
 results_df$epoch = epoch
 
 g_loss = ggplot(results_df, aes(x=epoch, y=train_loss)) +
-                geom_line(aes(color="Train")) +
-                geom_line(aes(y=dev_loss, color="Dev")) +
-                geom_line(aes(y=test_loss, color="Test")) +
-                ylab("Loss") +
-                labs(color = "")
+    geom_line(aes(color="Train")) +
+    geom_line(aes(y=dev_loss, color="Dev")) +
+    geom_line(aes(y=test_loss, color="Test")) +
+    ylab("Loss") +
+    labs(color = "")
 
 g_acc = ggplot(results_df, aes(x=epoch, y=train_acc)) +
-                geom_line(aes(color="Train")) +
-                geom_line(aes(y=dev_acc, color="Dev")) +
-                geom_line(aes(y=test_acc, color="Test")) +
-                ylab("Accuracy") +
-                labs(color = "")
+    geom_line(aes(color="Train")) +
+    geom_line(aes(y=dev_acc, color="Dev")) +
+    geom_line(aes(y=test_acc, color="Test")) +
+    ylab("Accuracy") +
+    labs(color = "")
                 
 loss_file = str_replace(args[1], ".json", "_Loss.pdf")
 acc_file = str_replace(args[1], ".json", "_Accuracy.pdf")
