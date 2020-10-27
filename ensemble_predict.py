@@ -134,7 +134,7 @@ def main():
     jsons = read_in_files(files)
     if not jsons:
         print("There was some error reading in the JSON files. Aborting")
-        import ipdb; ipdb.set_trace()
+        return
 
     qa_flag = True if jsons[0][0][0]["data set"] in ["XQuAD", "MLQA"] else False
     ensemble_results = []
@@ -188,10 +188,14 @@ def main():
         test_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count) for
                                 key, value in test_dict.items()}
 
-        dev_start_accur = compute_acc(dev_start_ensemble, {key: value[0] for key, value in dev_gold_dict.items()})
-        dev_end_accur = compute_acc(dev_end_ensemble, {key: value[1] for key, value in dev_gold_dict.items()})
-        test_start_accur = compute_acc(test_start_ensemble, {key: value[0] for key, value in test_gold_dict.items()})
-        test_end_accur = compute_acc(test_end_ensemble, {key: value[1] for key, value in test_gold_dict.items()})
+        dev_start_accur = compute_acc(dev_start_ensemble, {key: value[0] for
+                                                            key, value in dev_gold_dict.items()})
+        dev_end_accur = compute_acc(dev_end_ensemble, {key: value[1] for
+                                                            key, value in dev_gold_dict.items()})
+        test_start_accur = compute_acc(test_start_ensemble, {key: value[0] for
+                                                            key, value in test_gold_dict.items()})
+        test_end_accur = compute_acc(test_end_ensemble, {key: value[1] for
+                                                            key, value in test_gold_dict.items()})
 
         dev_accur = (dev_start_accur + dev_end_accur) / 2
         test_accur = (test_start_accur + test_end_accur) / 2
