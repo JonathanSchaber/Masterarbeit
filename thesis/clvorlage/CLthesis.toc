@@ -36,15 +36,15 @@
 \contentsline {subsection}{\numberline {3.2.4}SCARE}{14}{subsection.3.2.4}
 \contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{14}{subsubsection.3.2.4.1}
 \contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{16}{subsubsection.3.2.4.2}
-\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{16}{subsubsection.3.2.4.3}
+\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{17}{subsubsection.3.2.4.3}
 \contentsline {subsubsection}{\numberline {3.2.4.4}Statistics}{18}{subsubsection.3.2.4.4}
-\contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{18}{subsubsection.3.2.4.5}
-\contentsline {subsection}{\numberline {3.2.5}XNLI}{18}{subsection.3.2.5}
-\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{19}{subsubsection.3.2.5.1}
+\contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{19}{subsubsection.3.2.4.5}
+\contentsline {subsection}{\numberline {3.2.5}XNLI}{19}{subsection.3.2.5}
+\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{20}{subsubsection.3.2.5.1}
 \contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{20}{subsubsection.3.2.5.2}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{21}{subsection.3.2.6}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{20}{subsection.3.2.6}
 \contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{22}{subsubsection.3.2.6.1}
-\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{22}{subsubsection.3.2.6.2}
+\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{24}{subsubsection.3.2.6.2}
 \contentsline {subsection}{\numberline {3.2.7}Overview}{25}{subsection.3.2.7}
 \contentsline {chapter}{\numberline {4}Architecture}{26}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{26}{section.4.1}

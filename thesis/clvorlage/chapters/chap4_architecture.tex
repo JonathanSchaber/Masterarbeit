@@ -35,7 +35,7 @@ I use the \texttt{bert-base-german-cased} model from deepset which is available 
 
 \section{SRL Module}
 
-A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a given input text.\footnote{This may be one or multiple sentences.}
+A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a given input text.\myfootnote{This may be one or multiple sentences.}
 
 State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often implementing deep learning techniques, like RNNs or self-attention mechanisms, that render tedious feature engineering unnecessary.
 For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
@@ -56,7 +56,7 @@ It is a known problem in the analysis of semantic roles that a proper procedure 
 ``First, the predicates which assign semantic roles to the constituents are identified prior to semantic role labelling proper. They are usually identified as the main verbs which head clauses.'' \citep[p.~74]{samardzic2013dynamics}
 In a dependency framework like the Universal Stanford Dependencies (USD) \citep{de2014universal}, which explicitly sets the content verb as root, identification of the relevant predicate is straightforward:
 One has simply to look at the dependency parse tree of a given sentence and select the heads --- i.e. roots --- of the clauses.
-However, the ParZu parser models not content words as heads but function words.\footnote{This follows general dependency frameworks proposed for German, e.g. \cite{gerdes2001word, gross2015dependency}.}
+However, the ParZu parser models not content words as heads but function words.\myfootnote{This follows general dependency frameworks proposed for German, e.g. \cite{gerdes2001word, gross2015dependency}.}
 
 (interestingly, this stands in contrast to the Pro3Gres parser \citep{schneider2008hybrid} which 
 
