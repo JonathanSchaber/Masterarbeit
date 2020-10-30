@@ -778,7 +778,7 @@ class gliBertClassifierCNN(BertBase):
             #    emb = self.srl_model(srls)
             #    srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
             #                    for i in range(len(srls))]
-            srl_emb = self.embed_srls(srls, , split_idxs, data_type)
+            srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
 
