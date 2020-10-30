@@ -87,6 +87,14 @@ def Swish(batch):
 
 
 class SRL_Encoder(nn.Module):
+    """Implements RNN encoder for SRLs.
+
+    Attributes:
+        config: configuration file specifying various hyper params
+        dictionary: mapping from SRLs to indices
+        embeddings: embedding class from torch
+        encoder: actual RNN module that computes embeddings (GRU)
+    """
     def __init__(self, config):
         super(SRL_Encoder, self).__init__()
         self.config = config
@@ -152,14 +160,14 @@ class SRL_Encoder(nn.Module):
                             bidirectional=self.config["bidirectional"]
                         )
 
-    def forward(self, tokens):
-        """
-        forward pass, tokens come in shape: batch:sentence:predicate:ids
+    def forward(self, tokens: List["torch.tensor"]) -> List["torch.tensor"]:
+        """Forward pass - actual embedding
+        
         Args:
-            param1: list[list[list[list]]]
+            tokens: list of indices in torch tensors
 
         Returns:
-            list
+            batch_outputs: list of torch tensor embeddings
         """
         batch_outputs = []
         for batch in tokens:
@@ -167,8 +175,11 @@ class SRL_Encoder(nn.Module):
             for sentence in batch:
                 num_preds = len(sentence)
                 pred_1 = self.embeddings(sentence[0])
-                pred_2 = self.embeddings(sentence[1]) #if num_preds > 1 else pred_1
-                pred_3 = self.embeddings(sentence[2]) #if num_preds > 2 else pred_1
+                pred_2 = self.embeddings(sentence[1])
+                pred_3 = self.embeddings(sentence[2])
+                # no longer needed, since filled up with zeros
+                #pred_2 = self.embeddings(sentence[1]) if num_preds > 1 else pred_1
+                #pred_3 = self.embeddings(sentence[2]) if num_preds > 2 else pred_1
                 pred_merge = []
                 for i in range(len(pred_1)):
                     tokens = [pred_1[i], pred_2[i], pred_3[i]]
@@ -184,6 +195,8 @@ class SRL_Encoder(nn.Module):
 
 
 class BertBase(nn.Module):
+    """The Base model class from which all inherit
+    """
     @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
         """Set all probabilities up to start span to -inf for end spans.
@@ -208,6 +221,14 @@ class BertBase(nn.Module):
 
     @staticmethod
     def split_SRLs_to_subtokens(batch_srls, batch_idxs):
+        """Method for splitting SRLs to BERT subtokens
+
+        Args:
+            batch_srls: the SRLs
+            batch_idxs: number indicating how many times element has to be split
+        Returns:
+            split_srls: splitted SRLs
+        """
         split_srls = []
 
         for example in zip(batch_srls, batch_idxs):
@@ -230,6 +251,8 @@ class BertBase(nn.Module):
                     split_sentence.append(torch.stack(new_predicate))
                 split_example.append(split_sentence)
             split_srls.append(split_example)
+
+        import ipdb; ipdb.set_trace()
         return split_srls
 
     def concatenate_sents(self, srls):
@@ -289,9 +312,12 @@ class BertBase(nn.Module):
 
         return new_batch
 
-    def embed_srls(self, srls, data_type):
+    def embed_srls(self, srls, split_idxs, data_type):
         if data_type != 1:
             a_srls, b_srls = get_AB_SRLs(srls)
+            if not self.config["merge_subtokens"]:
+                a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+                                 self.split_SRLs_to_subtokens(b_srls, split_idxs[1]) 
             one_a = self.concatenate_sents(a_srls)
             one_a = self.add_spec_srl(one_a, "[CLS]")
             one_b = self.concatenate_sents(b_srls)
@@ -303,6 +329,8 @@ class BertBase(nn.Module):
             emb = self.srl_model(one_sent)
         else:
             srls = get_A_SRLs(srls)
+            if not self.config["merge_subtokens"]:
+                srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
             one_sent = self.concatenate_sents(srls)
             one_sent = self.add_spec_srl(one_sent, "[CLS]")
             emb = self.srl_model(one_sent)
@@ -433,20 +461,24 @@ class gliBertClassifierCLS(BertBase):
             data_type=None,
             device=torch.device("cpu")
             ):
-        _, pooler_output = self.bert(
+        last_hidden_state, pooler_output = self.bert(
                                 tokens,
                                 attention_mask,
                                 token_type_ids
                                 )
+        _, split_idxs = self.reconstruct_word_level(last_hidden_state,
+                                        tokens,
+                                        device)
                                 
         if self.config["combine_SRLs"]:
-            emb = self.embed_srls(srls, data_type)
+            emb = self.embed_srls(srls, split_idxs, data_type)
             emb = torch.stack([batch[0,:] for batch in emb])
 
             pooler_output = torch.cat((pooler_output, emb), dim=-1)
             
         linear_output = self.linear(pooler_output)
         proba = self.softmax(linear_output)
+        
         return proba
 
 
@@ -500,7 +532,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             #    emb = self.srl_model(srls)
             #    srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
             #                    for i in range(len(srls))]
-            srl_emb = self.embed_srls(srls, data_type)
+            srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
@@ -577,7 +609,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             #    srl_emb = [torch.cat(tuple([emb[i]]), dim=0)
             #                    for i in range(len(srls))]
 
-            srl_emb = self.embed_srls(srls, data_type)
+            srl_emb = self.embed_srls(srls, split_idxs, data_type)
             # ??? not necessary since line 557 takes care of that
             #srl_emb = [emb[1:,] for emb in srl_emb]
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl, self.max_len-1)
@@ -657,7 +689,7 @@ class gliBertClassifierGRU(BertBase):
                 #emb = self.srl_model(srls)
                 #srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
                                 #for i in range(len(srls))]
-            srl_emb = self.embed_srls(srls, data_type)
+            srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
@@ -746,7 +778,7 @@ class gliBertClassifierCNN(BertBase):
             #    emb = self.srl_model(srls)
             #    srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
             #                    for i in range(len(srls))]
-            srl_emb = self.embed_srls(srls, data_type)
+            srl_emb = self.embed_srls(srls, , split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
 
@@ -810,7 +842,7 @@ class gliBertSpanPrediction(BertBase):
             #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
             #srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
             #                for i in range(len(a_srls))]
-            srl_emb = self.embed_srls(srls, data_type)
+            srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
@@ -941,9 +973,9 @@ def convert_SRLs_to_tensor(mapping, lst, device="cpu"):
     """
     turns a nested list of SRLs into a list of tensors of indices of SRLs
     Args:
-        param1: dict    mapping of SRLs to indices
-        prarm2: list[list[list[list[list]]]]    batch:AB:sentences:predicates:SRLs
-        param3: torch.device
+        mapping: dict    mapping of SRLs to indices
+        lst: list[list[list[list[list]]]]    batch:AB:sentences:predicates:SRLs
+        device: torch.device
     Return:
         list[list[list[list[torch.tensor]]]]
     """
@@ -961,6 +993,7 @@ def convert_SRLs_to_tensor(mapping, lst, device="cpu"):
                 new_AB.append(new_sentence)
             new_batch.append(new_AB)
         new_lst.append(new_batch)
+        
     return new_lst
 
 
