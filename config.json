@@ -26,6 +26,7 @@
 	"max_length": 200,
 	"bert_head": "gliBertClassifierGRU",
 	"combine_SRLs": true,
+	"zeros": false,
 	"embedding_dim": 16,
 	"gru_hidden_size": 32,
 	"head_hidden_size": 512,

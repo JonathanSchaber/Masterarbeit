@@ -252,7 +252,7 @@ class BertBase(nn.Module):
                 split_example.append(split_sentence)
             split_srls.append(split_example)
 
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         return split_srls
 
     def concatenate_sents(self, srls):
@@ -260,21 +260,24 @@ class BertBase(nn.Module):
         for batch in srls:
             concat = []
             concat.append(torch.cat([sent[0] for sent in batch], dim=0))
-            #concat.append(torch.cat([sent[1] if len(sent) > 1 else sent[0] for sent in batch], dim=0))
-            #concat.append(torch.cat([sent[2] if len(sent) > 2 else sent[0] for sent in batch], dim=0))
-            # if less than 3 preds, simply add "0" SRLs
-            concat.append(torch.cat([sent[1]
-                                        if len(sent) > 1
-                                        else torch.squeeze(
-                                                torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
-                                        for sent
-                                        in batch], dim=0))
-            concat.append(torch.cat([sent[2]
-                                        if len(sent) > 2
-                                        else torch.squeeze(
-                                                torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
-                                        for sent
-                                        in batch], dim=0))
+            if not self.config["zeros"]:
+                # if less than 3 preds, duplicate first SRLs
+                concat.append(torch.cat([sent[1] if len(sent) > 1 else sent[0] for sent in batch], dim=0))
+                concat.append(torch.cat([sent[2] if len(sent) > 2 else sent[0] for sent in batch], dim=0))
+            else:
+                # if less than 3 preds, simply add "0" SRLs
+                concat.append(torch.cat([sent[1]
+                                            if len(sent) > 1
+                                            else torch.squeeze(
+                                                    torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
+                                            for sent
+                                            in batch], dim=0))
+                concat.append(torch.cat([sent[2]
+                                            if len(sent) > 2
+                                            else torch.squeeze(
+                                                    torch.stack([self.zero_srl]*len(sent[0])), dim=-1)
+                                            for sent
+                                            in batch], dim=0))
             new_batch.append([concat])
 
         return new_batch
