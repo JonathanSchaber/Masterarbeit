@@ -73,8 +73,10 @@ g_acc = ggplot(results_df, aes(x=epoch, y=train_acc)) +
     ylab("Accuracy") +
     labs(color = "")
                 
-loss_file = str_replace(args[1], ".json", "_Loss.pdf")
-acc_file = str_replace(args[1], ".json", "_Accuracy.pdf")
+loss_file = str_replace(args[1], ".json", "_Loss.tex")
+#loss_file = gsub(".*?/", "", loss_file)
+acc_file = str_replace(args[1], ".json", "_Accuracy.tex")
+#acc_file = gsub(".*?/", "", acc_file)
 
 latex_process(g_loss, loss_file)
 latex_process(g_acc, acc_file)
