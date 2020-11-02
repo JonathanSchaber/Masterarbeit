@@ -18,7 +18,7 @@ Overview of the data sets used in the experiments.
 | [MLQA](https://github.com/facebookresearch/MLQA) | Question Answering | Span Prediction | 509/4,499 | dev/test |
 | [PAWS-X](https://github.com/google-research-datasets/paws/tree/master/pawsx) | Paraphrase Identification | Binary Classification | 49,402/2,000/2,000 | train/dev/test |
 | [SCARE](http://romanklinger.de/scare/) | Sentiment Analysis | Multi-Class Classification | 1,760 | - |
-| [SCARE Reviews](http://romanklinger.de/scare/) |  Sentiment Analysis | Multi-Class Classification | 802,860 | - |
+.. | [SCARE Reviews](http://romanklinger.de/scare/) |  Sentiment Analysis | Multi-Class Classification | 802,860 | - |
 | [XNLI](https://cims.nyu.edu/~sbowman/xnli/) | Natural Language Inference | Multi-Class Classification |  2,489/7,498 | dev/test |
 | [XQuAD](https://github.com/deepmind/xquad) | Question Answering | Span Prediction |  1,192 | - |
 
@@ -96,15 +96,15 @@ cat all the .txt and .csv files into one file, respectively:
 
 `$ cat *.txt > annotations.txt && cat *.csv > annotations.csv`
 
-#### SCARE Reviews
+.. #### SCARE Reviews
 
-cd into the folder «reviews»:
+.. cd into the folder «reviews»:
 
-`$ cd /<path>/<to>/SCARE/scare_v1.0.0_data/reviews/`
+.. `$ cd /<path>/<to>/SCARE/scare_v1.0.0_data/reviews/`
 
-cat all the .csv files into one .csv files:
+.. cat all the .csv files into one .csv files:
 
-`$ cat *.csv > reviews.csv`
+.. `$ cat *.csv > reviews.csv`
 
 ## Preprocessing
 
@@ -113,6 +113,6 @@ For each data set, run the following command:
 	python preprocess_data.py \
 		-d <data set> \
 		-p /<path>/<to>/<data set>/ \
-		-a /<path>/<to>/DAMESRL/server_configs/srl_char_att_ger_infer.ini
+		-a /<path>/<to>/DAMESRL/<config>/srl_char_att_ger_infer.ini
 
 
