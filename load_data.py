@@ -36,6 +36,7 @@ class Dataloader:
         self.tokenizer = BertTokenizer.from_pretrained(path_tokenizer)
         self.merge_subtokens = merge_subtokens
         self.batch_size = batch_size
+        self.counter = 0
         self.path = path_data
         self.max_length = max_length
         self.path_train = None
@@ -93,6 +94,13 @@ class Dataloader:
         return token_list  
 
     def check_max_length(self, *sent_lengths):
+        """Ensure that the maxium length is below threshold
+
+        Args:
+            sent_lengths: list of lengths if sentences
+        Returns:
+            max_length: Maximum length calculated
+        """
         to_add = 1 if len(sent_lengths) == 1 else 2
         max_length = 0
         for sent_length in sent_lengths:
@@ -102,10 +110,8 @@ class Dataloader:
 
     def load_data(self, path):
         data = []
-        y_mapping = self.y_mapping
         with open(path, "r") as f:
             f_reader = csv.reader(f, delimiter="\t")
-            counter = 0
             for row in f_reader:
                 if self.type == 1:
                     instance_id, label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3], row[4]
@@ -154,11 +160,10 @@ class Dataloader:
                     data.append((instance_id, start_span, end_span, question, context, srl_question, srl_context))
 
                 if self.type != "qa":
-                    if label not in y_mapping:
-                        y_mapping[label] = counter
-                        counter += 1
+                    if label not in self.y_mapping:
+                        self.y_mapping[label] = self.counter
+                        self.counter += 1
     
-        self.y_mapping = y_mapping
         return data
 
     def make_datasets(self):
