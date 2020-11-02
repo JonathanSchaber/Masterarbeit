@@ -282,6 +282,33 @@ class BertBase(nn.Module):
         #import ipdb; ipdb.set_trace()
         return split_srls
 
+    @staticmethod
+    def get_AB_SRLs(lst):
+        a_lst, b_lst = ([] for i in range(2))
+        for batch in lst:
+            a_lst.append(batch[0])
+            b_lst.append(batch[1])
+        return a_lst, b_lst
+
+    @staticmethod
+    def get_A_SRLs(lst):
+        a_lst = []
+        for batch in lst:
+            a_lst.append(batch[0])
+        return a_lst
+
+    @staticmethod
+    def concatenate_sent1_sent2(sent1, sent2):
+        new_batch = []
+        for batch in zip(sent1, sent2):
+            concat = []
+            concat.append(torch.cat((batch[0][0][0], batch[1][0][0]), dim=0))
+            concat.append(torch.cat((batch[0][0][1], batch[1][0][1]), dim=0))
+            concat.append(torch.cat((batch[0][0][2], batch[1][0][2]), dim=0))
+            new_batch.append([concat])
+
+        return new_batch
+        
     def concatenate_sents(self, srls):
         new_batch = []
         for batch in srls:
@@ -309,18 +336,6 @@ class BertBase(nn.Module):
 
         return new_batch
 
-    @staticmethod
-    def concatenate_sent1_sent2(sent1, sent2):
-        new_batch = []
-        for batch in zip(sent1, sent2):
-            concat = []
-            concat.append(torch.cat((batch[0][0][0], batch[1][0][0]), dim=0))
-            concat.append(torch.cat((batch[0][0][1], batch[1][0][1]), dim=0))
-            concat.append(torch.cat((batch[0][0][2], batch[1][0][2]), dim=0))
-            new_batch.append([concat])
-
-        return new_batch
-        
     def add_spec_srl(self, srls, spec):
         new_batch = []
         if spec == "[CLS]":
@@ -344,7 +359,7 @@ class BertBase(nn.Module):
 
     def embed_srls(self, srls, split_idxs, data_type):
         if data_type != 1:
-            a_srls, b_srls = get_AB_SRLs(srls)
+            a_srls, b_srls = self.get_AB_SRLs(srls)
             if not self.config["merge_subtokens"]:
                 a_srls, b_srls = self.split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
                                  self.split_SRLs_to_subtokens(b_srls, split_idxs[1]) 
@@ -358,7 +373,7 @@ class BertBase(nn.Module):
             #print(one_sent[0][0][2].tolist())
             emb = self.srl_model(one_sent)
         else:
-            srls = get_A_SRLs(srls)
+            srls = self.get_A_SRLs(srls)
             if not self.config["merge_subtokens"]:
                 srls = self.split_SRLs_to_subtokens(srls, split_idxs[0])
             one_sent = self.concatenate_sents(srls)
@@ -999,29 +1014,10 @@ def batch_idcs(len_dataset, batch_size):
     return batch_idcs
 
 
-def get_AB_SRLs(lst):
-    a_lst, b_lst = ([] for i in range(2))
-    for batch in lst:
-        a_lst.append(batch[0])
-        b_lst.append(batch[1])
-    return a_lst, b_lst
-
-
-def get_A_SRLs(lst):
-    a_lst = []
-    for batch in lst:
-        a_lst.append(batch[0])
-    return a_lst
-
-
 def fine_tune_BERT(config):
-    """define fine-tuning procedure, write results to file.
+    """Define fine-tuning procedure, write results to file.
     Args:
-        param1: nn.Model (BERT-model)
-        param2: torch.tensor
-        param3: dict
-    Returns:
-        None
+        config: dictionary specifying hyper params
     """
     epochs = config["epochs"]
     gpu = config["gpu"]
