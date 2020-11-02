@@ -93,7 +93,7 @@ class Dataloader:
         return token_list  
 
     def check_max_length(self, *sent_lengths):
-        to_add = 2 if len(sent_lengths) == 1 else 3
+        to_add = 1 if len(sent_lengths) == 1 else 2
         max_length = 0
         for sent_length in sent_lengths:
             max_length += sent_length
