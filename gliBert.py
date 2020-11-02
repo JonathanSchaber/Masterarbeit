@@ -159,6 +159,33 @@ class SRL_Encoder(nn.Module):
                             dropout=self.config["gru_dropout"],
                             bidirectional=self.config["bidirectional"]
                         )
+                        
+    def convert_SRLs_to_tensor(self, lst, device="cpu"):
+        """
+        turns a nested list of SRLs into a list of tensors of indices of SRLs
+        Args:
+            mapping: dict    mapping of SRLs to indices
+            lst: list[list[list[list[list]]]]    batch:AB:sentences:predicates:SRLs
+            device: torch.device
+        Return:
+            list[list[list[list[torch.tensor]]]]
+        """
+        new_lst = []
+        for batch in lst:
+            new_batch = []
+            for AB in batch:
+                new_AB = []
+                for sentence in AB:
+                    new_sentence = []
+                    for predicate in sentence:
+                        new_predicate = [self.dictionary[srl] for srl in predicate]
+                        new_predicate = torch.tensor(new_predicate).to(device)
+                        new_sentence.append(new_predicate)
+                    new_AB.append(new_sentence)
+                new_batch.append(new_AB)
+            new_lst.append(new_batch)
+            
+        return new_lst
 
     def forward(self, tokens: List["torch.tensor"]) -> List["torch.tensor"]:
         """Forward pass - actual embedding
@@ -972,34 +999,6 @@ def batch_idcs(len_dataset, batch_size):
     return batch_idcs
 
 
-def convert_SRLs_to_tensor(mapping, lst, device="cpu"):
-    """
-    turns a nested list of SRLs into a list of tensors of indices of SRLs
-    Args:
-        mapping: dict    mapping of SRLs to indices
-        lst: list[list[list[list[list]]]]    batch:AB:sentences:predicates:SRLs
-        device: torch.device
-    Return:
-        list[list[list[list[torch.tensor]]]]
-    """
-    new_lst = []
-    for batch in lst:
-        new_batch = []
-        for AB in batch:
-            new_AB = []
-            for sentence in AB:
-                new_sentence = []
-                for predicate in sentence:
-                    new_predicate = [mapping[srl] for srl in predicate]
-                    new_predicate = torch.tensor(new_predicate).to(device)
-                    new_sentence.append(new_predicate)
-                new_AB.append(new_sentence)
-            new_batch.append(new_AB)
-        new_lst.append(new_batch)
-        
-    return new_lst
-
-
 def get_AB_SRLs(lst):
     a_lst, b_lst = ([] for i in range(2))
     for batch in lst:
@@ -1101,7 +1100,7 @@ def fine_tune_BERT(config):
             b_attention_mask = batch[2].to(device)
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
-            b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
+            b_srls_idx = model.srl_model.convert_SRLs_to_tensor(b_srls, device)
             model.zero_grad()
 
 
@@ -1213,7 +1212,7 @@ def fine_tune_BERT(config):
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
             b_ids = batch[5]
-            b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
+            b_srls_idx = model.srl_model.convert_SRLs_to_tensor(b_srls, device)
 
 
             with torch.no_grad():
@@ -1292,7 +1291,7 @@ def fine_tune_BERT(config):
             b_token_type_ids = batch[3].to(device)
             b_srls = batch[4]
             b_ids = batch[5]
-            b_srls_idx = convert_SRLs_to_tensor(model.srl_model.dictionary, b_srls, device)
+            b_srls_idx = model.srl_model.convert_SRLs_to_tensor(b_srls, device)
 
             with torch.no_grad():
                 if not data_type == "qa":
