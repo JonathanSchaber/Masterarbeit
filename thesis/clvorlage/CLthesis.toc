@@ -41,10 +41,10 @@
 \contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{19}{subsubsection.3.2.4.5}
 \contentsline {subsection}{\numberline {3.2.5}XNLI}{19}{subsection.3.2.5}
 \contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{20}{subsubsection.3.2.5.1}
-\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{20}{subsubsection.3.2.5.2}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{20}{subsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{22}{subsubsection.3.2.6.1}
-\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{24}{subsubsection.3.2.6.2}
+\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{21}{subsubsection.3.2.5.2}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{22}{subsection.3.2.6}
+\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{23}{subsubsection.3.2.6.1}
+\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{23}{subsubsection.3.2.6.2}
 \contentsline {subsection}{\numberline {3.2.7}Overview}{25}{subsection.3.2.7}
 \contentsline {chapter}{\numberline {4}Architecture}{26}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{26}{section.4.1}
@@ -56,12 +56,12 @@
 \contentsline {subsection}{\numberline {4.3.4}GRU}{31}{subsection.4.3.4}
 \contentsline {section}{\numberline {4.4}Fusion Module}{31}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Embedding the SRLs}{31}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Aligning BERT with SRLs}{31}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.2}Aligning BERT with SRLs}{32}{subsection.4.4.2}
 \contentsline {section}{\numberline {4.5}Head}{32}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}Question Answering}{32}{subsection.4.5.1}
 \contentsline {subsection}{\numberline {4.5.2}Classifiction}{32}{subsection.4.5.2}
 \contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{33}{subsubsection.4.5.2.1}
-\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{33}{subsubsection.4.5.2.2}
+\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{34}{subsubsection.4.5.2.2}
 \contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{34}{subsubsection.4.5.2.3}
 \contentsline {subsubsection}{\numberline {4.5.2.4}CNN}{34}{subsubsection.4.5.2.4}
 \contentsline {chapter}{\numberline {5}Results}{35}{chapter.5}

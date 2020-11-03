@@ -465,9 +465,40 @@ For tht English examples, the find a 85\% concesus on the gold labels, and for F
 	\item Ich wusste nicht was ich vorhatte oder so, ich musste mich an einen bestimmten Ort in Washington melden.
 
         Ich war noch nie in Washington, deshalb habe ich mich auf der Suche nach dem Ort verirrt, als ich dahin entsandt wurde.
+
+				\textbf{Neutral}
+\end{examples}
+\begin{examples}
+	\item Natürlich haben sie mich dort gefragt, warum ich ging.
+
+        Sie fragten, warum ich in den Laden ging.
+
+				\textbf{Neutral}
+\end{examples}
+\begin{examples}
+	\item Und ich dachte OK und das war es dann!
+
+        Nachdem ich ja gesagt hatte, endete es.
+
+				\textbf{Entailment}
+\end{examples}
+\begin{examples}
+\item John Burke (Alabama) überprüft und analysiert andere zeitgenössische Konten und findet, dass Boswells nicht nur der genaueste ist, sondern er nutzt es, um Johnsons Charakter zu demonstrieren, wobei andere es lediglich als literarischen Geschwätz abstempeln.
+
+        John Burke ignoriert Aussagen.
+
+				\textbf{Contradiction}
+\end{examples}
+\begin{examples}
+	\item Die öffentliche Bibliothek in Greenlee County, Arizona, zeigt die finanziellen und technologischen Probleme von ländlichen Einrichtungen auf.
+
+        Greenlee County hat eine öffentliche Bibliothek.
+
+				\textbf{Entailment}
 \end{examples}
 
-The label for example \ref{ex:xnli} is \emph{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
+
+%The label for example \ref{ex:xnli} is \emph{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
 
 \subsubsection{Statistics}
 
@@ -496,6 +527,13 @@ average length hypothesis dev: 14.3 (sigma 6.0)
 
 average length premise test: 26.1 (sigma 12.0) \\
 average length hypothesis test: 12.8 (sigma 5.0)
+
+
+label distribution:
+
+Neutral: 2,499
+Entailment: 2,500
+Contradiction: 2,499
 
 \fig{images/XNLI_premise_subtokenized.pdf}{fig:XNLI-premise-length}{Length of subtokenized premises.}{8}{XNLI-Length}
 
@@ -586,13 +624,13 @@ Accuracy (exact match): 57.6\%
 {\begin{tabular}{l|llll}
 	Data Set & NLP Task  & ML Task  & \# Examples & Splits \\
 	\hline
-	deISEAR &  Emotion Detection & Sequence Classification  & XYZ & - \\
-	MLQA & Question Answering & Span Prediction & XYZ & dev/test \\
-	PAWS-X & Paraphrase Identification & Sequence Classification & XYZ & train/dev/test \\
-	SCARE & Sentiment Analysis & Sequence Classifiaction & XYZ & - \\
-	SCARE Rev. &  Sentiment Analysis & Sequence Classification & XYZ & - \\
-	XNLI & Natural Language Inference & Sequence Classification &  XYZ & dev/test \\
-	XQuAD & Question Answering & Span Prediction & XYZ & - \\
+	deISEAR &  Emotion Detection & Multi-Class Classification  & 1,001 & - \\
+	MLQA & Question Answering & Span Prediction & 509/4,499 & dev/test \\
+	PAWS-X & Paraphrase Identification & Binary Classification & 48,977/1,932/1,967 & train/dev/test \\
+	SCARE & Sentiment Analysis & Multi-Class Classifiaction & 1,760 & - \\
+	%SCARE Rev. &  Sentiment Analysis & Sequence Classification & XYZ & - \\
+	XNLI & Natural Language Inference & Multi-Class Classification &  2,489/7,498 & dev/test \\
+	XQuAD & Question Answering & Span Prediction & 1,192 & - \\
 \end{tabular}
 }{Overview data sets}
 

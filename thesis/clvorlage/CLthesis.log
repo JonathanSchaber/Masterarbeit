@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  29 OCT 2020 13:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  2 NOV 2020 18:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1402,32 +1402,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 434--435
 
  []
 
-[18 <./images/SCARE_label_stats.png>] [19]
-<images/XNLI_premise_subtokenized.pdf, id=754, 433.62pt x 650.43pt>
+[18 <./images/SCARE_label_stats.png>] [19] [20]
+<images/XNLI_premise_subtokenized.pdf, id=761, 433.62pt x 650.43pt>
 File: images/XNLI_premise_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_premise_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_premise_subtokenized.pdf  used on input li
-ne 500.
+ne 538.
 (pdftex.def)             Requested size: 227.62204pt x 341.43124pt.
+ [21 <./images/XNLI_premise_subtokenized.pdf>] [22]
+<images/xquad_context_subtokenized.pdf, id=791, 433.62pt x 650.43pt>
+File: images/xquad_context_subtokenized.pdf Graphic file (type pdf)
+<use images/xquad_context_subtokenized.pdf>
+Package pdftex.def Info: images/xquad_context_subtokenized.pdf  used on input l
+ine 602.
+(pdftex.def)             Requested size: 284.52756pt x 426.81386pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[20] [21 <./images/XNLI_premise_subtokenized.pdf>] [22]
-<images/xquad_context_subtokenized.pdf, id=790, 433.62pt x 650.43pt>
-File: images/xquad_context_subtokenized.pdf Graphic file (type pdf)
-<use images/xquad_context_subtokenized.pdf>
-Package pdftex.def Info: images/xquad_context_subtokenized.pdf  used on input l
-ine 564.
-(pdftex.def)             Requested size: 284.52756pt x 426.81386pt.
- [23 <./images/xquad_context_subtokenized.pdf>] [24] [25
+[23] [24 <./images/xquad_context_subtokenized.pdf>] [25
 
 ])
 \openout2 = `chapters/chap4_architecture.aux'.
 
- (./chapters/chap4_architecture.tex
+
+(./chapters/chap4_architecture.tex
 chapter 4.
-<images/general_architecture.png, id=819, 2326.19063pt x 531.48563pt>
+<images/general_architecture.png, id=822, 2326.19063pt x 531.48563pt>
 File: images/general_architecture.png Graphic file (type png)
 <use images/general_architecture.png>
 Package pdftex.def Info: images/general_architecture.png  used on input line 14
@@ -1444,7 +1445,7 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 14--14
 
 
  <./images/general_architecture.png>] [27] [28]
-<images/exampleParzu2.png, id=885, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=888, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 97.
@@ -1457,21 +1458,17 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 97--97
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 103.
 [29 <./images/exampleParzu2.png (PNG copy)>] [30] [31]
-<images/bert_classification.png, id=944, 1071.25218pt x 441.14813pt>
+<images/bert_classification.png, id=946, 1071.25218pt x 441.14813pt>
 File: images/bert_classification.png Graphic file (type png)
 <use images/bert_classification.png>
-Package pdftex.def Info: images/bert_classification.png  used on input line 198
+Package pdftex.def Info: images/bert_classification.png  used on input line 205
 .
 (pdftex.def)             Requested size: 284.52756pt x 117.17294pt.
+ [32] [33 <./images/bert_classification.png>]
 
+LaTeX Warning: Reference `' on page 34 undefined on input line 239.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[32] [33 <./images/bert_classification.png>]
-
-LaTeX Warning: Reference `' on page 34 undefined on input line 232.
-
-LaTeX Font Info:    Try loading font information for U+bbm on input line 239.
+LaTeX Font Info:    Try loading font information for U+bbm on input line 246.
 (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )) [34]
@@ -1480,12 +1477,12 @@ File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 
 (./chapters/chap5_results.tex
 chapter 5.
-<images/SRLs_deISEAR_1.png, id=975, 666.23906pt x 90.3375pt>
+<images/SRLs_deISEAR_1.png, id=978, 666.23906pt x 90.3375pt>
 File: images/SRLs_deISEAR_1.png Graphic file (type png)
 <use images/SRLs_deISEAR_1.png>
 Package pdftex.def Info: images/SRLs_deISEAR_1.png  used on input line 11.
 (pdftex.def)             Requested size: 284.52756pt x 38.58107pt.
-<images/SRLs_deISEAR_2.png, id=976, 2436.10126pt x 204.01219pt>
+<images/SRLs_deISEAR_2.png, id=979, 2436.10126pt x 204.01219pt>
 File: images/SRLs_deISEAR_2.png Graphic file (type png)
 <use images/SRLs_deISEAR_2.png>
 Package pdftex.def Info: images/SRLs_deISEAR_2.png  used on input line 15.
@@ -1495,7 +1492,7 @@ Package pdftex.def Info: images/SRLs_deISEAR_2.png  used on input line 15.
 
 
  <./images/SRLs_deISEAR_1.png> <./images/SRLs_deISEAR_2.png>]
-<images/SRLs_PAWS-X_1.png, id=983, 1247.41031pt x 218.31563pt>
+<images/SRLs_PAWS-X_1.png, id=986, 1247.41031pt x 218.31563pt>
 File: images/SRLs_PAWS-X_1.png Graphic file (type png)
 <use images/SRLs_PAWS-X_1.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_1.png  used on input line 38.
@@ -1503,7 +1500,7 @@ Package pdftex.def Info: images/SRLs_PAWS-X_1.png  used on input line 38.
  [36
 
  <./images/SRLs_PAWS-X_1.png>]
-<images/SRLs_PAWS-X_2.png, id=989, 1836.8625pt x 386.19281pt>
+<images/SRLs_PAWS-X_2.png, id=992, 1836.8625pt x 386.19281pt>
 File: images/SRLs_PAWS-X_2.png Graphic file (type png)
 <use images/SRLs_PAWS-X_2.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_2.png  used on input line 62.
@@ -1513,22 +1510,22 @@ Package pdftex.def Info: images/SRLs_PAWS-X_2.png  used on input line 62.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [37] [38 <./images/SRLs_PAWS-X_2.png>]
-<images/SRLs_PAWS-X_3.png, id=999, 685.8122pt x 162.6075pt>
+<images/SRLs_PAWS-X_3.png, id=1002, 685.8122pt x 162.6075pt>
 File: images/SRLs_PAWS-X_3.png Graphic file (type png)
 <use images/SRLs_PAWS-X_3.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_3.png  used on input line 68.
 (pdftex.def)             Requested size: 284.52756pt x 67.46349pt.
-<images/SRLs_PAWS-X_4.png, id=1000, 1456.69218pt x 174.6525pt>
+<images/SRLs_PAWS-X_4.png, id=1003, 1456.69218pt x 174.6525pt>
 File: images/SRLs_PAWS-X_4.png Graphic file (type png)
 <use images/SRLs_PAWS-X_4.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_4.png  used on input line 72.
 (pdftex.def)             Requested size: 426.79134pt x 51.17026pt.
-<images/SRLs_PAWS-X_5.png, id=1001, 721.19438pt x 201.75375pt>
+<images/SRLs_PAWS-X_5.png, id=1004, 721.19438pt x 201.75375pt>
 File: images/SRLs_PAWS-X_5.png Graphic file (type png)
 <use images/SRLs_PAWS-X_5.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_5.png  used on input line 76.
 (pdftex.def)             Requested size: 284.52756pt x 79.59488pt.
-<images/SRLs_PAWS-X_6.png, id=1002, 1012.5328pt x 170.88844pt>
+<images/SRLs_PAWS-X_6.png, id=1005, 1012.5328pt x 170.88844pt>
 File: images/SRLs_PAWS-X_6.png Graphic file (type png)
 <use images/SRLs_PAWS-X_6.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_6.png  used on input line 80.
@@ -1537,7 +1534,7 @@ Package pdftex.def Info: images/SRLs_PAWS-X_6.png  used on input line 80.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/SRLs_PAWS-X_7.png, id=1003, 786.68906pt x 201.75375pt>
+<images/SRLs_PAWS-X_7.png, id=1006, 786.68906pt x 201.75375pt>
 File: images/SRLs_PAWS-X_7.png Graphic file (type png)
 <use images/SRLs_PAWS-X_7.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_7.png  used on input line 84.
@@ -1545,7 +1542,7 @@ Package pdftex.def Info: images/SRLs_PAWS-X_7.png  used on input line 84.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/SRLs_PAWS-X_8.png, id=1004, 1044.90375pt x 201.75375pt>
+<images/SRLs_PAWS-X_8.png, id=1007, 1044.90375pt x 201.75375pt>
 File: images/SRLs_PAWS-X_8.png Graphic file (type png)
 <use images/SRLs_PAWS-X_8.png>
 Package pdftex.def Info: images/SRLs_PAWS-X_8.png  used on input line 88.
@@ -1648,9 +1645,9 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 12419 strings out of 492982
- 194117 string characters out of 6134895
- 411700 words of memory out of 5000000
+ 12423 strings out of 492982
+ 194145 string characters out of 6134895
+ 411699 words of memory out of 5000000
  15346 multiletter control sequences out of 15000+600000
  25468 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1672,10 +1669,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
 elvetic/uhvr8a.pfb>
-Output written on CLthesis.pdf (58 pages, 984275 bytes).
+Output written on CLthesis.pdf (58 pages, 984968 bytes).
 PDF statistics:
- 1183 PDF objects out of 1200 (max. 8388607)
- 1048 compressed objects within 11 object streams
- 275 named destinations out of 1000 (max. 500000)
+ 1187 PDF objects out of 1200 (max. 8388607)
+ 1052 compressed objects within 11 object streams
+ 279 named destinations out of 1000 (max. 500000)
  749 words of extra memory for PDF output out of 10000 (max. 10000000)
 

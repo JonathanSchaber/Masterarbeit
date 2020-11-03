@@ -159,6 +159,13 @@ Encoding a sequence is a typical seq2seq task, for which recurrent neural networ
 
 \subsection{Embedding the SRLs}
 
+\begin{itemize}
+	\item Embed each sentence alone vs. concatenate all sentences
+	\item same for text\_1, text\_2
+	\item add meta-SRLs [CLS], [SEP]
+	\item duplicate if less preds than 3 vs. fill with zeros
+\end{itemize}
+
 \subsection{Aligning BERT with SRLs}
 
 A crucial part in the overall architecture is the combining of the numeric representation of (sub-)words computed by the BERT network and the embedded SRLs.
