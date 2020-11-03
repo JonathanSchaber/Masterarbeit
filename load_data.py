@@ -114,7 +114,10 @@ class Dataloader:
             f_reader = csv.reader(f, delimiter="\t")
             for row in f_reader:
                 if self.type == 1:
-                    instance_id, label, blank, sentence, srl_sentence = row[0], row[1], row[2], row[3], row[4]
+                    instance_id, \
+                    label, blank, \
+                    sentence, \
+                    srl_sentence = row[0], row[1], row[2], row[3], row[4]
                     srl_sentence = eval(srl_sentence)
                     data.append((instance_id, label, blank, sentence, "", srl_sentence, ""))
                 elif self.type == 2:
@@ -157,7 +160,14 @@ class Dataloader:
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
                     start_span += len_question + 1
                     end_span += len_question + 1
-                    data.append((instance_id, start_span, end_span, question, context, srl_question, srl_context))
+                    data.append((instance_id, \
+                                    start_span, \
+                                    end_span, \
+                                    question, \
+                                    context, \
+                                    srl_question, \
+                                    srl_context
+                                    ))
 
                 if self.type != "qa":
                     if label not in self.y_mapping:
