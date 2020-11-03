@@ -22,8 +22,8 @@ latex_process = function(g_plot, file_name) {
 
 post_process = function(tex_file) {
     # plots post-processing
-    no_ext_name <- gsub("\\.tex", "", tex_file)
-    pdf_file <- paste0(no_ext_name, ".pdf")
+    no_ext_name = gsub("\\.tex", "", tex_file)
+    pdf_file = paste0(no_ext_name, ".pdf")
     texi2pdf(tex_file,
         clean = TRUE,
         texi2dvi = Sys.which("lualatex")
