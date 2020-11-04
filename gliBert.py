@@ -981,9 +981,14 @@ def print_preds(model, \
         print("")
     else:
         start_span, end_span = prediction
+        ex = model.tokenizer.decode(example)
+        sep_index = ex.index("[SEP]")
+        question = ex[:sep_index].replace("[CLS] ", "")
+        context = ex[sep_index:].replace("[SEP] ", "").replace("[PAD]", "").strip()
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
-        print("    Text:   {}".format(model.tokenizer.decode(example, skip_special_tokens=True)))
+        print("    Context:   {}".format(context))
+        print("    Question:   {}".format(question))
         if not merge:
             sentence = model.tokenizer.tokenize(
                                 model.tokenizer.decode(
