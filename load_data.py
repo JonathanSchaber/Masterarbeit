@@ -101,7 +101,7 @@ class Dataloader:
         Returns:
             max_length: Maximum length calculated
         """
-        to_add = 1 if len(sent_lengths) == 1 else 2
+        to_add = 1 if len(sent_lengths) == 2 else 3
         max_length = 0
         for sent_length in sent_lengths:
             max_length += sent_length
