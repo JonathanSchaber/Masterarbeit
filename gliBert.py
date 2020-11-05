@@ -964,6 +964,7 @@ def print_preds(model, \
     tokens = merge_subs(tokens)
     tokens = [tok for tok in tokens if tok not in ["[CLS]", "[SEP]", "[PAD]"]]
     if not data_type == "qa":
+        prediction = prediction[-1]
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
         if not len(tokens) == len(first_srls):
@@ -981,6 +982,7 @@ def print_preds(model, \
         print("")
     else:
         start_span, end_span = prediction
+        start_span, end_span = start_span[-1], end_span[-1]
         ex = model.tokenizer.decode(example)
         sep_index = ex.index("[SEP]")
         question = ex[:sep_index].replace("[CLS] ", "")
@@ -1105,57 +1107,58 @@ def fine_tune_BERT(config):
             model.zero_grad()
 
 
+            outputs = model(
+                        b_input_ids, 
+                        attention_mask=b_attention_mask,
+                        token_type_ids=b_token_type_ids,
+                        srls = b_srls_idx,
+                        device=device,
+                        data_type=data_type
+                        )
+            # add #epoch to print condition for some variation in print output
+            if (step + epoch_i) % print_stats == 0 and not step == 0:
+                elapsed = format_time(time.time() - t0)
+                print_preds(
+                        model,
+                        data_type,
+                        b_input_ids[-1],
+                        b_srls_idx[-1],
+                        outputs,
+                        b_labels[-1],
+                        mapping,
+                        step,
+                        len(train_idcs),
+                        elapsed,
+                        merge_subtokens
+                        )
             if not data_type == "qa":
-                outputs = model(
-                            b_input_ids, 
-                            attention_mask=b_attention_mask,
-                            token_type_ids=b_token_type_ids,
-                            srls = b_srls_idx,
-                            device=device,
-                            data_type=data_type
-                            )
-                # add #epoch to print condition for some variation in print output
-                if (step + epoch_i) % print_stats == 0 and not step == 0:
-                    elapsed = format_time(time.time() - t0)
-                    print_preds(
-                            model,
-                            data_type,
-                            b_input_ids[-1],
-                            b_srls_idx[-1],
-                            outputs[-1],
-                            b_labels[-1],
-                            mapping,
-                            step,
-                            len(train_idcs),
-                            elapsed,
-                            merge_subtokens
-                            )
                 value_index = [tensor.max(0) for tensor in outputs]
                 acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                 loss = criterion(outputs, b_labels)
             else:
-                start_span, end_span = model(
-                                        b_input_ids,
-                                        attention_mask=b_attention_mask,
-                                        token_type_ids=b_token_type_ids,
-                                        srls = b_srls_idx,
-                                        device=device,
-                                        data_type=data_type
-                                        )
-                if step % print_stats == 0 and not step == 0:
-                    elapsed = format_time(time.time() - t0)
-                    print_preds(
-                            model,
-                            data_type,
-                            b_input_ids[-1],
-                            b_srls_idx[-1],
-                            (start_span[-1], end_span[-1]),
-                            b_labels[-1],
-                            mapping, step,
-                            len(train_idcs),
-                            elapsed,
-                            merge_subtokens
-                            )
+                #start_span, end_span = model(
+                #                        b_input_ids,
+                #                        attention_mask=b_attention_mask,
+                #                        token_type_ids=b_token_type_ids,
+                #                        srls = b_srls_idx,
+                #                        device=device,
+                #                        data_type=data_type
+                #                        )
+                #if step % print_stats == 0 and not step == 0:
+                #    elapsed = format_time(time.time() - t0)
+                #    print_preds(
+                #            model,
+                #            data_type,
+                #            b_input_ids[-1],
+                #            b_srls_idx[-1],
+                #            (start_span[-1], end_span[-1]),
+                #            b_labels[-1],
+                #            mapping, step,
+                #            len(train_idcs),
+                #            elapsed,
+                #            merge_subtokens
+                #            )
+                start_span, end_span = outputs
                 start_value_index = [tensor.max(0) for tensor in start_span]
                 end_value_index = [tensor.max(0) for tensor in end_span]
                 start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
@@ -1217,15 +1220,15 @@ def fine_tune_BERT(config):
 
 
             with torch.no_grad():
+                outputs = model(
+                            b_input_ids,
+                            attention_mask=b_attention_mask,
+                            token_type_ids=b_token_type_ids,
+                            srls = b_srls_idx,
+                            device=device,
+                            data_type=data_type
+                            )
                 if not data_type == "qa":
-                    outputs = model(
-                                b_input_ids,
-                                attention_mask=b_attention_mask,
-                                token_type_ids=b_token_type_ids,
-                                srls = b_srls_idx,
-                                device=device,
-                                data_type=data_type
-                                )
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
@@ -1235,14 +1238,15 @@ def fine_tune_BERT(config):
                     for ex in zip(b_ids, preds, gold):
                         dev_results.append(ex)
                 else:
-                    start_span, end_span = model(
-                                        b_input_ids,
-                                        attention_mask=b_attention_mask,
-                                        token_type_ids=b_token_type_ids,
-                                        srls = b_srls_idx,
-                                        device=device,
-                                        data_type=data_type
-                                        )
+                    #start_span, end_span = model(
+                    #                    b_input_ids,
+                    #                    attention_mask=b_attention_mask,
+                    #                    token_type_ids=b_token_type_ids,
+                    #                    srls = b_srls_idx,
+                    #                    device=device,
+                    #                    data_type=data_type
+                    #                    )
+                    start_span, end_span = outputs
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
                     start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
@@ -1295,15 +1299,15 @@ def fine_tune_BERT(config):
             b_srls_idx = model.srl_model.convert_SRLs_to_tensor(b_srls, device)
 
             with torch.no_grad():
+                outputs = model(
+                            b_input_ids,
+                            attention_mask=b_attention_mask,
+                            token_type_ids=b_token_type_ids,
+                            srls = b_srls_idx,
+                            device=device,
+                            data_type=data_type
+                            )
                 if not data_type == "qa":
-                    outputs = model(
-                                b_input_ids,
-                                attention_mask=b_attention_mask,
-                                token_type_ids=b_token_type_ids,
-                                srls = b_srls_idx,
-                                device=device,
-                                data_type=data_type
-                                )
                     value_index = [tensor.max(0) for tensor in outputs]
                     acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
@@ -1313,14 +1317,15 @@ def fine_tune_BERT(config):
                     for ex in zip(b_ids, preds, gold):
                         test_results.append(ex)
                 else:
-                    start_span, end_span = model(
-                                        b_input_ids,
-                                        attention_mask=b_attention_mask,
-                                        token_type_ids=b_token_type_ids,
-                                        srls = b_srls_idx,
-                                        device=device,
-                                        data_type=data_type
-                                        )
+                    #start_span, end_span = model(
+                    #                    b_input_ids,
+                    #                    attention_mask=b_attention_mask,
+                    #                    token_type_ids=b_token_type_ids,
+                    #                    srls = b_srls_idx,
+                    #                    device=device,
+                    #                    data_type=data_type
+                    #                    )
+                    start_span, end_span = outputs
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
                     start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
