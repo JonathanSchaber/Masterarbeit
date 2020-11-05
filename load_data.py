@@ -6,6 +6,17 @@ from torch.utils.data import Dataset
 from transformers import BertTokenizer
 
 
+blue = "\033[94m"
+
+green = "\033[92m"
+
+red = "\033[93m"
+
+end = "\033[0m"
+
+too_long_warning = red + "ATTENTION" + end + ": example too long!"
+
+
 class gliBertDataset(Dataset):
     def __init__(self, x_tensor, y_tensor, attention_masks, token_type_ids, srl, ids):
         assert all(len(obj) == len(x_tensor) for obj in [y_tensor, attention_masks, token_type_ids, srl])
@@ -235,7 +246,7 @@ class Dataloader:
                 if len(self.tokenizer.tokenize(sentence)) + \
                         2 > self.max_length:
                     print("")
-                    print("ATTENTION: example too long!")
+                    print(too_long_warning)
                     print("sentence: {}".format(sentence))
                     continue
                 encoded_dict = self.tokenizer.encode_plus(
@@ -262,7 +273,7 @@ class Dataloader:
                         len(self.tokenizer.tokenize(sentence_2)) + \
                         3 > self.max_length:
                     print("")
-                    print("ATTENTION: example too long!")
+                    print(too_long_warning)
                     print("sentence 1: {}".format(sentence_1))
                     print("sentence 2: {}".format(sentence_2))
                     continue
@@ -293,7 +304,7 @@ class Dataloader:
                         len(self.tokenizer.tokenize(context)) + \
                         3 > self.max_length:
                     print("")
-                    print("ATTENTION: example too long!")
+                    print(too_long_warning)
                     print("question: {}".format(question))
                     print("context: {}".format(context))
                     continue
