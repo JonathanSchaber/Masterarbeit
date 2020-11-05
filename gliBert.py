@@ -975,8 +975,6 @@ def print_preds(model, \
                 token = token + "\t\t" if len(token) < 8 else token + "\t"
                 print_tokens.append(token)
             print("".join(print_tokens))
-        #print("    Text:   {}".format("\t".join(tokens)))
-        #print("    SRLs:  {}".format("\t".join(first_srls)))
         print("    Prediction:  {}".format(mapping[prediction.max(0).indices.item()]))
         print("    True Label:  {}".format(mapping[true_label.item()]))
         print("")
@@ -1136,28 +1134,6 @@ def fine_tune_BERT(config):
                 acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                 loss = criterion(outputs, b_labels)
             else:
-                #start_span, end_span = model(
-                #                        b_input_ids,
-                #                        attention_mask=b_attention_mask,
-                #                        token_type_ids=b_token_type_ids,
-                #                        srls = b_srls_idx,
-                #                        device=device,
-                #                        data_type=data_type
-                #                        )
-                #if step % print_stats == 0 and not step == 0:
-                #    elapsed = format_time(time.time() - t0)
-                #    print_preds(
-                #            model,
-                #            data_type,
-                #            b_input_ids[-1],
-                #            b_srls_idx[-1],
-                #            (start_span[-1], end_span[-1]),
-                #            b_labels[-1],
-                #            mapping, step,
-                #            len(train_idcs),
-                #            elapsed,
-                #            merge_subtokens
-                #            )
                 start_span, end_span = outputs
                 start_value_index = [tensor.max(0) for tensor in start_span]
                 end_value_index = [tensor.max(0) for tensor in end_span]
@@ -1238,14 +1214,6 @@ def fine_tune_BERT(config):
                     for ex in zip(b_ids, preds, gold):
                         dev_results.append(ex)
                 else:
-                    #start_span, end_span = model(
-                    #                    b_input_ids,
-                    #                    attention_mask=b_attention_mask,
-                    #                    token_type_ids=b_token_type_ids,
-                    #                    srls = b_srls_idx,
-                    #                    device=device,
-                    #                    data_type=data_type
-                    #                    )
                     start_span, end_span = outputs
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
@@ -1317,14 +1285,6 @@ def fine_tune_BERT(config):
                     for ex in zip(b_ids, preds, gold):
                         test_results.append(ex)
                 else:
-                    #start_span, end_span = model(
-                    #                    b_input_ids,
-                    #                    attention_mask=b_attention_mask,
-                    #                    token_type_ids=b_token_type_ids,
-                    #                    srls = b_srls_idx,
-                    #                    device=device,
-                    #                    data_type=data_type
-                    #                    )
                     start_span, end_span = outputs
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
