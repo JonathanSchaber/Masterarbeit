@@ -60,16 +60,16 @@ results_df = data.frame(train_loss, dev_loss, test_loss, train_acc, dev_acc, tes
 #results_df$epoch = epoch
 
 g_loss = ggplot(results_df, aes(x=epoch, y=train_loss)) +
-    geom_line(aes(color="Train")) +
-    geom_line(aes(y=dev_loss, color="Dev")) +
-    geom_line(aes(y=test_loss, color="Test")) +
+    geom_line(aes(color="Train"), size=1.0) +
+    geom_line(aes(y=dev_loss, color="Dev"), size=1.0) +
+    geom_line(aes(y=test_loss, color="Test"), size=1.0) +
     ylab("Loss") +
     labs(color = "")
 
 g_acc = ggplot(results_df, aes(x=epoch, y=train_acc)) +
-    geom_line(aes(color="Train")) +
-    geom_line(aes(y=dev_acc, color="Dev")) +
-    geom_line(aes(y=test_acc, color="Test")) +
+    geom_line(aes(color="Train"), size=1.0) +
+    geom_line(aes(y=dev_acc, color="Dev"), size=1.0) +
+    geom_line(aes(y=test_acc, color="Test"), size=1.0) +
     ylab("Accuracy") +
     labs(color = "")
                 
