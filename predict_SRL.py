@@ -8,6 +8,7 @@ from liir.dame.core.representation.Word import Word
 from liir.dame.srl.DSRL import DSRL
 
 from transformers import BertTokenizer
+from typing import List, Tuple
 
 import parzu_class as parzu
 
@@ -16,6 +17,8 @@ import parzu_class as parzu
 
 
 class SRL_predictor:
+    """The class handling parsing and predicting SRLs.
+    """
     def __init__(self, argument_model_config, bert_path):
         self.dsrl = DSRL(argument_model_config)
         self.tokenizer = BertTokenizer.from_pretrained(bert_path)
@@ -71,6 +74,7 @@ class SRL_predictor:
                     else:
                         break
                 merged_sent.append("".join(current_word))
+                
         return merged_sent
 
     def create_ParZu_parser(self):
@@ -84,7 +88,7 @@ class SRL_predictor:
         ParZu = parzu.Parser(options)
         self.parser = ParZu
 
-    def check_if_end_note(self, verb, sentence):
+    def check_if_end_note(self, verb, sentence) -> bool:
         """return True if verb is end note, else False.
         Args:
             param1: list of str
@@ -97,10 +101,12 @@ class SRL_predictor:
             if token[3] == "V" and token[6] == verb[0] and not token[7] in self.subclause_marker:
                 FLAG = False
                 break
+                
         return FLAG
 
-    def parse_text(self, text):
-        """parse sentence and return list of tuples with token and POS-tags
+    def parse_text(self, text: str) -> List[List[Tuple[str, str]]]:
+        """Parse sentence and return list of tuples with token and POS-tags
+        
         Problem: We have to make sure that the tokenization of ParZu matches
         exactly the merged tokenization of BERT, since we need to align (sub-)
         tokens correctly.
@@ -108,8 +114,9 @@ class SRL_predictor:
         predicates on a merged BERT-tokenization of this text -> feed this to
         the DAMESRL.
         TODO: check if performance drops through this!
+        
         Args:
-            param1: text to parse
+            text: text to parse
         Returns:
             list of lists of tuples of strings
         """
@@ -183,13 +190,13 @@ class SRL_predictor:
 
         return tagged_tuple_list
 
-    def predict_semRoles(self, text):
+    def predict_semRoles(self, text: str) -> List[List[List[str]]]:
         """returns list of lists of SRL-tag per token
+        
         Args:
-            param1: DAMESRL DSRL() object
-            param2: DAMESL Text() object
+            text: DAMESRL DSRL() object
         Returns:
-            list of lists of str
+            srl_list: list of Sentences and corresponding Predicate & SRLs
         """
         srl_list = []
 
@@ -218,16 +225,15 @@ class SRL_predictor:
                 for predicate in sent.get_predicates():
                     sent_list.append(predicate.arguments) 
             srl_list.append(sent_list)
+            
         return srl_list
 
 
-    def pretty_print(self, text):
-        """prints pretty predicted semantic roles for a given sentence.
+    def pretty_print(self, text: str):
+        """Prints pretty predicted semantic roles for a given sentence.
+        
         Args:
-            param1: list of lists of lists of strings
-            param2: list of lists of tuples of strings
-        Returns:
-            None
+            text: list of lists of tuples of strings
         """
         srl_list = self.predict_semRoles(text)
         parsed_text = self.parse_text(text)
