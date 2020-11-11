@@ -408,7 +408,8 @@ class BertBase(nn.Module):
         new_batch = []
         for example in batch:
             if not len(example) <= length:
-                import ipdb; ipdb.set_trace()
+                #import ipdb; ipdb.set_trace()
+                example = example[:length][:]
             lst = [example] + [dummy]*(length-len(example))
             tensor = torch.cat(tuple(lst), dim=0) 
             new_batch.append(tensor)
@@ -967,8 +968,8 @@ def print_preds(model, \
         prediction = prediction[-1]
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last prediction: ")
-        if not len(tokens) == len(first_srls):
-            import ipdb; ipdb.set_trace()
+        #if not len(tokens) == len(first_srls):
+        #    import ipdb; ipdb.set_trace()
         for elem in zip(tokens, first_srls, second_srls, third_srls):
             print_tokens = []
             for token in elem:
@@ -1129,6 +1130,7 @@ def fine_tune_BERT(config):
                         elapsed,
                         merge_subtokens
                         )
+                        
             if not data_type == "qa":
                 value_index = [tensor.max(0) for tensor in outputs]
                 acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
@@ -1345,6 +1347,7 @@ def fine_tune_BERT(config):
                         print("")
                         print(red + "  !!! OVERFITTING !!!" + end)
                         print(red + "  Stopping fine-tuning!" + end)
+                        print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
                         break
                     PATIENCE += 1
                     print("")
