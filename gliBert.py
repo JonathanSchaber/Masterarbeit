@@ -265,12 +265,23 @@ class BertBase(nn.Module):
             for sent in example[0]:
                 sentence_idxs.append(example[1][offset:offset+len(sent[0])])
                 offset += len(sent[0])
+            sentence_idxs = [sentence_idx for sentence_idx in sentence_idxs if not len(sentence_idx) == 0]
             for sentence in zip(example[0], sentence_idxs):
                 split_sentence = []
                 for predicate in sentence[0]:
-                    assert len(predicate) == len(sentence[1])
+                    # now not anymore the case since cut-off - instead cut off - handle below
+                    #assert len(predicate) == len(sentence[1])
+                    #if not len(predicate) == len(sentence[1]):
+                    #    # this means the original sentence has been chopped due to max_length parameter
+                    #    assert len(predicate) > len(sentence[1])
+                    #    new_predicate = []
+                    #    for i, srl in enumerate(predicate[:len(sentence[1])]):
+                    #        copies = [srl]*sentence[1][i]
+                    #        for copy in copies:
+                    #            new_predicate.append(copy)
+                    #    assert len(new_predicate) == sum(sentence[1])
                     new_predicate = []
-                    for i, srl in enumerate(predicate):
+                    for i, srl in enumerate(predicate[:len(sentence[1])]):
                         copies = [srl]*sentence[1][i]
                         for copy in copies:
                             new_predicate.append(copy)
@@ -1042,6 +1053,7 @@ def fine_tune_BERT(config):
     data_type = dataloader(config, location, data_set)
     mapping = {value: key for (key, value) in mapping.items()} if mapping else None
 
+    global model
     model = bert_head(config, num_classes, max_len)
     train_idcs = batch_idcs(len(train_data), batch_size)
     dev_idcs = batch_idcs(len(dev_data), batch_size)
@@ -1081,7 +1093,7 @@ def fine_tune_BERT(config):
     training_stats.append(config)
     results = []
     total_t0 = time.time()
-    PATIENCE = 0
+    patience = 0
 
     for epoch_i in range(0, epochs):
         print("")
@@ -1097,6 +1109,7 @@ def fine_tune_BERT(config):
         model.train()
         for step, idcs in enumerate(train_idcs):
             batch = train_data[idcs[0]:idcs[1]]
+            global b_input_ids
             b_input_ids = batch[0].to(device)
             b_labels = batch[1].to(device)
             b_attention_mask = batch[2].to(device)
@@ -1327,7 +1340,7 @@ def fine_tune_BERT(config):
                 "Train Time": train_time,
                 "Dev Time": dev_time,
                 "Test Time": test_time,
-                "patience": PATIENCE
+                "patience": patience
             }
         )
 
@@ -1343,21 +1356,21 @@ def fine_tune_BERT(config):
         if config["early_stopping"]:
             if epoch_i > 0:
                 if training_stats[-2]["Dev Loss"] < training_stats[-1]["Dev Loss"]:
-                    if PATIENCE > 4:
+                    if patience > 4:
                         print("")
                         print(red + "  !!! OVERFITTING !!!" + end)
                         print(red + "  Stopping fine-tuning!" + end)
                         print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
                         break
-                    PATIENCE += 1
+                    patience += 1
                     print("")
                     print(
                         red + \
-                        "Attention: Development loss increased for the {} time in series...".format(PATIENCE) + \
+                        "Attention: Development loss increased for the {} time in series...".format(patience) + \
                         end
                         )
                 else:
-                    PATIENCE = 0
+                    patience = 0
 
     if stats_file: write_stats(stats_file, training_stats, results)
     print("")
