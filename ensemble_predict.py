@@ -3,10 +3,11 @@ import json
 import subprocess
 
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 
 download_file = "scp jschaber@rattle.ifi.uzh.ch:~/MA/results/{} /home/joni/Documents/Uni/Master/Computerlinguistik/20HS_Masterarbeit/Masterarbeit/results/"
+
 
 def parse_cmd_args():
     """Parse command line arguments.
@@ -25,8 +26,7 @@ def parse_cmd_args():
     return parser.parse_args()
 
 
-#def read_in_files(files: List[str]) -> List[Tuple[List[Dict[str, float]]], Tuple[List[Dict[str, float]]]]:
-def read_in_files(files):
+def read_in_files(files: List[str]) -> "Statsfile":
     """Reads in the files, return json-loaded objects
     Args:
         files: list of n stats-files
@@ -65,7 +65,7 @@ def read_in_files(files):
     return json_files
 
 
-def get_best_epoch(stats_file):
+def get_best_epoch(stats_file) -> Tuple[int, float, float]:
     """Find the best epoch according to Dev Accuracy
     Args:
         stats_file: json-file of all epoch results
@@ -125,6 +125,37 @@ def compute_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
             false += 1
 
     return true / (true + false)
+
+
+def check_configs(stat_files: "Statsfile") -> Optional[bool]:
+    """Checks stat files for inconsistencies
+    """
+    rel_params = {
+        "batch_size": [],
+        "merge_subtokens": [],
+        "max_length": [],
+        "bert_head": [],
+        "combine_SRLs": [],
+        "zeros": [],
+        "embedding_dim": [],
+        "gru_hidden_size": [],
+        "head_hidden_size": [],
+        "num_layers": [],
+        "bias": [],
+        "bidirectional": [],
+        "early_stopping": [],
+        "dropout": [],
+        "gru_dropout": []
+    }
+    if not len(set([dset[0][0]["data set"] for dset in stat_files])) == 1:
+        print("ATTENTION: Not the same data sets for all files! Aborting.")
+        return False
+    for i, stat_file in enumerate(stat_files):
+        for param in rel_params:
+            rel_params[param].append(stat_file[0][1][param])
+        if not len(set([len(set(val)) for val in rel_params.values()])) == 1:
+            print("ATTENTION: Inconsistencies found after the {}th file. Aborting.".format(i))
+            return False
     
  
 def main():
@@ -140,6 +171,9 @@ def main():
     ensemble_results = []
     dev_dict, dev_gold_dict, test_dict, test_gold_dict = {}, {}, {}, {}
     mean_dev_accur, mean_test_accur = 0, 0
+
+    if check_configs(jsons) == False:
+        return
     
     for i, file_pair in enumerate(jsons):
             stats_file, results_file = file_pair
