@@ -28,6 +28,7 @@ def parse_cmd_args():
 
 def read_in_files(files: List[str]) -> "Statsfile":
     """Reads in the files, return json-loaded objects
+    
     Args:
         files: list of n stats-files
     Returns:
@@ -67,6 +68,7 @@ def read_in_files(files: List[str]) -> "Statsfile":
 
 def get_best_epoch(stats_file) -> Tuple[int, float, float]:
     """Find the best epoch according to Dev Accuracy
+    
     Args:
         stats_file: json-file of all epoch results
     Returns:
@@ -90,6 +92,7 @@ def get_best_epoch(stats_file) -> Tuple[int, float, float]:
 
 def build_dicts(results: Tuple[List[List[str]]], target_dict: Dict[str, List[str]], target_gold_dict: Dict[str, str]) -> None:
     """build dictionaries; one with all preds, one gold
+    
     Args:
         results: dictionary of pred, golds of best epoch
         target_dict: dictionary for collecting all predictions
@@ -129,6 +132,10 @@ def compute_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
 
 def check_configs(stat_files: "Statsfile") -> Optional[bool]:
     """Checks stat files for inconsistencies
+
+    Args:
+        stat_files: List of opened .json files
+    Returns: False if check fails, else None
     """
     rel_params = {
         "batch_size": [],
