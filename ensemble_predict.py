@@ -163,6 +163,7 @@ def check_configs(stat_files: "Statsfile") -> Optional[bool]:
         if not len(set([len(set(val)) for val in rel_params.values()])) == 1:
             print("ATTENTION: Inconsistencies found after the {}th file. Aborting.".format(i))
             return False
+    return True
     
  
 def main():
@@ -179,7 +180,7 @@ def main():
     dev_dict, dev_gold_dict, test_dict, test_gold_dict = {}, {}, {}, {}
     mean_dev_accur, mean_test_accur = 0, 0
 
-    if check_configs(jsons) == False:
+    if not check_configs(jsons):
         return
     
     for i, file_pair in enumerate(jsons):
