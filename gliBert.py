@@ -269,17 +269,14 @@ class BertBase(nn.Module):
             for sentence in zip(example[0], sentence_idxs):
                 split_sentence = []
                 for predicate in sentence[0]:
-                    # now not anymore the case since cut-off - instead cut off - handle below
+                    ## now not anymore the case since cut-off - instead cut off - handle below
                     #assert len(predicate) == len(sentence[1])
-                    #if not len(predicate) == len(sentence[1]):
-                    #    # this means the original sentence has been chopped due to max_length parameter
-                    #    assert len(predicate) > len(sentence[1])
-                    #    new_predicate = []
-                    #    for i, srl in enumerate(predicate[:len(sentence[1])]):
-                    #        copies = [srl]*sentence[1][i]
-                    #        for copy in copies:
-                    #            new_predicate.append(copy)
-                    #    assert len(new_predicate) == sum(sentence[1])
+                    #new_predicate = []
+                    #for i, srl in enumerate(predicate[:len(sentence[1])]):
+                    #    copies = [srl]*sentence[1][i]
+                    #    for copy in copies:
+                    #        new_predicate.append(copy)
+                    #assert len(new_predicate) == sum(sentence[1])
                     new_predicate = []
                     for i, srl in enumerate(predicate[:len(sentence[1])]):
                         copies = [srl]*sentence[1][i]
@@ -379,6 +376,7 @@ class BertBase(nn.Module):
             one_b = self.concatenate_sents(b_srls)
             one_b = self.add_spec_srl(one_b, "[SEP]")
             one_sent = self.concatenate_sent1_sent2(one_a, one_b)
+            #import ipdb; ipdb.set_trace()
             #print(one_sent[0][0][0].tolist())
             #print(one_sent[0][0][1].tolist())
             #print(one_sent[0][0][2].tolist())
@@ -412,8 +410,14 @@ class BertBase(nn.Module):
         
 
     def pad_SRLs(self, batch, dummy, length=None):
-        """
-        Pad a batch of token SRLs to tokenized batch
+        """Pad a batch of token SRLs to tokenized batch
+
+        Args:
+            batch: the batch list of SRLs
+            dummy: the dummy-SRL (all 0.0)
+            length: only used when something cut of ([CLS] sometimes e.g.)
+        Returns:
+            new_batch: same dims as input
         """
         length = self.max_len if length == None else length
         new_batch = []
@@ -430,18 +434,19 @@ class BertBase(nn.Module):
         return new_batch
 
     def reconstruct_word_level(self, batch, ids, device="cpu"):
-        """method for joining subtokenized words back to word level
-        The idea is to average subtoken embeddings.
-        To preserve original length, append last subtoken-embedding (which
-        is per definition [PAD] since padding + 1 of max-length) until original
-        length is reached.
+        """Method for joining subtokenized words back to word level.
+        The strategy is to average subtoken embeddings.
+        To preserve original length, append non-informative zero vector until
+        original length of sequence is reached.
 
         Args:
-            param1: torch.tensor embeddings of subtokens
-            param2: torch.tensor indices of subtokens
+            batch: torch.tensor embeddings of subtokens
+            ids: torch.tensor indices of subtokens
+            decive: CPU/GPU
         Returns:
-            torch.tensor of same input dimensions with averaged embeddings
+            return_batch: torch.tensor of same input dimensions with averaged embeddings
                         for subtokens
+            ab_batch_idx: split idx used when contrary needs to be done: SLRs splitting
         """
         pad_token = torch.tensor([0.]*768).to(device)
         word_level_batch = []
