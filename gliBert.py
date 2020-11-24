@@ -160,15 +160,18 @@ class SRL_Encoder(nn.Module):
                             bidirectional=self.config["bidirectional"]
                         )
                         
-    def convert_SRLs_to_tensor(self, lst, device="cpu"):
+    def convert_SRLs_to_tensor(
+            self,
+            lst: List[List[List[List[List[str]]]]],
+            device: str="cpu") -> List[List[List[List["torch.Tensor"]]]]:
         """
         turns a nested list of SRLs into a list of tensors of indices of SRLs
+        
         Args:
-            mapping: dict    mapping of SRLs to indices
-            lst: list[list[list[list[list]]]]    batch:AB:sentences:predicates:SRLs
+            lst: batch:AB:sentences:predicates:SRLs
             device: torch.device
-        Return:
-            list[list[list[list[torch.tensor]]]]
+        Returns:
+            input lst with last list converted to torch.Tensor
         """
         new_lst = []
         for batch in lst:
@@ -187,7 +190,7 @@ class SRL_Encoder(nn.Module):
             
         return new_lst
 
-    def forward(self, tokens: List["torch.tensor"]) -> List["torch.tensor"]:
+    def forward(self, tokens: List["torch.Tensor"]) -> List["torch.Tensor"]:
         """Forward pass - actual embedding
         
         Args:
