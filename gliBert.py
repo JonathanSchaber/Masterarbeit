@@ -230,6 +230,7 @@ class BertBase(nn.Module):
     @staticmethod
     def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
         """Set all probabilities up to start span to -inf for end spans.
+        
         Args:
             param1: tensor[tensor]
             param2: tensor[tensor]
@@ -250,7 +251,9 @@ class BertBase(nn.Module):
         return torch.stack(new_batch_tensor)
 
     @staticmethod
-    def split_SRLs_to_subtokens(batch_srls, batch_idxs):
+    def split_SRLs_to_subtokens(
+            batch_srls: List[List[List["torch.Tensor"]]],
+            batch_idxs: List[List[int]]) -> List[List[List["torch.Tensor"]]]:
         """Method for splitting SRLs to BERT subtokens
 
         Args:
@@ -272,10 +275,10 @@ class BertBase(nn.Module):
             for sentence in zip(example[0], sentence_idxs):
                 split_sentence = []
                 for predicate in sentence[0]:
-                    ## now not anymore the case since cut-off - instead cut off - handle below
+                    ## now not anymore the case since cut-off - handle below
                     #assert len(predicate) == len(sentence[1])
                     #new_predicate = []
-                    #for i, srl in enumerate(predicate[:len(sentence[1])]):
+                    #for i, srl in enumerate(predicate):
                     #    copies = [srl]*sentence[1][i]
                     #    for copy in copies:
                     #        new_predicate.append(copy)
