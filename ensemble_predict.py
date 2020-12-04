@@ -23,10 +23,16 @@ def parse_cmd_args():
             nargs="+",
             help="List of results files for ensemble prediciton"
             )
+    parser.add_argument(
+            "-d", 
+            "--delete_result_files",
+            action="store_true",
+            help="Clean up results.json-files"
+            )
     return parser.parse_args()
 
 
-def read_in_files(files: List[str]) -> "Statsfile":
+def read_in_files(files: List[str], delete_results: bool) -> "Statsfile":
     """Reads in the files, return json-loaded objects
     
     Args:
@@ -35,6 +41,7 @@ def read_in_files(files: List[str]) -> "Statsfile":
         json_files: json-loaded stats and corresponding results files
     
     """
+    global args
     json_files = []
     
     for file in files:
@@ -62,6 +69,8 @@ def read_in_files(files: List[str]) -> "Statsfile":
             with open(res_file, "r") as f:
                 results_file = json.loads(f.read())
             json_files.append((stats_file, results_file))
+            if delete_results:
+                subprocess.run(["rm", res_file])
 
     return json_files
 
@@ -186,7 +195,7 @@ def main():
     args = parse_cmd_args()
     files = args.result_files
     #print(files)
-    jsons = read_in_files(files)
+    jsons = read_in_files(files, args.delete_result_files)
     if not jsons:
         print("There was some error reading in the JSON files. Aborting")
         return
