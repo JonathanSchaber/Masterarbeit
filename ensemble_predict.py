@@ -90,6 +90,22 @@ def get_best_epoch(stats_file) -> Tuple[int, float, float]:
     return best_epoch, best_dev, best_test
 
 
+def get_true_best_dev_epoch(stats_file):
+    best_epoch = 0
+    best_dev_acc = 0.0
+    
+    for i in range(1, len(stats_file)):
+        dict_pred, dict_lab = {}, {}
+        build_dicts(stats_file[i][str(i)]["dev"], dict_pred, dict_lab)
+        dict_pred = {key: value[0] for key, value in dict_pred.items()}
+        acc = compute_acc(dict_pred, dict_lab)
+        if acc > best_dev_acc:
+            best_epoch = i
+            best_dev_acc = acc
+
+    return best_epoch, best_dev_acc
+
+
 def build_dicts(results: Tuple[List[List[str]]], target_dict: Dict[str, List[str]], target_gold_dict: Dict[str, str]) -> None:
     """build dictionaries; one with all preds, one gold
     
@@ -186,17 +202,26 @@ def main():
     for i, file_pair in enumerate(jsons):
             stats_file, results_file = file_pair
             best_epoch, best_dev, best_test = get_best_epoch(stats_file)
-            mean_dev_accur += best_dev
-            mean_test_accur += best_test
             print("")
             print("Info for file {}:".format(Path(files[i]).name))
             print("Best epoch: {}".format(best_epoch))
             print("Best dev accuracy: {0:.4f}".format(best_dev))
             print("Best test accuracy: {0:.4f}".format(best_test))
+            print(20*"~")
+            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file)
+            a, b = build_dicts(results_file[true_best_epoch][str(true_best_epoch)]["test"], {}, {})
+            a = {k: v[0] for k, v in a.items()}
+            true_best_test = compute_acc(a, b)
+            print("True best epoch: {}".format(true_best_epoch))
+            print("True best dev accuracy: {0:.4f}".format(true_best_dev))
+            print("True best test accuracy: {0:.4f}".format(true_best_test))
             print("")
-            dev = results_file[best_epoch][str(best_epoch)]["dev"]    
-            test = results_file[best_epoch][str(best_epoch)]["test"]
+                                    
+            dev = results_file[true_best_epoch][str(true_best_epoch)]["dev"]    
+            test = results_file[true_best_epoch][str(true_best_epoch)]["test"]
             ensemble_results.append((dev, test))
+            mean_dev_accur += true_best_dev
+            mean_test_accur += true_best_test
 
     print("")
     print("==== MEAN PERFORMANCE ====")
@@ -211,6 +236,7 @@ def main():
     for results in ensemble_results:
         dev_res, test_res = results
 
+        #import ipdb; ipdb.set_trace()
         build_dicts(dev_res, dev_dict, dev_gold_dict)
         build_dicts(test_res, test_dict, test_gold_dict)
         
