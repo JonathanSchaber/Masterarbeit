@@ -9,6 +9,7 @@ import numpy as np
 
 from load_data import Dataloader, dataloader
 from torch import nn
+from torch.optim import Adadelta
 from transformers import (
         AdamW,
         BertModel,
@@ -227,28 +228,28 @@ class SRL_Encoder(nn.Module):
 class BertBase(nn.Module):
     """The Base model class from which all inherit
     """
-    @staticmethod
-    def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
-        """Set all probabilities up to start span to -inf for end spans.
-        
-        Args:
-            param1: tensor[tensor]
-            param2: tensor[tensor]
-        Returns:
-            tensor[tensor]
-        """
-        new_batch_tensor = []
-        
-        for i, end_tensor in enumerate(batch_end_tensor):
-            start_index = batch_start_tensor[i].max(0).indices.item()
-            new_end_tensor = torch.cat(
-                                tuple([
-                                    torch.tensor([float("-inf")]*start_index).to(device),
-                                    end_tensor[start_index:]])
-                                )
-            new_batch_tensor.append(new_end_tensor)
+    #@staticmethod
+    #def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
+    #    """Set all probabilities up to start span to -inf for end spans.
+    #    
+    #    Args:
+    #        param1: tensor[tensor]
+    #        param2: tensor[tensor]
+    #    Returns:
+    #        tensor[tensor]
+    #    """
+    #    new_batch_tensor = []
+    #    
+    #    for i, end_tensor in enumerate(batch_end_tensor):
+    #        start_index = batch_start_tensor[i].max(0).indices.item()
+    #        new_end_tensor = torch.cat(
+    #                            tuple([
+    #                                torch.tensor([float("-inf")]*start_index).to(device),
+    #                                end_tensor[start_index:]])
+    #                            )
+    #        new_batch_tensor.append(new_end_tensor)
 
-        return torch.stack(new_batch_tensor)
+    #    return torch.stack(new_batch_tensor)
 
     @staticmethod
     def _split_SRLs_to_subtokens(
@@ -982,16 +983,18 @@ def format_time(elapsed):
 
 def compute_acc(preds, labels):
     """computes the accordance of two lists
+    
     Args:
-        param1: list
-        param2: list
+        preds: list
+        labels: list
     Returns:
-        float
+        accuracy
     """
     correct = 0
     assert len(preds) == len(labels)
     for pred, lab in zip(preds, labels):
         if pred == lab: correct += 1
+
     return correct / len(preds)
 
 
@@ -1018,7 +1021,7 @@ def print_preds(model, \
     if not data_type == "qa":
         prediction = prediction[-1]
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
-        print("  Last prediction: ")
+        print("  Last example: ")
         #if not len(tokens) == len(first_srls):
         #    import ipdb; ipdb.set_trace()
         for elem in zip(tokens, first_srls, second_srls, third_srls):
@@ -1038,20 +1041,16 @@ def print_preds(model, \
         question = ex[:sep_index].replace("[CLS] ", "")
         context = ex[sep_index:].replace("[SEP] ", "").replace("[PAD]", "").strip()
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
-        print("  Last prediction: ")
+        print("  Last example: ")
         print("    Context:   {}".format(context))
         print("    Question:   {}".format(question))
         if not merge:
             sentence = model.tokenizer.tokenize(
-                                model.tokenizer.decode(
-                                    example
-                                    )
+                                model.tokenizer.decode(example)
                                 )
         else:
             sentence = merge_subs(model.tokenizer.tokenize(
-                                model.tokenizer.decode(
-                                    example
-                                    )
+                                model.tokenizer.decode(example)
                                 ))
         prediction = sentence[start_span.max(0).indices.item():end_span.max(0).indices.item()+1] 
         true_span = sentence[true_label.select(0, 0).item():true_label.select(0, 1).item()+1]
@@ -1073,6 +1072,7 @@ def batch_idcs(len_dataset, batch_size):
 
 def fine_tune_BERT(config):
     """Define fine-tuning procedure, write results to file.
+    
     Args:
         config: dictionary specifying hyper params
     """
@@ -1118,7 +1118,7 @@ def fine_tune_BERT(config):
 
     optimizer = AdamW(
             model.parameters(),
-            lr = 2e-5,
+            lr = 5e-5,
             eps = 1e-8
         )
 
@@ -1238,6 +1238,12 @@ def fine_tune_BERT(config):
 
         total_dev_accuracy = 0
         total_dev_loss = 0
+        all_preds = []
+        all_labels = []
+        all_pred_starts = []
+        all_pred_ends = []
+        all_label_starts = []
+        all_label_ends = []
 
         for idcs in dev_idcs:
             batch = dev_data[idcs[0]:idcs[1]]
@@ -1261,7 +1267,9 @@ def fine_tune_BERT(config):
                             )
                 if not data_type == "qa":
                     value_index = [tensor.max(0) for tensor in outputs]
-                    acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
+                    all_preds.append([maxs.indices for maxs in value_index])
+                    all_labels.append(b_labels)
+                    #acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
 
                     preds = [mapping[maxs.indices.tolist()] for maxs in value_index]
@@ -1272,9 +1280,13 @@ def fine_tune_BERT(config):
                     start_span, end_span = outputs
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
-                    start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
-                    end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
-                    acc = (start_acc + end_acc) / 2
+                    all_pred_starts.append([maxs.indices for maxs in start_value_index])
+                    all_pred_ends.append([maxs.indices for maxs in end_value_index])
+                    all_label_starts.append(b_labels.select(1, 0))
+                    all_label_ends.append(b_labels.select(1, 1))
+                    #start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
+                    #end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
+                    #acc = (start_acc + end_acc) / 2
                     start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
@@ -1287,14 +1299,21 @@ def fine_tune_BERT(config):
 
 
             total_dev_loss += loss.item()
-            total_dev_accuracy += acc
-
-        avg_dev_accuracy = total_dev_accuracy / len(dev_idcs)
+            #total_dev_accuracy += acc
+            
+        flatten = lambda ls: [item for batch in ls for item in batch]
+        if data_type == "qa":
+            start_acc = compute_acc(flatten(all_pred_starts), flatten(all_label_starts))
+            end_acc = compute_acc(flatten(all_pred_ends), flatten(all_label_ends))
+            avg_dev_accuracy = (start_acc + end_acc) / 2
+        else:
+            avg_dev_accuracy = compute_acc(flatten(all_preds), flatten(all_labels))
+        #avg_dev_accuracy = total_dev_accuracy / len(dev_idcs)
         avg_dev_loss = total_dev_loss / len(dev_idcs)
         dev_time = format_time(time.time() - t0)
 
         print("")
-        print("  Average Dev Accuracy: {0:.2f}".format(avg_dev_accuracy))
+        print("  Dev Accuracy: {0:.2f}".format(avg_dev_accuracy))
         print("  Average Dev Loss: {0:.2f}".format(avg_dev_loss))
         print("  Dev epoch took: {:}".format(dev_time))
 
@@ -1310,6 +1329,12 @@ def fine_tune_BERT(config):
 
         total_test_accuracy = 0
         total_test_loss = 0
+        all_preds = []
+        all_labels = []
+        all_pred_starts = []
+        all_pred_ends = []
+        all_label_starts = []
+        all_label_ends = []
 
         for idcs in test_idcs:
             batch = test_data[idcs[0]:idcs[1]]
@@ -1332,7 +1357,9 @@ def fine_tune_BERT(config):
                             )
                 if not data_type == "qa":
                     value_index = [tensor.max(0) for tensor in outputs]
-                    acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
+                    all_preds.append([maxs.indices for maxs in value_index])
+                    all_labels.append(b_labels)
+                    #acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
                     loss = criterion(outputs, b_labels)
 
                     preds = [mapping[maxs.indices.tolist()] for maxs in value_index]
@@ -1343,9 +1370,13 @@ def fine_tune_BERT(config):
                     start_span, end_span = outputs
                     start_value_index = [tensor.max(0) for tensor in start_span]
                     end_value_index = [tensor.max(0) for tensor in end_span]
-                    start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
-                    end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
-                    acc = (start_acc + end_acc) / 2
+                    all_pred_starts.append([maxs.indices for maxs in start_value_index])
+                    all_pred_ends.append([maxs.indices for maxs in end_value_index])
+                    all_label_starts.append(b_labels.select(1, 0))
+                    all_label_ends.append(b_labels.select(1, 1))
+                    #start_acc = compute_acc([maxs.indices for maxs in start_value_index], b_labels.select(1, 0))
+                    #end_acc = compute_acc([maxs.indices for maxs in end_value_index], b_labels.select(1, 1))
+                    #acc = (start_acc + end_acc) / 2
                     start_loss = criterion(start_span, torch.unsqueeze(b_labels.select(1, 0), -1))
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
@@ -1357,14 +1388,21 @@ def fine_tune_BERT(config):
                         test_results.append(ex)
 
             total_test_loss += loss.item()
-            total_test_accuracy += acc
+            #total_test_accuracy += acc
 
-        avg_test_accuracy = total_test_accuracy / len(test_idcs)
+        flatten = lambda ls: [item for batch in ls for item in batch]
+        if data_type == "qa":
+            start_acc = compute_acc(flatten(all_pred_starts), flatten(all_label_starts))
+            end_acc = compute_acc(flatten(all_pred_ends), flatten(all_label_ends))
+            avg_test_accuracy = (start_acc + end_acc) / 2
+        else:
+            avg_test_accuracy = compute_acc(flatten(all_preds), flatten(all_labels))
+        #avg_test_accuracy = total_test_accuracy / len(test_idcs)
         avg_test_loss = total_test_loss / len(test_idcs)
         test_time = format_time(time.time() - t0)
 
         print("")
-        print("  Average Test Accuracy: {0:.2f}".format(avg_test_accuracy))
+        print("  Test Accuracy: {0:.2f}".format(avg_test_accuracy))
         print("  Average Test Loss: {0:.2f}".format(avg_test_loss))
         print("  Test epoch took: {:}".format(test_time))
 
@@ -1395,7 +1433,7 @@ def fine_tune_BERT(config):
 
         if config["early_stopping"]:
             if epoch_i > 0:
-                if training_stats[-2]["Dev Loss"] < training_stats[-1]["Dev Loss"]:
+                if training_stats[-2]["Dev Loss"] <= training_stats[-1]["Dev Loss"]:
                     if patience > 4:
                         print("")
                         print(red + "  !!! OVERFITTING !!!" + end)
