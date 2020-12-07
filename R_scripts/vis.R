@@ -27,7 +27,9 @@ names(data) <- c("type","length")
 data$type <- factor(data$type)
 
 # plot ggplot object
-g <- ggplot(data,aes(x=type,y=length,fill=type)) +
+#g <- ggplot(data,aes(x=type,y=length,fill=type)) +
+# When having «normal» DF
+g <- ggplot(stack(data),aes(x=ind,y=values, fill=ind)) +
   stat_boxplot(
     geom = "errorbar", width = 0.3,
     position = position_dodge(width = 1)
