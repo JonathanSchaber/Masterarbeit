@@ -405,8 +405,8 @@ class BertBase(nn.Module):
         if data_type != 1:
             a_srls, b_srls = self._get_AB_SRLs(srls)
             if not self.config["merge_subtokens"]:
-                a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                 self._split_SRLs_to_subtokens(b_srls, split_idxs[1]) 
+                a_srls, b_srls = (self._split_SRLs_to_subtokens(a_srls, split_idxs[0]),
+                                 self._split_SRLs_to_subtokens(b_srls, split_idxs[1])) 
             one_a = self._concatenate_sents(a_srls)
             one_a = self._add_spec_srl(one_a, "[CLS]")
             one_b = self._concatenate_sents(b_srls)
@@ -998,15 +998,15 @@ def compute_acc(preds, labels):
     return correct / len(preds)
 
 
-def print_preds(model, \
-                data_type, \
-                example, \
-                srls, \
-                prediction, \
-                true_label, \
-                mapping, \
-                step, \
-                len_data, \
+def print_preds(model,
+                data_type,
+                example,
+                srls,
+                prediction,
+                true_label,
+                mapping,
+                step,
+                len_data,
                 elapsed, merge):
     reverse_dict = {value: key for key, value in model.srl_model.dictionary.items()}
     first_srls = [predicate[0].tolist() for sentence in srls for predicate in sentence]
@@ -1291,7 +1291,7 @@ def fine_tune_BERT(config):
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
 
-                    preds = zip([x.indices.item() for x in start_value_index], \
+                    preds = zip([x.indices.item() for x in start_value_index],
                                 [x.indices.item() for x in end_value_index])
                     gold = [tuple(x.tolist()) for x in b_labels]
                     for ex in zip(b_ids, preds, gold):
@@ -1381,7 +1381,7 @@ def fine_tune_BERT(config):
                     end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                     loss = (start_loss + end_loss) / 2
 
-                    preds = zip([x.indices.item() for x in start_value_index], \
+                    preds = zip([x.indices.item() for x in start_value_index],
                                 [x.indices.item() for x in end_value_index])
                     gold = [tuple(x.tolist()) for x in b_labels]
                     for ex in zip(b_ids, preds, gold):
@@ -1443,8 +1443,8 @@ def fine_tune_BERT(config):
                     patience += 1
                     print("")
                     print(
-                        red + \
-                        "Attention: Development loss increased for the {} time in series...".format(patience) + \
+                        red +
+                        "Attention: Development loss increased for the {} time in series...".format(patience) +
                         end
                         )
                 else:
