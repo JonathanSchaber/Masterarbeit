@@ -79,30 +79,30 @@ class Dataloader:
         self.dataset_test = None
 
     @staticmethod
-    def merge_subs(subtoken_list): 
+    def merge_subs(subtoken_list):
         """merges a sub-tokenized sentence back to token level (without special tokens).
         Args:
             param1: list
         Returns:
             list
         """
-        token_list = [] 
-        for i, token in enumerate(subtoken_list): 
-            if token.startswith("##"): 
-                continue 
-            elif i + 1 == len(subtoken_list): 
-                token_list.append(token) 
-            elif not subtoken_list[i+1].startswith("##"): 
-                token_list.append(token) 
-            else: 
-                current_word = [token] 
-                for subtoken in subtoken_list[i+1:]: 
-                    if subtoken.startswith("##"): 
-                        current_word.append(subtoken.lstrip("##")) 
-                    else: 
-                        break 
-                token_list.append("".join(current_word)) 
-        return token_list  
+        token_list = []
+        for i, token in enumerate(subtoken_list):
+            if token.startswith("##"):
+                continue
+            elif i + 1 == len(subtoken_list):
+                token_list.append(token)
+            elif not subtoken_list[i+1].startswith("##"):
+                token_list.append(token)
+            else:
+                current_word = [token]
+                for subtoken in subtoken_list[i+1:]:
+                    if subtoken.startswith("##"):
+                        current_word.append(subtoken.lstrip("##"))
+                    else:
+                        break
+                token_list.append("".join(current_word))
+        return token_list
 
     def check_max_length(self, *sent_lengths):
         """Ensure that the maxium length is below threshold
@@ -139,12 +139,12 @@ class Dataloader:
                     srl_sentence_2 = row[0], row[1], row[2], row[3], row[4], row[5], row[6]
                     srl_sentence_1 = eval(srl_sentence_1)
                     srl_sentence_2 = eval(srl_sentence_2)
-                    data.append((instance_id, \
-                                    label, \
-                                    blank, \
-                                    sentence_1, \
-                                    sentence_2, \
-                                    srl_sentence_1, \
+                    data.append((instance_id,
+                                    label,
+                                    blank,
+                                    sentence_1,
+                                    sentence_2,
+                                    srl_sentence_1,
                                     srl_sentence_2
                                     ))
                 elif self.type == "qa":
@@ -169,12 +169,16 @@ class Dataloader:
                         end_span = start_span + len(self.merge_subs(self.tokenizer.tokenize(text))) - 1
                     start_span += len_question + 1
                     end_span += len_question + 1
-                    data.append((instance_id, \
-                                    start_span, \
-                                    end_span, \
-                                    question, \
-                                    context, \
-                                    srl_question, \
+                    # if end span is not in BERTable sequence length -> omit
+                    if end_span > 512 - (len_question + 2):
+                        print(too_long_warning, "\tend span: {}".format(end_span), "\tid:", instance_id, "\tSkipping.")
+                        continue
+                    data.append((instance_id,
+                                    start_span,
+                                    end_span,
+                                    question,
+                                    context,
+                                    srl_question,
                                     srl_context
                                     ))
 
@@ -211,21 +215,21 @@ class Dataloader:
                                 self.ids_test
                                 )
 
-    def get_max_len(self):
+    def _get_max_len(self):
         if self.type == 2 or self.type == "qa":
-            longest_sentence_1_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
-            longest_sentence_2_train = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_train]) 
-            longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
-            longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_dev]) 
-            longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
-            longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_test]) 
+            longest_sentence_1_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train])
+            longest_sentence_2_train = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_train])
+            longest_sentence_1_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev])
+            longest_sentence_2_dev = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_dev])
+            longest_sentence_1_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test])
+            longest_sentence_2_test = max([len(self.tokenizer.tokenize(sent[4])) for sent in self.data_test])
             longest_sentence_1 = max(longest_sentence_1_train, longest_sentence_1_dev, longest_sentence_1_test)
             longest_sentence_2 = max(longest_sentence_2_train, longest_sentence_2_dev, longest_sentence_2_test)
             return self.check_max_length(longest_sentence_1, longest_sentence_2)
         else:
-            longest_sent_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train]) 
-            longest_sent_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev]) 
-            longest_sent_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test]) 
+            longest_sent_train = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_train])
+            longest_sent_dev = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_dev])
+            longest_sent_test = max([len(self.tokenizer.tokenize(sent[3])) for sent in self.data_test])
             return self.check_max_length(max(longest_sent_train, longest_sent_dev, longest_sent_test))
 
     def load_torch_data(self, data):
@@ -236,7 +240,7 @@ class Dataloader:
         srl = []
         ids = []
 
-        self.max_len = self.get_max_len()
+        self.max_len = self._get_max_len()
 
         if self.type == 1:
             for example in data:
@@ -248,14 +252,14 @@ class Dataloader:
                 #    print("sentence: {}".format(sentence))
                 #    continue
                 encoded_dict = self.tokenizer.encode_plus(
-                                            sentence, 
-                                            add_special_tokens = True, 
-                                            max_length = self.max_len,
-                                            pad_to_max_length = True, 
-                                            truncation = True, 
-                                            return_tensors = 'pt',
-                                            return_token_type_ids = True,
-                                            return_attention_mask = True
+                                            sentence,
+                                            add_special_tokens=True,
+                                            max_length=self.max_len,
+                                            pad_to_max_length=True,
+                                            truncation=True,
+                                            return_tensors='pt',
+                                            return_token_type_ids=True,
+                                            return_attention_mask=True
                                             )
                 input_ids.append(encoded_dict["input_ids"])
                 attention_mask.append(encoded_dict["attention_mask"])
@@ -276,15 +280,15 @@ class Dataloader:
                 #    print("sentence 2: {}".format(sentence_2))
                 #    continue
                 encoded_dict = self.tokenizer.encode_plus(
-                                            sentence_1, 
+                                            sentence_1,
                                             sentence_2,
-                                            add_special_tokens = True, 
-                                            max_length = self.max_len,
-                                            pad_to_max_length = True, 
-                                            truncation = True, 
-                                            return_tensors = 'pt',
-                                            return_token_type_ids = True,
-                                            return_attention_mask = True
+                                            add_special_tokens=True, 
+                                            max_length=self.max_len,
+                                            pad_to_max_length=True, 
+                                            truncation=True, 
+                                            return_tensors='pt',
+                                            return_token_type_ids=True,
+                                            return_attention_mask=True
                                             )
                 input_ids.append(encoded_dict["input_ids"])
                 attention_mask.append(encoded_dict["attention_mask"])
@@ -307,15 +311,15 @@ class Dataloader:
                 #    print("context: {}".format(context))
                 #    continue
                 encoded_dict = self.tokenizer.encode_plus(
-                                            question, 
-                                            context, 
-                                            add_special_tokens = True, 
-                                            max_length = self.max_len,
-                                            pad_to_max_length = True, 
-                                            truncation = True, 
-                                            return_tensors = 'pt',
-                                            return_token_type_ids = True,
-                                            return_attention_mask = True
+                                            question,
+                                            context,
+                                            add_special_tokens=True, 
+                                            max_length=self.max_len,
+                                            pad_to_max_length=True, 
+                                            truncation=True, 
+                                            return_tensors='pt',
+                                            return_token_type_ids=True,
+                                            return_attention_mask=True
                                             )
                 input_ids.append(encoded_dict["input_ids"])
                 attention_mask.append(encoded_dict["attention_mask"])
