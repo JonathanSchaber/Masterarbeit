@@ -99,15 +99,24 @@ def get_best_epoch(stats_file) -> Tuple[int, float, float]:
     return best_epoch, best_dev, best_test
 
 
-def get_true_best_dev_epoch(stats_file):
+def get_true_best_dev_epoch(results_file, qa_flag: bool) -> Tuple[int, float]:
     best_epoch = 0
     best_dev_acc = 0.0
     
-    for i in range(1, len(stats_file)):
+    for i in range(1, len(results_file)):
         dict_pred, dict_lab = {}, {}
-        build_dicts(stats_file[i][str(i)]["dev"], dict_pred, dict_lab)
+        build_dicts(results_file[i][str(i)]["dev"], dict_pred, dict_lab)
         dict_pred = {key: value[0] for key, value in dict_pred.items()}
-        acc = compute_acc(dict_pred, dict_lab)
+        if not qa_flag:
+            acc = compute_acc(dict_pred, dict_lab)
+        else:
+            dict_pred_start = {k: v[0] for k, v in dict_pred.items()}
+            dict_pred_end = {k: v[1] for k, v in dict_pred.items()}
+            dict_lab_start = {k: v[0] for k, v in dict_lab.items()}
+            dict_lab_end = {k: v[1] for k, v in dict_lab.items()}
+            start_acc = compute_acc(dict_pred_start, dict_lab_start)
+            end_acc = compute_acc(dict_pred_end, dict_lab_end)
+            acc = (start_acc + end_acc) / 2
         if acc > best_dev_acc:
             best_epoch = i
             best_dev_acc = acc
@@ -217,10 +226,20 @@ def main():
             print("Best dev accuracy: {0:.4f}".format(best_dev))
             print("Best test accuracy: {0:.4f}".format(best_test))
             print(20*"~")
-            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file)
+            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file, qa_flag)
             a, b = build_dicts(results_file[true_best_epoch][str(true_best_epoch)]["test"], {}, {})
             a = {k: v[0] for k, v in a.items()}
-            true_best_test = compute_acc(a, b)
+            if not qa_flag:
+                true_best_test = compute_acc(a, b)
+            else:
+                pred_start = {k: v[0] for k, v in a.items()}
+                pred_end = {k: v[1] for k, v in a.items()}
+                lab_start = {k: v[0] for k, v in b.items()}
+                lab_end = {k: v[1] for k, v in b.items()}
+                start_acc = compute_acc(pred_start, lab_start)
+                end_acc = compute_acc(pred_end, lab_end)
+                true_best_test = (start_acc + end_acc) / 2
+                
             print("True best epoch: {}".format(true_best_epoch))
             print("True best dev accuracy: {0:.4f}".format(true_best_dev))
             print("True best test accuracy: {0:.4f}".format(true_best_test))
@@ -245,7 +264,6 @@ def main():
     for results in ensemble_results:
         dev_res, test_res = results
 
-        #import ipdb; ipdb.set_trace()
         build_dicts(dev_res, dev_dict, dev_gold_dict)
         build_dicts(test_res, test_dict, test_gold_dict)
         
