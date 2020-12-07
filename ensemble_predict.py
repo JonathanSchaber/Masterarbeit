@@ -274,23 +274,23 @@ def main():
         dev_accur = compute_acc(dev_ensemble, dev_gold_dict)
         test_accur = compute_acc(test_ensemble, test_gold_dict)
     else:
-        dev_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count) for
-                                key, value in dev_dict.items()}        
-        dev_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count) for
-                                key, value in dev_dict.items()}        
-        test_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count) for
-                                key, value in test_dict.items()}        
-        test_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count) for
-                                key, value in test_dict.items()}
+        dev_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
+                                for key, value in dev_dict.items()}        
+        dev_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
+                                for key, value in dev_dict.items()}        
+        test_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
+                                for key, value in test_dict.items()}        
+        test_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
+                                for key, value in test_dict.items()}
 
-        dev_start_accur = compute_acc(dev_start_ensemble, {key: value[0] for
-                                                            key, value in dev_gold_dict.items()})
-        dev_end_accur = compute_acc(dev_end_ensemble, {key: value[1] for
-                                                            key, value in dev_gold_dict.items()})
-        test_start_accur = compute_acc(test_start_ensemble, {key: value[0] for
-                                                            key, value in test_gold_dict.items()})
-        test_end_accur = compute_acc(test_end_ensemble, {key: value[1] for
-                                                            key, value in test_gold_dict.items()})
+        dev_start_accur = compute_acc(dev_start_ensemble, {key: value[0]
+                                                            for key, value in dev_gold_dict.items()})
+        dev_end_accur = compute_acc(dev_end_ensemble, {key: value[1]
+                                                            for key, value in dev_gold_dict.items()})
+        test_start_accur = compute_acc(test_start_ensemble, {key: value[0]
+                                                            for key, value in test_gold_dict.items()})
+        test_end_accur = compute_acc(test_end_ensemble, {key: value[1]
+                                                            for key, value in test_gold_dict.items()})
 
         dev_accur = (dev_start_accur + dev_end_accur) / 2
         test_accur = (test_start_accur + test_end_accur) / 2
