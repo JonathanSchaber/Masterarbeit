@@ -96,6 +96,7 @@ class SRL_Encoder(nn.Module):
         embeddings: embedding class from torch
         encoder: actual RNN module that computes embeddings (GRU)
     """
+
     def __init__(self, config):
         super(SRL_Encoder, self).__init__()
         self.config = config
@@ -193,7 +194,7 @@ class SRL_Encoder(nn.Module):
 
     def forward(self, tokens: List["torch.Tensor"]) -> List["torch.Tensor"]:
         """Forward pass - actual embedding
-        
+
         Args:
             tokens: list of indices in torch tensors
 
@@ -323,7 +324,7 @@ class BertBase(nn.Module):
             new_batch.append([concat])
 
         return new_batch
-        
+
     def _concatenate_sents(self, srls):
         """concatenates the sub-sentences of a seq
 
@@ -436,7 +437,7 @@ class BertBase(nn.Module):
     def create_cls_srl(self, device):
         cls_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["[CLS]"]), dim=0)
         self.cls_srl = cls_tensor.to(device)
-        
+
     def create_sep_srl(self, device):
         sep_tensor = torch.unsqueeze(torch.tensor(self.srl_model.dictionary["[SEP]"]), dim=0)
         self.sep_srl = sep_tensor.to(device)
@@ -487,7 +488,7 @@ class BertBase(nn.Module):
         pad_token = torch.tensor([0.]*768).to(device)
         word_level_batch = []
         batch_idx = []
-        
+
         for j, sentence in enumerate(batch):
             A_sent_idx = []
             B_sent_idx = []
@@ -533,7 +534,7 @@ class BertBase(nn.Module):
             ab_batch_idx = [[idx[0] for idx in batch_idx], [idx[1] for idx in batch_idx]]
 
         return_batch = torch.stack(tuple(word_level_batch))
-        
+
         return return_batch, ab_batch_idx
 
 
@@ -567,16 +568,16 @@ class gliBertClassifierCLS(BertBase):
         _, split_idxs = self.reconstruct_word_level(last_hidden_state,
                                         tokens,
                                         device)
-                                
+
         if self.config["combine_SRLs"]:
             emb = self.embed_srls(srls, split_idxs, data_type)
             emb = torch.stack([batch[0,:] for batch in emb])
 
             pooler_output = torch.cat((pooler_output, emb), dim=-1)
-            
+
         linear_output = self.linear(pooler_output)
         proba = self.softmax(linear_output)
-        
+
         return proba
 
 
@@ -594,7 +595,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
         else:
             self.linear = nn.Linear(768*max_len, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
-    
+
     def forward(
             self,
             tokens,
@@ -650,6 +651,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
                     )
         linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
+        
         return proba
 
 
@@ -667,7 +669,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
         else:
             self.linear = nn.Linear(768*(max_len-1), num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
-    
+
     def forward(
             self,
             tokens,
@@ -728,6 +730,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
                     )
         linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
+        
         return proba
 
 
@@ -814,6 +817,7 @@ class gliBertClassifierGRU(BertBase):
         comb = torch.cat((last_hidden_fwd, last_hidden_bwd), dim=1)
         linear_output = self.linear(comb)
         proba = self.softmax(linear_output)
+        
         return proba
 
 
@@ -893,6 +897,7 @@ class gliBertClassifierCNN(BertBase):
         linear_output = self.linear(cnn_output)
         proba = self.softmax(linear_output)
         proba = torch.stack([torch.squeeze(tensor) for tensor in proba])
+        
         return proba
 
 
@@ -910,7 +915,7 @@ class gliBertSpanPrediction(BertBase):
         else:
             self.linear = nn.Linear(768, 2)
         self.softmax = nn.LogSoftmax(dim=-2)
-    
+
     def forward(
             self,
             tokens,
@@ -931,15 +936,15 @@ class gliBertSpanPrediction(BertBase):
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
-            #a_srls, b_srls = _get_AB_SRLs(srls) 
-            #if not self.config["merge_subtokens"]:
-            #    a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-            #                    self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
-            #a_emb = self.srl_model(a_srls)
-            #b_emb = self.srl_model(b_srls)
-            #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-            #srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
-            #                for i in range(len(a_srls))]
+            # a_srls, b_srls = _get_AB_SRLs(srls) 
+            # if not self.config["merge_subtokens"]:
+            #     a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
+            #                     self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
+            # a_emb = self.srl_model(a_srls)
+            # b_emb = self.srl_model(b_srls)
+            # ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
+            # srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #                 for i in range(len(a_srls))]
             srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
@@ -951,13 +956,17 @@ class gliBertSpanPrediction(BertBase):
         start_logits, end_logits = linear_output.split(1, dim=-1)
         start_span = self.softmax(start_logits)
         end_span = self.softmax(end_logits)
+        
         return start_span, end_span
 
 
 def write_stats(stats_file, training_stats, training_results):
     """checks if outfile specified, if yes, writes stats to it
+    
     Args:
-        prarm1: str
+        stats_file: filepath to stats_file
+        training_stats: statistics of training
+        training_results: actual predictions
     Returns:
         None
     """
@@ -983,7 +992,7 @@ def format_time(elapsed):
 
 def compute_acc(preds, labels):
     """computes the accordance of two lists
-    
+
     Args:
         preds: list
         labels: list
@@ -1022,7 +1031,7 @@ def print_preds(model,
         prediction = prediction[-1]
         print("  Batch {:>5,}  of  {:>5,}.    Elapsed: {:}.".format(step, len_data, elapsed))
         print("  Last example: ")
-        #if not len(tokens) == len(first_srls):
+        # if not len(tokens) == len(first_srls):
         #    import ipdb; ipdb.set_trace()
         for elem in zip(tokens, first_srls, second_srls, third_srls):
             print_tokens = []
@@ -1052,7 +1061,7 @@ def print_preds(model,
             sentence = merge_subs(model.tokenizer.tokenize(
                                 model.tokenizer.decode(example)
                                 ))
-        prediction = sentence[start_span.max(0).indices.item():end_span.max(0).indices.item()+1] 
+        prediction = sentence[start_span.max(0).indices.item():end_span.max(0).indices.item()+1]
         true_span = sentence[true_label.select(0, 0).item():true_label.select(0, 1).item()+1]
         print("    Prediction:  {}".format(" ".join(prediction)))
         print("    True Span:  {}".format(" ".join(true_span)))
@@ -1067,12 +1076,13 @@ def batch_idcs(len_dataset, batch_size):
         current_idx += batch_size
 
     random.shuffle(batch_idcs)
+    
     return batch_idcs
 
 
 def fine_tune_BERT(config):
     """Define fine-tuning procedure, write results to file.
-    
+
     Args:
         config: dictionary specifying hyper params
     """
@@ -1118,15 +1128,15 @@ def fine_tune_BERT(config):
 
     optimizer = AdamW(
             model.parameters(),
-            lr = 5e-5,
-            eps = 1e-8
+            lr=5e-5,
+            eps=1e-8
         )
 
     total_steps = len(dev_data) * epochs
     scheduler = get_linear_schedule_with_warmup(
-            optimizer, 
-            num_warmup_steps = 0,
-            num_training_steps = total_steps
+            optimizer,
+            num_warmup_steps=0,
+            num_training_steps=total_steps
         )
     training_stats = []
     training_stats.append({"data set": data_set})
@@ -1183,7 +1193,7 @@ def fine_tune_BERT(config):
                         elapsed,
                         merge_subtokens
                         )
-                        
+
             if not data_type == "qa":
                 value_index = [tensor.max(0) for tensor in outputs]
                 acc = compute_acc([maxs.indices for maxs in value_index], b_labels)
@@ -1199,11 +1209,11 @@ def fine_tune_BERT(config):
                 end_loss = criterion(end_span, torch.unsqueeze(b_labels.select(1, 1), -1))
                 loss = (start_loss + end_loss) / 2
 
-            #if step == 500:
-            #    print("")
-            #    print(red + "  >> Starting evaluating, train set is massive..." + end)
-            #    print("")
-            #    break
+            # if step == 500:
+            #     print("")
+            #     print(red + "  >> Starting evaluating, train set is massive..." + end)
+            #     print("")
+            #     break
 
             total_train_accuracy += acc
             total_train_loss += loss.item()
@@ -1300,7 +1310,7 @@ def fine_tune_BERT(config):
 
             total_dev_loss += loss.item()
             #total_dev_accuracy += acc
-            
+
         flatten = lambda ls: [item for batch in ls for item in batch]
         if data_type == "qa":
             start_acc = compute_acc(flatten(all_pred_starts), flatten(all_label_starts))
@@ -1456,7 +1466,6 @@ def fine_tune_BERT(config):
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
 
 
-
 def main():
     args = parse_cmd_args()
     global location
@@ -1467,7 +1476,6 @@ def main():
     stats_file = args.stats_file
     config = load_json(args.config)
     fine_tune_BERT(config)
-    
 
 
 if __name__ == "__main__":
