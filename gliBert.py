@@ -14,7 +14,8 @@ from transformers import (
         AdamW,
         BertModel,
         BertTokenizer,
-        get_linear_schedule_with_warmup
+        get_linear_schedule_with_warmup,
+        get_cosine_with_hard_restarts_schedule_with_warmup
         )
 from typing import List
 
@@ -749,7 +750,7 @@ class gliBertClassifierGRU(BertBase):
                 num_layers=2,
                 bias=True,
                 batch_first=True,
-                dropout=0.1,
+                dropout=config["dropout"],
                 bidirectional=True
                 )
         self.linear = nn.Linear(2*config["head_hidden_size"], num_classes)
@@ -1128,12 +1129,13 @@ def fine_tune_BERT(config):
 
     optimizer = AdamW(
             model.parameters(),
-            lr=5e-5,
+            lr=2e-5,
             eps=1e-8
         )
 
-    total_steps = len(dev_data) * epochs
-    scheduler = get_linear_schedule_with_warmup(
+    total_steps = len(train_idcs) * epochs
+    # scheduler = get_linear_schedule_with_warmup(
+    scheduler = get_cosine_with_hard_restarts_schedule_with_warmup(
             optimizer,
             num_warmup_steps=0,
             num_training_steps=total_steps
