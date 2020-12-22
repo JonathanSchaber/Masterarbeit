@@ -236,7 +236,7 @@ def main():
     dev_dict, dev_gold_dict, test_dict, test_gold_dict = {}, {}, {}, {}
     mean_dev_accur, mean_test_accur = 0, 0
 
-    if pathlib.Path(files[-1]).stat().st_mtime > 1608627243.2080748:
+    if pathlib.Path(files[-1]).stat().st_mtime > 1608645851.2425048:
         new_flag = True
     else:
         new_flag = False
