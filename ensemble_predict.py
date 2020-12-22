@@ -173,20 +173,39 @@ def check_configs(stat_files: "Statsfile") -> Optional[bool]:
     """
     rel_params = {
         "batch_size": [],
+        "gpu": [],
+        "print_stats": [],
         "merge_subtokens": [],
         "max_length": [],
         "bert_head": [],
         "combine_SRLs": [],
         "zeros": [],
-        "embedding_dim": [],
-        "gru_hidden_size": [],
-        "head_hidden_size": [],
-        "num_layers": [],
-        "bias": [],
-        "bidirectional": [],
+        "learning_rate": [],
+        "GRU_head_hidden_size": [],
         "early_stopping": [],
         "dropout": [],
-        "gru_dropout": []
+        "SRL_embedding_dim": [],
+        "SRL_hidden_size": [],
+        "SRL_num_layers": [],
+        "SRL_bias": [],
+        "SRL_bidirectional": [],
+        "SRL_dropout": [],
+        # old configs (> 22.12.2020)
+        # "batch_size": []
+        # "merge_subtokens": [],
+        # "max_length": [],
+        # "bert_head": [],
+        # "combine_SRLs": [],
+        # "zeros": [],
+        # "embedding_dim": [],
+        # "gru_hidden_size": [],
+        # "head_hidden_size": [],
+        # "num_layers": [],
+        # "bias": [],
+        # "bidirectional": [],
+        # "early_stopping": [],
+        # "dropout": [],
+        # "gru_dropout": []
     }
     if not len(set([dset[0][0]["data set"] for dset in stat_files])) == 1:
         print("ATTENTION: Not the same data sets for all files! Aborting.")
@@ -203,6 +222,7 @@ def check_configs(stat_files: "Statsfile") -> Optional[bool]:
 def main():
     args = parse_cmd_args()
     files = args.result_files
+    files = list(dict.fromkeys(files))
     #print(files)
     jsons = read_in_files(files, args.delete_result_files)
     if not jsons:
