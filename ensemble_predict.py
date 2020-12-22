@@ -173,8 +173,6 @@ def check_configs(stat_files: "Statsfile") -> Optional[bool]:
     """
     rel_params = {
         "batch_size": [],
-        "gpu": [],
-        "print_stats": [],
         "merge_subtokens": [],
         "max_length": [],
         "bert_head": [],
