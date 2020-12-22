@@ -151,16 +151,16 @@ class SRL_Encoder(nn.Module):
             "[CLS]":    46,
             "[SEP]":    47
         }
-        self.embeddings = nn.Embedding(len(set(self.dictionary.values())), self.config["embedding_dim"])
-        #self.embeddings = nn.Embedding(len(self.dictionary), self.config["embedding_dim"])
+        self.embeddings = nn.Embedding(len(set(self.dictionary.values())), self.config["SRL_embedding_dim"])
+        #self.embeddings = nn.Embedding(len(self.dictionary), self.config["SRL_embedding_dim"])
         self.encoder = nn.GRU(
-                            input_size=3*self.config["embedding_dim"],
-                            hidden_size=self.config["gru_hidden_size"],
-                            num_layers=self.config["num_layers"],
-                            bias=self.config["bias"],
+                            input_size=3*self.config["SRL_embedding_dim"],
+                            hidden_size=self.config["SRL_hidden_size"],
+                            num_layers=self.config["SRL_num_layers"],
+                            bias=self.config["SRL_bias"],
                             batch_first=True,
-                            dropout=self.config["gru_dropout"],
-                            bidirectional=self.config["bidirectional"]
+                            dropout=self.config["SRL_dropout"],
+                            bidirectional=self.config["SRL_bidirectional"]
                         )
 
     def convert_SRLs_to_tensor(
@@ -215,8 +215,8 @@ class SRL_Encoder(nn.Module):
                 #pred_3 = self.embeddings(sentence[2]) if num_preds > 2 else pred_1
                 pred_merge = []
                 for i in range(len(pred_1)):
-                    tokens = [pred_1[i], pred_2[i], pred_3[i]]
-                    pred_merge.append(torch.cat(tuple(tokens), dim=0))
+                    toks = [pred_1[i], pred_2[i], pred_3[i]]
+                    pred_merge.append(torch.cat(tuple(toks), dim=0))
                 preds = torch.unsqueeze(torch.stack(pred_merge), dim=0)
 
                 output, _ = self.encoder(preds)
@@ -432,7 +432,7 @@ class BertBase(nn.Module):
 
     def create_dummy_srl(self, device):
         # *2 because bi-GRU
-        dummy = torch.unsqueeze(torch.tensor([0.0]*2*self.config["gru_hidden_size"]), dim=0)
+        dummy = torch.unsqueeze(torch.tensor([0.0]*2*self.config["SRL_hidden_size"]), dim=0)
         self.dummy_srl = dummy.to(device)
 
     def create_cls_srl(self, device):
@@ -547,7 +547,7 @@ class gliBertClassifierCLS(BertBase):
         self.srl_model = SRL_Encoder(config)
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         if config["combine_SRLs"]:
-            self.linear = nn.Linear((768+2*config["gru_hidden_size"]), num_classes)
+            self.linear = nn.Linear((768+2*config["SRL_hidden_size"]), num_classes)
         else:
             self.linear = nn.Linear(768, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
@@ -592,7 +592,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
         self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         if config["combine_SRLs"]:
-            self.linear = nn.Linear((768+2*config["gru_hidden_size"])*max_len, num_classes)
+            self.linear = nn.Linear((768+2*config["SRL_hidden_size"])*max_len, num_classes)
         else:
             self.linear = nn.Linear(768*max_len, num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
@@ -666,7 +666,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
         self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         if config["combine_SRLs"]:
-            self.linear = nn.Linear((768+2*config["gru_hidden_size"])*(max_len-1), num_classes)
+            self.linear = nn.Linear((768+2*config["SRL_hidden_size"])*(max_len-1), num_classes)
         else:
             self.linear = nn.Linear(768*(max_len-1), num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
@@ -745,15 +745,15 @@ class gliBertClassifierGRU(BertBase):
         self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.gru = nn.GRU(
-                input_size=768+2*config["gru_hidden_size"] if config["combine_SRLs"] else 768,
-                hidden_size=config["head_hidden_size"],
+                input_size=768+2*config["SRL_hidden_size"] if config["combine_SRLs"] else 768,
+                hidden_size=config["GRU_head_hidden_size"],
                 num_layers=2,
                 bias=True,
                 batch_first=True,
                 dropout=config["dropout"],
                 bidirectional=True
                 )
-        self.linear = nn.Linear(2*config["head_hidden_size"], num_classes)
+        self.linear = nn.Linear(2*config["GRU_head_hidden_size"], num_classes)
         self.softmax = nn.LogSoftmax(dim=-1)
 
     def forward(
@@ -797,7 +797,7 @@ class gliBertClassifierGRU(BertBase):
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
-            #hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
+            #hidden = h_n.view(2, 2, tokens.shape[0], self.config["GRU_head_hidden_size"])
             #last_hidden = hidden[-1]
             #last_hidden_fwd = last_hidden[0]
             #last_hidden_bwd = last_hidden[1]
@@ -811,7 +811,7 @@ class gliBertClassifierGRU(BertBase):
             #else:
             #    _, h_n = self.gru(last_hidden_state)
             _, h_n = self.gru(hidden_state)
-        hidden = h_n.view(2, 2, tokens.shape[0], self.config["head_hidden_size"])
+        hidden = h_n.view(2, 2, tokens.shape[0], self.config["GRU_head_hidden_size"])
         last_hidden = hidden[-1]
         last_hidden_fwd = last_hidden[0]
         last_hidden_bwd = last_hidden[1]
@@ -833,7 +833,7 @@ class gliBertClassifierCNN(BertBase):
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         self.cnn = nn.Sequential(
                     nn.Conv1d(
-                        768 if not config["combine_SRLs"] else 768+2*config["gru_hidden_size"],
+                        768 if not config["combine_SRLs"] else 768+2*config["SRL_hidden_size"],
                         1,
                         kernel_size=10,
                         stride=1,
@@ -912,7 +912,7 @@ class gliBertSpanPrediction(BertBase):
         self.max_len = max_len
         self.tokenizer = BertTokenizer.from_pretrained(config[location]["BERT"])
         if config["combine_SRLs"]:
-            self.linear = nn.Linear(768+2*config["gru_hidden_size"], 2)
+            self.linear = nn.Linear(768+2*config["SRL_hidden_size"], 2)
         else:
             self.linear = nn.Linear(768, 2)
         self.softmax = nn.LogSoftmax(dim=-2)
@@ -1129,7 +1129,7 @@ def fine_tune_BERT(config):
 
     optimizer = AdamW(
             model.parameters(),
-            lr=2e-5,
+            lr=config["learning_rate"],
             eps=1e-8
         )
 
