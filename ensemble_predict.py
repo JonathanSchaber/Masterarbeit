@@ -183,7 +183,7 @@ def check_configs(stat_files: "Statsfile", new_flag: bool) -> Optional[bool]:
             "learning_rate": [],
             "GRU_head_hidden_size": [],
             "early_stopping": [],
-            "dropout": [],
+            "GRU_head_dropout": [],
             "SRL_embedding_dim": [],
             "SRL_hidden_size": [],
             "SRL_num_layers": [],
