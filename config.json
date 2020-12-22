@@ -30,7 +30,7 @@
 	"learning_rate": 2e-5,
 	"GRU_head_hidden_size": 712,
 	"early_stopping": true,
-	"dropout": 0.5,
+	"GRU_head_dropout": 0.5,
 	"SRL_embedding_dim": 20,
 	"SRL_hidden_size": 32,
 	"SRL_num_layers": 2,
