@@ -1,5 +1,6 @@
 import argparse
 import json
+import pathlib
 import subprocess
 
 from pathlib import Path
@@ -164,47 +165,50 @@ def compute_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
     return true / (true + false)
 
 
-def check_configs(stat_files: "Statsfile") -> Optional[bool]:
+def check_configs(stat_files: "Statsfile", new_flag: bool) -> Optional[bool]:
     """Checks stat files for inconsistencies
 
     Args:
         stat_files: List of opened .json files
     Returns: False if check fails, else None
     """
-    rel_params = {
-        "batch_size": [],
-        "merge_subtokens": [],
-        "max_length": [],
-        "bert_head": [],
-        "combine_SRLs": [],
-        "zeros": [],
-        "learning_rate": [],
-        "GRU_head_hidden_size": [],
-        "early_stopping": [],
-        "dropout": [],
-        "SRL_embedding_dim": [],
-        "SRL_hidden_size": [],
-        "SRL_num_layers": [],
-        "SRL_bias": [],
-        "SRL_bidirectional": [],
-        "SRL_dropout": [],
-        # old configs (> 22.12.2020)
-        # "batch_size": []
-        # "merge_subtokens": [],
-        # "max_length": [],
-        # "bert_head": [],
-        # "combine_SRLs": [],
-        # "zeros": [],
-        # "embedding_dim": [],
-        # "gru_hidden_size": [],
-        # "head_hidden_size": [],
-        # "num_layers": [],
-        # "bias": [],
-        # "bidirectional": [],
-        # "early_stopping": [],
-        # "dropout": [],
-        # "gru_dropout": []
-    }
+    if new_flag:
+        rel_params = {
+            "batch_size": [],
+            "merge_subtokens": [],
+            "max_length": [],
+            "bert_head": [],
+            "combine_SRLs": [],
+            "zeros": [],
+            "learning_rate": [],
+            "GRU_head_hidden_size": [],
+            "early_stopping": [],
+            "dropout": [],
+            "SRL_embedding_dim": [],
+            "SRL_hidden_size": [],
+            "SRL_num_layers": [],
+            "SRL_bias": [],
+            "SRL_bidirectional": [],
+            "SRL_dropout": []
+        }
+    else:
+        rel_params = {    
+            "batch_size": [],
+            "merge_subtokens": [],
+            "max_length": [],
+            "bert_head": [],
+            "combine_SRLs": [],
+            "zeros": [],
+            "embedding_dim": [],
+            "gru_hidden_size": [],
+            "head_hidden_size": [],
+            "num_layers": [],
+            "bias": [],
+            "bidirectional": [],
+            "early_stopping": [],
+            "dropout": [],
+            "gru_dropout": []
+        }
     if not len(set([dset[0][0]["data set"] for dset in stat_files])) == 1:
         print("ATTENTION: Not the same data sets for all files! Aborting.")
         return False
@@ -232,7 +236,12 @@ def main():
     dev_dict, dev_gold_dict, test_dict, test_gold_dict = {}, {}, {}, {}
     mean_dev_accur, mean_test_accur = 0, 0
 
-    if not check_configs(jsons):
+    if pathlib.Path(files[-1]).stat().st_mtime > 1608627243.2080748:
+        new_flag = True
+    else:
+        new_flag = False
+
+    if not check_configs(jsons, new_flag):
         return
     
     for i, file_pair in enumerate(jsons):
