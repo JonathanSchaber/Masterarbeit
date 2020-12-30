@@ -3,23 +3,24 @@ import random
 from typing import List
 
 
-def permute_without_replacement(treatment: List[bool], control: List[bool]) -> bool:
+def permute_without_replacement(treatment: List[bool], control: List[bool], R: int=1000) -> bool:
     """compute random permutations, t(X, Y)
 
     Args:
         treatment: True, False ordered list
         control: True, False ordered list
-    Returns:
+        R: number of permutations
+    count_Returns:
         True if t(X, Y), else False
     """
-    r, R = 0, 0
+    r, count_R = 0, 0
 
     e_treat_orig = len([x for x in treatment if x])/len(treatment)
     e_contr_orig = len([x for x in control if x])/len(control)
 
     t_orig = e_treat_orig - e_contr_orig
 
-    while R < 10001:
+    while count_R < R+1:
 
         perm_treat, perm_contr = [], []
 
@@ -39,33 +40,34 @@ def permute_without_replacement(treatment: List[bool], control: List[bool]) -> b
         if t_perm >= t_orig:
             r += 1
         else:
-            R += 1
+            count_R += 1
 
         treatment = perm_treat
         control = perm_contr
 
     print("r:", r)
-    print("R:", R-1)
-    print("r/R:", r/(R-1))
+    print("R:", R)
+    print("(r+1)/(R+1):", round((r+1)/(R+1), 4))
 
 
-def permute_with_replacement(treatment: List[bool], control: List[bool]) -> bool:
+def permute_with_replacement(treatment: List[bool], control: List[bool], R: int=1000) -> bool:
     """compute random permutations, t(X, Y)
 
     Args:
         treatment: True, False ordered list
         control: True, False ordered list
+        R: number of permutations
     Returns:
         True if t(X, Y), else False
     """
-    r, R = 0, 0
+    r, count_R = 0, 0
 
     e_treat_orig = len([x for x in treatment if x])/len(treatment)
     e_contr_orig = len([x for x in control if x])/len(control)
 
     t_orig = e_treat_orig - e_contr_orig
 
-    while R < 10001:
+    while count_R < R+1:
 
         perm_treat, perm_contr = [], []
 
@@ -85,9 +87,9 @@ def permute_with_replacement(treatment: List[bool], control: List[bool]) -> bool
         if t_perm >= t_orig:
             r += 1
         else:
-            R += 1
+            count_R += 1
 
     print("r:", r)
-    print("R:", R-1)
-    print("r/R:", r/(R-1))
+    print("R:", R)
+    print("(r+1)/(R+1):", round((r+1)/(R+1), 4))
 
