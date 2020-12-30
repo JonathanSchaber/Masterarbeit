@@ -19,7 +19,7 @@ def permute_without_replacement(treatment: List[bool], control: List[bool]) -> b
 
     t_orig = e_treat_orig - e_contr_orig
 
-    while R < 1000:
+    while R < 10001:
 
         perm_treat, perm_contr = [], []
 
@@ -44,7 +44,9 @@ def permute_without_replacement(treatment: List[bool], control: List[bool]) -> b
         treatment = perm_treat
         control = perm_contr
 
-    print(r/R)
+    print("r:", r)
+    print("R:", R-1)
+    print("r/R:", r/(R-1))
 
 
 def permute_with_replacement(treatment: List[bool], control: List[bool]) -> bool:
@@ -63,7 +65,7 @@ def permute_with_replacement(treatment: List[bool], control: List[bool]) -> bool
 
     t_orig = e_treat_orig - e_contr_orig
 
-    while R < 1000:
+    while R < 10001:
 
         perm_treat, perm_contr = [], []
 
@@ -85,5 +87,7 @@ def permute_with_replacement(treatment: List[bool], control: List[bool]) -> bool
         else:
             R += 1
 
-    print(r/R)
+    print("r:", r)
+    print("R:", R-1)
+    print("r/R:", r/(R-1))
 
