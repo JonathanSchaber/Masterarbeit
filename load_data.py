@@ -186,7 +186,7 @@ class Dataloader:
                     if label not in self.y_mapping:
                         self.y_mapping[label] = self.counter
                         self.counter += 1
-    
+
         return data
 
     def make_datasets(self):
@@ -282,10 +282,10 @@ class Dataloader:
                 encoded_dict = self.tokenizer.encode_plus(
                                             sentence_1,
                                             sentence_2,
-                                            add_special_tokens=True, 
+                                            add_special_tokens=True,
                                             max_length=self.max_len,
-                                            pad_to_max_length=True, 
-                                            truncation=True, 
+                                            pad_to_max_length=True,
+                                            truncation=True,
                                             return_tensors='pt',
                                             return_token_type_ids=True,
                                             return_attention_mask=True
@@ -313,10 +313,10 @@ class Dataloader:
                 encoded_dict = self.tokenizer.encode_plus(
                                             question,
                                             context,
-                                            add_special_tokens=True, 
+                                            add_special_tokens=True,
                                             max_length=self.max_len,
-                                            pad_to_max_length=True, 
-                                            truncation=True, 
+                                            pad_to_max_length=True,
+                                            truncation=True,
                                             return_tensors='pt',
                                             return_token_type_ids=True,
                                             return_attention_mask=True
@@ -328,7 +328,7 @@ class Dataloader:
                 y_tensor_list.append(torch.unsqueeze(y_tensor, dim=0))
                 srl.append([srl_question, srl_context])
                 ids.append(instance_id)
-            
+
         return torch.cat(input_ids, dim=0), \
                 torch.cat(attention_mask, dim=0), \
                 torch.cat(token_type_ids, dim=0), \
@@ -377,7 +377,7 @@ class deISEAR_dataloader(Dataloader):
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
-    
+
 ################################
 ########### M L Q A ############
 
