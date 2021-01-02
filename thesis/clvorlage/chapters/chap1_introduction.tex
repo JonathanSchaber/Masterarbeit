@@ -3,59 +3,57 @@
 \label{chap:1_intro}
 \section{Motivation}
 
-Human language bears some truly mesmerizing features and puzzles, a lot of them are still not yet 
-understood in all its depths:
-For example, it is still unclear how children are able to learn the grammar of their mother tongue 
-from the corrupted and comparatively scarce language material they are exposed to. %(POS, Chomsky etc)
-Another astonishing fact about human language is the overwhelming amount of languages that
-exist today, even that number was probably much higher a few centuries ago. 
-As to how languages evolve, change over time and what trajectories of possible change may be,
-lots of questions are still open, and there remains enough work to do.
-But for me, maybe the most trivial and enigmatic trait about human language is that we actually
-\emph{understand} each other:
-That, during a discourse, person X can retrieve the intentioned meaning of expressions uttered by
-person Y, and vice versa.
-Further, we are able to logically deduce a whole lot information that is not explicitly stated
-in a sentence, and uphold such a state of affairs during the whole conversation.
-%Maybe one of the most enigmatic and fascinating traits of human language is the fact that for us
-%humans, exchanging information through language is a meaninglessly working process.
-That this is not as trivial as it might look like on first sight, show the following considerations:
-Human language is, when being used, notoriously ambiguous, metaphorical and formally corrupted.
+Human language bears some truly mesmerizing features and puzzles, a lot of them are still not
+yet understood in all its depths: For example, it is still unclear how children are able to
+learn the grammar of their mother tongue from the corrupted and comparatively scarce language
+material they are exposed to. %(POS, Chomsky etc) Another astonishing fact about human language
+is the overwhelming amount of languages that exist today, even that number was probably much
+higher a few centuries ago.  As to how languages evolve, change over time and what trajectories
+of possible change may be, lots of questions are still open, and there remains enough work
+to do.  But for me, maybe the most trivial and enigmatic trait about human language is that
+we actually \emph{understand} each other: That, during a discourse, person X can retrieve
+the intentioned meaning of expressions uttered by person Y, and vice versa.  Further, we are
+able to logically deduce a whole lot information that is not explicitly stated in a sentence,
+and uphold such a state of affairs during the whole conversation.  %Maybe one of the most
+enigmatic and fascinating traits of human language is the fact that for us %humans, exchanging
+information through language is a meaninglessly working process.  That this is not as trivial
+as it might look like on first sight, show the following considerations: Human language is,
+when being used, notoriously ambiguous, metaphorical and formally corrupted.
 
-So, every system that claims to process human language in a ... must be able 
+So, every system that claims to process human language in a ... must be able
 
 \subsection{History, Methods, Problems of NLU}
 
 The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
-For quite some time, as in most areas of NLP, systems that addressed NLU problems were architectures
-that consisted of carefully hand-written rules that aimed at tackling a specific problem, such as
-recognizing textual entailment, coreference resolution, sentiment analysis, and so on.
+For quite some time, as in most areas of NLP, systems that addressed NLU problems were
+architectures that consisted of carefully hand-written rules that aimed at tackling a specific
+problem, such as recognizing textual entailment, coreference resolution, sentiment analysis,
+and so on.
 
-From on the 90ies, the so-called emph{statistical revolution} took place, and NLU related problems
-were now being addressed by learning patterns from huge data collections.
-The main challenge for engineers and scientists now lay in dicovering suitable features, according
-to which the algorithm would hopefully learn helpful patterns for solving the task at hand.
+From on the 90ies, the so-called emph{statistical revolution} took place, and NLU related
+problems were now being addressed by learning patterns from huge data collections.  The main
+challenge for engineers and scientists now lay in dicovering suitable features, according to
+which the algorithm would hopefully learn helpful patterns for solving the task at hand.
 
-Since now almost a decade, a next stage in NLU and NLP, in general, was entered --- we are now deep
-in the neural age of computational linguistics.
-In contrast to the statistical period's main challenge, now the algorithm is even itself learning 
-the features that are the most informative for a given task.
-The human part in the process is to design the overall model architecture and provide large enough 
-amounts of data that are also of good quality.
+Since now almost a decade, a next stage in NLU and NLP, in general, was entered --- we are
+now deep in the neural age of computational linguistics.  In contrast to the statistical
+period's main challenge, now the algorithm is even itself learning the features that are the
+most informative for a given task.  The human part in the process is to design the overall
+model architecture and provide large enough amounts of data that are also of good quality.
 
-In other words, 
+In other words,
 
-``The engineering side of computational linguistics, often called
-natural language processing (NLP), is largely concerned with building computational tools that do
-useful things with language'' \cite{johnson2009statistical}
+``The engineering side of computational linguistics, often called natural language processing
+(NLP), is largely concerned with building computational tools that do useful things with
+language'' \cite{johnson2009statistical}
 
 \subsection{Contextualized Word Embeddings in NLU}
 
 Since the beginning of the neural age, there was the problem as to how could text be numerically
-meaningful represented, so that the algorithms can extract meaningful feature patterns and that
-there is as little information loss as possible (since a numeric representation is always an 
-abstraction of the real data, there naturally is some unpreventable information loss).
-The solution that was proposed by \cite{mikolov2013distributed} is the approach that is still 
+meaningful represented, so that the algorithms can extract meaningful feature patterns and
+that there is as little information loss as possible (since a numeric representation is always
+an abstraction of the real data, there naturally is some unpreventable information loss).
+The solution that was proposed by \cite{mikolov2013distributed} is the approach that is still
 in use today in its core idea:
 
 \begin{itemize}
@@ -81,33 +79,33 @@ changes or additions to today's implementation have been made:
 					embeddings and finetuning them on the specific task along with it's goal
 \end{itemize}
 
-The architecture that has caused the most uproar was probably BERT \cite{devlin2018bert}, an architecture
-that led to so many variants of it, that it created a whole new field inside the NLP community ---
-the BERTology \cite{rogers2020primer}.
-These embeddings have also proved to achieve state-of-the-art results on well-established data sets,
-such as, e.g., GLUE \cite{wang2018glue}.
+The architecture that has caused the most uproar was probably BERT \cite{devlin2018bert},
+an architecture that led to so many variants of it, that it created a whole new field inside
+the NLP community --- the BERTology \cite{rogers2020primer}.  These embeddings have also
+proved to achieve state-of-the-art results on well-established data sets, such as, e.g.,
+GLUE \cite{wang2018glue}.
 
 However, the many studies and experiments that have been carried out exploring the capabilities
-and mechanisms behind BERT quickly showed that nevertheless BERT performs on many tasks surprisingly well,
-even outperforming all models before it, there are situations, often trivial looking ones, where
-BERT desperately fails.
+and mechanisms behind BERT quickly showed that nevertheless BERT performs on many tasks
+surprisingly well, even outperforming all models before it, there are situations, often trivial
+looking ones, where BERT desperately fails.
 
-\cite{jin2019bert}, for example, showed that by creating adversarial examples in the test set ---
-which were, of course, still valid ---, they could bring down the performance of BERT by a large
-margin.
+\cite{jin2019bert}, for example, showed that by creating adversarial examples in the test set
+--- which were, of course, still valid ---, they could bring down the performance of BERT by
+a large margin.
 
-As I laid out before, in the past decades computational linguistics has undergone several ``revolutions''
-which, although some people might see this differently, can be described as moving from a strong
-emphasis on linguistics to a more data-driven computational discipline.
+As I laid out before, in the past decades computational linguistics has undergone several
+``revolutions'' which, although some people might see this differently, can be described as
+moving from a strong emphasis on linguistics to a more data-driven computational discipline.
 
 Furthermore, the introduction of deep learning into computational linguistics has introduced a
 so called \emph{black box}; which means essentially that although the underlying formulas and the
-architecture of neural nets are well-known --- the mathematics behind them is rather simple ---, 
+architecture of neural nets are well-known --- the mathematics behind them is rather simple ---,
 it is nevertheless impossible to determine \emph{what exactly} those models learn from the data.
 
-One way to address the above outlined problems (1) the failure of very sophisticated models in 
-rather trivial situations and (2) the difficulties of the interpretation of their output lies
-in bringing back again the linguistics into the whole picture.
+One way to address the above outlined problems (1) the failure of very sophisticated models
+in rather trivial situations and (2) the difficulties of the interpretation of their output
+lies in bringing back again the linguistics into the whole picture.
 
 Examples:
 

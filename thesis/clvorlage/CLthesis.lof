@@ -9,25 +9,27 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1}{\ignorespaces deISEAR-Length}}{10}{figure.3.1}
 \contentsline {figure}{\numberline {2}{\ignorespaces deISEAR-Length}}{11}{figure.3.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces SCARE stars statistics}}{17}{figure.3.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces SCARE label statistics}}{18}{figure.3.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces XNLI-Length}}{21}{figure.3.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces XQuAD-Length}}{24}{figure.3.6}
+\contentsline {figure}{\numberline {3}{\ignorespaces deISEAR-Length}}{14}{figure.3.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces deISEAR-Length}}{15}{figure.3.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces SCARE stars statistics}}{18}{figure.3.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces SCARE label statistics}}{19}{figure.3.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces XNLI-Length}}{22}{figure.3.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces XQuAD-Length}}{25}{figure.3.8}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7}{\ignorespaces gliBERT Architecture}}{26}{figure.4.1}
-\contentsline {figure}{\numberline {8}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{29}{figure.4.2}
-\contentsline {figure}{\numberline {9}{\ignorespaces BERT-Classification}}{33}{figure.4.3}
+\contentsline {figure}{\numberline {9}{\ignorespaces gliBERT Architecture}}{28}{figure.4.1}
+\contentsline {figure}{\numberline {10}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{31}{figure.4.2}
+\contentsline {figure}{\numberline {11}{\ignorespaces BERT-Classification}}{35}{figure.4.3}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {10}{\ignorespaces }}{35}{figure.5.1}
-\contentsline {figure}{\numberline {11}{\ignorespaces }}{35}{figure.5.2}
-\contentsline {figure}{\numberline {12}{\ignorespaces }}{36}{figure.5.3}
-\contentsline {figure}{\numberline {13}{\ignorespaces }}{38}{figure.5.4}
-\contentsline {figure}{\numberline {14}{\ignorespaces }}{39}{figure.5.5}
-\contentsline {figure}{\numberline {15}{\ignorespaces }}{39}{figure.5.6}
-\contentsline {figure}{\numberline {16}{\ignorespaces }}{39}{figure.5.7}
-\contentsline {figure}{\numberline {17}{\ignorespaces }}{40}{figure.5.8}
-\contentsline {figure}{\numberline {18}{\ignorespaces }}{40}{figure.5.9}
-\contentsline {figure}{\numberline {19}{\ignorespaces }}{40}{figure.5.10}
+\contentsline {figure}{\numberline {12}{\ignorespaces }}{37}{figure.5.1}
+\contentsline {figure}{\numberline {13}{\ignorespaces }}{37}{figure.5.2}
+\contentsline {figure}{\numberline {14}{\ignorespaces }}{38}{figure.5.3}
+\contentsline {figure}{\numberline {15}{\ignorespaces }}{40}{figure.5.4}
+\contentsline {figure}{\numberline {16}{\ignorespaces }}{41}{figure.5.5}
+\contentsline {figure}{\numberline {17}{\ignorespaces }}{41}{figure.5.6}
+\contentsline {figure}{\numberline {18}{\ignorespaces }}{41}{figure.5.7}
+\contentsline {figure}{\numberline {19}{\ignorespaces }}{42}{figure.5.8}
+\contentsline {figure}{\numberline {20}{\ignorespaces }}{42}{figure.5.9}
+\contentsline {figure}{\numberline {21}{\ignorespaces }}{43}{figure.5.10}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}

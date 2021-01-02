@@ -4,18 +4,20 @@
 
 \section{Overview}
 
-gliBERT is an architecture that combines different, pre-existing models and tools.
-The general way an input sequence is processed by gliBERT is depicted in figure \ref{fig:architecture}:
+gliBERT is an architecture that combines different, pre-existing models and tools.  The general
+way an input sequence is processed by gliBERT is depicted in figure \ref{fig:architecture}:
 
 
-``Throughout this work, a «sentence» can be an arbitrary span of contiguous text, rather than an actual linguistic sentence. A «sequence» refers to the input token sequence to BERT, which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
+``Throughout this work, a «sentence» can be an arbitrary span of contiguous text, rather
+than an actual linguistic sentence. A «sequence» refers to the input token sequence to BERT,
+which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
 
 
 \fig{images/general_architecture.png}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{16}{gliBERT Architecture}
 
 The core parts of the model are the following:
 
-\begin{itemize}
+\begin{description}
 	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence and sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
   \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by ParZu to identify predicates.
 	Second, the sequence with the information about which tokens are predicates is handed to the DAMESRL model which predicts actual SRLs.
@@ -25,52 +27,76 @@ The core parts of the model are the following:
 	For this, there exist two approaches:
 	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
   \item[\textbf{Head module}] At last, the combined representation of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
-\end{itemize}
+\end{description}
 
 \section{BERT module}
 
-Since its publishing two years ago, BERT \citep{devlin2018bert} has often been called a ``turning-point'' in ML in NLP.
+Since its publishing two years ago, BERT \citep{devlin2018bert} has often been viewed as a
+``turning-point'' in ML in NLP. In the deep learning era 
 
-I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch through the hugging face library\cite{wolf2019transformers}.
+I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch
+through the hugging face library\cite{wolf2019transformers}.
+Throughout the training, the weights of the 
 
 \section{SRL Module}
 
-A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a given input text.\myfootnote{This may be one or multiple sentences.}
+A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a
+given input text.\myfootnote{This may be one or multiple sentences.}
 
-State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often implementing deep learning techniques, like RNNs or self-attention mechanisms, that render tedious feature engineering unnecessary.
-For my system, I implement the DAMESRL, a model presented by \cite{do2018flexible}.
-I use their pre-trained German Character-Attention model which, according to the authors, achieved an F1 score of 73.5\% on the CoNLL'09 task \citep{hajivc2009conll}.
-However, their SRL needs as input not only the sentence, but also ``its predicate $w_p$ as input'' \citep{do2018flexible}.
+State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often
+implementing deep learning techniques, like RNNs or self-attention mechanisms, that render
+tedious feature engineering unnecessary.  For my system, I implement the DAMESRL, a model
+presented by \cite{do2018flexible}.  I use their pre-trained German Character-Attention
+model which, according to the authors, achieved an F1 score of 73.5\% on the CoNLL'09 task
+\citep{hajivc2009conll}.  However, their SRL needs as input not only the sentence, but also
+``its predicate $w_p$ as input'' \citep{do2018flexible}.
 
-``A major advantage of dependency grammars is their ability to deal with languages that are morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
-For extracting predicates, I rely on the dependency tree the ParZu parser \cite{sennrich2013exploiting} generates for a given sentence.
-Given the parsed sentence, I have to decide what tokens in it are predicates, and which are not.
-While this may seem like a straightforward task --- just find the verb as in a simple sentence like ``He \emph{ate} the apple.'' ---, there are actually a few caveats (predicates are emphasised):
-(1) There may be no predicates at all: ``What a day!''. (2) There might be more than one predicate: ``We \emph{saw} her \emph{leave} the room''. (3) Not all verbs might be predicates: ``I can \emph{hear} you''.
-In the following section, I will describe how I tackle these problems by making use of parsing information from ParZu.
+``A major advantage of dependency grammars is their ability to deal with languages that are
+morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
+For extracting predicates, I rely on the dependency tree the ParZu parser
+\cite{sennrich2013exploiting} generates for a given sentence.  Given the parsed sentence, I
+have to decide what tokens in it are predicates, and which are not.  While this may seem like
+a straightforward task --- just find the verb as in a simple sentence like ``He \emph{ate}
+the apple.'' ---, there are actually a few caveats (predicates are emphasised): (1) There
+may be no predicates at all: ``What a day!''. (2) There might be more than one predicate:
+``We \emph{saw} her \emph{leave} the room''. (3) Not all verbs might be predicates: ``I can
+\emph{hear} you''.  In the following section, I will describe how I tackle these problems by
+making use of parsing information from ParZu.
 
 \subsection{Finding Predicates}
 
-It is a known problem in the analysis of semantic roles that a proper procedure for predicate identification is a hard to tackle problem, consider e.g. the discussion concerning so called light verbs: \cite{wittenberg2016light}.
+It is a known problem in the analysis of semantic roles that a proper procedure for predicate
+identification is a hard to tackle problem, consider e.g. the discussion concerning so called
+light verbs: \cite{wittenberg2016light}.
 
-``First, the predicates which assign semantic roles to the constituents are identified prior to semantic role labelling proper. They are usually identified as the main verbs which head clauses.'' \citep[p.~74]{samardzic2013dynamics}
-In a dependency framework like the Universal Stanford Dependencies (USD) \citep{de2014universal}, which explicitly sets the content verb as root, identification of the relevant predicate is straightforward:
-One has simply to look at the dependency parse tree of a given sentence and select the heads --- i.e. roots --- of the clauses.
-However, the ParZu parser models not content words as heads but function words.\myfootnote{This follows general dependency frameworks proposed for German, e.g. \cite{gerdes2001word, gross2015dependency}.}
+``First, the predicates which assign semantic roles to the constituents are identified
+prior to semantic role labelling proper. They are usually identified as the main verbs
+which head clauses.'' \citep[p.~74]{samardzic2013dynamics} In a dependency framework like
+the Universal Stanford Dependencies (USD) \citep{de2014universal}, which explicitly sets
+the content verb as root, identification of the relevant predicate is straightforward: One
+has simply to look at the dependency parse tree of a given sentence and select the heads ---
+i.e. roots --- of the clauses.  However, the ParZu parser models not content words as heads
+but function words.\myfootnote{This follows general dependency frameworks proposed for German,
+e.g. \cite{gerdes2001word, gross2015dependency}.}
 
-(interestingly, this stands in contrast to the Pro3Gres parser \citep{schneider2008hybrid} which 
+(interestingly, this stands in contrast to the Pro3Gres parser \citep{schneider2008hybrid} which
 
 ``In a constituency parse, the finite verb is the head of a verb phrase or rather sentence.
-A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore finite verbs are usually not the head of the sentence.
-Hence, the head of a sentence typically is the verb containing the meaning.
-In that sense, dependency structures are closer to the semantics of a sentence.'' \citep[p.~6f.]{aepli2018parsing}
+A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore
+finite verbs are usually not the head of the sentence.  Hence, the head of a sentence typically
+is the verb containing the meaning.  In that sense, dependency structures are closer to the
+semantics of a sentence.'' \citep[p.~6f.]{aepli2018parsing}
 
-According to the USD, function words are subordinated to content words, which means that in a sentence ``He was hit by a ball.'', the infinite participle \textit{hit} would be analysed as root, not the finitely inflected \textit{was}.
-This is an accordance with the view that XXXXXXXXXX
-However, there is a ``substantial amount of evidence [that] delivers a strong argument for the \textelp{} approach, which subordinates full verbs to auxiliaries'' \cite{gross2015dependency}.
+According to the USD, function words are subordinated to content words, which means that
+in a sentence ``He was hit by a ball.'', the infinite participle \textit{hit} would be
+analysed as root, not the finitely inflected \textit{was}.  This is an accordance with the
+view that XXXXXXXXXX However, there is a ``substantial amount of evidence [that] delivers a
+strong argument for the \textelp{} approach, which subordinates full verbs to auxiliaries''
+\cite{gross2015dependency}.
 
-``The parsing scheme that USD advocates takes the division between function word and content word as its guiding principle.
-One major difficulty with doing this is that the dividing line between function word and content word is often not clear.'' \cite{gross2015dependency}
+``The parsing scheme that USD advocates takes the division between function word and content
+word as its guiding principle.  One major difficulty with doing this is that the dividing line
+between function word and content word is often not clear.'' \cite{gross2015dependency}
 
 
 Following \cite{foth2006umfassende}
@@ -90,14 +116,20 @@ Following \cite{foth2006umfassende}
 	\item Die Klage wurde abgewiesen, was als Sieg beschrieben werden kann.
 \end{examples}
 
-whose dependency parse tree is shown in \reffig{fig:example-parzu}:
-This sentence has five verbs in it, \textit{wurde}, \textit{abgewiesen}, \textit{beschrieben}, \textit{werden}, and \textit{kann} (POS-tag ``V'' in the second row), but only two of them are relevant predicates, i.e. predicates that carry ``true'' semantics.
+whose dependency parse tree is shown in \reffig{fig:example-parzu}: This sentence has five
+verbs in it, \textit{wurde}, \textit{abgewiesen}, \textit{beschrieben}, \textit{werden}, and
+\textit{kann} (POS-tag ``V'' in the second row), but only two of them are relevant predicates,
+i.e. predicates that carry ``true'' semantics.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-\fig{images/exampleParzu2.png}{fig:example-parzu}{Example dependency parse tree for a sentence with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
+\fig{images/exampleParzu2.png}{fig:example-parzu}{Example dependency parse tree for a sentence
+with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
 
-I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence is or isn't a predicate using a heuristic, relying on the token's POS tag that the parser predicts.
-The ParZu parser's default output follows the CoNLL scheme \citep{buchholz2006conll} which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) and fine-grained (POSTAG), where the POSTAG corresponds to the token's STTS tag \citep{schiller1999guidelines}.
+I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence
+is or isn't a predicate using a heuristic, relying on the token's POS tag that the parser
+predicts.  The ParZu parser's default output follows the CoNLL scheme \citep{buchholz2006conll}
+which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) and fine-grained
+(POSTAG), where the POSTAG corresponds to the token's STTS tag \citep{schiller1999guidelines}.
 
 \begin{algorithm}
 \caption{Predicate finding algorithm}
@@ -138,6 +170,9 @@ This is obviously false.
 Taking into account the above considerations, we see that although \textit{führt} points to \textit{weitergeleitet}, its edge label is \textit{rel} --- which means that it's the head of a relative subclause --- therefore it is not anymore in the same subclause and \textit{weitergeleitet} gets labelled as predicate.
 
 \subsection{Ensuring Tokenization Equivalence}
+
+One of the major difficulties I ran into, was the tokenization differences between different parsers.
+More precisely, after 
 
 \subsection{DAMESRL}
 

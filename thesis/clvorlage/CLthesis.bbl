@@ -1,4 +1,4 @@
-\begin{thebibliography}{41}
+\begin{thebibliography}{45}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -47,6 +47,15 @@ Q.~N.~T. Do, A.~Leeuwenberg, G.~Heyman, and M.~F. Moens.
   different languages.
 \newblock In \emph{Proceedings of the 27th International Conference on
   Computational Linguistics: System Demonstrations}, pages 161--165, 2018.
+
+\bibitem[Dror et~al.(2018)Dror, Baumer, Shlomov, and
+  Reichart]{dror2018hitchhiker}
+R.~Dror, G.~Baumer, S.~Shlomov, and R.~Reichart.
+\newblock The hitchhiker’s guide to testing statistical significance in
+  natural language processing.
+\newblock In \emph{Proceedings of the 56th Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, pages 1383--1392,
+  2018.
 
 \bibitem[Foth(2006)]{foth2006umfassende}
 K.~A. Foth.
@@ -106,6 +115,12 @@ D.~Jurafsky and J.~H. Martin.
 \newblock Speech and language processing (draft). october 2019.
 \newblock \emph{URL https://web. stanford. edu/\~{} jurafsky/slp3}, 2019.
 
+\bibitem[Koehn(2004)]{koehn2004statistical}
+P.~Koehn.
+\newblock Statistical significance tests for machine translation evaluation.
+\newblock In \emph{Proceedings of the 2004 conference on empirical methods in
+  natural language processing}, pages 388--395, 2004.
+
 \bibitem[Kracht(2007)]{kracht2007introduction}
 M.~Kracht.
 \newblock Introduction to linguistics.
@@ -124,6 +139,10 @@ T.~Mikolov, I.~Sutskever, K.~Chen, G.~S. Corrado, and J.~Dean.
   compositionality.
 \newblock In \emph{Advances in neural information processing systems}, pages
   3111--3119, 2013.
+
+\bibitem[Morgan(2005)]{morgan2005statistical}
+W.~Morgan.
+\newblock Statistical hypothesis tests for nlp, 2005.
 
 \bibitem[Myagmar et~al.(2019)Myagmar, Li, and Kimura]{myagmar2019transferable}
 B.~Myagmar, J.~Li, and S.~Kimura.
@@ -255,6 +274,12 @@ Y.~Yang, Y.~Zhang, C.~Tar, and J.~Baldridge.
 \newblock Paws-x: A cross-lingual adversarial dataset for paraphrase
   identification.
 \newblock \emph{arXiv preprint arXiv:1908.11828}, 2019.
+
+\bibitem[Yeh(2000)]{yeh2000more}
+A.~Yeh.
+\newblock More accurate tests for the statistical significance of result
+  differences.
+\newblock \emph{arXiv preprint cs/0008005}, 2000.
 
 \bibitem[Zhang et~al.(2019{\natexlab{a}})Zhang, Baldridge, and
   He]{zhang2019paws}
