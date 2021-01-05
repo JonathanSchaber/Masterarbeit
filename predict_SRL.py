@@ -34,8 +34,9 @@ class SRL_predictor:
     @staticmethod
     def create_dsrl_repr(sentences):
         """Wraps the POS-labelled tokens into a DSRL class
+
         Args:
-            param1: list of lists of 2-tuples of strings [ (<token>, <POS>), ... ]
+            param1: list of lists of 2-tuples of strings [ (<token>, <POS>), …]
         Returns:
             DSRL class Text()
         """
@@ -45,14 +46,14 @@ class SRL_predictor:
             dsrl_sentence = Sentence(
                                 [Word(tuple[0])
                                     if tuple[1] != "PRED"
-                                    else Predicate(Word(tuple[0])) 
+                                    else Predicate(Word(tuple[0]))
                                     for tuple in sentence]
                                 )
             dsrl_text.append(dsrl_sentence)
-        
+
         for sentence in dsrl_text:
             for predicate in sentence.get_predicates():
-                predicate.arguments = ["**UNK**" for word in sentence] 
+                predicate.arguments = ["**UNK**" for word in sentence]
 
         return dsrl_text
 
@@ -74,11 +75,12 @@ class SRL_predictor:
                     else:
                         break
                 merged_sent.append("".join(current_word))
-                
+
         return merged_sent
 
     def create_ParZu_parser(self):
         """Create an ParZu-parser object
+
         Args:
             None
         Returns:
@@ -101,12 +103,12 @@ class SRL_predictor:
             if token[3] == "V" and token[6] == verb[0] and not token[7] in self.subclause_marker:
                 FLAG = False
                 break
-                
+
         return FLAG
 
     def parse_text(self, text: str) -> List[List[Tuple[str, str]]]:
         """Parse sentence and return list of tuples with token and POS-tags
-        
+
         Problem: We have to make sure that the tokenization of ParZu matches
         exactly the merged tokenization of BERT, since we need to align (sub-)
         tokens correctly.
@@ -114,7 +116,7 @@ class SRL_predictor:
         predicates on a merged BERT-tokenization of this text -> feed this to
         the DAMESRL.
         TODO: check if performance drops through this!
-        
+
         Args:
             text: text to parse
         Returns:
@@ -192,7 +194,7 @@ class SRL_predictor:
 
     def predict_semRoles(self, text: str) -> List[List[List[str]]]:
         """returns list of lists of SRL-tag per token
-        
+
         Args:
             text: DAMESRL DSRL() object
         Returns:
@@ -223,15 +225,15 @@ class SRL_predictor:
                 sent_list.append(["0"]*len(sent))
             else:
                 for predicate in sent.get_predicates():
-                    sent_list.append(predicate.arguments) 
+                    sent_list.append(predicate.arguments)
             srl_list.append(sent_list)
-            
+
         return srl_list
 
 
     def pretty_print(self, text: str):
         """Prints pretty predicted semantic roles for a given sentence.
-        
+
         Args:
             text: list of lists of tuples of strings
         """
@@ -243,4 +245,4 @@ class SRL_predictor:
             for i, token in enumerate(sent[1]):
                 print(token[0] + "\t" + "\t".join(srl[i] for srl in sent[0]))
             print("\n")
-                
+
