@@ -38,29 +38,29 @@ def parse_cmd_args():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
-            "-c", 
-            "--config", 
-            type=str, 
+            "-c",
+            "--config",
+            type=str,
             help="Path to hyperparamter/config file (json)"
             )
     parser.add_argument(
-            "-d", 
-            "--data_set", 
-            type=str, 
+            "-d",
+            "--data_set",
+            type=str,
             help="Indicate on which data set model should be trained",
             choices=["deISEAR", "XNLI", "MLQA", "SCARE", "PAWS-X", "XQuAD"]
             )
     parser.add_argument(
-            "-l", 
-            "--location", 
-            type=str, 
+            "-l",
+            "--location",
+            type=str,
             help="Indicate where model will be trained",
             choices=["local", "rattle"]
             )
     parser.add_argument(
-            "-s", 
-            "--stats_file", 
-            type=str, 
+            "-s",
+            "--stats_file",
+            type=str,
             help="Specify file for writing stats to",
             )
     return parser.parse_args()
@@ -233,7 +233,7 @@ class BertBase(nn.Module):
     #@staticmethod
     #def ensure_end_span_behind_start_span(batch_start_tensor, batch_end_tensor, device):
     #    """Set all probabilities up to start span to -inf for end spans.
-    #    
+    #
     #    Args:
     #        param1: tensor[tensor]
     #        param2: tensor[tensor]
@@ -241,7 +241,7 @@ class BertBase(nn.Module):
     #        tensor[tensor]
     #    """
     #    new_batch_tensor = []
-    #    
+    #
     #    for i, end_tensor in enumerate(batch_end_tensor):
     #        start_index = batch_start_tensor[i].max(0).indices.item()
     #        new_end_tensor = torch.cat(
@@ -408,7 +408,7 @@ class BertBase(nn.Module):
             a_srls, b_srls = self._get_AB_SRLs(srls)
             if not self.config["merge_subtokens"]:
                 a_srls, b_srls = (self._split_SRLs_to_subtokens(a_srls, split_idxs[0]),
-                                 self._split_SRLs_to_subtokens(b_srls, split_idxs[1])) 
+                                 self._split_SRLs_to_subtokens(b_srls, split_idxs[1]))
             one_a = self._concatenate_sents(a_srls)
             one_a = self._add_spec_srl(one_a, "[CLS]")
             one_b = self._concatenate_sents(b_srls)
@@ -464,7 +464,7 @@ class BertBase(nn.Module):
                 #import ipdb; ipdb.set_trace()
                 example = example[:length][:]
             lst = [example] + [dummy]*(length-len(example))
-            tensor = torch.cat(tuple(lst), dim=0) 
+            tensor = torch.cat(tuple(lst), dim=0)
             new_batch.append(tensor)
 
         new_batch = torch.stack(new_batch)
@@ -616,14 +616,14 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
 
         if self.config["combine_SRLs"]:
             #if data_type != 1:
-            #    a_srls, b_srls = _get_AB_SRLs(srls) 
+            #    a_srls, b_srls = _get_AB_SRLs(srls)
             #    if not self.config["merge_subtokens"]:
             #        a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
             #                        self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
             #    a_emb = self.srl_model(a_srls)
             #    b_emb = self.srl_model(b_srls)
             #    ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0)
             #                    for i in range(len(a_srls))]
             #else:
             #    srls = _get_A_SRLs(srls)
@@ -640,19 +640,19 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
             reshaped_last_hidden = torch.reshape(
                     combo_merge_batch,
                     (
-                        combo_merge_batch.shape[0], 
+                        combo_merge_batch.shape[0],
                         combo_merge_batch.shape[1]*combo_merge_batch.shape[2])
                     )
         else:
             reshaped_last_hidden = torch.reshape(
-                    hidden_state, 
+                    hidden_state,
                     (
-                        hidden_state.shape[0], 
+                        hidden_state.shape[0],
                         hidden_state.shape[1]*hidden_state.shape[2])
                     )
         linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
-        
+
         return proba
 
 
@@ -693,14 +693,14 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
 
         if self.config["combine_SRLs"]:
             #if data_type != 1:
-            #    a_srls, b_srls = _get_AB_SRLs(srls) 
+            #    a_srls, b_srls = _get_AB_SRLs(srls)
             #    if not self.config["merge_subtokens"]:
             #        a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
             #                        self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
             #    a_emb = self.srl_model(a_srls)
             #    b_emb = self.srl_model(b_srls)
             #    ab = lambda i: [a_emb[i], self.dummy_srl, b_emb[i]]
-            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0)
             #                    for i in range(len(a_srls))]
             #else:
             #    srls = _get_A_SRLs(srls)
@@ -719,19 +719,19 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
             reshaped_last_hidden = torch.reshape(
                     combo_merge_batch,
                     (
-                        combo_merge_batch.shape[0], 
+                        combo_merge_batch.shape[0],
                         combo_merge_batch.shape[1]*combo_merge_batch.shape[2])
                     )
         else:
             reshaped_last_hidden = torch.reshape(
-                    hidden_state, 
+                    hidden_state,
                     (
-                        hidden_state.shape[0], 
+                        hidden_state.shape[0],
                         hidden_state.shape[1]*hidden_state.shape[2])
                     )
         linear_output = self.linear(reshaped_last_hidden)
         proba = self.softmax(linear_output)
-        
+
         return proba
 
 
@@ -750,7 +750,7 @@ class gliBertClassifierGRU(BertBase):
                 num_layers=2,
                 bias=True,
                 batch_first=True,
-                dropout=config["dropout"],
+                dropout=config["GRU_head_dropout"],
                 bidirectional=True
                 )
         self.linear = nn.Linear(2*config["GRU_head_hidden_size"], num_classes)
@@ -775,14 +775,14 @@ class gliBertClassifierGRU(BertBase):
 
         if self.config["combine_SRLs"]:
             #if data_type != 1:
-                #a_srls, b_srls = _get_AB_SRLs(srls) 
+                #a_srls, b_srls = _get_AB_SRLs(srls)
                 #if not self.config["merge_subtokens"]:
                     #a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
                                     #self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
                 #a_emb = self.srl_model(a_srls)
                 #b_emb = self.srl_model(b_srls)
                 #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-                #srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+                #srl_emb = [torch.cat(tuple(ab(i)), dim=0)
                                 #for i in range(len(a_srls))]
             #else:
                 #srls = _get_A_SRLs(srls)
@@ -818,7 +818,7 @@ class gliBertClassifierGRU(BertBase):
         comb = torch.cat((last_hidden_fwd, last_hidden_bwd), dim=1)
         linear_output = self.linear(comb)
         proba = self.softmax(linear_output)
-        
+
         return proba
 
 
@@ -862,17 +862,16 @@ class gliBertClassifierCNN(BertBase):
                                         device)
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
-
         if self.config["combine_SRLs"]:
             #if data_type != 1:
-            #    a_srls, b_srls = _get_AB_SRLs(srls) 
+            #    a_srls, b_srls = _get_AB_SRLs(srls)
             #    if not self.config["merge_subtokens"]:
             #        a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
             #                        self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
             #    a_emb = self.srl_model(a_srls)
             #    b_emb = self.srl_model(b_srls)
             #    ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            #    srl_emb = [torch.cat(tuple(ab(i)), dim=0)
             #                    for i in range(len(a_srls))]
             #else:
             #    srls = _get_A_SRLs(srls)
@@ -898,7 +897,7 @@ class gliBertClassifierCNN(BertBase):
         linear_output = self.linear(cnn_output)
         proba = self.softmax(linear_output)
         proba = torch.stack([torch.squeeze(tensor) for tensor in proba])
-        
+
         return proba
 
 
@@ -937,14 +936,14 @@ class gliBertSpanPrediction(BertBase):
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
-            # a_srls, b_srls = _get_AB_SRLs(srls) 
+            # a_srls, b_srls = _get_AB_SRLs(srls)
             # if not self.config["merge_subtokens"]:
             #     a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
             #                     self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
             # a_emb = self.srl_model(a_srls)
             # b_emb = self.srl_model(b_srls)
             # ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-            # srl_emb = [torch.cat(tuple(ab(i)), dim=0) 
+            # srl_emb = [torch.cat(tuple(ab(i)), dim=0)
             #                 for i in range(len(a_srls))]
             srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
@@ -957,13 +956,13 @@ class gliBertSpanPrediction(BertBase):
         start_logits, end_logits = linear_output.split(1, dim=-1)
         start_span = self.softmax(start_logits)
         end_span = self.softmax(end_logits)
-        
+
         return start_span, end_span
 
 
 def write_stats(stats_file, training_stats, training_results):
     """checks if outfile specified, if yes, writes stats to it
-    
+
     Args:
         stats_file: filepath to stats_file
         training_stats: statistics of training
@@ -1077,7 +1076,7 @@ def batch_idcs(len_dataset, batch_size):
         current_idx += batch_size
 
     random.shuffle(batch_idcs)
-    
+
     return batch_idcs
 
 
@@ -1134,8 +1133,8 @@ def fine_tune_BERT(config):
         )
 
     total_steps = len(train_idcs) * epochs
-    # scheduler = get_linear_schedule_with_warmup(
-    scheduler = get_cosine_with_hard_restarts_schedule_with_warmup(
+    scheduler = get_linear_schedule_with_warmup(
+    # scheduler = get_cosine_with_hard_restarts_schedule_with_warmup(
             optimizer,
             num_warmup_steps=0,
             num_training_steps=total_steps
@@ -1172,7 +1171,7 @@ def fine_tune_BERT(config):
 
 
             outputs = model(
-                        b_input_ids, 
+                        b_input_ids,
                         attention_mask=b_attention_mask,
                         token_type_ids=b_token_type_ids,
                         srls = b_srls_idx,
