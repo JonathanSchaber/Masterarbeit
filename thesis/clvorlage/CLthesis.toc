@@ -52,40 +52,40 @@
 \contentsline {section}{\numberline {4.3}SRL Module}{29}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{30}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{33}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{33}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}GRU}{33}{subsection.4.3.4}
-\contentsline {section}{\numberline {4.4}Fusion Module}{33}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Embedding the SRLs}{33}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Aligning BERT with SRLs}{34}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Head}{34}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Question Answering}{34}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Classifiction}{34}{subsection.4.5.2}
-\contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{35}{subsubsection.4.5.2.1}
-\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{36}{subsubsection.4.5.2.2}
-\contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{36}{subsubsection.4.5.2.3}
-\contentsline {subsubsection}{\numberline {4.5.2.4}CNN}{36}{subsubsection.4.5.2.4}
-\contentsline {chapter}{\numberline {5}Results}{37}{chapter.5}
-\contentsline {section}{\numberline {5.1}SRL Evaluation}{37}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}deISEAR}{37}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Example 1}{37}{subsubsection.5.1.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.2}Example 2}{37}{subsubsection.5.1.1.2}
-\contentsline {subsection}{\numberline {5.1.2}PAWS-X}{37}{subsection.5.1.2}
-\contentsline {subsubsection}{\numberline {5.1.2.1}Example 1}{38}{subsubsection.5.1.2.1}
-\contentsline {subsubsection}{\numberline {5.1.2.2}Example 2}{39}{subsubsection.5.1.2.2}
-\contentsline {subsubsection}{\numberline {5.1.2.3}Example 3}{41}{subsubsection.5.1.2.3}
-\contentsline {subsubsection}{\numberline {5.1.2.4}Example 4}{41}{subsubsection.5.1.2.4}
-\contentsline {subsubsection}{\numberline {5.1.2.5}Example 5}{41}{subsubsection.5.1.2.5}
-\contentsline {subsubsection}{\numberline {5.1.2.6}Example 6}{42}{subsubsection.5.1.2.6}
-\contentsline {subsubsection}{\numberline {5.1.2.7}Example 7}{42}{subsubsection.5.1.2.7}
-\contentsline {subsubsection}{\numberline {5.1.2.8}Example 8}{42}{subsubsection.5.1.2.8}
-\contentsline {section}{\numberline {5.2}Data Set Results}{42}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Testing for Statistical Significance}{42}{subsection.5.2.1}
-\contentsline {subsubsection}{\numberline {5.2.1.1}Example Case for XNLI}{43}{subsubsection.5.2.1.1}
-\contentsline {chapter}{\numberline {6}Conclusion}{46}{chapter.6}
-\contentsline {chapter}{Glossary}{47}{section*.14}
-\contentsline {chapter}{References}{48}{section*.16}
-\contentsline {chapter}{Lebenslauf}{52}{section*.18}
+\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{35}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}GRU}{35}{subsection.4.3.4}
+\contentsline {section}{\numberline {4.4}Fusion Module}{35}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Embedding the SRLs}{35}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Aligning BERT subtokens with SRL tokens}{35}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Head}{36}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Question Answering}{36}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Classifiction}{36}{subsection.4.5.2}
+\contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{37}{subsubsection.4.5.2.1}
+\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{38}{subsubsection.4.5.2.2}
+\contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{38}{subsubsection.4.5.2.3}
+\contentsline {subsubsection}{\numberline {4.5.2.4}CNN}{38}{subsubsection.4.5.2.4}
+\contentsline {chapter}{\numberline {5}Results}{39}{chapter.5}
+\contentsline {section}{\numberline {5.1}SRL Evaluation}{39}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}deISEAR}{39}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Example 1}{39}{subsubsection.5.1.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.2}Example 2}{39}{subsubsection.5.1.1.2}
+\contentsline {subsection}{\numberline {5.1.2}PAWS-X}{39}{subsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2.1}Example 1}{40}{subsubsection.5.1.2.1}
+\contentsline {subsubsection}{\numberline {5.1.2.2}Example 2}{41}{subsubsection.5.1.2.2}
+\contentsline {subsubsection}{\numberline {5.1.2.3}Example 3}{43}{subsubsection.5.1.2.3}
+\contentsline {subsubsection}{\numberline {5.1.2.4}Example 4}{43}{subsubsection.5.1.2.4}
+\contentsline {subsubsection}{\numberline {5.1.2.5}Example 5}{43}{subsubsection.5.1.2.5}
+\contentsline {subsubsection}{\numberline {5.1.2.6}Example 6}{44}{subsubsection.5.1.2.6}
+\contentsline {subsubsection}{\numberline {5.1.2.7}Example 7}{44}{subsubsection.5.1.2.7}
+\contentsline {subsubsection}{\numberline {5.1.2.8}Example 8}{44}{subsubsection.5.1.2.8}
+\contentsline {section}{\numberline {5.2}Data Set Results}{44}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Testing for Statistical Significance}{44}{subsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.1.1}Example Case for XNLI}{45}{subsubsection.5.2.1.1}
+\contentsline {chapter}{\numberline {6}Conclusion}{48}{chapter.6}
+\contentsline {chapter}{Glossary}{49}{section*.14}
+\contentsline {chapter}{References}{50}{section*.16}
+\contentsline {chapter}{Lebenslauf}{54}{section*.18}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{53}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{54}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{55}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{56}{appendix.B}

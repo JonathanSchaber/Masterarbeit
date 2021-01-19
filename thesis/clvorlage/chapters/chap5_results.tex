@@ -195,23 +195,34 @@ when in reality, they tend to produce ``positively correlated results''. \citep{
 
 \subsubsection{Example Case for XNLI}
 
-Let's consider the case for the merged subtokens setting in the resampled XNLI data set. The test
-set contains 1,125 sentence pairs fr which textual entailment must be predicted. From these 1,125
+
+Let's consider the case for the non-merged subtokens setting in the resampled XNLI data set. The test
+set contains 1,125 sentence pairs for which textual entailment must be predicted. From these 1,125
 sentence pairs, 398 bear the gold label \emph{contradiction}, 357 are labeled \emph{entailment},
 and 370 are \emph{neutral}; so, the class distribution of the set is fairly balanced.
 
-I trained and optimized five algorithms for two architectures on the training and development
-set of XNLI: One architecture is the plain ``vanilla'' GRU classifier described in section
-XXX, the other is the same GRU architecture enriched with embedded SRLs. The ``vanilla''
-system ensemble achieved an accuracy of 66,84\% on the XNLI test set, while the SRL enriched
-ensemble scored a 67,64\% --- in other words, the SRL enchriched ensemble performed 0,80\%
-better than the ``vanilla'' ensemble.
+I trained and optimized five systems for two architectures on the training and development set
+of XNLI: One architecture is the plain ``vanilla'' GRU classifier described in section XXX, the
+other is the same GRU architecture enriched with embedded SRLs (implementing the duplication
+approach, described in section XXX). The ``vanilla'' system ensemble achieved an accuracy of
+66,58\% on the XNLI test set, while the SRL enriched ensemble scored a 68,27\% --- in other
+words, the SRL enchriched ensemble performed 1,69\% better than the ``vanilla'' ensemble.
 
 To check if this difference truly measures the supremacy of the latter model over the first, I
 apply the above described algorithm \ref{alg:approximate-randomization} for testing significance
 by permuting the actual ensemble predictions. Note that both ensemble models were equally
-right or wrong in 1,034 cases out of 1,125.  From this follows, in consequence, that in 92,89\%
+right or wrong in 1,018 cases out of 1,125.  From this follows, in consequence, that in 90,49\%
 of the cases the flipping of predictions between the ensemble models will have no effect.
+
+Result p = 4.80\%
+
+In contrary, if we compare this results to the zero implementation of SRLs, we observe something
+different: The accuracy of this ensemble was slightly lower than the duplicate architecture;
+namely 67,73\% or, speaking in differences, 1.15\% better than the vanilly ensemble. The
+number of equally right or wrong examples was also slightly lower --- 1,010 examples were
+equally wrong or correct predicted by the systems.
+
+Result zeros p = 14.09\%
 
 
 %%\section{BLEU Scores}
@@ -233,7 +244,7 @@ of the cases the flipping of predictions between the ensemble models will have n
 %
 %\section{Evaluation}
 %\label{sec:5_evaluation}
-%We saw in section \ref{sec:5_bleuscores} 
+%We saw in section \ref{sec:5_bleuscores}
 %
 %We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
 %

@@ -51,7 +51,7 @@
 \BOOKMARK [2][-]{subsection.4.3.4}{GRU}{section.4.3}% 51
 \BOOKMARK [1][-]{section.4.4}{Fusion Module}{chapter.4}% 52
 \BOOKMARK [2][-]{subsection.4.4.1}{Embedding the SRLs}{section.4.4}% 53
-\BOOKMARK [2][-]{subsection.4.4.2}{Aligning BERT with SRLs}{section.4.4}% 54
+\BOOKMARK [2][-]{subsection.4.4.2}{Aligning BERT subtokens with SRL tokens}{section.4.4}% 54
 \BOOKMARK [1][-]{section.4.5}{Head}{chapter.4}% 55
 \BOOKMARK [2][-]{subsection.4.5.1}{Question Answering}{section.4.5}% 56
 \BOOKMARK [2][-]{subsection.4.5.2}{Classifiction}{section.4.5}% 57

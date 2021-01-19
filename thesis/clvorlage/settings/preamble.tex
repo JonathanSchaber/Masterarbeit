@@ -28,6 +28,9 @@
 \usepackage{hhline}
 \usepackage{multicol}
 \usepackage{pdflscape}
+\usepackage{siunitx}
+\usepackage{textcomp}
+\usepackage{tabularx}
 \makesavenoteenv{tabular}
 \makesavenoteenv{table}
 
@@ -52,7 +55,7 @@
 \newcounter{mytable}
 \renewcommand{\thetable}{\arabic{mytable}}
 \usepackage{makeidx} \makeindex
-\makeglossary 
+\makeglossary
 
 
 % Formatierung von Referenzen
@@ -69,18 +72,18 @@
 
 % Definition vom Seitenlayout
 \setlength{\topmargin}{-1.2cm}
-\setlength{\oddsidemargin}{0.5cm} 
+\setlength{\oddsidemargin}{0.5cm}
 \setlength{\evensidemargin}{0.5cm}
 
-\setlength{\textheight}{24.5cm} 
+\setlength{\textheight}{24.5cm}
 \setlength{\textwidth}{15cm}
 
-\setlength{\footskip}{1.2cm} 
+\setlength{\footskip}{1.2cm}
 \setlength{\footnotesep}{0.4cm}
 
 % Definition vom Header und Footer im Seitenlayout
-\usepackage{fancyhdr} 
-\pagestyle{fancy} 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 \fancyhf{}
 
 % Linien nach dem Header und vor dem Footer
@@ -93,7 +96,7 @@
 
 % Plain Pagestyle für Kapitelanfangsseite
 \fancypagestyle{plain}{%
-  \fancyhf{} 
+  \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
   \fancyfoot[C]{\footnotesize{\thepage}}
 }
@@ -125,7 +128,7 @@
 \newcommand{\figtable}[4]{
   \begin{figure}[h]
     \begin{center}
-      {  
+      {
 	\footnotesize
 	\sffamily
 	#3
@@ -140,7 +143,7 @@
 \newcommand{\tab}[4]{
   \begin{table}[h]
     \begin{center}
-      {  
+      {
 	\footnotesize
 	\sffamily
 	\renewcommand{\arraystretch}{1.4}
@@ -166,9 +169,9 @@
 \floatplacement{fexample}{htbp}
 
 % Definition des Nummerierungslevel
-\setcounter{secnumdepth}{4} 
-\setcounter{tocdepth}{4} 
-\setcounter{lofdepth}{1} 
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\setcounter{lofdepth}{1}
 
 % Definition von Paragraphen
 \parskip=0.3cm
