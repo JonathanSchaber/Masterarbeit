@@ -58,27 +58,26 @@
 \BOOKMARK [3][-]{subsubsection.4.5.2.1}{[CLS]}{subsection.4.5.2}% 58
 \BOOKMARK [3][-]{subsubsection.4.5.2.2}{Fully-Connected Feed Forward}{subsection.4.5.2}% 59
 \BOOKMARK [3][-]{subsubsection.4.5.2.3}{GRU}{subsection.4.5.2}% 60
-\BOOKMARK [3][-]{subsubsection.4.5.2.4}{CNN}{subsection.4.5.2}% 61
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 62
-\BOOKMARK [1][-]{section.5.1}{SRL Evaluation}{chapter.5}% 63
-\BOOKMARK [2][-]{subsection.5.1.1}{deISEAR}{section.5.1}% 64
-\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example 1}{subsection.5.1.1}% 65
-\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Example 2}{subsection.5.1.1}% 66
-\BOOKMARK [2][-]{subsection.5.1.2}{PAWS-X}{section.5.1}% 67
-\BOOKMARK [3][-]{subsubsection.5.1.2.1}{Example 1}{subsection.5.1.2}% 68
-\BOOKMARK [3][-]{subsubsection.5.1.2.2}{Example 2}{subsection.5.1.2}% 69
-\BOOKMARK [3][-]{subsubsection.5.1.2.3}{Example 3}{subsection.5.1.2}% 70
-\BOOKMARK [3][-]{subsubsection.5.1.2.4}{Example 4}{subsection.5.1.2}% 71
-\BOOKMARK [3][-]{subsubsection.5.1.2.5}{Example 5}{subsection.5.1.2}% 72
-\BOOKMARK [3][-]{subsubsection.5.1.2.6}{Example 6}{subsection.5.1.2}% 73
-\BOOKMARK [3][-]{subsubsection.5.1.2.7}{Example 7}{subsection.5.1.2}% 74
-\BOOKMARK [3][-]{subsubsection.5.1.2.8}{Example 8}{subsection.5.1.2}% 75
-\BOOKMARK [1][-]{section.5.2}{Data Set Results}{chapter.5}% 76
-\BOOKMARK [2][-]{subsection.5.2.1}{Testing for Statistical Significance}{section.5.2}% 77
-\BOOKMARK [3][-]{subsubsection.5.2.1.1}{Example Case for XNLI}{subsection.5.2.1}% 78
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 79
-\BOOKMARK [0][-]{section*.14}{Glossary}{}% 80
-\BOOKMARK [0][-]{section*.16}{References}{}% 81
-\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 82
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 83
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 84
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 61
+\BOOKMARK [1][-]{section.5.1}{SRL Evaluation}{chapter.5}% 62
+\BOOKMARK [2][-]{subsection.5.1.1}{deISEAR}{section.5.1}% 63
+\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example 1}{subsection.5.1.1}% 64
+\BOOKMARK [3][-]{subsubsection.5.1.1.2}{Example 2}{subsection.5.1.1}% 65
+\BOOKMARK [2][-]{subsection.5.1.2}{PAWS-X}{section.5.1}% 66
+\BOOKMARK [3][-]{subsubsection.5.1.2.1}{Example 1}{subsection.5.1.2}% 67
+\BOOKMARK [3][-]{subsubsection.5.1.2.2}{Example 2}{subsection.5.1.2}% 68
+\BOOKMARK [3][-]{subsubsection.5.1.2.3}{Example 3}{subsection.5.1.2}% 69
+\BOOKMARK [3][-]{subsubsection.5.1.2.4}{Example 4}{subsection.5.1.2}% 70
+\BOOKMARK [3][-]{subsubsection.5.1.2.5}{Example 5}{subsection.5.1.2}% 71
+\BOOKMARK [3][-]{subsubsection.5.1.2.6}{Example 6}{subsection.5.1.2}% 72
+\BOOKMARK [3][-]{subsubsection.5.1.2.7}{Example 7}{subsection.5.1.2}% 73
+\BOOKMARK [3][-]{subsubsection.5.1.2.8}{Example 8}{subsection.5.1.2}% 74
+\BOOKMARK [1][-]{section.5.2}{Data Set Results}{chapter.5}% 75
+\BOOKMARK [2][-]{subsection.5.2.1}{Testing for Statistical Significance}{section.5.2}% 76
+\BOOKMARK [3][-]{subsubsection.5.2.1.1}{Example Case for XNLI}{subsection.5.2.1}% 77
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 78
+\BOOKMARK [0][-]{section*.14}{Glossary}{}% 79
+\BOOKMARK [0][-]{section*.16}{References}{}% 80
+\BOOKMARK [0][-]{section*.18}{Lebenslauf}{}% 81
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 82
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 83
