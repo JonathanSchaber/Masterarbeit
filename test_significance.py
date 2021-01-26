@@ -130,7 +130,7 @@ def permute_with_replacement(treatment: List[bool], control: List[bool], R: int=
 
     print("r:", r)
     print("R:", R)
-    print("(r+1)/(R+1):", round((r+1)/(R+1), 4))
+    print("(r+1)/(R+1):", round((r+1)/(R+1), 5))
 
 def main():
     args = parse_cmd_args()
@@ -140,17 +140,21 @@ def main():
     treatment_jsons = read_in_files(treatment_files, args.delete_result_files)
     control_jsons = read_in_files(control_files, args.delete_result_files)
 
+    qa_flag = True if control_jsons[0][0][0]["data set"] in ["XQuAD", "MLQA"] else False
+
+    #TODO: IMPLEMENT QA SETS
+
     treatment, control = [], []
     treatment_tf, control_tf = [], []
     treatment_dict, control_dict, gold_dict, gold_dict2 = {}, {}, {}, {}
     for file_pair in treatment_jsons:
             _, results_file = file_pair
-            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file, qa_flag=False)
+            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file, qa_flag)
             test = results_file[true_best_epoch][str(true_best_epoch)]["test"]
             treatment.append(test)
     for file_pair in control_jsons:
             _, results_file = file_pair
-            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file, qa_flag=False)
+            true_best_epoch, true_best_dev = get_true_best_dev_epoch(results_file, qa_flag)
             test = results_file[true_best_epoch][str(true_best_epoch)]["test"]
             control.append(test)
     for results in treatment:
@@ -161,6 +165,7 @@ def main():
     treatment_ensemble = {key: max(value, key=value.count) for key, value in treatment_dict.items()}
     control_ensemble = {key: max(value, key=value.count) for key, value in control_dict.items()}
 
+    # build the True (1) False (0) lists
     for i in sorted(gold_dict.items()):
         if treatment_ensemble[i[0]] == i[1]:
             treatment_tf.append(1)
@@ -171,15 +176,16 @@ def main():
         else:
             control_tf.append(0)
 
-    # import ipdb; ipdb.set_trace()
+    import ipdb; ipdb.set_trace()
     print("")
     print("Permute with replacement:")
     permute_with_replacement(treatment_tf, control_tf, args.R)
-    print("")
-    print("Permute without replacement:")
-    permute_without_replacement(treatment_tf, control_tf, args.R)
+    # print("")
+    # print("Permute without replacement:")
+    # permute_without_replacement(treatment_tf, control_tf, args.R)
 
 
 
 if __name__ == "__main__":
     main()
+
