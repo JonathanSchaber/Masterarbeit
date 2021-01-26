@@ -18,14 +18,14 @@ def parse_cmd_args():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
-            "-r", 
-            "--result_files", 
+            "-r",
+            "--result_files",
             type=str,
             nargs="+",
             help="List of results files for ensemble prediciton"
             )
     parser.add_argument(
-            "-d", 
+            "-d",
             "--delete_result_files",
             action="store_true",
             help="Clean up results.json-files"
@@ -35,16 +35,16 @@ def parse_cmd_args():
 
 def read_in_files(files: List[str], delete_results: bool) -> "Statsfile":
     """Reads in the files, return json-loaded objects
-    
+
     Args:
         files: list of n stats-files
     Returns:
         json_files: json-loaded stats and corresponding results files
-    
+
     """
     global args
     json_files = []
-    
+
     for file in files:
         try:
             with open(file, "r")as f:
@@ -78,7 +78,7 @@ def read_in_files(files: List[str], delete_results: bool) -> "Statsfile":
 
 def get_best_epoch(stats_file) -> Tuple[int, float, float]:
     """Find the best epoch according to Dev Accuracy
-    
+
     Args:
         stats_file: json-file of all epoch results
     Returns:
@@ -103,7 +103,7 @@ def get_best_epoch(stats_file) -> Tuple[int, float, float]:
 def get_true_best_dev_epoch(results_file, qa_flag: bool) -> Tuple[int, float]:
     best_epoch = 0
     best_dev_acc = 0.0
-    
+
     for i in range(1, len(results_file)):
         dict_pred, dict_lab = {}, {}
         build_dicts(results_file[i][str(i)]["dev"], dict_pred, dict_lab)
@@ -127,7 +127,7 @@ def get_true_best_dev_epoch(results_file, qa_flag: bool) -> Tuple[int, float]:
 
 def build_dicts(results: Tuple[List[List[str]]], target_dict: Dict[str, List[str]], target_gold_dict: Dict[str, str]) -> None:
     """build dictionaries; one with all preds, one gold
-    
+
     Args:
         results: dictionary of pred, golds of best epoch
         target_dict: dictionary for collecting all predictions
@@ -144,7 +144,7 @@ def build_dicts(results: Tuple[List[List[str]]], target_dict: Dict[str, List[str
 
     return target_dict, target_gold_dict
 
-    
+
 def compute_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
     """Compute the accuracy of the predictions
 
@@ -192,7 +192,7 @@ def check_configs(stat_files: "Statsfile", new_flag: bool) -> Optional[bool]:
             "SRL_dropout": []
         }
     else:
-        rel_params = {    
+        rel_params = {
             "batch_size": [],
             "merge_subtokens": [],
             "max_length": [],
@@ -219,8 +219,8 @@ def check_configs(stat_files: "Statsfile", new_flag: bool) -> Optional[bool]:
             print("ATTENTION: Inconsistencies found after the {}th file. Aborting.".format(i))
             return False
     return True
-    
- 
+
+
 def main():
     args = parse_cmd_args()
     files = args.result_files
@@ -243,7 +243,7 @@ def main():
 
     if not check_configs(jsons, new_flag):
         return
-    
+
     for i, file_pair in enumerate(jsons):
             stats_file, results_file = file_pair
             best_epoch, best_dev, best_test = get_best_epoch(stats_file)
@@ -266,13 +266,13 @@ def main():
                 start_acc = compute_acc(pred_start, lab_start)
                 end_acc = compute_acc(pred_end, lab_end)
                 true_best_test = (start_acc + end_acc) / 2
-                
+
             print("True best epoch: {}".format(true_best_epoch))
             print("True best dev accuracy: {0:.4f}".format(true_best_dev))
             print("True best test accuracy: {0:.4f}".format(true_best_test))
             print("")
-                                    
-            dev = results_file[true_best_epoch][str(true_best_epoch)]["dev"]    
+
+            dev = results_file[true_best_epoch][str(true_best_epoch)]["dev"]
             test = results_file[true_best_epoch][str(true_best_epoch)]["test"]
             ensemble_results.append((dev, test))
             mean_dev_accur += true_best_dev
@@ -287,26 +287,27 @@ def main():
     if len(set([len(ensemble_results[i][j]) for i in range(len(files)) for j in range(2)])) > 2:
         print("Files differ, are you sure they come from the same model configuration? Aborting.")
         return
-        
+
     for results in ensemble_results:
         dev_res, test_res = results
 
         build_dicts(dev_res, dev_dict, dev_gold_dict)
         build_dicts(test_res, test_dict, test_gold_dict)
-        
+
     if not qa_flag:
         dev_ensemble = {key: max(value, key=value.count) for key, value in dev_dict.items()}
         test_ensemble = {key: max(value, key=value.count) for key, value in test_dict.items()}
+        import ipdb; ipdb.set_trace()
 
         dev_accur = compute_acc(dev_ensemble, dev_gold_dict)
         test_accur = compute_acc(test_ensemble, test_gold_dict)
     else:
         dev_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
-                                for key, value in dev_dict.items()}        
+                                for key, value in dev_dict.items()}
         dev_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
-                                for key, value in dev_dict.items()}        
+                                for key, value in dev_dict.items()}
         test_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
-                                for key, value in test_dict.items()}        
+                                for key, value in test_dict.items()}
         test_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
                                 for key, value in test_dict.items()}
 
@@ -329,7 +330,7 @@ def main():
     print("test accur: {0:.4f}".format(test_accur))
     print("")
 
-     
+
 if __name__ == "__main__":
     main()
-    
+
