@@ -12,3 +12,8 @@ thesis/clvorlage/appendix/
 .RData
 .Rhistory
 .RData
+answer_out_of_context_MLQA.txt
+srl_quali.tsv
+strange_pawsx.pickle
+tags.lock
+tags.temp
