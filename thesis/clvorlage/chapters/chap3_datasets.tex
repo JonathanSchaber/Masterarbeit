@@ -4,14 +4,31 @@
 
 \section{gliGLUE}
 
-Traditionally in linguistics, language is analyzed into different structural levels, where 
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Ich        B-A0         O
+fühlte     \colorbox{light-gray}{B-V}          O
+[MASK]     B-A1         O
+,          I-A1         O
+als        I-A1         O
+ich        I-A1         \textit{B-A0}
+aus        I-A1         \textbf{O}
+Versehen   I-A1         O
+schlechte  I-A1         B-A1
+Milch      I-A1         I-A1
+\colorbox{light-gray}{getrunken  I-A1         \textbf{B-V}}
+habe       I-A1         O
+\end{Verbatim}
+
+
+Traditionally in linguistics, language is analyzed into different structural levels, where
 different tools for describing these levels, or strata, are used.
 In most theories, there are are four of these structural levels proposed:
-Beginning from the Bottom, there is the level of Phonetics and Phonology, followed by Morphology, 
-then there is the level of Syntax, and the last one is Semantics.\myfootnote{Sometimes Pragmatics 
-is conceptualized as an additional fifth layer on top, sometimes it is considered to form a field 
+Beginning from the Bottom, there is the level of Phonetics and Phonology, followed by Morphology,
+then there is the level of Syntax, and the last one is Semantics.\myfootnote{Sometimes Pragmatics
+is conceptualized as an additional fifth layer on top, sometimes it is considered to form a field
 of its own; I follow the latter.}
-While the first three levels deal with the form of utterances of human language, semantics is 
+While the first three levels deal with the form of utterances of human language, semantics is
 concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduction}.
 
 % \tab{tab:levels-of-lang}{Levels of language analysis and description.}
@@ -27,7 +44,7 @@ concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduc
 % }{Levels of language}
 
 
-Following \cite{wang2018glue}, 
+Following \cite{wang2018glue},
 
 \tab{tab:original-GLUE}{Original GLUE data sets and tasks.}
 {\begin{tabular}{l|llll}
@@ -70,7 +87,7 @@ Following \cite{wang2018glue},
 
 There are a few remarks and strategies that apply to all collected corpora:
 
-(1) Most of the data sets are not monolingual, i.e. German, sources, but bi- or multilingual 
+(1) Most of the data sets are not monolingual, i.e. German, sources, but bi- or multilingual
 corpora.
 To compile a German GLUE corpus I only use the German subset of those corpora.
 For example, the MLQA data set provides all 49 combinations of the languages it contains:
@@ -78,32 +95,32 @@ Context in Arabic, question in Hindi; context in English, question in Spanish, e
 Also in this case, I choose only the German-German part of the data set for my corpus.
 
 (2) The data sets I chose for my little GLUE corpus are being provided in different modes.
-While three of the corpora, namely MLQA, PAWS-X, and XNLI, come with a predefined split, the 
+While three of the corpora, namely MLQA, PAWS-X, and XNLI, come with a predefined split, the
 others are made available without splits.
-In the latter case, I split the data sets into train, development, and test splits using a 0.7, 
+In the latter case, I split the data sets into train, development, and test splits using a 0.7,
 0.15, and 0.15 portion, respectively.
 Interestingly, the data sets that come with splits, only provide a development and test portion.
-To ensure that my results are comparable with those that the authors of the different data sets 
-report, I leave the test split as it is, and split the development set into a train and 
+To ensure that my results are comparable with those that the authors of the different data sets
+report, I leave the test split as it is, and split the development set into a train and
 development set, implementing a 85:15 ratio.
 
-(3) Most datasets that I collected are not mono- but multilingual compilations, in which case I 
+(3) Most datasets that I collected are not mono- but multilingual compilations, in which case I
 simply include the German subset of the corpus into my GLUE.
 
 The following differences to the original GLUE corpus must be noted:
 
-(1) While \cite{wang2018glue} reformulate a multitude of tasks into inference tasks, I follow in 
-my implementation \cite{zhang2019semantics} and approach the question answering tasks as 
+(1) While \cite{wang2018glue} reformulate a multitude of tasks into inference tasks, I follow in
+my implementation \cite{zhang2019semantics} and approach the question answering tasks as
 \cite{devlin2018bert} in the original BERT implementation; i.e. as span prediction task.
 
-(2) I tried to combine a multitude of different tasks into my GLUE dataset (single sentence tasks 
-vs bi- or multiple sentence tasks, classification vs. span detection, different semantic problems 
-such as emotion detection, question answering etc.), I could not compile all tasks that appear in 
+(2) I tried to combine a multitude of different tasks into my GLUE dataset (single sentence tasks
+vs bi- or multiple sentence tasks, classification vs. span detection, different semantic problems
+such as emotion detection, question answering etc.), I could not compile all tasks that appear in
 GLUE into my semantic dataset compilation.
-For example, there are data sets that concern linguistic acceptability in the original GLUE 
+For example, there are data sets that concern linguistic acceptability in the original GLUE
 corpus, such as  e.g. CoLA \cite{warstadt2019neural}, or XXX .
-To disregard this task was not an intentional decision, but due to fact that there are simply not 
-as many datasets available for German and apparently there are no datasets addressing linguistic 
+To disregard this task was not an intentional decision, but due to fact that there are simply not
+as many datasets available for German and apparently there are no datasets addressing linguistic
 acceptability in German.
 
 \section{Corpora}
@@ -116,18 +133,18 @@ What kind of task is addressed, what is the text variety, how looks the label di
 \subsubsection{Task}
 
 This data set addresses the task of Emotion recognition, a sub-task of Sentiment Analysis.
-Technically, it is a sequence classification problem: Given a sequence of tokens, predict the 
+Technically, it is a sequence classification problem: Given a sequence of tokens, predict the
 correct label from a fixed set of emotions.
-Following by the original study ``International Survey on Emotion Antecedents and Reactions'' 
+Following by the original study ``International Survey on Emotion Antecedents and Reactions''
 \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed their data set for German:
-In a first step, the authors presented annotators with one of seven emotions, and asked them to 
+In a first step, the authors presented annotators with one of seven emotions, and asked them to
 come up with a textual description of an event in which they felt that emotion.
-The task was formulated as a sentence completion, so the annotators, which were recruited via an 
-crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte 
+The task was formulated as a sentence completion, so the annotators, which were recruited via an
+crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte
 \emph{emotion}, als/weil/dass ...''.
 Seven emotions were given for which the descriptions had to be constructed:
 Traurigkeit, Ekel, Schuld, Wut, Angst, Scham, Freude.
-For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, for the other 
+For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, for the other
 emotions there are 143.
 
 \begin{examples}
@@ -160,7 +177,7 @@ emotions there are 143.
 number of examples: \\
 train: 700 \\
 dev: 150 \\
-test: 151 
+test: 151
 
 \textbf{merged} \\
 average length train: 15.9 (sigma 6.6) \\
@@ -180,9 +197,9 @@ average length test: 19.5 (sigma 8.8)
 
 \subsubsection{SOTA}
 
-\cite{troiano2019crowdsourcing} train a maximum entropy classifier with L2 regularization with 
-boolean unigram features on the original ISEAR corpus (7665 instances). 
-Since the original ISEAR study and data collection was carried out in English, they then machine 
+\cite{troiano2019crowdsourcing} train a maximum entropy classifier with L2 regularization with
+boolean unigram features on the original ISEAR corpus (7665 instances).
+Since the original ISEAR study and data collection was carried out in English, they then machine
 translate the 1,001 deISEAR examples and evaluate on them.
 Using this strategy, the authors accomplish an average micro F$_1$ of 47.
 
@@ -238,30 +255,30 @@ average length test context: 165.5 (sigma 156.7)
 
 \subsubsection{SOTA}
 
-\cite{lewis2019mlqa} train their cross-lingual transfer model on the 100,000 instances of SQuAD 
+\cite{lewis2019mlqa} train their cross-lingual transfer model on the 100,000 instances of SQuAD
 \cite{rajpurkar2016squad} as training data.
 They use the English development set of MLQA for tuning.
 At test time, the model must extract the answer span in the target language.
-They report that XLM performs best for German, achieving a 47.6\% accuracy of exact matches, i.e. 
+They report that XLM performs best for German, achieving a 47.6\% accuracy of exact matches, i.e.
 predicting the correct start and end span of the answer.
 
 The total of all instances in all languages in MLQA is 46,444.
 
 \subsection{PAWS-X}
 
-The PAWS-X corpus \cite{yang2019paws} was compiled to provide a multilingual source for training 
-models that address the problem of paraphrase identification. 
-Since most corpora for this task are available only in English the authors compiled this corpus by 
+The PAWS-X corpus \cite{yang2019paws} was compiled to provide a multilingual source for training
+models that address the problem of paraphrase identification.
+Since most corpora for this task are available only in English the authors compiled this corpus by
 humanly translate a subset of the original PAWS corpus \cite{zhang2019paws}.
 
 \begin{examples}
 	\label{ex:paws-x}
 	\item Die Familie zog 1972 nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
-		
+
 	1972 zog die Familie nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
 \end{examples}
 
-The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence 
+The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence
 one is a paraphrase of sentence two, and vice versa.
 
 
@@ -273,26 +290,26 @@ stats
 
 During the preprocessing of this data set, the following considerations are taken into account:
 
-In the predefined development and test splits, there are some examples where one or both sentences 
+In the predefined development and test splits, there are some examples where one or both sentences
 consist
 only of the string ``NS''.
-I decided to not include this examples into the data used for training and evaluating my models, 
+I decided to not include this examples into the data used for training and evaluating my models,
 since
-those examples don't contribute any useful features for the model.\myfootnote{The authors don't 
-comment on these obscure sentences, so I do not know what was the reasoning behind including these 
+those examples don't contribute any useful features for the model.\myfootnote{The authors don't
+comment on these obscure sentences, so I do not know what was the reasoning behind including these
 into the data sets.}
-Further, some examples consist of empty strings; I treat those the same way as the examples 
+Further, some examples consist of empty strings; I treat those the same way as the examples
 mentioned before.
 
 Further, there are sentences XXXXX
 
 \subsubsection{Statistics}
 
-Since the training data are solely machine-translated while the development and test data are 
+Since the training data are solely machine-translated while the development and test data are
 human-translated, there needs to be some clarification as to how differently those sets are.
 One measure to capture similarities between sentences is the BLEU score \cite{papineni2002bleu}:
 This score measures the overlap of n-grams between two sentences, such that XXX
-The BLEU score is a value between 0 (no n-gram overlaps) to 1 (perfect n-gram overlaps), where a 
+The BLEU score is a value between 0 (no n-gram overlaps) to 1 (perfect n-gram overlaps), where a
 BLEU score of 1 means that the two sentences are identical.
 
 \fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:deISEAR-context}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{deISEAR-Length}
@@ -329,49 +346,49 @@ average length sentence 1 test: 28.1 (sigma 8.4) \\
 average length sentence 2 test: 28.0 (sigma 8.4)
 
 
-The training set contains 3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score 
+The training set contains 3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score
 of 1.0 --- which means they are identical.
 
 
 \subsubsection{SOTA}
 
-\cite{yang2019paws} achieve their best result --- 89.2\% accuracy for German --- employing the 
+\cite{yang2019paws} achieve their best result --- 89.2\% accuracy for German --- employing the
 following model architecture:
-They train a multilingual BERT on all languages, including the original English pairs and the 
+They train a multilingual BERT on all languages, including the original English pairs and the
 machine-translated data in all other languages and evaluate on the individual languages.
 
 \subsection{SCARE}
 
 \subsubsection{SCARE normal}
 
-``Unlike product reviews of other domains, e.g. household appliances, consumer electronics or 
+``Unlike product reviews of other domains, e.g. household appliances, consumer electronics or
 movies, application reviews offer a couple of peculiarities which deserve special treatment:
-The way in which users express their opinion in app reviews is shorter and more concise than in 
+The way in which users express their opinion in app reviews is shorter and more concise than in
 other product reviews.
-Moreover, due to the frequent use of colloquial words and a flexible use of grammar, app reviews 
-can be considered to be more similiar [sic] to Twitter messages (“Tweets”) than reviews of 
+Moreover, due to the frequent use of colloquial words and a flexible use of grammar, app reviews
+can be considered to be more similiar [sic] to Twitter messages (“Tweets”) than reviews of
 products from other domains or platforms \textelp{}.'' \citep[p.~1114]{sanger2016scare}
 
 
-The Sentiment Corpus of App Reviews with Fine-grained Annotations in German \cite{sanger2016scare} 
-is a hand-annotated corpus that asserts so sentiment to German mobile app reviews stemming from 
+The Sentiment Corpus of App Reviews with Fine-grained Annotations in German \cite{sanger2016scare}
+is a hand-annotated corpus that asserts so sentiment to German mobile app reviews stemming from
 the Google Play Store.
-Since there are many users of 
-In contrast to other data sets, e.g. \citep{socher2013recursive, go2009twitter}, that attributes 
-one sentiment label to a whole text (may it be a review, a tweet, etc.), \cite{sanger2016scare} 
+Since there are many users of
+In contrast to other data sets, e.g. \citep{socher2013recursive, go2009twitter}, that attributes
+one sentiment label to a whole text (may it be a review, a tweet, etc.), \cite{sanger2016scare}
 annotated their data set on a lower textual level:
-Not each review gets labelled for a certain polarity --- i.e. \emph{positive}, \emph{negative}, or 
-\emph{neutral} --- but what the authors call \emph{aspects} and correlating \emph{subjective 
+Not each review gets labelled for a certain polarity --- i.e. \emph{positive}, \emph{negative}, or
+\emph{neutral} --- but what the authors call \emph{aspects} and correlating \emph{subjective
 phrases}.
 An aspect is an entity, that is related to the application:
-It may be the application itself, parts of the application, a feature request regarding the 
+It may be the application itself, parts of the application, a feature request regarding the
 application, etc.
-A subjective phrase ``express[es] opinions and statements of a personal evaluation regarding the 
-app or a part of it, that are not based on (objective) facts but on individual opinions of the 
+A subjective phrase ``express[es] opinions and statements of a personal evaluation regarding the
+app or a part of it, that are not based on (objective) facts but on individual opinions of the
 reviewers'' \citep[p.~1116]{sanger2016scare}.
-In other words, aspects are facts about the App and subjective phrases are user opinions regarding 
+In other words, aspects are facts about the App and subjective phrases are user opinions regarding
 them.
-This fine level of annotations leads often to several annotations per review, the sentiment of 
+This fine level of annotations leads often to several annotations per review, the sentiment of
 which may not always match.
 As illustration, consider the following review:
 
@@ -380,7 +397,7 @@ As illustration, consider the following review:
 	\item guter wecker... \textbar\textbar\ vom prinzip her echt gut...aber grade was die sprachausgabe betrifft noch etwas buggy....\myfootnote{The ``\textbar\textbar'' denotes that the text left of it is the user given ``title'' of the review, and the part on the right is the actual review.}
 \end{examples}
 
-There are the following annotations for the aspects and their corresponding subjective phrases 
+There are the following annotations for the aspects and their corresponding subjective phrases
 (aspects are bold, the subjective phrase is italic and the polarity is normal):
 
 
@@ -390,9 +407,9 @@ There are the following annotations for the aspects and their corresponding subj
 	\item \textbf{Sprachausgabe}, \textit{etwas buggy} $\rightarrow$ negative
 \end{itemize}
 
-As is clear from this example, in a given review there may be several aspects with a corresponding 
+As is clear from this example, in a given review there may be several aspects with a corresponding
 subjective phrase per review.
-It is well possible, as in the provided example, that the sentiment of these is not always the 
+It is well possible, as in the provided example, that the sentiment of these is not always the
 same.
 The majority vote decision of the overall sentiment of the example above would be \emph{Positive}.
 
@@ -454,36 +471,36 @@ stats: there are 1,760 fine-grained annotated reviews
 
 \subsubsection{SCARE reviews}
 
-Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of 
-802,860 reviews along with the rating --- one to five stars ---, that were available in German on 
+Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of
+802,860 reviews along with the rating --- one to five stars ---, that were available in German on
 the Google Play Store.
-This data set is much larger than the annotated one: Due to the great expenses of generating those 
+This data set is much larger than the annotated one: Due to the great expenses of generating those
 fine-grained annotations, the authors were able to annotate only 0.22\% of all reviews available.
 
 \fig{images/SCARE_star_stats.png}{fig:SCARE-starstats}{Overview of percentage of stars given. Clearly, there is an imbalance towards giving the full amount of stars possible}{12}{SCARE stars statistics}
 
 \subsubsection{Preprocessing}
 
-For integrating the SCARE corpus into my GerBLUE corpus, I need to prepare the data, so it can be 
+For integrating the SCARE corpus into my GerBLUE corpus, I need to prepare the data, so it can be
 handled by the model architecture.
-Following the original GLUE sentiment task, the model needs only to predict one sentiment label 
+Following the original GLUE sentiment task, the model needs only to predict one sentiment label
 for each example.
-Since there exist mostly multiple annotations for each review in this data set, the data needs to 
+Since there exist mostly multiple annotations for each review in this data set, the data needs to
 be pre-processed in a way, so that there is one review-label per example.
 
 To generate the review-label, I simply carry out an majority class decision:
-The label that is most often annotated for a given review, regardless if it is an aspect or a 
+The label that is most often annotated for a given review, regardless if it is an aspect or a
 subjective, is then also the review-label.
 If there is no majority label, the review-label is set to ``neutral''.
-This is also the chosen strategy for 51 reviews that had no labels at all; an example of such a 
-review is the following one: 
+This is also the chosen strategy for 51 reviews that had no labels at all; an example of such a
+review is the following one:
 
 \begin{examples}
 	\item ``Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!''.
 \end{examples}
 
 \fig{images/SCARE_label_stats.png}{fig:SCARE-labelstats}{Statistics of label generation. For most of the examples, there was a clear majority decision as to which label should be chosen. \emph{Close Majority} means the majority vote was off by 1. The reddish portions in the graph were labelled \emph{neutral} by default, while the blueish ones were labelled accoring to the majority vote decision.}{12}{SCARE label statistics}
-2.9\% of reviews had no labels at all 
+2.9\% of reviews had no labels at all
 
 3.0\% of votes were non-majority
 
@@ -513,33 +530,33 @@ average length test: 26.1 (sigma 25.9)
 
 \subsubsection{SOTA}
 
-\cite{sanger2016scare} don't predict a sentiment for each instance, but predict fine-grained 
+\cite{sanger2016scare} don't predict a sentiment for each instance, but predict fine-grained
 aspect and subjective phrase spans using a CRF-based model.
 They report results for exact matches as well as partial matches.
 For the aspects, they achieve an F1 score of 69\% and 80\% for subjective phrases, respectively.
-Since predicting fine-grained aspect and subjective phrase spans is much more difficult than 
-etrapolating an overall sentiment of the same utterance, a comparison between the outcomes of the 
+Since predicting fine-grained aspect and subjective phrase spans is much more difficult than
+etrapolating an overall sentiment of the same utterance, a comparison between the outcomes of the
 two tasks are not really comparable.
-Furthermore, 
+Furthermore,
 
 \subsection{XNLI}
 
-\cite{conneau2018xnli} built the XNLI corpus by employing professional translators to tranlsate 
-7,500 English sentence pairs from the Multi-Genre Natural Language Inference (MultiNLI) corpus 
+\cite{conneau2018xnli} built the XNLI corpus by employing professional translators to tranlsate
+7,500 English sentence pairs from the Multi-Genre Natural Language Inference (MultiNLI) corpus
 \cite{williams2017broad} into fifteen languages.
-First, they randomly sample 750 examples from each of the ten text source used in MultiNLI, which 
-is in English, and then let the same MultiNLI worker pool generate three hypothesis for each 
+First, they randomly sample 750 examples from each of the ten text source used in MultiNLI, which
+is in English, and then let the same MultiNLI worker pool generate three hypothesis for each
 sentence, one for each possible label (\emph{entailment}, \emph{contradicion}, \emph{neutral}).
-Each sentence pair was then assigned a gold label that was retrieved by carrying out a majority 
-vote between the label that was assigned by the person who created the hypothesis and the labels 
+Each sentence pair was then assigned a gold label that was retrieved by carrying out a majority
+vote between the label that was assigned by the person who created the hypothesis and the labels
 that were assigend indepentently to the sentence pair by four other people.
 Finally, all the sentence pairs were translated into the different languages by tranlators.
-In addition, \cite{conneau2018xnli} carry out some tests to verify that the original gold label 
+In addition, \cite{conneau2018xnli} carry out some tests to verify that the original gold label
 still holds in the translated sentences:
-They recruited two bilingual annotators to reevaluate 100 examples in English and French, i.e. 
+They recruited two bilingual annotators to reevaluate 100 examples in English and French, i.e.
 they had to re-assign the labels given the sentence pairs.
-For tht English examples, the find a 85\% concesus on the gold labels, and for French a 
-corresponding 83\%, from which they conclude that the overall semantic relationship between the 
+For tht English examples, the find a 85\% concesus on the gold labels, and for French a
+corresponding 83\%, from which they conclude that the overall semantic relationship between the
 two languages has been preserved.
 
 % TODO: new stats figure!
@@ -628,9 +645,9 @@ Contradiction: 2,499
 
 \subsubsection{SOTA}
 
-The best system \cite{conneau2018xnli} report for German on their XNLI data set is a model that 
+The best system \cite{conneau2018xnli} report for German on their XNLI data set is a model that
 relies heavily on translation:
-They train their BiLSTM on the MultiNLI data (432,702 instances) and translate the test set of the 
+They train their BiLSTM on the MultiNLI data (432,702 instances) and translate the test set of the
 given language to English and predict on this data.
 Employing this startegy, the authors obtain an accuracy on the German test set of 68.7\%.
 
@@ -638,35 +655,35 @@ Employing this startegy, the authors obtain an accuracy on the German test set o
 
 \subsection{XQuAD}
 
-``XQuAD consists of a subset of 240 paragraphs and 1190 question-answer pairs from the development 
-set of SQuAD v1.1 together with their translations into ten languages \textelp{} In order to 
-facilitate easy annotations of answer spans, we choose the most frequent answer for each question 
-and mark its beginning and end in the context paragraph using special symbols, instructing 
-translators to keep these symbols in the relevant positions in their translations'' 
+``XQuAD consists of a subset of 240 paragraphs and 1190 question-answer pairs from the development
+set of SQuAD v1.1 together with their translations into ten languages \textelp{} In order to
+facilitate easy annotations of answer spans, we choose the most frequent answer for each question
+and mark its beginning and end in the context paragraph using special symbols, instructing
+translators to keep these symbols in the relevant positions in their translations''
 \cite{artetxe2019cross}.
 
 \begin{examples}
 	\label{ex:xquad}
-	\item Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft 
-als integraler Bestandteil der aristotelischen Kosmologie. Nach Ansicht von Aristoteles enthält 
-die irdische Sphäre vier Elemente, die an verschiedenen „natürlichen Orten“ darin zur Ruhe 
-kommen. Aristoteles glaubte, dass bewegungslose Objekte auf der Erde, die hauptsächlich aus den 
-Elementen Erde und Wasser bestehen, an ihrem natürlichen Ort auf dem Boden liegen und dass sie so 
-bleiben würden, wenn man sie in Ruhe lässt. Er unterschied zwischen der angeborenen Tendenz von 
-Objekten, ihren „natürlichen Ort“ zu finden (z. B. dass schwere Körper fallen), was eine 
-„natürliche Bewegung“ darstellt und unnatürlichen oder erzwungenen Bewegungen, die den 
-fortwährenden Einsatz einer Kraft erfordern. Diese Theorie, die auf der alltäglichen Erfahrung 
-basiert, wie sich Objekte bewegen, wie z. B. die ständige Anwendung einer Kraft, die erforderlich 
-ist, um einen Wagen in Bewegung zu halten, hatte konzeptionelle Schwierigkeiten, das Verhalten von 
-Projektilen, wie beispielsweise den Flug von Pfeilen, zu erklären. Der Ort, an dem der 
-Bogenschütze den Pfeil bewegt, liegt am Anfang des Fluges und während der Pfeil durch die Luft 
-gleitet, wirkt keine erkennbare effiziente Ursache darauf ein. Aristoteles war sich dieses 
-Problems bewusst und vermutete, dass die durch den Flugweg des Projektils verdrängte Luft das 
-Projektil zu seinem Ziel trägt. Diese Erklärung erfordert ein Kontinuum wie Luft zur 
+	\item Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft
+als integraler Bestandteil der aristotelischen Kosmologie. Nach Ansicht von Aristoteles enthält
+die irdische Sphäre vier Elemente, die an verschiedenen „natürlichen Orten“ darin zur Ruhe
+kommen. Aristoteles glaubte, dass bewegungslose Objekte auf der Erde, die hauptsächlich aus den
+Elementen Erde und Wasser bestehen, an ihrem natürlichen Ort auf dem Boden liegen und dass sie so
+bleiben würden, wenn man sie in Ruhe lässt. Er unterschied zwischen der angeborenen Tendenz von
+Objekten, ihren „natürlichen Ort“ zu finden (z. B. dass schwere Körper fallen), was eine
+„natürliche Bewegung“ darstellt und unnatürlichen oder erzwungenen Bewegungen, die den
+fortwährenden Einsatz einer Kraft erfordern. Diese Theorie, die auf der alltäglichen Erfahrung
+basiert, wie sich Objekte bewegen, wie z. B. die ständige Anwendung einer Kraft, die erforderlich
+ist, um einen Wagen in Bewegung zu halten, hatte konzeptionelle Schwierigkeiten, das Verhalten von
+Projektilen, wie beispielsweise den Flug von Pfeilen, zu erklären. Der Ort, an dem der
+Bogenschütze den Pfeil bewegt, liegt am Anfang des Fluges und während der Pfeil durch die Luft
+gleitet, wirkt keine erkennbare effiziente Ursache darauf ein. Aristoteles war sich dieses
+Problems bewusst und vermutete, dass die durch den Flugweg des Projektils verdrängte Luft das
+Projektil zu seinem Ziel trägt. Diese Erklärung erfordert ein Kontinuum wie Luft zur
 Veränderung des Ortes im Allgemeinen.
 \end{examples}
 
-The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the data set are the 
+The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the data set are the
 following:
 
 \begin{enumerate}
@@ -716,7 +733,7 @@ average length test question: 13.9 (sigma 4.9)
 
 \subsubsection{SOTA}
 
-Very peculiar architecture that consits in re-training a monolingual English BERT model on 
+Very peculiar architecture that consits in re-training a monolingual English BERT model on
 Wikipedia and transfer it to target language following these steps:
 
 \begin{enumerate}
@@ -752,7 +769,7 @@ Accuracy (exact match): 57.6\%
 \end{landscape}
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}
-% 
+%
 % Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
 % %\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
 % \tab{bleuresults}{BLEU scores of different MT systems}
@@ -764,58 +781,58 @@ Accuracy (exact match): 57.6\%
 % \hline
 % \end{tabular}
 % }{ABC BLEU scores}
-% 
+%
 % And we can reference the large table in the appendix as Table \ref{appendixTable}
-% 
+%
 % \section{Evaluation}
 % \label{sec:5_evaluation}
-% We saw in section \ref{sec:5_bleuscores} 
-% 
+% We saw in section \ref{sec:5_bleuscores}
+%
 % We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
-% 
+%
 % \subsection{More evaluation}
 % \label{subsec:5_moreeval}
-% 
-% 
+%
+%
 % \section{Citations}
 % Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
 % or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
-% 
+%
 % to cite: \cite[30-31]{Koehn2005} \\
 % to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
-% 
+%
 % to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
 % only the author(s): \citeauthor{Callison-Burch2006}\\
 % only the year: \citeyear{Callison-Burch2006}\\
-% 
+%
 % \section{Graphics}
-% 
+%
 % To include a graphic that appears in the list of figures, use the predefined fig command:\\
 % %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
 % \fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
-% 
+%
 % %\reffig{#1: label}
 % And then reference it as \reffig{fig:rosetta} is easy.
-% 
+%
 % \section{Some Linguistics}
-% 
+%
 % (With the package 'covington')\\
-% 
+%
 % Gloss:
-% 
+%
 % \begin{examples}
 %  \item \gll The cat sits on the table.
 % 	    die Katze sitzt auf dem Tisch
 % 	\glt 'Die Katze sitzt auf dem Tisch.'
 %     \glend
 % \end{examples}
-% 
+%
 % Gloss with morphology:
-% 
+%
 % \begin{examples}
 %  \item \gll La gata duerm -e en la cama.
 % 	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
 % 	\glt 'Die Katze schl\"aft im Bett.'
 %     \glend
 % \end{examples}
-% 
+%
