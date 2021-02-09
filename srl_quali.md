@@ -7,14 +7,14 @@ Note that the tagging scheme follows the **B**eginning, **I**nside, **O**utside 
 
 The tags for predicates (`B-V`) are surrounded by asterisks for faster identification.
 
-For each example, please check in the file assessment.md, if you estimate the SRLs to be
+For each example, please check in the file `assessment.md`, if you estimate the SRLs to be
 
-- helpful
-- neutral
+- **helpful** (if, e.g. the SRL analysis conforms to the actual state of affairs and potentially helps the model to identify relevant aspects of the task --- e.g. it correctly identifies agents in  active/passive alternations)
+- **neutral** (if, e.g. the SRL analysis is not very precise but also not wrong in the strict sense. The model could probably not get any useful information out of it)
 
 or
 
-- harmful
+- **harmful** (if, e.g. the SRL analysis is plain false and the SRLs would probably confuse the model by drawing its attention to the wrong parts of the sentences --- e.g. the identified predicate is wrong or active/passive alternations are not recognized)
 
 for the task.
 

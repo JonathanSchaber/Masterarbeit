@@ -3,7 +3,7 @@
 
 ## 1
 
-- [ ] helpful
+- [x] helpful
 - [ ] neutral
 - [ ] harmful
 
