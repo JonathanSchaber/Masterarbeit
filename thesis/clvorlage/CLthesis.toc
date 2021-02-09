@@ -36,7 +36,7 @@
 \contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{17}{subsubsection.3.2.3.3}
 \contentsline {subsection}{\numberline {3.2.4}SCARE}{17}{subsection.3.2.4}
 \contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{17}{subsubsection.3.2.4.1}
-\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{18}{subsubsection.3.2.4.2}
+\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{19}{subsubsection.3.2.4.2}
 \contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{19}{subsubsection.3.2.4.3}
 \contentsline {subsubsection}{\numberline {3.2.4.4}Statistics}{21}{subsubsection.3.2.4.4}
 \contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{21}{subsubsection.3.2.4.5}
@@ -44,7 +44,7 @@
 \contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{23}{subsubsection.3.2.5.1}
 \contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{23}{subsubsection.3.2.5.2}
 \contentsline {subsection}{\numberline {3.2.6}XQuAD}{24}{subsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{25}{subsubsection.3.2.6.1}
+\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{26}{subsubsection.3.2.6.1}
 \contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{26}{subsubsection.3.2.6.2}
 \contentsline {subsection}{\numberline {3.2.7}Overview}{28}{subsection.3.2.7}
 \contentsline {chapter}{\numberline {4}Architecture}{29}{chapter.4}
@@ -71,8 +71,8 @@
 \contentsline {chapter}{\numberline {5}Conclusion}{45}{chapter.5}
 \contentsline {chapter}{Glossary}{46}{section*.14}
 \contentsline {chapter}{References}{47}{section*.16}
-\contentsline {chapter}{Lebenslauf}{48}{section*.18}
+\contentsline {chapter}{Lebenslauf}{51}{section*.18}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{49}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{50}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{52}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{53}{appendix.B}

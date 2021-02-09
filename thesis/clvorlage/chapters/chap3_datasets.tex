@@ -35,8 +35,8 @@ concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduc
 % {\begin{tabular}{|l|l|l|l|}
 % \hline
 % \multicolumn{2}{|c|}{Form}     & \multicolumn{2}{c|}{Meaning}     \\ \hline
-% 	% a & b & c & d \\ \hline
-% 	& \multicolumn{2}{c|}{Level} &                   \\ \hhline{====}
+%   % a & b & c & d \\ \hline
+%   & \multicolumn{2}{c|}{Level} &                   \\ \hhline{====}
 %         Syntax  & \multicolumn{2}{l|}{Sentence} & \multirow{3}{*}{Semantics} \\ \cline{1-3}
 %         Morphology & \multicolumn{2}{l|}{Word} &                   \\ \cline{1-3}
 %         Phonology & \multicolumn{2}{l|}{Sound} &                   \\ \hline
@@ -46,41 +46,43 @@ concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduc
 
 Following \cite{wang2018glue},
 
-\tab{tab:original-GLUE}{Original GLUE data sets and tasks.}
-{\begin{tabular}{l|llll}
-	Data Set & NLP Task & ML Task & \# Examples & Splits \\
-	\hhline{=|====}
-	& \multicolumn{4}{c}{Single-Sentence Tasks} \\
-	CoLA &  Acceptability & Binary Classification & 8.5k/1k & train/test \\
-	SST-2 & Sentiment Analysis & Binary Classification & 67k/1.8k & train/test \\
-	\hline
-	& \multicolumn{4}{c}{Sentence Pair Tasks} \\
-	MNLI & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
-	MRPC & Paraphrase Identification & Binary Classification & 3.7k/1.7k & train/test \\
-	QNLI & Question Answering & Binary Classification\myfootnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
-	QQP & Paraphrase Identification & Binary Classification &  364k/391k & train/test \\
-	RTE & Natural Language Inference & Binary Classification\myfootnote{\cite{wang2018glue} combine several data sets into RTE; for data sets that have three labels --- \emph{entailment}, \emph{neutral}, and \emph{contradiction} --- they collapse the latter two into one label \emph{not\_entailment}.} &  2.5k/3k & train/test \\
-	STS-B & Sentence Similarity & Regression (1 - 5) & 7k/1.4k & train/test \\
-	WNLI & Coreference Resolution & Binary Classification\myfootnote{In the original Winograd Schema Challenge CITE, the task is to choose the correct referent of a pronoun from a list. \cite{wang2018glue} reformulate this to a sentence pair classification task, where the original sentence is paired with the original sentence with each pronoun substituted from the list and then predicting whether the substituted sentence is entailed by the original one.} &  634/146 & train/test \\
-\end{tabular}
+\tab{tab:original-GLUE}{Original GLUE data sets and tasks.}{
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{l|llll}
+      Data Set & NLP Task                   & ML Task                    & \# Examples & Splits \\ \hline\hline
+      & \multicolumn{4}{c}{\textit{Single-Sentence Tasks}} \\
+      CoLA     &  Acceptability             & Binary Classification      & 8.5k/1k & train/test \\
+      SST-2    & Sentiment Analysis         & Binary Classification      & 67k/1.8k & train/test \\
+      \hline
+      & \multicolumn{4}{c}{\textit{Sentence Pair Tasks}} \\
+      MNLI     & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
+      MRPC     & Paraphrase Identification  & Binary Classification      & 3.7k/1.7k & train/test \\
+      QNLI     & Question Answering         & Binary Classification\myfootnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
+      QQP      & Paraphrase Identification  & Binary Classification      &  364k/391k & train/test \\
+      RTE      & Natural Language Inference & Binary Classification\myfootnote{\cite{wang2018glue} combine several data sets into RTE; for data sets that have three labels --- \emph{entailment}, \emph{neutral}, and \emph{contradiction} --- they collapse the latter two into one label \emph{not\_entailment}.} &  2.5k/3k & train/test \\
+      STS-B    & Sentence Similarity        & Regression (1 - 5)         & 7k/1.4k & train/test \\
+      WNLI     & Coreference Resolution     & Binary Classification\myfootnote{In the original Winograd Schema Challenge CITE, the task is to choose the correct referent of a pronoun from a list. \cite{wang2018glue} reformulate this to a sentence pair classification task, where the original sentence is paired with the original sentence with each pronoun substituted from the list and then predicting whether the substituted sentence is entailed by the original one.} &  634/146 & train/test
+    \end{tabular}
+  }
 }{GLUE}
 
 
-\tab{tab:overview-data-sets}{gliGLUE data sets and tasks.}
-{\begin{tabular}{l|llll}
-	Data Set & NLP Task & ML Task & \# Examples & Splits \\ \hline\hline
-	% \hhline{=|====}
-	& \multicolumn{4}{c}{\textit{Single-Sentence Tasks}} \\
-	deISEAR &  Emotion Detection & Multi-Class Classification  & 1 001 & - \\
-	SCARE & Sentiment Analysis & Multi-Class Classification & 1 760 & - \\
-	\hline
-	& \multicolumn{4}{c}{\textit{Sentence Pair Tasks}} \\
-	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
-	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
-	PAWS-X & Paraphrase Identification & Binary Classification & 14 402/2 000/4 000 & train/dev/test \\
-	XNLI & Natural Language Inference & Multi-Class Classification &  2 489/7 498 & dev/test \\
-	XQuAD & Question Answering & Span Prediction &  1 192 & - \\
-\end{tabular}
+\tab{tab:overview-data-sets}{gliGLUE data sets and tasks.}{
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{l|llll}
+      Data Set & NLP Task                   & ML Task                    & \# Examples        & Splits \\ \hline\hline
+      & \multicolumn{4}{c}{\textit{Single-Sentence Tasks}} \\
+      deISEAR  & Emotion Detection          & Multi-Class Classification & 1 001              & - \\
+      SCARE    & Sentiment Analysis         & Multi-Class Classification & 1 760              & - \\
+      \hline
+      & \multicolumn{4}{c}{\textit{Sentence Pair Tasks}} \\
+      % SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
+      MLQA     & Question Answering         & Span Prediction            & 509/4 499          & dev/test \\
+      PAWS-X   & Paraphrase Identification  & Binary Classification      & 14 402/2 000/4 000 & train/dev/test \\
+      XNLI     & Natural Language Inference & Multi-Class Classification &  2 489/7 498       & dev/test \\
+      XQuAD    & Question Answering         & Span Prediction            &  1 192             & -
+    \end{tabular}
+  }
 }{gliGLUE}
 
 \subsection{General Issues}
@@ -148,24 +150,24 @@ For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, f
 emotions there are 143.
 
 \begin{examples}
-	%\label{ex:deisear}
-	\item Ich fühlte \textbf{[Traurigkeit]}, als mein Laptop kaputt ging und die Garantie schon abgelaufen war.
+  %\label{ex:deisear}
+  \item Ich fühlte \textbf{[Traurigkeit]}, als mein Laptop kaputt ging und die Garantie schon abgelaufen war.
 \end{examples}
 \begin{examples}
-	\label{ex:deisear}
-	\item  Ich fühlte \textbf{[Scham]}, weil mir mal beim Urlaub das Geld ausging.
+  \label{ex:deisear}
+  \item  Ich fühlte \textbf{[Scham]}, weil mir mal beim Urlaub das Geld ausging.
 \end{examples}
 \begin{examples}
-	\label{ex:deisear}
-	\item Ich fühlte \textbf{[Angst]}, als der Chef sagte dass Mitarbeiter gekündigt werden müssen.
+  \label{ex:deisear}
+  \item Ich fühlte \textbf{[Angst]}, als der Chef sagte dass Mitarbeiter gekündigt werden müssen.
 \end{examples}
 \begin{examples}
-	\label{ex:deisear}
-	\item Ich fühlte \textbf{[Ekel]}, als ich verschimmeltes Essen im Kühlschrank gefunden habe.
+  \label{ex:deisear}
+  \item Ich fühlte \textbf{[Ekel]}, als ich verschimmeltes Essen im Kühlschrank gefunden habe.
 \end{examples}
 \begin{examples}
-	\label{ex:deisear}
-	\item Ich fühlte \textbf{[Schuld]}, dass ich meinen besten Kumpel versetzt habe.
+  \label{ex:deisear}
+  \item Ich fühlte \textbf{[Schuld]}, dass ich meinen besten Kumpel versetzt habe.
 \end{examples}
 
 %The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
@@ -208,12 +210,12 @@ Using this strategy, the authors accomplish an average micro F$_1$ of 47.
 \subsubsection{Task}
 
 \begin{examples}
-	\label{ex:mlqa}
-	\item Rita Sahatçiu Ora (* 26. November 1990 in Priština, SFR Jugoslawien) ist eine britische Sängerin und Schauspielerin kosovarischer Herkunft. Von 2010 bis 2016 stand sie bei Jay Z und Roc Nation unter Vertrag. Seit 2017 steht sie bei Atlantic Records unter Vertrag.
+  \label{ex:mlqa}
+  \item Rita Sahatçiu Ora (* 26. November 1990 in Priština, SFR Jugoslawien) ist eine britische Sängerin und Schauspielerin kosovarischer Herkunft. Von 2010 bis 2016 stand sie bei Jay Z und Roc Nation unter Vertrag. Seit 2017 steht sie bei Atlantic Records unter Vertrag.
 \end{examples}
 
 \begin{enumerate}
-	\item Wann wurde Rita Sahatçiu Ora geboren? $\rightarrow$ 26. November 1990
+  \item Wann wurde Rita Sahatçiu Ora geboren? $\rightarrow$ 26. November 1990
 \end{enumerate}
 
 \cite{lewis2019mlqa} compiled
@@ -272,10 +274,10 @@ Since most corpora for this task are available only in English the authors compi
 humanly translate a subset of the original PAWS corpus \cite{zhang2019paws}.
 
 \begin{examples}
-	\label{ex:paws-x}
-	\item Die Familie zog 1972 nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
+  \label{ex:paws-x}
+  \item Die Familie zog 1972 nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
 
-	1972 zog die Familie nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
+  1972 zog die Familie nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
 \end{examples}
 
 The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence
@@ -418,8 +420,8 @@ which may not always match.
 As illustration, consider the following review:
 
 \begin{examples}
-	\label{ex:fine-grained-anno}
-	\item guter wecker... \textbar\textbar\ vom prinzip her echt gut...aber grade was die sprachausgabe betrifft noch etwas buggy....\myfootnote{The ``\textbar\textbar'' denotes that the text left of it is the user given ``title'' of the review, and the part on the right is the actual review.}
+  \label{ex:fine-grained-anno}
+  \item guter wecker... \textbar\textbar\ vom prinzip her echt gut...aber grade was die sprachausgabe betrifft noch etwas buggy....\myfootnote{The ``\textbar\textbar'' denotes that the text left of it is the user given ``title'' of the review, and the part on the right is the actual review.}
 \end{examples}
 
 There are the following annotations for the aspects and their corresponding subjective phrases
@@ -427,9 +429,9 @@ There are the following annotations for the aspects and their corresponding subj
 
 
 \begin{itemize}
-	\item \textbf{Wecker}, \textit{guter} $\rightarrow$ positive
-	\item \textbf{Prinzip}, \textit{echt gut} $\rightarrow$ positive
-	\item \textbf{Sprachausgabe}, \textit{etwas buggy} $\rightarrow$ negative
+  \item \textbf{Wecker}, \textit{guter} $\rightarrow$ positive
+  \item \textbf{Prinzip}, \textit{echt gut} $\rightarrow$ positive
+  \item \textbf{Sprachausgabe}, \textit{etwas buggy} $\rightarrow$ negative
 \end{itemize}
 
 As is clear from this example, in a given review there may be several aspects with a corresponding
@@ -461,33 +463,36 @@ The majority vote decision of the overall sentiment of the example above would b
 
 Example from .csv file:
 
-\tab{tab:scare-csv-example}{An example from the alarm\_clocks.csv file.}
-{\begin{tabular}{llllllll}
-	Class & ID & Left & Right & Text & Aspect- / Subj-ID & Polarity & Relation  \\
-	\hline
-	subjective & 7000 & 0 & 15 & Alles wieder ok & 7000-subjective2 & Positive & Related \\
-	aspect & 7000 & 21 & 27 & Update & 7000-aspect1 & Neutral & Related \\
-	subjective & 7000 & 28 & 40 & funktioniert & 7000-subjective1 & Positive & Related \\
-	subjective & 7001 & 0 & 10 & Echt super & 7001-subjective5 & Positive & Related \\
-	subjective & 7001 & 15 & 22 & Schönes & 7001-subjective4 & Positive & Related \\
-	subjective & 7001 & 38 & 51 & einzigartiges & 7001-subjective3 & Positive & Related \\
-	aspect & 7001 & 52 & 61 & interface & 7001-aspect2 & Neutral & Related \\
-	subjective & 7001 & 63 & 78 & wirklich klasse & 7001-subjective2 & Positive & Related \\
-	subjective & 7001 & 80 & 90 & Schön wäre & 7001-subjective1 & Negative & Related \\
-	aspect & 7001 & 113 & 135 & lieder als klingeltöne & 7001-aspect1 & Neutral & Foreign \\
-\end{tabular}
+\tab{tab:scare-csv-example}{An example from the alarm\_clocks.csv file.}{
+  % or better \scalebox since landscape ?
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{llllllll}
+      Class      & ID   & Left & Right & Text                   & Aspect- / Subj-ID & Polarity & Relation  \\
+      \hline
+      subjective & 7000 & 0    & 15    & Alles wieder ok        & 7000-subjective2  & Positive & Related \\
+      aspect     & 7000 & 21   & 27    & Update                 & 7000-aspect1      & Neutral  & Related \\
+      subjective & 7000 & 28   & 40    & funktioniert           & 7000-subjective1  & Positive & Related \\
+      subjective & 7001 & 0    & 10    & Echt super             & 7001-subjective5  & Positive & Related \\
+      subjective & 7001 & 15   & 22    & Schönes                & 7001-subjective4  & Positive & Related \\
+      subjective & 7001 & 38   & 51    & einzigartiges          & 7001-subjective3  & Positive & Related \\
+      aspect     & 7001 & 52   & 61    & interface              & 7001-aspect2      & Neutral  & Related \\
+      subjective & 7001 & 63   & 78    & wirklich klasse        & 7001-subjective2  & Positive & Related \\
+      subjective & 7001 & 80   & 90    & Schön wäre             & 7001-subjective1  & Negative & Related \\
+      aspect     & 7001 & 113  & 135   & lieder als klingeltöne & 7001-aspect1      & Neutral  & Foreign
+    \end{tabular}
+  }
 }{Example SCARE .csv}
 
 Corresponding .rel file:
 
 \tab{tab:scare-csv-example}{An example from the alarm\_clocks.rel file.}
 {\begin{tabular}{lllll}
-	Relation-ID & Aspect-ID & Subj-ID & Aspect-String & Subj-String \\
-	\hline
-	7000 & 7000-aspect1 & 7000-subjective1 & Update & funktioniert \\
-	7001 & 7001-aspect2 & 7001-subjective4 & interface & Schönes \\
-	7001 & 7001-aspect2 & 7001-subjective3 & interface & einzigartiges \\
-	7001 & 7001-aspect1 & 7001-subjective1 & lieder als klingeltöne & Schön wäre \\
+  Relation-ID & Aspect-ID    & Subj-ID          & Aspect-String          & Subj-String \\
+  \hline
+  7000        & 7000-aspect1 & 7000-subjective1 & Update                 & funktioniert \\
+  7001        & 7001-aspect2 & 7001-subjective4 & interface              & Schönes \\
+  7001        & 7001-aspect2 & 7001-subjective3 & interface              & einzigartiges \\
+  7001        & 7001-aspect1 & 7001-subjective1 & lieder als klingeltöne & Schön wäre
 \end{tabular}
 }{Example SCARE .rel}
 
@@ -521,7 +526,7 @@ This is also the chosen strategy for 51 reviews that had no labels at all; an ex
 review is the following one:
 
 \begin{examples}
-	\item ``Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!''.
+  \item ``Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!''.
 \end{examples}
 
 \fig{images/SCARE_label_stats.png}{fig:SCARE-labelstats}{Statistics of label generation. For most of the examples, there was a clear majority decision as to which label should be chosen. \emph{Close Majority} means the majority vote was off by 1. The reddish portions in the graph were labelled \emph{neutral} by default, while the blueish ones were labelled accoring to the majority vote decision.}{12}{SCARE label statistics}
@@ -588,28 +593,28 @@ two languages has been preserved.
 %\fig{}{fig:XNLI-stats}{Distribution of labels in the XNLI data set.}{15}{XNLI label statistics}
 
 \begin{examples}
-	\label{ex:xnli}
-	\item Ich wusste nicht was ich vorhatte oder so, ich musste mich an einen bestimmten Ort in Washington melden.
+  \label{ex:xnli}
+  \item Ich wusste nicht was ich vorhatte oder so, ich musste mich an einen bestimmten Ort in Washington melden.
 
         Ich war noch nie in Washington, deshalb habe ich mich auf der Suche nach dem Ort verirrt, als ich dahin entsandt wurde.
 
-				\textbf{Neutral}
+  \textbf{Neutral}
 \end{examples}
 
 \begin{examples}
-	\item Natürlich haben sie mich dort gefragt, warum ich ging.
+  \item Natürlich haben sie mich dort gefragt, warum ich ging.
 
         Sie fragten, warum ich in den Laden ging.
 
-				\textbf{Neutral}
+  \textbf{Neutral}
 \end{examples}
 
 \begin{examples}
-	\item Und ich dachte OK und das war es dann!
+  \item Und ich dachte OK und das war es dann!
 
         Nachdem ich ja gesagt hatte, endete es.
 
-				\textbf{Entailment}
+  \textbf{Entailment}
 \end{examples}
 
 \begin{examples}
@@ -617,15 +622,15 @@ two languages has been preserved.
 
         John Burke ignoriert Aussagen.
 
-				\textbf{Contradiction}
+  \textbf{Contradiction}
 \end{examples}
 
 \begin{examples}
-	\item Die öffentliche Bibliothek in Greenlee County, Arizona, zeigt die finanziellen und technologischen Probleme von ländlichen Einrichtungen auf.
+  \item Die öffentliche Bibliothek in Greenlee County, Arizona, zeigt die finanziellen und technologischen Probleme von ländlichen Einrichtungen auf.
 
         Greenlee County hat eine öffentliche Bibliothek.
 
-				\textbf{Entailment}
+  \textbf{Entailment}
 \end{examples}
 
 
@@ -690,8 +695,8 @@ translators to keep these symbols in the relevant positions in their translation
 \cite{artetxe2019cross}.
 
 \begin{examples}
-	\label{ex:xquad}
-	\item Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft
+  \label{ex:xquad}
+  \item Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft
 als integraler Bestandteil der aristotelischen Kosmologie. Nach Ansicht von Aristoteles enthält
 die irdische Sphäre vier Elemente, die an verschiedenen „natürlichen Orten“ darin zur Ruhe
 kommen. Aristoteles glaubte, dass bewegungslose Objekte auf der Erde, die hauptsächlich aus den
@@ -714,11 +719,11 @@ The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the
 following:
 
 \begin{enumerate}
-	\item Wer leitete eine philosophische Diskussion über Kraft? $\rightarrow$ Aristoteles
-	\item Wovon war das Konzept der Kraft ein integraler Bestandteil? $\rightarrow$ aristotelischen Kosmologie
-	\item Aus wie vielen Elementen besteht die irdische Sphäre nach Ansicht des Aristoteles? $\rightarrow$ vier
-	\item Wo vermutete Aristoteles den natürlichen Ort für Erd- und Wasserelemente? $\rightarrow$ auf dem Boden
-	\item Was bezeichnete Aristoteles als erzwungene Bewegung? $\rightarrow$ unnatürlichen
+  \item Wer leitete eine philosophische Diskussion über Kraft? $\rightarrow$ Aristoteles
+  \item Wovon war das Konzept der Kraft ein integraler Bestandteil? $\rightarrow$ aristotelischen Kosmologie
+  \item Aus wie vielen Elementen besteht die irdische Sphäre nach Ansicht des Aristoteles? $\rightarrow$ vier
+  \item Wo vermutete Aristoteles den natürlichen Ort für Erd- und Wasserelemente? $\rightarrow$ auf dem Boden
+  \item Was bezeichnete Aristoteles als erzwungene Bewegung? $\rightarrow$ unnatürlichen
 \end{enumerate}
 
 \cite{artetxe2019cross}
@@ -780,15 +785,15 @@ Accuracy (exact match): 57.6\%
 
 \tab{tab:data-set-overview}{Overview of collected data sets and tasks.}
 {\begin{tabular}{l|llll}
-	Data Set & NLP Task  & ML Task  & \# Examples & Splits \\
-	\hline
-	deISEAR &  Emotion Detection & Multi-Class Classification  & 1,001 & - \\
-	MLQA & Question Answering & Span Prediction & 509/4,499 & dev/test \\
-	PAWS-X & Paraphrase Identification & Binary Classification & 48,977/1,932/1,967 & train/dev/test \\
-	SCARE & Sentiment Analysis & Multi-Class Classifiaction & 1,760 & - \\
-	%SCARE Rev. &  Sentiment Analysis & Sequence Classification & XYZ & - \\
-	XNLI & Natural Language Inference & Multi-Class Classification &  2,489/7,498 & dev/test \\
-	XQuAD & Question Answering & Span Prediction & 1,192 & - \\
+  Data Set & NLP Task                   & ML Task                    & \# Examples        & Splits \\
+  \hline
+  deISEAR  &  Emotion Detection         & Multi-Class Classification & 1,001              & - \\
+  MLQA     & Question Answering         & Span Prediction            & 509/4,499          & dev/test \\
+  PAWS-X   & Paraphrase Identification  & Binary Classification      & 48,977/1,932/1,967 & train/dev/test \\
+  SCARE    & Sentiment Analysis         & Multi-Class Classifiaction & 1,760              & - \\
+  %SCARE Rev. &  Sentiment Analysis & Sequence Classification & XYZ & - \\
+  XNLI     & Natural Language Inference & Multi-Class Classification &  2,489/7,498       & dev/test \\
+  XQuAD    & Question Answering         & Span Prediction            & 1,192              & -
 \end{tabular}
 }{Overview data sets}
 
@@ -801,10 +806,10 @@ Accuracy (exact match): 57.6\%
 % %\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
 % \tab{bleuresults}{BLEU scores of different MT systems}
 % {\begin{tabular}{ll|ccc|c}
-% language pair		& ABC	& YYY	\\
+% language pair  & ABC  & YYY  \\
 % \hline
-% EN$\rightarrow$DE	& 20.56	& 32.53 \\
-% DE$\rightarrow$EN	& 43.35	& 52.53 \\
+% EN$\rightarrow$DE  & 20.56  & 32.53 \\
+% DE$\rightarrow$EN  & 43.35  & 52.53 \\
 % \hline
 % \end{tabular}
 % }{ABC BLEU scores}
@@ -849,8 +854,8 @@ Accuracy (exact match): 57.6\%
 %
 % \begin{examples}
 %  \item \gll The cat sits on the table.
-% 	    die Katze sitzt auf dem Tisch
-% 	\glt 'Die Katze sitzt auf dem Tisch.'
+%       die Katze sitzt auf dem Tisch
+%   \glt 'Die Katze sitzt auf dem Tisch.'
 %     \glend
 % \end{examples}
 %
@@ -858,8 +863,8 @@ Accuracy (exact match): 57.6\%
 %
 % \begin{examples}
 %  \item \gll La gata duerm -e en la cama.
-% 	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
-% 	\glt 'Die Katze schl\"aft im Bett.'
+%       Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
+%   \glt 'Die Katze schl\"aft im Bett.'
 %     \glend
 % \end{examples}
 %
