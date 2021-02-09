@@ -8,24 +8,34 @@ The meaning of a sentence in any natural langauge is more than an aggregate of t
 of its components. This is due to a number of reasons:
 
 \begin{description}
-  \item[\textbf{Fixed expressions}]: In 
+  \item[\textbf{Fixed expressions}]: In
   \item
   \item
 \end{description}
 
-``The main reason computational systems use semantic roles is to act as a shallow meaning 
-representation that can let us make simple inferences that aren’t possible from the pure surface 
+``The main reason computational systems use semantic roles is to act as a shallow meaning
+representation that can let us make simple inferences that aren’t possible from the pure surface
 string of words, or even from the parse tree.'' \cite[p.~375]{jurafsky2019speech}
 
-In the literature, often \cite{gildea2002automatic} is considered to have formally defined the 
+In the literature, often \cite{gildea2002automatic} is considered to have formally defined the
 task of automatic SRL.
 
-``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any 
+``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any
 system for natural language understanding.'' \citep{palmer2010semantic}
+
+\section{Quality}
+
+A major question arising in the context of using automatically assigned Semantic Roles in
+downstream tasks, is how good these Semantic Roles are. Since there is no gold standard
+available for Semantic Role Labels for the data sets I use in my experiments, there is no
+straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
+other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
+While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
+is more a scale concerning SRLs.
 
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}
-% 
+%
 % Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
 % %\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
 % \tab{bleuresults}{BLEU scores of different MT systems}
@@ -37,58 +47,58 @@ system for natural language understanding.'' \citep{palmer2010semantic}
 % \hline
 % \end{tabular}
 % }{ABC BLEU scores}
-% 
+%
 % And we can reference the large table in the appendix as Table \ref{appendixTable}
-% 
+%
 % \section{Evaluation}
 % \label{sec:5_evaluation}
-% We saw in section \ref{sec:5_bleuscores} 
-% 
+% We saw in section \ref{sec:5_bleuscores}
+%
 % We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
-% 
+%
 % \subsection{More evaluation}
 % \label{subsec:5_moreeval}
-% 
-% 
+%
+%
 % \section{Citations}
 % Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
 % or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
-% 
+%
 % to cite: \cite[30-31]{Koehn2005} \\
 % to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
-% 
+%
 % to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
 % only the author(s): \citeauthor{Callison-Burch2006}\\
 % only the year: \citeyear{Callison-Burch2006}\\
-% 
+%
 % \section{Graphics}
-% 
+%
 % To include a graphic that appears in the list of figures, use the predefined fig command:\\
 % %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
 % \fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
-% 
+%
 % %\reffig{#1: label}
 % And then reference it as \reffig{fig:rosetta} is easy.
-% 
+%
 % \section{Some Linguistics}
-% 
+%
 % (With the package 'covington')\\
-% 
+%
 % Gloss:
-% 
+%
 % \begin{examples}
 %  \item \gll The cat sits on the table.
 % 	    die Katze sitzt auf dem Tisch
 % 	\glt 'Die Katze sitzt auf dem Tisch.'
 %     \glend
 % \end{examples}
-% 
+%
 % Gloss with morphology:
-% 
+%
 % \begin{examples}
 %  \item \gll La gata duerm -e en la cama.
 % 	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
 % 	\glt 'Die Katze schl\"aft im Bett.'
 %     \glend
 % \end{examples}
-% 
+%

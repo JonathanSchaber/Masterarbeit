@@ -68,13 +68,13 @@ Following \cite{wang2018glue},
 
 \tab{tab:overview-data-sets}{gliGLUE data sets and tasks.}
 {\begin{tabular}{l|llll}
-	Data Set & NLP Task & ML Task & \# Examples & Splits \\
-	\hhline{=|====}
-	& \multicolumn{4}{c}{Single-Sentence Tasks} \\
+	Data Set & NLP Task & ML Task & \# Examples & Splits \\ \hline\hline
+	% \hhline{=|====}
+	& \multicolumn{4}{c}{\textit{Single-Sentence Tasks}} \\
 	deISEAR &  Emotion Detection & Multi-Class Classification  & 1 001 & - \\
 	SCARE & Sentiment Analysis & Multi-Class Classification & 1 760 & - \\
 	\hline
-	& \multicolumn{4}{c}{Sentence Pair Tasks} \\
+	& \multicolumn{4}{c}{\textit{Sentence Pair Tasks}} \\
 	% SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
 	MLQA & Question Answering & Span Prediction & 509/4 499 & dev/test \\
 	PAWS-X & Paraphrase Identification & Binary Classification & 14 402/2 000/4 000 & train/dev/test \\
@@ -310,15 +310,22 @@ human-translated, there needs to be some clarification as to how differently tho
 One measure to capture similarities between sentences is the BLEU score \cite{papineni2002bleu}:
 This score measures the overlap of n-grams between two sentences, such that XXX
 The BLEU score is a value between 0 (no n-gram overlaps) to 1 (perfect n-gram overlaps), where a
-BLEU score of 1 means that the two sentences are identical.
+BLEU score of 1 means that the two sentences are identical. As for other measures, like accuracy
+e.g., the value is sometimes multiplied by 100 for better readabilit, which I will also do here.
 
-\fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:deISEAR-context}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{deISEAR-Length}
+\fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:deISEAR-context}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{PAWS-X-Length-all}
 
-\fig{images/PAWS-X_subtokenized_sum.pdf}{fig:deISEAR-context}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{deISEAR-Length}
+\fig{images/PAWS-X_subtokenized_sum.pdf}{fig:PAWS-X-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{PAWS-X-Length}
 
-Train: 0.553 \\
-Development: 0.373 \\
-Test: 0.384
+Mean BLEU-scores for sets:
+
+Train: 55.27 stdev: 24.97\\
+Development: 37.33 stdev: 25.57\\
+Test: 38.37 stdev: 24.83
+
+
+\fig{images/PAWS-X_BLEU_scores.pdf}{fig:PAWS-X-BLEU}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{PAWS-X-BLEU}
+
 
 Number of instances: \\
 Train: 48,977 \\
@@ -346,8 +353,26 @@ average length sentence 1 test: 28.1 (sigma 8.4) \\
 average length sentence 2 test: 28.0 (sigma 8.4)
 
 
-The training set contains 3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score
-of 1.0 --- which means they are identical.
+identical sentence pairs:
+
+Train: 3209, wrong labelled: 84
+
+Dev: 38, wrong labelled: 4
+
+Test: 27, wrong labelled: 0
+
+
+The BLEU scores indicate that the sentence pairs in the training set are in tendency much
+more similar to each other than in the development and test set. Taken into account how
+the data sets were generated, this makes actually sense, however: While the development
+and test sets were translated from English to German by humans, the huge training set was
+automatically translated. Since the original differences in the sentence pair might well
+have been rather subtle, it is no surprise that an algorithm might exhibit difficulties in
+grasping those differences; resulting in similar translations for two similar sentences.
+Note that due to the difficulties mentioned before, the automic translation resulted in
+3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score of 100.00 in the
+training set --- which means they are identical.\myfootnote{I reported this to the authors
+of the corpus, but didn't receive an answer from them.}
 
 
 \subsubsection{SOTA}
@@ -642,6 +667,8 @@ Entailment: 2,500
 Contradiction: 2,499
 
 \fig{images/XNLI_premise_subtokenized.pdf}{fig:XNLI-premise-length}{XNLI: Length of subtokenized premises.}{8}{XNLI-Length}
+
+In contrary to the above described PAWS-X corpus, there are no identical sentence pairs in XNLI.
 
 \subsubsection{SOTA}
 
