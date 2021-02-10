@@ -7,19 +7,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces deISEAR-Length}}{10}{figure.3.1}
-\contentsline {figure}{\numberline {2}{\ignorespaces deISEAR-Length}}{11}{figure.3.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces PAWS-X-Length-all}}{14}{figure.3.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X-Length}}{15}{figure.3.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X-BLEU}}{16}{figure.3.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces SCARE stars statistics}}{20}{figure.3.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces SCARE label statistics}}{20}{figure.3.7}
-\contentsline {figure}{\numberline {8}{\ignorespaces XNLI-Length}}{24}{figure.3.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces XQuAD-Length}}{27}{figure.3.9}
+\contentsline {figure}{\numberline {1}{\ignorespaces deISEAR-Length}}{10}{figure.caption.16}
+\contentsline {figure}{\numberline {2}{\ignorespaces deISEAR-Length}}{11}{figure.caption.17}
+\contentsline {figure}{\numberline {3}{\ignorespaces PAWS-X-Length-all}}{14}{figure.caption.18}
+\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X-Length}}{15}{figure.caption.19}
+\contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X-BLEU}}{16}{figure.caption.20}
+\contentsline {figure}{\numberline {6}{\ignorespaces SCARE stars statistics}}{20}{figure.caption.23}
+\contentsline {figure}{\numberline {7}{\ignorespaces SCARE label statistics}}{20}{figure.caption.24}
+\contentsline {figure}{\numberline {8}{\ignorespaces XNLI-Length}}{24}{figure.caption.25}
+\contentsline {figure}{\numberline {9}{\ignorespaces XQuAD-Length}}{27}{figure.caption.26}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {10}{\ignorespaces gliBERT Architecture}}{29}{figure.4.1}
-\contentsline {figure}{\numberline {11}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{32}{figure.4.2}
-\contentsline {figure}{\numberline {12}{\ignorespaces BERT-Classification}}{38}{figure.4.3}
+\contentsline {figure}{\numberline {10}{\ignorespaces gliBERT Architecture}}{29}{figure.caption.28}
+\contentsline {figure}{\numberline {11}{\ignorespaces gliBERT Architecture detail}}{32}{figure.caption.29}
+\contentsline {figure}{\numberline {12}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{34}{figure.caption.30}
+\contentsline {figure}{\numberline {13}{\ignorespaces BERT-Classification}}{39}{figure.caption.31}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
