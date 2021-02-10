@@ -13,7 +13,7 @@ than an actual linguistic sentence. A «sequence» refers to the input token seq
 which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
 
 
-\fig{images/general_architecture.png}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{12}{gliBERT Architecture}
+\fig{images/architecture_grob}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{12}{gliBERT Architecture}
 
 The core parts of the model are the following:
 
@@ -22,7 +22,7 @@ The core parts of the model are the following:
   \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by ParZu to identify predicates.
 	Second, the sequence with the information about which tokens are predicates is handed to the DAMESRL model which predicts actual SRLs.
 	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as a list of tokens to DAMESRL.
-  \item[\textbf{Fusion module}] To combine the BERT embeddings and SRLs, first the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
+  \item[\textbf{combination}] To combine the BERT embeddings and SRLs, first the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
 	secondly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
 	For this, there exist two approaches:
 	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
