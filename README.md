@@ -1,4 +1,4 @@
-# Masterarbeit
+# Enriching BERT Embeddings with Semantic Role Labels for Natural Language Understanding Tasks in German
 
 This repository contains all code files relating to my master's thesis.
 
