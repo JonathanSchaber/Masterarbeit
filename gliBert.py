@@ -418,15 +418,14 @@ class BertBase(nn.Module):
             #print(one_sent[0][0][0].tolist())
             #print(one_sent[0][0][1].tolist())
             #print(one_sent[0][0][2].tolist())
-            emb = self.srl_model(one_sent)
         else:
             srls = self._get_A_SRLs(srls)
             if not self.config["merge_subtokens"]:
                 srls = self._split_SRLs_to_subtokens(srls, split_idxs[0])
             one_sent = self._concatenate_sents(srls)
             one_sent = self._add_spec_srl(one_sent, "[CLS]")
-            emb = self.srl_model(one_sent)
-            #import ipdb; ipdb.set_trace()
+        emb = self.srl_model(one_sent)
+        #import ipdb; ipdb.set_trace()
 
         return emb
 
@@ -774,42 +773,13 @@ class gliBertClassifierGRU(BertBase):
         hidden_state = full_word_hidden_state if self.config["merge_subtokens"] else last_hidden_state
 
         if self.config["combine_SRLs"]:
-            #if data_type != 1:
-                #a_srls, b_srls = _get_AB_SRLs(srls)
-                #if not self.config["merge_subtokens"]:
-                    #a_srls, b_srls = self._split_SRLs_to_subtokens(a_srls, split_idxs[0]), \
-                                    #self._split_SRLs_to_subtokens(b_srls, split_idxs[1])
-                #a_emb = self.srl_model(a_srls)
-                #b_emb = self.srl_model(b_srls)
-                #ab = lambda i: [self.dummy_srl, a_emb[i], self.dummy_srl, b_emb[i]]
-                #srl_emb = [torch.cat(tuple(ab(i)), dim=0)
-                                #for i in range(len(a_srls))]
-            #else:
-                #srls = _get_A_SRLs(srls)
-                #if not self.config["merge_subtokens"]:
-                    #srls = self._split_SRLs_to_subtokens(srls, split_idxs[0])
-                #emb = self.srl_model(srls)
-                #srl_emb = [torch.cat(tuple([self.dummy_srl, emb[i]]), dim=0)
-                                #for i in range(len(srls))]
             srl_emb = self.embed_srls(srls, split_idxs, data_type)
 
             srl_batch = self.pad_SRLs(srl_emb, self.dummy_srl)
             combo_merge_batch = torch.cat((hidden_state, srl_batch), dim=-1)
 
             _, h_n = self.gru(combo_merge_batch)
-            #hidden = h_n.view(2, 2, tokens.shape[0], self.config["GRU_head_hidden_size"])
-            #last_hidden = hidden[-1]
-            #last_hidden_fwd = last_hidden[0]
-            #last_hidden_bwd = last_hidden[1]
-            #comb = torch.cat(tuple([last_hidden_fwd, last_hidden_bwd]), dim=1)
-            #linear_output = self.linear(comb)
-            #proba = self.softmax(linear_output)
-            #return proba
         else:
-            #if self.config["merge_subtokens"]:
-            #    _, h_n = self.gru(full_word_hidden_state)
-            #else:
-            #    _, h_n = self.gru(last_hidden_state)
             _, h_n = self.gru(hidden_state)
         hidden = h_n.view(2, 2, tokens.shape[0], self.config["GRU_head_hidden_size"])
         last_hidden = hidden[-1]
