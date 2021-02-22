@@ -245,29 +245,35 @@ we align the two, duplicate ``-222'' and compare it with token number 7 in $T_{B
 While it is theoretically possible to align tokens that were differently tokenized by the two
 algorithms, it is nevertheless quite cumbersome. The main problem, however, arises due to the
 [UNK] token BERT introduces for characters --- or character sequences --- which lie out of its
-vocabulary. Since there is obviously no more (sub-)string comparison possible, the described
-method fails.\myfootnote{Of course, one could heuristically {\color{red} go on until no [UNK]
-token is encountered align up in between.}} Eventually, I decided to simply feed into DAMESRL
+vocabulary. Since there is obviously no more (sub-)string comparison possible, the process
+gets even more complicated: Suppose you have duplicted the ``-222'' in the NLTK column and are
+now on line 7. In the BERT tokenization you see the ``[UNK]'' token, while in the NLTK you see
+a ``\textdegree{}C''. To find out, what all is containt in the ``[UNK]'', you need to look at
+the token before and after it in the BERT tokenization and compare it with the respective NLTK
+tokens. since the the and so on....
+% \myfootnote{Of course, one could heuristically {\color{red}
+% go on until no [UNK] token is encountered align up in between.}}
+% Eventually, I decided to simply feed into DAMESRL
 the BERT-tokenized sequences, to get around this issue.
 
 
 \begin{tabularx}{\textwidth}{@{}l<{}@{\ }X@{}}
   \textbf{BERT} (merged) & \textbf{NLTK} \\
-  Die                    & Die \\
-  mittlere               & mittlere \\
-  Oberflächentemperatur  & Oberflächentemperatur \\
-  wird                   & wird \\
-  auf                    & auf \\
-  -                      & -222 \\
-  222                    & -222\\
-  {[}UNK{]}              & \textdegree{}C \\
-  (                      & ( \\
+  Die                                        & Die \\
+  mittlere                                   & mittlere \\
+  Oberflächentemperatur                      & Oberflächentemperatur \\
+  wird                                       & wird \\
+  auf                                        & auf \\
+  -                                          & -222 \\
+  222                                        & \textcolor{blue}{-222}\\
+  {[}UNK{]}                                  & \textdegree{}C \\
+  (                                          & ( \\
   {\fontfamily{ptm}\selectfont\texttildelow} & {\fontfamily{ptm}\selectfont\texttildelow}51 \\
-  51                     & {\fontfamily{ptm}\selectfont\texttildelow}51 \\
-  K                      & K \\
-  )                      & ) \\
-  geschätzt              & geschätzt \\
-  .                      & .
+  51                                         & \textcolor{blue}{{\fontfamily{ptm}\selectfont\texttildelow}51} \\
+  K                                          & K \\
+  )                                          & ) \\
+  geschätzt                                  & geschätzt \\
+  .                                          & .
 \end{tabularx}
 
 
@@ -341,9 +347,12 @@ Finally, the predicted SRLs need to be encoded in a numeric way similar to the B
 that they can be combined and sent thorugh the final head network Encoding a sequence is a typical.
 seq2seq task, for which recurrent neural networks have proven to be effective mechanisms (CITE)   .
 
-\section{Fusion Module}
-
-\subsection{Embedding the SRLs}
+\begin{itemize}
+  \item number of predicates equals 3
+  \item duplicate or zeros when not enough predicates
+  \item concatenate all sentences and then encode vs. encode each sentence and then concat
+  \item ...
+\end{itemize}
 
 \begin{itemize}
 	\item Embed each sentence alone vs. concatenate all sentences
@@ -351,6 +360,8 @@ seq2seq task, for which recurrent neural networks have proven to be effective me
 	\item add meta-SRLs [CLS], [SEP]
 	\item duplicate if less preds than 3 vs. fill with zeros
 \end{itemize}
+
+\section{combination}
 
 \subsection{Aligning BERT subtokens with SRL tokens}
 
@@ -416,13 +427,15 @@ provide are rather conflicting, only after inspecting the code they released on
 \href{https://github.com/cooelf/SemBERT/}{GitHub}, the picture somewhat cleared:
 
 After predicitng the SRLs for a given input, they add pseudo-SRLs for the [CLS] and [SEP] tokens.
-In the look-up table of the BiGRU that consumes the SRLs, they then simply add the corresponding.
-keys --- so that besides regular SRLs as ``B-V'' (beginning of predicate) or ``I-A0'' (inside   .
-or end of argument zero), there are also the labels ``[CLS]'' and ``[PRED]'' After sending this .
-sequence through the BiGRU, they concatenate the two hidden states of the [CLS] SRL with the    .
-[CLS] BERT embedding and predict on that vector % Applying this strategy, now there \emph{is} a .
-SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended.
-to its BERT embedding vector                                                                    .
+In the look-up table of the BiGRU that consumes the SRLs, they then simply add the corresponding
+keys --- so that besides regular SRLs as ``B-V'' (beginning of predicate) or ``I-A0'' (inside
+or end of argument zero), there are also the labels ``[CLS]'' and ``[PRED]'' After sending this
+sequence through the BiGRU, they concatenate the two hidden states of the [CLS] SRL with the
+[CLS] BERT embedding and predict on that vector % Applying this strategy, now there \emph{is} a
+SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended
+to its BERT embedding vector
+
+\fig{images/head-cls.png}{fig:CLS-Head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork on the [CLS]-token}{10}{CLS-Head}
 
 In table XYZ I report the gains, losses this strategy yields for the four classifications data sets
 in my corpus.
@@ -434,8 +447,8 @@ approach, it does not lead to an improvement on others, or worse, brings the per
 suspect a reason for this may lie in the manner of how the SRLs are processed in this approach.
 The information SRLs provide is, what I call, sub-sentence specific and cannot be represented
 as a single information piece. By this I mean that it does not suffice to know that given an
-utterance $x$ that there is a specific SR in it; rather the information \emph{where} is is is
-crucial. Consider the following example (the pseudo SRL [CLS] is added):
+utterance $x$ that there is a specific SR in it; rather the information \emph{where} is crucial.
+Consider the following example (the pseudo SRL [CLS] is added):
 
 
 [\textsubscript{[CLS]} ] [\textsubscript{A-0} The man] [\textsubscript{predicate} hit] [\textsubscript{A-1} the dog] .

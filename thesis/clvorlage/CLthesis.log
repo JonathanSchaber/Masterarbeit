@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  16 FEB 2021 08:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 FEB 2021 09:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1935,11 +1935,8 @@ LaTeX Warning: Label `fig:deISEAR-context' multiply defined.
 
 LaTeX Warning: Label `tab:scare-csv-example' multiply defined.
 
-) (./chapters/chap4_architecture.aux) (./chapters/chap5_results.aux
-
-LaTeX Warning: Label `tab:results' multiply defined.
-
-) (./chapters/chap6_conclusion.aux) (./chapters/glossary.aux)
+) (./chapters/chap4_architecture.aux) (./chapters/chap5_results.aux)
+(./chapters/chap6_conclusion.aux) (./chapters/glossary.aux)
 (./chapters/references.aux) (./chapters/cv.aux) (./appendix/tables.aux)
 (./appendix/scripts.aux))
 \openout1 = `CLthesis.aux'.
@@ -2201,13 +2198,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ] [7] [8] [9]
-<images/deISEAR_subtokenized.pdf, id=583, 433.62pt x 650.43pt>
+<images/deISEAR_subtokenized.pdf, id=587, 433.62pt x 650.43pt>
 File: images/deISEAR_subtokenized.pdf Graphic file (type pdf)
 <use images/deISEAR_subtokenized.pdf>
 Package pdftex.def Info: images/deISEAR_subtokenized.pdf  used on input line 19
 4.
 (pdftex.def)             Requested size: 227.62204pt x 341.43124pt.
-<images/deISEAR_subtokenized_all.pdf, id=584, 433.62pt x 650.43pt>
+<images/deISEAR_subtokenized_all.pdf, id=588, 433.62pt x 650.43pt>
 File: images/deISEAR_subtokenized_all.pdf Graphic file (type pdf)
 <use images/deISEAR_subtokenized_all.pdf>
 Package pdftex.def Info: images/deISEAR_subtokenized_all.pdf  used on input lin
@@ -2219,7 +2216,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [10 <./images/deISEAR_subtokenized.pdf>] [11 <./images/deISEAR_subtokenized_all
 .pdf>] [12] [13]
-<images/PAWS-X_subtokenized_sum_without_outlier.pdf, id=642, 433.62pt x 650.43p
+<images/PAWS-X_subtokenized_sum_without_outlier.pdf, id=646, 433.62pt x 650.43p
 t>
 File: images/PAWS-X_subtokenized_sum_without_outlier.pdf Graphic file (type pdf
 )
@@ -2227,7 +2224,7 @@ File: images/PAWS-X_subtokenized_sum_without_outlier.pdf Graphic file (type pdf
 Package pdftex.def Info: images/PAWS-X_subtokenized_sum_without_outlier.pdf  us
 ed on input line 318.
 (pdftex.def)             Requested size: 227.62204pt x 341.43124pt.
-<images/PAWS-X_subtokenized_sum.pdf, id=643, 433.62pt x 650.43pt>
+<images/PAWS-X_subtokenized_sum.pdf, id=647, 433.62pt x 650.43pt>
 File: images/PAWS-X_subtokenized_sum.pdf Graphic file (type pdf)
 <use images/PAWS-X_subtokenized_sum.pdf>
 Package pdftex.def Info: images/PAWS-X_subtokenized_sum.pdf  used on input line
@@ -2237,7 +2234,7 @@ Package pdftex.def Info: images/PAWS-X_subtokenized_sum.pdf  used on input line
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/PAWS-X_BLEU_scores.pdf, id=644, 433.62pt x 650.43pt>
+<images/PAWS-X_BLEU_scores.pdf, id=648, 433.62pt x 650.43pt>
 File: images/PAWS-X_BLEU_scores.pdf Graphic file (type pdf)
 <use images/PAWS-X_BLEU_scores.pdf>
 Package pdftex.def Info: images/PAWS-X_BLEU_scores.pdf  used on input line 329.
@@ -2266,7 +2263,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [18]
-<images/SCARE_star_stats.png, id=714, 723.4227pt x 346.896pt>
+<images/SCARE_star_stats.png, id=718, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
 Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 510.
@@ -2276,7 +2273,7 @@ Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 510.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [19]
-<images/SCARE_label_stats.png, id=720, 702.4644pt x 346.896pt>
+<images/SCARE_label_stats.png, id=724, 702.4644pt x 346.896pt>
 File: images/SCARE_label_stats.png Graphic file (type png)
 <use images/SCARE_label_stats.png>
 Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 532.
@@ -2287,7 +2284,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 553--554
  []
 
 [21] [22]
-<images/XNLI_premise_subtokenized.pdf, id=753, 433.62pt x 650.43pt>
+<images/XNLI_premise_subtokenized.pdf, id=757, 433.62pt x 650.43pt>
 File: images/XNLI_premise_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_premise_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_premise_subtokenized.pdf  used on input li
@@ -2298,7 +2295,7 @@ ne 674.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [23] [24 <./images/XNLI_premise_subtokenized.pdf>] [25]
-<images/xquad_context_subtokenized.pdf, id=788, 433.62pt x 650.43pt>
+<images/xquad_context_subtokenized.pdf, id=792, 433.62pt x 650.43pt>
 File: images/xquad_context_subtokenized.pdf Graphic file (type pdf)
 <use images/xquad_context_subtokenized.pdf>
 Package pdftex.def Info: images/xquad_context_subtokenized.pdf  used on input l
@@ -2316,7 +2313,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 (./chapters/chap4_architecture.tex
 chapter 4.
-<images/architecture_grob.png, id=818, 2326.19063pt x 531.48563pt>
+<images/architecture_grob.png, id=822, 2326.19063pt x 531.48563pt>
 File: images/architecture_grob.png Graphic file (type png)
 <use images/architecture_grob.png>
 Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
@@ -2327,20 +2324,20 @@ Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
 
 
  <./images/architecture_grob.png>] [30] [31]
-<images/architecture2.png, id=854, 4224.03696pt x 2128.20695pt>
-File: images/architecture2.png Graphic file (type png)
-<use images/architecture2.png>
-Package pdftex.def Info: images/architecture2.png  used on input line 68.
+<images/architecture.png, id=858, 4224.03696pt x 2128.20695pt>
+File: images/architecture.png Graphic file (type png)
+<use images/architecture.png>
+Package pdftex.def Info: images/architecture.png  used on input line 68.
 (pdftex.def)             Requested size: 682.86613pt x 344.02724pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[32 <./images/architecture2.png>] [33
+[32 <./images/architecture.png>] [33
 
 
 ]
-<images/exampleParzu2.png, id=895, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=899, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 132.
@@ -2365,36 +2362,61 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 209.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [36] [37] [38]
-<images/bert_classification.png, id=971, 1071.25218pt x 441.14813pt>
+<images/bert_classification.png, id=972, 1071.25218pt x 441.14813pt>
 File: images/bert_classification.png Graphic file (type png)
 <use images/bert_classification.png>
-Package pdftex.def Info: images/bert_classification.png  used on input line 398
+Package pdftex.def Info: images/bert_classification.png  used on input line 409
 .
 (pdftex.def)             Requested size: 284.52756pt x 117.17294pt.
 
-[39 <./images/bert_classification.png>]
 
-LaTeX Warning: Reference `' on page 40 undefined on input line 448.
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-[40]
-LaTeX Font Info:    Try loading font information for U+bbm on input line 459.
- (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+[39]
+<images/head-cls.png, id=985, 1751.8248pt x 1215.87048pt>
+File: images/head-cls.png Graphic file (type png)
+<use images/head-cls.png>
+Package pdftex.def Info: images/head-cls.png  used on input line 438.
+(pdftex.def)             Requested size: 284.52756pt x 197.47456pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[40 <./images/bert_classification.png>]
+
+LaTeX Warning: Reference `' on page 41 undefined on input line 461.
+
+LaTeX Font Info:    Try loading font information for U+bbm on input line 472.
+(/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)) [41]
+)) [41 <./images/head-cls.png>] [42]
 \openout2 = `chapters/chap5_results.aux'.
 
-
-(./chapters/chap5_results.tex
+ (./chapters/chap5_results.tex
 chapter 5.
-[42
+
+Overfull \hbox (0.48767pt too wide) in paragraph at lines 120--121
+[]\OT1/cmr/m/n/12 GRU ar-chi-tec-ture is prob-a-bly strongest: most best mod-el
+s (even though mostly
+ []
+
+[43
 
 
 
-] [43
+]
+Overfull \hbox (12.72972pt too wide) in paragraph at lines 180--180
+ [] 
+ []
 
-] [44
 
-] [45] [46]) [47]
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[44
+
+] [45] [46
+
+] [47] [48]) [49]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
@@ -2404,14 +2426,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [48
+) [50
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [49
+ (./chapters/glossary.tex) [51
 
 
 
@@ -2419,11 +2441,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [50
+(./CLthesis.bbl [52
 
 
 
-] [51] [52])) [53]
+] [53] [54])) [55]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -2436,7 +2458,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [54
+) [56
 
 
 
@@ -2445,7 +2467,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  (./appendix/tables.tex
 chapter A.
-[55
+[57
 
 
 
@@ -2454,7 +2476,7 @@ chapter A.
 
  (./appendix/scripts.tex
 chapter B.
-[56
+[58
 
 
 
@@ -2471,7 +2493,7 @@ hapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
-(rerunfilecheck)             Checksum: 24C40AE2BC39DBA675C042070DDAE979;4559.
+(rerunfilecheck)             Checksum: B0A4A8091073A661311624EBE4988A8C;4545.
 
 
 LaTeX Warning: There were undefined references.
@@ -2481,10 +2503,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 35344 strings out of 492982
- 683541 string characters out of 6134895
- 852930 words of memory out of 5000000
- 37930 multiletter control sequences out of 15000+600000
+ 35358 strings out of 492982
+ 683754 string characters out of 6134895
+ 856133 words of memory out of 5000000
+ 37939 multiletter control sequences out of 15000+600000
  559405 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,18n,78p,10408b,1003s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2511,10 +2533,10 @@ nts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/times/utmr8a.pfb>
-Output written on CLthesis.pdf (65 pages, 1198384 bytes).
+Output written on CLthesis.pdf (67 pages, 1412635 bytes).
 PDF statistics:
- 1262 PDF objects out of 1440 (max. 8388607)
- 1119 compressed objects within 12 object streams
- 307 named destinations out of 1000 (max. 500000)
- 659 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1281 PDF objects out of 1440 (max. 8388607)
+ 1134 compressed objects within 12 object streams
+ 311 named destinations out of 1000 (max. 500000)
+ 664 words of extra memory for PDF output out of 10000 (max. 10000000)
 

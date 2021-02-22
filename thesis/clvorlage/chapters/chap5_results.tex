@@ -1,7 +1,8 @@
 \newchap{Results}
 \label{chap:5_results}
 
-\section{SRL Evaluation}
+In this chapter, I will report the results of my experiments on the six data sets. Additionally, I
+conducted an ablation study on the XNLI data set, that is described in section \ref{sec:ablation}
 
 % \subsection{deISEAR}
 
@@ -121,6 +122,15 @@
   \item all 3 worsening are for subtokenized architectures.
 \end{itemize}
 
+To obtain as stable results as possible, I decided to train five models for each architecture
+and configuration, all initialized with different random seeds. Additionally, I ensembled the
+five models, achieving a performance gain of several percentage points (see example of PAWS-X,
+table \ref{tab:pawsx}). In table \ref{tab:results} below, the test set ensemble results for
+each architecture on the non-question answering data set are reported. The results for the
+architecture for the question answering tasks are reported in table \ref{tab:results-qa}.
+
+In a first step, I will discuss on the overall performance of models when the SRLs are added, compared to the same architectures without.
+
 
 \begin{landscape}\centering
   \vspace*{\fill}
@@ -152,23 +162,39 @@
       % \end{tablenotes}
     }
   }{Results}
+
+  \tab{tab:pawsx}{Ensemble vs. averages of PAWS-X b.}{
+    \scalebox{1}{
+      \begin{tabular}{lccc|ccc|ccc|ccc|ccc|ccc}
+               & \multicolumn{6}{c|}{\textbf{{[}CLS{]} Head}}                                                                                                                                                                                                                      & \multicolumn{6}{c|}{\textbf{LHSA Head}}                                                                                                                                                                                                & \multicolumn{6}{c}{\textbf{GRU Head}}                                                                                                                                                                                                                           \\ \cline{2-19}
+               & \multicolumn{3}{c|}{subtokenized}                                                                                               & \multicolumn{3}{c|}{subtokens merged}                                                                                           & \multicolumn{3}{c|}{subtokenized}                                                                                   & \multicolumn{3}{c|}{subtokens merged}                                                                            & \multicolumn{3}{c|}{subtokenized}                                                                                             & \multicolumn{3}{c}{subtokens merged}                                                                                            \\ \cline{2-19}
+               & \multicolumn{1}{c|}{-SRL}                    & \multicolumn{2}{c|}{+SRL}                                                        & \multicolumn{1}{c|}{-SRL}                  & \multicolumn{2}{c|}{+SRL}                                                          & \multicolumn{1}{c|}{-SRL}                      & \multicolumn{2}{c|}{+SRL}                                          & \multicolumn{1}{c|}{-SRL}                      & \multicolumn{2}{c|}{+SRL}                                       & \multicolumn{1}{c|}{-SRL}                    & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{-SRL}                       & \multicolumn{2}{c}{+SRL}                                                      \\
+               & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}              & \multicolumn{1}{c|}{dupl.}              & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c}{zeros}                 & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.} & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}          & dupl.                      & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}             & dupl.                                  & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & dupl.                                 \\ \hline\hline
+      Average  & \multicolumn{1}{c|}{86.82}                   & \multicolumn{1}{c}{86.00}              & \multicolumn{1}{c|}{86.18}              & \multicolumn{1}{c|}{86.26}                 & \multicolumn{1}{c}{86.88}                 & \multicolumn{1}{c|}{86.57}             & \multicolumn{1}{c|}{86.29}                     & \multicolumn{1}{c}{85.73}             & \multicolumn{1}{c|}{85.99} & \multicolumn{1}{c|}{\textit{85.41}}            & \multicolumn{1}{c}{86.32}          & \multicolumn{1}{c|}{86.58} & \multicolumn{1}{c|}{86.27}                   & \multicolumn{1}{c}{86.51}             & \multicolumn{1}{c|}{86.50}             & \multicolumn{1}{c|}{\textbf{87.09}}             & \multicolumn{1}{c}{\underline{87.00}} & \multicolumn{1}{c}{86.55}             \\
+      Ensemble & \multicolumn{1}{c|}{87.49}                   & \multicolumn{1}{c}{87.04}              & \multicolumn{1}{c|}{87.34}              & \multicolumn{1}{c|}{\textbf{88.05}}        & \multicolumn{1}{c}{\textbf{88.05}}        & \multicolumn{1}{c|}{\textbf{88.05}}    & \multicolumn{1}{c|}{\underline{87.95}}         & \multicolumn{1}{c}{87.29}             & \multicolumn{1}{c|}{87.90} & \multicolumn{1}{c|}{\textit{86.17}}            & \multicolumn{1}{c}{87.24}          & \multicolumn{1}{c|}{87.54} & \multicolumn{1}{c|}{86.88}                   & \multicolumn{1}{c}{87.49}             & \multicolumn{1}{c|}{\underline{87.95}} & \multicolumn{1}{c|}{87.90}                      & \multicolumn{1}{c}{\underline{87.95}} & \multicolumn{1}{c}{\textbf{88.05}}    \\ \hline
+      Gain     & \multicolumn{1}{c|}{.67}                     & \multicolumn{1}{c}{1.04}               & \multicolumn{1}{c|}{1.16}               & \multicolumn{1}{c|}{1.79}                  & \multicolumn{1}{c}{1.17}                  & \multicolumn{1}{c|}{1.48}              & \multicolumn{1}{c|}{1.66}                      & \multicolumn{1}{c}{1.56}              & \multicolumn{1}{c|}{1.91}  & \multicolumn{1}{c|}{.76}                       & \multicolumn{1}{c}{.92}            & \multicolumn{1}{c|}{.96}   & \multicolumn{1}{c|}{.61}                     & \multicolumn{1}{c}{.98}               & \multicolumn{1}{c|}{1.45}              & \multicolumn{1}{c|}{.81}                        & \multicolumn{1}{c}{.95}               & \multicolumn{1}{c}{1.50}              \\ \cline{1-1}
+      Average  & 1.18
+
+      \end{tabular}
+    }
+  }{TEEEST}
   \vfill
 \end{landscape}
 
 
-\tab{tab:results}{Ensemble percentage points gained / lost after adding SRLs for each configuration. The best of the +SRL configurations was taken into account: \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};, \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};. Light blue denotes that both architectures performed \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=light-blue,text=black](char){equally}; (in which case both ensembles were controlled for significance). One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
+\tab{tab:gain-loss}{Ensemble percentage points gained / lost after adding SRLs for each configuration. The best of the +SRL configurations was taken into account: \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};, \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};. Light blue denotes that both architectures performed \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=light-blue,text=black](char){equally}; (in which case both ensembles were controlled for significance). One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
     \scalebox{1}{
       \begin{tabular}{llc|c|c|c|c|c}
-                                                   &    & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                             & \multicolumn{2}{c|}{\textbf{LHSA Head}}                                                                    & \multicolumn{2}{c}{\textbf{GRU Head}}                                                                   \\ \cline{3-8}
-                                                   &    & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c|}{merged}                        & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c|}{merged}                          & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c}{merged}                        \\ \hline\hline
-      \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & a  & \multicolumn{1}{c|}{\cellcolor{blue} 0.67}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.00}    & \multicolumn{1}{c|}{\cellcolor{blue} 6.62**}        & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.00}      & \multicolumn{1}{c|}{\cellcolor{blue} 4.63**}        & \multicolumn{1}{c}{\cellcolor{dark-blue} -1.99}   \\
-      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{light-blue} 3.31}    & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.99}    & \multicolumn{1}{c|}{\cellcolor{dark-blue} -4.63*}   & \multicolumn{1}{c|}{\cellcolor{blue} -1.32}          & \multicolumn{1}{c|}{\cellcolor{blue} 1.32}          & \multicolumn{1}{c}{\cellcolor{dark-blue} -1.99}   \\ \cline{3-8}
-      \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & a  & \multicolumn{1}{c|}{\cellcolor{dark-blue} -1.90*}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.28*}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.76}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.38}      & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.38}     & \multicolumn{1}{c}{\cellcolor{blue} -1.89}        \\
-      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{blue} -1.51**}       & \multicolumn{1}{c|}{\cellcolor{light-blue} 0.00}   & \multicolumn{1}{c|}{\cellcolor{blue} -0.76}         & \multicolumn{1}{c|}{\cellcolor{dark-blue} -0.38}     & \multicolumn{1}{c|}{\cellcolor{blue} 0.76}          & \multicolumn{1}{c}{\cellcolor{dark-blue} -1.13}   \\ \cline{3-8}
-      \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & a  & \multicolumn{1}{c|}{\cellcolor{blue} 0.97*}         & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.59***} & \multicolumn{1}{c|}{\cellcolor{blue} -0.41}         & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.25}      & \multicolumn{1}{c|}{\cellcolor{light-blue} 0.51}    & \multicolumn{1}{c}{\cellcolor{dark-blue} -0.35}   \\
-      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{dark-blue} -0.15}    & \multicolumn{1}{c|}{\cellcolor{light-blue} 0.00}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} -0.05}    & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.37***}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.07}     & \multicolumn{1}{c}{\cellcolor{dark-blue} 0.15}    \\ \cline{3-8}
-      \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & a  & \multicolumn{1}{c|}{\cellcolor{blue} 0.18}          & \multicolumn{1}{c|}{\cellcolor{blue} -0.22}        & \multicolumn{1}{c|}{\cellcolor{blue} 0.22}          & \multicolumn{1}{c|}{\cellcolor{blue} 0.70*}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.46}     & \multicolumn{1}{c}{\cellcolor{dark-blue} 0.12}    \\
-      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{blue} 0.09}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.44}    & \multicolumn{1}{c|}{\cellcolor{dark-blue} 0.09}     & \multicolumn{1}{c|}{\cellcolor{blue} 0.53}           & \multicolumn{1}{c|}{\cellcolor{blue} 0.98}          & \multicolumn{1}{c}{\cellcolor{dark-blue} 0.89}
+                                                   &    & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                                 & \multicolumn{2}{c|}{\textbf{LHSA Head}}                                                                        & \multicolumn{2}{c}{\textbf{GRU Head}}                                                                     \\ \cline{3-8}
+                                                   &    & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                          & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                            & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c}{merged}                          \\ \hline\hline
+      \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & a  & \multicolumn{1}{c|}{\cellcolor{blue} .67}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}       & \multicolumn{1}{c|}{\cellcolor{blue} 6.62**}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}         & \multicolumn{1}{c|}{\cellcolor{blue} 4.63**}        & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\
+      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{light-blue} 3.31}      & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.99}      & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-4.63*$}   & \multicolumn{1}{c|}{\cellcolor{blue} $-1.32$}          & \multicolumn{1}{c|}{\cellcolor{blue} 1.32}          & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\ \cline{3-8}
+      \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & a  & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-1.90*$}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.28*}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} .76}        & \multicolumn{1}{c|}{\cellcolor{dark-blue} .38}         & \multicolumn{1}{c|}{\cellcolor{dark-blue} .38}      & \multicolumn{1}{c}{\cellcolor{blue} $-1.89$}        \\
+      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{blue} $-1.51**$}       & \multicolumn{1}{c|}{\cellcolor{light-blue} .00}      & \multicolumn{1}{c|}{\cellcolor{blue} $-.76$}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-.38$}      & \multicolumn{1}{c|}{\cellcolor{blue} .76}           & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.13$}   \\ \cline{3-8}
+      \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & a  & \multicolumn{1}{c|}{\cellcolor{blue} .97*}            & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.59***}   & \multicolumn{1}{c|}{\cellcolor{blue} $-.41$}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .25}         & \multicolumn{1}{c|}{\cellcolor{light-blue} .51}     & \multicolumn{1}{c}{\cellcolor{dark-blue} $-.35$}    \\
+      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-.15$}     & \multicolumn{1}{c|}{\cellcolor{light-blue} .00}      & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-.05$}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.37***}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.07}     & \multicolumn{1}{c}{\cellcolor{dark-blue} .15}       \\ \cline{3-8}
+      \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & a  & \multicolumn{1}{c|}{\cellcolor{blue} .18}             & \multicolumn{1}{c|}{\cellcolor{blue} $-.22$}         & \multicolumn{1}{c|}{\cellcolor{blue} .22}             & \multicolumn{1}{c|}{\cellcolor{blue} .70*}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .46}      & \multicolumn{1}{c}{\cellcolor{dark-blue} .12}       \\
+      \multicolumn{1}{c}{}                         & b  & \multicolumn{1}{c|}{\cellcolor{blue} .09}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .44}       & \multicolumn{1}{c|}{\cellcolor{dark-blue} .09}        & \multicolumn{1}{c|}{\cellcolor{blue} .53}              & \multicolumn{1}{c|}{\cellcolor{blue} .98}           & \multicolumn{1}{c}{\cellcolor{dark-blue} .89}
       \end{tabular}
     }
   }{Gain-Loss}
@@ -302,6 +328,11 @@ equally wrong or correct predicted by the systems.
 
 Result zeros p = 14.09\%
 
+\section{SRL Evaluation}
+\label{sec:srl-evaluation}
+
+\section{Ablation stuy}
+\label{sec:ablation}
 
 %%\section{BLEU Scores}
 %\label{sec:5_bleuscores}
