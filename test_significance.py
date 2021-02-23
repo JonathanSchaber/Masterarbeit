@@ -142,10 +142,7 @@ def main():
 
     qa_flag = True if control_jsons[0][0][0]["data set"] in ["XQuAD", "MLQA"] else False
 
-    #TODO: IMPLEMENT QA SETS
-
     treatment, control = [], []
-    treatment_tf, control_tf = [], []
     treatment_dict, control_dict, gold_dict, gold_dict2 = {}, {}, {}, {}
     for file_pair in treatment_jsons:
             _, results_file = file_pair
@@ -162,27 +159,63 @@ def main():
     for results in control:
         build_dicts(results, control_dict, gold_dict2)
 
-    treatment_ensemble = {key: max(value, key=value.count) for key, value in treatment_dict.items()}
-    control_ensemble = {key: max(value, key=value.count) for key, value in control_dict.items()}
+    if not qa_flag:
+        treatment_tf, control_tf = [], []
+        treatment_ensemble = {key: max(value, key=value.count) for key, value in treatment_dict.items()}
+        control_ensemble = {key: max(value, key=value.count) for key, value in control_dict.items()}
 
-    # build the True (1) False (0) lists
-    for i in sorted(gold_dict.items()):
-        if treatment_ensemble[i[0]] == i[1]:
-            treatment_tf.append(1)
-        else:
-            treatment_tf.append(0)
-        if control_ensemble[i[0]] == i[1]:
-            control_tf.append(1)
-        else:
-            control_tf.append(0)
+        # build the True (1) False (0) lists
+        for i in sorted(gold_dict.items()):
+            if treatment_ensemble[i[0]] == i[1]:
+                treatment_tf.append(1)
+            else:
+                treatment_tf.append(0)
+            if control_ensemble[i[0]] == i[1]:
+                control_tf.append(1)
+            else:
+                control_tf.append(0)
 
-    import ipdb; ipdb.set_trace()
-    print("")
-    print("Permute with replacement:")
-    permute_with_replacement(treatment_tf, control_tf, args.R)
-    # print("")
-    # print("Permute without replacement:")
-    # permute_without_replacement(treatment_tf, control_tf, args.R)
+        # import ipdb; ipdb.set_trace()
+        print("")
+        print("Permute with replacement:")
+        permute_with_replacement(treatment_tf, control_tf, args.R)
+        # print("")
+        # print("Permute without replacement:")
+        # permute_without_replacement(treatment_tf, control_tf, args.R)
+    else:
+        treatment_start_tf, treatment_end_tf, control_start_tf, control_end_tf = [], [], [], []
+        treatment_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
+                                for key, value in treatment_dict.items()}
+        treatment_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
+                                for key, value in treatment_dict.items()}
+        control_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
+                                for key, value in control_dict.items()}
+        control_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
+                                for key, value in control_dict.items()}
+
+        for i in sorted(gold_dict.items()):
+            if treatment_start_ensemble[i[0]] == i[1][0]:
+                treatment_start_tf.append(1)
+            else:
+                treatment_start_tf.append(0)
+            if treatment_end_ensemble[i[0]] == i[1][1]:
+                treatment_end_tf.append(1)
+            else:
+                treatment_end_tf.append(0)
+            if control_start_ensemble[i[0]] == i[1][0]:
+                control_start_tf.append(1)
+            else:
+                control_start_tf.append(0)
+            if control_end_ensemble[i[0]] == i[1][1]:
+                control_end_tf.append(1)
+            else:
+                control_end_tf.append(0)
+        print("")
+        print("Permute starts with replacement:")
+        permute_with_replacement(treatment_start_tf, control_start_tf, args.R)
+        print("")
+        print("Permute ends with replacement:")
+        permute_with_replacement(treatment_end_tf, control_end_tf, args.R)
 
 
 
