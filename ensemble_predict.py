@@ -165,6 +165,26 @@ def compute_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
     return true / (true + false)
 
 
+def compute_fuzzy_acc(preds: Dict[str, str], gold: Dict[str, str]) -> float:
+    """Compute the accuracy of the predictions
+
+    Args:
+        preds: predicitons dicitonary
+        gold: gold labels
+    Return:
+        accuracy
+    """
+    true, false = 0, 0
+
+    for key, value in preds.items():
+        if value in [num for num in range(gold[key]-2, gold[key]+3)]:
+            true += 1
+        else:
+            false += 1
+
+    return true / (true + false)
+
+
 def check_configs(stat_files: "Statsfile", new_flag: bool) -> Optional[bool]:
     """Checks stat files for inconsistencies
 
@@ -297,7 +317,7 @@ def main():
     if not qa_flag:
         dev_ensemble = {key: max(value, key=value.count) for key, value in dev_dict.items()}
         test_ensemble = {key: max(value, key=value.count) for key, value in test_dict.items()}
-        import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
 
         dev_accur = compute_acc(dev_ensemble, dev_gold_dict)
         test_accur = compute_acc(test_ensemble, test_gold_dict)
@@ -329,6 +349,8 @@ def main():
     print("dev accur: {0:.4f}".format(dev_accur))
     print("test accur: {0:.4f}".format(test_accur))
     print("")
+    print("  test start acc: {0:.4f}".format(test_start_accur))
+    print("  test end acc: {0:.4f}".format(test_end_accur))
 
 
 if __name__ == "__main__":
