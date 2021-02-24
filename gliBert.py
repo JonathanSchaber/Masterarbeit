@@ -1431,10 +1431,12 @@ def fine_tune_BERT(config):
                 else:
                     patience = 0
 
-    if stats_file: write_stats(stats_file, training_stats, results)
     print("")
     print("Training complete!")
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
+    if stats_file:
+        write_stats(stats_file, training_stats, results)
+        print("Statistics written to file: {}".format(stats_file))
 
 
 def main():
