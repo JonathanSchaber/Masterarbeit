@@ -949,10 +949,12 @@ def write_stats(stats_file, training_stats, training_results):
             stats_file = stats_file + stamp + ".json"
         with open(stats_file, "w") as outfile:
             outfile.write(json.dumps(training_stats))
+        print("Statistics written to file: {}".format(stats_file)
 
         results_file = stats_file.rstrip(".json") + ".results.json"
         with open(results_file, "w") as outfile:
             outfile.write(json.dumps(training_results))
+        print("Results written to file: {}".format(results_file)
 
 
 def format_time(elapsed):
@@ -1436,7 +1438,6 @@ def fine_tune_BERT(config):
     print("Total training took {:} (h:mm:ss)".format(format_time(time.time()-total_t0)))
     if stats_file:
         write_stats(stats_file, training_stats, results)
-        print("Statistics written to file: {}".format(stats_file))
 
 
 def main():
