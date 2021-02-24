@@ -348,9 +348,10 @@ def main():
     print("")
     print("dev accur: {0:.4f}".format(dev_accur))
     print("test accur: {0:.4f}".format(test_accur))
-    print("")
-    print("  test start acc: {0:.4f}".format(test_start_accur))
-    print("  test end acc: {0:.4f}".format(test_end_accur))
+    if "test_start_accur" in locals() and "test_end_accur" in locals():
+        print("")
+        print("  test start acc: {0:.4f}".format(test_start_accur))
+        print("  test end acc: {0:.4f}".format(test_end_accur))
 
 
 if __name__ == "__main__":
