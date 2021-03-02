@@ -42,14 +42,14 @@ def parse_cmd_args():
     return parser.parse_args()
 
 
-def permute_without_replacement(treatment: List[bool], control: List[bool], R: int=1000) -> bool:
+def permute_without_replacement(treatment: List[int], control: List[int], R: int=1000):
     """compute random permutations, t(X, Y)
 
     Args:
         treatment: True, False ordered list
         control: True, False ordered list
         R: number of permutations
-    count_Returns:
+    Returns:
         None
     """
     r, count_R = 0, 0
@@ -59,7 +59,7 @@ def permute_without_replacement(treatment: List[bool], control: List[bool], R: i
 
     t_orig = e_treat_orig - e_contr_orig
 
-    while count_R < R+1:
+    while count_R < R:
 
         perm_treat, perm_contr = [], []
 
@@ -84,11 +84,11 @@ def permute_without_replacement(treatment: List[bool], control: List[bool], R: i
         control = perm_contr
 
     print("r:", r)
-    print("R:", R)
-    print("(r+1)/(R+1):", round((r+1)/(R+1), 4))
+    print("R:", count_R)
+    print("(r+1)/(R+1):", round((r+1)/(count_R+1), 4))
 
 
-def permute_with_replacement(treatment: List[bool], control: List[bool], R: int=1000) -> bool:
+def permute_with_replacement(treatment: List[int], control: List[int], R: int=1000):
     """compute random permutations, t(X, Y)
 
     Args:
@@ -106,8 +106,9 @@ def permute_with_replacement(treatment: List[bool], control: List[bool], R: int=
     # print("Original control acc: {}".format(e_contr_orig))
 
     t_orig = e_treat_orig - e_contr_orig
+    # import ipdb; ipdb.set_trace()
 
-    while count_R < R+1:
+    while count_R < R:
 
         perm_treat, perm_contr = [], []
 
@@ -129,8 +130,8 @@ def permute_with_replacement(treatment: List[bool], control: List[bool], R: int=
         count_R += 1
 
     print("r:", r)
-    print("R:", R)
-    print("(r+1)/(R+1):", round((r+1)/(R+1), 5))
+    print("R:", count_R)
+    print("(r+1)/(R+1):", round((r+1)/(count_R+1), 5))
 
 def main():
     args = parse_cmd_args()
