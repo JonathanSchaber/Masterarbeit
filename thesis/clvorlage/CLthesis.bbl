@@ -1,4 +1,4 @@
-\begin{thebibliography}{45}
+\begin{thebibliography}{48}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -20,6 +20,14 @@ S.~Buchholz and E.~Marsi.
 \newblock Conll-x shared task on multilingual dependency parsing.
 \newblock In \emph{Proceedings of the tenth conference on computational natural
   language learning (CoNLL-X)}, pages 149--164, 2006.
+
+\bibitem[Cho et~al.(2014)Cho, Van~Merri{\"e}nboer, Gulcehre, Bahdanau,
+  Bougares, Schwenk, and Bengio]{cho2014learning}
+K.~Cho, B.~Van~Merri{\"e}nboer, C.~Gulcehre, D.~Bahdanau, F.~Bougares,
+  H.~Schwenk, and Y.~Bengio.
+\newblock Learning phrase representations using rnn encoder-decoder for
+  statistical machine translation.
+\newblock \emph{arXiv preprint arXiv:1406.1078}, 2014.
 
 \bibitem[Conneau et~al.(2018)Conneau, Lample, Rinott, Williams, Bowman,
   Schwenk, and Stoyanov]{conneau2018xnli}
@@ -96,6 +104,18 @@ J.~Haji{\v{c}}, M.~Ciaramita, R.~Johansson, D.~Kawahara, M.~A. Mart{\'\i},
 \newblock The conll-2009 shared task: Syntactic and semantic dependencies in
   multiple languages.
 \newblock 2009.
+
+\bibitem[Hochreiter and Schmidhuber(1997)]{hochreiter1997long}
+S.~Hochreiter and J.~Schmidhuber.
+\newblock Long short-term memory.
+\newblock \emph{Neural computation}, 9\penalty0 (8):\penalty0 1735--1780, 1997.
+
+\bibitem[Hopfield(1982)]{hopfield1982neural}
+J.~J. Hopfield.
+\newblock Neural networks and physical systems with emergent collective
+  computational abilities.
+\newblock \emph{Proceedings of the national academy of sciences}, 79\penalty0
+  (8):\penalty0 2554--2558, 1982.
 
 \bibitem[Jin et~al.(2019)Jin, Jin, Zhou, and Szolovits]{jin2019bert}
 D.~Jin, Z.~Jin, J.~T. Zhou, and P.~Szolovits.

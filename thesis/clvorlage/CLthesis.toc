@@ -63,17 +63,17 @@
 \contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{40}{subsubsection.4.5.2.1}
 \contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{40}{subsubsection.4.5.2.2}
 \contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{42}{subsubsection.4.5.2.3}
-\contentsline {chapter}{\numberline {5}Results}{43}{chapter.5}
-\contentsline {section}{\numberline {5.1}Data Set Results}{43}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{46}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{47}{subsubsection.5.1.1.1}
-\contentsline {section}{\numberline {5.2}SRL Evaluation}{49}{section.5.2}
-\contentsline {section}{\numberline {5.3}Ablation stuy}{49}{section.5.3}
-\contentsline {chapter}{\numberline {6}Conclusion}{50}{chapter.6}
-\contentsline {chapter}{Glossary}{51}{section*.37}
-\contentsline {chapter}{References}{52}{section*.39}
-\contentsline {chapter}{Lebenslauf}{56}{section*.41}
+\contentsline {chapter}{\numberline {5}Results}{44}{chapter.5}
+\contentsline {section}{\numberline {5.1}Data Set Results}{44}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{48}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{49}{subsubsection.5.1.1.1}
+\contentsline {section}{\numberline {5.2}SRL Evaluation}{51}{section.5.2}
+\contentsline {section}{\numberline {5.3}Ablation study}{51}{section.5.3}
+\contentsline {chapter}{\numberline {6}Conclusion}{54}{chapter.6}
+\contentsline {chapter}{Glossary}{55}{section*.41}
+\contentsline {chapter}{References}{56}{section*.43}
+\contentsline {chapter}{Lebenslauf}{61}{section*.45}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{57}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{58}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{62}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{63}{appendix.B}

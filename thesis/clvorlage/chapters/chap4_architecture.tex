@@ -406,7 +406,7 @@ of doing classification tasks runs as follows:
 
 \cite{devlin2018bert} visualize this as can be seen in figure \ref{fig:BERT-classification}.
 
-\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification.}{10}{BERT-Classification}
+\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification.}{13}{BERT-Classification}
 
 
 The problem now is that in the above described standard implementation, there
@@ -442,16 +442,17 @@ in my corpus.
 
 \subsubsection{Fully-Connected Feed Forward}
 
-While the approach implemented by \cite{zhang2019semantics} is able to improve the vanilla BERT
-approach, it does not lead to an improvement on others, or worse, brings the perormance down. I
-suspect a reason for this may lie in the manner of how the SRLs are processed in this approach.
-The information SRLs provide is, what I call, sub-sentence specific and cannot be represented
-as a single information piece. By this I mean that it does not suffice to know that given an
-utterance $x$ that there is a specific SR in it; rather the information \emph{where} is crucial.
-Consider the following example (the pseudo SRL [CLS] is added):
+While the approach implemented by \cite{zhang2019semantics} is able to improve the vanilla
+BERT approach, it does not lead to an improvement on others, or worse, brings the perormance
+down. I suspect a reason for this may lie in the manner of how the SRLs are processed in this
+approach. The information SRLs provide is, what may be called, sub-sentence specific and
+cannot be adequately represented as a single information piece. By this I mean that it does
+not suffice to know that given an utterance $x$ that there is a specific SR in it; rather the
+information \emph{where} is crucial. Consider the following example (the pseudo SRL [CLS] is
+added):
 
 
-[\textsubscript{[CLS]} ] [\textsubscript{A-0} The man] [\textsubscript{predicate} hit] [\textsubscript{A-1} the dog] .
+[\textsubscript{[CLS]} ] [\textsubscript{A-0} The man] [\textsubscript{predicate} asked] [\textsubscript{A-1} his friend] .
 
 After the subscripted SRLs were consumed by the BiGRU, there is some information about all
 SLRs in the hidden states of the [CLS] token. While there may be some information about there
@@ -460,7 +461,7 @@ to determine from which tokens these signals came. Especially in sentence pair t
 as paraphrase identification, this information is however absolutely crucial. As can be seen
 from results \ref{}, this hypothesis is also supported by the results:
 
-
+\fig{images/head-lhsa.png}{fig:Fully-Connected-Feed-Forward-Head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork on the concatenated token sequence.}{10}{Fully-Connected-Feed-Forward-Head}
 
 As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final
 fully-connected feed forward layer produces fairly good results (in fact, it performs the best
@@ -474,9 +475,15 @@ BERT+SRL vectors get concatenated into one large vector of size $\mathbbm{R}^{n\
 
 \subsubsection{GRU}
 
-While the fully-connected feed forward
+Since the SRLs are essentially a sequential ``mark-up'' of the sentences, the thought of
+encoding them with an architecture designed for sequential data is not too far. Inspired by
+the biological properties of the brain, the concept of recurrent neural networks has been
+around since the late 80ies, with \citep{hopfield1982neural} often being credited as having
+implemented the first recurrent neural network. To overcome the problems of the vanishing
+and explofing gradient problems, \citep{hochreiter1997long} proposed the LSTM architecture.
+\citep{cho2014learning} GRU
 
-
+\fig{images/head-gru.png}{fig:GRU-Head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork on the concatenated last hidden states of the bi-directional GRU.}{10}{GRU-Head}
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}
 %

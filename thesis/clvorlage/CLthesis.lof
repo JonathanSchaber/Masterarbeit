@@ -22,6 +22,8 @@
 \contentsline {figure}{\numberline {12}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{34}{figure.caption.30}
 \contentsline {figure}{\numberline {13}{\ignorespaces BERT-Classification}}{40}{figure.caption.31}
 \contentsline {figure}{\numberline {14}{\ignorespaces CLS-Head}}{41}{figure.caption.32}
+\contentsline {figure}{\numberline {15}{\ignorespaces Fully-Connected-Feed-Forward-Head}}{42}{figure.caption.33}
+\contentsline {figure}{\numberline {16}{\ignorespaces GRU-Head}}{43}{figure.caption.34}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 FEB 2021 09:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  3 MAR 2021 09:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1681,6 +1681,9 @@ Package caption Info: KOMA-Script document class.
 Package caption Info: float package is loaded.
 Package caption Info: wrapfig package is loaded.
 )
+\@float@every@srl=\toks46
+\c@srl=\count336
+
 (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
@@ -1713,16 +1716,16 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cftbeforefigskip=\skip186
 \cftfigindent=\skip187
 \cftfignumwidth=\skip188
-\c@lofdepth=\count336
-\c@lotdepth=\count337
+\c@lofdepth=\count337
+\c@lotdepth=\count338
 \cftbeforelottitleskip=\skip189
 \cftafterlottitleskip=\skip190
 \cftbeforetabskip=\skip191
 \cfttabindent=\skip192
 \cfttabnumwidth=\skip193
 )
-\c@myfigure=\count338
-\c@mytable=\count339
+\c@myfigure=\count339
+\c@mytable=\count340
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
 Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
@@ -1789,15 +1792,15 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen303
-\Hy@linkcounter=\count340
-\Hy@pagecounter=\count341
+\Hy@linkcounter=\count341
+\Hy@pagecounter=\count342
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count342
+\Hy@SavedSpaceFactor=\count343
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -1810,7 +1813,7 @@ Package hyperref Info: Plain pages OFF on input line 4524.
 Package hyperref Info: Backreferencing OFF on input line 4529.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4762.
-\c@Hy@tempcnt=\count343
+\c@Hy@tempcnt=\count344
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
@@ -1818,7 +1821,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5115.
 \XeTeXLinkMargin=\dimen304
-\Fld@menulength=\count344
+\Fld@menulength=\count345
 \Field@Width=\dimen305
 \Fld@charsize=\dimen306
 Package hyperref Info: Hyper figures OFF on input line 6369.
@@ -1830,15 +1833,15 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6394.
 Package hyperref Info: PDF/A mode OFF on input line 6399.
 LaTeX Info: Redefining \ref on input line 6439.
 LaTeX Info: Redefining \pageref on input line 6443.
-\Hy@abspage=\count345
-\c@Item=\count346
+\Hy@abspage=\count346
+\c@Item=\count347
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2018/02/06 v6.86b Hyperref driver for pdfTeX
-\Fld@listcount=\count347
-\c@bookmark@seq@number=\count348
+\Fld@listcount=\count348
+\c@bookmark@seq@number=\count349
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
@@ -1850,7 +1853,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 Package hyperref Warning: Invalid value `000'
 (hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 79.
+(hyperref)                Option setting is ignored on input line 86.
 
 
 Class scrreprt Warning: Usage of package `fancyhdr' together
@@ -1864,7 +1867,7 @@ Class scrreprt Warning: Usage of package `fancyhdr' together
 (scrreprt)              `\addtokomafont' for the page style elements need
 (scrreprt)              explicite user intervention to work.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `fancyhdr' on input line 96.
+(scrreprt)              package `fancyhdr' on input line 103.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
@@ -1879,9 +1882,9 @@ s
 \f@nch@O@olf=\skip258
 \f@nch@O@orf=\skip259
 )
-\c@myfootnote=\count349
-\@float@every@example=\toks46
-\c@example=\count350
+\c@myfootnote=\count350
+\@float@every@example=\toks47
+\c@example=\count351
 
 (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
@@ -1891,7 +1894,7 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/supertabular/supertabular.sty
 Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count351
+\c@tracingst=\count352
 \ST@wd=\dimen307
 \ST@rightskip=\skip260
 \ST@leftskip=\skip261
@@ -1965,17 +1968,17 @@ LaTeX Font Info:    ... okay on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count352
+\scratchcounter=\count353
 \scratchdimen=\dimen318
 \scratchbox=\box126
-\nofMPsegments=\count353
-\nofMParguments=\count354
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count355
+\nofMPsegments=\count354
+\nofMParguments=\count355
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count356
 \MPscratchDim=\dimen319
-\MPnumerator=\count356
-\makeMPintoPDFobject=\count357
-\everyMPtoPDFconversion=\toks48
+\MPnumerator=\count357
+\makeMPintoPDFobject=\count358
+\everyMPtoPDFconversion=\toks49
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -2014,7 +2017,7 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count358
+\c@section@level=\count359
 )
 LaTeX Info: Redefining \ref on input line 3.
 LaTeX Info: Redefining \pageref on input line 3.
@@ -2024,7 +2027,7 @@ LaTeX Info: Redefining \nameref on input line 3.
 \@outlinefile=\write7
 \openout7 = `CLthesis.out'.
 
-\c__siunitx_mathsf_int=\count359
+\c__siunitx_mathsf_int=\count360
 LaTeX Font Info:    Try loading font information for U+msa on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -2035,7 +2038,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 3.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-\c__siunitx_mathtt_int=\count360
+\c__siunitx_mathtt_int=\count361
 \openout2 = `chapters/titlepage_phil.aux'.
 
 
@@ -2198,13 +2201,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ] [7] [8] [9]
-<images/deISEAR_subtokenized.pdf, id=587, 433.62pt x 650.43pt>
+<images/deISEAR_subtokenized.pdf, id=595, 433.62pt x 650.43pt>
 File: images/deISEAR_subtokenized.pdf Graphic file (type pdf)
 <use images/deISEAR_subtokenized.pdf>
 Package pdftex.def Info: images/deISEAR_subtokenized.pdf  used on input line 19
 4.
 (pdftex.def)             Requested size: 227.62204pt x 341.43124pt.
-<images/deISEAR_subtokenized_all.pdf, id=588, 433.62pt x 650.43pt>
+<images/deISEAR_subtokenized_all.pdf, id=596, 433.62pt x 650.43pt>
 File: images/deISEAR_subtokenized_all.pdf Graphic file (type pdf)
 <use images/deISEAR_subtokenized_all.pdf>
 Package pdftex.def Info: images/deISEAR_subtokenized_all.pdf  used on input lin
@@ -2216,7 +2219,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [10 <./images/deISEAR_subtokenized.pdf>] [11 <./images/deISEAR_subtokenized_all
 .pdf>] [12] [13]
-<images/PAWS-X_subtokenized_sum_without_outlier.pdf, id=646, 433.62pt x 650.43p
+<images/PAWS-X_subtokenized_sum_without_outlier.pdf, id=654, 433.62pt x 650.43p
 t>
 File: images/PAWS-X_subtokenized_sum_without_outlier.pdf Graphic file (type pdf
 )
@@ -2224,7 +2227,7 @@ File: images/PAWS-X_subtokenized_sum_without_outlier.pdf Graphic file (type pdf
 Package pdftex.def Info: images/PAWS-X_subtokenized_sum_without_outlier.pdf  us
 ed on input line 318.
 (pdftex.def)             Requested size: 227.62204pt x 341.43124pt.
-<images/PAWS-X_subtokenized_sum.pdf, id=647, 433.62pt x 650.43pt>
+<images/PAWS-X_subtokenized_sum.pdf, id=655, 433.62pt x 650.43pt>
 File: images/PAWS-X_subtokenized_sum.pdf Graphic file (type pdf)
 <use images/PAWS-X_subtokenized_sum.pdf>
 Package pdftex.def Info: images/PAWS-X_subtokenized_sum.pdf  used on input line
@@ -2234,7 +2237,7 @@ Package pdftex.def Info: images/PAWS-X_subtokenized_sum.pdf  used on input line
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/PAWS-X_BLEU_scores.pdf, id=648, 433.62pt x 650.43pt>
+<images/PAWS-X_BLEU_scores.pdf, id=656, 433.62pt x 650.43pt>
 File: images/PAWS-X_BLEU_scores.pdf Graphic file (type pdf)
 <use images/PAWS-X_BLEU_scores.pdf>
 Package pdftex.def Info: images/PAWS-X_BLEU_scores.pdf  used on input line 329.
@@ -2263,7 +2266,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [18]
-<images/SCARE_star_stats.png, id=718, 723.4227pt x 346.896pt>
+<images/SCARE_star_stats.png, id=726, 723.4227pt x 346.896pt>
 File: images/SCARE_star_stats.png Graphic file (type png)
 <use images/SCARE_star_stats.png>
 Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 510.
@@ -2273,7 +2276,7 @@ Package pdftex.def Info: images/SCARE_star_stats.png  used on input line 510.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [19]
-<images/SCARE_label_stats.png, id=724, 702.4644pt x 346.896pt>
+<images/SCARE_label_stats.png, id=733, 702.4644pt x 346.896pt>
 File: images/SCARE_label_stats.png Graphic file (type png)
 <use images/SCARE_label_stats.png>
 Package pdftex.def Info: images/SCARE_label_stats.png  used on input line 532.
@@ -2284,7 +2287,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 553--554
  []
 
 [21] [22]
-<images/XNLI_premise_subtokenized.pdf, id=757, 433.62pt x 650.43pt>
+<images/XNLI_premise_subtokenized.pdf, id=765, 433.62pt x 650.43pt>
 File: images/XNLI_premise_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_premise_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_premise_subtokenized.pdf  used on input li
@@ -2295,7 +2298,7 @@ ne 674.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [23] [24 <./images/XNLI_premise_subtokenized.pdf>] [25]
-<images/xquad_context_subtokenized.pdf, id=792, 433.62pt x 650.43pt>
+<images/xquad_context_subtokenized.pdf, id=800, 433.62pt x 650.43pt>
 File: images/xquad_context_subtokenized.pdf Graphic file (type pdf)
 <use images/xquad_context_subtokenized.pdf>
 Package pdftex.def Info: images/xquad_context_subtokenized.pdf  used on input l
@@ -2313,7 +2316,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 (./chapters/chap4_architecture.tex
 chapter 4.
-<images/architecture_grob.png, id=822, 2326.19063pt x 531.48563pt>
+<images/architecture_grob.png, id=830, 2326.19063pt x 531.48563pt>
 File: images/architecture_grob.png Graphic file (type png)
 <use images/architecture_grob.png>
 Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
@@ -2324,7 +2327,7 @@ Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
 
 
  <./images/architecture_grob.png>] [30] [31]
-<images/architecture.png, id=858, 4224.03696pt x 2128.20695pt>
+<images/architecture.png, id=866, 4224.03696pt x 2128.20695pt>
 File: images/architecture.png Graphic file (type png)
 <use images/architecture.png>
 Package pdftex.def Info: images/architecture.png  used on input line 68.
@@ -2337,7 +2340,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ]
-<images/exampleParzu2.png, id=899, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=907, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 132.
@@ -2362,18 +2365,18 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 209.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [36] [37] [38]
-<images/bert_classification.png, id=972, 1071.25218pt x 441.14813pt>
+<images/bert_classification.png, id=980, 1071.25218pt x 441.14813pt>
 File: images/bert_classification.png Graphic file (type png)
 <use images/bert_classification.png>
 Package pdftex.def Info: images/bert_classification.png  used on input line 409
 .
-(pdftex.def)             Requested size: 284.52756pt x 117.17294pt.
+(pdftex.def)             Requested size: 369.88582pt x 152.32416pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [39]
-<images/head-cls.png, id=985, 1751.8248pt x 1215.87048pt>
+<images/head-cls.png, id=993, 1751.8248pt x 1215.87048pt>
 File: images/head-cls.png Graphic file (type png)
 <use images/head-cls.png>
 Package pdftex.def Info: images/head-cls.png  used on input line 438.
@@ -2384,15 +2387,34 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [40 <./images/bert_classification.png>]
 
-LaTeX Warning: Reference `' on page 41 undefined on input line 461.
+LaTeX Warning: Reference `' on page 41 undefined on input line 462.
 
-LaTeX Font Info:    Try loading font information for U+bbm on input line 472.
+<images/head-lhsa.png, id=1002, 1698.63408pt x 1286.406pt>
+File: images/head-lhsa.png Graphic file (type png)
+<use images/head-lhsa.png>
+Package pdftex.def Info: images/head-lhsa.png  used on input line 464.
+(pdftex.def)             Requested size: 284.52756pt x 215.46698pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Font Info:    Try loading font information for U+bbm on input line 473.
 (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)) [41 <./images/head-cls.png>] [42]
+) [41 <./images/head-cls.png>]
+<images/head-gru.png, id=1019, 1738.52711pt x 1697.47775pt>
+File: images/head-gru.png Graphic file (type png)
+<use images/head-gru.png>
+Package pdftex.def Info: images/head-gru.png  used on input line 486.
+(pdftex.def)             Requested size: 284.52756pt x 277.79242pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) [42 <./images/head-lhsa.png>] [43 <./images/head-gru.png>]
 \openout2 = `chapters/chap5_results.aux'.
 
- (./chapters/chap5_results.tex
+
+(./chapters/chap5_results.tex
 chapter 5.
 
 Overfull \hbox (0.48767pt too wide) in paragraph at lines 120--121
@@ -2400,23 +2422,39 @@ Overfull \hbox (0.48767pt too wide) in paragraph at lines 120--121
 s (even though mostly
  []
 
-[43
+[44
 
 
 
 ]
-Overfull \hbox (12.72972pt too wide) in paragraph at lines 180--180
- [] 
- []
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[44
+[45
 
-] [45] [46
+] [46] [47] [48
 
-] [47] [48]) [49]
+] [49] [50] [51]
+Package hyperref Info: bookmark level for unknown srl defaults to 0 on input li
+ne 402.
+
+
+Package caption Warning: \captionsetup{type*=...} or \captionof
+(caption)                outside box or environment on input line 456.
+See the caption package documentation for explanation.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 456.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) [52] [53]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
@@ -2426,14 +2464,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 
  []
 
-) [50
+) [54
 
 
 
 ]
 \openout2 = `chapters/glossary.aux'.
 
- (./chapters/glossary.tex) [51
+ (./chapters/glossary.tex) [55
 
 
 
@@ -2441,11 +2479,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
 \openout2 = `chapters/references.aux'.
 
  (./chapters/references.tex
-(./CLthesis.bbl [52
+(./CLthesis.bbl [56
 
 
 
-] [53] [54])) [55]
+] [57] [58] [59])) [60]
 \openout2 = `chapters/cv.aux'.
 
  (./chapters/cv.tex
@@ -2458,7 +2496,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  []
 
-) [56
+) [61
 
 
 
@@ -2467,7 +2505,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--13
 
  (./appendix/tables.tex
 chapter A.
-[57
+[62
 
 
 
@@ -2476,7 +2514,7 @@ chapter A.
 
  (./appendix/scripts.tex
 chapter B.
-[58
+[63
 
 
 
@@ -2493,7 +2531,7 @@ hapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `CLthesis.out' has not changed.
-(rerunfilecheck)             Checksum: B0A4A8091073A661311624EBE4988A8C;4545.
+(rerunfilecheck)             Checksum: C79D9E74051A34913AD164326013BD97;4546.
 
 
 LaTeX Warning: There were undefined references.
@@ -2503,13 +2541,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 35358 strings out of 492982
- 683754 string characters out of 6134895
- 856133 words of memory out of 5000000
- 37939 multiletter control sequences out of 15000+600000
+ 35416 strings out of 492982
+ 684646 string characters out of 6134895
+ 860794 words of memory out of 5000000
+ 37981 multiletter control sequences out of 15000+600000
  559405 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,18n,78p,10408b,1003s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,18n,78p,10408b,1017s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/joni/.texlive2017/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk>{/
 usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/font
 s/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type
@@ -2533,10 +2571,10 @@ nts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/times/utmr8a.pfb>
-Output written on CLthesis.pdf (67 pages, 1412635 bytes).
+Output written on CLthesis.pdf (72 pages, 1901837 bytes).
 PDF statistics:
- 1281 PDF objects out of 1440 (max. 8388607)
- 1134 compressed objects within 12 object streams
- 311 named destinations out of 1000 (max. 500000)
- 664 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1329 PDF objects out of 1440 (max. 8388607)
+ 1173 compressed objects within 12 object streams
+ 325 named destinations out of 1000 (max. 500000)
+ 674 words of extra memory for PDF output out of 10000 (max. 10000000)
 
