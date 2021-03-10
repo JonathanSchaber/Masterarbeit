@@ -13,28 +13,28 @@ def parse_cmd_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-            "-a", 
-            "--argument_model_config", 
-            type=str, 
+            "-a",
+            "--argument_model_config",
+            type=str,
             help="Argument model config for DAMESRL",
             )
     parser.add_argument(
-            "-b", 
-            "--bert_path", 
-            type=str, 
+            "-b",
+            "--bert_path",
+            type=str,
             help="Path to BERT model",
             )
     parser.add_argument(
-            "-d", 
-            "--data_set", 
-            type=str, 
+            "-d",
+            "--data_set",
+            type=str,
             help="Indicate on which data set model should be preprocessed",
             choices=["deISEAR", "XNLI", "SCARE", "PAWS-X", "MLQA", "XQuAD"]
             )
     parser.add_argument(
-            "-p", 
-            "--path", 
-            type=str, 
+            "-p",
+            "--path",
+            type=str,
             help="Path to directory containing the files",
             )
     return parser.parse_args()
@@ -186,7 +186,7 @@ def preprocess_MLQA(path):
         with open(file_path, "r") as f:
             file = f.read()
             json_data = json.loads(file)
-        
+
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
                 context = json_data["data"][i]["paragraphs"][j]["context"]
@@ -282,8 +282,6 @@ def preprocess_SCARE(path):
     ATTENTION: path points to directory, not input file!
     Args:
         param1: str
-        param2: str
-        param3: str
     Returns:
         None
     """
@@ -332,13 +330,13 @@ def preprocess_SCARE(path):
         if sem_roles == False:
             continue
         label_text_feat.append([polarity, "", feat["text"], sem_roles])
-        if polarity == "Neutral": count_non_maj += 1 
-        if not majority: count_close += 1 
+        if polarity == "Neutral": count_non_maj += 1
+        if not majority: count_close += 1
         if num_labels == 0:
             count_no_labels += 1
         else:
-            count_all += num_labels 
-    
+            count_all += num_labels
+
     print("")
     print("======== Stats ========")
     print("{} reviews had no labels".format(count_no_labels))
@@ -420,7 +418,7 @@ def preprocess_XNLI(path):
                 if sem_roles_1 == False or sem_roles_2 == False:
                     continue
                 label_text_feat.append([label, "", sentence_1, sentence_2, sem_roles_1, sem_roles_2])
-    
+
         splitted_write_to_files(label_text_feat, outfile_paths, i)
 
 
@@ -447,7 +445,7 @@ def preprocess_XQuAD(path):
     with open(path + "/xquad/xquad.de.json", "r") as f:
         file = f.read()
         json_data = json.loads(file)
-    
+
         for i in range(len(json_data["data"])):
             for j in range(len(json_data["data"][i]["paragraphs"])):
                 context = json_data["data"][i]["paragraphs"][j]["context"]
@@ -465,7 +463,7 @@ def preprocess_XQuAD(path):
                     text = json_data["data"][i]["paragraphs"][j]["qas"][k]["answers"][0]["text"]
                     spans_text_qas_srl.append([
                                         start_index,
-                                        text, 
+                                        text,
                                         context,
                                         question,
                                         sem_roles_context,
@@ -497,8 +495,8 @@ def main():
         preprocess_XNLI(path)
     elif data_set == "XQuAD":
         preprocess_XQuAD(path)
-    
+
 
 if __name__ == "__main__":
     main()
-    
+
