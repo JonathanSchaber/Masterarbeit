@@ -1,4 +1,3 @@
-
 \newchap{Data Sets}
 \label{chap:5_dataset}
 
@@ -507,8 +506,6 @@ the Google Play Store.
 This data set is much larger than the annotated one: Due to the great expenses of generating those
 fine-grained annotations, the authors were able to annotate only 0.22\% of all reviews available.
 
-\fig{images/SCARE_star_stats.png}{fig:SCARE-starstats}{Overview of percentage of stars given. Clearly, there is an imbalance towards giving the full amount of stars possible}{12}{SCARE stars statistics}
-
 \subsubsection{Preprocessing}
 
 For integrating the SCARE corpus into my GerBLUE corpus, I need to prepare the data, so it can be
@@ -529,7 +526,21 @@ review is the following one:
   \item ``Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!''.
 \end{examples}
 
-\fig{images/SCARE_label_stats.png}{fig:SCARE-labelstats}{Statistics of label generation. For most of the examples, there was a clear majority decision as to which label should be chosen. \emph{Close Majority} means the majority vote was off by 1. The reddish portions in the graph were labelled \emph{neutral} by default, while the blueish ones were labelled accoring to the majority vote decision.}{12}{SCARE label statistics}
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/SCARE_labels.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/SCARE_label_stats.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[Accumulated Gains and Losses.]{\textbf{Left}: Number of examples per label after heuristically computing them in the SCARE dataset. {\color{red} WRITE MORE ABOUT IMBALANCE, WHAT TO DO ABOUT IT, COMPUTE F1, ETC} \textbf{Right}: Statistics of label generation. For most of the examples, there was a clear majority decision as to which label should be chosen. \emph{Close Majority} means the majority vote was off by 1. The \emph{No Majority}/\emph{No Labels} portions in the graph were labelled \emph{neutral} by default, while \emph{Clear Majority}/\emph{Close Majority}  were labelled according to the majority vote decision.}
+\end{figure}
+
 2.9\% of reviews had no labels at all
 
 3.0\% of votes were non-majority
@@ -770,7 +781,7 @@ Wikipedia and transfer it to target language following these steps:
 
 \begin{enumerate}
     \item Pre-train a monolingual BERT in English with original pretraining objectives
-    \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is freezed) with original pretraining objectives
+    \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is frozen) with original pretraining objectives
     \item Fine-tune transformer for downstream task in English (transformer body is freezed)
     \item Zero-shot transfer this model to $L_2$ by swapping the English token embeddings with the $L_2$ embeddings
 \end{enumerate}

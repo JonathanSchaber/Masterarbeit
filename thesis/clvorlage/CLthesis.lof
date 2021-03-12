@@ -12,19 +12,19 @@
 \contentsline {figure}{\numberline {3}{\ignorespaces PAWS-X-Length-all}}{14}{figure.caption.18}
 \contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X-Length}}{15}{figure.caption.19}
 \contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X-BLEU}}{16}{figure.caption.20}
-\contentsline {figure}{\numberline {6}{\ignorespaces SCARE stars statistics}}{20}{figure.caption.23}
-\contentsline {figure}{\numberline {7}{\ignorespaces SCARE label statistics}}{20}{figure.caption.24}
-\contentsline {figure}{\numberline {8}{\ignorespaces XNLI-Length}}{24}{figure.caption.25}
-\contentsline {figure}{\numberline {9}{\ignorespaces XQuAD-Length}}{27}{figure.caption.26}
+\contentsline {figure}{\numberline {6}{\ignorespaces Accumulated Gains and Losses.}}{20}{figure.caption.23}
+\contentsline {figure}{\numberline {7}{\ignorespaces XNLI-Length}}{24}{figure.caption.24}
+\contentsline {figure}{\numberline {8}{\ignorespaces XQuAD-Length}}{27}{figure.caption.25}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {10}{\ignorespaces gliBERT Architecture}}{29}{figure.caption.28}
-\contentsline {figure}{\numberline {11}{\ignorespaces gliBERT Architecture detail}}{32}{figure.caption.29}
-\contentsline {figure}{\numberline {12}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{34}{figure.caption.30}
-\contentsline {figure}{\numberline {13}{\ignorespaces BERT-Classification}}{40}{figure.caption.31}
-\contentsline {figure}{\numberline {14}{\ignorespaces CLS-Head}}{41}{figure.caption.32}
-\contentsline {figure}{\numberline {15}{\ignorespaces Fully-Connected-Feed-Forward-Head}}{42}{figure.caption.33}
-\contentsline {figure}{\numberline {16}{\ignorespaces GRU-Head}}{43}{figure.caption.34}
+\contentsline {figure}{\numberline {9}{\ignorespaces gliBERT Architecture}}{29}{figure.caption.27}
+\contentsline {figure}{\numberline {10}{\ignorespaces gliBERT Architecture detail}}{32}{figure.caption.28}
+\contentsline {figure}{\numberline {11}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{34}{figure.caption.29}
+\contentsline {figure}{\numberline {12}{\ignorespaces BERT-Classification}}{40}{figure.caption.30}
+\contentsline {figure}{\numberline {13}{\ignorespaces CLS-Head}}{41}{figure.caption.31}
+\contentsline {figure}{\numberline {14}{\ignorespaces Fully-Connected-Feed-Forward-Head}}{42}{figure.caption.32}
+\contentsline {figure}{\numberline {15}{\ignorespaces GRU-Head}}{43}{figure.caption.33}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {16}{\ignorespaces Accumulated Gains and Losses.}}{48}{figure.caption.39}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
