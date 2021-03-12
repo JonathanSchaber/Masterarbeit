@@ -54,17 +54,53 @@ bp <- ggplot(df, aes(x=person, y=values, fill=verdict)) +
 
 # SCARE LABEL VOTES
 
-df2 <- data.frame(
-        vote = c("No Labels", "No Majority", "Close Majority", "Clear Majority"),
+df_lab_votes <- data.frame(
+        vote = c("No\nLabels", "No\nMajority", "Close\nMajority", "Clear\nMajority"),
         values = c(2.9, 3.0, 13.8, 80.3)
     )
 
-df2$vote <- factor(df2$vote, levels=c("Clear Majority", "Close Majority", "No Majority", "No Labels"))
+df_lab_votes$vote <- factor(df_lab_votes$vote, levels=c("Clear\nMajority", "Close\nMajority", "No\nMajority", "No\nLabels"))
 
-bp <- ggplot(df2, aes(x=vote, y=values, fill=as.factor(values))) +
-    geom_bar(width = 1, stat = "identity") +
-    theme(legend.position = "none", text=element_text(angle=90, size=20)) +
-    scale_fill_brewer(palette = "Blues") +
-    xlab("") +
-    ylab("") + ylab("Percentage")
+bp <- ggplot(df_lab_votes, aes(x=vote, y=values, fill=vote)) +
+        geom_bar(width = 1, stat = "identity") +
+        theme(legend.position = "none", text=element_text(size=27)) +
+        scale_fill_manual("legend", values = c("No\nLabels" = "#9ECAE1", "No\nMajority" = "#6BAED6", "Close\nMajority" = "#4292C6", "Clear\nMajority" = "#2171B5")) +
+        xlab("") +
+        ylab("") + ylab("%")
+
+# SCARE LABELS
+
+df_lab <- data.frame(
+        label = c("Positive", "Neutral", "Negative"),
+        values = c(1071, 193, 496)
+    )
+
+df_lab$label <- factor(df_lab$label, levels=c("Positive", "Neutral", "Negative"))
+
+bp <- ggplot(df_lab, aes(x=label, y=values, fill=label)) +
+            geom_bar(width = 1, stat = 'identity') +
+            theme(legend.position = 'none', text=element_text(size=27)) +
+            # scale_fill_brewer(palette='Blues') +
+            scale_fill_manual('legend', values = c('Positive' = '#74C476', 'Neutral' = '#9ECAE1', 'Negative' = '#FC9272')) +
+            xlab('') +
+            ylab('') + ylab('Number of Examples')
+
+
+# SCARE STARS
+
+df_lab_stars <- data.frame(
+        stars = c('*', '**', '***', '****', '*****'),
+        values = c(18.6, 6.0, 8.3, 15.9, 51.2)
+    )
+
+df_lab_stars$stars <- factor(df_lab_stars$stars, levels=c('*****', '****', '***', '**', '*'))
+
+bp <- ggplot(df_lab_stars, aes(x=stars, y=values, fill=stars)) +
+            geom_bar(width = 1, stat = 'identity') +
+            theme(legend.position = 'none', text=element_text(size=27)) +
+            # scale_fill_brewer(palette='Blues') +
+            scale_fill_manual('legend', values = c('*' = '#C6DBEF', '**' = '#9ECAE1', '***' = '#6BAED6', '****' = '#4292C6', '*****'
+    = '#2171B5')) +
+            xlab('') +
+            ylab('') + ylab('%')
 

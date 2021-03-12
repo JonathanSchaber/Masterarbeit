@@ -50,5 +50,3 @@ print(g)
 dev.off()
 post_process(tex_file)
 
-
-
