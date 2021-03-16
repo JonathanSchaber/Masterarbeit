@@ -1,0 +1,54 @@
+PAWS-X
+2624    correct
+31798   correct
+9814    correct
+24813   incorrect (no mention of Somaliland in the first sentence)
+15520   correct
+6483    incorrect (to me «herstellen» == «anbauen» in this case)
+35165   correct
+33060   correct (but very hard cas - only the word «marin» indicates it...)
+41150   not answerable since one word missing (due to translation?) -> if this word is «von» -> the incorrect!
+4618    correct
+14953   correct
+42333   correct
+33404   correct
+31119   incorrect
+16070   correct
+56970   correct
+57935   correct
+53341   correct (but hard...)
+50182   correct (but hard & could be debated: «Charakterstärke» == «Stabilität des Temparaments»?
+57346   incorrect (wtf «[…] zusammen mit seinem Zwillingsvater geboren»?)
+52354   correct
+53997   correct
+52424   incorrect (probably translation erros, words missing)
+51496   correct
+53754   correct
+
+XNLI
+9447    correct
+6995    correct (but debatable, it BECAME a province in 1784)
+9832    correct (but, since differently written, might not refer to same entity)
+7431    correct
+5194    correct
+9142    correct
+9474    correct
+5046    correct
+8920    correct
+6510    correct (but hard in German once informal then formal. In english both the same)
+5480    incorrect (in english probably correct: «drugs» == «medicaments», auf Deutsch aber nicht!)
+8914    correct
+6762    correct (but very hard, once direct addressment, once indirect...)
+8197    correct
+9760    correct
+1399    correct
+1635    correct
+1729    correct (but very hard)
+704     correct (but debatable, as human probably entailment)
+2098    correct
+1413    not answerable
+909     correct
+1653    correct
+1045    correct (but hard, entailment imho also correct)
+1244    correct
+

@@ -14,9 +14,9 @@ def parse_cmd_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-            "-s", 
-            "--stats_file", 
-            type=str, 
+            "-s",
+            "--stats_file",
+            type=str,
             help="Path to stats file"
             )
     parser.add_argument(
@@ -36,7 +36,7 @@ def parse_cmd_args():
 #     if title:
 #         plt.title(title, bbox={'facecolor':'0.8', 'pad':5})
 #     plt.show()
-    
+
 def make_pies(labels, values, colors, font_size=10, title=None):
       fig, ax = plt.subplots()
       a, b, _, = ax.pie(values, colors=colors, pctdistance=0.6, autopct='%1.1f%%', startangle=90)
@@ -55,7 +55,7 @@ def make_pies(labels, values, colors, font_size=10, title=None):
 #     pie2, _, _ = ax.pie(values_in, radius=1-width, labels=labels_in, colors=colors_in, autopct='%1.1f%%', startangle=90)
 #     plt.setp( pie2, width=width, edgecolor='white')
 #     plt.show()
-# 
+#
 
 
 def vals(data):
@@ -181,13 +181,21 @@ def compute_f1(path: str, epoch: int) -> None:
     print("Micro F1: {0:.4f}".format(micro_f1))
     print("Macro F1: {0:.4f}".format(macro_f1))
     print("Weighted F1: {0:.4f}".format(weighted_f1))
-    
+
     acc = accuracy_score(gold, pred)
     acc_2 = compute_acc(pred, gold)
     print("SK-Learn Acc: {0:.4f}".format(acc))
     print("Own Acc: {0:.4f}".format(acc_2))
 
-    
+
+def pprint_srl(sent, srls, tokenizer):
+    sent_mer = merge_subtokens(tokenizer.tokenize(sent))
+    long_tok = max(set([len(tok) for tok in sent_mer]))
+    for x in zip(sent_mer, *srls):
+        print(str(x[0]) + (long_tok-len(x[0])+2)*" " + "\t\t".join(x[1:]))
+
+
+
 
 
 def main():
@@ -197,6 +205,6 @@ def main():
     elif args.feature == "accuracy":
         plot_accuracy(args.stats_file)
 
-    
+
 if __name__ == "__main__":
     main()
