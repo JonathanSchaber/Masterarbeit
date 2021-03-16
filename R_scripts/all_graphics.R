@@ -14,40 +14,100 @@ df_gain_loss_tot$p <- factor(df_gain_loss_tot$p, levels=c("neutral", "gain", "ga
 bp <- ggplot(df_gain_loss_tot, aes(x=effect, y=value, fill=p)) +
     geom_bar(width = 1, stat = "identity") +
     theme(legend.position = "none", text=element_text(size=30)) +
-    scale_fill_manual("legend", values = c("neutral" = "#C7E9C0", "gain" = "#A1D99B", "gain sign" ="#005A32", "loss" = "#FC9272", "lo
-    ss sign" = "#CB181D")) +
+    scale_fill_manual("legend", values = c("neutral" = "#C7E9C0", "gain" = "#A1D99B", "gain sign" ="#005A32", "loss" = "#FC9272", "loss sign" = "#CB181D")) +
     xlab("") +
     ylab("") + ylab("Number Of Experiments") +
     coord_flip()
 
+# DATA_SET GAIN/LOSS
+
+data_set_gain <- function(gain_loss, last_row="") {
+    df <- data.frame(
+            effect = c("Gain", "Gain", "Gain", "Loss", "Loss"),
+            p = c("neutral", "gain", "gain sign", "loss", "loss sign"),
+            value = gain_loss
+        )
+    df$effect <- factor(df$effect, levels = c("Loss", "Gain"))
+    df$p <- factor(df$p, levels=c("neutral", "gain", "gain sign", "loss", "loss sign"))
+    bp <- ggplot(df, aes(x=effect, y=value, fill=p)) +
+        geom_bar(width = 1, stat = "identity") +
+        theme(legend.position = "none", text=element_text(size=30)) +
+        scale_fill_manual("legend", values = c("neutral" = "#C7E9C0", "gain" = "#A1D99B", "gain sign" ="#005A32", "loss" = "#FC9272", "loss sign" = "#CB181D")) +
+        ylim(0,11) +
+        xlab("") +
+        ylab("") + ylab(last_row) +
+        coord_flip()
+    return(bp)
+}
+
+
+deisear <- c(2, 4, 2, 3, 1)
+
+scare = c(1, 4, 1, 4, 2)
+
+pawsx = c(0, 7, 3, 1, 1)
+
+xnli = c(0, 10, 1, 1, 0)
+
 # TOTAL DUP/ZER/DRA
 
-df_dup_zer_tot <- data.frame(
-        mode = c("duplicate", "zeros", "draw"),
-        value = c(26, 19, 3)
-    )
+data_set_dup_zer <- function(dup_zer_draw, data_set, last_row="") {
+    df <- data.frame(
+            mode = c("duplicate", "zeros", "draw"),
+            value = dup_zer_draw
+        )
+    df$mode <- factor(df$mode, levels=c( "draw", "zeros", "duplicate"))
+    bp <- ggplot(df, aes(x=mode, y=value, fill=mode)) +
+        geom_bar(width = 1, stat = "identity") +
+        theme(legend.position = "none", text=element_text(size=30)) +
+        scale_fill_manual("legend", values = c("duplicate" = "#2171B5", "zeros" = "#9ECAE1", "draw" = "#C6DBEF")) +
+        ylim(0,8) +
+        xlab("") + xlab(data_set)
+        ylab("")+ ylab(last_row)
+        coord_flip()
+    return(bp)
+}
 
-df_dup_zer_tot$mode <- factor(df_dup_zer_tot$mode, levels=c( "draw", "zeros", "duplicate"))
+deisear <- c(6, 5, 1)
 
-bp <- ggplot(df_dup_zer_tot, aes(x=mode, y=value, fill=mode)) +
-    geom_bar(width = 1, stat = "identity") +
-    theme(legend.position = "none", text=element_text(size=30)) +
-    scale_fill_manual("legend", values = c("duplicate" = "#2171B5", "zeros" = "#9ECAE1", "draw" = "#C6DBEF")) +
+scare <- c(7, 4, 1)
+
+pawsx <- c(8, 3, 1)
+
+xnli <- c(5, 7, 0)
+
+# ASSESSMENT PER DATA SET
+
+df_data_sets <- data.frame(
+    data_set = c("deISEAR", "deISEAR", "deISEAR", "SCARE", "SCARE", "SCARE", "PAWS-X", "PAWS-X", "PAWS-X", "XNLI", "XNLI", "XNLI", "MLQA", "MLQA", "MLQA", "XQuAD", "XQuAD", "XQuAD"),
+    verdict = c("harmful", "neutral", "helpful"),
+    values = c(20.0, 35.0, 45.0, 30.0, 63.33, 6.67, 56.67, 30.0, 13.33, 33.33, 36.67, 30.0, 16.67, 50.0, 33.33, 33.33, 33.33, 33.33)
+)
+
+df_data_sets$verdict <- factor(df_data_sets$verdict, levels=c("harmful", "neutral", "helpful"))
+
+df_data_sets$data_set <- factor(df_data_sets$data_set, levels=c("deISEAR", "SCARE", "PAWS-X", "XNLI", "MLQA", "XQuAD"))
+
+bp <- ggplot(df_data_sets, aes(x=data_set, y=values, fill=verdict)) +
+    geom_bar(width = 0.8, stat = "identity", position = "dodge") +
+    theme(legend.title = element_blank(), legend.position = "right", text=element_text(size=30)) +
+    scale_fill_manual("legend", values = c("harmful" = "#FC9272", "neutral" = "#9ECAE1", "helpful" = "#74C476")) +
     xlab("") +
-    ylab("") + ylab("Number of Experiments") +
-    coord_flip()
+    ylab("") + ylab("%")
 
-# ASSESSMENT
+# ASSESSMENT PER PERSON
 
 df <- data.frame(
-        person = c("Person A", "Person A", "Person A", "Person B", "Person B", "Person B"),
+        person = c("Person A", "Person A", "Person A", "Person B", "Person B", "Person B", "Person C", "Person C", "Person C"),
         verdict = c("harmful", "neutral", "helpful"),
-        values = c(18, 34, 12, 33, 17 ,14)
+        values = c(18, 34, 12, 33, 17 ,14, 9, 39, 16)
     )
+
+df$verdict <- factor(df$verdict, levels=c("harmful", "neutral", "helpful"))
 
 bp <- ggplot(df, aes(x=person, y=values, fill=verdict)) +
     geom_bar(width = 0.8, stat = "identity", position = "dodge") +
-    theme(legend.position = "none", text=element_text(size=30)) +
+    theme(legend.title = element_blank(), legend.position = "right", text=element_text(size=30)) +
     scale_fill_manual("legend", values = c("harmful" = "#FC9272", "neutral" = "#9ECAE1", "helpful" = "#74C476")) +
     xlab("") +
     ylab("") + ylab("Counts")

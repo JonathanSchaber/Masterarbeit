@@ -45,7 +45,7 @@ g <- ggplot(stack(data),aes(x=ind,y=values, fill=ind)) +
   xlab("") + ylab("Length")
 
 tex_file <- "test.tex"
-tikz(tex_file, width = 6, height = 9, standAlone = TRUE, engine = "luatex")
+tikz(tex_file, width = 6, height = 9, standAlone = TRUE, engine = "luatex", sanitize=TRUE)
 print(g)
 dev.off()
 post_process(tex_file)
