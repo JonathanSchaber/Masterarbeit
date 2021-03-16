@@ -18,62 +18,62 @@
 \contentsline {chapter}{\numberline {2}Semantic Roles}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}Overview}{5}{section.2.1}
 \contentsline {section}{\numberline {2.2}Quality}{5}{section.2.2}
-\contentsline {chapter}{\numberline {3}Data Sets}{6}{chapter.3}
-\contentsline {section}{\numberline {3.1}gliGLUE}{6}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}General Issues}{7}{subsection.3.1.1}
-\contentsline {section}{\numberline {3.2}Corpora}{8}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}deISEAR}{9}{subsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.1.1}Task}{9}{subsubsection.3.2.1.1}
-\contentsline {subsubsection}{\numberline {3.2.1.2}Statistics}{9}{subsubsection.3.2.1.2}
-\contentsline {subsubsection}{\numberline {3.2.1.3}SOTA}{10}{subsubsection.3.2.1.3}
-\contentsline {subsection}{\numberline {3.2.2}MLQA}{11}{subsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.1}Task}{11}{subsubsection.3.2.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2.2}Statistics}{12}{subsubsection.3.2.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.3}SOTA}{12}{subsubsection.3.2.2.3}
-\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{13}{subsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{13}{subsubsection.3.2.3.1}
-\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{13}{subsubsection.3.2.3.2}
-\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{17}{subsubsection.3.2.3.3}
-\contentsline {subsection}{\numberline {3.2.4}SCARE}{17}{subsection.3.2.4}
-\contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{17}{subsubsection.3.2.4.1}
-\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{19}{subsubsection.3.2.4.2}
-\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{19}{subsubsection.3.2.4.3}
-\contentsline {subsubsection}{\numberline {3.2.4.4}Statistics}{21}{subsubsection.3.2.4.4}
-\contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{21}{subsubsection.3.2.4.5}
-\contentsline {subsection}{\numberline {3.2.5}XNLI}{21}{subsection.3.2.5}
-\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{23}{subsubsection.3.2.5.1}
-\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{23}{subsubsection.3.2.5.2}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{24}{subsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{25}{subsubsection.3.2.6.1}
-\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{26}{subsubsection.3.2.6.2}
-\contentsline {subsection}{\numberline {3.2.7}Overview}{28}{subsection.3.2.7}
-\contentsline {chapter}{\numberline {4}Architecture}{29}{chapter.4}
-\contentsline {section}{\numberline {4.1}Overview}{29}{section.4.1}
-\contentsline {section}{\numberline {4.2}BERT module}{30}{section.4.2}
-\contentsline {section}{\numberline {4.3}SRL Module}{30}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{33}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{35}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{37}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}GRU}{38}{subsection.4.3.4}
-\contentsline {section}{\numberline {4.4}combination}{38}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Aligning BERT subtokens with SRL tokens}{38}{subsection.4.4.1}
-\contentsline {section}{\numberline {4.5}Head}{39}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Question Answering}{39}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Classifiction}{39}{subsection.4.5.2}
-\contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{40}{subsubsection.4.5.2.1}
-\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{40}{subsubsection.4.5.2.2}
-\contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{42}{subsubsection.4.5.2.3}
-\contentsline {chapter}{\numberline {5}Results}{44}{chapter.5}
-\contentsline {section}{\numberline {5.1}Data Set Results}{44}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{48}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{50}{subsubsection.5.1.1.1}
-\contentsline {section}{\numberline {5.2}SRL Evaluation}{51}{section.5.2}
-\contentsline {section}{\numberline {5.3}Ablation study}{51}{section.5.3}
-\contentsline {chapter}{\numberline {6}Conclusion}{54}{chapter.6}
-\contentsline {chapter}{Glossary}{55}{section*.42}
-\contentsline {chapter}{References}{56}{section*.44}
-\contentsline {chapter}{Lebenslauf}{61}{section*.46}
+\contentsline {chapter}{\numberline {3}Data Sets}{8}{chapter.3}
+\contentsline {section}{\numberline {3.1}gliGLUE}{8}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}General Issues}{9}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}Corpora}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}deISEAR}{11}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Task}{11}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}Statistics}{11}{subsubsection.3.2.1.2}
+\contentsline {subsubsection}{\numberline {3.2.1.3}SOTA}{12}{subsubsection.3.2.1.3}
+\contentsline {subsection}{\numberline {3.2.2}MLQA}{13}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Task}{13}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}Statistics}{14}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}SOTA}{14}{subsubsection.3.2.2.3}
+\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{15}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{15}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{15}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{19}{subsubsection.3.2.3.3}
+\contentsline {subsection}{\numberline {3.2.4}SCARE}{19}{subsection.3.2.4}
+\contentsline {subsubsection}{\numberline {3.2.4.1}SCARE normal}{19}{subsubsection.3.2.4.1}
+\contentsline {subsubsection}{\numberline {3.2.4.2}SCARE reviews}{21}{subsubsection.3.2.4.2}
+\contentsline {subsubsection}{\numberline {3.2.4.3}Preprocessing}{21}{subsubsection.3.2.4.3}
+\contentsline {subsubsection}{\numberline {3.2.4.4}Statistics}{23}{subsubsection.3.2.4.4}
+\contentsline {subsubsection}{\numberline {3.2.4.5}SOTA}{23}{subsubsection.3.2.4.5}
+\contentsline {subsection}{\numberline {3.2.5}XNLI}{23}{subsection.3.2.5}
+\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{25}{subsubsection.3.2.5.1}
+\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{25}{subsubsection.3.2.5.2}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{26}{subsection.3.2.6}
+\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{27}{subsubsection.3.2.6.1}
+\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{28}{subsubsection.3.2.6.2}
+\contentsline {subsection}{\numberline {3.2.7}Overview}{30}{subsection.3.2.7}
+\contentsline {chapter}{\numberline {4}Architecture}{31}{chapter.4}
+\contentsline {section}{\numberline {4.1}Overview}{31}{section.4.1}
+\contentsline {section}{\numberline {4.2}BERT module}{32}{section.4.2}
+\contentsline {section}{\numberline {4.3}SRL Module}{32}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{35}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{37}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{39}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}GRU}{40}{subsection.4.3.4}
+\contentsline {section}{\numberline {4.4}combination}{40}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Aligning BERT subtokens with SRL tokens}{40}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}Head}{41}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Question Answering}{41}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Classifiction}{41}{subsection.4.5.2}
+\contentsline {subsubsection}{\numberline {4.5.2.1}[CLS]}{42}{subsubsection.4.5.2.1}
+\contentsline {subsubsection}{\numberline {4.5.2.2}Fully-Connected Feed Forward}{42}{subsubsection.4.5.2.2}
+\contentsline {subsubsection}{\numberline {4.5.2.3}GRU}{44}{subsubsection.4.5.2.3}
+\contentsline {chapter}{\numberline {5}Results}{46}{chapter.5}
+\contentsline {section}{\numberline {5.1}Data Set Results}{46}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{50}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{53}{subsubsection.5.1.1.1}
+\contentsline {section}{\numberline {5.2}SRL Evaluation}{55}{section.5.2}
+\contentsline {section}{\numberline {5.3}Ablation study}{55}{section.5.3}
+\contentsline {chapter}{\numberline {6}Conclusion}{57}{chapter.6}
+\contentsline {chapter}{Glossary}{58}{section*.47}
+\contentsline {chapter}{References}{59}{section*.49}
+\contentsline {chapter}{Lebenslauf}{64}{section*.51}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{62}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{63}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{65}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{66}{appendix.B}

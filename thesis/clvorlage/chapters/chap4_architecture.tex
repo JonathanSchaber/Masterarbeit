@@ -13,7 +13,7 @@ than an actual linguistic sentence. A «sequence» refers to the input token seq
 which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
 
 
-\fig{images/architecture_grob}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{12}{gliBERT Architecture}
+\fig{images/architecture_grob}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{14}{gliBERT Architecture}
 
 The core parts of the model are the following:
 
@@ -406,7 +406,7 @@ of doing classification tasks runs as follows:
 
 \cite{devlin2018bert} visualize this as can be seen in figure \ref{fig:BERT-classification}.
 
-\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification.}{13}{BERT-Classification}
+\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification. Figure taken from \citep{devlin2018bert}.}{13}{BERT-Classification}
 
 
 The problem now is that in the above described standard implementation, there
@@ -459,7 +459,7 @@ SLRs in the hidden states of the [CLS] token. While there may be some informatio
 being a predicate, an argument zero, and an argument 1 present, it is completely impossibly
 to determine from which tokens these signals came. Especially in sentence pair tasks, such
 as paraphrase identification, this information is however absolutely crucial. As can be seen
-from results \ref{}, this hypothesis is also supported by the results:
+from results \ref{tab:results}, this hypothesis is also supported by the results:
 
 \fig{images/head-lhsa.png}{fig:Fully-Connected-Feed-Forward-Head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork on the concatenated token sequence.}{10}{Fully-Connected-Feed-Forward-Head}
 

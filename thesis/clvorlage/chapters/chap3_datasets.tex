@@ -149,23 +149,18 @@ For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, f
 emotions there are 143.
 
 \begin{examples}
-  %\label{ex:deisear}
   \item Ich fühlte \textbf{[Traurigkeit]}, als mein Laptop kaputt ging und die Garantie schon abgelaufen war.
 \end{examples}
 \begin{examples}
-  \label{ex:deisear}
   \item  Ich fühlte \textbf{[Scham]}, weil mir mal beim Urlaub das Geld ausging.
 \end{examples}
 \begin{examples}
-  \label{ex:deisear}
   \item Ich fühlte \textbf{[Angst]}, als der Chef sagte dass Mitarbeiter gekündigt werden müssen.
 \end{examples}
 \begin{examples}
-  \label{ex:deisear}
   \item Ich fühlte \textbf{[Ekel]}, als ich verschimmeltes Essen im Kühlschrank gefunden habe.
 \end{examples}
 \begin{examples}
-  \label{ex:deisear}
   \item Ich fühlte \textbf{[Schuld]}, dass ich meinen besten Kumpel versetzt habe.
 \end{examples}
 
@@ -192,7 +187,7 @@ average length test: 19.5 (sigma 8.8)
 
 \fig{images/deISEAR_subtokenized.pdf}{fig:deISEAR-context}{deISEAR: Length of subtokenized Sentences.}{8}{deISEAR-Length}
 
-\fig{images/deISEAR_subtokenized_all.pdf}{fig:deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
+\fig{images/deISEAR_subtokenized_all.pdf}{fig:out-deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
 
 
 
@@ -314,9 +309,9 @@ The BLEU score is a value between 0 (no n-gram overlaps) to 1 (perfect n-gram ov
 BLEU score of 1 means that the two sentences are identical. As for other measures, like accuracy
 e.g., the value is sometimes multiplied by 100 for better readabilit, which I will also do here.
 
-\fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:deISEAR-context}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{PAWS-X-Length-all}
+\fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:paws-x-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{PAWS-X-Length-all}
 
-\fig{images/PAWS-X_subtokenized_sum.pdf}{fig:PAWS-X-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{PAWS-X-Length}
+\fig{images/PAWS-X_subtokenized_sum.pdf}{fig:out-paws-x-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{PAWS-X-Length}
 
 Mean BLEU-scores for sets:
 
@@ -484,7 +479,7 @@ Example from .csv file:
 
 Corresponding .rel file:
 
-\tab{tab:scare-csv-example}{An example from the alarm\_clocks.rel file.}
+\tab{tab:rel-scare-csv-example}{An example from the alarm\_clocks.rel file.}
 {\begin{tabular}{lllll}
   Relation-ID & Aspect-ID    & Subj-ID          & Aspect-String          & Subj-String \\
   \hline

@@ -33,7 +33,15 @@ other tagging tasks like POS prediction or NER, Semantic Roles are not as black 
 While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
 is more a scale concerning SRLs.
 
-% \section{BLEU Scores}
+\fig{images/SRL_assessment.pdf}{fig:SRL-assessment}{Independent evaluation of SRL quality by three people. Regardless of the label attributed to each example, it is obvious, that the total amount of sentences for which the annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}{11}{SRL assessment}
+
+\fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimatet quality of SRLs per data set.}{15}{SRL assessment per data sets}
+
+
+Fleiss' $\kappa$ = 0.2048 --- this slightly above the threshold of «fair agreement», as defined by \citep{landis1977measurement} (0.20).
+
+
+
 % \label{sec:5_bleuscores}
 %
 % Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.

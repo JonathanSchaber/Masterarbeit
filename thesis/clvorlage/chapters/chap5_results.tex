@@ -235,39 +235,64 @@ In a first step, I will discuss on the overall performance of models when the SR
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=1.0\linewidth]{images/gain_losses_accumulated.pdf}
-    % \fig{images/gain_losses_accumulated.pdf}{fig:Gain-Losses_mode}{Accumulated scores from table \ref{tab:gain-loss} of which SRL mode performed stronger out of a total of 48 settings. $-$SRL. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros.}{7}{SRL Mode comparison}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=1.0\linewidth]{images/gain_losses_SRL.pdf}
-    % \fig{images/gain_losses_SRL.pdf}{fig:Gain-Losses_SRL}{Accumulated Gains and Losses for +SRL. Darker shades indicate significant results. Light blue are architectures where gain equals 0.00. Note that the red colors correspond to the negative values of table \ref{tab:gain-loss}.}{7}{SRL Gains Losses}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 48 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 48 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
 \end{figure}
 
-
-  \tab{tab:results-qa}{Accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
-    \scalebox{1}{
-      \begin{tabular}{llccc|ccc}
-                                                 &           & \multicolumn{6}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                                                \\ \cline{3-8}
-                                                 &           & \multicolumn{3}{c|}{subtokenized}                                                                                                & \multicolumn{3}{c}{subtokens merged}                                                                          \\ \cline{3-8}
-                                                 &           & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}         & \multicolumn{2}{c}{+SRL}                                                \\ %\cline{3-4}\cline{6-7}
-                                                 &           & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}               & \multicolumn{1}{c}{zeros}          & dupl.                              \\ \hline\hline
-      \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}  & $\alpha$  & \multicolumn{1}{c|}{\textbf{30.69}}             & \multicolumn{1}{c}{\underline{29.68}} & \multicolumn{1}{c|}{\underline{29.68}} & \multicolumn{1}{c|}{21.92}          & \multicolumn{1}{c}{21.92}          & \multicolumn{1}{c}{\textit{21.81}} \\
-      \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\textbf{44.75}}             & \multicolumn{1}{c}{\underline{44.55}} & \multicolumn{1}{c|}{43.41}             & \multicolumn{1}{c|}{\textit{41.66}} & \multicolumn{1}{c}{41.86}          & \multicolumn{1}{c}{41.79}          \\ \cline{3-8}
-      \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}} & $\alpha$  & \multicolumn{1}{c|}{\textbf{42.01}}             & \multicolumn{1}{c}{\underline{41.42}} & \multicolumn{1}{c|}{41.12}             & \multicolumn{1}{c|}{37.87}          & \multicolumn{1}{c}{36.98}          & \multicolumn{1}{c}{\textit{35.50}} \\
-      \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\underline{46.57}}          & \multicolumn{1}{c}{45.43}             & \multicolumn{1}{c|}{\textbf{46.86}}    & \multicolumn{1}{c|}{37.43}          & \multicolumn{1}{c}{\textit{37.14}} & \multicolumn{1}{c}{39.14}          \\ \hline\hline
-      \multicolumn{1}{c}{Scores}                 &           & \multicolumn{1}{c|}{\textbf{III} \underline{I}} & \multicolumn{2}{c|}{\textbf{I} \underline{III}}                                & \multicolumn{1}{c|}{}               & \multicolumn{2}{c}{}                                                    \\ \cline{1-2}
-      \multicolumn{1}{c}{+SRL}                   & \multicolumn{3}{l}{\textbf{1} \underline{3}} \\
-      \multicolumn{1}{c}{$-$SRL}                 & \multicolumn{3}{l}{\textbf{3} \underline{1}}
-
-      \end{tabular}
-    }
-  }{Results-QA}
+\fig{images/all_datasets_gain_dup.pdf}{fig:each-dataset-gains}{Accumulation of stistics for each classification datasetclassification. \textbf{Left}: Which SRL architecture performed better. \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs.}{15}{Results Accumulation for each Data Set}
 
 
+\tab{tab:results-qa}{Accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
+  \scalebox{1}{
+    \begin{tabular}{llccc|ccc}
+                                               &           & \multicolumn{6}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                                                \\ \cline{3-8}
+                                               &           & \multicolumn{3}{c|}{subtokenized}                                                                                                & \multicolumn{3}{c}{subtokens merged}                                                                          \\ \cline{3-8}
+                                               &           & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}         & \multicolumn{2}{c}{+SRL}                                                \\ %\cline{3-4}\cline{6-7}
+                                               &           & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}               & \multicolumn{1}{c}{zeros}          & dupl.                              \\ \hline\hline
+    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}  & $\alpha$  & \multicolumn{1}{c|}{\textbf{30.69}}             & \multicolumn{1}{c}{\underline{29.68}} & \multicolumn{1}{c|}{\underline{29.68}} & \multicolumn{1}{c|}{21.92}          & \multicolumn{1}{c}{21.92}          & \multicolumn{1}{c}{\textit{21.81}} \\
+    \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\textbf{44.75}}             & \multicolumn{1}{c}{\underline{44.55}} & \multicolumn{1}{c|}{43.41}             & \multicolumn{1}{c|}{\textit{41.66}} & \multicolumn{1}{c}{41.86}          & \multicolumn{1}{c}{41.79}          \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}} & $\alpha$  & \multicolumn{1}{c|}{\textbf{42.01}}             & \multicolumn{1}{c}{\underline{41.42}} & \multicolumn{1}{c|}{41.12}             & \multicolumn{1}{c|}{37.87}          & \multicolumn{1}{c}{36.98}          & \multicolumn{1}{c}{\textit{35.50}} \\
+    \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\underline{46.57}}          & \multicolumn{1}{c}{45.43}             & \multicolumn{1}{c|}{\textbf{46.86}}    & \multicolumn{1}{c|}{37.43}          & \multicolumn{1}{c}{\textit{37.14}} & \multicolumn{1}{c}{39.14}          \\ \hline\hline
+    \multicolumn{1}{c}{Scores}                 &           & \multicolumn{1}{c|}{\textbf{III} \underline{I}} & \multicolumn{2}{c|}{\textbf{I} \underline{III}}                                & \multicolumn{1}{c|}{}               & \multicolumn{2}{c}{}                                                    \\ \cline{1-2}
+    \multicolumn{1}{c}{+SRL}                   & \multicolumn{3}{l}{\textbf{1} \underline{3}} \\
+    \multicolumn{1}{c}{$-$SRL}                 & \multicolumn{3}{l}{\textbf{3} \underline{1}}
+
+    \end{tabular}
+  }
+}{Results-QA}
+
+\tab{tab:qa-gain-loss}{Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL over $-$SRL for each configuration. The best of the +SRL configurations was taken into account: \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};, \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};. Light blue denotes that both architectures performed \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=llight-blue,text=black](char){equally}; (in which case both ensembles were controlled for significance). One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
+  \scalebox{1}{
+    \begin{tabular}{llcc}
+                                                 &           & \multicolumn{2}{c}{\textbf{Span Prediction Head}}                                                             \\ \cline{3-4}
+                                                 &           & \multicolumn{1}{c|}{subtok.}                            & \multicolumn{1}{c}{merged}                          \\ \hline\hline
+    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{llight-blue} $-$1.01***} & \multicolumn{1}{c}{\cellcolor{blue} .00}            \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{blue} $-$.20}            & \multicolumn{1}{c}{\cellcolor{blue} .20}            \\ \cline{3-4}
+    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{c}{\cellcolor{blue} -.89}           \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{dark-blue} .29}          & \multicolumn{1}{c}{\cellcolor{dark-blue} 1.71}      \\ \cline{3-4}
+   \end{tabular}
+  }
+}{QA Gain-Loss}
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_accumulated.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_SRL.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+\end{figure}
 \subsection{Testing for Statistical Significance}
 
 ``if we rely on empirical evaluation to validate our hypotheses and reveal the correct language processing mechanisms, we better be sure that our results are not coincidental.'' \citep{dror2018hitchhiker}
@@ -315,7 +340,7 @@ when in reality, they tend to produce ``positively correlated results''. \citep{
 \label{alg:approximate-randomization}
 	\begin{algorithmic}[1]
     \STATE $O = \{x_1, \dotsc, x_n\} =$ test set
-    \STATE $p(M,x) \leftarrow$ prediction from model $M$ on example $x$
+    \STATE $p(M,x) \leftarrow$ prediction of model $M$ on example $x$
     \STATE $O_A = \{p(A,x_1), \dotsc, p(A,x_n)\}$
     \STATE $O_B = \{p(B,x_1), \dotsc, p(B,x_n)\}$
     \STATE $O_{gold} =$ gold labels for $\{x_1, \dotsc, x_n\}$
@@ -478,7 +503,7 @@ dropped and only information about arguments is preserved.
     \end{BVerbatim}
   \end{minipage}
 \end{srl}
-\captionof{srl}{\textbf{Left}: Only predicate SRls. \textbf{Right}:  Only argument SRLs.}
+\captionof{srl}{\textbf{Left}: Only predicate SRLs. \textbf{Right}:  Only argument SRLs.}
 
 
 \tab{tab:pawsx-abla}{Ablation on Effect of PREDs and ARGs isolated. note that PRED/ARG SRL not significant (SCARE, XNLI ARGs almost, ca. 11\%)}{
