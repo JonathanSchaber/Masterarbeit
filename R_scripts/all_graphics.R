@@ -5,7 +5,7 @@
 df_gain_loss_tot <- data.frame(
         effect = c("Gain", "Gain", "Gain", "Loss", "Loss"),
         p = c("neutral", "gain", "gain sign", "loss", "loss sign"),
-        value = c(3, 32, 5, 15, 3)
+        value = c(3, 25, 7, 9, 4)
     )
 
 df_gain_loss_tot$effect <- factor(df_gain_loss_tot$effect, levels = c("Loss", "Gain"))
@@ -62,8 +62,8 @@ data_set_dup_zer <- function(dup_zer_draw, data_set, last_row="") {
         theme(legend.position = "none", text=element_text(size=30)) +
         scale_fill_manual("legend", values = c("duplicate" = "#2171B5", "zeros" = "#9ECAE1", "draw" = "#C6DBEF")) +
         ylim(0,8) +
-        xlab("") + xlab(data_set)
-        ylab("")+ ylab(last_row)
+        xlab("") + xlab(data_set) +
+        ylab("")+ ylab(last_row) +
         coord_flip()
     return(bp)
 }
@@ -76,24 +76,53 @@ pawsx <- c(8, 3, 1)
 
 xnli <- c(5, 7, 0)
 
+as_ggplot <- function(x){
+      cowplot::ggdraw() +
+        cowplot::draw_grob(grid::grobTree(x))
+    }
+
+all_sets <- grid.arrange(deisear_dup, deisear_gain,
+                 scare_dup, scare_gain,
+                 pawsx_dup, pawsx_gain,
+                 xnli_dup, xnli_gain,
+                 nrow=4)
+
+final_plot <- as_ggplot(all_sets)
+
+
 # ASSESSMENT PER DATA SET
 
 df_data_sets <- data.frame(
-    data_set = c("deISEAR", "deISEAR", "deISEAR", "SCARE", "SCARE", "SCARE", "PAWS-X", "PAWS-X", "PAWS-X", "XNLI", "XNLI", "XNLI", "MLQA", "MLQA", "MLQA", "XQuAD", "XQuAD", "XQuAD"),
-    verdict = c("harmful", "neutral", "helpful"),
-    values = c(20.0, 35.0, 45.0, 30.0, 63.33, 6.67, 56.67, 30.0, 13.33, 33.33, 36.67, 30.0, 16.67, 50.0, 33.33, 33.33, 33.33, 33.33)
+    data_set = c("deISEAR", "deISEAR", "deISEAR", "deISEAR", "deISEAR", "deISEAR", "SCARE", "SCARE", "SCARE", "SCARE", "SCARE", "SCARE", "PAWS-X", "PAWS-X", "PAWS-X", "PAWS-X", "PAWS-X", "PAWS-X", "XNLI", "XNLI", "XNLI", "XNLI", "XNLI", "XNLI", "MLQA", "MLQA", "MLQA", "MLQA", "MLQA", "MLQA", "XQuAD", "XQuAD", "XQuAD", "XQuAD", "XQuAD","XQuAD"),
+    verdict = c("harmful", "harmful", "neutral", "neutral", "helpful", "helpful"),
+    unisono = c("harmful", "harmful unisono", "neutral", "neutral unisono", "helpful", "helpful unisono"),
+    values = c(20.0,   0.0, 33.33,  1.67, 41.67, 3.33,
+               26.67, 3.33,  50.0, 13.33,  6.67,  0.0,
+               41.67, 15.0,  30.0,   0.0, 13.33,  0.0,
+               28.33,  5.0, 31.67,   5.0,  20.0, 10.0,
+               16.67,  0.0,  50.0,   0.0, 33.33,  0.0,
+               33.33,  0.0, 33.33,   0.0, 33.33,  0.0)
 )
 
 df_data_sets$verdict <- factor(df_data_sets$verdict, levels=c("harmful", "neutral", "helpful"))
 
 df_data_sets$data_set <- factor(df_data_sets$data_set, levels=c("deISEAR", "SCARE", "PAWS-X", "XNLI", "MLQA", "XQuAD"))
 
-bp <- ggplot(df_data_sets, aes(x=data_set, y=values, fill=verdict)) +
-    geom_bar(width = 0.8, stat = "identity", position = "dodge") +
-    theme(legend.title = element_blank(), legend.position = "right", text=element_text(size=30)) +
-    scale_fill_manual("legend", values = c("harmful" = "#FC9272", "neutral" = "#9ECAE1", "helpful" = "#74C476")) +
+bp <- ggplot(df_data_sets, aes(x=verdict, y=values, fill=unisono)) +
+    geom_bar(width = 1, stat = "identity", position = "stack") +
+    theme(legend.title = element_blank(),
+          legend.position = "top",
+          # legend.text = element_blank(),
+          text=element_text(size=33),
+          strip.background = element_blank()) +
+    scale_fill_manual("legend", values = c("harmful" = "#FC9272", "harmful unisono" = "#CB181D",
+                                           "neutral" = "#9ECAE1", "neutral unisono" = "#2171B5",
+                                           "helpful" = "#A1D99B", "helpful unisono" = "#005A32")) +
     xlab("") +
-    ylab("") + ylab("%")
+    ylab("") + ylab("%") +
+    theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+    facet_grid(.~data_set,
+               switch = "x")
 
 # ASSESSMENT PER PERSON
 
@@ -108,7 +137,7 @@ df$verdict <- factor(df$verdict, levels=c("harmful", "neutral", "helpful"))
 bp <- ggplot(df, aes(x=person, y=values, fill=verdict)) +
     geom_bar(width = 0.8, stat = "identity", position = "dodge") +
     theme(legend.title = element_blank(), legend.position = "right", text=element_text(size=30)) +
-    scale_fill_manual("legend", values = c("harmful" = "#FC9272", "neutral" = "#9ECAE1", "helpful" = "#74C476")) +
+    scale_fill_manual("legend", values = c("harmful" = "#FC9272", "neutral" = "#9ECAE1", "helpful" = "#A1D99B")) +
     xlab("") +
     ylab("") + ylab("Counts")
 
