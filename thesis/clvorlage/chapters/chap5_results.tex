@@ -157,41 +157,8 @@ In a first step, I will discuss on the overall performance of models when the SR
       \multicolumn{1}{c}{$-$SRL}                   & \multicolumn{3}{l}{\textbf{4} \underline{5}}
 
       \end{tabular}
-      % \begin{tablenotes}
-      %     \item[1] Mirror movements in the affected hand, while the unaffected hand is moving at normal speed.
-      %     \item[2] Mirror movements in the affected hand, while the unaffected hand is moving at fast speed.
-      %     \item[3] Mirror movements in the unaffected hand as the affected hand is moving at normal speed.
-      %     \item[4] Mirror movements in the unaffected hand as the affected hand is moving at fast speed. For TD children, the non-dominant hand corresponds to the affected hand.
-      % \end{tablenotes}
     }
   }{Results}
-
-  \tab{tab:configs}{The different hyperparameter configurations for each data set.}{
-    \scalebox{0.9}{
-      \begin{tabular}{lcc|cc|cc|cc||cc|cc}
-                                 & \multicolumn{2}{c|}{deISEAR}                                                    & \multicolumn{2}{c|}{SCARE}                                                & \multicolumn{2}{c|}{PAWS-X}                                                                                                  & \multicolumn{2}{c|}{XNLI}                                                                          & \multicolumn{2}{c|}{MLQA}                                                                            & \multicolumn{2}{c}{XQuAD}                                                                        \\
-                                 & \multicolumn{1}{c}{$\alpha$}           & \multicolumn{1}{c|}{$\beta$}           & \multicolumn{1}{c}{$\alpha$}             & \multicolumn{1}{c|}{$\beta$}   & \multicolumn{1}{c}{$\alpha$}                                           & \multicolumn{1}{c|}{$\beta$}                        & \multicolumn{1}{c}{$\alpha$}                  & \multicolumn{1}{c|}{$\beta$}                       & \multicolumn{1}{c}{$\alpha$}                    & \multicolumn{1}{c|}{$\beta$}                       & \multicolumn{1}{c}{$\alpha$}                   & \multicolumn{1}{c}{$\beta$}                     \\ \cline{2-13}
-      epochs                     & 100                                    & 100                                    & 50                                       & 50                             & 20                                                                     & 20                                                  & 50                                            & 50                                                 & 50                                              & 50                                                 & 100                                            & 100                                             \\
-      training set               & -                                      & -                                      & -                                        & -                              & \colorbox{blue}{\makecell{Train set scaled down \\ to ratio 70:15:15}} & \colorbox{blue}{Original Train set}                 & \colorbox{blue}{Original sets}                & \colorbox{blue}{Re-sampled and split 70:30:30}     & \colorbox{blue}{Normal splits}                  & \colorbox{blue}{Re-sampled and split 70:30:30}     &                                                &                                                 \\
-      batch size                 & 16                                     & 16                                     & 16                                       & 16                             & 16                                                                     & 16                                                  & 16                                            & 16                                                 & 8                                               & 8                                                  & 8                                              & 8                                               \\
-      maximum length             & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                                                                    & 100                                                 & 100                                           & 100                                                & 512                                             & 512                                                & 512                                            & 512                                             \\
-      \end{tabular}
-    }
-  }{Data Set specific Configs}
-
-  \tab{tab:hyper-configs}{General hyperparameter configurations.}{
-    \scalebox{0.9}{
-      \begin{tabular}{ll}
-      learning rate              & 2e-05                         \\
-      SRL embedding dimensions   & 20                            \\
-      SRL GRU hidden size        & 32                            \\
-      SRL number of layers       & 2                             \\
-      SRL bias                   & True                          \\
-      SRL bidirectional          & True                          \\
-      SRL dropout                & 0.1                           \\
-      \end{tabular}
-    }
-  }{Stable Hyperparameter Configs}
 
   \tab{tab:pawsx}{Ensemble vs. averages of PAWS-X $\beta$.}{
     \scalebox{0.9}{
@@ -209,6 +176,51 @@ In a first step, I will discuss on the overall performance of models when the SR
   }{Gains Ensemble vs Average}
   \vfill
 \end{landscape}
+
+\tab{tab:token-vs-merged}{Performance of architectures when BERT subtokenized (yellow) vs. merged (purple).}{
+  \scalebox{0.90}{
+    \begin{tabular}{llcc|cc|cc}
+                                                 &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                    & \multicolumn{2}{c|}{\textbf{LHSA Head}}                                                           & \multicolumn{2}{c}{\textbf{GRU Head}}                                        \\ \cline{3-8}
+                                                 &           & \multicolumn{1}{c}{zeros}                      & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c}{zeros}                        & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c}{zeros}             & dupl.                                \\ \hline\hline
+    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c}{\cellcolor{yellow} 4.64**}  & \multicolumn{1}{c|}{\cellcolor{purple} .67}    & \multicolumn{1}{c}{\cellcolor{yellow} 4.63*}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.32}   & \multicolumn{1}{c}{\underline{74.83}} & \multicolumn{1}{c|}{74.17}           \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c}{\cellcolor{yellow} 3.97*}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.98}   & \multicolumn{1}{c}{\cellcolor{purple} 5.30*}     & \multicolumn{1}{c|}{\cellcolor{purple} .66}    & \multicolumn{1}{c}{\underline{74.83}} & \multicolumn{1}{c|}{72.19}           \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c}{\cellcolor{purple} 1.13}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.90}   & \multicolumn{1}{c}{\cellcolor{yellow} 2.27*}     & \multicolumn{1}{c|}{\cellcolor{purple} .38}    & \multicolumn{1}{c}{83.33}             & \multicolumn{1}{c|}{84.09}           \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c}{\cellcolor{purple} .38}     & \multicolumn{1}{c|}{\cellcolor{purple} .76}    & \multicolumn{1}{c}{\cellcolor{yellow} 2.65**}    & \multicolumn{1}{c|}{\cellcolor{yellow} 1.14}   & \multicolumn{1}{c}{85.98}             & \multicolumn{1}{c|}{83.71}           \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c}{\cellcolor{yellow} .97*}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.02**} & \multicolumn{1}{c}{\cellcolor{yellow} .76}       & \multicolumn{1}{c|}{\cellcolor{purple} .61}    & \multicolumn{1}{c}{82.77}             & \multicolumn{1}{c|}{82.77}           \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c}{\cellcolor{yellow} .81**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .21}    & \multicolumn{1}{c}{\cellcolor{yellow} .81*}      & \multicolumn{1}{c|}{\cellcolor{yellow} .41}    & \multicolumn{1}{c}{87.60}             & \multicolumn{1}{c|}{87.90}           \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c}{\cellcolor{yellow} .58**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .38}    & \multicolumn{1}{c}{\cellcolor{yellow} .34}       & \multicolumn{1}{c|}{\cellcolor{yellow} .42}    & \multicolumn{1}{c}{66.60}             & \multicolumn{1}{c|}{67.14}           \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c}{\cellcolor{yellow} .36}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.52*}  & \multicolumn{1}{c}{\cellcolor{yellow} .09}       & \multicolumn{1}{c|}{\cellcolor{yellow} 1.33*}  & \multicolumn{1}{c}{67.82}             & \multicolumn{1}{c|}{67.02}           %\\ \hline\hline
+    \end{tabular}
+  }
+}{Tokenized vs. Merged}
+
+\tab{tab:configs}{The different hyperparameter configurations for each data set.}{
+  \scalebox{0.9}{
+    \begin{tabular}{lcc|cc|cc|cc||cc|cc}
+                               & \multicolumn{2}{c|}{deISEAR}                                                    & \multicolumn{2}{c|}{SCARE}                                                & \multicolumn{2}{c|}{PAWS-X}                                                                                                  & \multicolumn{2}{c|}{XNLI}                                                                          & \multicolumn{2}{c|}{MLQA}                                                                            & \multicolumn{2}{c}{XQuAD}                                                                        \\
+                               & \multicolumn{1}{c}{$\alpha$}           & \multicolumn{1}{c|}{$\beta$}           & \multicolumn{1}{c}{$\alpha$}             & \multicolumn{1}{c|}{$\beta$}   & \multicolumn{1}{c}{$\alpha$}                                           & \multicolumn{1}{c|}{$\beta$}                        & \multicolumn{1}{c}{$\alpha$}                  & \multicolumn{1}{c|}{$\beta$}                       & \multicolumn{1}{c}{$\alpha$}                    & \multicolumn{1}{c|}{$\beta$}                       & \multicolumn{1}{c}{$\alpha$}                   & \multicolumn{1}{c}{$\beta$}                     \\ \cline{2-13}
+    epochs                     & 100                                    & 100                                    & 50                                       & 50                             & 20                                                                     & 20                                                  & 50                                            & 50                                                 & 50                                              & 50                                                 & 100                                            & 100                                             \\
+    training set               & -                                      & -                                      & -                                        & -                              & \colorbox{blue}{\makecell{Train set scaled down \\ to ratio 70:15:15}} & \colorbox{blue}{Original Train set}                 & \colorbox{blue}{Original sets}                & \colorbox{blue}{Re-sampled and split 70:30:30}     & \colorbox{blue}{Normal splits}                  & \colorbox{blue}{Re-sampled and split 70:30:30}     &                                                &                                                 \\
+    batch size                 & 16                                     & 16                                     & 16                                       & 16                             & 16                                                                     & 16                                                  & 16                                            & 16                                                 & 8                                               & 8                                                  & 8                                              & 8                                               \\
+    maximum length             & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                                                                    & 100                                                 & 100                                           & 100                                                & 512                                             & 512                                                & 512                                            & 512                                             \\
+    \end{tabular}
+  }
+}{Data Set specific Configs}
+
+\tab{tab:hyper-configs}{General hyperparameter configurations.}{
+  \scalebox{0.9}{
+    \begin{tabular}{ll}
+    learning rate              & 2e-05                         \\
+    SRL embedding dimensions   & 20                            \\
+    SRL GRU hidden size        & 32                            \\
+    SRL number of layers       & 2                             \\
+    SRL bias                   & True                          \\
+    SRL bidirectional          & True                          \\
+    SRL dropout                & 0.1                           \\
+    \end{tabular}
+  }
+}{Stable Hyperparameter Configs}
+
 
 
 \tab{tab:gain-loss}{Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL over $-$SRL for each configuration. The best of the +SRL configurations was taken into account: \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};, \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};. Light blue denotes that both architectures performed \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=llight-blue,text=black](char){equally}; (in which case both ensembles were controlled for significance). One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
@@ -291,7 +303,7 @@ In a first step, I will discuss on the overall performance of models when the SR
     \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_SRL.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
 \end{figure}
 \subsection{Testing for Statistical Significance}
 
@@ -402,8 +414,97 @@ equally wrong or correct predicted by the systems.
 
 Result zeros p = 14.09\%
 
-\section{SRL Evaluation}
-\label{sec:srl-evaluation}
+In summary it is safe to say that although there is a positive effect of injecting
+SRL information during training over all data sets and architectures, this effect is
+arguably quite small and unsteady. {\color{red} this is especially in yontrast to
+\cite{zhang2019semantics}, who report more stable and higher effects} In the next
+sections I will try to give an answer as to what are the reasons for these, honestly
+spoken, moderate results. Concretely, I will argue that this is mainly due to noise,
+present in differing intensities and at various levels in the data I acquired, that
+the model has to cope with:
+
+\begin{itemize}
+  \item[\textbf{register noise}] The textual styles vary greatly from iutilizing complex,
+                                 hypotactic sentence structures (e.g. XQuAD), to highly
+                                 informal, elliptic --- even erratic --- structures
+                                 (e.g. SCARE).
+ \item[\textbf{label noise}] Many of my data sets were constructed either automatically
+                             (e.g. scrambling text automatically to create paraphrase pairs)
+                             or employing crowd-sourcing techniques. Either way, the process
+                             is prone to erros. There are, e.g., 84 sentence pairs in the trainig
+                             set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
+ \item[\textbf{translation noise}] Due to the mostly employed semi-automatic translation
+                                   approach for creating the various data sets, errors
+                                   have been introduced into the data ranging from typical
+                                   translation errors (e.g. english ``bishop'' in the clerical
+                                   context translated to the german chess figure counterpart
+                                   ``Läufer'', not ``Bischof'') to eventually wrongly copied
+                                   labels, since the overall meaning changed during
+                                   the tranlsation process (e.g. a sentence pair is no more
+                                   contradictive but neutral).
+ \item[\textbf{SRL noise}] The SRLs obtained from DAMESRL are, conservatively formulated,
+                           questionable in their quality (e.g. modifiers are completely missing).
+\end{itemize}
+
+In short --- the old GIGO concept from informatics holds mutatis mutandis also in NLP.
+
+\section{Register Noise}
+\label{sec:register-noise}
+
+\section{Label Noise}
+\label{sec:label-noise}
+
+PAWS-X sentence number 45061, labelled as non-paraphrases:
+
+Riverton was a parliamentary electorate in the New Zealand region of Southland .
+Riverton was a parliamentary electorate in the New Zealand region of Southland .
+
+Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
+Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
+
+\section{Translation Noise}
+\label{sec:translation-noise}
+
+XNLI labelled as entailment
+
+and that's a lot of it is due to the fact that the mothers are on drugs
+The mothers take drugs.
+
+Und vieles davon liegt daran, dass die Mütter Medikamente nehmen.
+Die Mütter nehmen Drogen.
+
+PAWS-X; different repair-strategies $\rightarrow$ different labels (gold: false)
+
+Sawyers autorisierte Biografie wurde 2014 von Huston Smith veröffentlicht.
+Im Jahr 2014 wurde Huston Smith eine autorisierte Biographie von Sawyer veröffentlicht.
+
+
+Im Jahr 2014 wurde {\color{red} «}Huston Smith{\color{red} », } eine autorisierte Biographie von Sawyer{\color{red} ,} veröffentlicht.
+
+Im Jahr 2014 wurde {\color{red} von|für|durch|trotz|wegen} Huston Smith eine autorisierte Biographie von Sawyer veröffentlicht.
+
+Im Jahr 2014 wurde Huston Smith eine autorisierte Biographie von Sawyer veröffentlicht.
+
+
+\section{SRL Noise}
+\label{sec:srl-noise}
+
+A major question arising in the context of using automatically assigned Semantic Roles in
+downstream tasks, is how good these Semantic Roles are. Since there is no gold standard
+available for Semantic Role Labels for the data sets I use in my experiments, there is no
+straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
+other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
+While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
+is more a scale concerning SRLs.
+
+\fig{images/SRL_assessment.pdf}{fig:SRL-assessment}{Independent evaluation of SRL quality by three people. Regardless of the label attributed to each example, it is obvious, that the total amount of sentences for which the annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}{11}{SRL assessment}
+
+\fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimated quality of SRLs per data set.}{15}{SRL assessment per data sets}
+
+
+Fleiss' $\kappa$ = 0.2048 --- this slightly above the threshold of «fair agreement», as defined by \citep{landis1977measurement} (0.20).
+
+The $\kappa$ for helpful vs. other is even worse: 0.1944
 
 \section{Ablation study}
 \label{sec:ablation}
@@ -430,24 +531,24 @@ dropped and only information about arguments is preserved.
   \begin{srl}
   \centering
     \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
-      Ich        \colorbox{llight-blue}{B-A0}         O
-      weiß       \colorbox{blue}{B-V}          O
-      nicht      O             O
-      ob         \colorbox{llight-blue}{B-A1}         O
+      Ich        \colorbox{llight-blue}{B-A0}         \colorbox{white}{O}
+      weiß       \colorbox{blue}{B-V}          \colorbox{white}{O}
+      nicht      \colorbox{white}{O}            \colorbox{white}{O}
+      ob         \colorbox{llight-blue}{B-A1}         \colorbox{white}{O}
       er         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A0}
-      danach     \colorbox{llight-blue}{I-A1}         O
+      danach     \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
       in         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A1}
       Augusta    \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{I-A1}
       geblieben  \colorbox{llight-blue}{I-A1}         \colorbox{blue}{B-V}
-      ist        \colorbox{llight-blue}{I-A1}         O
-      .          O             O
+      ist        \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      .          \colorbox{white}{O}            \colorbox{white}{O}
       ==============================
       Er         \colorbox{llight-blue}{B-A0}
       wohnte     \colorbox{blue}{B-V}
-      weiterhin  O
+      weiterhin  \colorbox{white}{O}
       in         \colorbox{llight-blue}{B-A1}
       Augusta    \colorbox{llight-blue}{I-A1}
-      .          O
+      .          \colorbox{white}{O}
     \end{BVerbatim}
     \caption{Normal SRLs.}
   \end{srl}
@@ -458,48 +559,48 @@ dropped and only information about arguments is preserved.
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
-      Ich        O            O
-      weiß       \colorbox{blue}{B-V}         O
-      nicht      O            O
-      ob         O            O
-      er         O            O
-      danach     O            O
-      in         O            O
-      Augusta    O            O
-      geblieben  O            \colorbox{blue}{B-V}
-      ist        O            O
-      .          O            O
+      Ich        \colorbox{white}{O}           \colorbox{white}{O}
+      weiß       \colorbox{blue}{B-V}         \colorbox{white}{O}
+      nicht      \colorbox{white}{O}           \colorbox{white}{O}
+      ob         \colorbox{white}{O}           \colorbox{white}{O}
+      er         \colorbox{white}{O}           \colorbox{white}{O}
+      danach     \colorbox{white}{O}           \colorbox{white}{O}
+      in         \colorbox{white}{O}           \colorbox{white}{O}
+      Augusta    \colorbox{white}{O}           \colorbox{white}{O}
+      geblieben  \colorbox{white}{O}           \colorbox{blue}{B-V}
+      ist        \colorbox{white}{O}           \colorbox{white}{O}
+      .          \colorbox{white}{O}           \colorbox{white}{O}
       ==============================
-      Er         O
+      Er         \colorbox{white}{O}
       wohnte     \colorbox{blue}{B-V}
-      weiterhin  O
-      in         O
-      Augusta    O
-      .          O
+      weiterhin  \colorbox{white}{O}
+      in         \colorbox{white}{O}
+      Augusta    \colorbox{white}{O}
+      .          \colorbox{white}{O}
     \end{BVerbatim}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
-      Ich        \colorbox{llight-blue}{B-A0}         O
-      weiß       O             O
-      nicht      O             O
-      ob         \colorbox{llight-blue}{B-A1}         O
+      Ich        \colorbox{llight-blue}{B-A0}         \colorbox{white}{O}
+      weiß       \colorbox{white}{O}            \colorbox{white}{O}
+      nicht      \colorbox{white}{O}            \colorbox{white}{O}
+      ob         \colorbox{llight-blue}{B-A1}         \colorbox{white}{O}
       er         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A0}
-      danach     \colorbox{llight-blue}{I-A1}         O
+      danach     \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
       in         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A1}
       Augusta    \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{I-A1}
-      geblieben  \colorbox{llight-blue}{I-A1}         O
-      ist        \colorbox{llight-blue}{I-A1}         O
-      .          O             O
+      geblieben  \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      ist        \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      .          \colorbox{white}{O}            \colorbox{white}{O}
       ==============================
       Er         \colorbox{llight-blue}{B-A0}
-      wohnte     O
-      weiterhin  O
+      wohnte     \colorbox{white}{O}
+      weiterhin  \colorbox{white}{O}
       in         \colorbox{llight-blue}{B-A1}
       Augusta    \colorbox{llight-blue}{I-A1}
-      .          O
+      .          \colorbox{white}{O}
     \end{BVerbatim}
   \end{minipage}
 \end{srl}
@@ -510,7 +611,7 @@ dropped and only information about arguments is preserved.
   \scalebox{0.9}{
     \begin{tabular}{llcccc}
                      &                               & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{3}{c}{+SRL}                                                                                                 \\
-                     &                               & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{only PREDs}         & \multicolumn{1}{c}{only ARGS}           & \multicolumn{1}{c}{normal}            \\ \cline{3-6}
+                     &                               & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{only PREDs}         & \multicolumn{1}{c}{only ARGs}           & \multicolumn{1}{c}{normal}            \\ \cline{3-6}
     deISEAR $\alpha$ & LHSA Head subtok. zeros       & \multicolumn{1}{c|}{\textit{70.86}}          & \multicolumn{1}{c}{72.19}              & \multicolumn{1}{c}{\underline{75.50**}} & \multicolumn{1}{c}{\textbf{77.48**}}  \\
     SCARE $\alpha$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{83.33}}          & \multicolumn{1}{c}{84.47}              & \multicolumn{1}{c}{\underline{85.23}}   & \multicolumn{1}{c}{\textbf{85.61*}}   \\
     PAWS-X $\beta$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{79.92}}          & \multicolumn{1}{c}{80.53}              & \multicolumn{1}{c}{\underline{80.68}}   & \multicolumn{1}{c}{\textbf{82.51***}} \\

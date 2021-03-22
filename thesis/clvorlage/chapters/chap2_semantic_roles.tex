@@ -23,24 +23,6 @@ task of automatic SRL.
 ``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any
 system for natural language understanding.'' \citep{palmer2010semantic}
 
-\section{Quality}
-
-A major question arising in the context of using automatically assigned Semantic Roles in
-downstream tasks, is how good these Semantic Roles are. Since there is no gold standard
-available for Semantic Role Labels for the data sets I use in my experiments, there is no
-straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
-other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
-While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
-is more a scale concerning SRLs.
-
-\fig{images/SRL_assessment.pdf}{fig:SRL-assessment}{Independent evaluation of SRL quality by three people. Regardless of the label attributed to each example, it is obvious, that the total amount of sentences for which the annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}{11}{SRL assessment}
-
-\fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimatet quality of SRLs per data set.}{15}{SRL assessment per data sets}
-
-
-Fleiss' $\kappa$ = 0.2048 --- this slightly above the threshold of «fair agreement», as defined by \citep{landis1977measurement} (0.20).
-
-
 
 % \label{sec:5_bleuscores}
 %

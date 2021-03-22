@@ -12,61 +12,63 @@
 \BOOKMARK [1][-]{section.1.3}{Thesis Structure}{chapter.1}% 12
 \BOOKMARK [0][-]{chapter.2}{Semantic Roles}{}% 13
 \BOOKMARK [1][-]{section.2.1}{Overview}{chapter.2}% 14
-\BOOKMARK [1][-]{section.2.2}{Quality}{chapter.2}% 15
-\BOOKMARK [0][-]{chapter.3}{Data Sets}{}% 16
-\BOOKMARK [1][-]{section.3.1}{gliGLUE}{chapter.3}% 17
-\BOOKMARK [2][-]{subsection.3.1.1}{General Issues}{section.3.1}% 18
-\BOOKMARK [1][-]{section.3.2}{Corpora}{chapter.3}% 19
-\BOOKMARK [2][-]{subsection.3.2.1}{deISEAR}{section.3.2}% 20
-\BOOKMARK [3][-]{subsubsection.3.2.1.1}{Task}{subsection.3.2.1}% 21
-\BOOKMARK [3][-]{subsubsection.3.2.1.2}{Statistics}{subsection.3.2.1}% 22
-\BOOKMARK [3][-]{subsubsection.3.2.1.3}{SOTA}{subsection.3.2.1}% 23
-\BOOKMARK [2][-]{subsection.3.2.2}{MLQA}{section.3.2}% 24
-\BOOKMARK [3][-]{subsubsection.3.2.2.1}{Task}{subsection.3.2.2}% 25
-\BOOKMARK [3][-]{subsubsection.3.2.2.2}{Statistics}{subsection.3.2.2}% 26
-\BOOKMARK [3][-]{subsubsection.3.2.2.3}{SOTA}{subsection.3.2.2}% 27
-\BOOKMARK [2][-]{subsection.3.2.3}{PAWS-X}{section.3.2}% 28
-\BOOKMARK [3][-]{subsubsection.3.2.3.1}{Preprocessing}{subsection.3.2.3}% 29
-\BOOKMARK [3][-]{subsubsection.3.2.3.2}{Statistics}{subsection.3.2.3}% 30
-\BOOKMARK [3][-]{subsubsection.3.2.3.3}{SOTA}{subsection.3.2.3}% 31
-\BOOKMARK [2][-]{subsection.3.2.4}{SCARE}{section.3.2}% 32
-\BOOKMARK [3][-]{subsubsection.3.2.4.1}{SCARE normal}{subsection.3.2.4}% 33
-\BOOKMARK [3][-]{subsubsection.3.2.4.2}{SCARE reviews}{subsection.3.2.4}% 34
-\BOOKMARK [3][-]{subsubsection.3.2.4.3}{Preprocessing}{subsection.3.2.4}% 35
-\BOOKMARK [3][-]{subsubsection.3.2.4.4}{Statistics}{subsection.3.2.4}% 36
-\BOOKMARK [3][-]{subsubsection.3.2.4.5}{SOTA}{subsection.3.2.4}% 37
-\BOOKMARK [2][-]{subsection.3.2.5}{XNLI}{section.3.2}% 38
-\BOOKMARK [3][-]{subsubsection.3.2.5.1}{Statistics}{subsection.3.2.5}% 39
-\BOOKMARK [3][-]{subsubsection.3.2.5.2}{SOTA}{subsection.3.2.5}% 40
-\BOOKMARK [2][-]{subsection.3.2.6}{XQuAD}{section.3.2}% 41
-\BOOKMARK [3][-]{subsubsection.3.2.6.1}{Statistics}{subsection.3.2.6}% 42
-\BOOKMARK [3][-]{subsubsection.3.2.6.2}{SOTA}{subsection.3.2.6}% 43
-\BOOKMARK [2][-]{subsection.3.2.7}{Overview}{section.3.2}% 44
-\BOOKMARK [0][-]{chapter.4}{Architecture}{}% 45
-\BOOKMARK [1][-]{section.4.1}{Overview}{chapter.4}% 46
-\BOOKMARK [1][-]{section.4.2}{BERT module}{chapter.4}% 47
-\BOOKMARK [1][-]{section.4.3}{SRL Module}{chapter.4}% 48
-\BOOKMARK [2][-]{subsection.4.3.1}{Finding Predicates}{section.4.3}% 49
-\BOOKMARK [2][-]{subsection.4.3.2}{Ensuring Tokenization Equivalence}{section.4.3}% 50
-\BOOKMARK [2][-]{subsection.4.3.3}{DAMESRL}{section.4.3}% 51
-\BOOKMARK [2][-]{subsection.4.3.4}{GRU}{section.4.3}% 52
-\BOOKMARK [1][-]{section.4.4}{combination}{chapter.4}% 53
-\BOOKMARK [2][-]{subsection.4.4.1}{Aligning BERT subtokens with SRL tokens}{section.4.4}% 54
-\BOOKMARK [1][-]{section.4.5}{Head}{chapter.4}% 55
-\BOOKMARK [2][-]{subsection.4.5.1}{Question Answering}{section.4.5}% 56
-\BOOKMARK [2][-]{subsection.4.5.2}{Classifiction}{section.4.5}% 57
-\BOOKMARK [3][-]{subsubsection.4.5.2.1}{[CLS]}{subsection.4.5.2}% 58
-\BOOKMARK [3][-]{subsubsection.4.5.2.2}{Fully-Connected Feed Forward}{subsection.4.5.2}% 59
-\BOOKMARK [3][-]{subsubsection.4.5.2.3}{GRU}{subsection.4.5.2}% 60
-\BOOKMARK [0][-]{chapter.5}{Results}{}% 61
-\BOOKMARK [1][-]{section.5.1}{Data Set Results}{chapter.5}% 62
-\BOOKMARK [2][-]{subsection.5.1.1}{Testing for Statistical Significance}{section.5.1}% 63
-\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example Case for XNLI}{subsection.5.1.1}% 64
-\BOOKMARK [1][-]{section.5.2}{SRL Evaluation}{chapter.5}% 65
-\BOOKMARK [1][-]{section.5.3}{Ablation study}{chapter.5}% 66
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 67
-\BOOKMARK [0][-]{section*.47}{Glossary}{}% 68
-\BOOKMARK [0][-]{section*.49}{References}{}% 69
-\BOOKMARK [0][-]{section*.51}{Lebenslauf}{}% 70
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 71
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 72
+\BOOKMARK [0][-]{chapter.3}{Data Sets}{}% 15
+\BOOKMARK [1][-]{section.3.1}{gliGLUE}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.1.1}{General Issues}{section.3.1}% 17
+\BOOKMARK [1][-]{section.3.2}{Corpora}{chapter.3}% 18
+\BOOKMARK [2][-]{subsection.3.2.1}{deISEAR}{section.3.2}% 19
+\BOOKMARK [3][-]{subsubsection.3.2.1.1}{Task}{subsection.3.2.1}% 20
+\BOOKMARK [3][-]{subsubsection.3.2.1.2}{Statistics}{subsection.3.2.1}% 21
+\BOOKMARK [3][-]{subsubsection.3.2.1.3}{SOTA}{subsection.3.2.1}% 22
+\BOOKMARK [2][-]{subsection.3.2.2}{MLQA}{section.3.2}% 23
+\BOOKMARK [3][-]{subsubsection.3.2.2.1}{Task}{subsection.3.2.2}% 24
+\BOOKMARK [3][-]{subsubsection.3.2.2.2}{Statistics}{subsection.3.2.2}% 25
+\BOOKMARK [3][-]{subsubsection.3.2.2.3}{SOTA}{subsection.3.2.2}% 26
+\BOOKMARK [2][-]{subsection.3.2.3}{PAWS-X}{section.3.2}% 27
+\BOOKMARK [3][-]{subsubsection.3.2.3.1}{Preprocessing}{subsection.3.2.3}% 28
+\BOOKMARK [3][-]{subsubsection.3.2.3.2}{Statistics}{subsection.3.2.3}% 29
+\BOOKMARK [3][-]{subsubsection.3.2.3.3}{SOTA}{subsection.3.2.3}% 30
+\BOOKMARK [2][-]{subsection.3.2.4}{SCARE}{section.3.2}% 31
+\BOOKMARK [3][-]{subsubsection.3.2.4.1}{SCARE normal}{subsection.3.2.4}% 32
+\BOOKMARK [3][-]{subsubsection.3.2.4.2}{SCARE reviews}{subsection.3.2.4}% 33
+\BOOKMARK [3][-]{subsubsection.3.2.4.3}{Preprocessing}{subsection.3.2.4}% 34
+\BOOKMARK [3][-]{subsubsection.3.2.4.4}{Statistics}{subsection.3.2.4}% 35
+\BOOKMARK [3][-]{subsubsection.3.2.4.5}{SOTA}{subsection.3.2.4}% 36
+\BOOKMARK [2][-]{subsection.3.2.5}{XNLI}{section.3.2}% 37
+\BOOKMARK [3][-]{subsubsection.3.2.5.1}{Statistics}{subsection.3.2.5}% 38
+\BOOKMARK [3][-]{subsubsection.3.2.5.2}{SOTA}{subsection.3.2.5}% 39
+\BOOKMARK [2][-]{subsection.3.2.6}{XQuAD}{section.3.2}% 40
+\BOOKMARK [3][-]{subsubsection.3.2.6.1}{Statistics}{subsection.3.2.6}% 41
+\BOOKMARK [3][-]{subsubsection.3.2.6.2}{SOTA}{subsection.3.2.6}% 42
+\BOOKMARK [2][-]{subsection.3.2.7}{Overview}{section.3.2}% 43
+\BOOKMARK [0][-]{chapter.4}{Architecture}{}% 44
+\BOOKMARK [1][-]{section.4.1}{Overview}{chapter.4}% 45
+\BOOKMARK [1][-]{section.4.2}{BERT module}{chapter.4}% 46
+\BOOKMARK [1][-]{section.4.3}{SRL Module}{chapter.4}% 47
+\BOOKMARK [2][-]{subsection.4.3.1}{Finding Predicates}{section.4.3}% 48
+\BOOKMARK [2][-]{subsection.4.3.2}{Ensuring Tokenization Equivalence}{section.4.3}% 49
+\BOOKMARK [2][-]{subsection.4.3.3}{DAMESRL}{section.4.3}% 50
+\BOOKMARK [2][-]{subsection.4.3.4}{GRU}{section.4.3}% 51
+\BOOKMARK [1][-]{section.4.4}{combination}{chapter.4}% 52
+\BOOKMARK [2][-]{subsection.4.4.1}{Aligning BERT subtokens with SRL tokens}{section.4.4}% 53
+\BOOKMARK [1][-]{section.4.5}{Head}{chapter.4}% 54
+\BOOKMARK [2][-]{subsection.4.5.1}{Question Answering}{section.4.5}% 55
+\BOOKMARK [2][-]{subsection.4.5.2}{Classifiction}{section.4.5}% 56
+\BOOKMARK [3][-]{subsubsection.4.5.2.1}{[CLS]}{subsection.4.5.2}% 57
+\BOOKMARK [3][-]{subsubsection.4.5.2.2}{Fully-Connected Feed Forward}{subsection.4.5.2}% 58
+\BOOKMARK [3][-]{subsubsection.4.5.2.3}{GRU}{subsection.4.5.2}% 59
+\BOOKMARK [0][-]{chapter.5}{Results}{}% 60
+\BOOKMARK [1][-]{section.5.1}{Data Set Results}{chapter.5}% 61
+\BOOKMARK [2][-]{subsection.5.1.1}{Testing for Statistical Significance}{section.5.1}% 62
+\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example Case for XNLI}{subsection.5.1.1}% 63
+\BOOKMARK [1][-]{section.5.2}{Register Noise}{chapter.5}% 64
+\BOOKMARK [1][-]{section.5.3}{Label Noise}{chapter.5}% 65
+\BOOKMARK [1][-]{section.5.4}{Translation Noise}{chapter.5}% 66
+\BOOKMARK [1][-]{section.5.5}{SRL Noise}{chapter.5}% 67
+\BOOKMARK [1][-]{section.5.6}{Ablation study}{chapter.5}% 68
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 69
+\BOOKMARK [0][-]{section*.48}{Glossary}{}% 70
+\BOOKMARK [0][-]{section*.50}{References}{}% 71
+\BOOKMARK [0][-]{section*.52}{Lebenslauf}{}% 72
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 73
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 74

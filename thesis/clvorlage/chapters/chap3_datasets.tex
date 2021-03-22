@@ -88,12 +88,11 @@ Following \cite{wang2018glue},
 
 There are a few remarks and strategies that apply to all collected corpora:
 
-(1) Most of the data sets are not monolingual, i.e. German, sources, but bi- or multilingual
-corpora.
-To compile a German GLUE corpus I only use the German subset of those corpora.
-For example, the MLQA data set provides all 49 combinations of the languages it contains:
-Context in Arabic, question in Hindi; context in English, question in Spanish, etc.
-Also in this case, I choose only the German-German part of the data set for my corpus.
+(1) All of the data sets except deISEAR are not monolingual, i.e. German, sources, but bi-
+or multilingual corpora. To compile a German GLUE corpus I only use the German subset of
+those corpora. For example, the MLQA data set provides all 49 combinations of the languages
+it contains: Context in Arabic, question in Hindi; context in English, question in Spanish,
+etc. Also in this case, I choose only the German-German part of the data set for my corpus.
 
 (2) The data sets I chose for my little GLUE corpus are being provided in different modes.
 While three of the corpora, namely MLQA, PAWS-X, and XNLI, come with a predefined split, the
@@ -105,8 +104,9 @@ To ensure that my results are comparable with those that the authors of the diff
 report, I leave the test split as it is, and split the development set into a train and
 development set, implementing a 85:15 ratio.
 
-(3) Most datasets that I collected are not mono- but multilingual compilations, in which case I
-simply include the German subset of the corpus into my GLUE.
+(3) Most of the data sets were constructud by translating existing monolingual English
+data sets (semi-)automatically into the different target languages. As I show in section
+{\color{red} REFXXXX}, this does not come without introducing noise into the data.
 
 The following differences to the original GLUE corpus must be noted:
 
