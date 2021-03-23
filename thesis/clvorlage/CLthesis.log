@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  22 MAR 2021 21:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  23 MAR 2021 10:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1857,7 +1857,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 Package hyperref Warning: Invalid value `000'
 (hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 92.
+(hyperref)                Option setting is ignored on input line 94.
 
 
 Class scrreprt Warning: Usage of package `fancyhdr' together
@@ -1871,7 +1871,7 @@ Class scrreprt Warning: Usage of package `fancyhdr' together
 (scrreprt)              `\addtokomafont' for the page style elements need
 (scrreprt)              explicite user intervention to work.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `fancyhdr' on input line 109.
+(scrreprt)              package `fancyhdr' on input line 111.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
@@ -2412,7 +2412,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [45
 
 ] [46]
-Overfull \hbox (410.98924pt too wide) in paragraph at lines 208--208
+Overfull \hbox (410.98924pt too wide) in paragraph at lines 212--212
  [] 
  []
 
@@ -2423,18 +2423,18 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: images/gain_losses_accumulated.pdf Graphic file (type pdf)
 <use images/gain_losses_accumulated.pdf>
 Package pdftex.def Info: images/gain_losses_accumulated.pdf  used on input line
- 249.
+ 253.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
 <images/gain_losses_SRL.pdf, id=1096, 650.43pt x 433.62pt>
 File: images/gain_losses_SRL.pdf Graphic file (type pdf)
 <use images/gain_losses_SRL.pdf>
-Package pdftex.def Info: images/gain_losses_SRL.pdf  used on input line 254.
+Package pdftex.def Info: images/gain_losses_SRL.pdf  used on input line 258.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
 <images/all_datasets_gain_dup.pdf, id=1099, 939.51pt x 867.24pt>
 File: images/all_datasets_gain_dup.pdf Graphic file (type pdf)
 <use images/all_datasets_gain_dup.pdf>
 Package pdftex.def Info: images/all_datasets_gain_dup.pdf  used on input line 2
-60.
+64.
 (pdftex.def)             Requested size: 426.79134pt x 393.95964pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -2449,12 +2449,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: images/QA_gain_losses_accumulated.pdf Graphic file (type pdf)
 <use images/QA_gain_losses_accumulated.pdf>
 Package pdftex.def Info: images/QA_gain_losses_accumulated.pdf  used on input l
-ine 298.
+ine 302.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
 <images/QA_gain_losses_SRL.pdf, id=1101, 650.43pt x 433.62pt>
 File: images/QA_gain_losses_SRL.pdf Graphic file (type pdf)
 <use images/QA_gain_losses_SRL.pdf>
-Package pdftex.def Info: images/QA_gain_losses_SRL.pdf  used on input line 303.
+Package pdftex.def Info: images/QA_gain_losses_SRL.pdf  used on input line 307.
 
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
 [47
@@ -2462,13 +2462,13 @@ Package pdftex.def Info: images/QA_gain_losses_SRL.pdf  used on input line 303.
 ] [48] [49 <./images/gain_losses_accumulated.pdf> <./images/gain_losses_SRL.pdf
 >] [50] [51 <./images/all_datasets_gain_dup.pdf>] [52 <./images/QA_gain_losses_
 accumulated.pdf> <./images/QA_gain_losses_SRL.pdf>] [53]
-Overfull \hbox (3.78987pt too wide) in paragraph at lines 462--464
+Overfull \hbox (3.78987pt too wide) in paragraph at lines 466--468
 []\OT1/cmr/m/n/12 Riverton war ein Par-la-mentsw^^?ahler in der neuseel^^?andis
 -chen Re-gion South-land. River-
  []
 
 
-Overfull \hbox (19.49571pt too wide) in paragraph at lines 486--487
+Overfull \hbox (19.49571pt too wide) in paragraph at lines 490--491
 []\OT1/cmr/m/n/12 Im Jahr 2014 wurde Hus-ton Smith eine au-torisierte Bi-ogra-p
 hie von Sawyer ver^^?offentlicht. 
  []
@@ -2477,13 +2477,13 @@ hie von Sawyer ver^^?offentlicht.
 <images/SRL_assessment.pdf, id=1231, 578.16pt x 650.43pt>
 File: images/SRL_assessment.pdf Graphic file (type pdf)
 <use images/SRL_assessment.pdf>
-Package pdftex.def Info: images/SRL_assessment.pdf  used on input line 500.
+Package pdftex.def Info: images/SRL_assessment.pdf  used on input line 504.
 (pdftex.def)             Requested size: 312.9803pt x 352.10034pt.
 <images/SRL_assessment_data_set.pdf, id=1232, 1156.32pt x 794.97pt>
 File: images/SRL_assessment_data_set.pdf Graphic file (type pdf)
 <use images/SRL_assessment_data_set.pdf>
 Package pdftex.def Info: images/SRL_assessment_data_set.pdf  used on input line
- 502.
+ 506.
 (pdftex.def)             Requested size: 426.79134pt x 293.41861pt.
 
 
@@ -2491,20 +2491,20 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 Package natbib Warning: Citation `landis1977measurement' on page 55 undefined o
-n input line 505.
+n input line 509.
 
 [55 <./images/SRL_assessment.pdf>]
 Package hyperref Info: bookmark level for unknown srl defaults to 0 on input li
-ne 553.
+ne 557.
  [56 <./images/SRL_assessment_data_set.pdf>]
 
 Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 607.
+(caption)                outside box or environment on input line 611.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 607.
+(caption)                particular \caption on input line 611.
 See the caption package documentation for explanation.
 
 ) [57]
@@ -2590,11 +2590,11 @@ Package rerunfilecheck Info: File `CLthesis.out' has not changed.
 (rerunfilecheck)             Checksum: 30982CDF7FCCBFC71F78663CC24344DD;4670.
  ) 
 Here is how much of TeX's memory you used:
- 35630 strings out of 492982
- 688223 string characters out of 6134895
- 862616 words of memory out of 5000000
- 38170 multiletter control sequences out of 15000+600000
- 559405 words of font info for 99 fonts, out of 8000000 for 9000
+ 35643 strings out of 492982
+ 688422 string characters out of 6134895
+ 871679 words of memory out of 5000000
+ 38183 multiletter control sequences out of 15000+600000
+ 561864 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,19n,78p,10408b,1017s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/joni/.texlive2017/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk>{/
@@ -2620,7 +2620,7 @@ nts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/times/utmr8a.pfb>
-Output written on CLthesis.pdf (76 pages, 1938797 bytes).
+Output written on CLthesis.pdf (76 pages, 1940784 bytes).
 PDF statistics:
  1463 PDF objects out of 1728 (max. 8388607)
  1266 compressed objects within 13 object streams
