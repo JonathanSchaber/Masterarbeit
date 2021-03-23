@@ -17,14 +17,16 @@ def parse_cmd_args():
             "--treatment_files",
             type=str,
             nargs="+",
-            help="List of treatment files for ensemble prediciton"
+            help="List of treatment files for ensemble prediciton",
+            required=True
             )
     parser.add_argument(
             "-c",
             "--control_files",
             type=str,
             nargs="+",
-            help="List of control files for ensemble prediciton"
+            help="List of control files for ensemble prediciton",
+            required=True
             )
     parser.add_argument(
             "-d",
@@ -133,6 +135,61 @@ def permute_with_replacement(treatment: List[int], control: List[int], R: int=10
     print("R:", count_R)
     print("(r+1)/(R+1):", round((r+1)/(count_R+1), 5))
 
+
+def qa_permute_with_replacement(start_treatment: List[int],
+                                end_treatment: List[int],
+                                start_control: List[int],
+                                end_control: List[int],
+                                R: int=1000):
+    """compute random permutations, t(X, Y)
+
+    Args:
+        treatment: True, False ordered list
+        control: True, False ordered list
+        R: number of permutations
+    Returns:
+        None
+    """
+    r, count_R = 0, 0
+
+    e_treat_orig = (sum(start_treatment)/len(start_treatment) + sum(end_treatment)/len(end_treatment)) / 2
+    e_contr_orig = (sum(start_control)/len(start_control) + sum(end_control)/len(end_control)) / 2
+    # print("Original treatment acc: {}".format(e_treat_orig))
+    # print("Original control acc: {}".format(e_contr_orig))
+
+    t_orig = e_treat_orig - e_contr_orig
+    # import ipdb; ipdb.set_trace()
+
+    while count_R < R:
+
+        perm_start_treat, perm_start_contr, perm_end_contr, perm_end_treat = [], [], [], []
+
+        for item in zip(start_treatment, start_control, end_treatment, end_control):
+            if random.randint(0,1) == 0:
+                perm_start_treat.append(item[0])
+                perm_start_contr.append(item[1])
+                perm_end_treat.append(item[2])
+                perm_end_contr.append(item[3])
+            else:
+                perm_start_treat.append(item[1])
+                perm_start_contr.append(item[0])
+                perm_end_treat.append(item[3])
+                perm_end_contr.append(item[2])
+
+        e_treat = (sum(perm_start_treat)/len(perm_start_treat) + sum(perm_end_treat)/len(perm_end_treat)) / 2
+        e_contr = (sum(perm_start_contr)/len(perm_start_contr) + sum(perm_end_contr)/len(perm_end_contr)) / 2
+
+        t_perm = e_treat - e_contr
+
+        if t_perm >= t_orig:
+            r += 1
+        count_R += 1
+
+    print("r:", r)
+    print("R:", count_R)
+    print("(r+1)/(R+1):", round((r+1)/(count_R+1), 5))
+
+
 def main():
     args = parse_cmd_args()
     treatment_files = list(dict.fromkeys(args.treatment_files))
@@ -186,13 +243,14 @@ def main():
     else:
         treatment_start_tf, treatment_end_tf, control_start_tf, control_end_tf = [], [], [], []
         treatment_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
-                                for key, value in treatment_dict.items()}
-        treatment_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
-                                for key, value in treatment_dict.items()}
-        control_start_ensemble = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
-                                for key, value in control_dict.items()}
-        control_end_ensemble = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
-                                for key, value in control_dict.items()}
+                                     for key, value in treatment_dict.items()}
+        treatment_end_ensemble   = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
+                                     for key, value in treatment_dict.items()}
+
+        control_start_ensemble   = {key: max([x[0] for x in value], key=[x[0] for x in value].count)
+                                     for key, value in control_dict.items()}
+        control_end_ensemble     = {key: max([x[1] for x in value], key=[x[1] for x in value].count)
+                                     for key, value in control_dict.items()}
 
         for i in sorted(gold_dict.items()):
             if treatment_start_ensemble[i[0]] == i[1][0]:
@@ -203,6 +261,8 @@ def main():
                 treatment_end_tf.append(1)
             else:
                 treatment_end_tf.append(0)
+
+        for i in sorted(gold_dict2.items()):
             if control_start_ensemble[i[0]] == i[1][0]:
                 control_start_tf.append(1)
             else:
@@ -212,11 +272,8 @@ def main():
             else:
                 control_end_tf.append(0)
         print("")
-        print("Permute starts with replacement:")
-        permute_with_replacement(treatment_start_tf, control_start_tf, args.R)
-        print("")
-        print("Permute ends with replacement:")
-        permute_with_replacement(treatment_end_tf, control_end_tf, args.R)
+        print("Permute with replacement:")
+        qa_permute_with_replacement(treatment_start_tf, treatment_end_tf, control_start_tf, control_end_tf, args.R)
 
 
 
