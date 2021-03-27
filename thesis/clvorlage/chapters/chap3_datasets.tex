@@ -45,7 +45,7 @@ concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduc
 
 Following \cite{wang2018glue},
 
-\tab{tab:original-GLUE}{Original GLUE data sets and tasks.}{
+\tab{tab:original-GLUE}{Original GLUE data sets and tasks (following the table from \cite{wang2018glue}).}{
   \resizebox{\textwidth}{!}{
     \begin{tabular}{l|llll}
       Data Set & NLP Task                   & ML Task                    & \# Examples & Splits \\ \hline\hline
@@ -185,10 +185,23 @@ average length train: 18.1 (sigma 7.9) \\
 average length dev: 20.7 (sigma 24.1) \\
 average length test: 19.5 (sigma 8.8)
 
-\fig{images/deISEAR_subtokenized.pdf}{fig:deISEAR-context}{deISEAR: Length of subtokenized Sentences.}{8}{deISEAR-Length}
+% \fig{images/deISEAR_subtokenized.pdf}{fig:deISEAR-context}{deISEAR: Length of subtokenized Sentences.}{8}{deISEAR-Length}
+% \fig{images/deISEAR_subtokenized_all.pdf}{fig:out-deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
 
-\fig{images/deISEAR_subtokenized_all.pdf}{fig:out-deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
-
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/deISEAR_subtokenized.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/deISEAR_label_percentages.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized deISEAR sentences. Note that one extreme outlier in the
+                          development set comprising 300 BERT-subtokens is not included in the plot. \textbf{Right}: Label distributions in deISEAR.}
+\end{figure}
 
 
 \subsubsection{SOTA}
@@ -197,7 +210,8 @@ average length test: 19.5 (sigma 8.8)
 boolean unigram features on the original ISEAR corpus (7665 instances).
 Since the original ISEAR study and data collection was carried out in English, they then machine
 translate the 1,001 deISEAR examples and evaluate on them.
-Using this strategy, the authors accomplish an average micro F$_1$ of 47.
+Using this strategy, the authors accomplish an average micro F$_1$ of 47. (Note: micro F$_1$ in settings where each example gets
+exactly one label assigned is the same as accuracy)
 
 \subsection{MLQA}
 
@@ -256,7 +270,7 @@ average length test context: 165.5 (sigma 156.7)
 They use the English development set of MLQA for tuning.
 At test time, the model must extract the answer span in the target language.
 They report that XLM performs best for German, achieving a 47.6\% accuracy of exact matches, i.e.
-predicting the correct start and end span of the answer.
+predicting the exact start and end span of the answer.
 
 The total of all instances in all languages in MLQA is 46,444.
 
@@ -276,7 +290,6 @@ humanly translate a subset of the original PAWS corpus \cite{zhang2019paws}.
 
 The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence
 one is a paraphrase of sentence two, and vice versa.
-
 
 % TODO: new stats figure!
 %\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
@@ -309,9 +322,22 @@ The BLEU score is a value between 0 (no n-gram overlaps) to 1 (perfect n-gram ov
 BLEU score of 1 means that the two sentences are identical. As for other measures, like accuracy
 e.g., the value is sometimes multiplied by 100 for better readabilit, which I will also do here.
 
-\fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:paws-x-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{PAWS-X-Length-all}
+% \fig{images/PAWS-X_subtokenized_sum_without_outlier.pdf}{fig:paws-x-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs.}{8}{PAWS-X-Length-all}
 
-\fig{images/PAWS-X_subtokenized_sum.pdf}{fig:out-paws-x-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{PAWS-X-Length}
+% \fig{images/PAWS-X_subtokenized_sum.pdf}{fig:out-paws-x-length}{PAWS-X: Length of subtokenized, concatenated sentence pairs (with one extreme outlier).}{8}{PAWS-X-Length}
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/PAWS-X_subtokenized_sent1.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/PAWS-X_subtokenized_sent2.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[PAWS-X Lengths]{\textbf{Left}: Length of subtokenized PAWS-X first sentences. \textbf{Right}: Length of subtokenized PAWS-X second sentences..}
+\end{figure}
 
 Mean BLEU-scores for sets:
 
@@ -492,6 +518,9 @@ Corresponding .rel file:
 
 
 stats: there are 1,760 fine-grained annotated reviews
+
+Baseline concerning imbalance labels: Always predicting majority class (``Positive'') results
+in accuracy of 59.09\%.
 
 \subsubsection{SCARE reviews}
 
@@ -677,8 +706,20 @@ Neutral: 2,499
 Entailment: 2,500
 Contradiction: 2,499
 
-\fig{images/XNLI_premise_subtokenized.pdf}{fig:XNLI-premise-length}{XNLI: Length of subtokenized premises.}{8}{XNLI-Length}
-
+% \fig{images/XNLI_premise_subtokenized.pdf}{fig:XNLI-premise-length}{XNLI: Length of subtokenized premises.}{8}{XNLI-Length}
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/XNLI_premise_subtokenized.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/XNLI_hypo_subtokenized.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized XNLI premises. \textbf{Right}: Length of subtokenized XNLI hypotheses.}
+\end{figure}
 In contrary to the above described PAWS-X corpus, there are no identical sentence pairs in XNLI.
 
 \subsubsection{SOTA}

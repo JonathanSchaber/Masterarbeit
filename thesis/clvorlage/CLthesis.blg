@@ -21,45 +21,45 @@ A level-1 auxiliary file: appendix/scripts.aux
 Database file #1: biblio/thesis.bib
 Warning--empty journal in foth2006umfassende
 Warning--empty journal in hajivc2009conll
-You've used 48 entries,
+You've used 49 entries,
             2773 wiz_defined-function locations,
-            849 strings with 14676 characters,
-and the built_in function-call counts, 24726 in all, are:
-= -- 2117
-> -- 1703
-< -- 34
-+ -- 577
-- -- 528
-* -- 1969
-:= -- 3786
-add.period$ -- 142
-call.type$ -- 48
-change.case$ -- 313
-chr.to.int$ -- 47
-cite$ -- 98
-duplicate$ -- 1116
-empty$ -- 1842
-format.name$ -- 590
-if$ -- 5194
+            856 strings with 14816 characters,
+and the built_in function-call counts, 25273 in all, are:
+= -- 2173
+> -- 1724
+< -- 36
++ -- 584
+- -- 534
+* -- 2003
+:= -- 3860
+add.period$ -- 145
+call.type$ -- 49
+change.case$ -- 318
+chr.to.int$ -- 48
+cite$ -- 100
+duplicate$ -- 1145
+empty$ -- 1887
+format.name$ -- 599
+if$ -- 5319
 int.to.chr$ -- 2
 int.to.str$ -- 1
-missing$ -- 43
-newline$ -- 245
-num.names$ -- 192
-pop$ -- 681
+missing$ -- 44
+newline$ -- 250
+num.names$ -- 196
+pop$ -- 691
 preamble$ -- 1
-purify$ -- 269
+purify$ -- 273
 quote$ -- 0
-skip$ -- 955
+skip$ -- 983
 stack$ -- 0
-substring$ -- 698
-swap$ -- 196
-text.length$ -- 16
+substring$ -- 732
+swap$ -- 206
+text.length$ -- 17
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 523
+type$ -- 534
 warning$ -- 2
-while$ -- 196
+while$ -- 202
 width$ -- 0
-write$ -- 602
+write$ -- 615
 (There were 2 warnings)

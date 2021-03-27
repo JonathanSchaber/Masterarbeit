@@ -7,28 +7,27 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces deISEAR-Length}}{10}{figure.caption.16}
-\contentsline {figure}{\numberline {2}{\ignorespaces deISEAR-Length}}{11}{figure.caption.17}
-\contentsline {figure}{\numberline {3}{\ignorespaces PAWS-X-Length-all}}{14}{figure.caption.18}
-\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X-Length}}{15}{figure.caption.19}
-\contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X-BLEU}}{16}{figure.caption.20}
-\contentsline {figure}{\numberline {6}{\ignorespaces Accumulated Gains and Losses.}}{20}{figure.caption.23}
-\contentsline {figure}{\numberline {7}{\ignorespaces XNLI-Length}}{24}{figure.caption.24}
-\contentsline {figure}{\numberline {8}{\ignorespaces XQuAD-Length}}{27}{figure.caption.25}
+\contentsline {figure}{\numberline {1}{\ignorespaces XNLI Lengths}}{10}{figure.caption.16}
+\contentsline {figure}{\numberline {2}{\ignorespaces PAWS-X Lengths}}{13}{figure.caption.17}
+\contentsline {figure}{\numberline {3}{\ignorespaces PAWS-X-BLEU}}{14}{figure.caption.18}
+\contentsline {figure}{\numberline {4}{\ignorespaces Accumulated Gains and Losses.}}{19}{figure.caption.21}
+\contentsline {figure}{\numberline {5}{\ignorespaces XNLI Lengths}}{23}{figure.caption.22}
+\contentsline {figure}{\numberline {6}{\ignorespaces XQuAD-Length}}{26}{figure.caption.23}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {9}{\ignorespaces gliBERT Architecture}}{29}{figure.caption.27}
-\contentsline {figure}{\numberline {10}{\ignorespaces gliBERT Architecture detail}}{32}{figure.caption.28}
-\contentsline {figure}{\numberline {11}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{34}{figure.caption.29}
-\contentsline {figure}{\numberline {12}{\ignorespaces BERT-Classification}}{40}{figure.caption.30}
-\contentsline {figure}{\numberline {13}{\ignorespaces CLS-Head}}{41}{figure.caption.31}
-\contentsline {figure}{\numberline {14}{\ignorespaces Fully-Connected-Feed-Forward-Head}}{42}{figure.caption.32}
-\contentsline {figure}{\numberline {15}{\ignorespaces GRU-Head}}{43}{figure.caption.33}
+\contentsline {figure}{\numberline {7}{\ignorespaces gliBERT Architecture}}{28}{figure.caption.25}
+\contentsline {figure}{\numberline {8}{\ignorespaces gliBERT Architecture detail}}{31}{figure.caption.26}
+\contentsline {figure}{\numberline {9}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{33}{figure.caption.27}
+\contentsline {figure}{\numberline {10}{\ignorespaces BERT-Classification}}{39}{figure.caption.28}
+\contentsline {figure}{\numberline {11}{\ignorespaces {[}CLS{]} Head}}{40}{figure.caption.29}
+\contentsline {figure}{\numberline {12}{\ignorespaces LLOA Head}}{41}{figure.caption.30}
+\contentsline {figure}{\numberline {13}{\ignorespaces GRU Head}}{42}{figure.caption.31}
+\contentsline {figure}{\numberline {14}{\ignorespaces Span Prediction Head}}{42}{figure.caption.32}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {16}{\ignorespaces Accumulated Gains and Losses.}}{49}{figure.caption.40}
-\contentsline {figure}{\numberline {17}{\ignorespaces Results Accumulation for each Data Set}}{51}{figure.caption.41}
-\contentsline {figure}{\numberline {18}{\ignorespaces Accumulated Gains and Losses.}}{52}{figure.caption.44}
-\contentsline {figure}{\numberline {19}{\ignorespaces SRL assessment}}{55}{figure.caption.45}
-\contentsline {figure}{\numberline {20}{\ignorespaces SRL assessment per data sets}}{56}{figure.caption.46}
+\contentsline {figure}{\numberline {15}{\ignorespaces Accumulated Gains and Losses.}}{49}{figure.caption.40}
+\contentsline {figure}{\numberline {16}{\ignorespaces Results Accumulation for each Data Set}}{50}{figure.caption.41}
+\contentsline {figure}{\numberline {17}{\ignorespaces Accumulated Gains and Losses.}}{52}{figure.caption.45}
+\contentsline {figure}{\numberline {18}{\ignorespaces SRL assessment}}{54}{figure.caption.46}
+\contentsline {figure}{\numberline {19}{\ignorespaces SRL assessment per data sets}}{55}{figure.caption.47}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
