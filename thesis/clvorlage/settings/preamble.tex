@@ -39,6 +39,7 @@
 \makesavenoteenv{table}
 \usepackage{textcomp}
 \usepackage{tikz}
+\usepackage{wrapfig}
 \usepackage{xcolor}
 
 \definecolor{light-gray}{gray}{0.70}
@@ -59,6 +60,22 @@
 \floatstyle{plain}
 \newfloat{srl}{H}{loe}[chapter]
 \floatname{srl}{SRL}
+
+\long\def\wrapfiguresafe#1#2#3{%
+  \sbox\curwrapfig{#3}%
+  \par\penalty-100%
+  \begingroup % preserve \dimen@
+    \dimen@\pagegoal \advance\dimen@-\pagetotal % space left
+    \advance\dimen@-\baselineskip % allow an extra line
+    \ifdim \ht\curwrapfig>\dimen@ % not enough space left
+      \break%
+    \fi%
+  \endgroup%
+  \begin{wrapfigure}{#1}{#2}%
+    \usebox\curwrapfig%
+  \end{wrapfigure}%
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
