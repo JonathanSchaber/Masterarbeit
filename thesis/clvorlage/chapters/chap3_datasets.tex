@@ -135,34 +135,55 @@ e.g. the average length of examples in the different sub-sets (Training, Develop
 \subsubsection{Task}
 
 This data set addresses the task of Emotion recognition, a sub-task of Sentiment Analysis.
-Technically, it is a sequence classification problem: Given a sequence of tokens, predict the
-correct label from a fixed set of emotions.
-Following by the original study ``International Survey on Emotion Antecedents and Reactions''
+Technically, it is a sequence classification problem: Given a sequence of tokens $x_1 \dotso x_n$, predict the
+correct label $y$ from a fixed set of emotions $Y$. Or. in a more natural way of speaking, what emotion
+expresses a ceratin statement?
+Following the original study ``International Survey on Emotion Antecedents and Reactions''
 \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed their data set for German:
+
 In a first step, the authors presented annotators with one of seven emotions, and asked them to
 come up with a textual description of an event in which they felt that emotion.
-The task was formulated as a sentence completion, so the annotators, which were recruited via an
+The task was formulated as a sentence completion problem, so the annotators, which were recruited via a
 crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte
 \emph{emotion}, als/weil/dass ...''.
 Seven emotions were given for which the descriptions had to be constructed:
-Traurigkeit, Ekel, Schuld, Wut, Angst, Scham, Freude.
-For \emph{Traurigkeit} and \emph{Ekel} there are 144 examples in the data set, for the other
-emotions there are 143.
+Traurigkeit, Ekel, Schuld, Wut, Angst, Scham, Freude.\myfootnote{Interestingly, out of these
+seven emotions, six represent rather negative emotions --- only \emph{Freude} is a clearly positive sensation.
+Maybe negative emotions are more lucidly detactable (by humans and/or machines) than positive ones, I leave
+this question for the reader to further explore.}
+
+The second phase of the data generation process comprised of re-labeling the generates sentences
+such that five annotators annotate each sentence. The emotion word was omitted, and the annotators
+had the list of seven emotions at hand.
+The authors report that for approximately half of all sentences, the inter-annotator agreement was perfect;
+i.e. each of the five annotators attributed the same emotion. However, some emotions seem to be prone for
+not being clearly separable: Shame, for example, gets confused with guilt in 35\% of the cases.
+The authors do not report any coefficient, but since they provided the complete results of phase 2,
+I was abe to compute the Fleiss' $\kappa$, a standard metric for estimating annotator agreement, and thus,
+reliabilty of these labels; the computed value equals to 0.66, which corresponds to ``substantial'' agreement
+in the interpretation scale for th variable, proposed by \cite{landis1977measurement}.
+
+Following are seven example sentence randomly picked out of the deISEAR corpus, one for each emotion.
 
 \begin{examples}
   \item Ich fühlte \textbf{[Traurigkeit]}, als mein Laptop kaputt ging und die Garantie schon abgelaufen war.
-\end{examples}
-\begin{examples}
-  \item  Ich fühlte \textbf{[Scham]}, weil mir mal beim Urlaub das Geld ausging.
-\end{examples}
-\begin{examples}
+  \item Ich fühlte \textbf{[Scham]}, weil mir mal beim Urlaub das Geld ausging.
+  \item Ich fühlte \textbf{[Freude]}, als ich mit meinen Arbeitskollegen ohne Ende Witze gerissen habe.
   \item Ich fühlte \textbf{[Angst]}, als der Chef sagte dass Mitarbeiter gekündigt werden müssen.
-\end{examples}
-\begin{examples}
+  \item Ich fühlte \textbf{[Wut]}, als ich die Nachricht gelesen habe, dass der VfB Stuttgart nicht in neue Spieler investieren wird.
   \item Ich fühlte \textbf{[Ekel]}, als ich verschimmeltes Essen im Kühlschrank gefunden habe.
-\end{examples}
-\begin{examples}
   \item Ich fühlte \textbf{[Schuld]}, dass ich meinen besten Kumpel versetzt habe.
+\end{examples}
+
+Now it is up to you: Here are four sentences with masked emotions --- try to assign what you thin is the correct one.
+The possible emotions are \textbf{Traurigkeit, Scham, Freude, Angst, Wut, Ekel, Schuld}.\myfootnote{\rotatebox{180}{\ref{itm:deisear1}: Freude, \ref{itm:deisear2}: Scham, \ref{itm:deisear3}: Wut, \ref{itm:deisear4}: Angst}}
+
+
+\begin{examples}
+  \item \label{itm:deisear1} Ich fühlte \textbf{[?]}, als ich meine kleine Tochter zum Schwimmen abgeholt habe.
+  \item \label{itm:deisear2} Ich fühlte \textbf{[?]}, als meine Mutter mich zur Schule begleiten musste als ich die schule geschwänzt hatte
+  \item \label{itm:deisear3} Ich fühlte \textbf{[?]}, als die Ärzte im KH bei meiner im sterben liegenden Großmutter einen künstlichen Zugang legen wollten um die Schilddrüsenmedikamente zu verabreichen.
+  \item \label{itm:deisear4} Ich fühlte \textbf{[?]}, als eine Feuerwerksrakete in Richtung meiner Kinder abgefeuert wurde und mein kleiner weinend davon lief.
 \end{examples}
 
 %The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
@@ -171,25 +192,31 @@ emotions there are 143.
 
 \subsubsection{Statistics}
 
-number of examples: \\
-train: 700 \\
-dev: 150 \\
-test: 151
+deISEAR is one of the data sets that are made available without any pre-defined training/development/test splits.
+Therefore I shuffle all 1,001 sentences with a 30:15:15 ratio, resulting in a training set of 700, a development set
+of 150 and a test set of 151 sentences.
 
-\textbf{merged} \\
-average length train: 15.9 (sigma 6.6) \\
-average length dev: 17.9 (sigma 19.9) \\
-average length test: 17.1 (sigma 7.4)
+In figure \ref{fig:fig:deisear-stats}, the length of the sentences and the label distributions in the three data sets are
+plotted. While the data sets were created randomly, there are some peculiarites observable: The lengths of the sentences
+in the trainig set show a greater variation compared to the development nd test set than one would except.
+% Further, the one extremely long example present in the whole data set ended also up in the training set --- although this is not
+% too unexpected.
 
-\textbf{subtokenized} \\
-average length train: 18.1 (sigma 7.9) \\
-average length dev: 20.7 (sigma 24.1) \\
-average length test: 19.5 (sigma 8.8)
+% \textbf{merged} \\
+% average length train: 15.9 (sigma 6.6) \\
+% average length dev: 17.9 (sigma 19.9) \\
+% average length test: 17.1 (sigma 7.4)
+
+% \textbf{subtokenized} \\
+% average length train: 18.1 (sigma 7.9) \\
+% average length dev: 20.7 (sigma 24.1) \\
+% average length test: 19.5 (sigma 8.8)
 
 % \fig{images/deISEAR_subtokenized.pdf}{fig:deISEAR-context}{deISEAR: Length of subtokenized Sentences.}{8}{deISEAR-Length}
 % \fig{images/deISEAR_subtokenized_all.pdf}{fig:out-deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
 
 \begin{figure}
+  \label{fig:deisear-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=1.0\linewidth]{images/deISEAR_subtokenized.pdf}

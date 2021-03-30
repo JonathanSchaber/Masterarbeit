@@ -52,7 +52,7 @@
 \BOOKMARK [1][-]{section.4.5}{Head Module}{chapter.4}% 52
 \BOOKMARK [2][-]{subsection.4.5.1}{Classifiction}{section.4.5}% 53
 \BOOKMARK [3][-]{subsubsection.4.5.1.1}{[CLS] Head}{subsection.4.5.1}% 54
-\BOOKMARK [3][-]{subsubsection.4.5.1.2}{LLOA Head}{subsection.4.5.1}% 55
+\BOOKMARK [3][-]{subsubsection.4.5.1.2}{FFNN Head}{subsection.4.5.1}% 55
 \BOOKMARK [3][-]{subsubsection.4.5.1.3}{GRU Head}{subsection.4.5.1}% 56
 \BOOKMARK [2][-]{subsection.4.5.2}{Question Answering}{section.4.5}% 57
 \BOOKMARK [3][-]{subsubsection.4.5.2.1}{Span Prediction Head}{subsection.4.5.2}% 58

@@ -440,9 +440,9 @@ to its BERT embedding vector
 In table XYZ I report the gains, losses this strategy yields for the four classifications data sets
 in my corpus.
 
-\subsubsection{LLOA Head}
+\subsubsection{FFNN Head}
 
-LLOA stands for Last Layer Output All. While th [CLS] Head procudes predictions based on the
+FFNN stands for Feed Forward Neural Network. While th [CLS] Head procudes predictions based on the
 weights of the last layer output of the [CLS]-token, this head takes the last layer output of all
 tokens and concatenates them.
 While the approach implemented by \cite{zhang2019semantics} is able to improve the vanilla
@@ -465,7 +465,7 @@ as paraphrase identification, this information is however absolutely crucial. As
 from results \ref{tab:results}, this hypothesis is also supported by the results:
 
 \fig{images/head-lhsa.png}{fig:lloa-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork
-    on the concatenated token sequence.}{10}{LLOA Head}
+    on the concatenated token sequence.}{10}{FFNN Head}
 
 As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final
 fully-connected feed forward layer produces fairly good results (in fact, it performs the best
