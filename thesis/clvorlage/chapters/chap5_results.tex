@@ -308,12 +308,14 @@ In a first step, I will discuss on the overall performance of models when the SR
                                        datasetclassification. \textbf{Left}: Which SRL architecture performed better.
                                        \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs.}{15}{Results Accumulation for each Data Set}
 
-\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ merged, +SRL duplicated.}{
-  \begin{tabular}{l|ccc}
-              & Positive & Neutral & Negative \\ \hline
-    Positive  &          &         &          \\
-    Neutral   &          &         &          \\
-    Negative  &          &         &
+\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ merged, +SRL duplicated. (macro F1: 73.52).}{
+  \begin{tabular}{|ll|ccc|}
+    \hline
+                                                    &           & \multicolumn{3}{c|}{Predicted} \\
+                                                    &           & Positive & Neutral & Negative  \\ \hline
+    \multirow{3}{*}{\rotatebox[origin=c]{90}{True}} & Positive  & 149      & 12      & 5         \\
+                                                    & Neutral   & 4        & 11      & 6         \\
+                                                    & Negative  & 3        & 8       & 66        \\ \hline
   \end{tabular}
 }{Confusion matrix for one SCARE +SRL ensemble}
 

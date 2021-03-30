@@ -132,7 +132,7 @@ e.g. the average length of examples in the different sub-sets (Training, Develop
 
 \subsection{deISEAR}
 
-\subsubsection{Task}
+
 
 This data set addresses the task of Emotion recognition, a sub-task of Sentiment Analysis.
 Technically, it is a sequence classification problem: Given a sequence of tokens $x_1 \dotso x_n$, predict the
@@ -243,30 +243,123 @@ exactly one label assigned is the same as accuracy)
 
 \subsection{MLQA}
 
-\subsubsection{Task}
+The term question answerin comprises several related tasks or problems: In it's most general form,
+question answering refers to the ability to give a meaningful answer to any possible inquiry. This is
+normally referred to as \emph{open-domain question answering} and models addressing this task require
+a whole pipeline of algorithms in the background to produce acceptable results (compare \cite{chen-yih-2020-open}).
+Another form is so called \emph{multi-choice question answering}, where the task for the model is to select the correct
+answer out of a list of options given the answer (compare \cite{welbl2017crowdsourcing}).
+The subsort of question answering MLQA addresses is so called \emph{span prediction question answering}.
+The goal here is to extract the correct answer span out of a context text given the question.
+
+Following are five random examples out of the MLQA data set:
 
 \begin{examples}
-  \label{ex:mlqa}
-  \item Rita Sahatçiu Ora (* 26. November 1990 in Priština, SFR Jugoslawien) ist eine britische Sängerin und Schauspielerin kosovarischer Herkunft. Von 2010 bis 2016 stand sie bei Jay Z und Roc Nation unter Vertrag. Seit 2017 steht sie bei Atlantic Records unter Vertrag.
+  \item \textbf{Context}:\\
+        Rita Sahatçiu Ora (* 26. November 1990 in Priština, SFR Jugoslawien) ist
+        eine britische Sängerin und Schauspielerin kosovarischer Herkunft. Von 2010 bis 2016 stand
+        sie bei Jay Z und Roc Nation unter Vertrag. Seit 2017 steht sie bei Atlantic Records unter Vertrag.\\
+        \textbf{Question}: Wann wurde Rita Sahatçiu Ora geboren?\\
+        \textbf{Answer}: 26. November 1990
+  \item \textbf{Context}:\\
+        Während Somalia an militärischer Stärke gewonnen hatte, wurde Äthiopien aufgrund innenpolitischer
+        Umstände geschwächt. 1974 hatte die Derg-Militärjunta den abessinischen Kaiser Haile Selassie
+        gestürzt, sich aber bald in interne Machtkämpfe verstrickt, woraufhin es zu Unruhen kam. In
+        verschiedenen Landesteilen waren Derg-feindliche und separatistische Kräfte aktiv. Das regionale
+        Machtgleichgewicht hatte sich zugunsten Somalias verschoben.\\
+      \textbf{Question}: Zu wessen Gunsten verlagerte sich die Balance of Power?\\
+      \textbf{Answer}: Somalia
+  \item \label{itm:mlqa-strange-answer-span} \textbf{Context}:\\
+        Das Johnston-Atoll verlassend, drehte John nach Nordwesten ab und begann sich erneut zu
+        intensivieren, als die Windscherung nachließ. Am 27. August Ortszeit erreichte John einen
+        sekundären Höhepunkt mit Windgeschwindigkeiten von 210 km/h. Kurz darauf überquerte John
+        die Datumsgrenze bei etwa 22° nördlicher Breite und gelangte in das Beobachtungsgebiet
+        des Joint Typhoon Warning Center (JTWC) auf Guam. Durch seinen Aufenthalt im westlichen
+        Pazifischen Ozean wurde Hurrikan John zum Taifun John. Kurz nach dem überschreiten
+        der Datumsgrenze schwächte sich John wieder ab und die Vorwärtsbewegung kam fast zum
+        Stillstand. Am 1. September hatte sich Taifun John zum tropischen Sturm abgeschwächt und
+        veränderte seine Position knapp westlich der Datumsgrenze kaum. Dort blieb der Sturm die
+        nächsten sechs Tage, während der John eine mehrere Tage andauernde Schleife entgegen dem
+        Uhrzeigersinn zog, bis am 7. September ein Trog in die Gegend gelangte und John schnell
+        nach Nordosten abzog. Am 8. September überquerte John die Datumslinie wieder nach Osten
+        und gelangte erneut in den Zentralpazifik.Dort angelangt erreichte John seinen tertiären
+        Höhepunkt mit Windgeschwindigkeiten von 145 km/h als starker Kategorie-1-Hurrikan, ein
+        gutes Stück nördlich der Midwayinseln. Der Trog nahm die Struktur von John auseinander
+        und das kalte Wasser des nördlichen Zentralpazifiks tat sein Übriges. Am 10. September
+        wurde die 120. Sturmwarnung zu John ausgegeben, mit der das System als außertropisch
+        erklärt wurde, etwa 1600 km südlich von Unalaska.
+       \textbf{Question}: Wo wurde John zum Taifun?\\
+       \textbf{Answer}: westlichen Pazifischen Ozean
 \end{examples}
 
-\begin{enumerate}
-  \item Wann wurde Rita Sahatçiu Ora geboren? $\rightarrow$ 26. November 1990
-\end{enumerate}
+To demonstrate that this is by no means a trivial task --- at least for us humans ---, try to
+identify the correct answer\myfootnote{\rotatebox{180}{\textbf{Answer}: überwiegend antibritisch
+und prorussisch}} span for the following context-question pair (to be ``fair'' and have the same conditions
+for the model and you, you would only be allowed to read the context once...):
 
-\cite{lewis2019mlqa} compiled
+\begin{examples}
+    \item \textbf{Context}:\\
+        Das britische Parlament genehmigte Königin Victoria, ihrer Tochter
+        als Mitgift 40.000 Britische Pfund (in heutiger Kaufkraft 3.662.803 Pfund) zu
+        zahlen und legte die jährliche Apanage der Prinzessin auf 8000 Pfund fest.
+        König Friedrich Wilhelm IV. gewährte seinem Neffen ein jährliches Einkommen
+        von 9000 Talern. Das Einkommen des Prinzen war damit nicht ausreichend, um
+        die Kosten eines standesgemäßen Haushaltes zu decken, und einen Teil der
+        Haushaltskosten würde zukünftig Prinzessin Victoria aus ihrem Vermögen tragen
+        müssen. Der zukünftige Hofstaat des jungen Paares wurde von der preußischen
+        Königin und der zukünftigen Schwiegermutter Prinzessin Auguste ausgewählt. Die
+        beiden Frauen entschieden sich überwiegend für Personen, die bereits länger
+        im Hofdienst standen und damit deutlich älter als das prinzliche Paar waren.
+        Prinz Alberts Bitte, seiner Tochter doch wenigstens zwei gleichaltrige und
+        britische Hofdamen zu gewähren, wurde nicht entsprochen. Als Kompromiss wurden
+        mit den Komtessen Walburga von Hohenthal und Marie zu Lynar zwei Hofdamen
+        gewählt, die Prinzessin Victoria wenigstens altersmäßig entsprachen. Immerhin
+        konnte Prinz Albert Ernst von Stockmar, den Sohn seines jahrelangen Beraters
+        Christian Friedrich von Stockmar, als persönlichen Sekretär der Prinzessin
+        durchsetzen. Prinz Albert, der überzeugt davon war, dass der preußische Hof
+        die Einheirat einer britischen Prinzessin als Bereicherung und Ehre ansähe,
+        bestand außerdem darauf, dass Prinzessin Victoria den Titel einer Princess
+        Royal of the United Kingdom of Great Britain and Ireland beibehielt. An dem
+        überwiegend antibritisch und prorussisch eingestellten preußischen Hof löste
+        dieser Schritt allerdings nur Verärgerung aus.Der Hochzeitsort war Anlass
+        für weitere Meinungsverschiedenheiten. Für das preußische Königshaus war es
+        selbstverständlich, dass ein Prinz, der als zweiter in der Thronfolge stand,
+        in Berlin heiratete. Letztlich konnte sich aber Königin Victoria durchsetzen,
+        die als regierende Monarchin für sich in Anspruch nahm, ihre älteste Tochter
+        in ihrem Land zu vermählen. Das Paar trat schließlich am 25. Januar 1858 in
+        der Kapelle des St James’s Palace in London vor den Traualtar.\\
+        \textbf{Question}: Was war die Position der Berliner Gerichts gegenüber Großbritannien und Russland?\\
+\end{examples}
 
-PROBLEM: 231 out of 5,008 exceed tokenized length of 512 $\rightarrow$ ignore? 4.6\%
+\cite{lewis2019mlqa} compiled this data set using Wikipedia articles. First, they
+``automatically identify sentences from \textelp{} articles which have the same or
+similar meaning in multiple languages.''\myfootnote{However, taking the sometimes huge
+contexts into account, I think the better formulation would have been ``paragraphs''
+with similar meaning, instead of ``sentences''.} Secondly, they crowdsourced questions
+for the english paragraphs, let them humanly translate into the target languages,
+and finally annotate the answer spans in the corresponding paragraphs.\myfootnote{If
+this was done manually or by implementing some other techniques is, unfortunately,
+not reported. The presence of sometimes strange offsets (included commas, misssing
+prepositions as in example \ref{itm:mlqa-strange-answer-span} etc.) seem to indicate a
+not fully hand-made annotation --- at least to me.}
 
 \subsubsection{Statistics}
 
-number of examples: \\
-train: 432 \\
-dev: 77 \\
-test: 4,499
+MLQA is a set that comes with pre-defined development and test splits {\color{red} (the
+reason that there is no training set lies in the fact that MLQA, like most other data sets
+used in my thesis, are targeted for multi-lingual models. This means, that the training set
+is normally ...)} The test set contains 4,499 examples, while the dev set is made up of 509
+examples. I treat the MLQA development set as training set and split off a 15\% portion of
+it as development set.
 
+As can bee seen in the left figure of \ref{fig:mlqa-stats}, MLQA comprises quite a high number ---
+868, to be precise ---  of examples which do not fit subtokenized into a normal BERT model. However,
+those examples where the answer span lies inside the maximum BERT sequence are simply cut off after
+the maximum length and are kept in the data set for the experiments. Only the 22 exmaples where the
+answer span lies partially or fully outside the maximum length were dropped.
 
 \begin{figure}
+  \label{fig:mlqa-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=1.0\linewidth]{images/MLQA_context.pdf}
@@ -283,31 +376,31 @@ test: 4,499
                          (subtokenized) words.}
 \end{figure}
 
-\textbf{merged} \\
-average length train answer: 4.0 (sigma 4.9) \\
-average length dev answer: 3.7 (sigma 5.4) \\
-average length test answer: 4.0 (sigma 5.1)
+% \textbf{merged} \\
+% average length train answer: 4.0 (sigma 4.9) \\
+% average length dev answer: 3.7 (sigma 5.4) \\
+% average length test answer: 4.0 (sigma 5.1)
 
-average length train question: 9.4 (sigma 3.7) \\
-average length dev question: 8.6 (sigma 3.4) \\
-average length test question: 9.1 (sigma 3.4)
+% average length train question: 9.4 (sigma 3.7) \\
+% average length dev question: 8.6 (sigma 3.4) \\
+% average length test question: 9.1 (sigma 3.4)
 
-average length train context: 127.7 (sigma 110.0) \\
-average length dev context: 125.1 (sigma 116.7) \\
-average length test context: 129.9 (sigma 123.1)
+% average length train context: 127.7 (sigma 110.0) \\
+% average length dev context: 125.1 (sigma 116.7) \\
+% average length test context: 129.9 (sigma 123.1)
 
-\textbf{subtokenized} \\
-average length train answer: 5.6 (sigma 6.6) \\
-average length dev answer: 5.2 (sigma 6.7) \\
-average length test answer: 5.6 (sigma 7.0)
+% \textbf{subtokenized} \\
+% average length train answer: 5.6 (sigma 6.6) \\
+% average length dev answer: 5.2 (sigma 6.7) \\
+% average length test answer: 5.6 (sigma 7.0)
 
-average length train question: 11.4 (sigma 4.5) \\
-average length dev question: 10.6 (sigma 4.3) \\
-average length test question: 11.2 (sigma 4.3)
+% average length train question: 11.4 (sigma 4.5) \\
+% average length dev question: 10.6 (sigma 4.3) \\
+% average length test question: 11.2 (sigma 4.3)
 
-average length train context: 162.7 (sigma 139.0) \\
-average length dev context: 159.4 (sigma 145.6) \\
-average length test context: 165.5 (sigma 156.7)
+% average length train context: 162.7 (sigma 139.0) \\
+% average length dev context: 159.4 (sigma 145.6) \\
+% average length test context: 165.5 (sigma 156.7)
 
 \subsubsection{SOTA}
 
