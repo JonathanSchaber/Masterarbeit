@@ -189,28 +189,11 @@ In a first step, I will discuss on the overall performance of models when the SR
   \vfill
 \end{landscape}
 
-\tab{tab:token-vs-merged}{Performance of architectures when BERT subtokenized (yellow) vs. merged (purple).}{
-  \scalebox{0.90}{
-    \begin{tabular}{llcc|cc|cc|cc}
-                                                 &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                     & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                            & \multicolumn{2}{c|}{\textbf{GRU Head}}                                                         & \multicolumn{2}{c}{\textbf{Span Pred. Head}}                                                       \\ \cline{3-10}
-                                                 &           & \multicolumn{1}{c|}{zeros}                      & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c|}{zeros}                        & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c|}{zeros}                    & dupl.                                          & \multicolumn{1}{c|}{zeros}                       & dupl.                                           \\ \hline\hline
-    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} 4.64**}  & \multicolumn{1}{c|}{\cellcolor{purple} .67}    & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.32}   & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*} & \multicolumn{1}{c|}{\cellcolor{yellow} 2.65}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} 3.97*}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.98}   & \multicolumn{1}{c|}{\cellcolor{purple} 5.30*}     & \multicolumn{1}{c|}{\cellcolor{purple} .66}    & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*} & \multicolumn{1}{c|}{\cellcolor{purple} 2.64}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\ \cline{3-10}
-    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{purple} 1.13}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.90}   & \multicolumn{1}{c|}{\cellcolor{yellow} 2.27*}     & \multicolumn{1}{c|}{\cellcolor{purple} .38}    & \multicolumn{1}{c|}{\cellcolor{purple} .76}   & \multicolumn{1}{c|}{\cellcolor{yellow} .38}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{purple} .38}     & \multicolumn{1}{c|}{\cellcolor{purple} .76}    & \multicolumn{1}{c|}{\cellcolor{yellow} 2.65**}    & \multicolumn{1}{c|}{\cellcolor{yellow} 1.14}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.89}  & \multicolumn{1}{c|}{\cellcolor{purple} 1.52}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} .97*}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.02**} & \multicolumn{1}{c|}{\cellcolor{yellow} .76}       & \multicolumn{1}{c|}{\cellcolor{purple} .61}    & \multicolumn{1}{c|}{\cellcolor{purple} .10}   & \multicolumn{1}{c|}{\cellcolor{purple} .76}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} .81**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .21}    & \multicolumn{1}{c|}{\cellcolor{yellow} .81*}      & \multicolumn{1}{c|}{\cellcolor{yellow} .41}    & \multicolumn{1}{c|}{\cellcolor{purple} .40}   & \multicolumn{1}{c|}{\cellcolor{purple} .15}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\ \cline{3-10}
-    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} .58**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .38}    & \multicolumn{1}{c|}{\cellcolor{yellow} .34}       & \multicolumn{1}{c|}{\cellcolor{yellow} .42}    & \multicolumn{1}{c|}{\cellcolor{yellow} .06}   & \multicolumn{1}{c|}{\cellcolor{yellow} .88**}  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} .36}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.52*}  & \multicolumn{1}{c|}{\cellcolor{yellow} .09}       & \multicolumn{1}{c|}{\cellcolor{yellow} 1.33*}  & \multicolumn{1}{c|}{\cellcolor{yellow} 1.51*} & \multicolumn{1}{c|}{\cellcolor{purple} 1.51*}  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}     & \multicolumn{1}{c}{\cellcolor{llight-gray}}     \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}      & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{yellow} 7.76***}  & \multicolumn{1}{c}{\cellcolor{yellow} 7.86***}  \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}      & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{yellow} 2.69}     & \multicolumn{1}{c}{\cellcolor{yellow} 1.62}     \\ \cline{3-10}
-    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}      & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{yellow} 4.44**}   & \multicolumn{1}{c}{\cellcolor{yellow} 5.62***}  \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}    & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}      & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{llight-gray}}  & \multicolumn{1}{c|}{\cellcolor{llight-gray}}   & \multicolumn{1}{c|}{\cellcolor{yellow} 8.29***}  & \multicolumn{1}{c}{\cellcolor{yellow} 7.72***}  \\
-    \end{tabular}
-  }
-}{Tokenized vs. Merged}
 
-\tab{tab:wo-qa-token-vs-merged}{Performance of architectures when BERT subtokenized (yellow) vs. merged (purple). Without QA.}{
+\tab{tab:token-vs-merged}{Performance of architectures when BERT subtokenized (yellow) vs. merged (purple). Both SRL implementations were
+                          compared pairwise. Example case, upper left 4.64**: Comparison of deISEAR $\alpha$, +SRL zero
+                          implementation, [CLS] Head, subtokenized ensemble (72.19\% accuracy) and the merged ensemble (67.55\%
+                          accuracy) --- the subtokenized ensemble performed 4.64\% better, apparently with very high significance (p $<$ 1\%).}{
   \scalebox{0.90}{
     \begin{tabular}{llcc|cc|cc}
                                                  &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                     & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                            & \multicolumn{2}{c}{\textbf{GRU Head}}                                                           \\ \cline{3-8}
@@ -230,17 +213,17 @@ In a first step, I will discuss on the overall performance of models when the SR
 \tab{tab:configs}{The different hyperparameter configurations for each data set.}{
   \scalebox{0.9}{
     \begin{tabular}{ll|ccccc}
-                                                   &             & number of epochs                       & set set up                             & batch size                               & maximum length                 & SRL implementation        \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}}   &  $\alpha$   & 100                                    & 100                                    & 50                                       & 50                             & 20                        \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 100                                    & 100                                    & 50                                       & 50                             & 20                        \\
-    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}     &  $\alpha$   & -                                      & -                                      & -                                        & -                              & asdasd                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & -                                      & -                                      & -                                        & -                              & asdasd                    \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}    &  $\alpha$   & 16                                     & 16                                     & 16                                       & 16                             & 16                        \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 16                                     & 16                                     & 16                                       & 16                             & 16                        \\
-    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}      &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}      &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
+                                                   &             & \# of epochs                           & split set up                           & batch size                               & maximum length                 & SRL implementation        \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}}   &  $\alpha$   & 100                                    & normal                                 & 16                                       & 40                             & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 100                                    & normal                                 & 16                                       & 200                            & normal                    \\
+    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}     &  $\alpha$   & 50                                     & normal                                 & 16                                       & 50                             & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}    &  $\alpha$   & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
+    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}      &  $\alpha$   & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & re-split                               & 16                                       & 100                            & normal                    \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}      &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
     \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}     &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
     \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
     \end{tabular}
@@ -340,24 +323,27 @@ In a first step, I will discuss on the overall performance of models when the SR
   }
 }{Results-QA}
 
-\tab{tab:qa-gain-loss}{Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
+\tab{tab:qa-gain-loss-token-merged}{\textbf{Left part}: Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
                        over $-$SRL for the Span Prediction Head from table \ref{tab:results-qa}. The better of the +SRL configurations was taken into
                        account: \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};,
                        \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};.
                        Light blue denotes that both architectures performed \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=llight-blue,text=black](char){equally};
                        (in which case both ensembles were controlled for significance).
-                       One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
+                       One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
+                       \textbf{Right part}: asdasdasdasdasd.}{
   \scalebox{1}{
-    \begin{tabular}{llcc}
-                                                 &           & \multicolumn{2}{c}{\textbf{Span Prediction Head}}                                                             \\ \cline{3-4}
-                                                 &           & \multicolumn{1}{c|}{subtok.}                            & \multicolumn{1}{c}{merged}                          \\ \hline\hline
-    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{llight-blue} $-$1.01***} & \multicolumn{1}{c}{\cellcolor{blue} .00}            \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{blue} $-$.20}            & \multicolumn{1}{c}{\cellcolor{blue} .20}            \\ \cline{3-4}
-    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{c}{\cellcolor{blue} -.89}           \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{dark-blue} .29}          & \multicolumn{1}{c}{\cellcolor{dark-blue} 1.71}      \\ \cline{3-4}
+    \begin{tabular}{llP{2cm}P{2cm}cP{2cm}P{2cm}}
+                                                 &           & \multicolumn{5}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                   \\
+                                                 &           & \multicolumn{2}{c}{Gains/Losses}                                                                            &  & \multicolumn{2}{c}{subtokenized/merged}                                                            \\ \cline{3-4} \cline{6-7}
+                                                 &           & \multicolumn{1}{P{1.5cm}|}{subtok.}                            & \multicolumn{1}{P{1.5cm}}{merged}                        &  & \multicolumn{1}{P{1.5cm}|}{zeros}                       & \multicolumn{1}{P{1.5cm}}{dupl.}                       \\ \hline\hline
+    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{llight-blue} $-$1.01***} & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .00}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 7.76***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.86***}  \\
+    \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.20}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .20}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 2.69}     & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 1.62}     \\ \cline{3-4} \cline{6-7}
+    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} -.89}         &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 4.44**}   & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 5.62***}  \\
+    \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{dark-blue} .29}          & \multicolumn{1}{P{1.5cm}}{\cellcolor{dark-blue} 1.71}    &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 8.29***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.72***}  \\
    \end{tabular}
   }
-}{QA Gain-Loss}
+}{QA Gain-Loss / QA Tokenized vs. merged}
+
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -492,6 +478,18 @@ sections I will try to give an answer as to what are the reasons for these, hone
 spoken, moderate results. Concretely, I will argue that this is mainly due to noise,
 present in differing intensities and at various levels in the data I acquired, that
 the model has to cope with:
+
+
+\fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all data sets.
+                                                                          \#\# Subtokens represent the amount of tokens that
+                                                                          get re-merged in the merged settings (e.g. ``Master''
+                                                                          ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''. The amount
+                                                                          of tokens that lie outside of the german BERT vocabulary is
+                                                                          in all data sets extremely small (for deISEAR and XNLI
+                                                                          there are no [UNK]s at all); the largest shares of such tokens
+                                                                          are present in MLQA and XQuAD with .79\% and .73\%,
+                                                                          respectively.}{14}{Token Types all Data Sets}
+
 
 \begin{itemize}
   \item[\textbf{register noise}] The textual styles vary greatly from iutilizing complex,

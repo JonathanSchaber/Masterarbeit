@@ -4,20 +4,20 @@
 \section{gliGLUE}
 
 
-\begin{Verbatim}[commandchars=\\\{\}]
-Ich        B-A0         O
-fühlte     \colorbox{blue}{B-V}          O
-[MASK]     B-A1         O
-,          I-A1         O
-als        I-A1         O
-ich        I-A1         \textit{B-A0}
-aus        I-A1         \textbf{O}
-Versehen   I-A1         O
-schlechte  I-A1         B-A1
-Milch      I-A1         I-A1
-\colorbox{blue}{getrunken  I-A1         \textbf{B-V}}
-habe       I-A1         O
-\end{Verbatim}
+% \begin{Verbatim}[commandchars=\\\{\}]
+% Ich        B-A0         O
+% fühlte     \colorbox{blue}{B-V}          O
+% [MASK]     B-A1         O
+% ,          I-A1         O
+% als        I-A1         O
+% ich        I-A1         \textit{B-A0}
+% aus        I-A1         \textbf{O}
+% Versehen   I-A1         O
+% schlechte  I-A1         B-A1
+% Milch      I-A1         I-A1
+% \colorbox{blue}{getrunken  I-A1         \textbf{B-V}}
+% habe       I-A1         O
+% \end{Verbatim}
 
 
 Traditionally in linguistics, language is analyzed into different structural levels, where
@@ -202,6 +202,10 @@ in the trainig set show a greater variation compared to the development nd test 
 % Further, the one extremely long example present in the whole data set ended also up in the training set --- although this is not
 % too unexpected.
 
+number of subtokens in deISEAR: 18,679
+number of sharps: 2251
+nubmer of [UNK]s: 0
+
 % \textbf{merged} \\
 % average length train: 15.9 (sigma 6.6) \\
 % average length dev: 17.9 (sigma 19.9) \\
@@ -349,14 +353,20 @@ MLQA is a set that comes with pre-defined development and test splits {\color{re
 reason that there is no training set lies in the fact that MLQA, like most other data sets
 used in my thesis, are targeted for multi-lingual models. This means, that the training set
 is normally ...)} The test set contains 4,499 examples, while the dev set is made up of 509
-examples. I treat the MLQA development set as training set and split off a 15\% portion of
-it as development set.
+examples. As for all the other pre-splitted data sets, a training set is not part of the splits,
+this has to do with the approach how \cite{lewis2019mlqa} intend to use their data set; see
+chapter \ref{chap:mlqa-sota} for the description of their training and evaluation process.
+In a first set up, I treat the MLQA development set as training set and split off a 15\% portion of
+it as development set, resulting in 432 training instances and 77 development examples.
+In a second set up I shuffle the pre-defined splits and create a more suiting 70:15:15 set ratio;
+resulting in the following numbers of examples per set: Training 3,506, development 751, test 751.
 
-As can bee seen in the left figure of \ref{fig:mlqa-stats}, MLQA comprises quite a high number ---
-868, to be precise ---  of examples which do not fit subtokenized into a normal BERT model. However,
-those examples where the answer span lies inside the maximum BERT sequence are simply cut off after
-the maximum length and are kept in the data set for the experiments. Only the 22 exmaples where the
-answer span lies partially or fully outside the maximum length were dropped.
+
+As can bee seen in the left figure of \ref{fig:mlqa-stats}, MLQA comprises quite a high number
+of examples --- 868, to be precise --- which do not fit subtokenized into a normal BERT model.
+However, those examples where the answer span lies inside the maximum BERT sequence are simply
+cut off after the maximum length and are kept in the data set for the experiments. Only the 22
+exmaples where the answer span lies partially or fully outside the maximum length were dropped.
 
 \begin{figure}
   \label{fig:mlqa-stats}
@@ -375,6 +385,10 @@ answer span lies partially or fully outside the maximum length were dropped.
                          The contexts are longer by orders of magnitude to the answer spans. In fact, most answer spans consist of only a handful of
                          (subtokenized) words.}
 \end{figure}
+
+all subs in MLQA: 883,394
+sharps: 188,445
+unks: 8,492
 
 % \textbf{merged} \\
 % average length train answer: 4.0 (sigma 4.9) \\
@@ -403,15 +417,23 @@ answer span lies partially or fully outside the maximum length were dropped.
 % average length test context: 165.5 (sigma 156.7)
 
 \subsubsection{SOTA}
+\label{chap:mlqa-sota}
 
-\cite{lewis2019mlqa} train their cross-lingual transfer model on the 100,000 instances of SQuAD
-\cite{rajpurkar2016squad} as training data.
-They use the English development set of MLQA for tuning.
-At test time, the model must extract the answer span in the target language.
-They report that XLM performs best for German, achieving a 47.6\% accuracy of exact matches, i.e.
-predicting the exact start and end span of the answer.
+\citeauthor{lewis2019mlqa} define two tasks tey use to evaluate performance on MLQA: The first
+one, cross-lingual transfer (XLT), means training models in English, and evaluating on the test
+sets for the various languages. The second case, generalized cross-lingual transfer (G-XLT), is
+not of interest to my thesis, since it involves a mixing of languages: teh context is presented
+in one language and the question in another. They include two models for the zero-shot transfer
+approach: multilingual BERT and XLM and use SQuAD (100,00 instances) as training set.
 
-The total of all instances in all languages in MLQA is 46,444.
+The best results for German in the XLT mode \citeauthor{lewis2019mlqa} reoprt, is a 47.6\% exact
+match accuracy, achieved by XLM. However, as the training procedure and amount of traning data
+differs quite drastically frommy set up, it's not possible to directly compare their benchmark
+with my results. More on this in chapter \ref{chap:results}.
+
+% The total of all instances in all languages in MLQA is 46,444.
+
+
 
 \subsection{PAWS-X}
 
@@ -425,14 +447,45 @@ humanly translate a subset of the original PAWS corpus \cite{zhang2019paws}.
   \item Die Familie zog 1972 nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
 
   1972 zog die Familie nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
+
+  \textbf{True}
+  \item Prestige gehört der verheirateten Kiribati-Frau an, sie steht jedoch beträchtlich unter der Autorität ihres Mannes.
+
+  Die verheiratete Kiribati-Frau ist ein inhärentes Prestige, aber sie steht unter der Autorität ihres Mannes.
+
+  \textbf{True}
+  \item Die österreichische Schule geht davon aus, dass die subjektive Entscheidung des Einzelnen, einschließlich des individuellen Wissens, der Zeit, der Erwartungen und anderer subjektiver Faktoren, alle wirtschaftlichen Phänomene verursacht.
+
+  Die österreichische Schule geht davon aus, dass die subjektive Entscheidung des Einzelnen, einschließlich des subjektiven Wissens, der Zeit, der Erwartung und anderer individueller Faktoren, alle wirtschaftlichen Phänomene verursacht.
+
+  \textbf{False}
+  \item "Es ist der vierte Track und die dritte Single aus ihrem Durchbruch ""Smash"" (1994)."
+
+  Es ist der vierte Track und die dritte Single von ihrem Durchbruchalbum `` Smash '' (1994).
+
+  \textbf{True}
+  \item Die Mannschaft reagierte auf die Änderungen im nächsten Spiel am selben Abend am 19. Februar.
+
+  Die Mannschaft reagierte auf die Änderungen im selben Spiel am nächsten Abend des 19. Februars.
+
+  \textbf{False}
 \end{examples}
 
-The label for the sentence pair \ref{ex:paws-x}, of course, would be \emph{true}, since sentence
-one is a paraphrase of sentence two, and vice versa.
 
 % TODO: new stats figure!
 %\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
-stats
+
+blablabalblabdbasbdabsdbasbdlasdb\myfootnote{\rotatebox{180}{\ref{itm:paws-x1}: False, \ref{itm:itm:paws-x2}: True}}
+
+
+\begin{examples}
+  \item \label{itm:paws-x1} Die Single wurde am 12. Oktober 2012 im italienischen Radio Airplay gespielt und am 3. Dezember 2012 weltweit verschickt.
+
+  Die Single wurde am 12. Oktober 2012 nach Italien zu Radio Airplay geschickt und am 3. Dezember 2012 weltweit veröffentlicht.
+  \item \label{itm:paws-x2} Lloyd gründete und leitete sein Unternehmen, um mit dem Verkauf von Spielzeug und Geschenken zu beginnen, und er erweiterte das House of Lloyd, mit Sitz in Grandview, Missouri, während das Geschäft mit den Geschenken wuchs.
+
+  Lloyd gründete und leitete sein Unternehmen zum Verkauf von Spiel- und Geschenkwaren und erweiterte das in Grandview, Missouri, liegende House of Lloyd mit dem Wachstum des Marktes für Geschenkwaren.
+\end{examples}
 
 \subsubsection{Preprocessing}
 
@@ -504,6 +557,10 @@ Test: 38.37 stdev: 24.83
                       and the development and test set on the other:}
 \end{wrapfigure}
 
+all subs in PAWS-X: 2,906,717
+all sharps: 684,155
+all unks: 9,880
+
 Er ist der derzeitige Weltmeister und Olympiasieger im Einzel und gilt mit einem Olympiasieg, drei WM- und zwei
 World-Cup-Titeln, sechs Siegen bei den World Tour Grand Finals und zahlreichen weiteren Titeln als
 einer der erfolgreichsten Tischtennisspieler überhaupt. Er ist Rechtshänder und verwendet als Schlägerhaltung den europäischen Shakehand-Stil.
@@ -572,6 +629,9 @@ of the corpus, but didn't receive an answer from them.}
 following model architecture:
 They train a multilingual BERT on all languages, including the original English pairs and the
 machine-translated data in all other languages and evaluate on the individual languages.
+
+
+
 
 \subsection{SCARE}
 
@@ -712,6 +772,10 @@ stats: there are 1,760 fine-grained annotated reviews
 Baseline concerning imbalance labels: Always predicting majority class (``Positive'') results
 in accuracy of 59.09\%.
 
+all subtokens in SCARE: 44,511
+all sharps: 9,163
+all unks: 92
+
 % \subsubsection{SCARE reviews}
 
 % Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of
@@ -803,6 +867,9 @@ etrapolating an overall sentiment of the same utterance, a comparison between th
 two tasks are not really comparable.
 Furthermore,
 
+
+
+
 \subsection{XNLI}
 
 \cite{conneau2018xnli} built the XNLI corpus by employing professional translators to tranlsate
@@ -876,6 +943,10 @@ Number of Examples: \\
 Train: 2,115 \\
 Dev: 374 \\
 Test: 5,009
+
+all subs: 290,826
+sharps: 52,457
+unks: 115
 
 \textbf{merged} \\
 average length premise train: 20.8 (sigma 9.4) \\
@@ -980,6 +1051,10 @@ Number of examples: \\
 Train: 820
 Dev: 181
 Test: 178
+
+all subs in XQuAD: 238,944
+sharps: 51,154
+unks: 2,143
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
