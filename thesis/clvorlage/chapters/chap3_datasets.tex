@@ -259,21 +259,23 @@ The goal here is to extract the correct answer span out of a context text given 
 Following are five random examples out of the MLQA data set:
 
 \begin{examples}
-  \item \textbf{Context}:\\
+  \item \textbf{Context}:
         Rita Sahatçiu Ora (* 26. November 1990 in Priština, SFR Jugoslawien) ist
         eine britische Sängerin und Schauspielerin kosovarischer Herkunft. Von 2010 bis 2016 stand
-        sie bei Jay Z und Roc Nation unter Vertrag. Seit 2017 steht sie bei Atlantic Records unter Vertrag.\\
+        sie bei Jay Z und Roc Nation unter Vertrag. Seit 2017 steht sie bei Atlantic Records unter Vertrag.
+
         \textbf{Question}: Wann wurde Rita Sahatçiu Ora geboren?\\
         \textbf{Answer}: 26. November 1990
-  \item \textbf{Context}:\\
+  \item \textbf{Context}:
         Während Somalia an militärischer Stärke gewonnen hatte, wurde Äthiopien aufgrund innenpolitischer
         Umstände geschwächt. 1974 hatte die Derg-Militärjunta den abessinischen Kaiser Haile Selassie
         gestürzt, sich aber bald in interne Machtkämpfe verstrickt, woraufhin es zu Unruhen kam. In
         verschiedenen Landesteilen waren Derg-feindliche und separatistische Kräfte aktiv. Das regionale
-        Machtgleichgewicht hatte sich zugunsten Somalias verschoben.\\
+        Machtgleichgewicht hatte sich zugunsten Somalias verschoben.
+
       \textbf{Question}: Zu wessen Gunsten verlagerte sich die Balance of Power?\\
       \textbf{Answer}: Somalia
-  \item \label{itm:mlqa-strange-answer-span} \textbf{Context}:\\
+  \item \label{itm:mlqa-strange-answer-span} \textbf{Context}:
         Das Johnston-Atoll verlassend, drehte John nach Nordwesten ab und begann sich erneut zu
         intensivieren, als die Windscherung nachließ. Am 27. August Ortszeit erreichte John einen
         sekundären Höhepunkt mit Windgeschwindigkeiten von 210 km/h. Kurz darauf überquerte John
@@ -292,17 +294,18 @@ Following are five random examples out of the MLQA data set:
         und das kalte Wasser des nördlichen Zentralpazifiks tat sein Übriges. Am 10. September
         wurde die 120. Sturmwarnung zu John ausgegeben, mit der das System als außertropisch
         erklärt wurde, etwa 1600 km südlich von Unalaska.
+
        \textbf{Question}: Wo wurde John zum Taifun?\\
        \textbf{Answer}: westlichen Pazifischen Ozean
 \end{examples}
 
 To demonstrate that this is by no means a trivial task --- at least for us humans ---, try to
-identify the correct answer\myfootnote{\rotatebox{180}{\textbf{Answer}: überwiegend antibritisch
+identify the correct answer\myfootnote{\rotatebox{180}{überwiegend antibritisch
 und prorussisch}} span for the following context-question pair (to be ``fair'' and have the same conditions
 for the model and you, you would only be allowed to read the context once...):
 
 \begin{examples}
-    \item \textbf{Context}:\\
+    \item \textbf{Context}:
         Das britische Parlament genehmigte Königin Victoria, ihrer Tochter
         als Mitgift 40.000 Britische Pfund (in heutiger Kaufkraft 3.662.803 Pfund) zu
         zahlen und legte die jährliche Apanage der Prinzessin auf 8000 Pfund fest.
@@ -331,7 +334,8 @@ for the model and you, you would only be allowed to read the context once...):
         in Berlin heiratete. Letztlich konnte sich aber Königin Victoria durchsetzen,
         die als regierende Monarchin für sich in Anspruch nahm, ihre älteste Tochter
         in ihrem Land zu vermählen. Das Paar trat schließlich am 25. Januar 1858 in
-        der Kapelle des St James’s Palace in London vor den Traualtar.\\
+        der Kapelle des St James’s Palace in London vor den Traualtar.
+
         \textbf{Question}: Was war die Position der Berliner Gerichts gegenüber Großbritannien und Russland?\\
 \end{examples}
 
@@ -429,7 +433,7 @@ approach: multilingual BERT and XLM and use SQuAD (100,00 instances) as training
 The best results for German in the XLT mode \citeauthor{lewis2019mlqa} reoprt, is a 47.6\% exact
 match accuracy, achieved by XLM. However, as the training procedure and amount of traning data
 differs quite drastically frommy set up, it's not possible to directly compare their benchmark
-with my results. More on this in chapter \ref{chap:results}.
+with my results. More on this in chapter \ref{chap:5_results}.
 
 % The total of all instances in all languages in MLQA is 46,444.
 
@@ -542,6 +546,26 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
                            \textbf{Right}: Length of subtokenized PAWS-X second sentences.}
 \end{figure}
 
+
+\begin{figure}
+  \label{fig:pawsx-stat}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/PAWS-X_num_examples.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/PAWS-X_labels.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[PAWS-X Set Size/Labels]{\textbf{Left}: Number of examples in the PAWS-X split. The automaticall translated
+                           trainin set contains way more examples than the humanly translated development and test set.
+                           \textbf{Right}: Distribution of paraphrase (True) and non-paraphrase (False) examples in the
+                           PAWS-X sets.}
+\end{figure}
+
+
 Mean BLEU-scores for sets:
 
 Train: 55.27 stdev: 24.97\\
@@ -556,6 +580,7 @@ Test: 38.37 stdev: 24.83
   \caption[PAWS-X BLEU]{BLEU scores of the PAWS-X data sets. Clearly visible is the diffence between the training set on the one hand,
                       and the development and test set on the other:}
 \end{wrapfigure}
+
 
 all subs in PAWS-X: 2,906,717
 all sharps: 684,155
@@ -690,23 +715,16 @@ same.
 The majority vote decision of the overall sentiment of the example above would be \emph{Positive}.
 
 \begin{examples}
-\item Ganz okay \textbar\textbar\ Hatte ein Problem mit der APP aber die updates neu installiert und jetzt gehts wieder vorläufig mal Und Ordner wären schön wenn man diese erstellen kann \hfill\rlap{\hspace*{-5em}\textbf{Neutral}}
-\end{examples}
-
-\begin{examples}
-\item Ssssereeehhhr gut \hfill\rlap{\hspace*{-5em}\textbf{Positive}}
-\end{examples}
-
-\begin{examples}
-\item Wie kann man so eine gute app machen und dann nicht auf wvga anpassen. Weg mit den matschtexturen und vor allem dem Icon x-( \hfill\rlap{\hspace*{-5em}\textbf{Negative}}
-\end{examples}
-
-\begin{examples}
-\item spitze \textbar\textbar\ Daran sollte sich MS ein Beispiel nehmen! \hfill\rlap{\hspace*{-5em}\textbf{Positive}}
-\end{examples}
-
-\begin{examples}
-\item Läuft nicht auf dem Acer A500 \textbar\textbar\ Stürzt leider immer beim Abspielen eines Videos ab. Honeycomb 3.2 \hfill\rlap{\hspace*{-5em}\textbf{Negative}}
+  \item Ganz okay \textbar\textbar\ Hatte ein Problem mit der APP aber die updates neu installiert und jetzt gehts wieder vorläufig mal Und Ordner wären schön wenn man diese erstellen kann
+        \hfill\rlap{\hspace*{-5em}\textbf{Neutral}}
+  \item Ssssereeehhhr gut
+        \hfill\rlap{\hspace*{-5em}\textbf{Positive}}
+  \item Wie kann man so eine gute app machen und dann nicht auf wvga anpassen. Weg mit den matschtexturen und vor allem dem Icon x-(
+        \hfill\rlap{\hspace*{-5em}\textbf{Negative}}
+  \item spitze \textbar\textbar\ Daran sollte sich MS ein Beispiel nehmen!
+        \hfill\rlap{\hspace*{-5em}\textbf{Positive}}
+  \item Läuft nicht auf dem Acer A500 \textbar\textbar\ Stürzt leider immer beim Abspielen eines Videos ab. Honeycomb 3.2
+        \hfill\rlap{\hspace*{-5em}\textbf{Negative}}
 \end{examples}
 
 
@@ -899,42 +917,42 @@ two languages has been preserved.
 
         Ich war noch nie in Washington, deshalb habe ich mich auf der Suche nach dem Ort verirrt, als ich dahin entsandt wurde.
 
-  \textbf{Neutral}
-\end{examples}
-
-\begin{examples}
+        \textbf{Neutral}
   \item Natürlich haben sie mich dort gefragt, warum ich ging.
 
         Sie fragten, warum ich in den Laden ging.
 
-  \textbf{Neutral}
-\end{examples}
-
-\begin{examples}
+        \textbf{Neutral}
   \item Und ich dachte OK und das war es dann!
 
         Nachdem ich ja gesagt hatte, endete es.
 
-  \textbf{Entailment}
-\end{examples}
-
-\begin{examples}
-\item John Burke (Alabama) überprüft und analysiert andere zeitgenössische Konten und findet, dass Boswells nicht nur der genaueste ist, sondern er nutzt es, um Johnsons Charakter zu demonstrieren, wobei andere es lediglich als literarischen Geschwätz abstempeln.
+        \textbf{Entailment}
+  \item John Burke (Alabama) überprüft und analysiert andere zeitgenössische Konten und findet, dass Boswells nicht nur der genaueste ist, sondern er nutzt es, um Johnsons Charakter zu demonstrieren, wobei andere es lediglich als literarischen Geschwätz abstempeln.
 
         John Burke ignoriert Aussagen.
 
-  \textbf{Contradiction}
-\end{examples}
-
-\begin{examples}
+        \textbf{Contradiction}
   \item Die öffentliche Bibliothek in Greenlee County, Arizona, zeigt die finanziellen und technologischen Probleme von ländlichen Einrichtungen auf.
 
         Greenlee County hat eine öffentliche Bibliothek.
 
-  \textbf{Entailment}
+        \textbf{Entailment}
 \end{examples}
 
+Here are the answers\myfootnote{\rotatebox{180}{\ref{itm:xnli1}: Neutral, \ref{itm:xnli2} Entailment, \ref{itm:xnli3} Neutral}}
 
+\begin{examples}
+  \item \label{itm:xnli1} Er kommt aus Griechenland und er kommt aus einem kleinen Dorf in Griechenland namens Tokaleka und er kam nach Amerika und ich glaube es war 1969 oder 1970 und er heiratete kurz darauf.
+
+        Er ist ein griechischer Mann, der kein Englisch spricht.
+  \item \label{itm:xnli2} Suchen Sie nach Emily Dickinson's kommendem Gedicht, alles was ich wirklich von Poesie wissen muss habe ich bein Microsoft gelernt.
+
+        Dickinson schrieb Gedichte.
+  \item \label{itm:xnli3} „So hat es auch in den kubanischen Tropen vor Kurzem einen Tag gegeben, der so schön wie Ruhm und kalt wie ein Grabstein war.“
+
+        Es ist immer über 80 in Kuba.
+\end{examples}
 %The label for example \ref{ex:xnli} is \emph{neutral} since the second sentence does not follow necessarily from the first and it also does not contradict it, either.
 
 \subsubsection{Statistics}
@@ -948,26 +966,26 @@ all subs: 290,826
 sharps: 52,457
 unks: 115
 
-\textbf{merged} \\
-average length premise train: 20.8 (sigma 9.4) \\
-average length hypothesis train: 10.5 (sigma 4.0)
+% \textbf{merged} \\
+% average length premise train: 20.8 (sigma 9.4) \\
+% average length hypothesis train: 10.5 (sigma 4.0)
 
-average length premise dev: 20.9 (sigma 9.1) \\
-average length hypothesis dev: 11.9 (sigma 4.9)
+% average length premise dev: 20.9 (sigma 9.1) \\
+% average length hypothesis dev: 11.9 (sigma 4.9)
 
-average length premise test: 21.2 (sigma 9.6) \\
-average length hypothesis test: 10.7 (sigma 4.1)
+% average length premise test: 21.2 (sigma 9.6) \\
+% average length hypothesis test: 10.7 (sigma 4.1)
 
 
-\textbf{subtokenized} \\
-average length premise train: 25.8 (sigma 11.9) \\
-average length hypothesis train: 12.4 (sigma 4.7)
+% \textbf{subtokenized} \\
+% average length premise train: 25.8 (sigma 11.9) \\
+% average length hypothesis train: 12.4 (sigma 4.7)
 
-average length premise dev: 26.3 (sigma 12.1) \\
-average length hypothesis dev: 14.3 (sigma 6.0)
+% average length premise dev: 26.3 (sigma 12.1) \\
+% average length hypothesis dev: 14.3 (sigma 6.0)
 
-average length premise test: 26.1 (sigma 12.0) \\
-average length hypothesis test: 12.8 (sigma 5.0)
+% average length premise test: 26.1 (sigma 12.0) \\
+% average length hypothesis test: 12.8 (sigma 5.0)
 
 
 label distribution:
@@ -990,7 +1008,17 @@ Contradiction: 2,499
   \stepcounter{myfigure}
   \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized XNLI premises. \textbf{Right}: Length of subtokenized XNLI hypotheses.}
 \end{figure}
+
+
 In contrary to the above described PAWS-X corpus, there are no identical sentence pairs in XNLI.
+
+\begin{wrapfigure}{r}{0.55\linewidth}
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{images/XNLI_labels.pdf}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[XNLI labels]{Label distributions of the XNLI data set; apparently, the three classes are very well balanced.}
+\end{wrapfigure}
 
 \subsubsection{SOTA}
 
@@ -1013,35 +1041,40 @@ translators to keep these symbols in the relevant positions in their translation
 
 \begin{examples}
   \label{ex:xquad}
-  \item Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft
-als integraler Bestandteil der aristotelischen Kosmologie. Nach Ansicht von Aristoteles enthält
-die irdische Sphäre vier Elemente, die an verschiedenen „natürlichen Orten“ darin zur Ruhe
-kommen. Aristoteles glaubte, dass bewegungslose Objekte auf der Erde, die hauptsächlich aus den
-Elementen Erde und Wasser bestehen, an ihrem natürlichen Ort auf dem Boden liegen und dass sie so
-bleiben würden, wenn man sie in Ruhe lässt. Er unterschied zwischen der angeborenen Tendenz von
-Objekten, ihren „natürlichen Ort“ zu finden (z. B. dass schwere Körper fallen), was eine
-„natürliche Bewegung“ darstellt und unnatürlichen oder erzwungenen Bewegungen, die den
-fortwährenden Einsatz einer Kraft erfordern. Diese Theorie, die auf der alltäglichen Erfahrung
-basiert, wie sich Objekte bewegen, wie z. B. die ständige Anwendung einer Kraft, die erforderlich
-ist, um einen Wagen in Bewegung zu halten, hatte konzeptionelle Schwierigkeiten, das Verhalten von
-Projektilen, wie beispielsweise den Flug von Pfeilen, zu erklären. Der Ort, an dem der
-Bogenschütze den Pfeil bewegt, liegt am Anfang des Fluges und während der Pfeil durch die Luft
-gleitet, wirkt keine erkennbare effiziente Ursache darauf ein. Aristoteles war sich dieses
-Problems bewusst und vermutete, dass die durch den Flugweg des Projektils verdrängte Luft das
-Projektil zu seinem Ziel trägt. Diese Erklärung erfordert ein Kontinuum wie Luft zur
-Veränderung des Ortes im Allgemeinen.
+  \item \textbf{Context}:
+        Aristoteles lieferte eine philosophische Diskussion über das Konzept einer Kraft
+        als integraler Bestandteil der aristotelischen Kosmologie. Nach Ansicht von Aristoteles enthält
+        die irdische Sphäre vier Elemente, die an verschiedenen „natürlichen Orten“ darin zur Ruhe
+        kommen. Aristoteles glaubte, dass bewegungslose Objekte auf der Erde, die hauptsächlich aus den
+        Elementen Erde und Wasser bestehen, an ihrem natürlichen Ort auf dem Boden liegen und dass sie so
+        bleiben würden, wenn man sie in Ruhe lässt. Er unterschied zwischen der angeborenen Tendenz von
+        Objekten, ihren „natürlichen Ort“ zu finden (z. B. dass schwere Körper fallen), was eine
+        „natürliche Bewegung“ darstellt und unnatürlichen oder erzwungenen Bewegungen, die den
+        fortwährenden Einsatz einer Kraft erfordern. Diese Theorie, die auf der alltäglichen Erfahrung
+        basiert, wie sich Objekte bewegen, wie z. B. die ständige Anwendung einer Kraft, die erforderlich
+        ist, um einen Wagen in Bewegung zu halten, hatte konzeptionelle Schwierigkeiten, das Verhalten von
+        Projektilen, wie beispielsweise den Flug von Pfeilen, zu erklären. Der Ort, an dem der
+        Bogenschütze den Pfeil bewegt, liegt am Anfang des Fluges und während der Pfeil durch die Luft
+        gleitet, wirkt keine erkennbare effiziente Ursache darauf ein. Aristoteles war sich dieses
+        Problems bewusst und vermutete, dass die durch den Flugweg des Projektils verdrängte Luft das
+        Projektil zu seinem Ziel trägt. Diese Erklärung erfordert ein Kontinuum wie Luft zur
+        Veränderung des Ortes im Allgemeinen.
+
+        \textbf{Question}: Wer leitete eine philosophische Diskussion über Kraft?\\
+        \textbf{Answer}: Aristoteles
+
+        \textbf{Question}: Wovon war das Konzept der Kraft ein integraler Bestandteil?\\
+        \textbf{Answer}: aristotelischen Kosmologie
+
+        \textbf{Question}: Aus wie vielen Elementen besteht die irdische Sphäre nach Ansicht des Aristoteles?\\
+        \textbf{Answer}: vier
+
+        \textbf{Question}: Wo vermutete Aristoteles den natürlichen Ort für Erd- und Wasserelemente?\\
+        \textbf{Answer}: auf dem Boden
+
+        \textbf{Question}: Was bezeichnete Aristoteles als erzwungene Bewegung?\\
+        \textbf{Answer}: unnatürlichen
 \end{examples}
-
-The questions and corresponding answer spans for paragraph \ref{ex:xquad} in the data set are the
-following:
-
-\begin{enumerate}
-  \item Wer leitete eine philosophische Diskussion über Kraft? $\rightarrow$ Aristoteles
-  \item Wovon war das Konzept der Kraft ein integraler Bestandteil? $\rightarrow$ aristotelischen Kosmologie
-  \item Aus wie vielen Elementen besteht die irdische Sphäre nach Ansicht des Aristoteles? $\rightarrow$ vier
-  \item Wo vermutete Aristoteles den natürlichen Ort für Erd- und Wasserelemente? $\rightarrow$ auf dem Boden
-  \item Was bezeichnete Aristoteles als erzwungene Bewegung? $\rightarrow$ unnatürlichen
-\end{enumerate}
 
 \cite{artetxe2019cross}
 
@@ -1071,34 +1104,51 @@ unks: 2,143
                          \textbf{Right}: Length of subtokenized XQuAD answers. Note the difference in y-axis scaling between the two plots.}
 \end{figure}
 
+\begin{examples}
+  \item \label{itm:xquad} \textbf{Context}: Da sowohl Präsident Kenyatta als auch Vizepräsident William Ruto
+        2013 Gerichtstermine vor dem Internationalen Strafgerichtshof in Verbindung mit den
+        Auswirkungen der Wahl von 2007 hatten, entschied sich US-Präsident Barack Obama,
+        das Land während seiner Afrikareise Mitte 2013 nicht zu besuchen. Später in diesem
+        Sommer besuchte Kenyatta auf Einladung von Präsident Xi Jinping China, nachdem er
+        einen Zwischenstopp in Russland eingelegt und die USA als Präsident nicht besucht
+        hatte. Im Juli 2015 besuchte Obama Kenia als erster amerikanischer Präsident, der
+        das Land während seiner Regierungszeit bereiste.
 
-\textbf{merged}
-average length train answer: 3.3 (sigma 3.2) \\
-average length dev answer: 3.4 (sigma 3.4) \\
-average length test answer: 3.0 (sigma 3.3)
+        \textbf{Question}: Welches Land besuchte Kenyatta auf Einladung des Präsidenten?\myfootnote{\rotatebox{180}{China}}
 
-average length train context: 147.3 (sigma 68.7) \\
-average length dev context: 151.7 (sigma 74.1) \\
-average length test context: 162.0 (94.8)
+        \textbf{Question}: Wann besuchte Obama Kenia schließlich?\myfootnote{\rotatebox{180}{Juli 2015}}
 
-average length train question: 11.2 (sigma 3.8) \\
-average length dev question: 11.9 (sigma 4.3) \\
-average length test question: 11.0 (sigma 4.0)
+        \textbf{Question}: Wer entschied sich, das Land 2013 nicht zu besuchen?\myfootnote{\rotatebox{180}{US-Präsident Barack Obama}}
 
-\textbf{subtokenized}
-average length train answer: 5.0 (sigma 4.5) \\
-average length dev answer: 5.0 (sigma 4.8) \\
-average length test answer: 4.5 (sigma 4.4)
+        \textbf{Question}: Was war das Ergebnis der Wahl von 2007?\myfootnote{\rotatebox{180}{Gerichtstermine vor dem Internationalen Strafgerichtshof}}
+\end{examples}
 
-average length train context: 187.9 (85.8) \\
-average length dev context: 192.8 (sigma 90.1) \\
-average length test context: 205.1 (sigma 113.0)
+% \textbf{merged}
+% average length train answer: 3.3 (sigma 3.2) \\
+% average length dev answer: 3.4 (sigma 3.4) \\
+% average length test answer: 3.0 (sigma 3.3)
 
-average length train question: 14.1 (sigma 4.9) \\
-average length dev question: 15.3 (sigma 5.3) \\
-average length test question: 13.9 (sigma 4.9)
+% average length train context: 147.3 (sigma 68.7) \\
+% average length dev context: 151.7 (sigma 74.1) \\
+% average length test context: 162.0 (94.8)
 
-\fig{images/xquad_context_subtokenized.pdf}{fig:xquad-context}{XQuAD: Length of subtokenized Contexts.}{10}{XQuAD-Length}
+% average length train question: 11.2 (sigma 3.8) \\
+% average length dev question: 11.9 (sigma 4.3) \\
+% average length test question: 11.0 (sigma 4.0)
+
+% \textbf{subtokenized}
+% average length train answer: 5.0 (sigma 4.5) \\
+% average length dev answer: 5.0 (sigma 4.8) \\
+% average length test answer: 4.5 (sigma 4.4)
+
+% average length train context: 187.9 (85.8) \\
+% average length dev context: 192.8 (sigma 90.1) \\
+% average length test context: 205.1 (sigma 113.0)
+
+% average length train question: 14.1 (sigma 4.9) \\
+% average length dev question: 15.3 (sigma 5.3) \\
+% average length test question: 13.9 (sigma 4.9)
+
 
 \subsubsection{SOTA}
 
@@ -1121,17 +1171,15 @@ Accuracy (exact match): 57.6\%
 \subsection{Overview}
 
 \tab{tab:data-set-overview}{Overview of collected data sets and tasks.}
-{\begin{tabular}{l|llll}
-  Data Set & NLP Task                   & ML Task                    & \# Examples        & Splits \\
-  \hline
-  deISEAR  &  Emotion Detection         & Multi-Class Classification & 1,001              & - \\
-  MLQA     & Question Answering         & Span Prediction            & 509/4,499          & dev/test \\
-  PAWS-X   & Paraphrase Identification  & Binary Classification      & 48,977/1,932/1,967 & train/dev/test \\
-  SCARE    & Sentiment Analysis         & Multi-Class Classifiaction & 1,760              & - \\
-  %SCARE Rev. &  Sentiment Analysis & Sequence Classification & XYZ & - \\
-  XNLI     & Natural Language Inference & Multi-Class Classification &  2,489/7,498       & dev/test \\
-  XQuAD    & Question Answering         & Span Prediction            & 1,192              & -
-\end{tabular}
+{\begin{tabularx}{\linewidth}{l|llllX}
+           & NLP Task                   & ML Task                    & \# Examples (Train/Dev/Test) & Splits         & Remarks \\ \toprule
+  deISEAR  &  Emotion Detection          & Multi-Class Classification & 1,001                        & -              &         \\
+  SCARE    & Sentiment Analysis         & Multi-Class Classifiaction & 1,760                        & -              &         \\ \hline
+  PAWS-X   & Paraphrase Identification  & Binary Classification      & 48,977/1,932/1,967           & train/dev/test &         \\
+  XNLI     & Natural Language Inference & Multi-Class Classification & 2,489/7,498                  & dev/test       &         \\ \hline
+  MLQA     & Question Answering         & Span Prediction            & 509/4,499                    & dev/test       &         \\
+  XQuAD    & Question Answering         & Span Prediction            & 1,192                        & -              &
+\end{tabularx}
 }{Overview data sets}
 
 

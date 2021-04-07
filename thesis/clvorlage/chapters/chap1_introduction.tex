@@ -1,7 +1,8 @@
-
 \newchap{Introduction}
 \label{chap:1_intro}
 \section{Motivation}
+
+\epigraph{Verba docent, exempla trahunt.}{\textit{unknown}}
 
 Human language bears some truly mesmerizing features and puzzles, a lot of them are still not
 yet understood in all its depths: For example, it is still unclear how children are able to
@@ -22,7 +23,50 @@ when being used, notoriously ambiguous, metaphorical and formally corrupted.
 
 So, every system that claims to process human language in a ... must be able
 
+``It is always precarious to build arguments on inherently vague and general
+concepts such as `language', `understanding' and `meaning,' as the resulting
+theoretical constructs may become so overly general that they almost become
+vacuous.'' \cite{sahlgren2021singleton}
+
+{\color{red} $\rightarrow$ of course, NLU is very strong claim, although to be taken \emph{cum grano salis}:
+Be aware of short-comings etc.}
+
+\begin{quote}
+  learning a language entails learning the set of symbols and rules that define the
+  system. Learning the set of symbols equals vocabulary acqui- sition, while learning
+  the rules entails recognizing and formalizing grammati- cal, morphological, and
+  syntactic regularities.i We measure these competencies in humans — often indirectly
+  — by using various language proficiency tests, such as vocabulary tests, cloze
+  tests, reading comprehension, as well as various forms of production, interaction,
+  and mediation tests \textelp{}. \cite{sahlgren2021singleton}
+\end{quote}
+
+\begin{quote}
+  there is an overwhelming body of empirical results to demonstrate that current language models
+  have a passable capacity to detect the symbols and rules that define human language. This is not
+  what is under dispute in the current debate; what is under dispute is whether such structural
+  knowledge about the workings of the language system suffices.
+\end{quote}
+
 \subsection{History, Methods, Problems of NLU}
+
+
+``The `understanding' these models have of language is entirely structural,
+and thus does not extend beyond the language system'' \cite{sahlgren2021singleton}
+
+``We can of course always question whether there is any `real' under-
+standing going on, but if the absence or presence of this `real' understanding
+has no effect on the behavior of the system, it will be a mere epiphenomenon
+that need not concern us.'' \cite{sahlgren2021singleton}
+
+``consciousness is not an extra ingredient in addition to the complexity of a system:
+consciousness is the complexity of the system. Our point is that understanding is also
+not an extra ingredient of a symbol manipulation system: `understanding' is a term we
+use to describe the complexity of such a system.'' \cite{sahlgren2021singleton}
+
+``Our point is that when the behavior of an NLU system becomes sufficiently complex, it will be
+easier to explain its behavior using intentional terms such as `understanding,' than to use a
+purely functional explanation.'' \cite{sahlgren2021singleton}
 
 The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
 For quite some time, as in most areas of NLP, systems that addressed NLU problems were
@@ -114,6 +158,18 @@ Examples:
 	\item Goldberg Syntax to the rescue
 	\item ...
 \end{itemize}
+
+
+\section{Related Work}
+
+In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
+in the NLP field, those efforts are often referred to by the notion of ``BERTology'' (cf. \cite{rogers2020primer}).
+Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- the BERT model
+trained on  a French corpus is named CamemBERT \cite{martin2019camembert}, an architecture more robust than the
+standard BERT was baptized RoBERTa \cite{liu2019roberta}, etc. --- I decided to not deviate from this tradition.
+
+The following overview is heavily based on the excellent towards-data-science article\myfootnote{\url{https://towardsdatascience.com/a-review-of-bert-based-models-4ffdc0f15d58}} by Ajit Rajasekharan.
+
 
 \section{Research Questions}
 
