@@ -1,4 +1,4 @@
-\begin{thebibliography}{49}
+\begin{thebibliography}{72}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -15,11 +15,59 @@ M.~Artetxe, S.~Ruder, and D.~Yogatama.
 \newblock On the cross-lingual transferability of monolingual representations.
 \newblock \emph{arXiv preprint arXiv:1910.11856}, 2019.
 
+\bibitem[Bender et~al.(2021)Bender, Gebru, McMillan-Major, and
+  Shmitchell]{bender2021dangers}
+E.~M. Bender, T.~Gebru, A.~McMillan-Major, and S.~Shmitchell.
+\newblock On the dangers of stochastic parrots: Can language models be too big?
+\newblock In \emph{Proceedings of the 2021 ACM Conference on Fairness,
+  Accountability, and Transparency}, pages 610--623, 2021.
+
+\bibitem[Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal,
+  Neelakantan, Shyam, Sastry, Askell, et~al.]{brown2020language}
+T.~B. Brown, B.~Mann, N.~Ryder, M.~Subbiah, J.~Kaplan, P.~Dhariwal,
+  A.~Neelakantan, P.~Shyam, G.~Sastry, A.~Askell, et~al.
+\newblock Language models are few-shot learners.
+\newblock \emph{arXiv preprint arXiv:2005.14165}, 2020.
+
 \bibitem[Buchholz and Marsi(2006)]{buchholz2006conll}
 S.~Buchholz and E.~Marsi.
 \newblock Conll-x shared task on multilingual dependency parsing.
 \newblock In \emph{Proceedings of the tenth conference on computational natural
   language learning (CoNLL-X)}, pages 149--164, 2006.
+
+\bibitem[Caswell et~al.(2021)Caswell, Kreutzer, Wang, Wahab, van Esch,
+  Ulzii-Orshikh, Tapo, Subramani, Sokolov, Sikasote, Setyawan, Sarin, Samb,
+  Sagot, Rivera, Rios, Papadimitriou, Osei, Suárez, Orife, Ogueji, Niyongabo,
+  Nguyen, Müller, Müller, Muhammad, Muhammad, Mnyakeni, Mirzakhalov,
+  Matangira, Leong, Lawson, Kudugunta, Jernite, Jenny, Firat, Dossou, Dlamini,
+  de~Silva, Çabuk Ballı, Biderman, Battisti, Baruwa, Bapna, Baljekar, Azime,
+  Awokoya, Ataman, Ahia, Ahia, Agrawal, and Adeyemi]{caswell2021quality}
+I.~Caswell, J.~Kreutzer, L.~Wang, A.~Wahab, D.~van Esch, N.~Ulzii-Orshikh,
+  A.~Tapo, N.~Subramani, A.~Sokolov, C.~Sikasote, M.~Setyawan, S.~Sarin,
+  S.~Samb, B.~Sagot, C.~Rivera, A.~Rios, I.~Papadimitriou, S.~Osei, P.~J.~O.
+  Suárez, I.~Orife, K.~Ogueji, R.~A. Niyongabo, T.~Q. Nguyen, M.~Müller,
+  A.~Müller, S.~H. Muhammad, N.~Muhammad, A.~Mnyakeni, J.~Mirzakhalov,
+  T.~Matangira, C.~Leong, N.~Lawson, S.~Kudugunta, Y.~Jernite, M.~Jenny,
+  O.~Firat, B.~F.~P. Dossou, S.~Dlamini, N.~de~Silva, S.~Çabuk Ballı,
+  S.~Biderman, A.~Battisti, A.~Baruwa, A.~Bapna, P.~Baljekar, I.~A. Azime,
+  A.~Awokoya, D.~Ataman, O.~Ahia, O.~Ahia, S.~Agrawal, and M.~Adeyemi.
+\newblock Quality at a glance: An audit of web-crawled multilingual datasets,
+  2021.
+
+\bibitem[Chalkidis et~al.(2020)Chalkidis, Fergadiotis, Malakasiotis, Aletras,
+  and Androutsopoulos]{chalkidis2020legalbert}
+I.~Chalkidis, M.~Fergadiotis, P.~Malakasiotis, N.~Aletras, and
+  I.~Androutsopoulos.
+\newblock Legal-bert: The muppets straight out of law school, 2020.
+
+\bibitem[Chen and Yih(2020)]{chen-yih-2020-open}
+D.~Chen and W.-t. Yih.
+\newblock Open-domain question answering.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association
+  for Computational Linguistics: Tutorial Abstracts}, pages 34--37, Online,
+  July 2020. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2020.acl-tutorials.8}.
+\newblock URL \url{https://www.aclweb.org/anthology/2020.acl-tutorials.8}.
 
 \bibitem[Cho et~al.(2014)Cho, Van~Merri{\"e}nboer, Gulcehre, Bahdanau,
   Bougares, Schwenk, and Bengio]{cho2014learning}
@@ -43,6 +91,13 @@ M.-C. De~Marneffe, T.~Dozat, N.~Silveira, K.~Haverinen, F.~Ginter, J.~Nivre,
 \newblock Universal stanford dependencies: A cross-linguistic typology.
 \newblock In \emph{LREC}, volume~14, pages 4585--4592, 2014.
 
+\bibitem[de~Vries et~al.(2019)de~Vries, van Cranenburgh, Bisazza, Caselli, van
+  Noord, and Nissim]{de2019bertje}
+W.~de~Vries, A.~van Cranenburgh, A.~Bisazza, T.~Caselli, G.~van Noord, and
+  M.~Nissim.
+\newblock Bertje: A dutch bert model.
+\newblock \emph{arXiv preprint arXiv:1912.09582}, 2019.
+
 \bibitem[Devlin et~al.(2018)Devlin, Chang, Lee, and Toutanova]{devlin2018bert}
 J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova.
 \newblock Bert: Pre-training of deep bidirectional transformers for language
@@ -64,6 +119,18 @@ R.~Dror, G.~Baumer, S.~Shlomov, and R.~Reichart.
 \newblock In \emph{Proceedings of the 56th Annual Meeting of the Association
   for Computational Linguistics (Volume 1: Long Papers)}, pages 1383--1392,
   2018.
+
+\bibitem[Ettinger(2020)]{ettinger2020bert}
+A.~Ettinger.
+\newblock What bert is not: Lessons from a new suite of psycholinguistic
+  diagnostics for language models.
+\newblock \emph{Transactions of the Association for Computational Linguistics},
+  8:\penalty0 34--48, 2020.
+
+\bibitem[Floridi and Chiriatti(2020)]{floridi2020gpt}
+L.~Floridi and M.~Chiriatti.
+\newblock Gpt-3: Its nature, scope, limits, and consequences.
+\newblock \emph{Minds and Machines}, 30\penalty0 (4):\penalty0 681--694, 2020.
 
 \bibitem[Foth(2006)]{foth2006umfassende}
 K.~A. Foth.
@@ -105,6 +172,11 @@ J.~Haji{\v{c}}, M.~Ciaramita, R.~Johansson, D.~Kawahara, M.~A. Mart{\'\i},
   multiple languages.
 \newblock 2009.
 
+\bibitem[He et~al.(2020)He, Liu, Gao, and Chen]{he2020deberta}
+P.~He, X.~Liu, J.~Gao, and W.~Chen.
+\newblock Deberta: Decoding-enhanced bert with disentangled attention.
+\newblock \emph{arXiv preprint arXiv:2006.03654}, 2020.
+
 \bibitem[Hochreiter and Schmidhuber(1997)]{hochreiter1997long}
 S.~Hochreiter and J.~Schmidhuber.
 \newblock Long short-term memory.
@@ -117,11 +189,12 @@ J.~J. Hopfield.
 \newblock \emph{Proceedings of the national academy of sciences}, 79\penalty0
   (8):\penalty0 2554--2558, 1982.
 
-\bibitem[Jin et~al.(2019)Jin, Jin, Zhou, and Szolovits]{jin2019bert}
+\bibitem[Jin et~al.(2020)Jin, Jin, Zhou, and Szolovits]{jin2020bert}
 D.~Jin, Z.~Jin, J.~T. Zhou, and P.~Szolovits.
-\newblock Is bert really robust? natural language attack on text classification
-  and entailment.
-\newblock \emph{arXiv preprint arXiv:1907.11932}, 2, 2019.
+\newblock Is bert really robust? a strong baseline for natural language attack
+  on text classification and entailment.
+\newblock In \emph{Proceedings of the AAAI conference on artificial
+  intelligence}, volume~34, pages 8018--8025, 2020.
 
 \bibitem[Johnson(2009)]{johnson2009statistical}
 M.~Johnson.
@@ -151,11 +224,46 @@ J.~R. Landis and G.~G. Koch.
 \newblock The measurement of observer agreement for categorical data.
 \newblock \emph{biometrics}, pages 159--174, 1977.
 
+\bibitem[Lee et~al.(2020)Lee, Yoon, Kim, Kim, Kim, So, and
+  Kang]{lee2020biobert}
+J.~Lee, W.~Yoon, S.~Kim, D.~Kim, S.~Kim, C.~H. So, and J.~Kang.
+\newblock Biobert: a pre-trained biomedical language representation model for
+  biomedical text mining.
+\newblock \emph{Bioinformatics}, 36\penalty0 (4):\penalty0 1234--1240, 2020.
+
 \bibitem[Lewis et~al.(2019)Lewis, O{\u{g}}uz, Rinott, Riedel, and
   Schwenk]{lewis2019mlqa}
 P.~Lewis, B.~O{\u{g}}uz, R.~Rinott, S.~Riedel, and H.~Schwenk.
 \newblock Mlqa: Evaluating cross-lingual extractive question answering.
 \newblock \emph{arXiv preprint arXiv:1910.07475}, 2019.
+
+\bibitem[Li et~al.(2021)Li, Ding, and Liu]{li2021transbert}
+Z.~Li, X.~Ding, and T.~Liu.
+\newblock Transbert: A three-stage pre-training technology for story-ending
+  prediction.
+\newblock \emph{ACM Transactions on Asian and Low-Resource Language Information
+  Processing (TALLIP)}, 20\penalty0 (1):\penalty0 1--20, 2021.
+
+\bibitem[Liu et~al.(2019)Liu, Ott, Goyal, Du, Joshi, Chen, Levy, Lewis,
+  Zettlemoyer, and Stoyanov]{liu2019roberta}
+Y.~Liu, M.~Ott, N.~Goyal, J.~Du, M.~Joshi, D.~Chen, O.~Levy, M.~Lewis,
+  L.~Zettlemoyer, and V.~Stoyanov.
+\newblock Roberta: A robustly optimized bert pretraining approach.
+\newblock \emph{arXiv preprint arXiv:1907.11692}, 2019.
+
+\bibitem[Lu et~al.(2020)Lu, Du, and Nie]{lu2020vgcn}
+Z.~Lu, P.~Du, and J.-Y. Nie.
+\newblock Vgcn-bert: augmenting bert with graph embedding for text
+  classification.
+\newblock In \emph{European Conference on Information Retrieval}, pages
+  369--382. Springer, 2020.
+
+\bibitem[Martin et~al.(2019)Martin, Muller, Su{\'a}rez, Dupont, Romary, de~la
+  Clergerie, Seddah, and Sagot]{martin2019camembert}
+L.~Martin, B.~Muller, P.~J.~O. Su{\'a}rez, Y.~Dupont, L.~Romary, {\'E}.~V.
+  de~la Clergerie, D.~Seddah, and B.~Sagot.
+\newblock Camembert: a tasty french language model.
+\newblock \emph{arXiv preprint arXiv:1911.03894}, 2019.
 
 \bibitem[Mikolov et~al.(2013)Mikolov, Sutskever, Chen, Corrado, and
   Dean]{mikolov2013distributed}
@@ -190,15 +298,23 @@ K.~Papineni, S.~Roukos, T.~Ward, and W.-J. Zhu.
 \newblock In \emph{Proceedings of the 40th annual meeting of the Association
   for Computational Linguistics}, pages 311--318, 2002.
 
-\bibitem[Rajpurkar et~al.(2016)Rajpurkar, Zhang, Lopyrev, and
-  Liang]{rajpurkar2016squad}
-P.~Rajpurkar, J.~Zhang, K.~Lopyrev, and P.~Liang.
-\newblock Squad: 100,000+ questions for machine comprehension of text.
-\newblock \emph{arXiv preprint arXiv:1606.05250}, 2016.
+\bibitem[Polignano et~al.(2019)Polignano, Basile, De~Gemmis, Semeraro, and
+  Basile]{polignano2019alberto}
+M.~Polignano, P.~Basile, M.~De~Gemmis, G.~Semeraro, and V.~Basile.
+\newblock Alberto: Italian bert language understanding model for nlp
+  challenging tasks based on tweets.
+\newblock In \emph{6th Italian Conference on Computational Linguistics, CLiC-it
+  2019}, volume 2481, pages 1--6. CEUR, 2019.
 
 \bibitem[Rogers et~al.(2020)Rogers, Kovaleva, and Rumshisky]{rogers2020primer}
 A.~Rogers, O.~Kovaleva, and A.~Rumshisky.
 \newblock A primer in bertology: What we know about how bert works, 2020.
+
+\bibitem[Sahlgren and Carlsson(2021)]{sahlgren2021singleton}
+M.~Sahlgren and F.~Carlsson.
+\newblock The singleton fallacy: Why current critiques of language models miss
+  the point.
+\newblock \emph{arXiv preprint arXiv:2102.04310}, 2021.
 
 \bibitem[Samardzic(2013)]{samardzic2013dynamics}
 T.~Samardzic.
@@ -213,6 +329,12 @@ M.~S{\"a}nger, U.~Leser, S.~Kemmerer, P.~Adolphs, and R.~Klinger.
   annotations in german.
 \newblock In \emph{Proceedings of the Tenth International Conference on
   Language Resources and Evaluation (LREC'16)}, pages 1114--1121, 2016.
+
+\bibitem[Sanh et~al.(2019)Sanh, Debut, Chaumond, and Wolf]{sanh2019distilbert}
+V.~Sanh, L.~Debut, J.~Chaumond, and T.~Wolf.
+\newblock Distilbert, a distilled version of bert: smaller, faster, cheaper and
+  lighter.
+\newblock \emph{arXiv preprint arXiv:1910.01108}, 2019.
 
 \bibitem[Scherer and Wallbott(1994)]{scherer1994evidence}
 K.~R. Scherer and H.~G. Wallbott.
@@ -232,6 +354,12 @@ G.~Schneider.
 \newblock \emph{Hybrid long-distance functional dependency parsing}.
 \newblock PhD thesis, University of Zurich, 2008.
 
+\bibitem[Schwartz et~al.(2019)Schwartz, Dodge, Smith, and
+  Etzioni]{schwartz2019green}
+R.~Schwartz, J.~Dodge, N.~A. Smith, and O.~Etzioni.
+\newblock Green ai.
+\newblock \emph{arXiv preprint arXiv:1907.10597}, 2019.
+
 \bibitem[Sennrich et~al.(2013)Sennrich, Volk, and
   Schneider]{sennrich2013exploiting}
 R.~Sennrich, M.~Volk, and G.~Schneider.
@@ -239,6 +367,11 @@ R.~Sennrich, M.~Volk, and G.~Schneider.
   parsing, pos-tagging, and morphological analysis.
 \newblock In \emph{Proceedings of the International Conference Recent Advances
   in Natural Language Processing RANLP 2013}, pages 601--609, 2013.
+
+\bibitem[Sharir et~al.(2020)Sharir, Peleg, and Shoham]{sharir2020cost}
+O.~Sharir, B.~Peleg, and Y.~Shoham.
+\newblock The cost of training nlp models: A concise overview.
+\newblock \emph{arXiv preprint arXiv:2004.08900}, 2020.
 
 \bibitem[Socher et~al.(2013)Socher, Perelygin, Wu, Chuang, Manning, Ng, and
   Potts]{socher2013recursive}
@@ -249,12 +382,34 @@ R.~Socher, A.~Perelygin, J.~Wu, J.~Chuang, C.~D. Manning, A.~Y. Ng, and
 \newblock In \emph{Proceedings of the 2013 conference on empirical methods in
   natural language processing}, pages 1631--1642, 2013.
 
+\bibitem[Sun et~al.(2019{\natexlab{a}})Sun, Myers, Vondrick, Murphy, and
+  Schmid]{sun2019videobert}
+C.~Sun, A.~Myers, C.~Vondrick, K.~Murphy, and C.~Schmid.
+\newblock Videobert: A joint model for video and language representation
+  learning.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 7464--7473, 2019{\natexlab{a}}.
+
+\bibitem[Sun et~al.(2019{\natexlab{b}})Sun, Wang, Li, Feng, Chen, Zhang, Tian,
+  Zhu, Tian, and Wu]{sun2019ernie}
+Y.~Sun, S.~Wang, Y.~Li, S.~Feng, X.~Chen, H.~Zhang, X.~Tian, D.~Zhu, H.~Tian,
+  and H.~Wu.
+\newblock Ernie: Enhanced representation through knowledge integration.
+\newblock \emph{arXiv preprint arXiv:1904.09223}, 2019{\natexlab{b}}.
+
 \bibitem[Troiano et~al.(2019)Troiano, Pad{\'o}, and
   Klinger]{troiano2019crowdsourcing}
 E.~Troiano, S.~Pad{\'o}, and R.~Klinger.
 \newblock Crowdsourcing and validating event-focused emotion corpora for german
   and english.
 \newblock \emph{arXiv preprint arXiv:1905.13618}, 2019.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez,
+  Kaiser, and Polosukhin]{vaswani2017attention}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
+  L.~Kaiser, and I.~Polosukhin.
+\newblock Attention is all you need.
+\newblock \emph{arXiv preprint arXiv:1706.03762}, 2017.
 
 \bibitem[Wang et~al.(2018)Wang, Singh, Michael, Hill, Levy, and
   Bowman]{wang2018glue}
@@ -263,9 +418,20 @@ A.~Wang, A.~Singh, J.~Michael, F.~Hill, O.~Levy, and S.~R. Bowman.
   language understanding.
 \newblock \emph{arXiv preprint arXiv:1804.07461}, 2018.
 
+\bibitem[Wang et~al.(2019)Wang, Bi, Yan, Wu, Bao, Xia, Peng, and
+  Si]{wang2019structbert}
+W.~Wang, B.~Bi, M.~Yan, C.~Wu, Z.~Bao, J.~Xia, L.~Peng, and L.~Si.
+\newblock Structbert: Incorporating language structures into pre-training for
+  deep language understanding.
+\newblock \emph{arXiv preprint arXiv:1908.04577}, 2019.
+
 \bibitem[Warstadt et~al.(2019)Warstadt, Singh, and Bowman]{warstadt2019neural}
 A.~Warstadt, A.~Singh, and S.~R. Bowman.
 \newblock Neural network acceptability judgments, 2019.
+
+\bibitem[Welbl et~al.(2017)Welbl, Liu, and Gardner]{welbl2017crowdsourcing}
+J.~Welbl, N.~F. Liu, and M.~Gardner.
+\newblock Crowdsourcing multiple choice science questions, 2017.
 
 \bibitem[Williams et~al.(2017)Williams, Nangia, and Bowman]{williams2017broad}
 A.~Williams, N.~Nangia, and S.~R. Bowman.

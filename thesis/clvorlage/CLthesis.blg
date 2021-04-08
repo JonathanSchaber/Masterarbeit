@@ -7,7 +7,7 @@ A level-1 auxiliary file: chapters/acknow.aux
 A level-1 auxiliary file: chapters/index.aux
 A level-1 auxiliary file: chapters/acronyms.aux
 A level-1 auxiliary file: chapters/chap1_introduction.aux
-A level-1 auxiliary file: chapters/chap2_semantic_roles.aux
+A level-1 auxiliary file: chapters/chap2_approach.aux
 A level-1 auxiliary file: chapters/chap3_datasets.aux
 A level-1 auxiliary file: chapters/chap4_architecture.aux
 A level-1 auxiliary file: chapters/chap5_results.aux
@@ -21,45 +21,46 @@ A level-1 auxiliary file: appendix/scripts.aux
 Database file #1: biblio/thesis.bib
 Warning--empty journal in foth2006umfassende
 Warning--empty journal in hajivc2009conll
-You've used 49 entries,
+Warning--can't use both volume and number fields in jin2020bert
+You've used 72 entries,
             2773 wiz_defined-function locations,
-            856 strings with 14816 characters,
-and the built_in function-call counts, 25273 in all, are:
-= -- 2173
-> -- 1724
-< -- 36
-+ -- 584
-- -- 534
-* -- 2003
-:= -- 3860
-add.period$ -- 145
-call.type$ -- 49
-change.case$ -- 318
-chr.to.int$ -- 48
-cite$ -- 100
-duplicate$ -- 1145
-empty$ -- 1887
-format.name$ -- 599
-if$ -- 5319
-int.to.chr$ -- 2
+            970 strings with 20841 characters,
+and the built_in function-call counts, 41206 in all, are:
+= -- 3444
+> -- 3284
+< -- 48
++ -- 1106
+- -- 1032
+* -- 3479
+:= -- 6400
+add.period$ -- 216
+call.type$ -- 72
+change.case$ -- 552
+chr.to.int$ -- 70
+cite$ -- 147
+duplicate$ -- 1669
+empty$ -- 2771
+format.name$ -- 1126
+if$ -- 8546
+int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 44
-newline$ -- 250
-num.names$ -- 196
-pop$ -- 691
+missing$ -- 64
+newline$ -- 364
+num.names$ -- 288
+pop$ -- 1178
 preamble$ -- 1
-purify$ -- 273
+purify$ -- 484
 quote$ -- 0
-skip$ -- 983
+skip$ -- 1500
 stack$ -- 0
-substring$ -- 732
-swap$ -- 206
-text.length$ -- 17
+substring$ -- 1053
+swap$ -- 292
+text.length$ -- 25
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 534
-warning$ -- 2
-while$ -- 202
+type$ -- 787
+warning$ -- 3
+while$ -- 297
 width$ -- 0
-write$ -- 615
-(There were 2 warnings)
+write$ -- 904
+(There were 3 warnings)

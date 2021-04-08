@@ -1,5 +1,7 @@
 \newchap{Data Sets}
-\label{chap:5_dataset}
+\label{chap:3_datasets}
+
+\epigraph{ascascascascascasc}{\textit{unknown}}
 
 \section{gliGLUE}
 
@@ -605,34 +607,34 @@ Train: 48,977 \\
 Dev: 1,932 \\
 Test: 1,967
 
-\textbf{merged} \\
-average lenght sentence 1 train: 21.0 (sigma 6.5) \\
-average length sentence 2 train: 21.0 (sigma 5.8)
+% \textbf{merged} \\
+% average lenght sentence 1 train: 21.0 (sigma 6.5) \\
+% average length sentence 2 train: 21.0 (sigma 5.8)
 
-average length sentence 1 dev: 21.1 (sigma 6.0) \\
-average length sentence 2 dev: 21.1 (sigma 6.0)
+% average length sentence 1 dev: 21.1 (sigma 6.0) \\
+% average length sentence 2 dev: 21.1 (sigma 6.0)
 
-average length sentence 1 test: 21.4 (sigma 5.9) \\
-average length sentence 2 test: 21.3 (sigma 5.9)
+% average length sentence 1 test: 21.4 (sigma 5.9) \\
+% average length sentence 2 test: 21.3 (sigma 5.9)
 
-\textbf{subtokenized} \\
-average length sentence 1 train: 27.5 (sigma 9.0) \\
-average length sentence 2 train: 27.4 (sigma 8.2)
+% \textbf{subtokenized} \\
+% average length sentence 1 train: 27.5 (sigma 9.0) \\
+% average length sentence 2 train: 27.4 (sigma 8.2)
 
-average length sentence 1 dev: 27.6 (sigma 8.4) \\
-average length sentence 2 dev: 27.7 (sigma 8.4)
+% average length sentence 1 dev: 27.6 (sigma 8.4) \\
+% average length sentence 2 dev: 27.7 (sigma 8.4)
 
-average length sentence 1 test: 28.1 (sigma 8.4) \\
-average length sentence 2 test: 28.0 (sigma 8.4)
+% average length sentence 1 test: 28.1 (sigma 8.4) \\
+% average length sentence 2 test: 28.0 (sigma 8.4)
 
 
-identical sentence pairs:
+% identical sentence pairs:
 
-Train: 3209, wrong labelled: 84
+% Train: 3209, wrong labelled: 84
 
-Dev: 38, wrong labelled: 4
+% Dev: 38, wrong labelled: 4
 
-Test: 27, wrong labelled: 0
+% Test: 27, wrong labelled: 0
 
 
 The BLEU scores indicate that the sentence pairs in the training set are in tendency much
@@ -716,15 +718,19 @@ The majority vote decision of the overall sentiment of the example above would b
 
 \begin{examples}
   \item Ganz okay \textbar\textbar\ Hatte ein Problem mit der APP aber die updates neu installiert und jetzt gehts wieder vorläufig mal Und Ordner wären schön wenn man diese erstellen kann
-        \hfill\rlap{\hspace*{-5em}\textbf{Neutral}}
+
+        \textbf{Neutral}
+        % \hfill\rlap{\hspace*{-5em}\textbf{Neutral}}
   \item Ssssereeehhhr gut
-        \hfill\rlap{\hspace*{-5em}\textbf{Positive}}
+
+        \textbf{Positive}
+        % \hfill\rlNeutralp{\hspace*{-5em}\textbf{Positive}}
   \item Wie kann man so eine gute app machen und dann nicht auf wvga anpassen. Weg mit den matschtexturen und vor allem dem Icon x-(
-        \hfill\rlap{\hspace*{-5em}\textbf{Negative}}
+        % \hfill\rlNeutralp{\hspace*{-5em}\textbf{Negative}}
   \item spitze \textbar\textbar\ Daran sollte sich MS ein Beispiel nehmen!
-        \hfill\rlap{\hspace*{-5em}\textbf{Positive}}
+        % \hfill\rlNeutralp{\hspace*{-5em}\textbf{Positive}}
   \item Läuft nicht auf dem Acer A500 \textbar\textbar\ Stürzt leider immer beim Abspielen eines Videos ab. Honeycomb 3.2
-        \hfill\rlap{\hspace*{-5em}\textbf{Negative}}
+        % \hfill\rlNeutralp{\hspace*{-5em}\textbf{Negative}}
 \end{examples}
 
 

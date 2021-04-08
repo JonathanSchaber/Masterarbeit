@@ -4,29 +4,119 @@
 \epigraph{\textgreek{πάντες ἄνθρωποι τοῦ εἰδέναι}}{\textit{Heraclitus of Ephesus}}
 
 
-In this chapter, I will give a brief overview of several things:
-First, I will shortly point to Problems that have been identified
-relating to the performance of BERT. Then, I will point out some
-submitted solutions countering those problems. And lastly, I will
-describe my approach and elucidate the thematic of semantic roles.
+In this chapter, I will give a brief overview of several things: In a first step, I present
+the BERT architecture and its impact on NLP in recent years. Secondly, I will shortly demonstrate
+Problems that have been identified relating to the performance of BERT. Then, I will point out
+some submitted solutions countering those problems. And lastly, I will describe my approach and
+elucidate the topic of semantic roles.
+
+\section{BERT}
+
+Since the publication of the seminal paper ``BERT: Pre-training of deep bidirectional transformers
+for language understanding'' \cite{devlin2018bert} and the accompanying open-sourcing of its
+architecture\myfootnote{\url{https://github.com/google-research/bert}}, BERT has probably been the
+most studied and cited NLP model since word2vec \cite{mikolov2013distributed} --- amassing over
+17,000 citations on Google Scholar as of April 2021. This massive interest from the NLP community
+in BERT suggests that it somehow must be accomplishing something which is of greater significance
+to the field than regular benchmark SOTA cracking by ``normal'' new or improved architectures.
 
 
-\section{BERTology / Related Work}
+The basic concept of BERT is rather trivial: (1) Let a big, sohpisticated neural network learn
+contextualized embeddings for words by training it unsupervized on huge amounts of data. (2)
+Use these embeddings as representations for words in downstream tasks, put a very simple neural
+network on top (mostly a simple FFNN) and fine-tune them during training on the downstream task.
+One of the strengths of this approach is that the cost, hardware, and data intensive pre-training of the
+embeddings (step one) must only be computed once; the downstream task dependent fine-tunig can then
+be carried out in a lean set up.\myfootnote{To give an impression on the expenses of pre-training
+the BERT architecture: \cite{schwartz2019green} estimate the pre-training for BERT-large to have lasted four days
+on 64 TPU chips, resulting in power expenditures of about \$7,000. However, this has to be considered
+rather cheap compared to recent architectures' sizes: The largest architecture to this date is the
+T-NLG (Turing Natural Language Generation) built by Microsoft, possessing a staggering 17 billion
+parameters --- that is approximately 48 times the size of BERT-large (350 million parameters), cf.
+\cite{sharir2020cost}. Open AI's GPT-3's \citep{brown2020language} pretraining is estimated to have costed
+\$12 million \citep{floridi2020gpt}. This trend of increasingly bigger language models has earned severe critique from
+several sides, ranging from ecological and social to linguistic concerns over such models; for
+a good overview of these points see \cite{bender2021dangers}.}
+
+From a more technical point of view is BERT first and foremost a neural network architecture. More precise, it is an
+implementation of the self-attention mechanism introced by \cite{vaswani2017attention}. I will not go into
+too much details here since BERT is now a very well-known structure and has been described in a
+plethora of papers, blogs, and videos\myfootnote{For a really well made visualization of self-attention
+in BERT, I can recommend \url{https://www.youtube.com/watch?v=-9vVhYEXeyQ}}.
+In simple terms, BERT takes an input sequence, tokenizes it and computes contextualized vector
+representations for each token via stacked blocks employing self-attention and linear combination.
+Figure \ref{fig:bert-architecture} shows one of these blocks.
+
+\fig{images/BERT.png}{fig:bert-architecture}{3D-visualization of BERT architecture. Credit goes to Peltarion: \url{https://peltarion.com/blog/data-science/illustration-3d-bert}}{11}{BERT Architecture}
+
+The computation of the weight matrices and initial vector representations for the tokens is done
+via an unsupervised learning phase, often referred to as pre-training. The basic concept is
+that BERT is given sentence-chunks of large amouts of text (\citeauthor{devlin2018bert} use the BooksCorpus, consisting
+of 800 million words, plus the English Wikipedia, consisting of 2.5 billion words) and BERT
+needs to optimize on two training objectives: (1) One word is randomly masked and BERT has
+to predict it, and (2) BERT has to decide if, given two randomly sampled sentences, the second
+is a valid continuation of the first. Crucially, both tasks can be generated automatically, no
+tedious human annotation of data is needed.
+
+\section{Problems}
 
 In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
 in the NLP field, those efforts are often referred to by the notion of ``BERTology'' (cf. \cite{rogers2020primer}).
-Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- the BERT model
-trained on  a French corpus is named CamemBERT \cite{martin2019camembert}, an architecture more robust than the
-standard BERT was baptized RoBERTa \cite{liu2019roberta}, etc. --- I decided to not deviate from this tradition.
+While BERT showed to be astoniglishly effective on several established data sets and benchmarks such as GLUE \citep{wang2018glue},
+it soon became obvious that it also {\color{red} had} its weak-spots: \citeauthor{ettinger2020bert} confronted
+BERT with three language tasks originally coming from psycholinguistics which are well-known to be difficult
+to tackle, even for humans. They find
 
-The following overview is heavily based on the excellent towards-data-science article\myfootnote{\url{https://towardsdatascience.com/a-review-of-bert-based-models-4ffdc0f15d58}} by Ajit Rajasekharan.
+\begin{quote}
+that [BERT] shows sensitivity to role reversal and
+same-category distinctions, albeit less than humans, and it succeeds with noun hypernyms,
+but it struggles with challenging inferences and role-based event prediction—and it shows
+clear failures with the meaning of negation.'' \citep[p.~46]{ettinger2020bert}
+\end{quote}
+
+Apparently, while being able to solve ``regular'' tasks, BERT seems to be prone to fail
+in situations where proper semantic understanding of text sequences is crucial, such as
+detecting role reversal or sentence completion tasks.
+
+\cite{jiang2019evaluating} also state ``that despite the high F1 scores, BERT models have
+systematic error pat terns'', which for them suggests ``that they still do not capture the
+full complexity of human pragmatic reasoning.''
+
+
+\cite{jin2020bert}even go further and created so-called adversarial attacks on BERT:
+
+
+
+% ``BERT shows a complete inability to prefer true over false completions for negative sentences.''
+% \citep[p.~45]{ettinger2020bert}
+
+\section{Solutions / Related Work}
+
+
+
+The following overview is partially drawn from the towards-data-science article ``A review of BERT based models''\myfootnote{\url{https://towardsdatascience.com/a-review-of-bert-based-models-4ffdc0f15d58}} by Ajit Rajasekharan.
+
+\begin{itemize}
+  \item language specific models: CamemBERT \cite{martin2019camembert}, AlBERTo \cite{polignano2019alberto}, BERTje \cite{de2019bertje}, germanBERT
+  \item domain-specific training material: BioBERT \cite{lee2020biobert}, LEGAL-BERT \cite{chalkidis2020legalbert}
+  \item including different modalities:  VideoBERT \cite{sun2019videobert}
+  \item optimizing architecture/training objective(s): DistilBERT \cite{sanh2019distilbert}, RoBERTa \cite{liu2019roberta}, DeBERTa \cite{he2020deberta}, TransBERT \cite{li2021transbert}
+  \item incorporating structured information: ERNIE \cite{sun2019ernie}, StructBERT \cite{wang2019structbert}, VGCN-BERT \cite{lu2020vgcn}, SemBERT \cite{zhang2019semantics}
+\end{itemize}
+
+\section{gliBERT}
+
+Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- you may have spotted
+a pattern in the sections before --- I decided to not deviate from this tradition, and decided to call my breed
+\textbf{g}erman \textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{gliBERT}.
+And thus a new
 
 
 \section{Semantic Roles}
 
 
 \begin{itemize}
-  \item conceptual relations that the referents of the noun phrases play with respect to the verb (palmer2010semantic)
+  \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
   \item different syntactic constituents can bear same SR
   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
 \end{itemize}
