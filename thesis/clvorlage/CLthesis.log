@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  7 APR 2021 12:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  7 APR 2021 14:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -428,6 +428,379 @@ Now handling font encoding U ...
    defining Unicode char U+2026 (decimal 8230)
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+
+(/usr/share/texlive/texmf-dist/tex/latex/greek-fontenc/lgrenc.def
+File: lgrenc.def 2015/12/07 v0.13.1 LGR Greek font encoding definitions
+Now handling font encoding LGR ...
+... processing UTF-8 mapping file for font encoding LGR
+
+(/usr/share/texlive/texmf-dist/tex/latex/greek-inputenc/lgrenc.dfu
+File: lgrenc.dfu 2015/08/05 1.6 UTF-8 support for Greek
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+0259 (decimal 601)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201A (decimal 8218)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+0374 (decimal 884)
+   defining Unicode char U+0375 (decimal 885)
+   defining Unicode char U+037A (decimal 890)
+   defining Unicode char U+037E (decimal 894)
+   defining Unicode char U+0384 (decimal 900)
+   defining Unicode char U+0385 (decimal 901)
+   defining Unicode char U+0386 (decimal 902)
+   defining Unicode char U+0387 (decimal 903)
+   defining Unicode char U+0388 (decimal 904)
+   defining Unicode char U+0389 (decimal 905)
+   defining Unicode char U+038A (decimal 906)
+   defining Unicode char U+038C (decimal 908)
+   defining Unicode char U+038E (decimal 910)
+   defining Unicode char U+038F (decimal 911)
+   defining Unicode char U+0390 (decimal 912)
+   defining Unicode char U+0391 (decimal 913)
+   defining Unicode char U+0392 (decimal 914)
+   defining Unicode char U+0393 (decimal 915)
+   defining Unicode char U+0394 (decimal 916)
+   defining Unicode char U+0395 (decimal 917)
+   defining Unicode char U+0396 (decimal 918)
+   defining Unicode char U+0397 (decimal 919)
+   defining Unicode char U+0398 (decimal 920)
+   defining Unicode char U+0399 (decimal 921)
+   defining Unicode char U+039A (decimal 922)
+   defining Unicode char U+039B (decimal 923)
+   defining Unicode char U+039C (decimal 924)
+   defining Unicode char U+039D (decimal 925)
+   defining Unicode char U+039E (decimal 926)
+   defining Unicode char U+039F (decimal 927)
+   defining Unicode char U+03A0 (decimal 928)
+   defining Unicode char U+03A1 (decimal 929)
+   defining Unicode char U+03A3 (decimal 931)
+   defining Unicode char U+03A4 (decimal 932)
+   defining Unicode char U+03A5 (decimal 933)
+   defining Unicode char U+03A6 (decimal 934)
+   defining Unicode char U+03A7 (decimal 935)
+   defining Unicode char U+03A8 (decimal 936)
+   defining Unicode char U+03A9 (decimal 937)
+   defining Unicode char U+03AA (decimal 938)
+   defining Unicode char U+03AB (decimal 939)
+   defining Unicode char U+03AC (decimal 940)
+   defining Unicode char U+03AD (decimal 941)
+   defining Unicode char U+03AE (decimal 942)
+   defining Unicode char U+03AF (decimal 943)
+   defining Unicode char U+03B0 (decimal 944)
+   defining Unicode char U+03B1 (decimal 945)
+   defining Unicode char U+03B2 (decimal 946)
+   defining Unicode char U+03B3 (decimal 947)
+   defining Unicode char U+03B4 (decimal 948)
+   defining Unicode char U+03B5 (decimal 949)
+   defining Unicode char U+03B6 (decimal 950)
+   defining Unicode char U+03B7 (decimal 951)
+   defining Unicode char U+03B8 (decimal 952)
+   defining Unicode char U+03B9 (decimal 953)
+   defining Unicode char U+03BA (decimal 954)
+   defining Unicode char U+03BB (decimal 955)
+   defining Unicode char U+03BC (decimal 956)
+   defining Unicode char U+03BD (decimal 957)
+   defining Unicode char U+03BE (decimal 958)
+   defining Unicode char U+03BF (decimal 959)
+   defining Unicode char U+03C0 (decimal 960)
+   defining Unicode char U+03C1 (decimal 961)
+   defining Unicode char U+03C2 (decimal 962)
+   defining Unicode char U+03C3 (decimal 963)
+   defining Unicode char U+03C4 (decimal 964)
+   defining Unicode char U+03C5 (decimal 965)
+   defining Unicode char U+03C6 (decimal 966)
+   defining Unicode char U+03C7 (decimal 967)
+   defining Unicode char U+03C8 (decimal 968)
+   defining Unicode char U+03C9 (decimal 969)
+   defining Unicode char U+03CA (decimal 970)
+   defining Unicode char U+03CB (decimal 971)
+   defining Unicode char U+03CC (decimal 972)
+   defining Unicode char U+03CD (decimal 973)
+   defining Unicode char U+03CE (decimal 974)
+   defining Unicode char U+03D0 (decimal 976)
+   defining Unicode char U+03D1 (decimal 977)
+   defining Unicode char U+03D5 (decimal 981)
+   defining Unicode char U+03D6 (decimal 982)
+   defining Unicode char U+03D8 (decimal 984)
+   defining Unicode char U+03D9 (decimal 985)
+   defining Unicode char U+03DA (decimal 986)
+   defining Unicode char U+03DB (decimal 987)
+   defining Unicode char U+03DC (decimal 988)
+   defining Unicode char U+03DD (decimal 989)
+   defining Unicode char U+03DF (decimal 991)
+   defining Unicode char U+03E0 (decimal 992)
+   defining Unicode char U+03E1 (decimal 993)
+   defining Unicode char U+03F0 (decimal 1008)
+   defining Unicode char U+03F1 (decimal 1009)
+   defining Unicode char U+03F4 (decimal 1012)
+   defining Unicode char U+03F5 (decimal 1013)
+   defining Unicode char U+1F00 (decimal 7936)
+   defining Unicode char U+1F01 (decimal 7937)
+   defining Unicode char U+1F02 (decimal 7938)
+   defining Unicode char U+1F03 (decimal 7939)
+   defining Unicode char U+1F04 (decimal 7940)
+   defining Unicode char U+1F05 (decimal 7941)
+   defining Unicode char U+1F06 (decimal 7942)
+   defining Unicode char U+1F07 (decimal 7943)
+   defining Unicode char U+1F08 (decimal 7944)
+   defining Unicode char U+1F09 (decimal 7945)
+   defining Unicode char U+1F0A (decimal 7946)
+   defining Unicode char U+1F0B (decimal 7947)
+   defining Unicode char U+1F0C (decimal 7948)
+   defining Unicode char U+1F0D (decimal 7949)
+   defining Unicode char U+1F0E (decimal 7950)
+   defining Unicode char U+1F0F (decimal 7951)
+   defining Unicode char U+1F10 (decimal 7952)
+   defining Unicode char U+1F11 (decimal 7953)
+   defining Unicode char U+1F12 (decimal 7954)
+   defining Unicode char U+1F13 (decimal 7955)
+   defining Unicode char U+1F14 (decimal 7956)
+   defining Unicode char U+1F15 (decimal 7957)
+   defining Unicode char U+1F18 (decimal 7960)
+   defining Unicode char U+1F19 (decimal 7961)
+   defining Unicode char U+1F1A (decimal 7962)
+   defining Unicode char U+1F1B (decimal 7963)
+   defining Unicode char U+1F1C (decimal 7964)
+   defining Unicode char U+1F1D (decimal 7965)
+   defining Unicode char U+1F20 (decimal 7968)
+   defining Unicode char U+1F21 (decimal 7969)
+   defining Unicode char U+1F22 (decimal 7970)
+   defining Unicode char U+1F23 (decimal 7971)
+   defining Unicode char U+1F24 (decimal 7972)
+   defining Unicode char U+1F25 (decimal 7973)
+   defining Unicode char U+1F26 (decimal 7974)
+   defining Unicode char U+1F27 (decimal 7975)
+   defining Unicode char U+1F28 (decimal 7976)
+   defining Unicode char U+1F29 (decimal 7977)
+   defining Unicode char U+1F2A (decimal 7978)
+   defining Unicode char U+1F2B (decimal 7979)
+   defining Unicode char U+1F2C (decimal 7980)
+   defining Unicode char U+1F2D (decimal 7981)
+   defining Unicode char U+1F2E (decimal 7982)
+   defining Unicode char U+1F2F (decimal 7983)
+   defining Unicode char U+1F30 (decimal 7984)
+   defining Unicode char U+1F31 (decimal 7985)
+   defining Unicode char U+1F32 (decimal 7986)
+   defining Unicode char U+1F33 (decimal 7987)
+   defining Unicode char U+1F34 (decimal 7988)
+   defining Unicode char U+1F35 (decimal 7989)
+   defining Unicode char U+1F36 (decimal 7990)
+   defining Unicode char U+1F37 (decimal 7991)
+   defining Unicode char U+1F38 (decimal 7992)
+   defining Unicode char U+1F39 (decimal 7993)
+   defining Unicode char U+1F3A (decimal 7994)
+   defining Unicode char U+1F3B (decimal 7995)
+   defining Unicode char U+1F3C (decimal 7996)
+   defining Unicode char U+1F3D (decimal 7997)
+   defining Unicode char U+1F3E (decimal 7998)
+   defining Unicode char U+1F3F (decimal 7999)
+   defining Unicode char U+1F40 (decimal 8000)
+   defining Unicode char U+1F41 (decimal 8001)
+   defining Unicode char U+1F42 (decimal 8002)
+   defining Unicode char U+1F43 (decimal 8003)
+   defining Unicode char U+1F44 (decimal 8004)
+   defining Unicode char U+1F45 (decimal 8005)
+   defining Unicode char U+1F48 (decimal 8008)
+   defining Unicode char U+1F49 (decimal 8009)
+   defining Unicode char U+1F4A (decimal 8010)
+   defining Unicode char U+1F4B (decimal 8011)
+   defining Unicode char U+1F4C (decimal 8012)
+   defining Unicode char U+1F4D (decimal 8013)
+   defining Unicode char U+1F50 (decimal 8016)
+   defining Unicode char U+1F51 (decimal 8017)
+   defining Unicode char U+1F52 (decimal 8018)
+   defining Unicode char U+1F53 (decimal 8019)
+   defining Unicode char U+1F54 (decimal 8020)
+   defining Unicode char U+1F55 (decimal 8021)
+   defining Unicode char U+1F56 (decimal 8022)
+   defining Unicode char U+1F57 (decimal 8023)
+   defining Unicode char U+1F59 (decimal 8025)
+   defining Unicode char U+1F5B (decimal 8027)
+   defining Unicode char U+1F5D (decimal 8029)
+   defining Unicode char U+1F5F (decimal 8031)
+   defining Unicode char U+1F60 (decimal 8032)
+   defining Unicode char U+1F61 (decimal 8033)
+   defining Unicode char U+1F62 (decimal 8034)
+   defining Unicode char U+1F63 (decimal 8035)
+   defining Unicode char U+1F64 (decimal 8036)
+   defining Unicode char U+1F65 (decimal 8037)
+   defining Unicode char U+1F66 (decimal 8038)
+   defining Unicode char U+1F67 (decimal 8039)
+   defining Unicode char U+1F68 (decimal 8040)
+   defining Unicode char U+1F69 (decimal 8041)
+   defining Unicode char U+1F6A (decimal 8042)
+   defining Unicode char U+1F6B (decimal 8043)
+   defining Unicode char U+1F6C (decimal 8044)
+   defining Unicode char U+1F6D (decimal 8045)
+   defining Unicode char U+1F6E (decimal 8046)
+   defining Unicode char U+1F6F (decimal 8047)
+   defining Unicode char U+1F70 (decimal 8048)
+   defining Unicode char U+1F71 (decimal 8049)
+   defining Unicode char U+1F72 (decimal 8050)
+   defining Unicode char U+1F73 (decimal 8051)
+   defining Unicode char U+1F74 (decimal 8052)
+   defining Unicode char U+1F75 (decimal 8053)
+   defining Unicode char U+1F76 (decimal 8054)
+   defining Unicode char U+1F77 (decimal 8055)
+   defining Unicode char U+1F78 (decimal 8056)
+   defining Unicode char U+1F79 (decimal 8057)
+   defining Unicode char U+1F7A (decimal 8058)
+   defining Unicode char U+1F7B (decimal 8059)
+   defining Unicode char U+1F7C (decimal 8060)
+   defining Unicode char U+1F7D (decimal 8061)
+   defining Unicode char U+1F80 (decimal 8064)
+   defining Unicode char U+1F81 (decimal 8065)
+   defining Unicode char U+1F82 (decimal 8066)
+   defining Unicode char U+1F83 (decimal 8067)
+   defining Unicode char U+1F84 (decimal 8068)
+   defining Unicode char U+1F85 (decimal 8069)
+   defining Unicode char U+1F86 (decimal 8070)
+   defining Unicode char U+1F87 (decimal 8071)
+   defining Unicode char U+1F88 (decimal 8072)
+   defining Unicode char U+1F89 (decimal 8073)
+   defining Unicode char U+1F8A (decimal 8074)
+   defining Unicode char U+1F8B (decimal 8075)
+   defining Unicode char U+1F8C (decimal 8076)
+   defining Unicode char U+1F8D (decimal 8077)
+   defining Unicode char U+1F8E (decimal 8078)
+   defining Unicode char U+1F8F (decimal 8079)
+   defining Unicode char U+1F90 (decimal 8080)
+   defining Unicode char U+1F91 (decimal 8081)
+   defining Unicode char U+1F92 (decimal 8082)
+   defining Unicode char U+1F93 (decimal 8083)
+   defining Unicode char U+1F94 (decimal 8084)
+   defining Unicode char U+1F95 (decimal 8085)
+   defining Unicode char U+1F96 (decimal 8086)
+   defining Unicode char U+1F97 (decimal 8087)
+   defining Unicode char U+1F98 (decimal 8088)
+   defining Unicode char U+1F99 (decimal 8089)
+   defining Unicode char U+1F9A (decimal 8090)
+   defining Unicode char U+1F9B (decimal 8091)
+   defining Unicode char U+1F9C (decimal 8092)
+   defining Unicode char U+1F9D (decimal 8093)
+   defining Unicode char U+1F9E (decimal 8094)
+   defining Unicode char U+1F9F (decimal 8095)
+   defining Unicode char U+1FA0 (decimal 8096)
+   defining Unicode char U+1FA1 (decimal 8097)
+   defining Unicode char U+1FA2 (decimal 8098)
+   defining Unicode char U+1FA3 (decimal 8099)
+   defining Unicode char U+1FA4 (decimal 8100)
+   defining Unicode char U+1FA5 (decimal 8101)
+   defining Unicode char U+1FA6 (decimal 8102)
+   defining Unicode char U+1FA7 (decimal 8103)
+   defining Unicode char U+1FA8 (decimal 8104)
+   defining Unicode char U+1FA9 (decimal 8105)
+   defining Unicode char U+1FAA (decimal 8106)
+   defining Unicode char U+1FAB (decimal 8107)
+   defining Unicode char U+1FAC (decimal 8108)
+   defining Unicode char U+1FAD (decimal 8109)
+   defining Unicode char U+1FAE (decimal 8110)
+   defining Unicode char U+1FAF (decimal 8111)
+   defining Unicode char U+1FB0 (decimal 8112)
+   defining Unicode char U+1FB1 (decimal 8113)
+   defining Unicode char U+1FB2 (decimal 8114)
+   defining Unicode char U+1FB3 (decimal 8115)
+   defining Unicode char U+1FB4 (decimal 8116)
+   defining Unicode char U+1FB6 (decimal 8118)
+   defining Unicode char U+1FB7 (decimal 8119)
+   defining Unicode char U+1FB8 (decimal 8120)
+   defining Unicode char U+1FB9 (decimal 8121)
+   defining Unicode char U+1FBA (decimal 8122)
+   defining Unicode char U+1FBB (decimal 8123)
+   defining Unicode char U+1FBC (decimal 8124)
+   defining Unicode char U+1FBD (decimal 8125)
+   defining Unicode char U+1FBE (decimal 8126)
+   defining Unicode char U+1FBF (decimal 8127)
+   defining Unicode char U+1FC0 (decimal 8128)
+   defining Unicode char U+1FC1 (decimal 8129)
+   defining Unicode char U+1FC2 (decimal 8130)
+   defining Unicode char U+1FC3 (decimal 8131)
+   defining Unicode char U+1FC4 (decimal 8132)
+   defining Unicode char U+1FC6 (decimal 8134)
+   defining Unicode char U+1FC7 (decimal 8135)
+   defining Unicode char U+1FC8 (decimal 8136)
+   defining Unicode char U+1FC9 (decimal 8137)
+   defining Unicode char U+1FCA (decimal 8138)
+   defining Unicode char U+1FCB (decimal 8139)
+   defining Unicode char U+1FCC (decimal 8140)
+   defining Unicode char U+1FCD (decimal 8141)
+   defining Unicode char U+1FCE (decimal 8142)
+   defining Unicode char U+1FCF (decimal 8143)
+   defining Unicode char U+1FD0 (decimal 8144)
+   defining Unicode char U+1FD1 (decimal 8145)
+   defining Unicode char U+1FD2 (decimal 8146)
+   defining Unicode char U+1FD3 (decimal 8147)
+   defining Unicode char U+1FD6 (decimal 8150)
+   defining Unicode char U+1FD7 (decimal 8151)
+   defining Unicode char U+1FD8 (decimal 8152)
+   defining Unicode char U+1FD9 (decimal 8153)
+   defining Unicode char U+1FDA (decimal 8154)
+   defining Unicode char U+1FDB (decimal 8155)
+   defining Unicode char U+1FDD (decimal 8157)
+   defining Unicode char U+1FDE (decimal 8158)
+   defining Unicode char U+1FDF (decimal 8159)
+   defining Unicode char U+1FE0 (decimal 8160)
+   defining Unicode char U+1FE1 (decimal 8161)
+   defining Unicode char U+1FE2 (decimal 8162)
+   defining Unicode char U+1FE3 (decimal 8163)
+   defining Unicode char U+1FE4 (decimal 8164)
+   defining Unicode char U+1FE5 (decimal 8165)
+   defining Unicode char U+1FE6 (decimal 8166)
+   defining Unicode char U+1FE7 (decimal 8167)
+   defining Unicode char U+1FE8 (decimal 8168)
+   defining Unicode char U+1FE9 (decimal 8169)
+   defining Unicode char U+1FEA (decimal 8170)
+   defining Unicode char U+1FEB (decimal 8171)
+   defining Unicode char U+1FEC (decimal 8172)
+   defining Unicode char U+1FED (decimal 8173)
+   defining Unicode char U+1FEE (decimal 8174)
+   defining Unicode char U+1FEF (decimal 8175)
+   defining Unicode char U+1FF2 (decimal 8178)
+   defining Unicode char U+1FF3 (decimal 8179)
+   defining Unicode char U+1FF4 (decimal 8180)
+   defining Unicode char U+1FF6 (decimal 8182)
+   defining Unicode char U+1FF7 (decimal 8183)
+   defining Unicode char U+1FF8 (decimal 8184)
+   defining Unicode char U+1FF9 (decimal 8185)
+   defining Unicode char U+1FFA (decimal 8186)
+   defining Unicode char U+1FFB (decimal 8187)
+   defining Unicode char U+1FFC (decimal 8188)
+   defining Unicode char U+1FFD (decimal 8189)
+   defining Unicode char U+1FFE (decimal 8190)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+10144 (decimal 65860)
+   defining Unicode char U+10145 (decimal 65861)
+   defining Unicode char U+10146 (decimal 65862)
+   defining Unicode char U+10147 (decimal 65863)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/greek-fontenc/greek-fontenc.def
+File: greek-fontenc.def 2015/08/04 v0.13 Common Greek font encoding definitions
+
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/helvet.sty
 Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS) 
@@ -1864,7 +2237,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 Package hyperref Warning: Invalid value `000'
 (hyperref)                for option `pdfborder'.
-(hyperref)                Option setting is ignored on input line 113.
+(hyperref)                Option setting is ignored on input line 116.
 
 
 Class scrreprt Warning: Usage of package `fancyhdr' together
@@ -1878,7 +2251,7 @@ Class scrreprt Warning: Usage of package `fancyhdr' together
 (scrreprt)              `\addtokomafont' for the page style elements need
 (scrreprt)              explicite user intervention to work.
 (scrreprt)              Nevertheless, using requested
-(scrreprt)              package `fancyhdr' on input line 130.
+(scrreprt)              package `fancyhdr' on input line 133.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
@@ -1927,17 +2300,7 @@ Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
 
-(./CLthesis.aux (./chapters/titlepage_phil.aux) (./chapters/abstract.aux)
-(./chapters/acknow.aux) (./chapters/index.aux) (./chapters/acronyms.aux)
-(./chapters/chap1_introduction.aux) (./chapters/chap2_approach.aux)
-(./chapters/chap3_datasets.aux
-
-LaTeX Warning: Label `fig:pawsx-stat' multiply defined.
-
-) (./chapters/chap4_architecture.aux) (./chapters/chap5_results.aux)
-(./chapters/chap6_conclusion.aux) (./chapters/glossary.aux)
-(./chapters/references.aux) (./chapters/cv.aux) (./appendix/tables.aux)
-(./appendix/scripts.aux))
+(./CLthesis.aux)
 \openout1 = `CLthesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
@@ -1952,9 +2315,14 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 3.
+LaTeX Font Info:    Try loading font information for LGR+cmr on input line 3.
+ (/usr/share/texlive/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
+File: lgrcmr.fd 2017/07/29 v1.2 Greek European Computer Regular
+)
+LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 3.
-
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
@@ -2040,7 +2408,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 (./chapters/titlepage_phil.tex
-<images/uzh_logo_d_pos.pdf, id=300, 142.5325pt x 49.18375pt>
+<images/uzh_logo_d_pos.pdf, id=7, 142.5325pt x 49.18375pt>
 File: images/uzh_logo_d_pos.pdf Graphic file (type pdf)
 <use images/uzh_logo_d_pos.pdf>
 Package pdftex.def Info: images/uzh_logo_d_pos.pdf  used on input line 2.
@@ -2050,23 +2418,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--3
 
  []
 
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 6.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
-File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 6.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 11.39996pt on input line 6.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 9.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 9.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 11.39996pt on input line 9.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 16.41594pt on input line 14.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <8> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 26.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 26.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 7.59998pt on input line 26.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 10.40245pt on input line 33.
  [1
 
@@ -2081,9 +2449,9 @@ f>])
 
 
 (./chapters/abstract.tex
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 5.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 5.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 16.41594pt on input line 5.
  [1
 
@@ -2094,9 +2462,9 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 \openout2 = `chapters/acknow.aux'.
 
  (./chapters/acknow.tex
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 3.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 23.63593pt on input line 3.
  [2
 
@@ -2105,36 +2473,44 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 ])
 \openout2 = `chapters/index.aux'.
 
- (./chapters/index.tex (./CLthesis.toc [3
+ (./chapters/index.tex
 
+Package hyperref Warning: old toc file detected, not used; run LaTeX again.
 
-
-] [4])
 \tf@toc=\write8
 \openout8 = `CLthesis.toc'.
 
- [5] (./CLthesis.lof)
+[3
+
+
+
+]
+
+Package hyperref Warning: old lof file detected, not used; run LaTeX again.
+
 \tf@lof=\write9
 \openout9 = `CLthesis.lof'.
 
- [6
+[4
 
-] (./CLthesis.lot)
+]
+
+Package hyperref Warning: old lot file detected, not used; run LaTeX again.
+
 \tf@lot=\write10
 \openout10 = `CLthesis.lot'.
 
-) [7
+) [5
 
 ]
 \openout2 = `chapters/acronyms.aux'.
 
-
-(./chapters/acronyms.tex
-Overfull \hbox (10.22308pt too wide) in paragraph at lines 6--43
+ (./chapters/acronyms.tex
+Overfull \hbox (10.20964pt too wide) in paragraph at lines 6--43
 [] 
  []
 
-[8
+[6
 
 
 
@@ -2167,9 +2543,9 @@ Package natbib Warning: Citation `sahlgren2021singleton' on page 1 undefined on
  input line 41.
 
 
-Overfull \hbox (15.59157pt too wide) in paragraph at lines 35--42
-\OT1/cmr/m/n/12 sition, while learn-ing the rules en-tails rec-og-niz-ing and f
-or-mal-iz-ing grammati-
+Overfull \hbox (15.50179pt too wide) in paragraph at lines 35--42
+\T1/cmr/m/n/12 sition, while learn-ing the rules en-tails rec-og-niz-ing and fo
+r-mal-iz-ing grammati-
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
@@ -2182,9 +2558,9 @@ l.42 \end{quote}
 
 
 ]
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 51.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 51.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 51.
 
 
@@ -2203,29 +2579,111 @@ Package natbib Warning: Citation `sahlgren2021singleton' on page 2 undefined on
 Package natbib Warning: Citation `sahlgren2021singleton' on page 2 undefined on
  input line 69.
 
-[2] [3] [4]
+[2]
 
-Package natbib Warning: Citation `martin2019camembert' on page 5 undefined on i
-nput line 168.
+Package natbib Warning: Citation `johnson2009statistical' on page 3 undefined o
+n input line 92.
 
 
-Package natbib Warning: Citation `liu2019roberta' on page 5 undefined on input 
-line 169.
+Package natbib Warning: Citation `mikolov2013distributed' on page 3 undefined o
+n input line 100.
+
+[3]
+
+Package natbib Warning: Citation `devlin2018bert' on page 4 undefined on input 
+line 126.
+
+
+Package natbib Warning: Citation `rogers2020primer' on page 4 undefined on inpu
+t line 128.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 4 undefined on input li
+ne 130.
+
+
+Package natbib Warning: Citation `jin2019bert' on page 4 undefined on input lin
+e 137.
+
+[4]
+
+Package natbib Warning: Citation `zhang2019semantics' on page 5 undefined on in
+put line 170.
 
 ) [5]
 \openout2 = `chapters/chap2_approach.aux'.
 
  (./chapters/chap2_approach.tex
 chapter 2.
-[6
+
+Package natbib Warning: Citation `rogers2020primer' on page 6 undefined on inpu
+t line 17.
+
+
+Package natbib Warning: Citation `martin2019camembert' on page 6 undefined on i
+nput line 19.
+
+
+Package natbib Warning: Citation `liu2019roberta' on page 6 undefined on input 
+line 20.
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 22.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+) [6
 
 
 
-]) [7]
+]
+
+Package natbib Warning: Citation `palmer2010semantic' on page 7 undefined on in
+put line 45.
+
+
+Package natbib Warning: Citation `jurafsky2019speech' on page 7 undefined on in
+put line 49.
+
+
+Package natbib Warning: Citation `gildea2002automatic' on page 7 undefined on i
+nput line 51.
+
+
+Package natbib Warning: Citation `palmer2010semantic' on page 7 undefined on in
+put line 55.
+
+) [7]
 \openout2 = `chapters/chap3_datasets.aux'.
 
  (./chapters/chap3_datasets.tex
 chapter 3.
+
+Package natbib Warning: Citation `kracht2007introduction' on page 8 undefined o
+n input line 31.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 8 undefined on input li
+ne 46.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 8 undefined on input li
+ne 66.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 8 undefined on input li
+ne 66.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 8 undefined on input li
+ne 66.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 8 undefined on input li
+ne 66.
+
+
+Package natbib Warning: Citation `wang2018glue' on page 8 undefined on input li
+ne 66.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -2233,23 +2691,73 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-] [9] [10] [11]
+] [9]
+
+Package natbib Warning: Citation `wang2018glue' on page 10 undefined on input l
+ine 113.
+
+
+Package natbib Warning: Citation `zhang2019semantics' on page 10 undefined on i
+nput line 114.
+
+
+Package natbib Warning: Citation `devlin2018bert' on page 10 undefined on input
+ line 115.
+
+
+Package natbib Warning: Citation `warstadt2019neural' on page 10 undefined on i
+nput line 122.
+
+
+Package natbib Warning: Citation `scherer1994evidence' on page 10 undefined on 
+input line 142.
+
+
+Package natbib Warning: Citation `troiano2019crowdsourcing' on page 10 undefine
+d on input line 142.
+
+[10]
+
+Package natbib Warning: Citation `landis1977measurement' on page 11 undefined o
+n input line 164.
+
+
+LaTeX Warning: Reference `itm:deisear1' on page 11 undefined on input line 179.
+
+
+
+LaTeX Warning: Reference `itm:deisear2' on page 11 undefined on input line 179.
+
+
+
+LaTeX Warning: Reference `itm:deisear3' on page 11 undefined on input line 179.
+
+
+
+LaTeX Warning: Reference `itm:deisear4' on page 11 undefined on input line 179.
+
+
+[11]
 
 LaTeX Warning: Reference `fig:fig:deisear-stats' on page 12 undefined on input 
 line 199.
 
-<images/deISEAR_subtokenized.pdf, id=656, 433.62pt x 650.43pt>
+<images/deISEAR_subtokenized.pdf, id=149, 433.62pt x 650.43pt>
 File: images/deISEAR_subtokenized.pdf Graphic file (type pdf)
 <use images/deISEAR_subtokenized.pdf>
 Package pdftex.def Info: images/deISEAR_subtokenized.pdf  used on input line 22
 6.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/deISEAR_label_percentages.pdf, id=657, 650.43pt x 968.42001pt>
+<images/deISEAR_label_percentages.pdf, id=150, 650.43pt x 968.42001pt>
 File: images/deISEAR_label_percentages.pdf Graphic file (type pdf)
 <use images/deISEAR_label_percentages.pdf>
 Package pdftex.def Info: images/deISEAR_label_percentages.pdf  used on input li
 ne 231.
 (pdftex.def)             Requested size: 192.0548pt x 285.94742pt.
+
+Package natbib Warning: Citation `troiano2019crowdsourcing' on page 12 undefine
+d on input line 241.
+
 
 Package natbib Warning: Citation `chen-yih-2020-open' on page 12 undefined on i
 nput line 253.
@@ -2259,126 +2767,156 @@ Package natbib Warning: Citation `welbl2017crowdsourcing' on page 12 undefined
 on input line 255.
 
 [12] [13 <./images/deISEAR_subtokenized.pdf> <./images/deISEAR_label_percentage
-s.pdf>] [14] [15]
+s.pdf>] [14]
 
-Package caption Warning: \label without proper reference on input line 376.
-See the caption package documentation for explanation.
+Package natbib Warning: Citation `lewis2019mlqa' on page 15 undefined on input 
+line 342.
+
+
+LaTeX Warning: Reference `itm:mlqa-strange-answer-span' on page 15 undefined on
+ input line 352.
+
+[15]
+
+Package natbib Warning: Citation `lewis2019mlqa' on page 16 undefined on input 
+line 361.
+
+
+LaTeX Warning: Reference `chap:mlqa-sota' on page 16 undefined on input line 36
+2.
 
 
 LaTeX Warning: Reference `fig:mlqa-stats' on page 16 undefined on input line 36
 9.
 
-<images/MLQA_context.pdf, id=707, 433.62pt x 650.43pt>
+<images/MLQA_context.pdf, id=196, 433.62pt x 650.43pt>
 File: images/MLQA_context.pdf Graphic file (type pdf)
 <use images/MLQA_context.pdf>
 Package pdftex.def Info: images/MLQA_context.pdf  used on input line 379.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/MLQA_answer.pdf, id=708, 433.62pt x 650.43pt>
+<images/MLQA_answer.pdf, id=197, 433.62pt x 650.43pt>
 File: images/MLQA_answer.pdf Graphic file (type pdf)
 <use images/MLQA_answer.pdf>
 Package pdftex.def Info: images/MLQA_answer.pdf  used on input line 384.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-[16] [17 <./images/MLQA_context.pdf> <./images/MLQA_answer.pdf>]
 
-LaTeX Warning: Reference `itm:itm:paws-x2' on page 18 undefined on input line 4
-82.
+Package natbib Warning: Citation `lewis2019mlqa' on page 16 undefined on input 
+line 426.
+
+[16]
+
+Package natbib Warning: Citation `lewis2019mlqa' on page 17 undefined on input 
+line 433.
+
+
+LaTeX Warning: Reference `chap:5_results' on page 17 undefined on input line 43
+6.
+
+
+Package natbib Warning: Citation `yang2019paws' on page 17 undefined on input l
+ine 444.
+
+
+Package natbib Warning: Citation `zhang2019paws' on page 17 undefined on input 
+line 447.
+
+[17 <./images/MLQA_context.pdf> <./images/MLQA_answer.pdf>]
+
+LaTeX Warning: Reference `itm:paws-x1' on page 18 undefined on input line 482.
+
+
+LaTeX Warning: Reference `itm:paws-x2' on page 18 undefined on input line 482.
 
 [18]
 
 LaTeX Warning: Reference `fig:fig:pawsx-stat' on page 19 undefined on input lin
 e 513.
 
+
+Package natbib Warning: Citation `zhang2019paws' on page 19 undefined on input 
+line 519.
+
+
+Package natbib Warning: Citation `papineni2002bleu' on page 19 undefined on inp
+ut line 523.
+
 [19]
-<images/PAWS-X_subtokenized_sent1.pdf, id=765, 433.62pt x 650.43pt>
+<images/PAWS-X_subtokenized_sent1.pdf, id=244, 433.62pt x 650.43pt>
 File: images/PAWS-X_subtokenized_sent1.pdf Graphic file (type pdf)
 <use images/PAWS-X_subtokenized_sent1.pdf>
 Package pdftex.def Info: images/PAWS-X_subtokenized_sent1.pdf  used on input li
 ne 536.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_subtokenized_sent2.pdf, id=766, 433.62pt x 650.43pt>
+<images/PAWS-X_subtokenized_sent2.pdf, id=245, 433.62pt x 650.43pt>
 File: images/PAWS-X_subtokenized_sent2.pdf Graphic file (type pdf)
 <use images/PAWS-X_subtokenized_sent2.pdf>
 Package pdftex.def Info: images/PAWS-X_subtokenized_sent2.pdf  used on input li
 ne 541.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_num_examples.pdf, id=767, 433.62pt x 650.43pt>
+<images/PAWS-X_num_examples.pdf, id=246, 433.62pt x 650.43pt>
 File: images/PAWS-X_num_examples.pdf Graphic file (type pdf)
 <use images/PAWS-X_num_examples.pdf>
 Package pdftex.def Info: images/PAWS-X_num_examples.pdf  used on input line 554
 .
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_labels.pdf, id=768, 433.62pt x 650.43pt>
+<images/PAWS-X_labels.pdf, id=247, 433.62pt x 650.43pt>
 File: images/PAWS-X_labels.pdf Graphic file (type pdf)
 <use images/PAWS-X_labels.pdf>
 Package pdftex.def Info: images/PAWS-X_labels.pdf  used on input line 559.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_BLEU_scores.pdf, id=769, 433.62pt x 650.43pt>
+<images/PAWS-X_BLEU_scores.pdf, id=248, 433.62pt x 650.43pt>
 File: images/PAWS-X_BLEU_scores.pdf Graphic file (type pdf)
 <use images/PAWS-X_BLEU_scores.pdf>
 Package pdftex.def Info: images/PAWS-X_BLEU_scores.pdf  used on input line 577.
 
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
 
-Underfull \hbox (badness 1189) in paragraph at lines 581--581
-[][]|\OT1/cmr/m/n/10 BLEU scores of the PAWS-X
+Underfull \hbox (badness 1199) in paragraph at lines 581--581
+[][]|\T1/cmr/m/n/10 BLEU scores of the PAWS-X
+ []
+
+
+Underfull \hbox (badness 4144) in paragraph at lines 589--598
+[]\T1/cmr/m/n/12 Er ist der derzeit-ige Welt-meis-ter und
  []
 
 [20 <./images/PAWS-X_subtokenized_sent1.pdf> <./images/PAWS-X_subtokenized_sent
-2.pdf>]
-Underfull \hbox (badness 4120) in paragraph at lines 589--598
-[]\OT1/cmr/m/n/12 Er ist der derzeit-ige Welt-meis-ter und
- []
+2.pdf> <./images/PAWS-X_BLEU_scores.pdf>] [21 <./images/PAWS-X_num_examples.pdf
+> <./images/PAWS-X_labels.pdf>] [22]
+
+Package natbib Warning: Citation `yang2019paws' on page 23 undefined on input l
+ine 653.
 
 
-Underfull \hbox (badness 2057) in paragraph at lines 589--598
-\OT1/cmr/m/n/12 rop^^?ais-chen Shakehand-Stil. Er ist der
- []
+Package natbib Warning: Citation `sanger2016scare' on page 23 undefined on inpu
+t line 671.
 
 
-Underfull \hbox (badness 1939) in paragraph at lines 589--598
-\OT1/cmr/m/n/12 Siegen bei den World Tour Grand Fi-
- []
-
-[21 <./images/PAWS-X_num_examples.pdf> <./images/PAWS-X_labels.pdf> <./images/P
-AWS-X_BLEU_scores.pdf>] [22] [23]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 698.
+Package natbib Warning: Citation `sanger2016scare' on page 23 undefined on inpu
+t line 674.
 
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 698.
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 698.
+Package natbib Warning: Citation `socher2013recursive' on page 23 undefined on 
+input line 678.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Overfull \hbox (19.40376pt too wide) in paragraph at lines 772--772
- [] 
- []
+Package natbib Warning: ged to `ht'.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [24]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[25]
-<images/SCARE_labels.pdf, id=859, 433.62pt x 650.43pt>
+<images/SCARE_labels.pdf, id=450, 433.62pt x 650.43pt>
 File: images/SCARE_labels.pdf Graphic file (type pdf)
 <use images/SCARE_labels.pdf>
 Package pdftex.def Info: images/SCARE_labels.pdf  used on input line 829.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/SCARE_label_stats.pdf, id=860, 433.62pt x 650.43pt>
+<images/SCARE_label_stats.pdf, id=451, 433.62pt x 650.43pt>
 File: images/SCARE_label_stats.pdf Graphic file (type pdf)
 <use images/SCARE_label_stats.pdf>
 Package pdftex.def Info: images/SCARE_label_stats.pdf  used on input line 834.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/SCARE_subtokenized.pdf, id=861, 433.62pt x 650.43pt>
+<images/SCARE_subtokenized.pdf, id=452, 433.62pt x 650.43pt>
 File: images/SCARE_subtokenized.pdf Graphic file (type pdf)
 <use images/SCARE_subtokenized.pdf>
 Package pdftex.def Info: images/SCARE_subtokenized.pdf  used on input line 848.
@@ -2389,26 +2927,42 @@ Package pdftex.def Info: images/SCARE_subtokenized.pdf  used on input line 848.
 Package wrapfig Warning: Stationary wrapfigure forced to float on input line 85
 5.
 
-[26 <./images/SCARE_subtokenized.pdf>] [27 <./images/SCARE_labels.pdf> <./image
-s/SCARE_label_stats.pdf>]
+[25] [26 <./images/SCARE_labels.pdf> <./images/SCARE_label_stats.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 869--870
 
  []
 
+[27 <./images/SCARE_subtokenized.pdf>]
+
+Package natbib Warning: Citation `sanger2016scare' on page 28 undefined on inpu
+t line 879.
+
+
+Package natbib Warning: Citation `conneau2018xnli' on page 28 undefined on inpu
+t line 893.
+
+
+Package natbib Warning: Citation `williams2017broad' on page 28 undefined on in
+put line 895.
+
+
+Package natbib Warning: Citation `conneau2018xnli' on page 28 undefined on inpu
+t line 903.
+
 [28] [29]
-<images/XNLI_premise_subtokenized.pdf, id=926, 433.62pt x 650.43pt>
+<images/XNLI_premise_subtokenized.pdf, id=514, 433.62pt x 650.43pt>
 File: images/XNLI_premise_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_premise_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_premise_subtokenized.pdf  used on input li
 ne 1001.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/XNLI_hypo_subtokenized.pdf, id=927, 433.62pt x 650.43pt>
+<images/XNLI_hypo_subtokenized.pdf, id=515, 433.62pt x 650.43pt>
 File: images/XNLI_hypo_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_hypo_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_hypo_subtokenized.pdf  used on input line 
 1006.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/XNLI_labels.pdf, id=928, 505.89pt x 650.43pt>
+<images/XNLI_labels.pdf, id=516, 505.89pt x 650.43pt>
 File: images/XNLI_labels.pdf Graphic file (type pdf)
 <use images/XNLI_labels.pdf>
 Package pdftex.def Info: images/XNLI_labels.pdf  used on input line 1017.
@@ -2419,41 +2973,82 @@ Package wrapfig Warning: Stationary wrapfigure forced to float on input line 10
 23.
 
 
-Underfull \hbox (badness 1668) in paragraph at lines 1025--1030
-\OT1/cmr/m/n/12 their BiL-STM on the MultiNLI
- []
+Package natbib Warning: Citation `conneau2018xnli' on page 30 undefined on inpu
+t line 1025.
 
-[30 <./images/XNLI_labels.pdf>] [31 <./images/XNLI_premise_subtokenized.pdf> <.
-/images/XNLI_hypo_subtokenized.pdf>] [32]
-<images/XQuAD_context.pdf, id=973, 433.62pt x 650.43pt>
-File: images/XQuAD_context.pdf Graphic file (type pdf)
-<use images/XQuAD_context.pdf>
-Package pdftex.def Info: images/XQuAD_context.pdf  used on input line 1095.
-(pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/XQuAD_answer.pdf, id=974, 433.62pt x 650.43pt>
-File: images/XQuAD_answer.pdf Graphic file (type pdf)
-<use images/XQuAD_answer.pdf>
-Package pdftex.def Info: images/XQuAD_answer.pdf  used on input line 1100.
-(pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
- [33 <./images/XQuAD_context.pdf> <./images/XQuAD_answer.pdf>] [34] [35
+[30 <./images/XNLI_premise_subtokenized.pdf> <./images/XNLI_hypo_subtokenized.p
+df> <./images/XNLI_labels.pdf>]
 
-])
-\openout2 = `chapters/chap4_architecture.aux'.
+Package natbib Warning: Citation `artetxe2019cross' on page 31 undefined on inp
+ut line 1040.
 
- (./chapters/chap4_architecture.tex
-chapter 4.
-<images/architecture_grob.png, id=1013, 2326.19063pt x 531.48563pt>
-File: images/architecture_grob.png Graphic file (type png)
-<use images/architecture_grob.png>
-Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
-(pdftex.def)             Requested size: 398.33858pt x 91.00826pt.
-[36
+[31]
+
+Package natbib Warning: Citation `artetxe2019cross' on page 32 undefined on inp
+ut line 1079.
+
+! Undefined control sequence.
+l.1081 \Statistics
+                  }
+? x
+ 
+Here is how much of TeX's memory you used:
+ 36190 strings out of 492982
+ 692851 string characters out of 6134895
+ 829827 words of memory out of 5000000
+ 39003 multiletter control sequences out of 15000+600000
+ 574584 words of font info for 105 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 68i,18n,68p,10408b,936s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fo
+nts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/en
+c/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/cbfonts/grmn1095.pfb></usr/share/tex
+mf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.
+pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texm
+f/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on CLthesis.pdf (38 pages, 549101 bytes).
+PDF statistics:
+ 649 PDF objects out of 1000 (max. 8388607)
+ 520 compressed objects within 6 object streams
+ 140 named destinations out of 1000 (max. 500000)
+ 377 words of extra memory for PDF output out of 10000 (max. 10000000)
+
+undefined on
+ input line 38.
 
 
+Package natbib Warning: Citation `do2018flexible' on page 37 undefined on input
+ line 49.
 
 
- <./images/architecture_grob.png>] [37] [38]
-<images/architecture.png, id=1049, 4224.03696pt x 2128.20695pt>
+Package natbib Warning: Citation `hajivc2009conll' on page 37 undefined on inpu
+t line 51.
+
+
+Package natbib Warning: Citation `do2018flexible' on page 37 undefined on input
+ line 52.
+
+
+Package natbib Warning: Citation `jurafsky2019speech' on page 37 undefined on i
+nput line 55.
+
+
+Package natbib Warning: Citation `sennrich2013exploiting' on page 37 undefined 
+on input line 57.
+
+[37] [38]
+<images/architecture.png, id=496, 4224.03696pt x 2128.20695pt>
 File: images/architecture.png Graphic file (type png)
 <use images/architecture.png>
 Package pdftex.def Info: images/architecture.png  used on input line 68.
@@ -2462,11 +3057,56 @@ Package pdftex.def Info: images/architecture.png  used on input line 68.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[39 <./images/architecture.png>] [40
+[39 <./images/architecture.png>]
+
+Package natbib Warning: Citation `wittenberg2016light' on page 40 undefined on 
+input line 76.
+
+
+Package natbib Warning: Citation `samardzic2013dynamics' on page 40 undefined o
+n input line 80.
+
+
+Package natbib Warning: Citation `de2014universal' on page 40 undefined on inpu
+t line 81.
+
+
+Package natbib Warning: Citation `gerdes2001word' on page 40 undefined on input
+ line 86.
+
+
+Package natbib Warning: Citation `gross2015dependency' on page 40 undefined on 
+input line 86.
+
+
+Package natbib Warning: Citation `schneider2008hybrid' on page 40 undefined on 
+input line 88.
+
+
+Package natbib Warning: Citation `aepli2018parsing' on page 40 undefined on inp
+ut line 94.
+
+
+Package natbib Warning: Citation `gross2015dependency' on page 40 undefined on 
+input line 101.
+
+
+Package natbib Warning: Citation `gross2015dependency' on page 40 undefined on 
+input line 105.
+
+
+Package natbib Warning: Citation `foth2006umfassende' on page 40 undefined on i
+nput line 108.
+
+[40
 
 
 ]
-<images/exampleParzu2.png, id=1091, 827.34094pt x 358.33875pt>
+
+LaTeX Warning: Reference `fig:example-parzu' on page 41 undefined on input line
+ 125.
+
+<images/exampleParzu2.png, id=510, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 132.
@@ -2476,33 +3116,93 @@ Overfull \hbox (28.45274pt too wide) in paragraph at lines 132--132
  [] 
  []
 
+
+LaTeX Warning: Reference `alg:find-predicates' on page 41 undefined on input li
+ne 134.
+
+
+Package natbib Warning: Citation `buchholz2006conll' on page 41 undefined on in
+put line 136.
+
+
+Package natbib Warning: Citation `schiller1999guidelines' on page 41 undefined 
+on input line 138.
+
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 141.
-[41 <./images/exampleParzu2.png (PNG copy)>] [42]
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 209.
+
+LaTeX Warning: Reference `ex:multiple-predicates' on page 41 undefined on input
+ line 173.
 
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
-File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+LaTeX Warning: Reference `ex:multiple-predicates' on page 41 undefined on input
+ line 176.
+
+[41 <./images/exampleParzu2.png (PNG copy)>]
+
+Package natbib Warning: Citation `wu2016google' on page 42 undefined on input l
+ine 197.
+
+[42]
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 209.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 209.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [43] [44] [45]
-<images/bert_classification.png, id=1162, 1071.25218pt x 441.14813pt>
+) [43]
+
+Package natbib Warning: Citation `do2018flexible' on page 44 undefined on input
+ line 334.
+
+[44]
+
+Package natbib Warning: Citation `wu2016google' on page 45 undefined on input l
+ine 371.
+
+
+Package natbib Warning: Citation `wu2016google' on page 45 undefined on input l
+ine 376.
+
+[45]
+
+Package natbib Warning: Citation `devlin2018bert' on page 46 undefined on input
+ line 406.
+
+
+LaTeX Warning: Reference `fig:BERT-classification' on page 46 undefined on inpu
+t line 406.
+
+<images/bert_classification.png, id=566, 1071.25218pt x 441.14813pt>
 File: images/bert_classification.png Graphic file (type png)
 <use images/bert_classification.png>
 Package pdftex.def Info: images/bert_classification.png  used on input line 408
 .
 (pdftex.def)             Requested size: 369.88582pt x 152.32416pt.
 
+Package natbib Warning: Citation `devlin2018bert' on page 46 undefined on input
+ line 408.
+
+
+Package natbib Warning: Citation `devlin2018bert' on page 46 undefined on input
+ line 408.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+Package natbib Warning: Citation `zhang2019semantics' on page 46 undefined on i
+nput line 418.
+
+
+Package natbib Warning: Citation `zhang2019semantics' on page 46 undefined on i
+nput line 423.
+
 [46]
-<images/head-cls.png, id=1180, 1751.8248pt x 1215.87048pt>
+<images/head-cls.png, id=578, 1751.8248pt x 1215.87048pt>
 File: images/head-cls.png Graphic file (type png)
 <use images/head-cls.png>
 Package pdftex.def Info: images/head-cls.png  used on input line 438.
@@ -2511,30 +3211,51 @@ Package pdftex.def Info: images/head-cls.png  used on input line 438.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+Package natbib Warning: Citation `zhang2019semantics' on page 47 undefined on i
+nput line 448.
+
 [47 <./images/bert_classification.png>]
-<images/head-lhsa.png, id=1189, 1698.63408pt x 1286.406pt>
+
+LaTeX Warning: Reference `tab:results' on page 48 undefined on input line 465.
+
+<images/head-lhsa.png, id=587, 1698.63408pt x 1286.406pt>
 File: images/head-lhsa.png Graphic file (type png)
 <use images/head-lhsa.png>
 Package pdftex.def Info: images/head-lhsa.png  used on input line 468.
 (pdftex.def)             Requested size: 284.52756pt x 215.46698pt.
 
-
 LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Package natbib Warning: Citation `myagmar2019transferable' on page 48 undefined
+ on input line 470.
 
 LaTeX Font Info:    Try loading font information for U+bbm on input line 477.
 (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 ) [48 <./images/head-cls.png>]
-<images/head-gru.png, id=1204, 1738.52711pt x 1697.47775pt>
+
+Package natbib Warning: Citation `hopfield1982neural' on page 49 undefined on i
+nput line 485.
+
+
+Package natbib Warning: Citation `hochreiter1997long' on page 49 undefined on i
+nput line 487.
+
+
+Package natbib Warning: Citation `cho2014learning' on page 49 undefined on inpu
+t line 488.
+
+<images/head-gru.png, id=595, 1738.52711pt x 1697.47775pt>
 File: images/head-gru.png Graphic file (type png)
 <use images/head-gru.png>
 Package pdftex.def Info: images/head-gru.png  used on input line 491.
 (pdftex.def)             Requested size: 284.52756pt x 277.79242pt.
 
-
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/head-span_pred.png, id=1205, 1704.99384pt x 1033.17192pt>
+<images/head-span_pred.png, id=596, 1704.99384pt x 1033.17192pt>
 File: images/head-span_pred.png Graphic file (type png)
 <use images/head-span_pred.png>
 Package pdftex.def Info: images/head-span_pred.png  used on input line 502.
@@ -2549,19 +3270,37 @@ _pred.png>]
  (./chapters/chap5_results.tex
 chapter 5.
 
-Overfull \hbox (0.48767pt too wide) in paragraph at lines 122--123
-[]\OT1/cmr/m/n/12 GRU ar-chi-tec-ture is prob-a-bly strongest: most best mod-el
-s (even though mostly
+LaTeX Warning: Reference `sec:ablation' on page 51 undefined on input line 7.
+
+
+Overfull \hbox (0.39456pt too wide) in paragraph at lines 122--123
+[]\T1/cmr/m/n/12 GRU ar-chi-tec-ture is prob-a-bly strongest: most best mod-els
+ (even though mostly
  []
 
 
 LaTeX Warning: Reference `tab:pawsx' on page 51 undefined on input line 130.
+
+
+LaTeX Warning: Reference `tab:results' on page 51 undefined on input line 130.
+
+
+LaTeX Warning: Reference `tab:results-qa' on page 51 undefined on input line 13
+2.
 
 [51
 
 
 
 ]
+
+LaTeX Warning: Reference `tab:pawsx-beta' on page 52 undefined on input line 16
+5.
+
+
+LaTeX Warning: Reference `tab:pawsx-beta' on page 52 undefined on input line 16
+5.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -2579,20 +3318,34 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
+LaTeX Warning: Reference `tab:results' on page 54 undefined on input line 274.
+
+
+LaTeX Warning: Reference `tab:results' on page 54 undefined on input line 274.
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/gain_losses_accumulated.pdf, id=1244, 650.43pt x 433.62pt>
+<images/gain_losses_accumulated.pdf, id=635, 650.43pt x 433.62pt>
 File: images/gain_losses_accumulated.pdf Graphic file (type pdf)
 <use images/gain_losses_accumulated.pdf>
 Package pdftex.def Info: images/gain_losses_accumulated.pdf  used on input line
  279.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
-<images/gain_losses_SRL.pdf, id=1245, 650.43pt x 433.62pt>
+<images/gain_losses_SRL.pdf, id=636, 650.43pt x 433.62pt>
 File: images/gain_losses_SRL.pdf Graphic file (type pdf)
 <use images/gain_losses_SRL.pdf>
 Package pdftex.def Info: images/gain_losses_SRL.pdf  used on input line 284.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
-<images/all_datasets_gain_dup.pdf, id=1248, 939.51pt x 867.24pt>
+
+LaTeX Warning: Reference `tab:gain-loss' on page 54 undefined on input line 287
+.
+
+
+LaTeX Warning: Reference `tab:gain-loss' on page 54 undefined on input line 287
+.
+
+<images/all_datasets_gain_dup.pdf, id=637, 939.51pt x 867.24pt>
 File: images/all_datasets_gain_dup.pdf Graphic file (type pdf)
 <use images/all_datasets_gain_dup.pdf>
 Package pdftex.def Info: images/all_datasets_gain_dup.pdf  used on input line 2
@@ -2608,15 +3361,23 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
+LaTeX Warning: Reference `tab:results-qa' on page 54 undefined on input line 34
+5.
+
+
+LaTeX Warning: Reference `tab:results-qa' on page 54 undefined on input line 34
+5.
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/QA_gain_losses_accumulated.pdf, id=1251, 650.43pt x 433.62pt>
+<images/QA_gain_losses_accumulated.pdf, id=638, 650.43pt x 433.62pt>
 File: images/QA_gain_losses_accumulated.pdf Graphic file (type pdf)
 <use images/QA_gain_losses_accumulated.pdf>
 Package pdftex.def Info: images/QA_gain_losses_accumulated.pdf  used on input l
 ine 351.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
-<images/QA_gain_losses_SRL2.pdf, id=1252, 650.43pt x 433.62pt>
+<images/QA_gain_losses_SRL2.pdf, id=639, 650.43pt x 433.62pt>
 File: images/QA_gain_losses_SRL2.pdf Graphic file (type pdf)
 <use images/QA_gain_losses_SRL2.pdf>
 Package pdftex.def Info: images/QA_gain_losses_SRL2.pdf  used on input line 356
@@ -2630,12 +3391,55 @@ LaTeX Warning: Reference `tab:qa-gain-loss' on page 54 undefined on input line
 LaTeX Warning: Reference `tab:qa-gain-loss' on page 54 undefined on input line 
 359.
 
+
+Package natbib Warning: Citation `dror2018hitchhiker' on page 54 undefined on i
+nput line 365.
+
+
+Package natbib Warning: Citation `koehn2004statistical' on page 54 undefined on
+ input line 376.
+
 [54
 
 
-] [55] [56 <./images/gain_losses_accumulated.pdf> <./images/gain_losses_SRL.pdf
->] [57] [58 <./images/all_datasets_gain_dup.pdf>] [59]
-<images/all_data_sets_token_stats.pdf, id=1356, 1084.05pt x 650.43pt>
+]
+
+Package natbib Warning: Citation `koehn2004statistical' on page 55 undefined on
+ input line 378.
+
+
+Package natbib Warning: Citation `koehn2004statistical' on page 55 undefined on
+ input line 384.
+
+
+Package natbib Warning: Citation `morgan2005statistical' on page 55 undefined o
+n input line 387.
+
+
+Package natbib Warning: Citation `yeh2000more' on page 55 undefined on input li
+ne 393.
+
+[55]
+
+Package natbib Warning: Citation `yeh2000more' on page 56 undefined on input li
+ne 398.
+
+
+Package natbib Warning: Citation `yeh2000more' on page 56 undefined on input li
+ne 402.
+
+[56 <./images/gain_losses_accumulated.pdf> <./images/gain_losses_SRL.pdf>]
+[57] [58 <./images/all_datasets_gain_dup.pdf>]
+
+LaTeX Warning: Reference `alg:approximate-randomization' on page 59 undefined o
+n input line 458.
+
+
+Package natbib Warning: Citation `zhang2019semantics' on page 59 undefined on i
+nput line 476.
+
+[59]
+<images/all_data_sets_token_stats.pdf, id=730, 1084.05pt x 650.43pt>
 File: images/all_data_sets_token_stats.pdf Graphic file (type pdf)
 <use images/all_data_sets_token_stats.pdf>
 Package pdftex.def Info: images/all_data_sets_token_stats.pdf  used on input li
@@ -2652,24 +3456,18 @@ Package natbib Warning: Citation `caswell2021quality' on page 61 undefined on i
 nput line 525.
 
 [61 <./images/all_data_sets_token_stats.pdf>]
-Overfull \hbox (3.78987pt too wide) in paragraph at lines 533--535
-[]\OT1/cmr/m/n/12 Riverton war ein Par-la-mentsw^^?ahler in der neuseel^^?andis
--chen Re-gion South-land. River-
- []
-
-
-Overfull \hbox (19.49571pt too wide) in paragraph at lines 557--558
-[]\OT1/cmr/m/n/12 Im Jahr 2014 wurde Hus-ton Smith eine au-torisierte Bi-ogra-p
-hie von Sawyer ver^^?offentlicht. 
+Overfull \hbox (3.36285pt too wide) in paragraph at lines 533--535
+[]\T1/cmr/m/n/12 Riverton war ein Par-la-mentswäh-ler in der neuseeländis-chen 
+Re-gion South-land. River-
  []
 
 [62]
-<images/SRL_assessment.pdf, id=1394, 578.16pt x 433.62pt>
+<images/SRL_assessment.pdf, id=774, 578.16pt x 433.62pt>
 File: images/SRL_assessment.pdf Graphic file (type pdf)
 <use images/SRL_assessment.pdf>
 Package pdftex.def Info: images/SRL_assessment.pdf  used on input line 571.
 (pdftex.def)             Requested size: 312.9803pt x 234.73357pt.
-<images/SRL_assessment_data_set.pdf, id=1395, 1156.32pt x 794.97pt>
+<images/SRL_assessment_data_set.pdf, id=775, 1156.32pt x 794.97pt>
 File: images/SRL_assessment_data_set.pdf Graphic file (type pdf)
 <use images/SRL_assessment_data_set.pdf>
 Package pdftex.def Info: images/SRL_assessment_data_set.pdf  used on input line
@@ -2679,7 +3477,16 @@ Package pdftex.def Info: images/SRL_assessment_data_set.pdf  used on input line
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[63 <./images/SRL_assessment.pdf>] [64 <./images/SRL_assessment_data_set.pdf>]
+
+Package natbib Warning: Citation `landis1977measurement' on page 63 undefined o
+n input line 576.
+
+[63 <./images/SRL_assessment.pdf>]
+
+Package natbib Warning: Citation `do2018flexible' on page 64 undefined on input
+ line 596.
+
+[64 <./images/SRL_assessment_data_set.pdf>]
 Package hyperref Info: bookmark level for unknown srl defaults to 0 on input li
 ne 643.
 
@@ -2771,8 +3578,12 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
 (./chapters/chap1_introduction.aux) (./chapters/chap2_approach.aux)
 (./chapters/chap3_datasets.aux) (./chapters/chap4_architecture.aux)
 (./chapters/chap5_results.aux) (./chapters/chap6_conclusion.aux)
-(./chapters/glossary.aux) (./chapters/references.aux) (./chapters/cv.aux)
-(./appendix/tables.aux) (./appendix/scripts.aux))
+(./chapters/glossary.aux) (./chapters/references.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+) (./chapters/cv.aux) (./appendix/tables.aux) (./appendix/scripts.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 
@@ -2782,49 +3593,52 @@ Package rerunfilecheck Warning: File `CLthesis.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `CLthesis.out':
-(rerunfilecheck)             Before: 695C2961BD7E66879C32717A9FF8EF21;4584
-(rerunfilecheck)             After:  A557A5A0C12775DA3D71AAF638803787;4661.
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  5465D68520155BA763BAC3BB3C565387;4602.
 
 LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 35809 strings out of 492982
- 691542 string characters out of 6134895
- 875486 words of memory out of 5000000
- 38306 multiletter control sequences out of 15000+600000
- 564195 words of font info for 118 fonts, out of 8000000 for 9000
+ 36877 strings out of 492982
+ 706856 string characters out of 6134895
+ 865681 words of memory out of 5000000
+ 39385 multiletter control sequences out of 15000+600000
+ 582550 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,18n,78p,10408b,1019s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/joni/.texlive2017/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk>{/
-usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/font
-s/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/te
+ 68i,18n,78p,10408b,1066s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc} </home/joni/.texl
+ive2017/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk>{/usr/share/texlive/te
+xmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super
+/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
+2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12
-.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/times/utmr8a.pfb>
-Output written on CLthesis.pdf (85 pages, 2307648 bytes).
+/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/cbfonts/grmn1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1
+000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/
+texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/pu
+blic/cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm08
+00.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/t
+exmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/pub
+lic/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti100
+0.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/te
+xmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/publ
+ic/cm-super/sftt1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on CLthesis.pdf (83 pages, 2459442 bytes).
 PDF statistics:
- 1639 PDF objects out of 1728 (max. 8388607)
- 1391 compressed objects within 14 object streams
- 369 named destinations out of 1000 (max. 500000)
- 767 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1090 PDF objects out of 1200 (max. 8388607)
+ 852 compressed objects within 9 object streams
+ 366 named destinations out of 1000 (max. 500000)
+ 183 words of extra memory for PDF output out of 10000 (max. 10000000)
 

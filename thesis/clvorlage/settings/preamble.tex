@@ -1,6 +1,7 @@
 \documentclass[a4paper, 12pt,numbers=noenddot]{scrreprt}
 
 \usepackage[utf8]{inputenc}
+\usepackage[LGR,T1]{fontenc}
 \usepackage[scaled]{helvet}
 \usepackage[ngerman,english]{babel} %Trennungen, Schriftsatz; Neue deutsche Rechtschreibung
 \usepackage[square]{natbib}  % more options for citations, e.g. here: square brackets as ``parentheses''
@@ -57,6 +58,8 @@
 
 \newcolumntype{g}{>{\columncolor{llight-gray}}c}
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\newcommand{\textgreek}[1]{\begingroup\fontencoding{LGR}\selectfont#1\endgroup}
 
 \floatstyle{plain}
 \newfloat{srl}{H}{loe}[chapter]
