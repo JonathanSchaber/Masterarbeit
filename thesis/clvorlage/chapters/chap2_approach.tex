@@ -22,7 +22,7 @@ to the field than regular benchmark SOTA cracking by ``normal'' new or improved 
 
 
 The basic concept of BERT is rather trivial: (1) Let a big, sohpisticated neural network learn
-contextualized embeddings for words by training it unsupervized on huge amounts of data. (2)
+contextualized embeddings for words by training it unsupervised on huge amounts of data. (2)
 Use these embeddings as representations for words in downstream tasks, put a very simple neural
 network on top (mostly a simple FFNN) and fine-tune them during training on the downstream task.
 One of the strengths of this approach is that the cost, hardware, and data intensive pre-training of the
@@ -47,7 +47,7 @@ In simple terms, BERT takes an input sequence, tokenizes it and computes context
 representations for each token via stacked blocks employing self-attention and linear combination.
 Figure \ref{fig:bert-architecture} shows one of these blocks.
 
-\fig{images/BERT.png}{fig:bert-architecture}{3D-visualization of BERT architecture. Credit goes to Peltarion: \url{https://peltarion.com/blog/data-science/illustration-3d-bert}}{11}{BERT Architecture}
+\fig{images/BERT.png}{fig:bert-architecture}{3D-visualization of the BERT architecture. Nicely illustrated are the 12 attention heads and following linear projections in one block (here called ``Layer''). Credit goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT Architecture}
 
 The computation of the weight matrices and initial vector representations for the tokens is done
 via an unsupervised learning phase, often referred to as pre-training. The basic concept is
@@ -57,6 +57,14 @@ needs to optimize on two training objectives: (1) One word is randomly masked an
 to predict it, and (2) BERT has to decide if, given two randomly sampled sentences, the second
 is a valid continuation of the first. Crucially, both tasks can be generated automatically, no
 tedious human annotation of data is needed.
+
+With this ``simple'' approach --- i.e. unsupervised pretraining of contextualized embeddings and
+fin-tuning on target tasks with very simple head on top --- \citeauthor{devlin2018bert} beat the
+hithertho leading architecture on the GLUE benchmark by an outstanding average of 7,0\%. This is
+especially remarkink, since BERT is not a highly specialized model\myfootnote{Until then, SOTAs
+were achieved by complex interwiring of some embeddings with a specialized architecture. }, but
+aparently still more effective on most tasks than highly tas-specific optimized models.
+Thus, the NLP community was awestruck.
 
 \section{Problems}
 
@@ -79,11 +87,32 @@ in situations where proper semantic understanding of text sequences is crucial, 
 detecting role reversal or sentence completion tasks.
 
 \cite{jiang2019evaluating} also state ``that despite the high F1 scores, BERT models have
-systematic error pat terns'', which for them suggests ``that they still do not capture the
+systematic error patterns'', which for them suggests ``that they still do not capture the
 full complexity of human pragmatic reasoning.''
 
-
 \cite{jin2020bert}even go further and created so-called adversarial attacks on BERT:
+After observing that BERT seems to rely only on the statistical cues of a small number of the input tokens to
+form its predictions, \citeauthor{jin2020bert} create a sohpisticated algorithm to permute
+the input sentences wihtout actually changing its meaning. Follwing is an example from the
+SNLI \citep{bowman2015snli} dataset, exemplifying one such attack:
+
+\begin{examples}
+  \item \textbf{Premise}: A child with wet hair is holding a butterfly decorated beach ball.
+
+        \textbf{Original Hypothesis}: The \emph{child} is at the \emph{beach}.\\
+        \textbf{Adversarial Hypothesis}: The \emph{youngster} is at the \emph{shore}.
+\end{examples}
+
+The italicized words are the ones that were affected by the adversarial algorithm.
+Obviously --- for a human --- the meaning of the adversarial hypothesis has not
+changed from the original one. One could argue that there is a slight difference
+in style (the adversarial sounds somewhat overblown to me) but it would still count
+as an entailment of the premise. However, as the authors report, BERT is affected
+by such attacks and changes its predictions.
+
+For SNLI, \citeauthor{jin2020bert} report to bring down BERT's original accuracy of
+89,4\% to an astonishing 4,0\% by permuting 18,5\% of the input tokens. Recall that
+the permutations are, simply put, nothing else than exchanging words with identical meanings.
 
 
 
@@ -92,28 +121,77 @@ full complexity of human pragmatic reasoning.''
 
 \section{Solutions / Related Work}
 
+But the NLP community was not only passive and/or destructive concerning BERT, it also
+produced a vast number of adaptions, variations, and improvements to the ``vanilla''-BERT.
+The motivations behind all those BERTlings are as manifold as one can think: some are simply
+adaptions to other languages than English, some are general variations (in hope of improvement)
+of the BERT architecture, other are explicitly addressing above outlined problems.
+
+The following overview sheds some light on the iridescent potpourri of the BERT
+family.\myfootnote{This compilation is partly drawn from the towards-data-science article
+\href{https://towardsdatascience.com/a-review-of-bert-based-models-4ffdc0f15d58}{``A
+review of BERT based models''} by Ajit Rajasekharan.}
+Note however that this is by no means an exhaustive presentation of all BERT-variants produced so far.
 
 
-The following overview is partially drawn from the towards-data-science article ``A review of BERT based models''\myfootnote{\url{https://towardsdatascience.com/a-review-of-bert-based-models-4ffdc0f15d58}} by Ajit Rajasekharan.
+\begin{description}
+  \item[\textbf{Adapting to other languages}] One of the most straightforward modifications to the BERT model is to pre-train it on different langauges. Examples for this are the French CamemBERT \cite{martin2019camembert}, the Italian AlBERTo \cite{polignano2019alberto}, or the Dutch BERTje \cite{de2019bertje}.\myfootnote{\cite{devlin2018bert} also trained a multi-lingual BERT (mBERT), which was trained on 104 languages. However, language-specific BERTs have been shown to be more performant than employing the mBERT.}
+  \item[\textbf{Adapting to specialized domains}] BERT was pre-trained on two corpora: (1) The BooksCorpus \citep{zhu2015aligning}, consisting of 800 million words and comprising 16 different genres. (2) The English Wikipedia, lists and tables excluded (2.5 billion words).
+  Examples of BERTs pre-trained on specialized domains are for example BioBERT \cite{lee2020biobert}, which  is an adaption to biomedical language, and LEGAL-BERT \cite{chalkidis2020legalbert} which is a whole family of BERT models pre-trained on legal texts.
+  \item[\textbf{Including different modalities}] Another, highly interesting amplification of the BERT architecture is the inclusion of additional modalities, for exmple (moving) images: VideoBERT \cite{sun2019videobert} learns embeddings for image-enriched texts and can be used for example for image captioning or image classification tasks.
+  Several researchers claim that the future of NLP relies on combining text with sensory, e.g. visual, data for creating more stable and reliable models; cf. \citep{bisk2020experience, bender2021dangers}.
+  \item[\textbf{Optimizing architecture/training objective(s)}] Several BERT-variations modify the actual architecture of BERT:  DistilBERT \cite{sanh2019distilbert} is a variant 60\% of the size of the original BERT while retaining 97\% of its original performance.
+  RoBERTa \cite{liu2019roberta} essentially modifies core hyper-parameteres such as batch-size, byte-level BPE, and the like, creating a more stable BERT.
+  DeBERTa \cite{he2020deberta} modifies the attention mechanism and the position encoding, while TransBERT \cite{li2021transbert} introduces a new pre-training framework.
+  \item[\textbf{Incorporating structured information}] One of the strengths of BERT is the unsupervised pre-training on unstructered, raw text. However, research has shown that including structured linguistic information can stabilize BERT and even balance some of the known weaknesses (see above) to some extent:
+  ERNIE \cite{sun2019ernie} includes a knowledge graph into BERT, making structural fact representations available to BERT.
+  %StructBERT \cite{wang2019structbert},
+  VGCN-BERT \cite{lu2020vgcn} combines a Vocabulary Graph Convolutional Network with the standard BERT and \cite{zhang2019semantics} include semantic role labels in their SemBERT during fine-tuning.
+\end{description}
 
-\begin{itemize}
-  \item language specific models: CamemBERT \cite{martin2019camembert}, AlBERTo \cite{polignano2019alberto}, BERTje \cite{de2019bertje}, germanBERT
-  \item domain-specific training material: BioBERT \cite{lee2020biobert}, LEGAL-BERT \cite{chalkidis2020legalbert}
-  \item including different modalities:  VideoBERT \cite{sun2019videobert}
-  \item optimizing architecture/training objective(s): DistilBERT \cite{sanh2019distilbert}, RoBERTa \cite{liu2019roberta}, DeBERTa \cite{he2020deberta}, TransBERT \cite{li2021transbert}
-  \item incorporating structured information: ERNIE \cite{sun2019ernie}, StructBERT \cite{wang2019structbert}, VGCN-BERT \cite{lu2020vgcn}, SemBERT \cite{zhang2019semantics}
-\end{itemize}
 
 \section{gliBERT}
+
+Infected by the pandemic BERT-fever and slightly annoyed by the hegemony of English, I decided to
+enqueue in this illustrious list by combining two of the improvement approaches: I try to improve
+the German BERT by enhancing it with structured, linguistic information during fine-tuning.
 
 Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- you may have spotted
 a pattern in the sections before --- I decided to not deviate from this tradition, and decided to call my breed
 \textbf{g}erman \textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{gliBERT}.
 And thus a new
 
+There exist several linguistic structures which could be hypothetically included into BERT:
+\href{https://uni-tuebingen.de/en/faculties/faculty-of-humanities/departments/modern-languages/department-of-linguistics/chairs/general-and-computational-linguistics/ressources/lexica/germanet/}{GermaNet} \citep{hamp1997germanet}
+is a large lexical-semantic net that relates noun, verbs, and adjectives semantically by
+grouping lexical units that express the same concept into synsets and by defining semantic
+relations between these synsets. It can also be characterized as a thesaurus or a light-weight
+ontology.
+
+Another, much simpler, possibility would be to identify named entities
+
+
+and include the encoded structured
+information related to them, e.g. using the DBpedia \citep{auer2007dbpedia}, and enrich
+the BERT embeddings with them.
+
+However, I decided to concentrate on semantic roles for several reasons: \citeauthor{zhang2019semantics}
+demonstrated the feasability of this undertaking for English. Further, it occurred to me to be a good
+balance between two extremes: (1) Including sophisticated knowledge structures, which would
+require extensive preprocessing (stemming, identifying content words, poteantial word sense
+disambiguation, look-up in the knowledge base) and rather cumbersome encoding; and (2)
+stright-forward on the fly ``mark-up'' of input text, with low information substance in the
+case of named entities. with semantic roles, I get the best from both worlds: Easy to implement
+structured information, while --- hopefully --- truly adding semantic substance to the vanilla
+BERT embeddings.
+
+
+
+All code relating to the following dataset set ups, gliBERT architecture, and training can be found in
+my \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub repository}.
+
 
 \section{Semantic Roles}
-
 
 \begin{itemize}
   \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
