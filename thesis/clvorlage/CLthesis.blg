@@ -20,48 +20,49 @@ A level-1 auxiliary file: appendix/tables.aux
 A level-1 auxiliary file: appendix/scripts.aux
 Database file #1: biblio/thesis.bib
 Warning--empty journal in bowman2015snli
+Warning--empty journal in fillmore1967case
 Warning--empty journal in foth2006umfassende
 Warning--empty journal in hajivc2009conll
 Warning--can't use both volume and number fields in jin2020bert
-You've used 76 entries,
+You've used 79 entries,
             2773 wiz_defined-function locations,
-            987 strings with 21819 characters,
-and the built_in function-call counts, 43595 in all, are:
-= -- 3646
-> -- 3457
-< -- 52
-+ -- 1164
-- -- 1086
-* -- 3664
-:= -- 6753
-add.period$ -- 228
-call.type$ -- 76
-change.case$ -- 581
-chr.to.int$ -- 74
-cite$ -- 156
-duplicate$ -- 1777
-empty$ -- 2949
-format.name$ -- 1188
-if$ -- 9059
+            1003 strings with 22384 characters,
+and the built_in function-call counts, 45246 in all, are:
+= -- 3787
+> -- 3581
+< -- 54
++ -- 1206
+- -- 1125
+* -- 3797
+:= -- 7010
+add.period$ -- 238
+call.type$ -- 79
+change.case$ -- 603
+chr.to.int$ -- 77
+cite$ -- 163
+duplicate$ -- 1850
+empty$ -- 3064
+format.name$ -- 1230
+if$ -- 9405
 int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 68
-newline$ -- 384
-num.names$ -- 304
-pop$ -- 1248
+missing$ -- 71
+newline$ -- 399
+num.names$ -- 316
+pop$ -- 1296
 preamble$ -- 1
-purify$ -- 509
+purify$ -- 528
 quote$ -- 0
-skip$ -- 1596
+skip$ -- 1657
 stack$ -- 0
-substring$ -- 1125
-swap$ -- 316
-text.length$ -- 27
+substring$ -- 1163
+swap$ -- 327
+text.length$ -- 28
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 831
-warning$ -- 4
-while$ -- 315
+type$ -- 864
+warning$ -- 5
+while$ -- 327
 width$ -- 0
-write$ -- 953
-(There were 4 warnings)
+write$ -- 991
+(There were 5 warnings)

@@ -248,10 +248,10 @@ In a first step, I will discuss on the overall performance of models when the SR
 
 \tab{tab:gain-loss}{Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
                       over $-$SRL for each configuration from table \ref{tab:results}. The better of the +SRL configurations was taken into account:
-                      \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};,
-                      \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};.
+                      \customcolorbox{zeros}{blue},
+                      \customcolorbox{duplicate}{dark-blue}.
                       Light blue denotes that both architectures performed
-                      \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=llight-blue,text=black](char){equally};
+                      \customcolorbox{equally}{llight-blue}
                       (in which case both ensembles were controlled for significance). One asterisk signifies
                       a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
     \scalebox{1}{
@@ -325,9 +325,9 @@ In a first step, I will discuss on the overall performance of models when the SR
 
 \tab{tab:qa-gain-loss-token-merged}{\textbf{Left part}: Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
                        over $-$SRL for the Span Prediction Head from table \ref{tab:results-qa}. The better of the +SRL configurations was taken into
-                       account: \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=blue,text=black](char){zeros};,
-                       \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=dark-blue,text=black](char){duplicate};.
-                       Light blue denotes that both architectures performed \tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.2ex, text depth=0.1ex,fill=llight-blue,text=black](char){equally};
+                       account: \customcolorbox{zeros}{blue},
+                       \customcolorbox{duplicate}{dark-blue}.
+                       Light blue denotes that both architectures performed \customcolorbox{equally}{llight-blue}
                        (in which case both ensembles were controlled for significance).
                        One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
                        \textbf{Right part}: asdasdasdasdasd.}{
@@ -504,7 +504,7 @@ the model has to cope with:
  \item[\textbf{translation noise}] Due to the mostly employed semi-automatic translation
                                    approach for creating the various data sets, errors
                                    have been introduced into the data ranging from typical
-                                   translation errors (e.g. english ``bishop'' in the clerical
+                                   translation errors (e.g. English ``bishop'' in the clerical
                                    context translated to the german chess figure counterpart
                                    ``Läufer'', not ``Bischof'') to eventually wrongly copied
                                    labels, since the overall meaning changed during
@@ -532,6 +532,74 @@ Riverton was a parliamentary electorate in the New Zealand region of Southland .
 
 Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
 Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
+
+
+\subsubsection{Re-annotation}
+
+\textbf{PAWS-X}
+
+2 human annotators re-label 20 examples of PAWS-X where gold != predicted.
+Fleiss' $\kappa$ between 2 annotators: 0.68
+Fleiss' $\kappa$ between 2 annotators and gold: 0.3541
+
+6 examples where both annotators agree with predictions, disagree with gold:
+
+Der NVIDIA TITAN V wurde von Nvidia am 7. Dezember 2017 offiziell angekündigt.
+Am 07. Dezember 2017, verkündete NVIDIA offiziell Nvidia TITAN V.
+
+humans \& model: False, Gold: True
+
+
+Die Schäfte sind sehr kurz oder oft nicht vorhanden.
+Es sind entweder wenig Landschaften vorhanden oder sie fehlen in den meisten Fällen.
+
+humans \& model: False, Gold: True
+
+
+1963 trat Roy der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen in Bansdroni in Kalkutta.
+Roy trat 1963 der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen im Kolkata-Gebiet von Bansdroni.
+
+humans \& model: True, Gold:False
+
+
+Der Kanal ist einer der ältesten schiffbaren Kanäle Europas und sogar Belgiens.
+Der Kanal ist einer der ältesten befahrbaren Kanäle in Belgien und Europa.
+
+humans \& model: True, Gold:False
+
+
+Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Gastropoden-Mollusk in der Familie der Lepetidae.
+Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Meeres-Gastropoden-Mollusk der Familie der Lepetidae.
+
+humans \& model: True, Gold:False
+
+
+Die Chicago Bears sanken auf die Giants 27:21, und verloren 0:6 zum ersten Mal seit 1976.
+Die Chicago Bears verloren 21:27 gegen die Bears und standen erstmals seit 1976 bei 0:6.
+
+humans \& model: False, Gold:True
+
+
+\textbf{XNLI}
+
+2 human annotators re-label 20 examples of XNLI where gold != predicted.
+Fleiss' $\kappa$ between 2 annotators: 0.36
+Fleiss' $\kappa$ between 2 annotators and gold: 0.4787
+
+1 example where 2 humans == model and 2 humans != Gold
+
+Bato ist ein Jahrhunderte altes Wort, das man als Kerl oder Kumpel übersetzen kann.
+Bato (oder Vato) ist ein spanisches Wort, das Typ oder Typ bedeutet.
+
+humans \& model: neutral, Gold: Entailment
+
+1 example where 2 humans != model and 2 humans != Gold
+
+Oh, ich sehe oh der Staat braucht es nicht gut, das ist eher das, das ist eher ungewöhnlich, nicht wahr?
+Das macht Sinn, dass der Staat es benötigt.
+
+humans: neutral, model: entailment, Gold: contradiction
+
 
 \section{Translation Noise}
 \label{sec:translation-noise}

@@ -1,4 +1,4 @@
-\begin{thebibliography}{76}
+\begin{thebibliography}{79}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -15,6 +15,12 @@ M.~Artetxe, S.~Ruder, and D.~Yogatama.
 \newblock On the cross-lingual transferability of monolingual representations.
 \newblock \emph{arXiv preprint arXiv:1910.11856}, 2019.
 
+\bibitem[Auer et~al.(2007)Auer, Bizer, Kobilarov, Lehmann, Cyganiak, and
+  Ives]{auer2007dbpedia}
+S.~Auer, C.~Bizer, G.~Kobilarov, J.~Lehmann, R.~Cyganiak, and Z.~Ives.
+\newblock Dbpedia: A nucleus for a web of open data.
+\newblock In \emph{The semantic web}, pages 722--735. Springer, 2007.
+
 \bibitem[Bender et~al.(2021)Bender, Gebru, McMillan-Major, and
   Shmitchell]{bender2021dangers}
 E.~M. Bender, T.~Gebru, A.~McMillan-Major, and S.~Shmitchell.
@@ -28,6 +34,13 @@ Y.~Bisk, A.~Holtzman, J.~Thomason, J.~Andreas, Y.~Bengio, J.~Chai, M.~Lapata,
   A.~Lazaridou, J.~May, A.~Nisnevich, et~al.
 \newblock Experience grounds language.
 \newblock \emph{arXiv preprint arXiv:2004.10151}, 2020.
+
+\bibitem[Bonial et~al.(2012)Bonial, Hwang, Bonn, Conger, Babko-Malaya, and
+  Palmer]{bonial2012english}
+C.~Bonial, J.~Hwang, J.~Bonn, K.~Conger, O.~Babko-Malaya, and M.~Palmer.
+\newblock English propbank annotation guidelines.
+\newblock \emph{Center for Computational Language and Education Research
+  Institute of Cognitive Science University of Colorado at Boulder}, 48, 2012.
 
 \bibitem[Bowman et~al.(2015)Bowman, Angeli, Potts, and Manning]{bowman2015snli}
 S.~R. Bowman, G.~Angeli, C.~Potts, and C.~D. Manning.
@@ -138,6 +151,11 @@ A.~Ettinger.
   diagnostics for language models.
 \newblock \emph{Transactions of the Association for Computational Linguistics},
   8:\penalty0 34--48, 2020.
+
+\bibitem[Fillmore(1967)]{fillmore1967case}
+C.~Fillmore.
+\newblock The case for case.
+\newblock 1967.
 
 \bibitem[Floridi and Chiriatti(2020)]{floridi2020gpt}
 L.~Floridi and M.~Chiriatti.

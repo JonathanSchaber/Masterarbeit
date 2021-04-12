@@ -67,6 +67,7 @@ aparently still more effective on most tasks than highly tas-specific optimized 
 Thus, the NLP community was awestruck.
 
 \section{Problems}
+\label{sec:problems}
 
 In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
 in the NLP field, those efforts are often referred to by the notion of ``BERTology'' (cf. \cite{rogers2020primer}).
@@ -143,7 +144,7 @@ Note however that this is by no means an exhaustive presentation of all BERT-var
   \item[\textbf{Optimizing architecture/training objective(s)}] Several BERT-variations modify the actual architecture of BERT:  DistilBERT \cite{sanh2019distilbert} is a variant 60\% of the size of the original BERT while retaining 97\% of its original performance.
   RoBERTa \cite{liu2019roberta} essentially modifies core hyper-parameteres such as batch-size, byte-level BPE, and the like, creating a more stable BERT.
   DeBERTa \cite{he2020deberta} modifies the attention mechanism and the position encoding, while TransBERT \cite{li2021transbert} introduces a new pre-training framework.
-  \item[\textbf{Incorporating structured information}] One of the strengths of BERT is the unsupervised pre-training on unstructered, raw text. However, research has shown that including structured linguistic information can stabilize BERT and even balance some of the known weaknesses (see above) to some extent:
+  \item[\textbf{Incorporating structured information}] One of the strengths of BERT is the unsupervised pre-training on unstructered, raw text. However, research has shown that including structured linguistic information can stabilize BERT and even counterbalance some of the known weaknesses (see above) to some extent:
   ERNIE \cite{sun2019ernie} includes a knowledge graph into BERT, making structural fact representations available to BERT.
   %StructBERT \cite{wang2019structbert},
   VGCN-BERT \cite{lu2020vgcn} combines a Vocabulary Graph Convolutional Network with the standard BERT and \cite{zhang2019semantics} include semantic role labels in their SemBERT during fine-tuning.
@@ -153,7 +154,7 @@ Note however that this is by no means an exhaustive presentation of all BERT-var
 \section{gliBERT}
 
 Infected by the pandemic BERT-fever and slightly annoyed by the hegemony of English, I decided to
-enqueue in this illustrious list by combining two of the improvement approaches: I try to improve
+enqueue in this illustrious list by combining two of the {\color{red} advancement startegies}: I try to improve
 the German BERT by enhancing it with structured, linguistic information during fine-tuning.
 
 Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- you may have spotted
@@ -169,8 +170,6 @@ relations between these synsets. It can also be characterized as a thesaurus or 
 ontology.
 
 Another, much simpler, possibility would be to identify named entities
-
-
 and include the encoded structured
 information related to them, e.g. using the DBpedia \citep{auer2007dbpedia}, and enrich
 the BERT embeddings with them.
@@ -193,24 +192,113 @@ my \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub repository}.
 
 \section{Semantic Roles}
 
+One difficulty a system targeted at NLU must tackle is the ability to cope with the vast amount of
+flexibility and freedom in natural language to express things. In NLU, often one would probably
+talk about propositions: Facts about the world are being stated and properties of this propositions
+need to be understood or processed in some way or the other.
+{\color{red} Problems now arise due to t}
+
+\begin{examples}
+  \label{ex:semantics}
+  \item Due to the big waves, the ship was severely damaged and went down.
+  \item The stormy ocean caused the vessel to sink.
+  \item Unable to save the stricken freighter, the crew had to be evacuated.
+\end{examples}
+
+Although these three sentences make use of very different vocabulary --- an unweighted BLEU score
+is virtually zero between them --- it is obvious to a speaker of English that they all convey more
+or less the same meaning, that all of them tell the same state of affairs: A ship sank because of the
+forces of nature.
+
+Maybe the most obvious way of saying the same thing with different words is synonymy: ``Ship'',
+``vessel'', and ``freighter'' all refer to the same object in the examples above; having several
+options when choosing a word to denote something is a paramount feature of human language.
+
+Further, the communication of one and the same event, e.g. the sinking
+of a ship, can be transmitted in various ways: In the second sentence,
+the process is denominated explicitly using the verb ``to sink''; in
+the first, the semantically more obscure semi-fixed expression ``to go
+down'' is used to inform about that very situation; while in the third
+the sinking of the ship is not mentioned explicitly but inferable from
+the circumstance of ``not being able to save'' it.
+
+For a human speaker, all this disentangeling, recognising coreference,
+reconstructing not explicitly mentioned context, etc. happens effortless
+and automatic --- for an algorithm, however, phenomena like the ones
+mentioned before pose serious challenges.
+
+``For computers to make effective use of information encoded in text, it is essential that
+they be able to detect the events that are being described and the event participants.''
+\citep{palmer2010semantic}
+
+As I laid out in section \ref{sec:problems}, a modern, unsupervised model
+like BERT seems to perform surprisingly good in tasks where such ``understanding'' of
+events are being tested.\myfootnote{Of course, one does not really measure epistemical
+understanding in such tests, {\color{red} but this is maybe the closest we get} (cf. \cite{sahlgren2021singleton})}
+Simultaneously, some investigated failures of BERT seem to indicate that this ``understanding''
+goes not too deep.
+
+Semantic Roles are an attempt at creating an instrument with which it is possible to analyze
+sentences as \ref{ex:semantics} and capture the semantic similarity between them. The central
+idea hereby is that every utterance has an underlying semantic structure\myfootnote{Often,
+especially in Generative Grammar traditions, this level is also known as deep structure, or
+D-structure.} (sloppily phrased: ``Who did What to Whom, and How, When and Where?'') which
+can be realized in different surface structures. There have been various undertakings in
+creating a vocabulary for describing such structures, putting the focus on different aspects
+and showing varying degrees of {\color{red} analytic detail}.
+
+The paper ``The Case for Case'' \citep{fillmore1967case} is often seen as the starting point for
+the theory of semantic roles in modern linguistics. \citeauthor{fillmore1967case} argued in it
+that what he called ``Deep-Cases'' play a crucial role in the Deep-Structure of sentences ---
+the hitherto prevalent view in Generative Grammar was that case was a purely Surface-Structure
+related phenomenon and only one of several possibilities to realize syntactic relationships.
+Interestingly, these ``Deep-Cases'' were semantically-motivated; he proposed
+seven Deep-Cases, e.g. the ``Agentive'': `` [T]he case of the typically animate perceived instigator of the
+action identified by the verb'', or the so-called ``Factitive'': `` [T]he case of the object or being resulting from the action or
+state identified by the verb, or understood as a part of the meaning of the verb'' \citep[p.~46]{fillmore1967case}.
+The observable Surface-From cases could than through elaborate tests give insights as to what the
+underlying Deep-Cases were.
+
+Buidling upon those core concepts introduced by Fillmore, other linguists added features
+to the project of formalizing the core semantiv structures found in language, as summarized by
+\citeauthor{palmer2010semantic}:
+In the beginnings of the 70ies, \cite{jackendoff1972semantic} expanded and refined Fillmore's
+model by introducing the concept of primitive conceptual predicate and their property of governing
+arguments, which were concpetualized as bearing some proto-semantics, similar to the Fillmorian
+Deep-Cases.
+
+
+``There may be general agreement on the cases (or Thematic Roles or Semantic Roles) \textelp{},
+but there is substantial disagreement on exactly when and where they can be assigned and which
+additional cases should be added, if any.'' \citep{palmer2010semantic}
+
+
+
 \begin{itemize}
   \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
   \item different syntactic constituents can bear same SR
   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
 \end{itemize}
 
-The meaning of a sentence in any natural langauge is more than an aggregate of the semantics
-of its components. This is due to a number of reasons:
 
-\begin{description}
-  \item[\textbf{Fixed expressions}]: In
-  \item
-  \item
-\end{description}
+Semantic Roles are systematic abstractions of semantic functions that are attributed to the participants
+in a factual situation: The volitional acting entity in a situation is abstracted as ``(Proto-)Agent''; regardless
+of the actual, concrete act. Similarly, noun phrases which denote participants that
 
-``For computers to make effective use of information encoded in text, it is essential that
-they be able to detect the events that are being described and the event participants.''
-\citep{palmer2010semantic}
+In the following sentences\myfootnote{Examples are taken from PropBank frames, accessible through this \href{https://github.com/propbank/propbank-frames.git}{GitHub repository}.} are the participants which constitute agents highlighted in
+blue:
+
+
+Illustrations for (Proto-)Patients (yellow):
+
+\begin{examples}
+  \item \customcolorbox{[\textsubscript{Arg0} Yasser Arafat]}{blue} has \customcolorbox{[\textsubscript{Rel} written]}{llight-blue} \customcolorbox{[\textsubscript{Arg2} to the chairman of the International Olympic Committee]}{yellow}, asking him to back a Palestinian bid to join the committee.
+  \item Once \customcolorbox{[\textsubscript{Arg0} he]}{blue} \customcolorbox{[\textsubscript{Rel} realized]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} that Paribas's intentions weren't friendly]}{green}, he said, but before the bid was launched, he sought approval to boost his Paribas stake above 10\%.
+  \item \customcolorbox{[\textsubscript{Arg0} The new round of bidding]}{blue} would seem to \customcolorbox{[\textsubscript{Rel} complicate]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} the decision making]}{green} \customcolorbox{[\textsubscript{Arg2} for Judge James Yacos]}{yellow}.
+  \item The action followed by one day an Intelogic announcement that it will retain \customcolorbox{[\textsubscript{Arg0} an investment banker]}{blue} to explore alternatives ``to \customcolorbox{[\textsubscript{Rel} maximize]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} shareholder value]}{green},'' including the possible sale of the company.
+  \item \customcolorbox{[\textsubscript{Arg0} He]}{blue} \customcolorbox{[\textsubscript{ArgM-mod} would]}{purple} scream and \customcolorbox{[\textsubscript{Rel} cut]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} himself]}{green} \customcolorbox{[\textsubscript{Arg3} with rocks]}{red}.
+\end{examples}
+
 
 ``The main reason computational systems use semantic roles is to act as a shallow meaning
 representation that can let us make simple inferences that aren’t possible from the pure surface
@@ -221,6 +309,35 @@ task of automatic SRL.
 
 ``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any
 system for natural language understanding.'' \citep{palmer2010semantic}
+
+PropBank Roles, according to \cite{bonial2012english}:
+
+\begin{description}
+  \item[\textbf{Arg0}] agent
+  \item[\textbf{Arg1}] patient
+  \item[\textbf{Arg2}] instrument, benefactive, attribute
+  \item[\textbf{Arg3}] starting point, benefactive, attribute
+  \item[\textbf{Arg4}] ending point
+  \item[\textbf{ArgM}] modifier
+\end{description}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Ich        \colorbox{white}{B-A0}         \colorbox{white}{O}
+fühlte     \colorbox{blue}{B-V}          \colorbox{white}{O}
+[MASK]     \colorbox{white}{B-A1}         \colorbox{white}{O}
+,          \colorbox{white}{I-A1}         \colorbox{white}{O}
+als        \colorbox{white}{I-A1}         \colorbox{white}{O}
+ich        \colorbox{white}{I-A1}         \colorbox{white}{B-A0}
+aus        \colorbox{white}{I-A1}         \colorbox{white}{O}
+Versehen   \colorbox{white}{I-A1}         \colorbox{white}{O}
+schlechte  \colorbox{white}{I-A1}         \colorbox{white}{B-A1}
+Milch      \colorbox{white}{I-A1}         \colorbox{white}{I-A1}
+getrunken  \colorbox{white}{I-A1}         \colorbox{blue}{B-V}
+habe       \colorbox{white}{I-A1}         \colorbox{white}{O}
+\end{Verbatim}
+
+
 
 % \label{sec:5_bleuscores}
 %

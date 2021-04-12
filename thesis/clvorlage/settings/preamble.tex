@@ -59,11 +59,15 @@
 \definecolor{yellow}{HTML}{FED976}
 \definecolor{light-yellow}{HTML}{FED976}
 \definecolor{purple}{HTML}{BCBDDC}
+\definecolor{green}{HTML}{A1D99B}
+\definecolor{red}{HTML}{FC9272}
 
 % own commands
 
 \newcolumntype{g}{>{\columncolor{llight-gray}}c}
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\newcommand{\customcolorbox}[2]{\tikz[baseline=(char.base)]\node[minimum width=2em,text height=1.7ex, text depth=0.1ex,fill=#2,text=black](char){#1};}
 
 \newcommand{\textgreek}[1]{\begingroup\fontencoding{LGR}\selectfont#1\endgroup}
 
