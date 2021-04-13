@@ -7,27 +7,27 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {1}{\ignorespaces GLUE}}{18}{table.caption.15}
-\contentsline {table}{\numberline {2}{\ignorespaces gliGLUE}}{18}{table.caption.16}
-\contentsline {table}{\numberline {3}{\ignorespaces Example SCARE .txt}}{33}{table.caption.22}
-\contentsline {table}{\numberline {4}{\ignorespaces Example SCARE .csv}}{34}{table.caption.23}
-\contentsline {table}{\numberline {5}{\ignorespaces Example SCARE .rel}}{34}{table.caption.24}
-\contentsline {table}{\numberline {6}{\ignorespaces Overview data sets}}{44}{table.caption.31}
+\contentsline {table}{\numberline {1}{\ignorespaces GLUE}}{21}{table.caption.15}
+\contentsline {table}{\numberline {2}{\ignorespaces gliGLUE}}{21}{table.caption.16}
+\contentsline {table}{\numberline {3}{\ignorespaces Example SCARE .txt}}{36}{table.caption.22}
+\contentsline {table}{\numberline {4}{\ignorespaces Example SCARE .csv}}{37}{table.caption.23}
+\contentsline {table}{\numberline {5}{\ignorespaces Example SCARE .rel}}{37}{table.caption.24}
+\contentsline {table}{\numberline {6}{\ignorespaces Overview data sets}}{47}{table.caption.31}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7}{\ignorespaces Results}}{61}{table.caption.40}
-\contentsline {table}{\numberline {8}{\ignorespaces Gains Ensemble vs Average}}{62}{table.caption.41}
-\contentsline {table}{\numberline {9}{\ignorespaces Tokenized vs. Merged wo QA}}{63}{table.caption.42}
-\contentsline {table}{\numberline {10}{\ignorespaces Data Set specific Configs}}{63}{table.caption.43}
-\contentsline {table}{\numberline {11}{\ignorespaces Stable Hyperparameter Configs}}{64}{table.caption.44}
-\contentsline {table}{\numberline {12}{\ignorespaces Gain-Loss}}{64}{table.caption.45}
-\contentsline {table}{\numberline {13}{\ignorespaces Confusion matrix for one SCARE +SRL ensemble}}{65}{table.caption.48}
-\contentsline {table}{\numberline {14}{\ignorespaces Results-QA}}{68}{table.caption.49}
-\contentsline {table}{\numberline {15}{\ignorespaces QA Gain-Loss / QA Tokenized vs. merged}}{69}{table.caption.50}
-\contentsline {table}{\numberline {16}{\ignorespaces Ablation Study}}{76}{table.caption.55}
+\contentsline {table}{\numberline {7}{\ignorespaces Results}}{65}{table.caption.40}
+\contentsline {table}{\numberline {8}{\ignorespaces Gains Ensemble vs Average}}{66}{table.caption.41}
+\contentsline {table}{\numberline {9}{\ignorespaces Tokenized vs. Merged wo QA}}{67}{table.caption.42}
+\contentsline {table}{\numberline {10}{\ignorespaces Data Set specific Configs}}{67}{table.caption.43}
+\contentsline {table}{\numberline {11}{\ignorespaces Stable Hyperparameter Configs}}{68}{table.caption.44}
+\contentsline {table}{\numberline {12}{\ignorespaces Gain-Loss}}{68}{table.caption.45}
+\contentsline {table}{\numberline {13}{\ignorespaces Confusion matrix for one SCARE +SRL ensemble}}{69}{table.caption.48}
+\contentsline {table}{\numberline {14}{\ignorespaces Results-QA}}{72}{table.caption.49}
+\contentsline {table}{\numberline {15}{\ignorespaces QA Gain-Loss / QA Tokenized vs. merged}}{73}{table.caption.50}
+\contentsline {table}{\numberline {16}{\ignorespaces Ablation Study}}{80}{table.caption.55}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {17}{\ignorespaces Some large table}}{88}{table.caption.62}
+\contentsline {table}{\numberline {17}{\ignorespaces Some large table}}{92}{table.caption.62}
 \addvspace {10\p@ }

@@ -29,6 +29,13 @@ The core parts of the model are the following:
   \item[\textbf{Head module}] At last, the combined representation of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
 \end{description}
 
+\begin{landscape}\centering
+  % \vspace*{\fill}
+  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of gliBERT.}{24}{gliBERT Architecture detail}
+  % \vfill
+\end{landscape}
+
+
 \section{BERT module}
 
 Since its publishing two years ago, BERT \citep{devlin2018bert} has often been viewed as a
@@ -37,6 +44,7 @@ Since its publishing two years ago, BERT \citep{devlin2018bert} has often been v
 I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch
 through the hugging face library\cite{wolf2019transformers}.
 Throughout the training, the weights of the
+
 
 \section{SRL Module}
 
@@ -63,11 +71,6 @@ may be no predicates at all: ``What a day!''. (2) There might be more than one p
 \emph{hear} you''.  In the following section, I will describe how I tackle these problems by
 making use of parsing information from ParZu.
 
-\begin{landscape}\centering
-  % \vspace*{\fill}
-  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of gliBERT.}{24}{gliBERT Architecture detail}
-  % \vfill
-\end{landscape}
 
 \subsection{Finding Predicates}
 
@@ -343,9 +346,54 @@ for each other token in the sequence its SRL.
 
 \subsection{GRU}
 
-Finally, the predicted SRLs need to be encoded in a numeric way similar to the BERT embeddings so .
-that they can be combined and sent thorugh the final head network Encoding a sequence is a typical.
-seq2seq task, for which recurrent neural networks have proven to be effective mechanisms (CITE)   .
+Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated
+to the vectors which are computed by BERT. The ``classic'', pre-transformer age times, way
+of encoding sequential data would be to employ a recurrent neural network architecture.
+I decided to use GRUs, since they are less computational intesive and research has found
+both architectures mostly performing on par (cf. \cite{chung2014empirical}).
+
+
+\begin{srl}[!h]
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
+            Slot 1   Slot 2   Slot 3
+
+Wir         B-A0     0        0
+wollten     O        0        0
+eine        B-A1     0        0
+Sache       I-A1     0        0
+mehr        I-A1     0        0
+retten      B-V      0        0
+als         B-C-A1   0        0
+die         I-C-A1   0        0
+Restlichen  I-C-A1   0        0
+.           O        0        0
+      \end{BVerbatim}
+  \end{minipage}
+  % \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
+                    Slot 1   Slot 2   Slot 3
+
+        Wir         B-A0     B-A0     B-A0
+        wollten     O        O        O
+        eine        B-A1     B-A1     B-A1
+        Sache       I-A1     I-A1     I-A1
+        mehr        I-A1     I-A1     I-A1
+        retten      B-V      B-V      B-V
+        als         B-C-A1   B-C-A1   B-C-A1
+        die         I-C-A1   I-C-A1   I-C-A1
+        Restlichen  I-C-A1   I-C-A1   I-C-A1
+        .           O        O        O
+    \end{BVerbatim}
+  \end{minipage}
+\end{srl}
+\captionof{srl}{The two strategies for dealing with less than three predicates: \textbf{Left}:
+                The open SRL ``slots'' get filled with the special SRL \emph{0}.
+                \textbf{Right}: The first SRL structure gets duplicated until all slots
+                are filled.}
 
 \begin{itemize}
   \item number of predicates equals 3
@@ -474,7 +522,7 @@ in the different architectures they tested for their task).
 Implementing a fully-connected feed forward network as final layer counters the problem of the
 information deprecation that is present in the [CLS] approach: Every token's BERT embedding gets
 concatenated with the token's SRL embeddding. The whole sequence is then flattened, i.e. all
-BERT+SRL vectors get concatenated into one large vector of size $\mathbbm{R}^{n\times768+XXX}$
+BERT+SRL vectors get concatenated into one large vector of size $\mathbbm{R}^{n\times768+20}$.
 
 
 \subsubsection{GRU Head}
@@ -493,13 +541,40 @@ and explofing gradient problems, \citep{hochreiter1997long} proposed the LSTM ar
 
 \subsection{Question Answering}
 
+
+
+``\textelp{} in the question answering task, we represent the input question and passage as
+a single packed sequence, with the question using the A embedding and the passage using the
+B embedding. We only introduce a start vector $S \in \mathbb{R}^H$ and an end vector $E \in
+\mathbb{R}^H$ during fine-tuning. The probability of word $i$ being the start of the answer
+span is computed as a dot product between $T_i$ and $S$ followed by a softmax over all of the
+words in the paragraph: $P_i = \frac{e^{S\cdot T_i}}{\sum_{j}^{} e^{S\cdot T_j}}$.'' \citep{devlin2018bert}
+
 \subsubsection{Span Prediction Head}
+
+The ``standard'' implementation of the Q\&A BERT head consists of one simple FFNN which predicts
+on each input token the probability of it being the start of the answer span and the end of the
+answer span, respectively. After both probabilities are computed for all tokens, the ones with
+the highest probability get selected; no further logic is enforced, such as that the index of
+the start token should be smaller than the one of the end token, or that the answer span may
+not lie inside the question (i. e. before the first [SEP] token), etc.
+
+Since the standard implementation already implements a model that predicts on each token,
+the SRL-emgedding enriching is relatively straight forward:
+First, the input layer of the small head FFNN needs to be adapted to the BERT-token + SRL
+dimensionality, which results in the vector representation $\mathbb{R}^{768+20}$ for each
+SRL-enriched token. Secondly, when the setting of merging the BERT subtokens before adding
+the SRL embeddings is used, the start and end span indexes have to be recomputed.
+
 
 \fig{images/head-span_pred.png}{fig:Span-Prediction-Head}{The gliBERT head for span prediction
     in Question Answering Tasks. After the Tokens and SRLs were consumed by BERT and the SRL
-    embedding module, two FFNNs predict on each token in the sequence, how likely it is the start
-    or the end of the answer span. After these predictions have been made for all tokens, the token
-    with the highest value for each position get selected.}{10}{Span Prediction Head}
+    embedding module, one FFNN predict on each token in the sequence, how likely it is first
+    and the last token of the answer span. After these predictions have been made for all tokens, the token
+    with the highest value for each position gets selected.}{10}{Span Prediction Head}
+
+
+
 % \section{BLEU Scores}
 % \label{sec:5_bleuscores}
 %

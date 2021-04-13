@@ -38,11 +38,15 @@ parameters --- that is approximately 48 times the size of BERT-large (350 millio
 several sides, ranging from ecological and social to linguistic concerns over such models; for
 a good overview of these points see \cite{bender2021dangers}.}
 
-From a more technical point of view is BERT first and foremost a neural network architecture. More precise, it is an
-implementation of the self-attention mechanism introced by \cite{vaswani2017attention}. I will not go into
-too much details here since BERT is now a very well-known structure and has been described in a
-plethora of papers, blogs, and videos\myfootnote{For a really well made visualization of self-attention
-in BERT, I can recommend \url{https://www.youtube.com/watch?v=-9vVhYEXeyQ}}.
+From a more technical point of view is BERT first and foremost a neural
+network architecture. More precise, it is an implementation of the
+self-attention mechanism introced by \cite{vaswani2017attention}; the
+main difference, and apparently advantage, to other architectures
+that implement the transformer architecutre is that  BERT is a bi-directional
+language model.I will not go into too much details here since BERT is
+now a very well-known structure and has been described in a
+plethora of papers, blogs, and videos.%\myfootnote{For a really well made visualization of self-attention
+% in BERT, I can recommend \url{https://www.youtube.com/watch?v=-9vVhYEXeyQ}}.
 In simple terms, BERT takes an input sequence, tokenizes it and computes contextualized vector
 representations for each token via stacked blocks employing self-attention and linear combination.
 Figure \ref{fig:bert-architecture} shows one of these blocks.
@@ -51,7 +55,7 @@ Figure \ref{fig:bert-architecture} shows one of these blocks.
 
 The computation of the weight matrices and initial vector representations for the tokens is done
 via an unsupervised learning phase, often referred to as pre-training. The basic concept is
-that BERT is given sentence-chunks of large amouts of text (\citeauthor{devlin2018bert} use the BooksCorpus, consisting
+that BERT is given sentence-chunks of large amounts of text (\citeauthor{devlin2018bert} use the BooksCorpus, consisting
 of 800 million words, plus the English Wikipedia, consisting of 2.5 billion words) and BERT
 needs to optimize on two training objectives: (1) One word is randomly masked and BERT has
 to predict it, and (2) BERT has to decide if, given two randomly sampled sentences, the second
@@ -65,8 +69,7 @@ especially remarkink, since BERT is not a highly specialized model\myfootnote{Un
 were achieved by complex interwiring of some embeddings with a specialized architecture. }, but
 aparently still more effective on most tasks than highly tas-specific optimized models.
 Thus, the NLP community was awestruck.
-
-\section{Problems}
+ \section{Problems}
 \label{sec:problems}
 
 In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
@@ -263,42 +266,100 @@ Buidling upon those core concepts introduced by Fillmore, other linguists added 
 to the project of formalizing the core semantiv structures found in language, as summarized by
 \citeauthor{palmer2010semantic}:
 In the beginnings of the 70ies, \cite{jackendoff1972semantic} expanded and refined Fillmore's
-model by introducing the concept of primitive conceptual predicate and their property of governing
+model by introducing the concept of primitive conceptual predicates and their property of governing
 arguments, which were concpetualized as bearing some proto-semantics, similar to the Fillmorian
-Deep-Cases.
+Deep-Cases. This approach, known as ``Lexical Conceptual Structures'' (LCS), proved to be
+an elegent theory and capable of generalizing well between different verbs; in the 90ies LCS
+was implemented as system for representing semantics in early NLU und translation models \citep{palmer2010semantic}.
+But, due to its detailed analysis of verbs into (several) primitive predicates and the highly verb specific
+conceptualized semantic roles of them, LCS turned out to be cumbersome to extend to the whole range
+of a vocabulary of a language.
 
+\cite{dowty1991thematic} in contrast, approached the proeblem of constructing
+a framework for analysing core conceptual semantic structures from a different
+angle: Instead of providing a detailed description of the primitive predicate and
+idiomatic argument structure for each individual verb, he attempted to identify
+general functions of noun phrases, what he called ``thematic proto-roles'',
+present in sentences. To accomplish this, \citeauthor{dowty1991thematic} drew
+from the theory of ``family resemblance'' and defined a set of attributes which
+would indicate such a thematic role.
+``The hypothesis put forth here about thematic roles is suggested by the
+reflection that we may have had a hard time pinning down the traditional role
+types because role types are simply not discrete categories at all, but rather
+are cluster concepts \textelp{}'' \citep[p.~571]{dowty1991thematic}
 
+Proto-Agent properties (after \citep[p.~572]{dowty1991thematic}):
+
+\begin{enumerate}[label=\alph*]
+  \item volitional involvement in the event or state
+  \item sentence (and/or perception)
+  \item causing an event or change of state in another participant
+  \item movement (relative to the position of another participant)
+  \item (exists independently of the event named by the verb)
+\end{enumerate}
+
+{\color{red} I will not elaborate this further, but other theories have been put forward.}
+
+Like many theories in linguistics, Semantic Roles remain a disputed topic in the field until today:
 ``There may be general agreement on the cases (or Thematic Roles or Semantic Roles) \textelp{},
 but there is substantial disagreement on exactly when and where they can be assigned and which
 additional cases should be added, if any.'' \citep{palmer2010semantic}
 
+% \begin{itemize}
+%   \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
+%   \item different syntactic constituents can bear same SR
+%   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
+% \end{itemize}
 
-
-\begin{itemize}
-  \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
-  \item different syntactic constituents can bear same SR
-  \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
-\end{itemize}
+However, different resources have been created, implementing some variaty of the various Semantic Roles frameworks.
+One of these is the PropBank \citep{kingsbury2002treebank}.
 
 
 Semantic Roles are systematic abstractions of semantic functions that are attributed to the participants
 in a factual situation: The volitional acting entity in a situation is abstracted as ``(Proto-)Agent''; regardless
 of the actual, concrete act. Similarly, noun phrases which denote participants that
 
-In the following sentences\myfootnote{Examples are taken from PropBank frames, accessible through this \href{https://github.com/propbank/propbank-frames.git}{GitHub repository}.} are the participants which constitute agents highlighted in
-blue:
+``Because verbs generally provide the bulk of the event semantics of any given sentence, verbs have
+been the target of most of the existing two million words of PropBank annota- tion. Nonetheless,
+to fully capture event relations, annota- tions must recognize the potential for their expression
+in the form of nouns, adjectives and multi-word expressions, such as Light Verb Constructions
+(LVCs).'' \citep[p.~3014]{bonial2014propbank}
 
+\begin{examples}
+  \item He fears bears.
+  \item His fear of bears.
+  \item He is afraid of bears.
+\end{examples}
 
-Illustrations for (Proto-)Patients (yellow):
+\cite{bonial2012english} define the following proto-roles for the numbered arguments, modifiers,
+and relations:
+
+\begin{description}
+  \item[\customcolorbox{\textbf{Arg0}}{blue}] agent
+  \item[\customcolorbox{\textbf{Arg1}}{green}] patient
+  \item[\customcolorbox{\textbf{Arg2}}{yellow}] instrument, benefactive, attribute
+  \item[\customcolorbox{\textbf{Arg3}}{red}] starting point, benefactive, attribute
+  \item[\customcolorbox{\textbf{Arg4}}{manatee}] ending point
+  \item[\customcolorbox{\textbf{ArgM}}{sage}] modifier
+  \item[\customcolorbox{\textbf{Rel}}{llight-blue}] Relation (can be a verb, noun, or adjective)
+\end{description}
+
+Following are soe exmample sentences from the PropBank frames\myfootnote{accessible through this
+\href{https://github.com/propbank/propbank-frames.git}{GitHub repository}}. Semantic roles are
+highlighted using the colors from the previous list. Note that only one relation is marked in the
+sentences, even if there are multiple. Since DAMESRL only treats verbs as semantic roles distributing
+relations, I include only verbal ``Rel''s in the examples:
 
 \begin{examples}
   \item \customcolorbox{[\textsubscript{Arg0} Yasser Arafat]}{blue} has \customcolorbox{[\textsubscript{Rel} written]}{llight-blue} \customcolorbox{[\textsubscript{Arg2} to the chairman of the International Olympic Committee]}{yellow}, asking him to back a Palestinian bid to join the committee.
   \item Once \customcolorbox{[\textsubscript{Arg0} he]}{blue} \customcolorbox{[\textsubscript{Rel} realized]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} that Paribas's intentions weren't friendly]}{green}, he said, but before the bid was launched, he sought approval to boost his Paribas stake above 10\%.
+  \item \customcolorbox{[\textsubscript{Arg1} National Market System volume]}{green} \customcolorbox{[\textsubscript{Rel} improved]}{llight-blue} \customcolorbox{[\textsubscript{Arg4} to 94,425,00 shares]}{manatee} \customcolorbox{[\textsubscript{Arg3} from 71.7 million Monday]}{red}.
   \item \customcolorbox{[\textsubscript{Arg0} The new round of bidding]}{blue} would seem to \customcolorbox{[\textsubscript{Rel} complicate]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} the decision making]}{green} \customcolorbox{[\textsubscript{Arg2} for Judge James Yacos]}{yellow}.
-  \item The action followed by one day an Intelogic announcement that it will retain \customcolorbox{[\textsubscript{Arg0} an investment banker]}{blue} to explore alternatives ``to \customcolorbox{[\textsubscript{Rel} maximize]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} shareholder value]}{green},'' including the possible sale of the company.
-  \item \customcolorbox{[\textsubscript{Arg0} He]}{blue} \customcolorbox{[\textsubscript{ArgM-mod} would]}{purple} scream and \customcolorbox{[\textsubscript{Rel} cut]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} himself]}{green} \customcolorbox{[\textsubscript{Arg3} with rocks]}{red}.
+  \item \label{itm:wrongsrl} The action followed by one day an Intelogic announcement that it will retain \customcolorbox{[\textsubscript{Arg0} an investment banker]}{blue} to explore alternatives ``to \customcolorbox{[\textsubscript{Rel} maximize]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} shareholder value]}{green},'' including the possible sale of the company.
+  \item \customcolorbox{[\textsubscript{Arg0} He]}{blue} \customcolorbox{[\textsubscript{ArgM-mod} would]}{sage} scream and \customcolorbox{[\textsubscript{Rel} cut]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} himself]}{green} \customcolorbox{[\textsubscript{Arg3} with rocks]}{red}.
 \end{examples}
 
+NOTE: \myfootnote{To me, not all annotations in PropBank are beyond all doubt; for example, in sentence \ref{itm:wrongsrl} ``an investment banker'' is labelled as agent ``maximzing'' the the patient ``shareholder value'' --- however, I would argue that it's rather the ``alternative'' that take proto-agentive role in maximizing the shareholer values.}
 
 ``The main reason computational systems use semantic roles is to act as a shallow meaning
 representation that can let us make simple inferences that aren’t possible from the pure surface
@@ -312,30 +373,93 @@ system for natural language understanding.'' \citep{palmer2010semantic}
 
 PropBank Roles, according to \cite{bonial2012english}:
 
-\begin{description}
-  \item[\textbf{Arg0}] agent
-  \item[\textbf{Arg1}] patient
-  \item[\textbf{Arg2}] instrument, benefactive, attribute
-  \item[\textbf{Arg3}] starting point, benefactive, attribute
-  \item[\textbf{Arg4}] ending point
-  \item[\textbf{ArgM}] modifier
-\end{description}
+Thanks to lexical resources such as the PropBank, a multitude of models aiming at labeling
+sentences with semantic roles are now available. DAMESRL \citep{do2018flexible}, trained on
+the CoNLL '09 \citep{hajivc2009conll} data (which implements PropBank style SRLs).
 
+Following some examples of DAMESRL-labelled sentences stemming from the gliBERT corpus (see chapter
+\ref{chap:3_datasets}). The sentences are represented vertically with the leftmost column being the
+actual sentence; each column represents one identified verb (B-V) and its predicted semantic roles,
+labelled using the BIO-schema\myfootnote{Introduced by \citep{ramshaw1999text}, the BIO-schema is a
+convenient way of adding a label to each token in a sequence, indicating if it belongs to a certain
+subgroup, or chunk, of the sequence. For example, to mark the prepositional phrase in a syntagma
+like ``He is running from the bear'', one would mark the word beginning the PP with \textbf{B}, any
+other words inside the PP with \textbf{I}, and all other words outside of it, using \textbf{O}:
+``He[O] is[O] running[O] from[B-PP] the[I-PP] bear[I-PP]''.}
+
+\textbf{deISEAR}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-Ich        \colorbox{white}{B-A0}         \colorbox{white}{O}
-fühlte     \colorbox{blue}{B-V}          \colorbox{white}{O}
-[MASK]     \colorbox{white}{B-A1}         \colorbox{white}{O}
-,          \colorbox{white}{I-A1}         \colorbox{white}{O}
-als        \colorbox{white}{I-A1}         \colorbox{white}{O}
-ich        \colorbox{white}{I-A1}         \colorbox{white}{B-A0}
-aus        \colorbox{white}{I-A1}         \colorbox{white}{O}
-Versehen   \colorbox{white}{I-A1}         \colorbox{white}{O}
-schlechte  \colorbox{white}{I-A1}         \colorbox{white}{B-A1}
-Milch      \colorbox{white}{I-A1}         \colorbox{white}{I-A1}
-getrunken  \colorbox{white}{I-A1}         \colorbox{blue}{B-V}
-habe       \colorbox{white}{I-A1}         \colorbox{white}{O}
+  Ich        \colorbox{white}{B-A0}         \colorbox{white}{O}
+  fühlte     \colorbox{white}{B-V}          \colorbox{white}{O}
+  [MASK]     \colorbox{white}{B-A1}         \colorbox{white}{O}
+  ,          \colorbox{white}{I-A1}         \colorbox{white}{O}
+  als        \colorbox{white}{I-A1}         \colorbox{white}{O}
+  ich        \colorbox{white}{I-A1}         \colorbox{white}{B-A0}
+  aus        \colorbox{white}{I-A1}         \colorbox{white}{O}
+  Versehen   \colorbox{white}{I-A1}         \colorbox{white}{O}
+  schlechte  \colorbox{white}{I-A1}         \colorbox{white}{B-A1}
+  Milch      \colorbox{white}{I-A1}         \colorbox{white}{I-A1}
+  getrunken  \colorbox{white}{I-A1}         \colorbox{white}{B-V}
+  habe       \colorbox{white}{I-A1}         \colorbox{white}{O}
 \end{Verbatim}
+
+\textbf{MLQA}
+
+\begin{verbatim}
+  Welche       B-A1       B-A2
+  Positionen   I-A1       I-A2
+  muss         O          O
+  man          B-A0       B-A0
+  erreichen    B-V        O
+  ,            O          O
+  um           O          O
+  die          O          B-A1
+  von          O          I-A1
+  Kaius        O          I-A1
+  angeordnete  O          I-A1
+  Position     O          I-A1
+  eines        O          I-A1
+  Läufers      O          O
+  einzunehmen  O          B-V
+  ?            O          O
+\end{verbatim}
+
+\textbf{XNLI}
+
+\begin{verbatim}
+  Es           O          O               O
+  war          O          O               O
+  das          O          O               O
+  Wichtigste   O          O               O
+  was          B-A1       O               O
+  wir          B-A0       O               O
+  sichern      B-V        O               O
+  wollten      O          O               O
+  da           O          O               O
+  es           O          O               O
+  keine        O          B-A1            O
+  Möglichkeit  O          I-A1            O
+  gab          O          B-V             O
+  eine         O          B-A1            B-A3
+  20           O          I-A1            I-A3
+  Megatonnen   O          I-A1            I-A3
+  -            O          I-A1            I-A3
+  H            O          I-A1            I-A3
+  -            O          I-A1            I-A3
+  Bombe        O          I-A1            I-A3
+  ab           O          I-A1            O
+  zu           O          I-A1            B-A5
+  werfen       O          I-A1            B-V
+  von          O          I-A1            I-A5
+  einem        O          I-A1            I-A5
+  30           O          I-A3            I-A5
+  ,            O          O               O
+  C124         O          O               O
+  .            O          O               O
+\end{verbatim}
+
+
 
 
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{79}
+\begin{thebibliography}{83}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -41,6 +41,12 @@ C.~Bonial, J.~Hwang, J.~Bonn, K.~Conger, O.~Babko-Malaya, and M.~Palmer.
 \newblock English propbank annotation guidelines.
 \newblock \emph{Center for Computational Language and Education Research
   Institute of Cognitive Science University of Colorado at Boulder}, 48, 2012.
+
+\bibitem[Bonial et~al.(2014)Bonial, Bonn, Conger, Hwang, and
+  Palmer]{bonial2014propbank}
+C.~Bonial, J.~Bonn, K.~Conger, J.~D. Hwang, and M.~Palmer.
+\newblock Propbank: Semantics of new predicate types.
+\newblock In \emph{LREC}, pages 3013--3019. Citeseer, 2014.
 
 \bibitem[Bowman et~al.(2015)Bowman, Angeli, Potts, and Manning]{bowman2015snli}
 S.~R. Bowman, G.~Angeli, C.~Potts, and C.~D. Manning.
@@ -136,6 +142,11 @@ Q.~N.~T. Do, A.~Leeuwenberg, G.~Heyman, and M.~F. Moens.
 \newblock In \emph{Proceedings of the 27th International Conference on
   Computational Linguistics: System Demonstrations}, pages 161--165, 2018.
 
+\bibitem[Dowty(1991)]{dowty1991thematic}
+D.~Dowty.
+\newblock Thematic proto-roles and argument selection.
+\newblock \emph{language}, 67\penalty0 (3):\penalty0 547--619, 1991.
+
 \bibitem[Dror et~al.(2018)Dror, Baumer, Shlomov, and
   Reichart]{dror2018hitchhiker}
 R.~Dror, G.~Baumer, S.~Shlomov, and R.~Reichart.
@@ -225,6 +236,11 @@ J.~J. Hopfield.
 \newblock \emph{Proceedings of the national academy of sciences}, 79\penalty0
   (8):\penalty0 2554--2558, 1982.
 
+\bibitem[Jackendoff(1972)]{jackendoff1972semantic}
+R.~S. Jackendoff.
+\newblock Semantic interpretation in generative grammar.
+\newblock 1972.
+
 \bibitem[Jiang and de~Marneffe(2019)]{jiang2019evaluating}
 N.~Jiang and M.-C. de~Marneffe.
 \newblock Evaluating bert for natural language inference: A case study on the
@@ -251,6 +267,11 @@ M.~Johnson.
 D.~Jurafsky and J.~H. Martin.
 \newblock Speech and language processing (draft). october 2019.
 \newblock \emph{URL https://web. stanford. edu/\~{} jurafsky/slp3}, 2019.
+
+\bibitem[Kingsbury and Palmer(2002)]{kingsbury2002treebank}
+P.~R. Kingsbury and M.~Palmer.
+\newblock From treebank to propbank.
+\newblock In \emph{LREC}, pages 1989--1993. Citeseer, 2002.
 
 \bibitem[Koehn(2004)]{koehn2004statistical}
 P.~Koehn.
