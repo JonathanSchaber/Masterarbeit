@@ -21,7 +21,7 @@ in BERT suggests that it somehow must be accomplishing something which is of gre
 to the field than regular benchmark SOTA cracking by ``normal'' new or improved architectures.
 
 
-The basic concept of BERT is rather trivial: (1) Let a big, sohpisticated neural network learn
+The basic concept of BERT is rather trivial: (1) Let a big, sophisticated neural network learn
 contextualized embeddings for words by training it unsupervised on huge amounts of data. (2)
 Use these embeddings as representations for words in downstream tasks, put a very simple neural
 network on top (mostly a simple FFNN) and fine-tune them during training on the downstream task.
@@ -40,9 +40,9 @@ a good overview of these points see \cite{bender2021dangers}.}
 
 From a more technical point of view is BERT first and foremost a neural
 network architecture. More precise, it is an implementation of the
-self-attention mechanism introced by \cite{vaswani2017attention}; the
+self-attention mechanism introduced by \cite{vaswani2017attention}; the
 main difference, and apparently advantage, to other architectures
-that implement the transformer architecutre is that  BERT is a bi-directional
+that implement the transformer architecture is that  BERT is a bi-directional
 language model.I will not go into too much details here since BERT is
 now a very well-known structure and has been described in a
 plethora of papers, blogs, and videos.%\myfootnote{For a really well made visualization of self-attention
@@ -64,17 +64,17 @@ tedious human annotation of data is needed.
 
 With this ``simple'' approach --- i.e. unsupervised pretraining of contextualized embeddings and
 fin-tuning on target tasks with very simple head on top --- \citeauthor{devlin2018bert} beat the
-hithertho leading architecture on the GLUE benchmark by an outstanding average of 7,0\%. This is
-especially remarkink, since BERT is not a highly specialized model\myfootnote{Until then, SOTAs
+hitherto leading architecture on the GLUE benchmark by an outstanding average of 7,0\%. This is
+especially remaking, since BERT is not a highly specialized model\myfootnote{Until then, SOTAs
 were achieved by complex interwiring of some embeddings with a specialized architecture. }, but
-aparently still more effective on most tasks than highly tas-specific optimized models.
+apparently still more effective on most tasks than highly task-specific optimized models.
 Thus, the NLP community was awestruck.
  \section{Problems}
 \label{sec:problems}
 
 In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
 in the NLP field, those efforts are often referred to by the notion of ``BERTology'' (cf. \cite{rogers2020primer}).
-While BERT showed to be astoniglishly effective on several established data sets and benchmarks such as GLUE \citep{wang2018glue},
+While BERT showed to be astonishingly effective on several established data sets and benchmarks such as GLUE \citep{wang2018glue},
 it soon became obvious that it also {\color{red} had} its weak-spots: \citeauthor{ettinger2020bert} confronted
 BERT with three language tasks originally coming from psycholinguistics which are well-known to be difficult
 to tackle, even for humans. They find
@@ -96,8 +96,8 @@ full complexity of human pragmatic reasoning.''
 
 \cite{jin2020bert}even go further and created so-called adversarial attacks on BERT:
 After observing that BERT seems to rely only on the statistical cues of a small number of the input tokens to
-form its predictions, \citeauthor{jin2020bert} create a sohpisticated algorithm to permute
-the input sentences wihtout actually changing its meaning. Follwing is an example from the
+form its predictions, \citeauthor{jin2020bert} create a sophisticated algorithm to permute
+the input sentences wihtout actually changing its meaning. Following is an example from the
 SNLI \citep{bowman2015snli} dataset, exemplifying one such attack:
 
 \begin{examples}
@@ -178,9 +178,9 @@ information related to them, e.g. using the DBpedia \citep{auer2007dbpedia}, and
 the BERT embeddings with them.
 
 However, I decided to concentrate on semantic roles for several reasons: \citeauthor{zhang2019semantics}
-demonstrated the feasability of this undertaking for English. Further, it occurred to me to be a good
+demonstrated the feasibility of this undertaking for English. Further, it occurred to me to be a good
 balance between two extremes: (1) Including sophisticated knowledge structures, which would
-require extensive preprocessing (stemming, identifying content words, poteantial word sense
+require extensive preprocessing (stemming, identifying content words, potential word sense
 disambiguation, look-up in the knowledge base) and rather cumbersome encoding; and (2)
 stright-forward on the fly ``mark-up'' of input text, with low information substance in the
 case of named entities. with semantic roles, I get the best from both worlds: Easy to implement
@@ -225,7 +225,7 @@ down'' is used to inform about that very situation; while in the third
 the sinking of the ship is not mentioned explicitly but inferable from
 the circumstance of ``not being able to save'' it.
 
-For a human speaker, all this disentangeling, recognising coreference,
+For a human speaker, all this disentangling, recognizing coreference,
 reconstructing not explicitly mentioned context, etc. happens effortless
 and automatic --- for an algorithm, however, phenomena like the ones
 mentioned before pose serious challenges.
@@ -247,8 +247,7 @@ idea hereby is that every utterance has an underlying semantic structure\myfootn
 especially in Generative Grammar traditions, this level is also known as deep structure, or
 D-structure.} (sloppily phrased: ``Who did What to Whom, and How, When and Where?'') which
 can be realized in different surface structures. There have been various undertakings in
-creating a vocabulary for describing such structures, putting the focus on different aspects
-and showing varying degrees of {\color{red} analytic detail}.
+creating a vocabulary for describing such structures, putting the focus on different aspects and showing varying degrees of {\color{red} analytic detail}.
 
 The paper ``The Case for Case'' \citep{fillmore1967case} is often seen as the starting point for
 the theory of semantic roles in modern linguistics. \citeauthor{fillmore1967case} argued in it
@@ -262,21 +261,21 @@ state identified by the verb, or understood as a part of the meaning of the verb
 The observable Surface-From cases could than through elaborate tests give insights as to what the
 underlying Deep-Cases were.
 
-Buidling upon those core concepts introduced by Fillmore, other linguists added features
-to the project of formalizing the core semantiv structures found in language, as summarized by
+Building upon those core concepts introduced by Fillmore, other linguists added features
+to the project of formalizing the core semantic structures found in language, as summarized by
 \citeauthor{palmer2010semantic}:
 In the beginnings of the 70ies, \cite{jackendoff1972semantic} expanded and refined Fillmore's
 model by introducing the concept of primitive conceptual predicates and their property of governing
-arguments, which were concpetualized as bearing some proto-semantics, similar to the Fillmorian
-Deep-Cases. This approach, known as ``Lexical Conceptual Structures'' (LCS), proved to be
-an elegent theory and capable of generalizing well between different verbs; in the 90ies LCS
-was implemented as system for representing semantics in early NLU und translation models \citep{palmer2010semantic}.
+arguments, which were conceptualized as bearing some proto-semantics, similar to the Fillmorian
+Deep-Cases. This approach, known as ``Lexical Conceptual Structure'' (LCS), proved to be
+an elegant theory and capable of generalizing well between different verbs; in the 90ies LCS
+was implemented as system for representing semantics in early NLU and translation models \citep{palmer2010semantic}.
 But, due to its detailed analysis of verbs into (several) primitive predicates and the highly verb specific
 conceptualized semantic roles of them, LCS turned out to be cumbersome to extend to the whole range
 of a vocabulary of a language.
 
-\cite{dowty1991thematic} in contrast, approached the proeblem of constructing
-a framework for analysing core conceptual semantic structures from a different
+\cite{dowty1991thematic} in contrast, approached the problem of constructing
+a framework for analyzing core conceptual semantic structures from a different
 angle: Instead of providing a detailed description of the primitive predicate and
 idiomatic argument structure for each individual verb, he attempted to identify
 general functions of noun phrases, what he called ``thematic proto-roles'',
@@ -311,7 +310,7 @@ additional cases should be added, if any.'' \citep{palmer2010semantic}
 %   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
 % \end{itemize}
 
-However, different resources have been created, implementing some variaty of the various Semantic Roles frameworks.
+However, different resources have been created, implementing some variety of the various Semantic Roles frameworks.
 One of these is the PropBank \citep{kingsbury2002treebank}.
 
 
@@ -320,8 +319,8 @@ in a factual situation: The volitional acting entity in a situation is abstracte
 of the actual, concrete act. Similarly, noun phrases which denote participants that
 
 ``Because verbs generally provide the bulk of the event semantics of any given sentence, verbs have
-been the target of most of the existing two million words of PropBank annota- tion. Nonetheless,
-to fully capture event relations, annota- tions must recognize the potential for their expression
+been the target of most of the existing two million words of PropBank annotation. Nonetheless,
+to fully capture event relations, annotations must recognize the potential for their expression
 in the form of nouns, adjectives and multi-word expressions, such as Light Verb Constructions
 (LVCs).'' \citep[p.~3014]{bonial2014propbank}
 
@@ -344,7 +343,7 @@ and relations:
   \item[\customcolorbox{\textbf{Rel}}{llight-blue}] Relation (can be a verb, noun, or adjective)
 \end{description}
 
-Following are soe exmample sentences from the PropBank frames\myfootnote{accessible through this
+Following are some exmample sentences from the PropBank frames\myfootnote{accessible through this
 \href{https://github.com/propbank/propbank-frames.git}{GitHub repository}}. Semantic roles are
 highlighted using the colors from the previous list. Note that only one relation is marked in the
 sentences, even if there are multiple. Since DAMESRL only treats verbs as semantic roles distributing
@@ -359,7 +358,7 @@ relations, I include only verbal ``Rel''s in the examples:
   \item \customcolorbox{[\textsubscript{Arg0} He]}{blue} \customcolorbox{[\textsubscript{ArgM-mod} would]}{sage} scream and \customcolorbox{[\textsubscript{Rel} cut]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} himself]}{green} \customcolorbox{[\textsubscript{Arg3} with rocks]}{red}.
 \end{examples}
 
-NOTE: \myfootnote{To me, not all annotations in PropBank are beyond all doubt; for example, in sentence \ref{itm:wrongsrl} ``an investment banker'' is labelled as agent ``maximzing'' the the patient ``shareholder value'' --- however, I would argue that it's rather the ``alternative'' that take proto-agentive role in maximizing the shareholer values.}
+NOTE: \myfootnote{To me, not all annotations in PropBank are beyond all doubt; for example, in sentence \ref{itm:wrongsrl} ``an investment banker'' is labelled as agent ``maximzing'' the the patient ``shareholder value'' --- however, I would argue that it's rather the ``alternative'' that take proto-agentive role in maximizing the shareholder values.}
 
 ``The main reason computational systems use semantic roles is to act as a shallow meaning
 representation that can let us make simple inferences that aren’t possible from the pure surface

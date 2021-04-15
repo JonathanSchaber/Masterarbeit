@@ -3,29 +3,49 @@
 
 \epigraph{Not only the entire ability to think rests on language... but language is also the crux of the misunderstanding of reason with itself.}{\textit{Johann Georg Hamann}}
 
-Asdasdalsdj asldka sdlkajsdh aklsjdh
+In this chapter, I will expand a bit further to put the intent if this master's thesis into
+a bigger picture. Therefore, I will line out the general techniques and problems of NLP in
+general and NLU in particular, which led to the approach at hand. {\color{red} After that,
+I position my approach in current field.}
+
 
 \section{Motivation}
-
 
 Human language bears some truly mesmerizing features and puzzles, a lot of them are still not
 yet understood in all its depths: For example, it is still unclear how children are able to
 learn the grammar of their mother tongue from the corrupted and comparatively scarce language
-material they are exposed to. %(POS, Chomsky etc) Another astonishing fact about human language
-is the overwhelming amount of languages that exist today, even that number was probably much
-higher a few centuries ago.  As to how languages evolve, change over time and what trajectories
-of possible change may be, lots of questions are still open, and there remains enough work
-to do.  But for me, maybe the most trivial and enigmatic trait about human language is that
-we actually \emph{understand} each other: That, during a discourse, person X can retrieve
+material they are exposed to.
+%(POS, Chomsky etc) Another astonishing fact about human language
+% is the overwhelming amount of languages that exist today, even that number was probably much
+% higher a few centuries ago.  As to how languages evolve, change over time and what trajectories
+% of possible change may be, lots of questions are still open, and there remains enough work
+% to do.
+But maybe the most trivial and enigmatic trait about human language is that
+we actually \emph{understand} each other: That during a discourse, person X can retrieve
 the intentioned meaning of expressions uttered by person Y, and vice versa.  Further, we are
 able to logically deduce a whole lot information that is not explicitly stated in a sentence,
-and uphold such a state of affairs during the whole conversation.  %Maybe one of the most
-enigmatic and fascinating traits of human language is the fact that for us %humans, exchanging
-information through language is a meaninglessly working process.  That this is not as trivial
-as it might look like on first sight, show the following considerations: Human language is,
-when being used, notoriously ambiguous, metaphorical and formally corrupted.
+and uphold such a state of affairs during the whole conversation.
+%Maybe one of the most
+% enigmatic and fascinating traits of human language is the fact that for us humans, exchanging
+% information through language is a meaninglessly working process.
+That this is not as trivial as it might look like on first sight, show the following
+considerations:
 
-So, every system that claims to process human language in a ... must be able
+\begin{itemize}
+  \item vagueness
+  \item ambiguity
+  \item pragmatics
+  \item common world knowledge
+\end{itemize}
+
+% ``The engineering side of computational linguistics, often called natural language processing
+% (NLP), is largely concerned with building computational tools that do useful things with
+% language'' \cite{johnson2009statistical}
+
+So, every system that is built aiming at processing natural language in a {\color{red} deep} manner
+must cope with this inherent fuzzinesses of human communication. In the field of applied
+computational linguistics, often referred to as Natural Language Processing (NLP), this subfield
+of research is known as Natural Language Understanding (NLU).
 
 ``It is always precarious to build arguments on inherently vague and general
 concepts such as `language', `understanding' and `meaning,' as the resulting
@@ -72,44 +92,53 @@ use to describe the complexity of such a system.'' \cite{sahlgren2021singleton}
 easier to explain its behavior using intentional terms such as `understanding,' than to use a
 purely functional explanation.'' \cite{sahlgren2021singleton}
 
-The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
-For quite some time, as in most areas of NLP, systems that addressed NLU problems were
-architectures that consisted of carefully hand-written rules that aimed at tackling a specific
-problem, such as recognizing textual entailment, coreference resolution, sentiment analysis,
-and so on.
+% The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
+During the first phase of NLP, approximately from the 1950ies until the 1980ies, systems
+that addressed NLU problems were architectures that consisted of carefully hand-written
+symbolic grammars and knowledge bases that aimed at tackling a specific problem, such as
+recognizing textual entailment, coreference resolution, sentiment analysis, and so on.
 
-From on the 90ies, the so-called emph{statistical revolution} took place, and NLU related
-problems were now being addressed by learning patterns from huge data collections.  The main
-challenge for engineers and scientists now lay in dicovering suitable features, according to
-which the algorithm would hopefully learn helpful patterns for solving the task at hand.
+From the 90ies on, the so-called emph{statistical revolution} took place, and NLU related
+problems were now being addressed by learning patterns from huge data collections. One driver
+of this paradigm shift were the various difficulties the traditional systems bore: Their
+development ``requiring a great deal of domain-specific knowledge engineering. In addition,
+the systems were brittle and could not function adequately outside the restricted tasks for
+which they were designed'' \citep[p.~13]{brill1997overview}.
+The new, statistical {\color{red} approach} tries to tackle NLU-problems by shifting
+the focus from tedious hand-crafting ``to empirical, or corpus-based, methods in which
+development is much more data driven and is
+at least partially automated by using statistical
+or machine-learning methods to train systems
+on large amounts of real language data'' \citep[p.~13]{brill1997overview}.
+The main challenge for engineers and scientists now laid in discovering suitable features, according
+to which the algorithm would hopefully learn helpful patterns from the language data for solving
+the task at hand.
 
-Since now almost a decade, a next stage in NLU and NLP, in general, was entered --- we are
-now deep in the neural age of computational linguistics.  In contrast to the statistical
-period's main challenge, now the algorithm is even itself learning the features that are the
-most informative for a given task.  The human part in the process is to design the overall
-model architecture and provide large enough amounts of data that are also of good quality.
+Since now almost a decade, a next stage in NLU and NLP, in general, was entered: we are now in the
+middle of the \emph{neural age} of computational linguistics. In contrast to the statistical period's main
+challenge --- the identification and extraction of suitable features ---, now the algorithms are
+itself learning the features that are the most informative for a given task. The human part in the
+process is reduced to design the overall model architecture and provide large enough amounts of data that
+are also of good quality.
 
 In other words,
 
-``The engineering side of computational linguistics, often called natural language processing
-(NLP), is largely concerned with building computational tools that do useful things with
-language'' \cite{johnson2009statistical}
 
 \subsection{Contextualized Word Embeddings in NLU}
 
 Since the beginning of the neural age, there was the problem as to how could text be numerically
-meaningful represented, so that the algorithms can extract meaningful feature patterns and
+represented, so that the algorithms could extract meaningful feature patterns and
 that there is as little information loss as possible (since a numeric representation is always
 an abstraction of the real data, there naturally is some unpreventable information loss).
 The solution that was proposed by \cite{mikolov2013distributed} is the approach that is still
 in use today in its core idea:
 
 \begin{itemize}
-	\item Initialize a random vector for each word in the vocabulary
-	\item Train a neural model to learn the best numerical representation of each word
-		by giving it a simple task on huge amounts of unlabeled data (like CBOW, next word
-		prediction, etc.)
-	\item Save those numeric representations and use them in target task at hand
+  \item Initialize a random vector for each word in the vocabulary.
+  \item Train a neural model to learn the best numerical representation of each word
+    by giving it a simple task on huge amounts of unlabeled data (like CBOW, next word
+    prediction, etc.).
+  \item Save those numeric representations and use them in target task at hand.
 \end{itemize}
 
 While the basic approaches of this approach still hold --- train randomly initialized vectors on
@@ -117,30 +146,34 @@ large amounts of unlabeled data with a neural network with a simple training goa
 changes or additions to today's implementation have been made:
 
 \begin{itemize}
-	\item The original word2vec embeddings were \emph{fixed}, in the sense that a word had always
-					the same representation, regardless of the context
-	\item The neural networks that computed these vectors were quite small (two layers of dimensionality
-					300) and could be run on a standard machine.
-					Today's models are huge (hundreds of millions of parameters are not unusual) and computationally
-					very intensive and cannot be run locally.
-	\item Due to the last point, practice has shifted towards pretraining these computationally heavy
-					embeddings and finetuning them on the specific task along with it's goal
+  \item The original word2vec embeddings were \emph{fixed}, in the sense that a word had always
+    the same representation, regardless of the context
+  \item The neural networks that computed these vectors were quite small (two layers of dimensionality
+    300) and could be run on a standard machine.
+    Today's models are huge (hundreds of millions of parameters are not unusual) and computationally
+    very intensive and cannot be run locally.
+  \item Due to the last point, practice has shifted towards pretraining these computationally heavy
+    embeddings and finetuning them on the specific task along with it's goal
 \end{itemize}
 
-The architecture that has caused the most uproar was probably BERT \cite{devlin2018bert},
-an architecture that led to so many variants of it, that it created a whole new field inside
-the NLP community --- the BERTology \cite{rogers2020primer}.  These embeddings have also
+The architecture that has caused the most uproar was probably BERT \cite{devlin2018bert}, an
+architecture that led to so many variants of it, that it created a whole new field inside the
+NLP community --- the BERTology \cite{rogers2020primer}. BERT is a good example for a typical
+neural age NLP model: It's architecture is completely agnostic of knowledge about language
+whatsoever, it ``only'' operates on sequental concatenations of symbols; there is also no
+preprocessing of the data --- no POS-tagging, no dependency parsing, no NER.\myfootnote{Because
+of this non linguistic specific architecture, BERT can easily be adapted to operate on other
+sequential data. This has actually be done: \cite{ji2020dnabert} for example trained a DNABERT
+model for successfully deciphering non-coding DNA.}
+
+These embeddings have also
 proved to achieve state-of-the-art results on well-established data sets, such as, e.g.,
 GLUE \cite{wang2018glue}.
 
-However, the many studies and experiments that have been carried out exploring the capabilities
+{\color{red} However, the many studies and experiments that have been carried out exploring the capabilities
 and mechanisms behind BERT quickly showed that nevertheless BERT performs on many tasks
 surprisingly well, even outperforming all models before it, there are situations, often trivial
-looking ones, where BERT desperately fails.
-
-\cite{jin2020bert}, for example, showed that by creating adversarial examples in the test set
---- which were, of course, still valid ---, they could bring down the performance of BERT by
-a large margin.
+looking ones, where BERT desperately fails.}
 
 As I laid out before, in the past decades computational linguistics has undergone several
 ``revolutions'' which, although some people might see this differently, can be described as
@@ -158,9 +191,9 @@ lies in bringing back again the linguistics into the whole picture.
 Examples:
 
 \begin{itemize}
-	\item Zhang et al SemBERT
-	\item Goldberg Syntax to the rescue
-	\item ...
+  \item Zhang et al SemBERT
+  \item Goldberg Syntax to the rescue
+  \item ...
 \end{itemize}
 
 
@@ -171,9 +204,9 @@ The research questions that shall be answered in this thesis, are:
  \item What do I do?
  \item How do I do it?
  \item And why?
-	\item Can I reproduce \cite{zhang2019semantics} for German?
-	\item Am I able to reach reported SOTAs of the data sets?
-	\item Is there a difference for different head architectures? And if yes, why?
+  \item Can I reproduce \cite{zhang2019semantics} for German?
+  \item Am I able to reach reported SOTAs of the data sets?
+  \item Is there a difference for different head architectures? And if yes, why?
 \end{enumerate}
 
 Questions and Claims that are \textbf{not} being made:
@@ -186,6 +219,7 @@ Questions and Claims that are \textbf{not} being made:
 
 
 \section{Thesis Structure}
+
 In this first chapter I gave a very brief overview of general trends in
 NLP over the past decades and highlighted some
 
@@ -196,6 +230,13 @@ I explain my approach and the relating linguistic concepts.
 The datasets I compiled to test my models on are described in detail
 in chapter \ref{chap:3_datasets}.
 
-In Chapter \ref{chap:4_architecture}, I describe the architecture of my
-BERT-variant in all detail and
+In Chapter \ref{chap:4_architecture}, I describe the details of the architecture of
+my BERT-variant in all detail: The identification and encoding of the semantic role
+labels, the different combination procedures of the BERT embeddings with these, as
+well as the different head architectures.
+
+The overview and discussion of the performance of the various model architectures on
+the gliGLUE data set is made in chapter \ref{chap:5_results}.
+
+Finally, I draw some insights and conclusions in the last chapter \ref{chap:6_conclusion}.
 

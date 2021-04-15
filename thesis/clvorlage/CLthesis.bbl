@@ -1,4 +1,4 @@
-\begin{thebibliography}{83}
+\begin{thebibliography}{86}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -52,6 +52,11 @@ C.~Bonial, J.~Bonn, K.~Conger, J.~D. Hwang, and M.~Palmer.
 S.~R. Bowman, G.~Angeli, C.~Potts, and C.~D. Manning.
 \newblock The snli corpus.
 \newblock 2015.
+
+\bibitem[Brill and Mooney(1997)]{brill1997overview}
+E.~Brill and R.~J. Mooney.
+\newblock An overview of empirical natural language processing.
+\newblock \emph{AI magazine}, 18\penalty0 (4):\penalty0 13--13, 1997.
 
 \bibitem[Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal,
   Neelakantan, Shyam, Sastry, Askell, et~al.]{brown2020language}
@@ -107,6 +112,13 @@ K.~Cho, B.~Van~Merri{\"e}nboer, C.~Gulcehre, D.~Bahdanau, F.~Bougares,
 \newblock Learning phrase representations using rnn encoder-decoder for
   statistical machine translation.
 \newblock \emph{arXiv preprint arXiv:1406.1078}, 2014.
+
+\bibitem[Chung et~al.(2014)Chung, Gulcehre, Cho, and
+  Bengio]{chung2014empirical}
+J.~Chung, C.~Gulcehre, K.~Cho, and Y.~Bengio.
+\newblock Empirical evaluation of gated recurrent neural networks on sequence
+  modeling.
+\newblock \emph{arXiv preprint arXiv:1412.3555}, 2014.
 
 \bibitem[Conneau et~al.(2018)Conneau, Lample, Rinott, Williams, Bowman,
   Schwenk, and Stoyanov]{conneau2018xnli}
@@ -241,6 +253,12 @@ R.~S. Jackendoff.
 \newblock Semantic interpretation in generative grammar.
 \newblock 1972.
 
+\bibitem[Ji et~al.(2020)Ji, Zhou, Liu, and Davuluri]{ji2020dnabert}
+Y.~Ji, Z.~Zhou, H.~Liu, and R.~V. Davuluri.
+\newblock Dnabert: pre-trained bidirectional encoder representations from
+  transformers model for dna-language in genome.
+\newblock \emph{bioRxiv}, 2020.
+
 \bibitem[Jiang and de~Marneffe(2019)]{jiang2019evaluating}
 N.~Jiang and M.-C. de~Marneffe.
 \newblock Evaluating bert for natural language inference: A case study on the
@@ -255,13 +273,6 @@ D.~Jin, Z.~Jin, J.~T. Zhou, and P.~Szolovits.
   on text classification and entailment.
 \newblock In \emph{Proceedings of the AAAI conference on artificial
   intelligence}, volume~34, pages 8018--8025, 2020.
-
-\bibitem[Johnson(2009)]{johnson2009statistical}
-M.~Johnson.
-\newblock How the statistical revolution changes (computational) linguistics.
-\newblock In \emph{Proceedings of the EACL 2009 Workshop on the Interaction
-  between Linguistics and Computational Linguistics: Virtuous, Vicious or
-  Vacuous?}, pages 3--11, 2009.
 
 \bibitem[Jurafsky and Martin(2019)]{jurafsky2019speech}
 D.~Jurafsky and J.~H. Martin.
@@ -370,6 +381,12 @@ M.~Polignano, P.~Basile, M.~De~Gemmis, G.~Semeraro, and V.~Basile.
   challenging tasks based on tweets.
 \newblock In \emph{6th Italian Conference on Computational Linguistics, CLiC-it
   2019}, volume 2481, pages 1--6. CEUR, 2019.
+
+\bibitem[Ramshaw and Marcus(1999)]{ramshaw1999text}
+L.~A. Ramshaw and M.~P. Marcus.
+\newblock Text chunking using transformation-based learning.
+\newblock In \emph{Natural language processing using very large corpora}, pages
+  157--176. Springer, 1999.
 
 \bibitem[Rogers et~al.(2020)Rogers, Kovaleva, and Rumshisky]{rogers2020primer}
 A.~Rogers, O.~Kovaleva, and A.~Rumshisky.

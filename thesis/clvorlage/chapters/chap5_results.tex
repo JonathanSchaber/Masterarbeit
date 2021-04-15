@@ -544,40 +544,32 @@ Fleiss' $\kappa$ between 2 annotators and gold: 0.3541
 
 6 examples where both annotators agree with predictions, disagree with gold:
 
-Der NVIDIA TITAN V wurde von Nvidia am 7. Dezember 2017 offiziell angekündigt.
-Am 07. Dezember 2017, verkündete NVIDIA offiziell Nvidia TITAN V.
+\begin{examples}
+  \item Der NVIDIA TITAN V wurde von Nvidia am 7. Dezember 2017 offiziell angekündigt.\\
+        Am 07. Dezember 2017, verkündete NVIDIA offiziell Nvidia TITAN V.
 
-humans \& model: False, Gold: True
+        humans \& model: False, Gold: True
+  \item Die Schäfte sind sehr kurz oder oft nicht vorhanden.\\
+        Es sind entweder wenig Landschaften vorhanden oder sie fehlen in den meisten Fällen.
 
+        humans \& model: False, Gold: True
+  \item 1963 trat Roy der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen in Bansdroni in Kalkutta.\\
+        Roy trat 1963 der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen im Kolkata-Gebiet von Bansdroni.
 
-Die Schäfte sind sehr kurz oder oft nicht vorhanden.
-Es sind entweder wenig Landschaften vorhanden oder sie fehlen in den meisten Fällen.
+        humans \& model: True, Gold:False
+  \item Der Kanal ist einer der ältesten schiffbaren Kanäle Europas und sogar Belgiens.\\
+        Der Kanal ist einer der ältesten befahrbaren Kanäle in Belgien und Europa.
 
-humans \& model: False, Gold: True
+        humans \& model: True, Gold:False
+  \item Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Gastropoden-Mollusk in der Familie der Lepetidae.\\
+        Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Meeres-Gastropoden-Mollusk der Familie der Lepetidae.
 
+        humans \& model: True, Gold:False
+  \item Die Chicago Bears sanken auf die Giants 27:21, und verloren 0:6 zum ersten Mal seit 1976.\\
+        Die Chicago Bears verloren 21:27 gegen die Bears und standen erstmals seit 1976 bei 0:6.
 
-1963 trat Roy der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen in Bansdroni in Kalkutta.
-Roy trat 1963 der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen im Kolkata-Gebiet von Bansdroni.
-
-humans \& model: True, Gold:False
-
-
-Der Kanal ist einer der ältesten schiffbaren Kanäle Europas und sogar Belgiens.
-Der Kanal ist einer der ältesten befahrbaren Kanäle in Belgien und Europa.
-
-humans \& model: True, Gold:False
-
-
-Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Gastropoden-Mollusk in der Familie der Lepetidae.
-Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Meeres-Gastropoden-Mollusk der Familie der Lepetidae.
-
-humans \& model: True, Gold:False
-
-
-Die Chicago Bears sanken auf die Giants 27:21, und verloren 0:6 zum ersten Mal seit 1976.
-Die Chicago Bears verloren 21:27 gegen die Bears und standen erstmals seit 1976 bei 0:6.
-
-humans \& model: False, Gold:True
+        humans \& model: False, Gold:True
+\end{examples}
 
 
 \textbf{XNLI}

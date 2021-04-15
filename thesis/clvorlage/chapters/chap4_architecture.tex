@@ -352,8 +352,18 @@ of encoding sequential data would be to employ a recurrent neural network archit
 I decided to use GRUs, since they are less computational intesive and research has found
 both architectures mostly performing on par (cf. \cite{chung2014empirical}).
 
+In most cases, a sentences contains not exactly one predicate which distributes semantic roles,
+but several, especially in longer sentences, --- or even none, especially in colloquial, short
+sentences. Research by \citeauthor{zhang2019semantics} suggests that fixing the number of predicate-argument
+structures to three yields the best results; so I adopt this number. In other words, if a sentence has more
+than three argument-predicate structures, I only care about the first three predicates identified (if
+proceeding from left to right through the sequence), and disregard the others. However, if there are
+fewer than three predicate-argument structures present, I compare two strategies:
+The first solution (the left sentence in figure \ref{srl:zeros-duplicate})
+
 
 \begin{srl}[!h]
+  \label{srl:zeros-duplicate}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
