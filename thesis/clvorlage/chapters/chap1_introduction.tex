@@ -31,39 +31,47 @@ and uphold such a state of affairs during the whole conversation.
 That this is not as trivial as it might look like on first sight, show the following
 considerations:
 
-\begin{itemize}
-  \item vagueness
-  \item ambiguity
-  \item pragmatics
-  \item common world knowledge
-\end{itemize}
+\begin{description}
+  \item[Vagueness] We have no problem dealing with vague statements like ``Most people never heard of it''; in a specific conversation situation we rely on extra-linguistic cues like pragmatics and common world knowledge to decide if ``most'' means 7.5 billion people, or 70\% of our friends, or if the approximate number is even relevant (maybe it was ironically spoken, etc.)
+  \item[Ambiguity] The fact that a linguistic sign can't be interpreted in only one way, is an ubiquitous phenomenon in human language that is present on all levels: phonological, lexical, syntactic, semantic, pragmatic. A classic example for syntactic ambiguity would be the phrase ``He saw the elephant with a telescope''.
+  \item[Corruption] Contrary to how we perceive language when speaking to each other, utterances are mostly not well-formed, grammatical sentences, but show a varying degree of stutter, incomplete phrases, repetitions, and other ``mistakes''. While not as present in written language, depending on the domain, there still is quite some noise present, e.g. in online chat threads etc. Still, we mostly have no problems at all, reconstructing the encoded information from such a corrupted signal.
+  \item[Common world knowledge] Normally the information we encode in ordinary conversation is highly condensed and as scarce as possible --- most of the actual information is reconstructed by the receiver, making use of general knowledge about the world (factual knowledge, such as ``Bern is the capital of Switzerland'', logical consequence such as ``If $X$ was at the party yesterday evening, then $X$ was not in his apartment yesterday evening'', etc.) and the actual situation, time, and place the conversation takes place.
+\end{description}
 
 % ``The engineering side of computational linguistics, often called natural language processing
 % (NLP), is largely concerned with building computational tools that do useful things with
 % language'' \cite{johnson2009statistical}
 
-So, every system that is built aiming at processing natural language in a {\color{red} deep} manner
-must cope with this inherent fuzzinesses of human communication. In the field of applied
-computational linguistics, often referred to as Natural Language Processing (NLP), this subfield
-of research is known as Natural Language Understanding (NLU).
+So, every system that is built aiming at processing natural language in a ``deep'', human-like
+manner must cope with this inherent fuzzinesses of human communication. In the field of
+applied computational linguistics, often referred to as Natural Language Processing (NLP),
+this subfield of research is known as Natural Language Understanding (NLU).\myfootnote{Note
+that I will not engage in the discussion about whether it is philosophically appropriate
+to claim that computational models ``understand'' human language. A lot of controversy has
+arisen around this issue, with positions ranging from completely denying language models any
+sort of (linguistic) understanding \citep{bender2021dangers} to the current trend of simply
+concentrating on beating NLU SOTAs with ever larger models and blindly taking this as proof
+of building architectures capable of learning human language. I would argue that the thruth
+lies somewhere in between: Of course it is not enough to perform well on a standardized data
+set to speak of ``understanding'', however, as \cite{sahlgren2021singleton} point out: Also
+in humans, especially children, we measure language competences indirectly ``by using various
+language proficiency tests, such as vocabulary tests, cloze tests, reading comprehension, as
+well as various forms of production, interaction, and mediation tests \textelp{}''.}
 
-``It is always precarious to build arguments on inherently vague and general
-concepts such as `language', `understanding' and `meaning,' as the resulting
-theoretical constructs may become so overly general that they almost become
-vacuous.'' \cite{sahlgren2021singleton}
+% ``It is always precarious to build arguments on inherently vague and general
+% concepts such as `language', `understanding' and `meaning,' as the resulting
+% theoretical constructs may become so overly general that they almost become
+% vacuous.'' \cite{sahlgren2021singleton}
 
-{\color{red} $\rightarrow$ of course, NLU is very strong claim, although to be taken \emph{cum grano salis}:
-Be aware of short-comings etc.}
-
-\begin{quote}
-  learning a language entails learning the set of symbols and rules that define the
-  system. Learning the set of symbols equals vocabulary acqui- sition, while learning
-  the rules entails recognizing and formalizing grammati- cal, morphological, and
-  syntactic regularities.i We measure these competencies in humans — often indirectly
-  — by using various language proficiency tests, such as vocabulary tests, cloze
-  tests, reading comprehension, as well as various forms of production, interaction,
-  and mediation tests \textelp{}. \cite{sahlgren2021singleton}
-\end{quote}
+% \begin{quote}
+%   learning a language entails learning the set of symbols and rules that define the
+%   system. Learning the set of symbols equals vocabulary acquisition, while learning
+%   the rules entails recognizing and formalizing grammatical, morphological, and
+%   syntactic regularities.i We measure these competencies in humans — often indirectly
+%   — by using various language proficiency tests, such as vocabulary tests, cloze
+%   tests, reading comprehension, as well as various forms of production, interaction,
+%   and mediation tests \textelp{}. \cite{sahlgren2021singleton}
+% \end{quote}
 
 \begin{quote}
   there is an overwhelming body of empirical results to demonstrate that current language models
@@ -75,22 +83,22 @@ Be aware of short-comings etc.}
 \subsection{History, Methods, Problems of NLU}
 
 
-``The `understanding' these models have of language is entirely structural,
-and thus does not extend beyond the language system'' \cite{sahlgren2021singleton}
+% ``The `understanding' these models have of language is entirely structural,
+% and thus does not extend beyond the language system'' \cite{sahlgren2021singleton}
 
-``We can of course always question whether there is any `real' under-
-standing going on, but if the absence or presence of this `real' understanding
-has no effect on the behavior of the system, it will be a mere epiphenomenon
-that need not concern us.'' \cite{sahlgren2021singleton}
+% ``We can of course always question whether there is any `real' under-
+% standing going on, but if the absence or presence of this `real' understanding
+% has no effect on the behavior of the system, it will be a mere epiphenomenon
+% that need not concern us.'' \cite{sahlgren2021singleton}
 
-``consciousness is not an extra ingredient in addition to the complexity of a system:
-consciousness is the complexity of the system. Our point is that understanding is also
-not an extra ingredient of a symbol manipulation system: `understanding' is a term we
-use to describe the complexity of such a system.'' \cite{sahlgren2021singleton}
+% ``consciousness is not an extra ingredient in addition to the complexity of a system:
+% consciousness is the complexity of the system. Our point is that understanding is also
+% not an extra ingredient of a symbol manipulation system: `understanding' is a term we
+% use to describe the complexity of such a system.'' \cite{sahlgren2021singleton}
 
-``Our point is that when the behavior of an NLU system becomes sufficiently complex, it will be
-easier to explain its behavior using intentional terms such as `understanding,' than to use a
-purely functional explanation.'' \cite{sahlgren2021singleton}
+% ``Our point is that when the behavior of an NLU system becomes sufficiently complex, it will be
+% easier to explain its behavior using intentional terms such as `understanding,' than to use a
+% purely functional explanation.'' \cite{sahlgren2021singleton}
 
 % The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
 During the first phase of NLP, approximately from the 1950ies until the 1980ies, systems
@@ -103,25 +111,24 @@ problems were now being addressed by learning patterns from huge data collection
 of this paradigm shift were the various difficulties the traditional systems bore: Their
 development ``requiring a great deal of domain-specific knowledge engineering. In addition,
 the systems were brittle and could not function adequately outside the restricted tasks for
-which they were designed'' \citep[p.~13]{brill1997overview}.
-The new, statistical {\color{red} approach} tries to tackle NLU-problems by shifting
-the focus from tedious hand-crafting ``to empirical, or corpus-based, methods in which
-development is much more data driven and is
-at least partially automated by using statistical
-or machine-learning methods to train systems
-on large amounts of real language data'' \citep[p.~13]{brill1997overview}.
-The main challenge for engineers and scientists now laid in discovering suitable features, according
-to which the algorithm would hopefully learn helpful patterns from the language data for solving
-the task at hand.
+which they were designed'' \citep[p.~13]{brill1997overview}. The new, statistical {\color{red}
+approach} tries to tackle NLU-problems by shifting the focus from tedious hand-crafting ``to
+empirical, or corpus-based, methods in which development is much more data driven and is at
+least partially automated by using statistical or machine-learning methods to train systems
+on large amounts of real language data'' \citep[p.~13]{brill1997overview}. The main challenge
+for engineers and scientists now laid in discovering suitable features, according to which the
+algorithm would hopefully learn helpful patterns from the language data for solving the task
+at hand. With this orientation towards data-driven NLP solutions came also the possibility to
+compare different architectures on the same standardized data set and measure which performed
+better --- as laid out before, this has led to the problematic temptation to focus on beating
+SOTAs without a great deal of theoretical linguistic considerations behind.
 
-Since now almost a decade, a next stage in NLU and NLP, in general, was entered: we are now in the
-middle of the \emph{neural age} of computational linguistics. In contrast to the statistical period's main
-challenge --- the identification and extraction of suitable features ---, now the algorithms are
-itself learning the features that are the most informative for a given task. The human part in the
-process is reduced to design the overall model architecture and provide large enough amounts of data that
-are also of good quality.
-
-In other words,
+For almost a decade now a next stage in NLU and NLP in general was entered: we are now in the
+middle of the \emph{neural age} of computational linguistics. In contrast to the statistical
+period's main challenge --- the identification and extraction of suitable features ---, now the
+algorithms are itself learning the features that are the most informative for a given task. The
+human part in the process is reduced to design the overall model architecture and compile large
+large enough amounts of data that are, in the best case, also of good quality.
 
 
 \subsection{Contextualized Word Embeddings in NLU}
@@ -165,15 +172,13 @@ preprocessing of the data --- no POS-tagging, no dependency parsing, no NER.\myf
 of this non linguistic specific architecture, BERT can easily be adapted to operate on other
 sequential data. This has actually be done: \cite{ji2020dnabert} for example trained a DNABERT
 model for successfully deciphering non-coding DNA.}
+Albeit this complete lack of any sort of explicit linguistic knowledge, by only extracting
+statistical patterns it learns from processing huge amounts of text, BERT achieved several
+SOTAs on well-established NLU data sets, such as GLUE \cite{wang2018glue}.
 
-These embeddings have also
-proved to achieve state-of-the-art results on well-established data sets, such as, e.g.,
-GLUE \cite{wang2018glue}.
-
-{\color{red} However, the many studies and experiments that have been carried out exploring the capabilities
-and mechanisms behind BERT quickly showed that nevertheless BERT performs on many tasks
-surprisingly well, even outperforming all models before it, there are situations, often trivial
-looking ones, where BERT desperately fails.}
+However, as I will describe in more detail in the next chapter, BERT exposes also
+some weaknesses and undesirable flaws: While being able to perform surprisingly well
+on some tasks, there are situations where BERT fails in rather trivial situations.
 
 As I laid out before, in the past decades computational linguistics has undergone several
 ``revolutions'' which, although some people might see this differently, can be described as
@@ -184,36 +189,27 @@ so called \emph{black box}; which means essentially that although the underlying
 architecture of neural nets are well-known --- the mathematics behind them is rather simple ---,
 it is nevertheless impossible to determine \emph{what exactly} those models learn from the data.
 
-One way to address the above outlined problems (1) the failure of very sophisticated models
-in rather trivial situations and (2) the difficulties of the interpretation of their output
-lies in bringing back again the linguistics into the whole picture.
-
-Examples:
-
-\begin{itemize}
-  \item Zhang et al SemBERT
-  \item Goldberg Syntax to the rescue
-  \item ...
-\end{itemize}
-
 
 \section{Research Questions}
 
 The research questions that shall be answered in this thesis, are:
 \begin{enumerate}
- \item What do I do?
- \item How do I do it?
- \item And why?
-  \item Can I reproduce \cite{zhang2019semantics} for German?
-  \item Am I able to reach reported SOTAs of the data sets?
-  \item Is there a difference for different head architectures? And if yes, why?
+ \item What do I do? Try to boost BERT embeddings on NLU tasks
+ \item How do I do it?  Combine BERT embeddings with encoded SRL information
+ \item And why? BERT lacks any linguistic knwoledge and shows error behaviour which suggests adding some could help
+ \item more concrete questions:
+ \begin{itemize}
+    \item Can I reproduce \cite{zhang2019semantics} for German?
+    \item Am I able to reach reported SOTAs of the data sets?
+    \item Is there a difference for different head architectures? And if yes, why?
+ \end{itemize}
 \end{enumerate}
 
 Questions and Claims that are \textbf{not} being made:
 
 \begin{itemize}
   \item No claim of ``real'' understanding
-  \item carefully interpreting purely empirical results
+  \item carefully interpreting purely empirical results $\rightarrow$ data quality critique
 \end{itemize}
 
 

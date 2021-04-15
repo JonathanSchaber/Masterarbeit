@@ -1,15 +1,35 @@
 \newchap{Conclusion}
 \label{chap:6_conclusion}
-In this project we have done so much.\myfootnote{Thanks to many people that helped me.}
 
-We could show that \ldots \\
+
+In a first paragraph, I will quickly point out the core elements of my thesis. In a second part, I
+locate my findings in the current debate; and lastly, I will look into further steps that could be
+taken from this point on.
+
+
+My experiment consists mainly of three components: (1) The compilation of a German NLU
+dataset, \emph{gliGLUE}, incorporating different tasks and modalities, as well as
+including domain-specific language, ranging from colloquial to highly stylized texts.
+(2) A pipeline which brings all data sets in the same workable format, computes SRLs
+by implementing two freely available tools (ParZu, DAMESRL) and several instruments
+for training and analyzing models. (3) \emph{gliBERT}, a BERT-derived architecture
+which combines vanilla BERT-embeddings with embedded SRLs during fine-tuning, with
+several heads on top.
+
+asdasdasdadasdasd
+
+
 
 \section{Outlook / Future Work}
 
 
+
 \begin{itemize}
-  \item better SRL system
+  \item better SRL system (bspw. mit MOD-NEG detection)
+  \item ``sincere'' hyper-param search
   \item more thoroughful SRL quality estimation
+  \item compile data sets targeted at weaknesses of BERT
+  \item ``Manually'' add negation particle from parse tree information
 \end{itemize}
 
 

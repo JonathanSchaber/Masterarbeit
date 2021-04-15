@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  15 APR 2021 11:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.15)  15 APR 2021 18:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2550,28 +2550,18 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.49 
-      [1
+l.37   \item[Corruption]
+                         Contrary to how we perceive language when speaking ...
+[1
 
 
 
 ]
-Overfull \hbox (15.50179pt too wide) in paragraph at lines 59--66
-\T1/cmr/m/n/12 sition, while learn-ing the rules en-tails rec-og-niz-ing and fo
-r-mal-iz-ing grammati-
- []
-
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 75.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 83.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 75.
-[2] [3]
-Overfull \hbox (17.18501pt too wide) in paragraph at lines 169--172
-[]\T1/cmr/m/n/12 These em-bed-dings have also proved to achieve state-of-the-ar
-t re-sults on well-established
- []
-
-[4] [5]) [6]
+(Font)              scaled to size 13.67995pt on input line 83.
+ [2] [3] [4] [5]) [6]
 \openout2 = `chapters/chap2_approach.aux'.
 
  (./chapters/chap2_approach.tex
@@ -2584,7 +2574,7 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 
 
 ]
-<images/BERT.png, id=641, 642.7212pt x 753.0534pt>
+<images/BERT.png, id=632, 642.7212pt x 753.0534pt>
 File: images/BERT.png Graphic file (type png)
 <use images/BERT.png>
 Package pdftex.def Info: images/BERT.png  used on input line 54.
@@ -2623,13 +2613,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: Reference `fig:fig:deisear-stats' on page 24 undefined on input 
 line 185.
 
-<images/deISEAR_subtokenized.pdf, id=932, 433.62pt x 650.43pt>
+<images/deISEAR_subtokenized.pdf, id=921, 433.62pt x 650.43pt>
 File: images/deISEAR_subtokenized.pdf Graphic file (type pdf)
 <use images/deISEAR_subtokenized.pdf>
 Package pdftex.def Info: images/deISEAR_subtokenized.pdf  used on input line 21
 2.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/deISEAR_label_percentages.pdf, id=933, 650.43pt x 968.42001pt>
+<images/deISEAR_label_percentages.pdf, id=922, 650.43pt x 968.42001pt>
 File: images/deISEAR_label_percentages.pdf Graphic file (type pdf)
 <use images/deISEAR_label_percentages.pdf>
 Package pdftex.def Info: images/deISEAR_label_percentages.pdf  used on input li
@@ -2645,12 +2635,12 @@ See the caption package documentation for explanation.
 LaTeX Warning: Reference `fig:mlqa-stats' on page 28 undefined on input line 35
 5.
 
-<images/MLQA_context.pdf, id=991, 433.62pt x 650.43pt>
+<images/MLQA_context.pdf, id=980, 433.62pt x 650.43pt>
 File: images/MLQA_context.pdf Graphic file (type pdf)
 <use images/MLQA_context.pdf>
 Package pdftex.def Info: images/MLQA_context.pdf  used on input line 365.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/MLQA_answer.pdf, id=992, 433.62pt x 650.43pt>
+<images/MLQA_answer.pdf, id=981, 433.62pt x 650.43pt>
 File: images/MLQA_answer.pdf Graphic file (type pdf)
 <use images/MLQA_answer.pdf>
 Package pdftex.def Info: images/MLQA_answer.pdf  used on input line 370.
@@ -2661,30 +2651,30 @@ LaTeX Warning: Reference `fig:fig:pawsx-stat' on page 31 undefined on input lin
 e 499.
 
 [31]
-<images/PAWS-X_subtokenized_sent1.pdf, id=1050, 433.62pt x 650.43pt>
+<images/PAWS-X_subtokenized_sent1.pdf, id=1039, 433.62pt x 650.43pt>
 File: images/PAWS-X_subtokenized_sent1.pdf Graphic file (type pdf)
 <use images/PAWS-X_subtokenized_sent1.pdf>
 Package pdftex.def Info: images/PAWS-X_subtokenized_sent1.pdf  used on input li
 ne 522.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_subtokenized_sent2.pdf, id=1051, 433.62pt x 650.43pt>
+<images/PAWS-X_subtokenized_sent2.pdf, id=1040, 433.62pt x 650.43pt>
 File: images/PAWS-X_subtokenized_sent2.pdf Graphic file (type pdf)
 <use images/PAWS-X_subtokenized_sent2.pdf>
 Package pdftex.def Info: images/PAWS-X_subtokenized_sent2.pdf  used on input li
 ne 527.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_num_examples.pdf, id=1052, 433.62pt x 650.43pt>
+<images/PAWS-X_num_examples.pdf, id=1041, 433.62pt x 650.43pt>
 File: images/PAWS-X_num_examples.pdf Graphic file (type pdf)
 <use images/PAWS-X_num_examples.pdf>
 Package pdftex.def Info: images/PAWS-X_num_examples.pdf  used on input line 540
 .
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_labels.pdf, id=1053, 433.62pt x 650.43pt>
+<images/PAWS-X_labels.pdf, id=1042, 433.62pt x 650.43pt>
 File: images/PAWS-X_labels.pdf Graphic file (type pdf)
 <use images/PAWS-X_labels.pdf>
 Package pdftex.def Info: images/PAWS-X_labels.pdf  used on input line 545.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/PAWS-X_BLEU_scores.pdf, id=1054, 433.62pt x 650.43pt>
+<images/PAWS-X_BLEU_scores.pdf, id=1043, 433.62pt x 650.43pt>
 File: images/PAWS-X_BLEU_scores.pdf Graphic file (type pdf)
 <use images/PAWS-X_BLEU_scores.pdf>
 Package pdftex.def Info: images/PAWS-X_BLEU_scores.pdf  used on input line 563.
@@ -2714,17 +2704,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [36] [37]
-<images/SCARE_labels.pdf, id=1145, 433.62pt x 650.43pt>
+<images/SCARE_labels.pdf, id=1133, 433.62pt x 650.43pt>
 File: images/SCARE_labels.pdf Graphic file (type pdf)
 <use images/SCARE_labels.pdf>
 Package pdftex.def Info: images/SCARE_labels.pdf  used on input line 819.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/SCARE_label_stats.pdf, id=1146, 433.62pt x 650.43pt>
+<images/SCARE_label_stats.pdf, id=1134, 433.62pt x 650.43pt>
 File: images/SCARE_label_stats.pdf Graphic file (type pdf)
 <use images/SCARE_label_stats.pdf>
 Package pdftex.def Info: images/SCARE_label_stats.pdf  used on input line 824.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/SCARE_subtokenized.pdf, id=1147, 433.62pt x 650.43pt>
+<images/SCARE_subtokenized.pdf, id=1135, 433.62pt x 650.43pt>
 File: images/SCARE_subtokenized.pdf Graphic file (type pdf)
 <use images/SCARE_subtokenized.pdf>
 Package pdftex.def Info: images/SCARE_subtokenized.pdf  used on input line 838.
@@ -2742,19 +2732,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 859--860
  []
 
 [39] [40]
-<images/XNLI_premise_subtokenized.pdf, id=1207, 433.62pt x 650.43pt>
+<images/XNLI_premise_subtokenized.pdf, id=1196, 433.62pt x 650.43pt>
 File: images/XNLI_premise_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_premise_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_premise_subtokenized.pdf  used on input li
 ne 991.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/XNLI_hypo_subtokenized.pdf, id=1208, 433.62pt x 650.43pt>
+<images/XNLI_hypo_subtokenized.pdf, id=1197, 433.62pt x 650.43pt>
 File: images/XNLI_hypo_subtokenized.pdf Graphic file (type pdf)
 <use images/XNLI_hypo_subtokenized.pdf>
 Package pdftex.def Info: images/XNLI_hypo_subtokenized.pdf  used on input line 
 996.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/XQuAD_SRL_normal--24-10-2020_16-52-40_Accuracy.pdf, id=1209, 578.16pt x
+<images/XQuAD_SRL_normal--24-10-2020_16-52-40_Accuracy.pdf, id=1198, 578.16pt x
  650.43pt>
 File: images/XQuAD_SRL_normal--24-10-2020_16-52-40_Accuracy.pdf Graphic file (t
 ype pdf)
@@ -2762,7 +2752,7 @@ ype pdf)
 Package pdftex.def Info: images/XQuAD_SRL_normal--24-10-2020_16-52-40_Accuracy.
 pdf  used on input line 1006.
 (pdftex.def)             Requested size: 192.0548pt x 216.0618pt.
-<images/XQuAD_SRL_normal--24-10-2020_16-52-40_Loss.pdf, id=1210, 578.16pt x 650
+<images/XQuAD_SRL_normal--24-10-2020_16-52-40_Loss.pdf, id=1199, 578.16pt x 650
 .43pt>
 File: images/XQuAD_SRL_normal--24-10-2020_16-52-40_Loss.pdf Graphic file (type 
 pdf)
@@ -2770,7 +2760,7 @@ pdf)
 Package pdftex.def Info: images/XQuAD_SRL_normal--24-10-2020_16-52-40_Loss.pdf 
  used on input line 1011.
 (pdftex.def)             Requested size: 192.0548pt x 216.0618pt.
-<images/XNLI_labels.pdf, id=1211, 505.89pt x 650.43pt>
+<images/XNLI_labels.pdf, id=1200, 505.89pt x 650.43pt>
 File: images/XNLI_labels.pdf Graphic file (type pdf)
 <use images/XNLI_labels.pdf>
 Package pdftex.def Info: images/XNLI_labels.pdf  used on input line 1022.
@@ -2789,12 +2779,12 @@ Underfull \hbox (badness 1681) in paragraph at lines 1030--1035
 /images/XNLI_hypo_subtokenized.pdf> <./images/XQuAD_SRL_normal--24-10-2020_16-5
 2-40_Accuracy.pdf> <./images/XQuAD_SRL_normal--24-10-2020_16-52-40_Loss.pdf>]
 [43]
-<images/XQuAD_context.pdf, id=1272, 433.62pt x 650.43pt>
+<images/XQuAD_context.pdf, id=1261, 433.62pt x 650.43pt>
 File: images/XQuAD_context.pdf Graphic file (type pdf)
 <use images/XQuAD_context.pdf>
 Package pdftex.def Info: images/XQuAD_context.pdf  used on input line 1100.
 (pdftex.def)             Requested size: 192.0548pt x 288.08571pt.
-<images/XQuAD_answer.pdf, id=1273, 433.62pt x 650.43pt>
+<images/XQuAD_answer.pdf, id=1262, 433.62pt x 650.43pt>
 File: images/XQuAD_answer.pdf Graphic file (type pdf)
 <use images/XQuAD_answer.pdf>
 Package pdftex.def Info: images/XQuAD_answer.pdf  used on input line 1105.
@@ -2807,7 +2797,7 @@ Package pdftex.def Info: images/XQuAD_answer.pdf  used on input line 1105.
 
  (./chapters/chap4_architecture.tex
 chapter 4.
-<images/architecture_grob.png, id=1316, 2326.19063pt x 531.48563pt>
+<images/architecture_grob.png, id=1305, 2326.19063pt x 531.48563pt>
 File: images/architecture_grob.png Graphic file (type png)
 <use images/architecture_grob.png>
 Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
@@ -2818,7 +2808,7 @@ Package pdftex.def Info: images/architecture_grob.png  used on input line 16.
 
 
  <./images/architecture_grob.png>] [49]
-<images/architecture.png, id=1326, 4224.03696pt x 2128.20695pt>
+<images/architecture.png, id=1315, 4224.03696pt x 2128.20695pt>
 File: images/architecture.png Graphic file (type png)
 <use images/architecture.png>
 Package pdftex.def Info: images/architecture.png  used on input line 34.
@@ -2831,7 +2821,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ] [52]
-<images/exampleParzu2.png, id=1389, 827.34094pt x 358.33875pt>
+<images/exampleParzu2.png, id=1378, 827.34094pt x 358.33875pt>
 File: images/exampleParzu2.png Graphic file (type png)
 <use images/exampleParzu2.png>
 Package pdftex.def Info: images/exampleParzu2.png  used on input line 135.
@@ -2856,7 +2846,7 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 212.
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [55] [56]
 
-Package caption Warning: \label without proper reference on input line 366.
+Package caption Warning: \label without proper reference on input line 367.
 See the caption package documentation for explanation.
 
 
@@ -2864,66 +2854,70 @@ LaTeX Warning: Reference `srl:zeros-duplicate' on page 57 undefined on input li
 ne 362.
 
 
-Overfull \hbox (38.88881pt too wide) in paragraph at lines 387--401
+Overfull \hbox (38.88881pt too wide) in paragraph at lines 388--402
 [][] 
  []
 
 
-Package caption Warning: \captionsetup{type*=...} or \captionof
-(caption)                outside box or environment on input line 403.
-See the caption package documentation for explanation.
-
-
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 406.
+(caption)                particular \caption on input line 407.
 See the caption package documentation for explanation.
 
 Package hyperref Info: bookmark level for unknown srl defaults to 0 on input li
-ne 406.
-[57] [58]
-<images/bert_classification.png, id=1475, 1071.25218pt x 441.14813pt>
+ne 407.
+[57]
+Overfull \hbox (0.54305pt too wide) in paragraph at lines 427--429
+[]\T1/cmr/m/n/12 asdah sashdg askjdh gsad-k-jahsdg askjdh ga sd-k-jahs-g-da-js-
+d-hga-jd-hgasd jhagsd akjshdg
+ []
+
+[58]
+<images/bert_classification.png, id=1464, 1071.25218pt x 441.14813pt>
 File: images/bert_classification.png Graphic file (type png)
 <use images/bert_classification.png>
-Package pdftex.def Info: images/bert_classification.png  used on input line 466
+Package pdftex.def Info: images/bert_classification.png  used on input line 474
 .
 (pdftex.def)             Requested size: 369.88582pt x 152.32416pt.
  [59 <./images/bert_classification.png>]
-<images/head-cls.png, id=1490, 1751.8248pt x 1215.87048pt>
+<images/head-cls.png, id=1479, 1751.8248pt x 1215.87048pt>
 File: images/head-cls.png Graphic file (type png)
 <use images/head-cls.png>
-Package pdftex.def Info: images/head-cls.png  used on input line 496.
+Package pdftex.def Info: images/head-cls.png  used on input line 504.
 (pdftex.def)             Requested size: 284.52756pt x 197.47456pt.
  [60 <./images/head-cls.png>]
-<images/head-lhsa.png, id=1499, 1698.63408pt x 1286.406pt>
+<images/head-lhsa.png, id=1488, 1698.63408pt x 1286.406pt>
 File: images/head-lhsa.png Graphic file (type png)
 <use images/head-lhsa.png>
-Package pdftex.def Info: images/head-lhsa.png  used on input line 526.
+Package pdftex.def Info: images/head-lhsa.png  used on input line 534.
 (pdftex.def)             Requested size: 284.52756pt x 215.46698pt.
-LaTeX Font Info:    Try loading font information for U+bbm on input line 535.
+LaTeX Font Info:    Try loading font information for U+bbm on input line 543.
 
 (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)
-<images/head-gru.png, id=1508, 1738.52711pt x 1697.47775pt>
+) [61 <./images/head-lhsa.png>]
+<images/head-gru.png, id=1503, 1738.52711pt x 1697.47775pt>
 File: images/head-gru.png Graphic file (type png)
 <use images/head-gru.png>
-Package pdftex.def Info: images/head-gru.png  used on input line 549.
+Package pdftex.def Info: images/head-gru.png  used on input line 557.
 (pdftex.def)             Requested size: 284.52756pt x 277.79242pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[61 <./images/head-lhsa.png>] [62 <./images/head-gru.png>]
-<images/head-span_pred.png, id=1532, 1698.63408pt x 1053.40752pt>
+ [62 <./images/head-gru.png>]
+<images/head-span_pred.png, id=1518, 1698.63408pt x 1053.40752pt>
 File: images/head-span_pred.png Graphic file (type png)
 <use images/head-span_pred.png>
-Package pdftex.def Info: images/head-span_pred.png  used on input line 584.
+Package pdftex.def Info: images/head-span_pred.png  used on input line 592.
 (pdftex.def)             Requested size: 284.52756pt x 176.44083pt.
 ) [63 <./images/head-span_pred.png>]
 \openout2 = `chapters/chap5_results.aux'.
 
- (./chapters/chap5_results.tex
+
+(./chapters/chap5_results.tex
 chapter 5.
+
+Overfull \hbox (0.39456pt too wide) in paragraph at lines 122--123
+[]\T1/cmr/m/n/12 GRU ar-chi-tec-ture is prob-a-bly strongest: most best mod-els
+ (even though mostly
+ []
+
 
 LaTeX Warning: Reference `tab:pawsx' on page 64 undefined on input line 130.
 
@@ -2951,18 +2945,18 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/gain_losses_accumulated.pdf, id=1561, 650.43pt x 433.62pt>
+<images/gain_losses_accumulated.pdf, id=1550, 650.43pt x 433.62pt>
 File: images/gain_losses_accumulated.pdf Graphic file (type pdf)
 <use images/gain_losses_accumulated.pdf>
 Package pdftex.def Info: images/gain_losses_accumulated.pdf  used on input line
  279.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
-<images/gain_losses_SRL.pdf, id=1562, 650.43pt x 433.62pt>
+<images/gain_losses_SRL.pdf, id=1551, 650.43pt x 433.62pt>
 File: images/gain_losses_SRL.pdf Graphic file (type pdf)
 <use images/gain_losses_SRL.pdf>
 Package pdftex.def Info: images/gain_losses_SRL.pdf  used on input line 284.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
-<images/all_datasets_gain_dup.pdf, id=1565, 939.51pt x 867.24pt>
+<images/all_datasets_gain_dup.pdf, id=1554, 939.51pt x 867.24pt>
 File: images/all_datasets_gain_dup.pdf Graphic file (type pdf)
 <use images/all_datasets_gain_dup.pdf>
 Package pdftex.def Info: images/all_datasets_gain_dup.pdf  used on input line 2
@@ -2980,13 +2974,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<images/QA_gain_losses_accumulated.pdf, id=1568, 650.43pt x 433.62pt>
+<images/QA_gain_losses_accumulated.pdf, id=1557, 650.43pt x 433.62pt>
 File: images/QA_gain_losses_accumulated.pdf Graphic file (type pdf)
 <use images/QA_gain_losses_accumulated.pdf>
 Package pdftex.def Info: images/QA_gain_losses_accumulated.pdf  used on input l
 ine 351.
 (pdftex.def)             Requested size: 192.0548pt x 128.03589pt.
-<images/QA_gain_losses_SRL2.pdf, id=1569, 650.43pt x 433.62pt>
+<images/QA_gain_losses_SRL2.pdf, id=1558, 650.43pt x 433.62pt>
 File: images/QA_gain_losses_SRL2.pdf Graphic file (type pdf)
 <use images/QA_gain_losses_SRL2.pdf>
 Package pdftex.def Info: images/QA_gain_losses_SRL2.pdf  used on input line 356
@@ -3004,8 +2998,8 @@ LaTeX Warning: Reference `tab:qa-gain-loss' on page 67 undefined on input line
 
 
 ] [68] [69 <./images/gain_losses_accumulated.pdf> <./images/gain_losses_SRL.pdf
->] [70] [71 <./images/all_datasets_gain_dup.pdf>]
-<images/all_data_sets_token_stats.pdf, id=1669, 1084.05pt x 650.43pt>
+>] [70] [71 <./images/all_datasets_gain_dup.pdf>] [72]
+<images/all_data_sets_token_stats.pdf, id=1662, 1084.05pt x 650.43pt>
 File: images/all_data_sets_token_stats.pdf Graphic file (type pdf)
 <use images/all_data_sets_token_stats.pdf>
 Package pdftex.def Info: images/all_data_sets_token_stats.pdf  used on input li
@@ -3015,48 +3009,48 @@ ne 491.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[72] [73 <./images/QA_gain_losses_accumulated.pdf> <./images/QA_gain_losses_SRL
-2.pdf>] [74 <./images/all_data_sets_token_stats.pdf>]
+[73 <./images/QA_gain_losses_accumulated.pdf> <./images/QA_gain_losses_SRL2.pdf
+>] [74 <./images/all_data_sets_token_stats.pdf>]
+Overfull \hbox (3.36285pt too wide) in paragraph at lines 533--535
+[]\T1/cmr/m/n/12 Riverton war ein Par-la-mentswäh-ler in der neuseeländis-chen 
+Re-gion South-land. River-
+ []
+
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 537.
 
-[75]
-<images/SRL_assessment.pdf, id=1719, 578.16pt x 433.62pt>
+[75] [76]
+<images/SRL_assessment.pdf, id=1713, 578.16pt x 433.62pt>
 File: images/SRL_assessment.pdf Graphic file (type pdf)
 <use images/SRL_assessment.pdf>
 Package pdftex.def Info: images/SRL_assessment.pdf  used on input line 631.
 (pdftex.def)             Requested size: 312.9803pt x 234.73357pt.
- [76]
-<images/SRL_assessment_data_set.pdf, id=1725, 1156.32pt x 794.97pt>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<images/SRL_assessment_data_set.pdf, id=1714, 1156.32pt x 794.97pt>
 File: images/SRL_assessment_data_set.pdf Graphic file (type pdf)
 <use images/SRL_assessment_data_set.pdf>
 Package pdftex.def Info: images/SRL_assessment_data_set.pdf  used on input line
  633.
 (pdftex.def)             Requested size: 426.79134pt x 293.41861pt.
 
-
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[77 <./images/SRL_assessment.pdf>] [78 <./images/SRL_assessment_data_set.pdf>]
+[77] [78 <./images/SRL_assessment.pdf>] [79 <./images/SRL_assessment_data_set.p
+df>]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 757.
+(caption)                particular \caption on input line 758.
 See the caption package documentation for explanation.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) [79] [80]
+) [80]
 \openout2 = `chapters/chap6_conclusion.aux'.
 
  (./chapters/chap6_conclusion.tex
 chapter 6.
-
-Underfull \hbox (badness 10000) in paragraph at lines 5--6
-
- []
-
 ) [81
 
 
@@ -3134,13 +3128,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 37513 strings out of 492982
- 718909 string characters out of 6134895
+ 37511 strings out of 492982
+ 718895 string characters out of 6134895
  890370 words of memory out of 5000000
  39889 multiletter control sequences out of 15000+600000
  582550 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,18n,80p,10408b,1088s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,18n,80p,10408b,1100s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc} </home/joni/.texl
 ive2017/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk>{/usr/share/texlive/te
 xmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super
@@ -3169,10 +3163,10 @@ r/sftt1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/times/utmr8a.pfb>
-Output written on CLthesis.pdf (102 pages, 2931966 bytes).
+Output written on CLthesis.pdf (102 pages, 2933337 bytes).
 PDF statistics:
- 2025 PDF objects out of 2073 (max. 8388607)
- 1737 compressed objects within 18 object streams
- 453 named destinations out of 1000 (max. 500000)
+ 2014 PDF objects out of 2073 (max. 8388607)
+ 1726 compressed objects within 18 object streams
+ 451 named destinations out of 1000 (max. 500000)
  814 words of extra memory for PDF output out of 10000 (max. 10000000)
 
