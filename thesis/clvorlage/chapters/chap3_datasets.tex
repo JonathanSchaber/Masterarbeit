@@ -1176,14 +1176,14 @@ Accuracy (exact match): 57.6\%
 \subsection{Overview}
 
 \tab{tab:data-set-overview}{Overview of collected data sets and tasks.}
-{\begin{tabularx}{\linewidth}{l|llllX}
-           & NLP Task                   & ML Task                    & \# Examples (Train/Dev/Test) & Splits         & Remarks \\ \toprule
-  deISEAR  &  Emotion Detection          & Multi-Class Classification & 1,001                        & -              &         \\
-  SCARE    & Sentiment Analysis         & Multi-Class Classifiaction & 1,760                        & -              &         \\ \hline
-  PAWS-X   & Paraphrase Identification  & Binary Classification      & 48,977/1,932/1,967           & train/dev/test &         \\
-  XNLI     & Natural Language Inference & Multi-Class Classification & 2,489/7,498                  & dev/test       &         \\ \hline
-  MLQA     & Question Answering         & Span Prediction            & 509/4,499                    & dev/test       &         \\
-  XQuAD    & Question Answering         & Span Prediction            & 1,192                        & -              &
+{\begin{tabularx}{\linewidth}{l|lllllX}
+  \multirowcell{2}{} & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\(Train/Dev/Test)} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Domain} & \multirowcell{2}{Remarks} \\ \\ \toprule
+  deISEAR            & Emotion Detection           & Multi-Class Classification  & 1001/150/151                                    & -                                   &                          &         \\
+  SCARE              & Sentiment Analysis          & Multi-Class Classifiaction  & 1,232/264/264                                   & -                                   &                          &         \\ \hline
+  PAWS-X             & Paraphrase Identification   & Binary Classification       & 48,977/1,932/1,967                              & train/dev/test                      & Wikipedia                &         \\
+  XNLI               & Natural Language Inference  & Multi-Class Classification  & 2,115/374/5,009                                 & dev/test                            &                          &         \\ \hline
+  MLQA               & Question Answering          & Span Prediction             & 432/77/4,499                                    & dev/test                            &                          &         \\
+  XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                     & -                                   &                          &
 \end{tabularx}
 }{Overview data sets}
 
