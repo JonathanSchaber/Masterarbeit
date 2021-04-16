@@ -4,8 +4,8 @@
 
 \section{Overview}
 
-gliBERT is an architecture that combines different, pre-existing models and tools.  The general
-way an input sequence is processed by gliBERT is depicted in figure \ref{fig:architecture}:
+GliBERT is an architecture that combines different, pre-existing models and tools.  The general
+way an input sequence is processed by GliBERT is depicted in figure \ref{fig:architecture}:
 
 
 ``Throughout this work, a «sentence» can be an arbitrary span of contiguous text, rather
@@ -13,7 +13,7 @@ than an actual linguistic sentence. A «sequence» refers to the input token seq
 which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
 
 
-\fig{images/architecture_grob}{fig:architecture}{General architecture of gliBERT, exemplified for deISEAR task.}{14}{gliBERT Architecture}
+\fig{images/architecture_grob}{fig:architecture}{General architecture of GliBERT, exemplified for deISEAR task.}{14}{GliBERT Architecture}
 
 The core parts of the model are the following:
 
@@ -31,7 +31,7 @@ The core parts of the model are the following:
 
 \begin{landscape}\centering
   % \vspace*{\fill}
-  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of gliBERT.}{24}{gliBERT Architecture detail}
+  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of GliBERT.}{24}{GliBERT Architecture detail}
   % \vfill
 \end{landscape}
 
@@ -585,7 +585,7 @@ SRL-enriched token. Secondly, when the setting of merging the BERT subtokens bef
 the SRL embeddings is used, the start and end span indexes have to be recomputed.
 
 
-\fig{images/head-span_pred.png}{fig:Span-Prediction-Head}{The gliBERT head for span prediction
+\fig{images/head-span_pred.png}{fig:Span-Prediction-Head}{The GliBERT head for span prediction
     in Question Answering Tasks. After the Tokens and SRLs were consumed by BERT and the SRL
     embedding module, one FFNN predict on each token in the sequence, how likely it is first
     and the last token of the answer span. After these predictions have been made for all tokens, the token
