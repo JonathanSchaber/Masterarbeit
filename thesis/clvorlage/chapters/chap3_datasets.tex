@@ -5,28 +5,27 @@
 
 \section{GerGLUE}
 
+Because semantics is such a fuzzy, hard to formalize property of language, it is not easy to
+assess the capabilities of an architecture designed at solving problems related to meaning. In
+the data-driven NLP community today, it is common practise to measure the {\color{red} power of
+a model} by measuring it's performance on some standardized data set. However, a model aiming at
+capturing semantics of human langauge ``must be able to process language in a way that is not
+exclusive to a single task, genre, or dataset'', as \cite{wang2018glue} correctly point out.
 
-Traditionally in linguistics, language is analyzed into different structural levels, where
-different tools for describing these levels, or strata, are used.
-In most theories, there are are four of these structural levels proposed:
-Beginning from the Bottom, there is the level of Phonetics and Phonology, followed by Morphology,
-then there is the level of Syntax, and the last one is Semantics.\myfootnote{Sometimes Pragmatics
-is conceptualized as an additional fifth layer on top, sometimes it is considered to form a field
-of its own; I follow the latter.}
-While the first three levels deal with the form of utterances of human language, semantics is
-concerned with the meaning of such utterances \citep[p.~4ff.]{kracht2007introduction}.
+To provide a standardized set of data sets for the NLP community to compare different NLU-committed
+models, \citeauthor{wang2018glue} compiled the General Lanuage Understanding Evaluation, short
+GLUE, benchmark. It consists of nine data sets addressing different NLU problems; from acceptability
+tasks (is the phrase ``Saw the man the dog.'' an acceptable English sentence?) to detecting
+textual entailment (is the meaning of ``A boy is at the beach'' enatiled by the sentence
+``Two kids are building a sandcastle at the beach''?). See table \ref{tab:original-GLUE} for
+a list of all GLUE data sets, their tasks and
 
-% \tab{tab:levels-of-lang}{Levels of language analysis and description.}
-% {\begin{tabular}{|l|l|l|l|}
-% \hline
-% \multicolumn{2}{|c|}{Form}     & \multicolumn{2}{c|}{Meaning}     \\ \hline
-%   % a & b & c & d \\ \hline
-%   & \multicolumn{2}{c|}{Level} &                   \\ \hhline{====}
-%         Syntax  & \multicolumn{2}{l|}{Sentence} & \multirow{3}{*}{Semantics} \\ \cline{1-3}
-%         Morphology & \multicolumn{2}{l|}{Word} &                   \\ \cline{1-3}
-%         Phonology & \multicolumn{2}{l|}{Sound} &                   \\ \hline
-% \end{tabular}
-% }{Levels of language}
+
+% Therefore, ``it
+% must be able to process language in a way that is not exclusive to a single task,
+% genre, or dataset'', as \cite{wang2018glue}
+% To assess that an architecture designed for tackling NLU problems surpasses another technology indeed,
+% it is not probably not enough
 
 
 Following \cite{wang2018glue},
@@ -35,11 +34,11 @@ Following \cite{wang2018glue},
   \resizebox{\textwidth}{!}{
     \begin{tabular}{l|llll}
       Data Set & NLP Task                   & ML Task                    & \# Examples & Splits \\ \hline\hline
-      & \multicolumn{4}{c}{\textit{Single-Sentence Tasks}} \\
+      & \multicolumn{4}{g}{\textit{Single-Sentence Tasks}} \\
       CoLA     &  Acceptability             & Binary Classification      & 8.5k/1k & train/test \\
       SST-2    & Sentiment Analysis         & Binary Classification      & 67k/1.8k & train/test \\
       \hline
-      & \multicolumn{4}{c}{\textit{Sentence Pair Tasks}} \\
+      & \multicolumn{4}{g}{\textit{Sentence Pair Tasks}} \\
       MNLI     & Natural Language Inference & Multi-Class Classification &  393k/20k & train/test \\
       MRPC     & Paraphrase Identification  & Binary Classification      & 3.7k/1.7k & train/test \\
       QNLI     & Question Answering         & Binary Classification\myfootnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
@@ -56,16 +55,16 @@ Following \cite{wang2018glue},
   \resizebox{\textwidth}{!}{
     \begin{tabular}{l|llll}
       Data Set & NLP Task                   & ML Task                    & \# Examples        & Splits \\ \hline\hline
-      & \multicolumn{4}{c}{\textit{Single-Sentence Tasks}} \\
-      deISEAR  & Emotion Detection          & Multi-Class Classification & 1 001              & - \\
-      SCARE    & Sentiment Analysis         & Multi-Class Classification & 1 760              & - \\
+      & \multicolumn{4}{g}{\textit{Single-Sentence Tasks}} \\
+      deISEAR  & Emotion Detection          & Multi-Class Classification & 1,001              & - \\
+      SCARE    & Sentiment Analysis         & Multi-Class Classification & 1,760              & - \\
       \hline
-      & \multicolumn{4}{c}{\textit{Sentence Pair Tasks}} \\
+      & \multicolumn{4}{g}{\textit{Sentence Pair Tasks}} \\
       % SCARE Reviews &  Sentiment Analysis & Multi-Class Classification & 802 860 & - \\
-      MLQA     & Question Answering         & Span Prediction            & 509/4 499          & dev/test \\
-      PAWS-X   & Paraphrase Identification  & Binary Classification      & 14 402/2 000/4 000 & train/dev/test \\
-      XNLI     & Natural Language Inference & Multi-Class Classification &  2 489/7 498       & dev/test \\
-      XQuAD    & Question Answering         & Span Prediction            &  1 192             & -
+      MLQA     & Question Answering         & Span Prediction            & 509/4,499          & dev/test \\
+      PAWS-X   & Paraphrase Identification  & Binary Classification      & 49,402/2,001/2,001 & train/dev/test \\
+      XNLI     & Natural Language Inference & Multi-Class Classification & 2,489/5,009        & dev/test \\
+      XQuAD    & Question Answering         & Span Prediction            & 1,179              & -
     \end{tabular}
   }
 }{GerGLUE}
@@ -1175,15 +1174,20 @@ Accuracy (exact match): 57.6\%
 
 \subsection{Overview}
 
-\tab{tab:data-set-overview}{Overview of collected data sets and tasks.}
-{\begin{tabularx}{\linewidth}{l|lllllX}
-  \multirowcell{2}{} & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\(Train/Dev/Test)} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Domain} & \multirowcell{2}{Remarks} \\ \\ \toprule
-  deISEAR            & Emotion Detection           & Multi-Class Classification  & 1001/150/151                                    & -                                   &                          &         \\
-  SCARE              & Sentiment Analysis          & Multi-Class Classifiaction  & 1,232/264/264                                   & -                                   &                          &         \\ \hline
-  PAWS-X             & Paraphrase Identification   & Binary Classification       & 48,977/1,932/1,967                              & train/dev/test                      & Wikipedia                &         \\
-  XNLI               & Natural Language Inference  & Multi-Class Classification  & 2,115/374/5,009                                 & dev/test                            &                          &         \\ \hline
-  MLQA               & Question Answering          & Span Prediction             & 432/77/4,499                                    & dev/test                            &                          &         \\
-  XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                     & -                                   &                          &
+\tab{tab:gerglue-overview}{Overview of \textit{GerGLUE} data sets and tasks. The number of exmaples represent the size of the
+                            set splits after preparing the data sets for the experiment; therefore all datasets have all splits.
+                            Note that during the preprocessing some examples had to be excluded (see chapter \ref{chap:3_datasets}
+                            for more details), that's why some numbers do not coincide with those of table \ref{tab:overview-data-sets}.}
+{\begin{tabularx}{\linewidth}{ll|lllllX}
+  \multicolumn{2}{c}{}                                                            & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\{\tiny Train/Dev/Test}} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Register\\{\tiny coll. $<$ mix. $<$ form.}} & \multirowcell{2}{Remarks}                                 \\ \\ \toprule
+  \multirow{3}{*}{\rotatebox[origin=c]{90}{\textit{Single}}} &                    & \multicolumn{6}{g}{\textit{Classification}}\\
+                                                             &  deISEAR           & Emotion Detection           & Multi-Class                 & 1001/150/151                                          & -                                   & \multicolumn{1}{c}{mixed}                                    & Boilerplate text structures (``Ich fühlte [?], als ...'') \\
+                                                             & SCARE              & Sentiment Analysis          & Multi-Class                 & 1,232/264/264                                         & -                                   & \multicolumn{1}{c}{colloquial}                               & Very informal, ungrammatical, short text snippets         \\ \cline{1-2}
+  \multirow{5}{*}{\rotatebox[origin=c]{90}{\textit{Pair}}}   & PAWS-X             & Paraphrase Identification   & Binary                      & 48,977/1,932/1,967                                    & Train/Dev/Test                      & \multicolumn{1}{c}{formal}                                   & Translation artefact noise                                \\
+                                                             & XNLI               & Natural Language Inference  & Multi-Class                 & 2,115/374/5,009                                       & Dev/Test                            & \multicolumn{1}{c}{mixed}                                    &                                                           \\ \cline{3-8}
+                                                             &                    & \multicolumn{6}{g}{\textit{Question Answering}}\\
+                                                             & MLQA               & Question Answering          & Span Prediction             & 432/77/4,499                                          & Dev/Test                            & \multicolumn{1}{c}{formal}                                   &                                                           \\
+                                                             & XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                           & -                                   & \multicolumn{1}{c}{formal}                                   &
 \end{tabularx}
 }{Overview data sets}
 

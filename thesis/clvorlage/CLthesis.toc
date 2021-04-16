@@ -23,11 +23,11 @@
 \contentsline {section}{\numberline {2.5}Semantic Roles}{13}{section.2.5}
 \contentsline {chapter}{\numberline {3}Data Sets}{20}{chapter.3}
 \contentsline {section}{\numberline {3.1}GerGLUE}{20}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}General Issues}{20}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.1}General Issues}{21}{subsection.3.1.1}
 \contentsline {section}{\numberline {3.2}Corpora}{22}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}deISEAR}{22}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.1}deISEAR}{23}{subsection.3.2.1}
 \contentsline {subsubsection}{\numberline {3.2.1.1}Statistics}{24}{subsubsection.3.2.1.1}
-\contentsline {subsubsection}{\numberline {3.2.1.2}SOTA}{24}{subsubsection.3.2.1.2}
+\contentsline {subsubsection}{\numberline {3.2.1.2}SOTA}{25}{subsubsection.3.2.1.2}
 \contentsline {subsection}{\numberline {3.2.2}MLQA}{25}{subsection.3.2.2}
 \contentsline {subsubsection}{\numberline {3.2.2.1}Statistics}{28}{subsubsection.3.2.2.1}
 \contentsline {subsubsection}{\numberline {3.2.2.2}SOTA}{29}{subsubsection.3.2.2.2}
@@ -75,10 +75,10 @@
 \contentsline {section}{\numberline {5.6}Ablation study}{78}{section.5.6}
 \contentsline {chapter}{\numberline {6}Conclusion}{81}{chapter.6}
 \contentsline {section}{\numberline {6.1}Outlook / Future Work}{81}{section.6.1}
-\contentsline {chapter}{Glossary}{83}{section*.56}
-\contentsline {chapter}{References}{84}{section*.58}
-\contentsline {chapter}{Lebenslauf}{92}{section*.60}
+\contentsline {chapter}{Glossary}{82}{section*.56}
+\contentsline {chapter}{References}{83}{section*.58}
+\contentsline {chapter}{Lebenslauf}{91}{section*.60}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{93}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{94}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{92}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{93}{appendix.B}
