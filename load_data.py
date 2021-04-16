@@ -17,7 +17,7 @@ end = "\033[0m"
 too_long_warning = red + "ATTENTION" + end + ": example too long!"
 
 
-class gliBertDataset(Dataset):
+class GliBertDataset(Dataset):
     def __init__(self, x_tensor, y_tensor, attention_masks, token_type_ids, srl, ids):
         assert all(len(obj) == len(x_tensor) for obj in [y_tensor, attention_masks, token_type_ids, srl])
         self.x_tensor = x_tensor
@@ -190,7 +190,7 @@ class Dataloader:
         return data
 
     def make_datasets(self):
-        self.dataset_train = gliBertDataset(
+        self.dataset_train = GliBertDataset(
                                 self.x_tensor_train,
                                 self.y_tensor_train,
                                 self.attention_mask_train,
@@ -198,7 +198,7 @@ class Dataloader:
                                 self.srl_train,
                                 self.ids_train
                                 )
-        self.dataset_dev = gliBertDataset(
+        self.dataset_dev = GliBertDataset(
                                 self.x_tensor_dev,
                                 self.y_tensor_dev,
                                 self.attention_mask_dev,
@@ -206,7 +206,7 @@ class Dataloader:
                                 self.srl_dev,
                                 self.ids_dev
                                 )
-        self.dataset_test = gliBertDataset(
+        self.dataset_test = GliBertDataset(
                                 self.x_tensor_test,
                                 self.y_tensor_test,
                                 self.attention_mask_test,
@@ -371,9 +371,9 @@ class Dataloader:
 class deISEAR_dataloader(Dataloader):
     def load(self):
         self.type = 1
-        self.path_train = str(Path(self.path)) + "/gliBert_deISEAR_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_deISEAR_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_deISEAR_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBert_deISEAR_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBert_deISEAR_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBert_deISEAR_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -384,9 +384,9 @@ class deISEAR_dataloader(Dataloader):
 class MLQA_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_train = str(Path(self.path)) + "/gliBert_mlqa_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_mlqa_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_mlqa_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBert_mlqa_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBert_mlqa_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBert_mlqa_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -397,9 +397,9 @@ class MLQA_dataloader(Dataloader):
 class PAWS_X_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_train = str(Path(self.path)) + "/gliBert_paws_x_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_paws_x_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBert_paws_x_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBert_paws_x_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBert_paws_x_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -410,9 +410,9 @@ class PAWS_X_dataloader(Dataloader):
 class SCARE_dataloader(Dataloader):
     def load(self):
         self.type = 1
-        self.path_train = str(Path(self.path)) + "/gliBert_scare_annotations_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_scare_annotations_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_scare_annotations_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBert_scare_annotations_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBert_scare_annotations_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBert_scare_annotations_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -423,9 +423,9 @@ class SCARE_dataloader(Dataloader):
 class XNLI_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_train = str(Path(self.path)) + "/gliBert_xnli_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_xnli_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_xnli_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBert_xnli_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBert_xnli_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBert_xnli_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -436,9 +436,9 @@ class XNLI_dataloader(Dataloader):
 class XQuAD_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_train = str(Path(self.path)) + "/gliBert_xquad_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/gliBert_xquad_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/gliBert_xquad_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBert_xquad_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBert_xquad_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBert_xquad_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)

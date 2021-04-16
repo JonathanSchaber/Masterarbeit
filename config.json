@@ -25,7 +25,7 @@
 	"early_stopping": true,
 	"merge_subtokens": false,
 	"max_length": 100,
-	"bert_head": "gliBertClassifierGRU",
+	"bert_head": "GliBertClassifierGRU",
 	"combine_SRLs": true,
 	"zeros": false,
 	"learning_rate": 2e-5,

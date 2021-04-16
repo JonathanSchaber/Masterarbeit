@@ -1,26 +1,26 @@
 Predicted, Gold
 
 XNLI
-5925        neutral           entailment
-1160        entailment        contradiction
-7829        contradiction     neutral
-1459        contradiction     neutral
-2156        entailment        neutral
-1020        neutral           entailment
-6122        contradiction     neutral
-6969        neutral           contradiction
-1397        contradiction     entailment
-8906        entailment        contradiction
-5694        contradiction     neutral
-2133        contradiction     entailment
-5765        entailment        contradiction
-6459        entailment        neutral
-1169        neutral           contradiction
-8304        contradiction     neutral
-617         entailment        contradiction
-564         neutral           entailment
 17          neutral           contradiction
+564         neutral           entailment
+617         entailment        contradiction
+1020        neutral           entailment
+1160        entailment        contradiction
+1169        neutral           contradiction
+1397        contradiction     entailment
+1459        contradiction     neutral
+2133        contradiction     entailment
+2156        entailment        neutral
+5694        contradiction     neutral
+5765        entailment        contradiction
+5925        neutral           entailment
+6122        contradiction     neutral
+6459        entailment        neutral
+6969        neutral           contradiction
+7829        contradiction     neutral
+8304        contradiction     neutral
 8518        contradiction     neutral
+8906        entailment        contradiction
 
 
 PAWS-X

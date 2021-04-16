@@ -136,9 +136,9 @@ def preprocess_deISEAR(path):
     path = str(path)
     file_path = path + "/deISEAR.tsv"
     outfile_paths = [
-            path + "/gliBert_deISEAR_train.tsv",
-            path + "/gliBert_deISEAR_dev.tsv",
-            path + "/gliBert_deISEAR_test.tsv"
+            path + "/GliBert_deISEAR_train.tsv",
+            path + "/GliBert_deISEAR_dev.tsv",
+            path + "/GliBert_deISEAR_test.tsv"
             ]
 
     emotion_sentence_srl = []
@@ -174,9 +174,9 @@ def preprocess_MLQA(path):
             path + "/test/test-context-de-question-de.json"
             ]
     outfile_paths = [
-            path + "/gliBert_mlqa_train.tsv",
-            path + "/gliBert_mlqa_dev.tsv",
-            path + "/gliBert_mlqa_test.tsv"
+            path + "/GliBert_mlqa_train.tsv",
+            path + "/GliBert_mlqa_dev.tsv",
+            path + "/GliBert_mlqa_test.tsv"
             ]
 
     too_long_contexts = []
@@ -237,9 +237,9 @@ def preprocess_PAWS_X(path):
             path + "/de/test_2k.tsv"
             ]
     outfile_paths = [
-            path + "/gliBert_paws_x_train.tsv",
-            path + "/gliBert_paws_x_dev.tsv",
-            path + "/gliBert_paws_x_test.tsv"
+            path + "/GliBert_paws_x_train.tsv",
+            path + "/GliBert_paws_x_dev.tsv",
+            path + "/GliBert_paws_x_test.tsv"
             ]
 
     counter = 0
@@ -291,9 +291,9 @@ def preprocess_SCARE(path):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/gliBert_scare_annotations_train.tsv",
-            path + "/gliBert_scare_annotations_dev.tsv",
-            path + "/gliBert_scare_annotations_test.tsv"
+            path + "/GliBert_scare_annotations_train.tsv",
+            path + "/GliBert_scare_annotations_dev.tsv",
+            path + "/GliBert_scare_annotations_test.tsv"
             ]
 
     count_non_maj = 0
@@ -360,9 +360,9 @@ def preprocess_SCARE_reviews(path, path_outfile):
     id_text_labels = {}
     label_text_feat = []
     outfile_paths = [
-            path + "/gliBert_scare_reviews_train.tsv",
-            path + "/gliBert_scare_reviews_dev.tsv",
-            path + "/gliBert_scare_reviews_test.tsv"
+            path + "/GliBert_scare_reviews_train.tsv",
+            path + "/GliBert_scare_reviews_dev.tsv",
+            path + "/GliBert_scare_reviews_test.tsv"
             ]
 
     rating_text_srl = []
@@ -401,9 +401,9 @@ def preprocess_XNLI(path):
             path + "/XNLI-1.0/xnli.test.de.tsv"
             ]
     outfile_paths = [
-            path + "/gliBert_xnli_train.tsv",
-            path + "/gliBert_xnli_dev.tsv",
-            path + "/gliBert_xnli_test.tsv"
+            path + "/GliBert_xnli_train.tsv",
+            path + "/GliBert_xnli_dev.tsv",
+            path + "/GliBert_xnli_test.tsv"
             ]
 
     for i, file_path in enumerate(file_paths):
@@ -434,9 +434,9 @@ def preprocess_XQuAD(path):
     assert path.is_dir(), "Path must point to root directory /<path>/<to>/XQUAD/, not file!"
     path = str(path)
     outfile_paths = [
-            path + "/gliBert_xquad_train.tsv",
-            path + "/gliBert_xquad_dev.tsv",
-            path + "/gliBert_xquad_test.tsv"
+            path + "/GliBert_xquad_train.tsv",
+            path + "/GliBert_xquad_dev.tsv",
+            path + "/GliBert_xquad_test.tsv"
             ]
 
     too_long_contexts = []

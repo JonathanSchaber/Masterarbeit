@@ -14,7 +14,7 @@ library(tikzDevice)
 library(tools)
 
 latex_process = function(g_plot, file_name) {
-    tikz(file_name, width = 6, height = 9, standAlone = TRUE, engine = "luatex")
+    tikz(file_name, width = 8, height = 9, standAlone = TRUE, engine = "luatex")
     print(g_plot)
     dev.off()
     post_process(file_name)
@@ -60,19 +60,21 @@ results_df = data.frame(train_loss, dev_loss, test_loss, train_acc, dev_acc, tes
 #results_df$epoch = epoch
 
 g_loss = ggplot(results_df, aes(x=epoch, y=train_loss)) +
-    geom_line(aes(color="Train"), size=1.0) +
-    geom_line(aes(y=dev_loss, color="Dev"), size=1.0) +
-    geom_line(aes(y=test_loss, color="Test"), size=1.0) +
+    geom_line(aes(color="Train"), size=2.0) +
+    geom_line(aes(y=dev_loss, color="Dev"), size=2.0) +
+    geom_line(aes(y=test_loss, color="Test"), size=2.0) +
+    theme(legend.position = c(0.8, 0.3), text=element_text(size=45)) +
     ylab("Loss") +
     labs(color = "")
 
 g_acc = ggplot(results_df, aes(x=epoch, y=train_acc)) +
-    geom_line(aes(color="Train"), size=1.0) +
-    geom_line(aes(y=dev_acc, color="Dev"), size=1.0) +
-    geom_line(aes(y=test_acc, color="Test"), size=1.0) +
+    geom_line(aes(color="Train"), size=2.0) +
+    geom_line(aes(y=dev_acc, color="Dev"), size=2.0) +
+    geom_line(aes(y=test_acc, color="Test"), size=2.0) +
+    theme(legend.position = "none", text=element_text(size=45)) +
     ylab("Accuracy") +
     labs(color = "")
-                
+
 loss_file = str_replace(args[1], ".json", "_Loss.tex")
 #loss_file = gsub(".*?/", "", loss_file)
 acc_file = str_replace(args[1], ".json", "_Accuracy.tex")

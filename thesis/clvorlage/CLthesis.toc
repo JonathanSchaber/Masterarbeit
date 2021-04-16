@@ -75,10 +75,10 @@
 \contentsline {section}{\numberline {5.6}Ablation study}{78}{section.5.6}
 \contentsline {chapter}{\numberline {6}Conclusion}{81}{chapter.6}
 \contentsline {section}{\numberline {6.1}Outlook / Future Work}{81}{section.6.1}
-\contentsline {chapter}{Glossary}{82}{section*.56}
-\contentsline {chapter}{References}{83}{section*.58}
-\contentsline {chapter}{Lebenslauf}{91}{section*.60}
+\contentsline {chapter}{Glossary}{83}{section*.56}
+\contentsline {chapter}{References}{84}{section*.58}
+\contentsline {chapter}{Lebenslauf}{92}{section*.60}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{92}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{93}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{93}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{94}{appendix.B}

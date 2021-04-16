@@ -538,7 +538,7 @@ class BertBase(nn.Module):
         return return_batch, ab_batch_idx
 
 
-class gliBertClassifierCLS(BertBase):
+class GliBertClassifierCLS(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -581,7 +581,7 @@ class gliBertClassifierCLS(BertBase):
         return proba
 
 
-class gliBertClassifierLastHiddenStateAll(BertBase):
+class GliBertClassifierLastHiddenStateAll(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -655,7 +655,7 @@ class gliBertClassifierLastHiddenStateAll(BertBase):
         return proba
 
 
-class gliBertClassifierLastHiddenStateNoCLS(BertBase):
+class GliBertClassifierLastHiddenStateNoCLS(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -734,7 +734,7 @@ class gliBertClassifierLastHiddenStateNoCLS(BertBase):
         return proba
 
 
-class gliBertClassifierGRU(BertBase):
+class GliBertClassifierGRU(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -792,7 +792,7 @@ class gliBertClassifierGRU(BertBase):
         return proba
 
 
-class gliBertClassifierCNN(BertBase):
+class GliBertClassifierCNN(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -871,7 +871,7 @@ class gliBertClassifierCNN(BertBase):
         return proba
 
 
-class gliBertSpanPrediction(BertBase):
+class GliBertSpanPrediction(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
