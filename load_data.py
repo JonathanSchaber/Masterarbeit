@@ -371,9 +371,9 @@ class Dataloader:
 class deISEAR_dataloader(Dataloader):
     def load(self):
         self.type = 1
-        self.path_train = str(Path(self.path)) + "/GliBert_deISEAR_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/GliBert_deISEAR_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/GliBert_deISEAR_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBERT_deISEAR_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBERT_deISEAR_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBERT_deISEAR_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -384,9 +384,9 @@ class deISEAR_dataloader(Dataloader):
 class MLQA_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_train = str(Path(self.path)) + "/GliBert_mlqa_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/GliBert_mlqa_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/GliBert_mlqa_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBERT_mlqa_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBERT_mlqa_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBERT_mlqa_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -397,9 +397,9 @@ class MLQA_dataloader(Dataloader):
 class PAWS_X_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_train = str(Path(self.path)) + "/GliBert_paws_x_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/GliBert_paws_x_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/GliBert_paws_x_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBERT_paws_x_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBERT_paws_x_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBERT_paws_x_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -410,9 +410,9 @@ class PAWS_X_dataloader(Dataloader):
 class SCARE_dataloader(Dataloader):
     def load(self):
         self.type = 1
-        self.path_train = str(Path(self.path)) + "/GliBert_scare_annotations_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/GliBert_scare_annotations_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/GliBert_scare_annotations_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBERT_scare_annotations_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBERT_scare_annotations_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBERT_scare_annotations_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -423,9 +423,9 @@ class SCARE_dataloader(Dataloader):
 class XNLI_dataloader(Dataloader):
     def load(self):
         self.type = 2
-        self.path_train = str(Path(self.path)) + "/GliBert_xnli_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/GliBert_xnli_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/GliBert_xnli_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBERT_xnli_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBERT_xnli_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBERT_xnli_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
@@ -436,9 +436,9 @@ class XNLI_dataloader(Dataloader):
 class XQuAD_dataloader(Dataloader):
     def load(self):
         self.type = "qa"
-        self.path_train = str(Path(self.path)) + "/GliBert_xquad_train.tsv"
-        self.path_dev = str(Path(self.path)) + "/GliBert_xquad_dev.tsv"
-        self.path_test = str(Path(self.path)) + "/GliBert_xquad_test.tsv"
+        self.path_train = str(Path(self.path)) + "/GliBERT_xquad_train.tsv"
+        self.path_dev = str(Path(self.path)) + "/GliBERT_xquad_dev.tsv"
+        self.path_test = str(Path(self.path)) + "/GliBERT_xquad_test.tsv"
         self.data_train = self.load_data(self.path_train)
         self.data_dev = self.load_data(self.path_dev)
         self.data_test = self.load_data(self.path_test)
