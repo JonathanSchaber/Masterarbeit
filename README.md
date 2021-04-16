@@ -6,7 +6,7 @@ To reproduce the results, run the commands under [Preparing the Data](#preparing
 
 # Architecture
 
-![GLIBERT Architecture](architecture.png)
+![GliBERT Architecture](architecture.png)
 
 # Data
 
@@ -70,16 +70,17 @@ Download the data and adhere to the following folder structure (it is important 
 Clone the [repository](https://github.com/rsennrich/ParZu/) and configure
 config.ini file to run locally on your machine.
 
+`$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/ParZu"`
+
+
 ## DAMESRL
 
 Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php)
 in a local folder `DAMESRL`, and configure `server_configs/charatt_ger_pred_infer.ini` to run
 locally on your machine.
 
-
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
 
-`$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/ParZu"`
 
 ## Pre-Preprocessing
 
