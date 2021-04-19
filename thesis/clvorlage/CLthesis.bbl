@@ -290,11 +290,6 @@ P.~Koehn.
 \newblock In \emph{Proceedings of the 2004 conference on empirical methods in
   natural language processing}, pages 388--395, 2004.
 
-\bibitem[Kracht(2007)]{kracht2007introduction}
-M.~Kracht.
-\newblock Introduction to linguistics.
-\newblock \emph{Departement of}, 2007.
-
 \bibitem[Landis and Koch(1977)]{landis1977measurement}
 J.~R. Landis and G.~G. Koch.
 \newblock The measurement of observer agreement for categorical data.
@@ -340,6 +335,11 @@ L.~Martin, B.~Muller, P.~J.~O. Su{\'a}rez, Y.~Dupont, L.~Romary, {\'E}.~V.
   de~la Clergerie, D.~Seddah, and B.~Sagot.
 \newblock Camembert: a tasty french language model.
 \newblock \emph{arXiv preprint arXiv:1911.03894}, 2019.
+
+\bibitem[McShane(2017)]{mcshane2017natural}
+M.~McShane.
+\newblock Natural language understanding (nlu, not nlp) in cognitive systems.
+\newblock \emph{AI Magazine}, 38\penalty0 (4):\penalty0 43--56, 2017.
 
 \bibitem[Mikolov et~al.(2013)Mikolov, Sutskever, Chen, Corrado, and
   Dean]{mikolov2013distributed}

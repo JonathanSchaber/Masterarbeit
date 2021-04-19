@@ -12,73 +12,73 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}History, Methods, Problems of NLU}{3}{subsection.1.1.1}
-\contentsline {subsection}{\numberline {1.1.2}Contextualized Word Embeddings in NLU}{3}{subsection.1.1.2}
-\contentsline {section}{\numberline {1.2}Research Questions}{5}{section.1.2}
-\contentsline {section}{\numberline {1.3}Thesis Structure}{6}{section.1.3}
-\contentsline {chapter}{\numberline {2}Approach}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}BERT}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}Problems}{9}{section.2.2}
-\contentsline {section}{\numberline {2.3}Solutions / Related Work}{10}{section.2.3}
-\contentsline {section}{\numberline {2.4}GliBERT}{12}{section.2.4}
-\contentsline {section}{\numberline {2.5}Semantic Roles}{13}{section.2.5}
-\contentsline {chapter}{\numberline {3}Data Sets}{20}{chapter.3}
-\contentsline {section}{\numberline {3.1}GerGLUE}{20}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}General Issues}{21}{subsection.3.1.1}
-\contentsline {section}{\numberline {3.2}Corpora}{22}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}deISEAR}{23}{subsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.1.1}Statistics}{24}{subsubsection.3.2.1.1}
-\contentsline {subsubsection}{\numberline {3.2.1.2}SOTA}{25}{subsubsection.3.2.1.2}
-\contentsline {subsection}{\numberline {3.2.2}MLQA}{25}{subsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.1}Statistics}{28}{subsubsection.3.2.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2.2}SOTA}{29}{subsubsection.3.2.2.2}
-\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{30}{subsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{31}{subsubsection.3.2.3.1}
-\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{32}{subsubsection.3.2.3.2}
-\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{34}{subsubsection.3.2.3.3}
-\contentsline {subsection}{\numberline {3.2.4}SCARE}{35}{subsection.3.2.4}
-\contentsline {subsubsection}{\numberline {3.2.4.1}Preprocessing}{37}{subsubsection.3.2.4.1}
-\contentsline {subsubsection}{\numberline {3.2.4.2}Statistics}{38}{subsubsection.3.2.4.2}
-\contentsline {subsubsection}{\numberline {3.2.4.3}SOTA}{39}{subsubsection.3.2.4.3}
-\contentsline {subsection}{\numberline {3.2.5}XNLI}{39}{subsection.3.2.5}
-\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{41}{subsubsection.3.2.5.1}
-\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{41}{subsubsection.3.2.5.2}
-\contentsline {subsection}{\numberline {3.2.6}XQuAD}{43}{subsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{44}{subsubsection.3.2.6.1}
-\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{45}{subsubsection.3.2.6.2}
-\contentsline {subsection}{\numberline {3.2.7}Overview}{47}{subsection.3.2.7}
-\contentsline {chapter}{\numberline {4}Architecture}{48}{chapter.4}
-\contentsline {section}{\numberline {4.1}Overview}{48}{section.4.1}
-\contentsline {section}{\numberline {4.2}BERT module}{51}{section.4.2}
-\contentsline {section}{\numberline {4.3}SRL Module}{51}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{52}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{54}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{56}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}GRU}{57}{subsection.4.3.4}
-\contentsline {section}{\numberline {4.4}combination}{58}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Aligning BERT subtokens with SRL tokens}{58}{subsection.4.4.1}
-\contentsline {section}{\numberline {4.5}Head Module}{59}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Classifiction}{59}{subsection.4.5.1}
-\contentsline {subsubsection}{\numberline {4.5.1.1}[CLS] Head}{60}{subsubsection.4.5.1.1}
-\contentsline {subsubsection}{\numberline {4.5.1.2}FFNN Head}{60}{subsubsection.4.5.1.2}
-\contentsline {subsubsection}{\numberline {4.5.1.3}GRU Head}{62}{subsubsection.4.5.1.3}
-\contentsline {subsection}{\numberline {4.5.2}Question Answering}{62}{subsection.4.5.2}
-\contentsline {subsubsection}{\numberline {4.5.2.1}Span Prediction Head}{63}{subsubsection.4.5.2.1}
-\contentsline {chapter}{\numberline {5}Results}{64}{chapter.5}
-\contentsline {section}{\numberline {5.1}Data Set Results}{64}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{67}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{71}{subsubsection.5.1.1.1}
-\contentsline {section}{\numberline {5.2}Register Noise}{75}{section.5.2}
-\contentsline {section}{\numberline {5.3}Label Noise}{75}{section.5.3}
-\contentsline {subsubsection}{\numberline {5.3.0.1}Re-annotation}{75}{subsubsection.5.3.0.1}
-\contentsline {section}{\numberline {5.4}Translation Noise}{76}{section.5.4}
-\contentsline {section}{\numberline {5.5}SRL Noise}{77}{section.5.5}
-\contentsline {section}{\numberline {5.6}Ablation study}{78}{section.5.6}
-\contentsline {chapter}{\numberline {6}Conclusion}{81}{chapter.6}
-\contentsline {section}{\numberline {6.1}Outlook / Future Work}{81}{section.6.1}
-\contentsline {chapter}{Glossary}{82}{section*.56}
-\contentsline {chapter}{References}{83}{section*.58}
-\contentsline {chapter}{Lebenslauf}{91}{section*.60}
+\contentsline {subsection}{\numberline {1.1.2}Contextualized Word Embeddings in NLU}{5}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}Research Questions}{6}{section.1.2}
+\contentsline {section}{\numberline {1.3}Thesis Structure}{7}{section.1.3}
+\contentsline {chapter}{\numberline {2}Approach}{8}{chapter.2}
+\contentsline {section}{\numberline {2.1}BERT}{8}{section.2.1}
+\contentsline {section}{\numberline {2.2}Problems}{10}{section.2.2}
+\contentsline {section}{\numberline {2.3}Solutions / Related Work}{11}{section.2.3}
+\contentsline {section}{\numberline {2.4}GliBERT}{13}{section.2.4}
+\contentsline {section}{\numberline {2.5}Semantic Roles}{14}{section.2.5}
+\contentsline {chapter}{\numberline {3}Data Sets}{21}{chapter.3}
+\contentsline {section}{\numberline {3.1}GerGLUE}{21}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}General Issues}{22}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}Corpora}{23}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}deISEAR}{24}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Statistics}{25}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}SOTA}{26}{subsubsection.3.2.1.2}
+\contentsline {subsection}{\numberline {3.2.2}MLQA}{27}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Statistics}{29}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}SOTA}{30}{subsubsection.3.2.2.2}
+\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{31}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{32}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{33}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{36}{subsubsection.3.2.3.3}
+\contentsline {subsection}{\numberline {3.2.4}SCARE}{36}{subsection.3.2.4}
+\contentsline {subsubsection}{\numberline {3.2.4.1}Preprocessing}{38}{subsubsection.3.2.4.1}
+\contentsline {subsubsection}{\numberline {3.2.4.2}Statistics}{40}{subsubsection.3.2.4.2}
+\contentsline {subsubsection}{\numberline {3.2.4.3}SOTA}{41}{subsubsection.3.2.4.3}
+\contentsline {subsection}{\numberline {3.2.5}XNLI}{41}{subsection.3.2.5}
+\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{43}{subsubsection.3.2.5.1}
+\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{43}{subsubsection.3.2.5.2}
+\contentsline {subsection}{\numberline {3.2.6}XQuAD}{44}{subsection.3.2.6}
+\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{46}{subsubsection.3.2.6.1}
+\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{47}{subsubsection.3.2.6.2}
+\contentsline {subsection}{\numberline {3.2.7}Summary}{48}{subsection.3.2.7}
+\contentsline {chapter}{\numberline {4}Architecture}{49}{chapter.4}
+\contentsline {section}{\numberline {4.1}Overview}{49}{section.4.1}
+\contentsline {section}{\numberline {4.2}BERT module}{52}{section.4.2}
+\contentsline {section}{\numberline {4.3}SRL Module}{52}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{53}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{56}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{58}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}GRU}{58}{subsection.4.3.4}
+\contentsline {section}{\numberline {4.4}combination}{60}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Aligning BERT subtokens with SRL tokens}{60}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}Head Module}{60}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Classifiction}{60}{subsection.4.5.1}
+\contentsline {subsubsection}{\numberline {4.5.1.1}[CLS] Head}{61}{subsubsection.4.5.1.1}
+\contentsline {subsubsection}{\numberline {4.5.1.2}FFNN Head}{62}{subsubsection.4.5.1.2}
+\contentsline {subsubsection}{\numberline {4.5.1.3}GRU Head}{64}{subsubsection.4.5.1.3}
+\contentsline {subsection}{\numberline {4.5.2}Question Answering}{64}{subsection.4.5.2}
+\contentsline {subsubsection}{\numberline {4.5.2.1}Span Prediction Head}{65}{subsubsection.4.5.2.1}
+\contentsline {chapter}{\numberline {5}Results}{66}{chapter.5}
+\contentsline {section}{\numberline {5.1}Data Set Results}{66}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{69}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{73}{subsubsection.5.1.1.1}
+\contentsline {section}{\numberline {5.2}Register Noise}{77}{section.5.2}
+\contentsline {section}{\numberline {5.3}Label Noise}{77}{section.5.3}
+\contentsline {subsubsection}{\numberline {5.3.0.1}Re-annotation}{77}{subsubsection.5.3.0.1}
+\contentsline {section}{\numberline {5.4}Translation Noise}{78}{section.5.4}
+\contentsline {section}{\numberline {5.5}SRL Noise}{79}{section.5.5}
+\contentsline {section}{\numberline {5.6}Ablation study}{80}{section.5.6}
+\contentsline {chapter}{\numberline {6}Conclusion}{83}{chapter.6}
+\contentsline {section}{\numberline {6.1}Outlook / Future Work}{83}{section.6.1}
+\contentsline {chapter}{Glossary}{84}{section*.56}
+\contentsline {chapter}{References}{85}{section*.58}
+\contentsline {chapter}{Lebenslauf}{93}{section*.60}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{92}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{93}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{94}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{95}{appendix.B}

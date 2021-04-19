@@ -1,13 +1,13 @@
 \newchap{Introduction}
 \label{chap:1_intro}
 
-\epigraph{Not only the entire ability to think rests on language... but language is also the crux of the misunderstanding of reason with itself.}{\textit{Johann Georg Hamann}}
+% \epigraph{Not only the entire ability to think rests on language... but language is also the crux of the misunderstanding of reason with itself.}{\textit{Johann Georg Hamann}}
 
-In this chapter, I will expand a bit further to put the intent if this master's thesis into
-a bigger picture. Therefore, I will line out the general techniques and problems of NLP in
-general and NLU in particular, which led to the approach at hand. {\color{red} After that,
-I position my approach in current field.}
+In this chapter, I will expand a bit further to put the intent of this master's thesis into
+a bigger picture. Therefore, I will line out the general problems and topics of NLU and elaborate
+a little bit on the methods and techniques that were developed to address those questions.
 
+Further, I will tie in my {\color{red} approach} with the current research efforts in NLU.
 
 \section{Motivation}
 
@@ -20,16 +20,16 @@ material they are exposed to.
 % higher a few centuries ago.  As to how languages evolve, change over time and what trajectories
 % of possible change may be, lots of questions are still open, and there remains enough work
 % to do.
-But maybe the most trivial and enigmatic trait about human language is that
-we actually \emph{understand} each other: That during a discourse, person X can retrieve
-the intentioned meaning of expressions uttered by person Y, and vice versa.  Further, we are
-able to logically deduce a whole lot information that is not explicitly stated in a sentence,
-and uphold such a state of affairs during the whole conversation.
+But maybe the most trivial and enigmatic trait about human language is that we actually
+\emph{understand} each other so well: That during a discourse, person X can retrieve
+the intentioned meaning of expressions uttered by person Y, and vice versa. Further, we
+are able to logically deduce a whole lot information that is not explicitly stated in an
+expression, and uphold such a state of affairs during the whole conversation.
 %Maybe one of the most
 % enigmatic and fascinating traits of human language is the fact that for us humans, exchanging
 % information through language is a meaninglessly working process.
-That this is not as trivial as it might look like on first sight, show the following
-considerations:
+That this is not as trivial as it might look like on first glance, reveal the following
+considerations, which are only a subset of all the complexities involved in human communication:
 
 \begin{description}
   \item[Vagueness] We have no problem dealing with vague statements like ``Most people never heard of it''; in a specific conversation situation we rely on extra-linguistic cues like pragmatics and common world knowledge to decide if ``most'' means 7.5 billion people, or 70\% of our friends, or if the approximate number is even relevant (maybe it was ironically spoken, etc.)
@@ -57,6 +57,19 @@ set to speak of ``understanding'', however, as \cite{sahlgren2021singleton} poin
 in humans, especially children, we measure language competences indirectly ``by using various
 language proficiency tests, such as vocabulary tests, cloze tests, reading comprehension, as
 well as various forms of production, interaction, and mediation tests \textelp{}''.}
+NLU, therefore aims at producing systems which are able to retreive the semantic
+content encoded in natural language and are able to further act upon it:
+For example, a chatbot should be capable of ``understanding'' that the questions ``What's
+the weather like?'', ``Can you tell me today's weather forecast, please?'', ``Will I need
+an umbrella today?'' all have more or less the same meaning and should provoke the same
+answer.\myfootnote{Although one could argue that the third question differs from the first
+two since it is a polar question; i.e. a simple ``yes'' or ``no'' would be grammatically
+correct --- however, I have the strong feeling one would perceive this as a very dry, or
+even rude, answer and would expect a more elaborated answer in a regular conversation
+context.}
+
+% TODO: embed this quote
+
 
 % ``It is always precarious to build arguments on inherently vague and general
 % concepts such as `language', `understanding' and `meaning,' as the resulting
@@ -73,12 +86,12 @@ well as various forms of production, interaction, and mediation tests \textelp{}
 %   and mediation tests \textelp{}. \cite{sahlgren2021singleton}
 % \end{quote}
 
-\begin{quote}
-  there is an overwhelming body of empirical results to demonstrate that current language models
-  have a passable capacity to detect the symbols and rules that define human language. This is not
-  what is under dispute in the current debate; what is under dispute is whether such structural
-  knowledge about the workings of the language system suffices.
-\end{quote}
+% \begin{quote}
+%   there is an overwhelming body of empirical results to demonstrate that current language models
+%   have a passable capacity to detect the symbols and rules that define human language. This is not
+%   what is under dispute in the current debate; what is under dispute is whether such structural
+%   knowledge about the workings of the language system suffices.
+% \end{quote}
 
 \subsection{History, Methods, Problems of NLU}
 
@@ -101,6 +114,7 @@ well as various forms of production, interaction, and mediation tests \textelp{}
 % purely functional explanation.'' \cite{sahlgren2021singleton}
 
 % The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
+
 During the first phase of NLP, approximately from the 1950ies until the 1980ies, systems
 that addressed NLU problems were architectures that consisted of carefully hand-written
 symbolic grammars and knowledge bases that aimed at tackling a specific problem, such as
@@ -130,15 +144,53 @@ algorithms are itself learning the features that are the most informative for a 
 human part in the process is reduced to design the overall model architecture and compile large
 large enough amounts of data that are, in the best case, also of good quality.
 
+While the roughly sketched methods above apply to a wide ranges of applications in NLP, I will now
+point to some of the enquiries NLU aims at: Simply put, NLP is concernced with the structural side
+of natural language text, while NLU looks at the content of these utterances. For example, typical
+NLP tasks such as dependency parsing, POS-tagging, and coreference soltution don't require a
+semantic representation of words or phrases --- often, it suffices to look at structural properties
+such as morphology, simple frequency statstics, or transition probablities to solve such problems
+to an acceptable extent. On the other hand, NLU tries to process language more in a manner as
+humans do it: We infer something from language, answer questions, detect logical inconsistencies
+etc. Several tasks have been formulized which model such processes, for example: NLI is the task
+of recpgnizing if sentence B is entailed by sentence B, or stands in a neutral or contradictory
+relationship to it. Question Answering is the task of --- answering questions ( see also section
+\ref{sec:sec:question-answering}. In sentiment detection, a model has to infer which emotion is
+expressed by an utterance.
+
+A concise summary of the scope of the NLU and the numerous, non-intuitive pitfalls is given by
+\cite{mcshane2017natural} in her paper on NLU in cognitive agents, where she also argues that
+truly NLU-capable systems's abilities must go beyond ``mere'' symbol processing:
+
+\begin{quote}
+  cognitive agents must be nimble in the face of incomplete interpretations since even people do not
+  perfectly understand every aspect of every utterance they hear. This means that once an agent
+  has reached the best interpretation it can, it must determine how to proceed — be that acting
+  upon the new information directly, remembering whatever it has understood and waiting to see
+  what happens next, seeking out information to fill in the blanks, or asking its interlocutor
+  for clarification. The reasoning needed to support NLU extends far beyond language itself,
+  including, nonexhaustively, the agent’s understanding of its own plans and goals; its dynamic
+  modeling of its interlocutor’s knowledge, plans, and goals, all guided by a theory of mind;
+  its recognition of diverse aspects of human behavior, such as affect, cooperative behavior,
+  and the effects of cognitive biases; and its integration of linguistic interpretations with
+  its interpretations of other perceptive inputs, such as simulated vision and nonlinguistic
+  audition. Considering all of these needs, it seems hardly possible that fundamental NLU
+  will ever be achieved through the kinds of knowledge-lean text-string manipulation being
+  pursued by the mainstream natural language processing (NLP) community. Instead, it requires
+  a holistic approach to cognitive modeling of the type we are pursuing in a paradigm called
+  OntoAgent.
+\end{quote}
+
+
 
 \subsection{Contextualized Word Embeddings in NLU}
 
 Since the beginning of the neural age, there was the problem as to how could text be numerically
-represented, so that the algorithms could extract meaningful feature patterns and
-that there is as little information loss as possible (since a numeric representation is always
-an abstraction of the real data, there naturally is some unpreventable information loss).
-The solution that was proposed by \cite{mikolov2013distributed} is the approach that is still
-in use today in its core idea:
+represented, so that the algorithms could extract meaningful feature patterns and that there
+is as little information loss as possible (however, since a numeric representation is always
+an abstraction of the real data, there naturally is some unpreventable information loss). The
+solution that was proposed by \cite{mikolov2013distributed} is the approach that is still in use
+today in its core idea:
 
 \begin{itemize}
   \item Initialize a random vector for each word in the vocabulary.
@@ -170,7 +222,7 @@ neural age NLP model: It's architecture is completely agnostic of knowledge abou
 whatsoever, it ``only'' operates on sequental concatenations of symbols; there is also no
 preprocessing of the data --- no POS-tagging, no dependency parsing, no NER.\myfootnote{Because
 of this non linguistic specific architecture, BERT can easily be adapted to operate on other
-sequential data. This has actually be done: \cite{ji2020dnabert} for example trained a DNABERT
+sequential data. This has actually been done: \cite{ji2020dnabert} for example trained a DNABERT
 model for successfully deciphering non-coding DNA.}
 Albeit this complete lack of any sort of explicit linguistic knowledge, by only extracting
 statistical patterns it learns from processing huge amounts of text, BERT achieved several
@@ -180,7 +232,7 @@ However, as I will describe in more detail in the next chapter, BERT exposes als
 some weaknesses and undesirable flaws: While being able to perform surprisingly well
 on some tasks, there are situations where BERT fails in rather trivial situations.
 
-As I laid out before, in the past decades computational linguistics has undergone several
+{\color{red} As I laid out before, in the past decades computational linguistics has undergone several
 ``revolutions'' which, although some people might see this differently, can be described as
 moving from a strong emphasis on linguistics to a more data-driven computational discipline.
 
@@ -189,19 +241,23 @@ so called \emph{black box}; which means essentially that although the underlying
 architecture of neural nets are well-known --- the mathematics behind them is rather simple ---,
 it is nevertheless impossible to determine \emph{what exactly} those models learn from the data.
 
+I see one of the contributions of my model also in re-introducing some sort of linguistic
+considerations in the current NLP efforts and also to}
+
 
 \section{Research Questions}
 
 The research questions that shall be answered in this thesis, are:
 \begin{enumerate}
  \item What do I do? Try to boost BERT embeddings on NLU tasks
- \item How do I do it?  Combine BERT embeddings with encoded SRL information
+ \item How do I do it?  Combine BERT embeddings with encoded SRL information, similar ti \cite{zhang2019paws}
  \item And why? BERT lacks any linguistic knwoledge and shows error behaviour which suggests adding some could help
  \item more concrete questions:
  \begin{itemize}
     \item Can I reproduce \cite{zhang2019semantics} for German?
     \item Am I able to reach reported SOTAs of the data sets?
     \item Is there a difference for different head architectures? And if yes, why?
+    \item general outlooks
  \end{itemize}
 \end{enumerate}
 
@@ -226,7 +282,7 @@ I explain my approach and the relating linguistic concepts.
 The datasets I compiled to test my models on are described in detail
 in chapter \ref{chap:3_datasets}.
 
-In Chapter \ref{chap:4_architecture}, I describe the details of the architecture of
+In chapter \ref{chap:4_architecture}, I describe the details of the architecture of
 my BERT-variant in all detail: The identification and encoding of the semantic role
 labels, the different combination procedures of the BERT embeddings with these, as
 well as the different head architectures.

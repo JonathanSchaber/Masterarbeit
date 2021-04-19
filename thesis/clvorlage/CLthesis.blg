@@ -27,43 +27,43 @@ Warning--empty journal in jackendoff1972semantic
 Warning--can't use both volume and number fields in jin2020bert
 You've used 86 entries,
             2773 wiz_defined-function locations,
-            1040 strings with 23320 characters,
-and the built_in function-call counts, 48843 in all, are:
-= -- 4126
+            1042 strings with 23363 characters,
+and the built_in function-call counts, 48918 in all, are:
+= -- 4136
 > -- 3780
 < -- 60
 + -- 1273
 - -- 1185
-* -- 4067
-:= -- 7540
+* -- 4079
+:= -- 7548
 add.period$ -- 262
 call.type$ -- 86
 change.case$ -- 644
 chr.to.int$ -- 84
 cite$ -- 178
-duplicate$ -- 2023
-empty$ -- 3352
+duplicate$ -- 2024
+empty$ -- 3360
 format.name$ -- 1303
-if$ -- 10185
+if$ -- 10201
 int.to.chr$ -- 3
 int.to.str$ -- 1
 missing$ -- 78
 newline$ -- 434
 num.names$ -- 344
-pop$ -- 1383
+pop$ -- 1381
 preamble$ -- 1
 purify$ -- 562
 quote$ -- 0
 skip$ -- 1799
 stack$ -- 0
-substring$ -- 1314
+substring$ -- 1333
 swap$ -- 360
 text.length$ -- 30
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 941
 warning$ -- 6
-while$ -- 358
+while$ -- 360
 width$ -- 0
-write$ -- 1081
+write$ -- 1082
 (There were 6 warnings)

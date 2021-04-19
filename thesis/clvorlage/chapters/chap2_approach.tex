@@ -1,7 +1,7 @@
 \newchap{Approach}
 \label{chap:2_approach}
 
-\epigraph{\textgreek{πάντες ἄνθρωποι τοῦ εἰδέναι}}{\textit{Heraclitus of Ephesus}}
+% \epigraph{\textgreek{πάντες ἄνθρωποι τοῦ εἰδέναι}}{\textit{Heraclitus of Ephesus}}
 
 
 In this chapter, I will give a brief overview of several things: In a first step, I present
@@ -51,7 +51,7 @@ In simple terms, BERT takes an input sequence, tokenizes it and computes context
 representations for each token via stacked blocks employing self-attention and linear combination.
 Figure \ref{fig:bert-architecture} shows one of these blocks.
 
-\fig{images/BERT.png}{fig:bert-architecture}{3D-visualization of the BERT architecture. Nicely illustrated are the 12 attention heads and following linear projections in one block (here called ``Layer''). Credit goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT Architecture}
+\fig{images/BERT_clipped.png}{fig:bert-architecture}{3D-visualization of the BERT architecture. Nicely illustrated are the 12 attention heads and following linear projections in one block (here called ``Layer''). Credit for the image goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT Architecture}
 
 The computation of the weight matrices and initial vector representations for the tokens is done
 via an unsupervised learning phase, often referred to as pre-training. The basic concept is
@@ -162,7 +162,7 @@ the German BERT by enhancing it with structured, linguistic information during f
 
 Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- you may have spotted
 a pattern in the sections before --- I decided to not deviate from this tradition, and decided to call my breed
-\textbf{g}erman \textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{GliBERT}.
+\textbf{G}erman \textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{GliBERT}.
 And thus a new
 
 There exist several linguistic structures which could be hypothetically included into BERT:

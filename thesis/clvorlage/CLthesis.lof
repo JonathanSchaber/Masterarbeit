@@ -6,35 +6,35 @@
 \babel@toc {english}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces BERT Architecture}}{9}{figure.caption.14}
+\contentsline {figure}{\numberline {1}{\ignorespaces BERT Architecture}}{10}{figure.caption.14}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2}{\ignorespaces XNLI Lengths}}{25}{figure.caption.17}
-\contentsline {figure}{\numberline {3}{\ignorespaces MLQA Lengths}}{29}{figure.caption.18}
-\contentsline {figure}{\numberline {6}{\ignorespaces PAWS-X BLEU}}{32}{figure.caption.21}
-\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X Lengths}}{33}{figure.caption.19}
-\contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X Set Size/Labels}}{33}{figure.caption.20}
-\contentsline {figure}{\numberline {7}{\ignorespaces Accumulated Gains and Losses.}}{38}{figure.caption.25}
-\contentsline {figure}{\numberline {8}{\ignorespaces SCARE Lengths}}{38}{figure.caption.26}
-\contentsline {figure}{\numberline {11}{\ignorespaces XNLI labels}}{41}{figure.caption.29}
-\contentsline {figure}{\numberline {9}{\ignorespaces XNLI Lengths}}{42}{figure.caption.27}
-\contentsline {figure}{\numberline {10}{\ignorespaces TEEEEST}}{42}{figure.caption.28}
-\contentsline {figure}{\numberline {12}{\ignorespaces XQuAD Lengths}}{45}{figure.caption.30}
+\contentsline {figure}{\numberline {2}{\ignorespaces XNLI Lengths}}{26}{figure.caption.17}
+\contentsline {figure}{\numberline {3}{\ignorespaces MLQA Lengths}}{30}{figure.caption.18}
+\contentsline {figure}{\numberline {6}{\ignorespaces PAWS-X BLEU}}{33}{figure.caption.21}
+\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X Lengths}}{34}{figure.caption.19}
+\contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X Set Size/Labels}}{34}{figure.caption.20}
+\contentsline {figure}{\numberline {7}{\ignorespaces Accumulated Gains and Losses.}}{39}{figure.caption.25}
+\contentsline {figure}{\numberline {8}{\ignorespaces SCARE Lengths}}{40}{figure.caption.26}
+\contentsline {figure}{\numberline {9}{\ignorespaces XNLI Lengths}}{43}{figure.caption.27}
+\contentsline {figure}{\numberline {11}{\ignorespaces XNLI labels}}{43}{figure.caption.29}
+\contentsline {figure}{\numberline {10}{\ignorespaces TEEEEST}}{44}{figure.caption.28}
+\contentsline {figure}{\numberline {12}{\ignorespaces XQuAD Lengths}}{46}{figure.caption.30}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {13}{\ignorespaces GliBERT Architecture}}{48}{figure.caption.32}
-\contentsline {figure}{\numberline {14}{\ignorespaces GliBERT Architecture detail}}{50}{figure.caption.33}
-\contentsline {figure}{\numberline {15}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{53}{figure.caption.34}
-\contentsline {figure}{\numberline {16}{\ignorespaces BERT-Classification}}{59}{figure.caption.35}
-\contentsline {figure}{\numberline {17}{\ignorespaces {[}CLS{]} Head}}{60}{figure.caption.36}
-\contentsline {figure}{\numberline {18}{\ignorespaces FFNN Head}}{61}{figure.caption.37}
-\contentsline {figure}{\numberline {19}{\ignorespaces GRU Head}}{62}{figure.caption.38}
-\contentsline {figure}{\numberline {20}{\ignorespaces Span Prediction Head}}{63}{figure.caption.39}
+\contentsline {figure}{\numberline {13}{\ignorespaces GliBERT Architecture}}{49}{figure.caption.32}
+\contentsline {figure}{\numberline {14}{\ignorespaces GliBERT Architecture detail}}{51}{figure.caption.33}
+\contentsline {figure}{\numberline {15}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{54}{figure.caption.34}
+\contentsline {figure}{\numberline {16}{\ignorespaces BERT-Classification}}{61}{figure.caption.35}
+\contentsline {figure}{\numberline {17}{\ignorespaces {[}CLS{]} Head}}{62}{figure.caption.36}
+\contentsline {figure}{\numberline {18}{\ignorespaces FFNN Head}}{63}{figure.caption.37}
+\contentsline {figure}{\numberline {19}{\ignorespaces GRU Head}}{64}{figure.caption.38}
+\contentsline {figure}{\numberline {20}{\ignorespaces Span Prediction Head}}{65}{figure.caption.39}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {21}{\ignorespaces Accumulated Gains and Losses.}}{69}{figure.caption.46}
-\contentsline {figure}{\numberline {22}{\ignorespaces Results Accumulation for each Data Set}}{71}{figure.caption.47}
-\contentsline {figure}{\numberline {23}{\ignorespaces Accumulated Gains and Losses.}}{73}{figure.caption.51}
-\contentsline {figure}{\numberline {24}{\ignorespaces Token Types all Data Sets}}{74}{figure.caption.52}
-\contentsline {figure}{\numberline {25}{\ignorespaces SRL assessment}}{78}{figure.caption.53}
-\contentsline {figure}{\numberline {26}{\ignorespaces SRL assessment per data sets}}{79}{figure.caption.54}
+\contentsline {figure}{\numberline {21}{\ignorespaces Accumulated Gains and Losses.}}{71}{figure.caption.46}
+\contentsline {figure}{\numberline {22}{\ignorespaces Results Accumulation for each Data Set}}{73}{figure.caption.47}
+\contentsline {figure}{\numberline {23}{\ignorespaces Accumulated Gains and Losses.}}{75}{figure.caption.51}
+\contentsline {figure}{\numberline {24}{\ignorespaces Token Types all Data Sets}}{76}{figure.caption.52}
+\contentsline {figure}{\numberline {25}{\ignorespaces SRL assessment}}{80}{figure.caption.53}
+\contentsline {figure}{\numberline {26}{\ignorespaces SRL assessment per data sets}}{81}{figure.caption.54}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}

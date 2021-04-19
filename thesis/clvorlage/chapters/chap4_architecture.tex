@@ -13,14 +13,14 @@ than an actual linguistic sentence. A «sequence» refers to the input token seq
 which may be a single sentence or two sentences packed together.'' \citep{devlin2018bert}
 
 
-\fig{images/architecture_grob}{fig:architecture}{General architecture of GliBERT, exemplified for deISEAR task.}{14}{GliBERT Architecture}
+\fig{images/architecture_grob}{fig:architecture}{General architecture of GliBERT, exemplified for  the deISEAR task.}{14}{GliBERT Architecture}
 
 The core parts of the model are the following:
 
 \begin{description}
 	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence and sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
-  \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by ParZu to identify predicates.
-	Second, the sequence with the information about which tokens are predicates is handed to the DAMESRL model which predicts actual SRLs.
+  \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by \href{https://github.com/rsennrich/ParZu}{ParZu} \citep{sennrich2009new} to identify predicates.
+	Second, the sequence with the information about which tokens are predicates is handed to the \href{https://liir.cs.kuleuven.be/software_pages/damesrl.php}{DAMESRL} model \citep{do2018flexible} which predicts actual SRLs.
 	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as a list of tokens to DAMESRL.
   \item[\textbf{combination}] To combine the BERT embeddings and SRLs, first the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
 	secondly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
@@ -31,19 +31,31 @@ The core parts of the model are the following:
 
 \begin{landscape}\centering
   % \vspace*{\fill}
-  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of GliBERT.}{24}{GliBERT Architecture detail}
+  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of GliBERT: On the left, the input sentence is passed through two paths: On top, through the German BERT, with the optional subtoken fusion module on top. On the bottom, through ParZu and DAMESRL, with subsequent embedding via a GRU model; after that an optional split token module follows. The bold arrows on the right side show information flow, when BERT subtokens are fusioned for appending with SRLs. The dotted arrows represent the information flow when the SRLs are splitted to match with the BERT subtokens.}{24}{GliBERT Architecture detail}
   % \vfill
 \end{landscape}
 
 
 \section{BERT module}
 
-Since its publishing two years ago, BERT \citep{devlin2018bert} has often been viewed as a
-``turning-point'' in ML in NLP. In the deep learning era
+Since its publishing two years ago, BERT \citep{devlin2018bert} has often
+been viewed as a ``turning-point'' in NLP: The embeddings it computed only by
+implementing massive ``unsophisticated'' self-supervised pretraining proved to
+be very potent representations of language and were successfully implemented
+in a wide array of downstream tasks. Pretrained models and APIs for BERT are
+vastly available --- I chose to use the \texttt{bert-base-german-cased} model
+from \href{https://deepset.ai/german-bert}{deepset} which is available in
+pyTorch through the hugging face library\cite{wolf2019transformers}.
 
-I use the \texttt{bert-base-german-cased} model from deepset which is available in pyTorch
-through the hugging face library\cite{wolf2019transformers}.
-Throughout the training, the weights of the
+deepset only provides a BERT base model which has the following specifications
+\citep{devlin2018bert}:
+
+\begin{itemize}
+  \item Transformer Blocks: 12
+  \item hidden Size: 768
+  \item Attention Heads: 12
+  \item Total Parameters: 110 million
+\end{itemize}
 
 
 \section{SRL Module}
@@ -447,7 +459,7 @@ following example:
 	\label{ex:tokenization-diff}
 	\item Es ist der Sitz des Bezirks Zerendi in der Region Akmola.
 	\item ParZu: Es ist der Sitz des Bezirks Zerendi in der Region Akmola .
-	\item germanBERT: Es ist der Sitz des Bezirks Zer \#\#end \#\#i in der Region Ak \#\#mol \#\#a .
+	\item GermanBERT: Es ist der Sitz des Bezirks Zer \#\#end \#\#i in der Region Ak \#\#mol \#\#a .
 \end{examples}
 
 
@@ -500,11 +512,22 @@ sequence through the BiGRU, they concatenate the two hidden states of the [CLS] 
 SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended
 to its BERT embedding vector
 
+Formally, the [CLS] Head is a one layer Fullyconnected Feedforwrd Neural Network. The
+prediction is the results of sending the embedding of the [CLS] token through the network:
+$\hat{y} = softmax(L_1)$. The input dimensions of the layer vary according to the setting,
+i. e. if the SRLs are included, or not. if not, then the demsion is simply the standard
+BERT hidden size $h_i \in \mathbb{R}^768$, if the SRL embedding is appended, then $h_i \in
+\mathbb{R}^788$. the output dimensionality of the network depends on the number of classes
+for the task: This number ranges from 2 (PAWS-X, \emph{true}, \emph{false}) to 7 (deISEAR,
+\emph{Traurigkeit, Scham, Freude, Angst, Wut, Ekel, Schuld}).
+
+
 \fig{images/head-cls.png}{fig:cls-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural
     \textbf{N}etwork on the [CLS]-token}{10}{{[}CLS{]} Head}
 
 In table XYZ I report the gains, losses this strategy yields for the four classifications data sets
 in my corpus.
+
 
 \subsubsection{FFNN Head}
 
@@ -558,6 +581,7 @@ and explofing gradient problems, \citep{hochreiter1997long} proposed the LSTM ar
 
 
 \subsection{Question Answering}
+\label{sec:question-answering}
 
 
 

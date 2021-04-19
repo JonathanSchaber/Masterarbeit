@@ -987,12 +987,12 @@ Contradiction: 2,499
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/XNLI_premise_subtokenized.pdf}
+    \includegraphics[width=0.9\linewidth]{images/XNLI_premise_subtokenized.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/XNLI_hypo_subtokenized.pdf}
+    \includegraphics[width=0.9\linewidth]{images/XNLI_hypo_subtokenized.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized XNLI premises. \textbf{Right}: Length of subtokenized XNLI hypotheses.}
@@ -1172,24 +1172,25 @@ Accuracy (exact match): 57.6\%
 
 \begin{landscape}
 
-\subsection{Overview}
+\subsection{Summary}
 
 \tab{tab:gerglue-overview}{Overview of \textit{GerGLUE} data sets and tasks. The number of exmaples represent the size of the
                             set splits after preparing the data sets for the experiment; therefore all datasets have all splits.
                             Note that during the preprocessing some examples had to be excluded (see chapter \ref{chap:3_datasets}
                             for more details), that's why some numbers do not coincide with those of table \ref{tab:overview-data-sets}.}
 {\begin{tabularx}{\linewidth}{ll|lllllX}
-  \multicolumn{2}{c}{}                                                            & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\{\tiny Train/Dev/Test}} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Register\\{\tiny coll. $<$ mix. $<$ form.}} & \multirowcell{2}{Remarks}                                 \\ \\ \toprule
-  \multirow{3}{*}{\rotatebox[origin=c]{90}{\textit{Single}}} &                    & \multicolumn{6}{g}{\textit{Classification}}\\
-                                                             &  deISEAR           & Emotion Detection           & Multi-Class                 & 1001/150/151                                          & -                                   & \multicolumn{1}{c}{mixed}                                    & Boilerplate text structures (``Ich fühlte [?], als ...'') \\
-                                                             & SCARE              & Sentiment Analysis          & Multi-Class                 & 1,232/264/264                                         & -                                   & \multicolumn{1}{c}{colloquial}                               & Very informal, ungrammatical, short text snippets         \\ \cline{1-2}
-  \multirow{5}{*}{\rotatebox[origin=c]{90}{\textit{Pair}}}   & PAWS-X             & Paraphrase Identification   & Binary                      & 48,977/1,932/1,967                                    & Train/Dev/Test                      & \multicolumn{1}{c}{formal}                                   & Translation artefact noise                                \\
-                                                             & XNLI               & Natural Language Inference  & Multi-Class                 & 2,115/374/5,009                                       & Dev/Test                            & \multicolumn{1}{c}{mixed}                                    &                                                           \\ \cline{3-8}
+  \multicolumn{8}{c}{\large \textbf{GerGLUE}}\\ \\
+  \multicolumn{2}{c}{}                                                            & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\{\tiny Train/Dev/Test}} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Register\\{\tiny coll. $<$ mix. $<$ form.}} & \multirowcell{2}{Remarks}                                    \\ \\ \toprule
+  \multirow{5}{*}{\rotatebox[origin=c]{90}{\textit{Single}}} &                    & \multicolumn{6}{g}{\textit{Classification}}\\
+                                                             &  deISEAR           & Emotion Detection           & Multi-Class                 & 1001/150/151                                          & -                                   & \multicolumn{1}{c}{mixed}                                    & Boilerplate text structures (``Ich fühlte [?], als ...'')    \\
+                                                             & SCARE              & Sentiment Analysis          & Multi-Class                 & 1,232/264/264                                         & -                                   & \multicolumn{1}{c}{colloquial}                               & Very informal, ungrammatical, and often short text snippets            \\ \cline{1-2}
+  \multirow{8}{*}{\rotatebox[origin=c]{90}{\textit{Pair}}}   & PAWS-X             & Paraphrase Identification   & Binary                      & 48,977/1,932/1,967                                    & Train/Dev/Test                      & \multicolumn{1}{c}{formal}                                   & Translation artifact noise, dev/test splits OOD to train     \\
+                                                             & XNLI               & Natural Language Inference  & Multi-Class                 & 2,115/374/5,009                                       & Dev/Test                            & \multicolumn{1}{c}{mixed}                                    & Translation artifact noise, language from different domains  \\ \cline{3-8}
                                                              &                    & \multicolumn{6}{g}{\textit{Question Answering}}\\
-                                                             & MLQA               & Question Answering          & Span Prediction             & 432/77/4,499                                          & Dev/Test                            & \multicolumn{1}{c}{formal}                                   &                                                           \\
-                                                             & XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                           & -                                   & \multicolumn{1}{c}{formal}                                   &
+                                                             & MLQA               & Question Answering          & Span Prediction             & 432/77/4,499                                          & Dev/Test                            & \multicolumn{1}{c}{formal}                                   & Highly imbalanced splits regarding number of examples        \\
+                                                             & XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                           & -                                   & \multicolumn{1}{c}{formal}                                   & Small data set
 \end{tabularx}
-}{Overview data sets}
+}{Summary GerGLUE}
 
 
 \end{landscape}
