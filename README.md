@@ -49,9 +49,9 @@ Download the data and adhere to the following folder structure (it is important 
 				../alarm_clocks.rel
 				../alarm_clocks.txt
 				../...
-			../scare_v1.0.0_data/reviews/
+<!--			../scare_v1.0.0_data/reviews/
 				../alarm_clocks.csv
-				../...
+				../... -->
 
 	/<path>/<to>/XNLI/
 			../XNLI-1.0/
@@ -76,7 +76,7 @@ config.ini file to run locally on your machine.
 ## DAMESRL
 
 Download the source code from [here](https://liir.cs.kuleuven.be/software_pages/damesrl.php)
-in a local folder `DAMESRL`, and configure `server_configs/charatt_ger_pred_infer.ini` to run
+in a local folder `DAMESRL`, and configure `config/charatt_ger_pred_infer.ini` to run
 locally on your machine.
 
 `$ export PYTHONPATH="${PYTHONPATH}:/<path>/<to>/DAMESRL"`
