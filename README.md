@@ -49,9 +49,6 @@ Download the data and adhere to the following folder structure (it is important 
 				../alarm_clocks.rel
 				../alarm_clocks.txt
 				../...
-<!--			../scare_v1.0.0_data/reviews/
-				../alarm_clocks.csv
-				../... -->
 
 	/<path>/<to>/XNLI/
 			../XNLI-1.0/
