@@ -30,34 +30,34 @@ Overview of the data sets used in the experiments.
 Download the data and adhere to the following folder structure (it is important that the names of the directories are exactly the same as below; e.g. «deISEAR» and not «deISEARenISEAR» as it is named when downloaded etc. The structure of the downloaded data sets is not changed, so naming the root directory correctly is the main thing to follow):
 
 	/<path>/<to>/deISEAR/
-			../deISEAR.tsv
+			├─/deISEAR.tsv
 
 
 	/<path>/<to>/MLQA/
-			../dev/dev-context-de-question-de.tsv
-			../test/test-context-de-question-de.json
+			├─/dev/dev-context-de-question-de.tsv
+			├─/test/test-context-de-question-de.json
 
 	/<path>/<to>/PAWS-X/
-			../de/
-				../dev_2k.tsv
-				../test_2k.tsv
-				../translated_train.tsv
+			├─/de/
+				├─/dev_2k.tsv
+				├─/test_2k.tsv
+				├─/translated_train.tsv
 
 	/<path>/<to>/SCARE/
-			../scare_v1.0.0/annotations/
-				../alarm_clocks.csv
-				../alarm_clocks.rel
-				../alarm_clocks.txt
-				../...
+			├─/scare_v1.0.0/annotations/
+				├─/alarm_clocks.csv
+				├─/alarm_clocks.rel
+				├─/alarm_clocks.txt
+				├─/...
 
 	/<path>/<to>/XNLI/
-			../XNLI-1.0/
-				../xnli.dev.de.tsv
-				../xnli.test.de.tsv
+			├─/XNLI-1.0/
+				├─/xnli.dev.de.tsv
+				├─/xnli.test.de.tsv
 
 	/<path>/<to>/XQuAD/
-			../xquad/
-				../xquad.de.json
+			├─/xquad/
+				├─/xquad.de.json
 
 
 # SRL Resources
