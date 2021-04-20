@@ -117,7 +117,15 @@ For each data set, run the following command:
 
 This will create in each data set directory the following three files, their names starting with `GliBERT_` (example for deISEAR):
 
-    /<path>/<to>/deISAER/
+    /<path>/<to>/deISEAR/
             ├─GliBERT_deISEAR_dev.tsv
             ├─GliBERT_deISEAR_test.tsv
             ├─GliBERT_deISEAR_train.tsv
+
+# Training a model
+
+# Evaluating / Ensemble predict
+
+# Miscallenaoues (Plotting graphs, etc.)
+
+
