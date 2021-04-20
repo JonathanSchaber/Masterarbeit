@@ -135,13 +135,13 @@ In a first step, I will discuss on the overall performance of models when the SR
 
 \begin{landscape}\centering
   % \vspace*{\fill}
-  \tab{tab:results}{Accuracy ensemble results (per 5 models) on single sentence and sentence pair tasks.
+  \tab{tab:results}{Test set accuracy ensemble results (per 5 models) on single sentence and sentence pair tasks.
                     \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.
                     In the \emph{Scores} row, the afore mentioned positive extremes are accumulated for $-$SRL and $+$SRL;
                     note that if both +SRL configurations of an architecture achieved an extreme, it is only counted once.
 
                     The line marked with light gray --- PAWS-X $\beta$ --- is ``expanded'' in table \ref{tab:pawsx-beta} to illustrate
-                    that each results in this table is actually a majority voting out of an ensembeling of fice models.}{
+                    that each result in this table is actually a majority voting out of an ensembeling of fice models.}{
     \scalebox{0.90}{
       \begin{tabular}{llccc|ccc|ccc|ccc|ccc|ccc}
                                                       &           & \multicolumn{18}{c}{\large \textbf{Classification Data Sets}}  \\ \\
@@ -164,7 +164,7 @@ In a first step, I will discuss on the overall performance of models when the SR
     }
   }{Results}
 
-  \tab{tab:pawsx-beta}{The ``expanded'' PAWS-X $\beta$ results. The light gray line corresponds to the one in table \ref{ref:results}.
+  \tab{tab:pawsx-beta}{The ``expanded'' PAWS-X $\beta$ results. The light gray line corresponds to the one in table \ref{tab:results}.
                        As can be seen, the fluctuations between single models is not too big, {\textcolor{red} which is an indicator that the architecture
                        is fairly stable.} Ensembeling reliably adds 1.26 percentage points on average.}{
     \scalebox{0.9}{
@@ -303,7 +303,7 @@ In a first step, I will discuss on the overall performance of models when the SR
 }{Confusion matrix for one SCARE +SRL ensemble}
 
 
-\tab{tab:results-qa}{Accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
+\tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
   \scalebox{1}{
     \begin{tabular}{llccc|ccc}
                                                &           & \multicolumn{6}{c}{\large \textbf{Q\&A Data Sets}}  \\ \\

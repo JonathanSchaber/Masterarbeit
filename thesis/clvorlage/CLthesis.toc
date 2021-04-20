@@ -28,7 +28,7 @@
 \contentsline {subsection}{\numberline {3.2.1}deISEAR}{24}{subsection.3.2.1}
 \contentsline {subsubsection}{\numberline {3.2.1.1}Statistics}{25}{subsubsection.3.2.1.1}
 \contentsline {subsubsection}{\numberline {3.2.1.2}SOTA}{26}{subsubsection.3.2.1.2}
-\contentsline {subsection}{\numberline {3.2.2}MLQA}{27}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.2}MLQA}{26}{subsection.3.2.2}
 \contentsline {subsubsection}{\numberline {3.2.2.1}Statistics}{29}{subsubsection.3.2.2.1}
 \contentsline {subsubsection}{\numberline {3.2.2.2}SOTA}{30}{subsubsection.3.2.2.2}
 \contentsline {subsection}{\numberline {3.2.3}PAWS-X}{31}{subsection.3.2.3}
@@ -49,36 +49,36 @@
 \contentsline {chapter}{\numberline {4}Architecture}{49}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{49}{section.4.1}
 \contentsline {section}{\numberline {4.2}BERT module}{52}{section.4.2}
-\contentsline {section}{\numberline {4.3}SRL Module}{52}{section.4.3}
+\contentsline {section}{\numberline {4.3}SRL Module}{53}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Finding Predicates}{53}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{56}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}DAMESRL}{58}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}GRU}{58}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.4}GRU}{59}{subsection.4.3.4}
 \contentsline {section}{\numberline {4.4}combination}{60}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Aligning BERT subtokens with SRL tokens}{60}{subsection.4.4.1}
-\contentsline {section}{\numberline {4.5}Head Module}{60}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Classifiction}{60}{subsection.4.5.1}
-\contentsline {subsubsection}{\numberline {4.5.1.1}[CLS] Head}{61}{subsubsection.4.5.1.1}
-\contentsline {subsubsection}{\numberline {4.5.1.2}FFNN Head}{62}{subsubsection.4.5.1.2}
+\contentsline {section}{\numberline {4.5}Head Module}{61}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Classifiction}{61}{subsection.4.5.1}
+\contentsline {subsubsection}{\numberline {4.5.1.1}[CLS] Head}{62}{subsubsection.4.5.1.1}
+\contentsline {subsubsection}{\numberline {4.5.1.2}FFNN Head}{63}{subsubsection.4.5.1.2}
 \contentsline {subsubsection}{\numberline {4.5.1.3}GRU Head}{64}{subsubsection.4.5.1.3}
-\contentsline {subsection}{\numberline {4.5.2}Question Answering}{64}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.2}Question Answering}{65}{subsection.4.5.2}
 \contentsline {subsubsection}{\numberline {4.5.2.1}Span Prediction Head}{65}{subsubsection.4.5.2.1}
-\contentsline {chapter}{\numberline {5}Results}{66}{chapter.5}
-\contentsline {section}{\numberline {5.1}Data Set Results}{66}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{69}{subsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{73}{subsubsection.5.1.1.1}
-\contentsline {section}{\numberline {5.2}Register Noise}{77}{section.5.2}
-\contentsline {section}{\numberline {5.3}Label Noise}{77}{section.5.3}
-\contentsline {subsubsection}{\numberline {5.3.0.1}Re-annotation}{77}{subsubsection.5.3.0.1}
-\contentsline {section}{\numberline {5.4}Translation Noise}{78}{section.5.4}
-\contentsline {section}{\numberline {5.5}SRL Noise}{79}{section.5.5}
-\contentsline {section}{\numberline {5.6}Ablation study}{80}{section.5.6}
-\contentsline {chapter}{\numberline {6}Conclusion}{83}{chapter.6}
-\contentsline {section}{\numberline {6.1}Outlook / Future Work}{83}{section.6.1}
-\contentsline {chapter}{Glossary}{84}{section*.56}
-\contentsline {chapter}{References}{85}{section*.58}
-\contentsline {chapter}{Lebenslauf}{93}{section*.60}
+\contentsline {chapter}{\numberline {5}Results}{67}{chapter.5}
+\contentsline {section}{\numberline {5.1}Data Set Results}{67}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Testing for Statistical Significance}{70}{subsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.1.1}Example Case for XNLI}{74}{subsubsection.5.1.1.1}
+\contentsline {section}{\numberline {5.2}Register Noise}{78}{section.5.2}
+\contentsline {section}{\numberline {5.3}Label Noise}{78}{section.5.3}
+\contentsline {subsubsection}{\numberline {5.3.0.1}Re-annotation}{78}{subsubsection.5.3.0.1}
+\contentsline {section}{\numberline {5.4}Translation Noise}{79}{section.5.4}
+\contentsline {section}{\numberline {5.5}SRL Noise}{80}{section.5.5}
+\contentsline {section}{\numberline {5.6}Ablation study}{81}{section.5.6}
+\contentsline {chapter}{\numberline {6}Conclusion}{84}{chapter.6}
+\contentsline {section}{\numberline {6.1}Outlook / Future Work}{84}{section.6.1}
+\contentsline {chapter}{Glossary}{85}{section*.57}
+\contentsline {chapter}{References}{86}{section*.59}
+\contentsline {chapter}{Lebenslauf}{94}{section*.61}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{94}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{95}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{95}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{96}{appendix.B}

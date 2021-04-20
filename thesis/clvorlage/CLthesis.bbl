@@ -1,4 +1,4 @@
-\begin{thebibliography}{86}
+\begin{thebibliography}{89}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -279,6 +279,11 @@ D.~Jurafsky and J.~H. Martin.
 \newblock Speech and language processing (draft). october 2019.
 \newblock \emph{URL https://web. stanford. edu/\~{} jurafsky/slp3}, 2019.
 
+\bibitem[Kingma and Ba(2014)]{kingma2014adam}
+D.~P. Kingma and J.~Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock \emph{arXiv preprint arXiv:1412.6980}, 2014.
+
 \bibitem[Kingsbury and Palmer(2002)]{kingsbury2002treebank}
 P.~R. Kingsbury and M.~Palmer.
 \newblock From treebank to propbank.
@@ -321,6 +326,10 @@ Y.~Liu, M.~Ott, N.~Goyal, J.~Du, M.~Joshi, D.~Chen, O.~Levy, M.~Lewis,
   L.~Zettlemoyer, and V.~Stoyanov.
 \newblock Roberta: A robustly optimized bert pretraining approach.
 \newblock \emph{arXiv preprint arXiv:1907.11692}, 2019.
+
+\bibitem[Loshchilov and Hutter(2019)]{loshchilov2019decoupled}
+I.~Loshchilov and F.~Hutter.
+\newblock Decoupled weight decay regularization, 2019.
 
 \bibitem[Lu et~al.(2020)Lu, Du, and Nie]{lu2020vgcn}
 Z.~Lu, P.~Du, and J.-Y. Nie.
@@ -441,6 +450,13 @@ G.~Schneider.
 R.~Schwartz, J.~Dodge, N.~A. Smith, and O.~Etzioni.
 \newblock Green ai.
 \newblock \emph{arXiv preprint arXiv:1907.10597}, 2019.
+
+\bibitem[Sennrich et~al.(2009)Sennrich, Schneider, Volk, and
+  Warin]{sennrich2009new}
+R.~Sennrich, G.~Schneider, M.~Volk, and M.~Warin.
+\newblock A new hybrid dependency parser for german.
+\newblock \emph{Proceedings of the German Society for Computational Linguistics
+  and Language Technology}, pages 115--124, 2009.
 
 \bibitem[Sennrich et~al.(2013)Sennrich, Volk, and
   Schneider]{sennrich2013exploiting}

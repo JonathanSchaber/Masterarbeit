@@ -47,15 +47,36 @@ vastly available --- I chose to use the \texttt{bert-base-german-cased} model
 from \href{https://deepset.ai/german-bert}{deepset} which is available in
 pyTorch through the hugging face library\cite{wolf2019transformers}.
 
-deepset only provides a BERT base model which has the following specifications
-\citep{devlin2018bert}:
+deepset only provides a BERT base model which has the following specifications according to it's
+configuration file:
 
 \begin{itemize}
   \item Transformer Blocks: 12
   \item hidden Size: 768
+  \item hidden activation function: GeLu
+  \item hidden dropout probability: 0.1
   \item Attention Heads: 12
+  \item Vocabulary size: 30,000 (cased)
   \item Total Parameters: 110 million
 \end{itemize}
+
+The handling of the BERT model is straightforward through huggingface's \texttt{transformer}
+library: With a simple function call \texttt{BertModel.from\_pretrained()} one loads the
+pretrained BERT, and with another function, \texttt{BertTokenizer.from\_pretrained()},
+one instantiates the BERT tokenizer.
+After encoding a sentence using the tokenizer's method \texttt{.encode\_plus()}, the
+encoded sentence is send through BERT via it's \texttt{.forward()}-method --- or
+called implicitly, by simply passing the sentence to the model --- which returns the
+vectors for all input tokens, which can then be used in downstream tasks. Fine-tuning
+is simply done by passing the computed loss to the specified loss funtion (I use the
+AdamW loss function \citep{loshchilov2019decoupled}, a modification of the well-known
+Adam (Adaptive Moment Estimation) loss function \citep{kingma2014adam}, implementing
+weight decay), which updates the BERT weight matrices.
+
+In the \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub} repository, in
+the file \texttt{load\_data.py}, the data gets tokenized and loaded, and in
+the file \texttt{gli\_bert.py}, the forward pass and weight-updating is
+defined in the \texttt{fine\_tune\_BERT()} function.
 
 
 \section{SRL Module}
@@ -366,17 +387,20 @@ both architectures mostly performing on par (cf. \cite{chung2014empirical}).
 
 In most cases, a sentences contains not exactly one predicate which distributes semantic roles,
 but several, especially in longer sentences, --- or even none, especially in colloquial, short
-sentences. Research by \citeauthor{zhang2019semantics} suggests that fixing the number of predicate-argument
-structures to three yields the best results; so I adopt this number. In other words, if a sentence has more
-than three argument-predicate structures, I only care about the first three predicates identified (if
-proceeding from left to right through the sequence), and disregard the others. However, if there are
-fewer than three predicate-argument structures present, I compare two strategies:
-The first solution (the left sentence in figure \ref{srl:zeros-duplicate})
+sentences. Research by \citeauthor{zhang2019semantics} suggests that fixing the number of
+predicate-argument structures to three yields the best results; so I adopt this number. In
+other words, if a sentence has more than three argument-predicate structures, I only care about
+the first three predicates identified (if proceeding from left to right through the sequence),
+and disregard the others. However, if there are fewer than three predicate-argument structures
+present, I test and report results for two strategies: The first solution (the left sentence
+in SRL \ref{srl:zeros-duplicate}) lies in filling the ``unfilled'' predicate-slots with the
+special ``0''-SRL. The second (the right sentence in SRL \ref{srl:zeros-duplicate}) simply
+copies the first predicate-argument structure to the unfilled slots, thus amplifying the signal
+from the first predicate-argument structure.
 
 
 \begingroup
 \begin{srl}[!h]
-  \label{srl:zeros-duplicate}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
@@ -414,9 +438,10 @@ Restlichen  I-C-A1   0        0
   \end{minipage}
 \end{srl}
 \captionof{srl}{The two strategies for dealing with less than three predicates: \textbf{Left}:
-                The open SRL ``slots'' get filled with the special SRL \emph{0}.
+                The open SRL slots get filled with the special SRL \emph{0}.
                 \textbf{Right}: The first SRL structure gets duplicated until all slots
                 are filled.}
+  \label{srl:zeros-duplicate}
 \endgroup
 
 \begin{itemize}
@@ -433,11 +458,19 @@ Restlichen  I-C-A1   0        0
 	\item duplicate if less preds than 3 vs. fill with zeros
 \end{itemize}
 
-asdasdasdasdasdasjdhgashjdgasdjhags jhasgd jashdg asjdga dasg jashdg ajshdg asjd gasjdhg ajsdhg
-asdjh gasdj hagd jhasdg
+\fig{images/num_predarg_structs.pdf}{fig:num-predarg-structs}{Number of predicate-argument structures in all data sets.
+                                                              Due to it's boilerplate template form, deISEAR shows a peculiar distribution:
+                                                              Since it's examples always begin with ``Ich \underline{fühlte} $X$, als ....'',
+                                                              it's guaranteed that at least one predicate is identifed, and it is very probable,
+                                                              because of this sentence structure, that another will occur.
+                                                              The other curious patterns exhibits SCARE: In no other
+                                                              data set the amount of sentences where ParZu couldn't detect any predicates
+                                                              is that high.
 
-asdah sashdg askjdh gsadkjahsdg askjdh ga sdkjahsgdajsdhgajdhgasd jhagsd akjshdg asjdkhga sdsgd
-akjshdg askjdhga sdhgsd ajshdg
+                                                              Besides the noted peculiarites, it is safe to say that setting the maximum number
+                                                              predicate-argument structures to three does probably not lead to much inforation loss;
+                                                              on average over all datasets, over 90\% of all sentences have three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
+
 
 \section{combination}
 
