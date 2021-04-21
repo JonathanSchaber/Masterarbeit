@@ -193,3 +193,41 @@ bp <- ggplot(df_lab_stars, aes(x=stars, y=values, fill=stars)) +
             xlab('') +
             ylab('') + ylab('%')
 
+
+
+# pred-arg structures
+# numbers of pred-arg-structs (0, 1, 2, 3, 4, >4)
+deisear = c(5, 49, 691, 262, 57, 18)
+scare = c(1227, 1122, 553, 224, 75, 69)
+xquad = c(120, 3303, 2267, 1226, 472, 307)
+xnli = c(472, 7465, 4791, 1813, 732, 374)
+mlqa = c(889, 17471, 9364, 3747, 1336, 795)
+xquad = c(120, 3303, 2267, 1226, 472, 307)
+
+deisear_percentage = mapply(function(x){x/sum(deisear)*100}, deisear)
+
+df3 <- data.frame(
+        sets = c(rep("deISEAR", 6), rep("SCARE", 6), rep("PAWS-X", 6), rep("XNLI", 6), rep("MLQA", 6), rep("XQuAD", 6))
+    ,
+        vals = c(deisear33, scare33, paws33, xnli33, mlqa33, xquad33),
+        pred = rep(c("0", "1", "2", "3", "4", ">4"), 6)
+    )
+
+df3$pred <- factor(df3$pred, levels=c(">4", "4", "3", "2", "1", "0"))
+
+df3$sets <- factor(df3$sets, levels=c("deISEAR", "SCARE", "PAWS-X", "XNLI", "MLQA", "XQuAD"))
+
+bp <- ggplot(df3, aes(x=sets, y=vals, fill=pred)) +
+        geom_bar(width = 0.8, stat = "identity", position = "stack") +
+        theme(legend.title = element_blank(), legend.position = "right", text=element_text(size=27)) +
+        scale_fill_manual("legend", values = c("0"="#3E517A", "1" = "#861657", "2" = "#AA4465", "3" = "#FFA69E", "4"="#
+    93E1D8", ">4"="#C7F2BB")) +
+        xlab("") +
+        ylab("") + ylab("% of Predicate-Argument Structures per Sentence")
+
+tex_file <- "test.tex"
+    tikz(tex_file, width = 12, height = 9, standAlone = TRUE, engine = "luatex", sanitize=TRUE)
+    print(bp)
+    dev.off()
+    post_process(tex_file)
+
