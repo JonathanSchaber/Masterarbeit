@@ -9,27 +9,53 @@ a little bit on the methods and techniques that were developed to address those 
 
 Further, I will tie in my {\color{red} approach} with the current research efforts in NLU.
 
+
 \section{Motivation}
 
-Human language bears some truly mesmerizing features and puzzles, a lot of them are still not
-yet understood in all its depths: For example, it is still unclear how children are able to
-learn the grammar of their mother tongue from the corrupted and comparatively scarce language
-material they are exposed to.
+Human language bears some truly mesmerizing features and puzzles, a lot of them are still not yet
+understood in all its depths: For example, it is still unclear how children are able to learn the
+grammar of their mother tongue from the corrupted and comparatively scarce language material they
+are exposed to (cf. \cite{lust2006child, lewis2001learnability}).\myfootnote{The famous term describing this
+phenomenon, ``Poverty of Stimulus'' (POS), was coined by \cite{chomsky1980cognitive}, arguing for
+an innate language learning/processing faculty. This has led to a fierce debate over that issue:
+Many researchers claim that the POS-motivated necessity for such an innate, human-specific,
+genetic trait does not hold, and humans learn language simply by means of extremely sophisticated
+statistic analysis. It has indeed been shown that infants are amazingly apt at extracting
+statistical information from auditive input \citep{saffran1996statistical}. However, as was
+countered by Chomsky and others, this does not fully explain the ability of children to apply
+these statistical input cues to \emph{hierarchical} structures : ``The issue that is so central
+to this particular POS problem is tacit knowledge by the child that grammatical rules apply to
+such [hierarchical] structures'' \citep{berwick2013poverty} --- there is no behavioral explanation
+for the tacit knowledge about hierarchical structures in the mind of the child. Therefore,
+the POS argument still holds, although it has been somewhat weakend by empirical findings about
+acquisition driven by statisitcal insights.}
+
 %(POS, Chomsky etc) Another astonishing fact about human language
 % is the overwhelming amount of languages that exist today, even that number was probably much
 % higher a few centuries ago.  As to how languages evolve, change over time and what trajectories
 % of possible change may be, lots of questions are still open, and there remains enough work
 % to do.
+
 But maybe the most trivial and enigmatic trait about human language is that we actually
-\emph{understand} each other so well: That during a discourse, person X can retrieve
-the intentioned meaning of expressions uttered by person Y, and vice versa. Further, we
-are able to logically deduce a whole lot information that is not explicitly stated in an
-expression, and uphold such a state of affairs during the whole conversation.
+\emph{understand} each other so well: That during a discourse, person X can
+retrieve the intentioned meaning of expressions uttered by person Y, and
+vice versa. Further, we are able to logically deduce a whole lot information
+that is not explicitly stated in an expression, and uphold such a state of
+affairs during the whole conversation. In fact, communication is perceived
+as such an intrinsic human capability, that it is often used as a proxy for
+attesting intelligence to an entity: \cite{turing1950computing} suggested
+his renowned ``Turing-Test'' as method for determining the capabilities of
+artificial intelligence systems: If the communicative behavior of an agent
+is indistinguishable from a human agent, it is justifiable, according to
+this view, to attribute ``intelligence'' to such a system.
+
 %Maybe one of the most
 % enigmatic and fascinating traits of human language is the fact that for us humans, exchanging
 % information through language is a meaninglessly working process.
-That this is not as trivial as it might look like on first glance, reveal the following
-considerations, which are only a subset of all the complexities involved in human communication:
+
+That reproducing human communication is not as trivial as it might look like on first glance,
+reveal the following considerations, which are only a subset of all the complexities involved
+in human communication:
 
 \begin{description}
   \item[Vagueness] We have no problem dealing with vague statements like ``Most people never heard of it''; in a specific conversation situation we rely on extra-linguistic cues like pragmatics and common world knowledge to decide if ``most'' means 7.5 billion people, or 70\% of our friends, or if the approximate number is even relevant (maybe it was ironically spoken, etc.)
@@ -133,16 +159,19 @@ on large amounts of real language data'' \citep[p.~13]{brill1997overview}. The m
 for engineers and scientists now laid in discovering suitable features, according to which the
 algorithm would hopefully learn helpful patterns from the language data for solving the task
 at hand. With this orientation towards data-driven NLP solutions came also the possibility to
-compare different architectures on the same standardized data set and measure which performed
-better --- as laid out before, this has led to the problematic temptation to focus on beating
-SOTAs without a great deal of theoretical linguistic considerations behind.
+compare different architectures on the same standardized data set and measured
 
-For almost a decade now a next stage in NLU and NLP in general was entered: we are now in the
-middle of the \emph{neural age} of computational linguistics. In contrast to the statistical
+For half a decade now a next stage in NLU and NLP in general was entered: we are now in the
+middle of the \emph{neural age} of computational linguistics:
+{\color{red} ``Deep Learning waves have lapped at the shores of computational linguistics for several
+years now, but 2015 seems like the year when the full force of the tsunami hit the
+major Natural Language Processing (NLP) conferences.'' \citep[p.~701]{manning2015computational}}
+
+In contrast to the statistical
 period's main challenge --- the identification and extraction of suitable features ---, now the
 algorithms are itself learning the features that are the most informative for a given task. The
 human part in the process is reduced to design the overall model architecture and compile large
-large enough amounts of data that are, in the best case, also of good quality.
+enough amounts of data that are, in the best case, also of good quality.
 
 While the roughly sketched methods above apply to a wide ranges of applications in NLP, I will now
 point to some of the enquiries NLU aims at: Simply put, NLP is concernced with the structural side
@@ -152,13 +181,9 @@ semantic representation of words or phrases --- often, it suffices to look at st
 such as morphology, simple frequency statstics, or transition probablities to solve such problems
 to an acceptable extent. On the other hand, NLU tries to process language more in a manner as
 humans do it: We infer something from language, answer questions, detect logical inconsistencies
-etc. Several tasks have been formulized which model such processes, for example: NLI is the task
-of recpgnizing if sentence B is entailed by sentence B, or stands in a neutral or contradictory
-relationship to it. Question Answering is the task of --- answering questions ( see also section
-\ref{sec:sec:question-answering}. In sentiment detection, a model has to infer which emotion is
-expressed by an utterance.
+etc.
 
-A concise summary of the scope of the NLU and the numerous, non-intuitive pitfalls is given by
+{\color{red} A concise summary of the scope of the NLU and the numerous, non-intuitive pitfalls is given by
 \cite{mcshane2017natural} in her paper on NLU in cognitive agents, where she also argues that
 truly NLU-capable systems's abilities must go beyond ``mere'' symbol processing:
 
@@ -179,58 +204,203 @@ truly NLU-capable systems's abilities must go beyond ``mere'' symbol processing:
   pursued by the mainstream natural language processing (NLP) community. Instead, it requires
   a holistic approach to cognitive modeling of the type we are pursuing in a paradigm called
   OntoAgent.
-\end{quote}
+\end{quote}}
+
+All disagreements about the very nature of ``understanding'' and ``communication'' set aside,
+there is probably consensus that we are far from being able to construct a system that
+would pass the Turing test.
+As laid out in the quote above, such a model would need
+to be equipped with
 
 
 
-\subsection{Contextualized Word Embeddings in NLU}
+\subsection{Subtasks of Solving NLU}
 
-Since the beginning of the neural age, there was the problem as to how could text be numerically
-represented, so that the algorithms could extract meaningful feature patterns and that there
-is as little information loss as possible (however, since a numeric representation is always
-an abstraction of the real data, there naturally is some unpreventable information loss). The
-solution that was proposed by \cite{mikolov2013distributed} is the approach that is still in use
-today in its core idea:
+As the endeavor of building a holistic, fully NLU capable agent is probably an objective too
+ambitious to achieve at once, the strategy in modern computational linguistics is to break it
+down into smaller ``subproblems'':
 
-\begin{itemize}
-  \item Initialize a random vector for each word in the vocabulary.
-  \item Train a neural model to learn the best numerical representation of each word
-    by giving it a simple task on huge amounts of unlabeled data (like CBOW, next word
-    prediction, etc.).
-  \item Save those numeric representations and use them in target task at hand.
-\end{itemize}
+Several core NLU {\color{red} skills} have been identified and datasets tailored at those
+have been constructed.
 
-While the basic approaches of this approach still hold --- train randomly initialized vectors on
-large amounts of unlabeled data with a neural network with a simple training goal ---, some important
-changes or additions to today's implementation have been made:
+For example:
 
-\begin{itemize}
-  \item The original word2vec embeddings were \emph{fixed}, in the sense that a word had always
-    the same representation, regardless of the context
-  \item The neural networks that computed these vectors were quite small (two layers of dimensionality
-    300) and could be run on a standard machine.
-    Today's models are huge (hundreds of millions of parameters are not unusual) and computationally
-    very intensive and cannot be run locally.
-  \item Due to the last point, practice has shifted towards pretraining these computationally heavy
-    embeddings and finetuning them on the specific task along with it's goal
-\end{itemize}
+\begin{description}
+  \item[Sentiment Detection] Given a sentence, we can normally assess if the emotion transmitted by
+      it is rather positive, negative, or neutral: ``Oh my, what a lovely day!'' is clearly positive,
+      while  ``asdasd'' probably is not.
+  \item[Grammaticality Recognition] Being able to understand utterances in a language also implies
+      being able to judge the grammaticality of any statement in that language: ``Eagles that fly can
+      eat'' is judged as valid by English speakers while ``Eagles that fly eat can'' is not.
+  \item[Entailment Recognition] An important ability of understanding is the recognition of the
+      logical relationship in which two utterances stand. In other words, given two sentences $A$ and
+      $B$, does $B$ follow from $A$? For example, given the sentence ``The weather forecast predicts
+      rainfall the next days'' does the sentence ``Tomorrow will be a beautiful, sunny day'' conform,
+      contradict or stand in a neutral relation to the first sentence.
+  \item[Question Answering] To locate a (or rather, the) relevant text span in a given context according to some
+      questions is also a task where one would assume that some sort of understanding is needed:
+      Given the question `` What was the name of the King of England?'' and the context ``Henry
+      V (16 September 1386 – 31 August 1422) was King of England from 1413 until his death in
+      1422.'', a system would would need to extract the span ``Henry V''.
+\end{description}
 
-The architecture that has caused the most uproar was probably BERT \cite{devlin2018bert}, an
-architecture that led to so many variants of it, that it created a whole new field inside the
-NLP community --- the BERTology \cite{rogers2020primer}. BERT is a good example for a typical
-neural age NLP model: It's architecture is completely agnostic of knowledge about language
-whatsoever, it ``only'' operates on sequental concatenations of symbols; there is also no
-preprocessing of the data --- no POS-tagging, no dependency parsing, no NER.\myfootnote{Because
-of this non linguistic specific architecture, BERT can easily be adapted to operate on other
-sequential data. This has actually been done: \cite{ji2020dnabert} for example trained a DNABERT
-model for successfully deciphering non-coding DNA.}
-Albeit this complete lack of any sort of explicit linguistic knowledge, by only extracting
-statistical patterns it learns from processing huge amounts of text, BERT achieved several
-SOTAs on well-established NLU data sets, such as GLUE \cite{wang2018glue}.
+Datasets addressing those tasks are listed in table ref{tab:original-GLUE} describing the GLUE
+benchmark dataset compilation.
+
+
+\subsection{Text Representations}
+
+Text can be analysed and represented in various ways.\myfootnote{For simplicity, I will
+focus on written language in my thesis, however this applies to other modalities like
+speech and signing as well.} For example, one could represent each word of a sentence as
+a number, e.g. the page number of the Oxford English Dictionary on which the definition
+of the word --- or its lemma base form ---is given: <Every> <event> <has> <a> <cause>
+$\rightarrow$ <234> <229> <388> <12> <176>. However, that would probably not be very
+informative, but if we represent each word of a sequence by its POS, we might be able to
+get some information out of it; especially if both representations, the ``normal'' one
+and the POS one, are combined: <Every DET> <event NOUN> <has VERB> <a DET> <cause NOUN>.
+
+
+\subsubsection*{Embeddings}
+
+{\color{red} ``Where has Deep Learning helped NLP? The gains so far have not so much been from
+true Deep Learning (use of a hierarchy of more abstract representations to promote
+generalization) as from the use of distributed word representations—through the use
+of real-valued vector representations of words and concepts. Having a dense, multi-
+dimensional representation of similarity between all words is incredibly useful in NLP,
+but not only in NLP.'' \citep[p.~703]{manning2015computational}}
+
+Most NLU models don't operate on the text as it is, i.e. as an array of UTF-8 encoded
+signs. Often, it is easier to implement an algorithm that process text in some way, to
+encode this text numerically. A strategy adopted quite early is the so-called Bag of
+Words \citep{harris1954distributional} technique, which encoded a sequence of words $s$
+in one vector, basically indicating what items of a given vocabulary or present in $s$.
+% Given a corpus of texts, the whole vocabulary $V$, or some subset,
+% e.g. the most frequent 10,000 tokens, gets encoded in one large vector $v \in 0^{|V|}$. Where
+% the $i$th dimension of $v$ stands for the $i$th item in $V$.
+% To encode a sentence $S$ in this vector, for each token in it, the correlating dimension of the
+% vector gets set to 1.
+While this BOW technique is quite effective for certain tasks, e.g. information extraction
+systems often make use of it, it has some flaws: It fails in particular to reflect the core
+property of language being inherently sequential --- the BOW encodings of ``Alice hit Bob''
+and ``Bob hit Alice'' are indistinguishable.
+
+Therefore, other methods of representing word sequences numerically have been devised, which assign
+to each word in a sequence a numeral representation, thus preserving the sequential information.
+Examples of such a representation would be Latent Semantic Analysis \citep{furnas1988using}, or
+word2vec \citep{mikolov2013distributed} which showed the possibility of letting a neural model
+compute those embeddings in an unsupervised manner.
+
+
+\paragraph*{Contextualized Word Embeddings}
+
+First implementation\cite{bengio2003neural}
+
+% Since the beginning of the neural age, there was the problem as to how could text be numerically
+% represented, so that the algorithms could extract meaningful feature patterns and that there
+% is as little information loss as possible (however, since a numeric representation is always
+% an abstraction of the real data, there naturally is some unpreventable information loss). The
+% solution that was proposed by \cite{mikolov2013distributed} is the approach that is still in use
+% today in its core idea:
+
+% \begin{itemize}
+%   \item Initialize a random vector for each word in the vocabulary.
+%   \item Train a neural model to learn the best numerical representation of each word
+%     by giving it a simple task on huge amounts of unlabeled data (like CBOW, next word
+%     prediction, etc.).
+%   \item Save those numeric representations and use them in target task at hand.
+% \endkol{itemize}
+
+% While the basic approaches of this approach still hold --- train randomly initialized vectors on
+% large amounts of unlabeled data with a neural network with a simple training goal ---, some important
+% changes or additions to today's implementation have been made:
+
+% \begin{itemize}
+%   \item The original word2vec embeddings were \emph{fixed}, in the sense that a word had always
+%     the same representation, regardless of the context
+%   \item The neural networks that computed these vectors were quite small (two layers of dimensionality
+%     300) and could be run on a standard machine.
+%     Today's models are huge (hundreds of millions of parameters are not unusual) and computationally
+%     very intensive and cannot be run locally.
+%   \item Due to the last point, practice has shifted towards pretraining these computationally heavy
+%     embeddings and finetuning them on the specific task along with it's goal
+% \end{itemize}
+
+% `` The general approach to
+% building Deep Learning systems is compelling and powerful: The researcher defines a
+% model architecture and a top-level loss function and then both the parameters and the
+% representations of the model self-organize so as to minimize this loss, in an end-to-end
+% learning framework.'' \citep[p.~703]{manning2015computational}
+
+The architecture computing word embeddings that has caused the most uproar
+recently was probably BERT \cite{devlin2018bert}, an architecture that led
+to so many variants of it, that it created a whole new field inside the NLP
+community --- the BERTology \cite{rogers2020primer}. BERT is a good example
+for a typical neural age NLP model: It's architecture is completely agnostic
+of knowledge about language whatsoever, it ``only'' operates on sequental
+concatenations of symbols; there is also no preprocessing of the data --- no
+POS-tagging, no dependency parsing, no NER.\myfootnote{Because of this non
+linguistic specific architecture, BERT can easily be adapted to operate on
+other sequential data. This has actually been done: \cite{ji2020dnabert} for
+example trained a DNABERT model for successfully deciphering non-coding DNA.}
+Albeit this complete lack of any sort of explicit linguistic knowledge, by
+only extracting statistical patterns it learns from processing huge amounts
+of text, BERT achieved several SOTAs on well-established NLU data sets, such
+as GLUE \cite{wang2018glue}.
 
 However, as I will describe in more detail in the next chapter, BERT exposes also
 some weaknesses and undesirable flaws: While being able to perform surprisingly well
 on some tasks, there are situations where BERT fails in rather trivial situations.
+
+
+
+\subsubsection*{Semantic Structures}
+
+While the motivation for representing a sentence numerically is to let algorithms operate
+then ``autonomously'' on these representations, for example by computing some distance measures
+between a query and a set of texts for information retrieval, one can also try to encode
+some structural information of the sentence at hand.
+To support a model with information about what grammatical relations between
+parts of a sentence are present, one could provide the algorithm with the syntax parse
+tree of the sentence. This way, the difference between the afore mentioned
+two ``hitting''-sentences would be clearly distinguishable.
+
+\paragraph*{Semantic Role Labels}
+
+Semantic Roles are a linguistic tool developed for analyzing a sentence regarding the semantic
+relations that hold between different entitles involved in the action described by it. The core
+idea is to identify generalizable semantic functions, or semantic roles, that participants in an
+event can engage in. With such an instrument, it is possible to model the semantic equivalence
+of grammatical and syntactical quite different sentences (after \cite{palmer2010semantic}:
+
+\begin{examples}
+  \item John broke the window.
+  \item The window broke.
+\end{examples}
+
+Although ``break'' is a transitive verb in the first sentence while in the second
+an intransitive; although ``window'' is the grammatical object in the prior whil
+the grammatical object in the latter --- the expressed action is both times that
+an object, the window, was shattered.
+Semantic Roles are an attempt to formalize this by attributing each noun phrase
+a generalizable label. In this case, ``the window'' would be labelled as \emph{patient}
+, i.e. the particiapnt undergoing a change of state, in both sentences.
+In thge first, where there is also a clear initiator of this change, ``John''
+would be labelled as the \emph{agent} of the event.
+
+Thus, any sentence can be represented by the words in it replaced by their Semnantic Role Label
+(SRL): <John> <broke> <the> <window> $\rightarrow$ <AGENT> <PREDICATE> <PATIENT> <PATIENT>.
+(Or, as mentioned before, a combination of the ``normal'' text represenatation combined with SRLs)
+
+
+
+
+\section{Contributions/Goals}
+
+
+``Recently at ACL conferences, there has been
+an over-focus on numbers, on beating the state of the art. Call it playing the Kaggle
+game.'' \citep[p.~702]{manning2015computational}
 
 {\color{red} As I laid out before, in the past decades computational linguistics has undergone several
 ``revolutions'' which, although some people might see this differently, can be described as
@@ -241,32 +411,64 @@ so called \emph{black box}; which means essentially that although the underlying
 architecture of neural nets are well-known --- the mathematics behind them is rather simple ---,
 it is nevertheless impossible to determine \emph{what exactly} those models learn from the data.
 
+``It would be good to return some emphasis within NLP to
+cognitive and scientific investigation of language rather than almost exclusively using
+an engineering model of research.'' \citep[p.~706]{manning2015computational}
+
+
 I see one of the contributions of my model also in re-introducing some sort of linguistic
 considerations in the current NLP efforts and also to}
+
+
 
 
 \section{Research Questions}
 
 The research questions that shall be answered in this thesis, are:
+
 \begin{enumerate}
- \item What do I do? Try to boost BERT embeddings on NLU tasks
- \item How do I do it?  Combine BERT embeddings with encoded SRL information, similar ti \cite{zhang2019paws}
- \item And why? BERT lacks any linguistic knwoledge and shows error behaviour which suggests adding some could help
- \item more concrete questions:
- \begin{itemize}
-    \item Can I reproduce \cite{zhang2019semantics} for German?
-    \item Am I able to reach reported SOTAs of the data sets?
-    \item Is there a difference for different head architectures? And if yes, why?
-    \item general outlooks
- \end{itemize}
+  \item \label{ques:one} Does enriching BERT embeddings with SRL information have a positive,
+                         measurable effect on NLU tasks?
+  \item \label{ques:two} What role play different implementations of SRL-enriching?
 \end{enumerate}
 
-Questions and Claims that are \textbf{not} being made:
+Question \ref{ques:one} has the following subquestions: \textbf{(a)} Since I replicate
+in some sense the work of \cite{zhang2019semantics}, are my findings similar to what
+they reported? \textbf{(b)} Are there differences between datsets, registers, tasks,
+etc.? \textbf{(c)} Are the datasets well-suited for making sound statements about the
+effect of enriching BERT embeddings with SRLs? \textbf{(d)} In case (c) does not hold,
+is there a way to determine nevertheless if SRLs might have a positive effect in more
+appropriate settings? \textbf{(e)} Can I determine what aspect(s) of SRLs support
+models in downstream tasks?
 
-\begin{itemize}
-  \item No claim of ``real'' understanding
-  \item carefully interpreting purely empirical results $\rightarrow$ data quality critique
-\end{itemize}
+Question \ref{ques:two} can be broken down into: \textbf{(a)} The number of predicate-argument
+structures is defined to be three per sentence; is it more effective to fill empty slots with
+0-SRLs, or duplicating existing SRLs? \textbf{(b)} To merge BERT embeddings with SRLs, either
+the splitted BERT subtokens need to be merged back or the SRLs have to splitted up --- does
+this lead to different results?
+
+
+
+
+% \begin{enumerate}
+%  \item What do I do? Try to boost BERT embeddings on NLU tasks
+%  \item How do I do it?  Combine BERT embeddings with encoded SRL information, similar ti \cite{zhang2020paws}
+%  \item And why? BERT lacks any linguistic knwoledge and shows error behaviour which suggests adding some could help
+%  \item more concrete questions:
+%  \begin{itemize}
+%     \item Can I reproduce \cite{zhang2019semantics} for German?
+%     \item Am I able to reach reported SOTAs of the data sets?
+%     \item Is there a difference for different head architectures? And if yes, why?
+%     \item general outlooks
+%  \end{itemize}
+% \end{enumerate}
+
+% Questions and Claims that are \textbf{not} being made:
+
+% \begin{itemize}
+%   \item No claim of ``real'' understanding
+%   \item carefully interpreting purely empirical results $\rightarrow$ data quality critique
+% \end{itemize}
 
 
 

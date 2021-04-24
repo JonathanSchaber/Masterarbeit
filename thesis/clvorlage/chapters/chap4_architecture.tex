@@ -460,16 +460,16 @@ Restlichen  I-C-A1   0        0
 
 \fig{images/num_predarg_structs.pdf}{fig:num-predarg-structs}{Number of predicate-argument structures in all data sets.
                                                               Due to it's boilerplate template form, deISEAR shows a peculiar distribution:
-                                                              Since it's examples always begin with ``Ich \underline{fühlte} $X$, als ....'',
+                                                              Since it's examples always begin with ``Ich [\textsubscript{PRED} fühlte] $X$, als ....'',
                                                               it's guaranteed that at least one predicate is identifed, and it is very probable,
                                                               because of this sentence structure, that another will occur.
-                                                              The other curious patterns exhibits SCARE: In no other
+                                                              The other curious pattern exhibits SCARE: In no other
                                                               data set the amount of sentences where ParZu couldn't detect any predicates
                                                               is that high.
 
-                                                              Besides the noted peculiarites, it is safe to say that setting the maximum number
-                                                              predicate-argument structures to three does probably not lead to much inforation loss;
-                                                              on average over all datasets, over 90\% of all sentences have three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
+                                                              Besides the noted peculiarities, it is safe to say that setting the maximum number of
+                                                              predicate-argument structures to three does probably not lead to much information loss;
+                                                              on average over all datasets, 92.73\% of all sentences have three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
 
 
 \section{combination}
@@ -482,7 +482,7 @@ the fact that, as already mentioned above, BERT has its own tokenizer which impl
 a so-called sub-word or wordpiece \cite{wu2016google} encoding strategy: BERT has a
 fixed length of vocabulary it can hold, namely 30,000 tokens. The wordpiece tokenization
 approach is a balance between word and character tokenization in that that it ``gives
-a good balance between theflexibility of single characters and the efficiency of full
+a good balance between the flexibility of single characters and the efficiency of full
 words for decoding, and also sidesteps the need for special treatment of unknown words''
 \citep[p.~2]{wu2016google}. As a consequence, BERT tokenizes a sentence quite differently
 than a traditional parser, since the latter adheres to the full tokens. Consider the

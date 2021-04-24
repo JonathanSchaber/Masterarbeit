@@ -47,6 +47,7 @@
 \makesavenoteenv{table}
 \usepackage{textcomp}
 \usepackage{tikz}
+\usepackage{titlesec}
 \usepackage{wrapfig}
 \usepackage{xcolor}
 
@@ -94,6 +95,12 @@
     \usebox\curwrapfig%
   \end{wrapfigure}%
 }
+
+% own formatting
+
+% \setsansfont{Calibri}
+\titleformat{\paragraph}
+  {\sffamily}{\thesection}{1em}{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

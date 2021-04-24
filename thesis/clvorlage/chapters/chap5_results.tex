@@ -124,6 +124,29 @@ conducted an ablation study on the XNLI data set, that is described in section \
   \item all 3 worsening are for subtokenized architectures.
 \end{itemize}
 
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/XNLI_SRL_GRU_normal_200--01-11-2020_22-12-38_Accuracy.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/XNLI_SRL_GRU_normal_200--01-11-2020_22-12-38_Loss.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[Best Epoch Selection]{Example of selection of best epoch for XNLI SRL normal, GRU head. \textcolor{blue}{Blue}
+                                = traning set, \textcolor{red}{red} = development set, \textcolor{green}{green} = test set.
+                                On the \textbf{left}: The epoch with the best accuracy on the development
+                                set is selected --- the horizontal drawn through line marks the development accuracy
+                                of this epoch, the dashed through horizontal line marks the test accuracy
+                                for the same epoch. On the \textbf{right}, the same lines mark the losses for
+                                the best epoch.}
+\end{figure}
+
+
+
 To obtain as stable results as possible, I decided to train five models for each architecture
 and configuration, all initialized with different random seeds. Additionally, I ensembled the
 five models, achieving a performance gain of several percentage points (see example of PAWS-X,
@@ -190,7 +213,7 @@ In a first step, I will discuss on the overall performance of models when the SR
 \end{landscape}
 
 
-\tab{tab:token-vs-merged}{Performance of architectures when BERT subtokenized (yellow) vs. merged (purple). Both SRL implementations were
+\tab{tab:token-vs-merged}{Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
                           compared pairwise. Example case, upper left 4.64**: Comparison of deISEAR $\alpha$, +SRL zero
                           implementation, [CLS] Head, subtokenized ensemble (72.19\% accuracy) and the merged ensemble (67.55\%
                           accuracy) --- the subtokenized ensemble performed 4.64\% better, apparently with very high significance (p $<$ 1\%).}{
@@ -330,7 +353,8 @@ In a first step, I will discuss on the overall performance of models when the SR
                        Light blue denotes that both architectures performed \customcolorbox{equally}{llight-blue}
                        (in which case both ensembles were controlled for significance).
                        One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
-                       \textbf{Right part}: asdasdasdasdasd.}{
+                       \textbf{Right part}: Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
+                          compared pairwise..}{
   \scalebox{1}{
     \begin{tabular}{llP{2cm}P{2cm}cP{2cm}P{2cm}}
                                                  &           & \multicolumn{5}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                   \\

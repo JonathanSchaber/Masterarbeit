@@ -1,4 +1,4 @@
-\begin{thebibliography}{89}
+\begin{thebibliography}{99}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -27,6 +27,19 @@ E.~M. Bender, T.~Gebru, A.~McMillan-Major, and S.~Shmitchell.
 \newblock On the dangers of stochastic parrots: Can language models be too big?
 \newblock In \emph{Proceedings of the 2021 ACM Conference on Fairness,
   Accountability, and Transparency}, pages 610--623, 2021.
+
+\bibitem[Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
+  Janvin]{bengio2003neural}
+Y.~Bengio, R.~Ducharme, P.~Vincent, and C.~Janvin.
+\newblock A neural probabilistic language model.
+\newblock \emph{The journal of machine learning research}, 3:\penalty0
+  1137--1155, 2003.
+
+\bibitem[Berwick et~al.(2013)Berwick, Chomsky, and
+  Piattelli-Palmarini]{berwick2013poverty}
+R.~C. Berwick, N.~Chomsky, and M.~Piattelli-Palmarini.
+\newblock Poverty of the stimulus stands: Why recent challenges fail.
+\newblock \emph{Rich languages from poor inputs}, pages 19--42, 2013.
 
 \bibitem[Bisk et~al.(2020)Bisk, Holtzman, Thomason, Andreas, Bengio, Chai,
   Lapata, Lazaridou, May, Nisnevich, et~al.]{bisk2020experience}
@@ -113,6 +126,12 @@ K.~Cho, B.~Van~Merri{\"e}nboer, C.~Gulcehre, D.~Bahdanau, F.~Bougares,
   statistical machine translation.
 \newblock \emph{arXiv preprint arXiv:1406.1078}, 2014.
 
+\bibitem[Chomsky(1980)]{chomsky1980cognitive}
+N.~Chomsky.
+\newblock On cognitive structures and their development: A reply to piaget.
+\newblock \emph{Language and Learning: The debate between Jean Piaget and Noam
+  Chomsky}, 1980.
+
 \bibitem[Chung et~al.(2014)Chung, Gulcehre, Cho, and
   Bengio]{chung2014empirical}
 J.~Chung, C.~Gulcehre, K.~Cho, and Y.~Bengio.
@@ -190,6 +209,12 @@ K.~A. Foth.
 \newblock Eine umfassende constraint-dependenz-grammatik des deutschen.
 \newblock 2006.
 
+\bibitem[Furnas et~al.(1988)]{furnas1988using}
+G.~Furnas et~al.
+\newblock Using latent semantic analysis to improve information retrieval.
+\newblock In \emph{Proceedings of the ACM Conference on Human Factors in
+  Computing Systems}, pages 281--285. ACM Press, 1988.
+
 \bibitem[Gerdes and Kahane(2001)]{gerdes2001word}
 K.~Gerdes and S.~Kahane.
 \newblock Word order in german: A formal dependency grammar using a topological
@@ -230,6 +255,11 @@ B.~Hamp and H.~Feldweg.
 \newblock Germanet-a lexical-semantic net for german.
 \newblock In \emph{Automatic information extraction and building of lexical
   semantic resources for NLP applications}, 1997.
+
+\bibitem[Harris(1954)]{harris1954distributional}
+Z.~S. Harris.
+\newblock Distributional structure.
+\newblock \emph{Word}, 10\penalty0 (2-3):\penalty0 146--162, 1954.
 
 \bibitem[He et~al.(2020)He, Liu, Gao, and Chen]{he2020deberta}
 P.~He, X.~Liu, J.~Gao, and W.~Chen.
@@ -307,6 +337,13 @@ J.~Lee, W.~Yoon, S.~Kim, D.~Kim, S.~Kim, C.~H. So, and J.~Kang.
   biomedical text mining.
 \newblock \emph{Bioinformatics}, 36\penalty0 (4):\penalty0 1234--1240, 2020.
 
+\bibitem[Lewis and Elman(2001)]{lewis2001learnability}
+J.~D. Lewis and J.~L. Elman.
+\newblock Learnability and the statistical structure of language: Poverty of
+  stimulus arguments revisited.
+\newblock In \emph{Proceedings of the 26th annual Boston University conference
+  on language development}, volume~1, pages 359--370. Citeseer, 2001.
+
 \bibitem[Lewis et~al.(2019)Lewis, O{\u{g}}uz, Rinott, Riedel, and
   Schwenk]{lewis2019mlqa}
 P.~Lewis, B.~O{\u{g}}uz, R.~Rinott, S.~Riedel, and H.~Schwenk.
@@ -337,6 +374,17 @@ Z.~Lu, P.~Du, and J.-Y. Nie.
   classification.
 \newblock In \emph{European Conference on Information Retrieval}, pages
   369--382. Springer, 2020.
+
+\bibitem[Lust(2006)]{lust2006child}
+B.~C. Lust.
+\newblock \emph{Child language: Acquisition and growth}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem[Manning(2015)]{manning2015computational}
+C.~D. Manning.
+\newblock Computational linguistics and deep learning.
+\newblock \emph{Computational Linguistics}, 41\penalty0 (4):\penalty0 701--707,
+  2015.
 
 \bibitem[Martin et~al.(2019)Martin, Muller, Su{\'a}rez, Dupont, Romary, de~la
   Clergerie, Seddah, and Sagot]{martin2019camembert}
@@ -400,6 +448,12 @@ L.~A. Ramshaw and M.~P. Marcus.
 \bibitem[Rogers et~al.(2020)Rogers, Kovaleva, and Rumshisky]{rogers2020primer}
 A.~Rogers, O.~Kovaleva, and A.~Rumshisky.
 \newblock A primer in bertology: What we know about how bert works, 2020.
+
+\bibitem[Saffran et~al.(1996)Saffran, Aslin, and
+  Newport]{saffran1996statistical}
+J.~R. Saffran, R.~N. Aslin, and E.~L. Newport.
+\newblock Statistical learning by 8-month-old infants.
+\newblock \emph{Science}, 274\penalty0 (5294):\penalty0 1926--1928, 1996.
 
 \bibitem[Sahlgren and Carlsson(2021)]{sahlgren2021singleton}
 M.~Sahlgren and F.~Carlsson.
@@ -501,6 +555,11 @@ E.~Troiano, S.~Pad{\'o}, and R.~Klinger.
 \newblock Crowdsourcing and validating event-focused emotion corpora for german
   and english.
 \newblock \emph{arXiv preprint arXiv:1905.13618}, 2019.
+
+\bibitem[Turing(1950)]{turing1950computing}
+A.~Turing.
+\newblock Computing machinery and intelligence.
+\newblock \emph{Mind}, 59\penalty0 (236):\penalty0 433, 1950.
 
 \bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez,
   Kaiser, and Polosukhin]{vaswani2017attention}

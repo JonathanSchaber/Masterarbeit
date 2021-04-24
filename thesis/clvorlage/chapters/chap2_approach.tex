@@ -21,11 +21,16 @@ in BERT suggests that it somehow must be accomplishing something which is of gre
 to the field than regular benchmark SOTA cracking by ``normal'' new or improved architectures.
 
 
-The basic concept of BERT is rather trivial: (1) Let a big, sophisticated neural network learn
+The basic concept of BERT is straight forward: (1) Let a big, sophisticated neural network learn
 contextualized embeddings for words by training it unsupervised on huge amounts of data. (2)
 Use these embeddings as representations for words in downstream tasks, put a very simple neural
 network on top (mostly a simple FFNN) and fine-tune them during training on the downstream task.
-One of the strengths of this approach is that the cost, hardware, and data intensive pre-training of the
+
+One of the surprising findings of \citeauthor{devlin2018bert} was the transferability of
+these word embeddings: Although the task of the pretraining learning has nothing to do
+with the downstream task, where the embeddings are used in, the BERT embeddings can be
+fine-tuned in a lean manner to achieve SOTA results on established NLU datasets.
+Another advantage of this approach is that the cost, hardware, and data intensive pre-training of the
 embeddings (step one) must only be computed once; the downstream task dependent fine-tunig can then
 be carried out in a lean set up.\myfootnote{To give an impression on the expenses of pre-training
 the BERT architecture: \cite{schwartz2019green} estimate the pre-training for BERT-large to have lasted four days
@@ -69,7 +74,11 @@ especially remaking, since BERT is not a highly specialized model\myfootnote{Unt
 were achieved by complex interwiring of some embeddings with a specialized architecture. }, but
 apparently still more effective on most tasks than highly task-specific optimized models.
 Thus, the NLP community was awestruck.
- \section{Problems}
+
+
+
+
+\subsection{Problems}
 \label{sec:problems}
 
 In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
@@ -123,7 +132,7 @@ the permutations are, simply put, nothing else than exchanging words with identi
 % ``BERT shows a complete inability to prefer true over false completions for negative sentences.''
 % \citep[p.~45]{ettinger2020bert}
 
-\section{Solutions / Related Work}
+\subsection{Solutions / Related Work}
 
 But the NLP community was not only passive and/or destructive concerning BERT, it also
 produced a vast number of adaptions, variations, and improvements to the ``vanilla''-BERT.
