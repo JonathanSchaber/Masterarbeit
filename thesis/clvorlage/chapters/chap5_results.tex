@@ -3,391 +3,52 @@
 
 % \epigraph{Yada, yada, yada}{\textit{Someone, somewhere}}
 
-In this chapter, I will report the results of my experiments on the six data sets. Additionally, I
-conducted an ablation study on the XNLI data set, that is described in section \ref{sec:ablation}
-
-% \subsection{deISEAR}
-
-% \subsubsection{Example 1}
-
-% \fig{images/SRLs_deISEAR_1.png}{fig:SRL-PAWS-X-1}{}{10}{}
-
-% \subsubsection{Example 2}
-
-% \fig{images/SRLs_deISEAR_2.png}{fig:SRL-PAWS-X-1}{}{15}{}
-
-% \subsection{PAWS-X}
-
-% \begin{landscape}
-
-% \subsubsection{Example 1}
-
-% \textbf{Sentence 1}
-
-% Im Gegenzug [\textsubscript{predicate} gab] Grimoald [\textsubscript{A1} seine Tochter zur
-% Hochzeit] und gewährte ihm das Herzogtum Spoleto nach dem Tod von Atto.
-
-% Im Gegenzug gab Grimoald [\textsubscript{A0} seine Tochter] zur Hochzeit und
-% [\textsubscript{predicate} gewährte] [\textsubscript{A2} ihm] [\textsubscript{A1} das Herzogtum
-% Spoleto nach dem Tod von Atto] .
-
-% \textbf{Sentence 2}
-
-% %[\textsubscript{O} Im Gegenzug] [\textsubscript{predicate} gab] [\textsubscript{O} Grimoald]
-% [\textsubscript{A1} seine Tochter] [\textsubscript{A3} in die Ehe] [\textsubscript{O} und
-% gewährte ihm das Herzogtum Spoleto nach dem Tod von Atto] [\textsubscript{O} .]  Im Gegenzug
-% [\textsubscript{predicate} gab] Grimoald [\textsubscript{A1} seine Tochter] [\textsubscript{A3}
-% in die Ehe] und gewährte ihm das Herzogtum Spoleto nach dem Tod von Atto.
-
-% %[\textsubscript{O} Im Gegenzug gab Grimoald] [\textsubscript{A0} seine Tochter]
-% [\textsubscript{O} in die Ehe und] [\textsubscript{predicate} gewährte] [\textsubscript{A2}
-% ihm] [\textsubscript{A1} das Herzogtum Spoleto nach dem Tod von Atto] [\textsubscript{O} .]  Im
-% Gegenzug gab Grimoald [\textsubscript{A0} seine Tochter] in die Ehe und [\textsubscript{predicate}
-% gewährte] [\textsubscript{A2} ihm] [\textsubscript{A1} das Herzogtum Spoleto nach dem Tod
-% von Atto] .
-
-
-% \fig{images/SRLs_PAWS-X_1.png}{fig:SRL-PAWS-X-1}{}{15}{}
-
-% \subsubsection{Example 2}
-
-% \textbf{Sentence 1}
-
-% Camm [\textsubscript{predicate} entschied] , [\textsubscript{A1} dass beide Motoren eingesetzt
-% werden sollten: Der Tempest Mk 5 hatte den Napier Saber eingebaut, während der Tempest Mk 2
-% der Bristol Centaurus war] .
-
-% Camm entschied, dass [\textsubscript{A1} beide Motoren] [\textsubscript{predicate} eingesetzt]
-% werden sollten: [\textsubscript{A1} Der Tempest Mk 5 hatte den Napier Saber eingebaut, während]
-% der Tempest Mk 2 der Bristol Centaurus war.
-
-% Camm entschied, dass beide Motoren eingesetzt werden sollten: [\textsubscript{A0} Der Tempest
-% Mk 5] hatte [\textsubscript{A3} den Napier Saber] [\textsubscript{predicate} eingebaut],
-% während der Tempest Mk 2 der Bristol Centaurus war.
-
-% Camm entschied, dass beide Motoren eingesetzt werden sollten: Der Tempest Mk 5 hatte den
-% Napier Saber eingebaut, während [\textsubscript{A1} der Tempest Mk 2 der Bristol Centaurus]
-% [\textsubscript{predicate} war] .
-
-% \textbf{Sentence 2}
-
-% Camm [\textsubscript{predicate} entschied] , [\textsubscript{A1} dass beide Motoren eingesetz
-% werden sollten: Der Tempest Mk 5 war mit dem Napier Saber ausgestattet, während der Tempest
-% Mk 2 den Bristol Centaurus hatte] .
-
-% Camm entschied, dass [\textsubscript{A1} beide Motoren] [\textsubscript{predicate} eingesetzt]
-% werden sollten: [\textsubscript{A1} Der Tempest Mk 5 war mit dem Napier Saber ausgestattet,
-% während der Tempest Mk 2 den Bristol Centaurus hatte] .
-
-% Camm entschied, dass beide Motoren eingesetzt werden sollten: [\textsubscript{A0} Der Tempest
-% Mk 5] war [\textsubscript{A1} mit dem Napier Saber] [\textsubscript{predicate} ausgestattet]
-% , während der Tempest Mk 2 den Bristol Centaurus hatte.
-
-% Camm entschied, dass beide Motoren eingesetzt werden sollten: Der Tempest Mk 5 war mit dem
-% Napier Saber ausgestattet, während [\textsubscript{A1} der Tempest Mk 2 den Bristol Centaurus]
-% [\textsubscript{predicate} hatte] .
-
-% \fig{images/SRLs_PAWS-X_2.png}{fig:SRL-PAWS-X-1}{}{15}{}
-
-% \end{landscape}
-
-% \subsubsection{Example 3}
-
-% \fig{images/SRLs_PAWS-X_3.png}{fig:SRL-PAWS-X-1}{}{10}{}
-
-% xwubsubsection{Example 4}
-
-% \fig{images/SRLs_PAWS-X_4.png}{fig:SRL-PAWS-X-1}{}{15}{}
-
-% \subsubsection{Example 5}
-
-% \fig{images/SRLs_PAWS-X_5.png}{fig:SRL-PAWS-X-1}{}{10}{}
-
-% \subsubsection{Example 6}
-
-% \fig{images/SRLs_PAWS-X_6.png}{fig:SRL-PAWS-X-1}{}{10}{}
-
-% \subsubsection{Example 7}
-
-% \fig{images/SRLs_PAWS-X_7.png}{fig:SRL-PAWS-X-1}{}{10}{}
-
-% \subsubsection{Example 8}
-
-% \fig{images/SRLs_PAWS-X_8.png}{fig:SRL-PAWS-X-1}{}{10}{}
-
-\section{Data Set Results}
-
-\begin{itemize}
-  \item conjecture: SRLs are rather adding noise in sequences that are too long. Extreme exmples are the Q\&A datasets.
-  \item GRU architecture is probably strongest: most best models (even though mostly -SRL) and second best models, no worst performance
-  \item 6 sgnificantly better +SRL vs. 3 significantly worse +SRL. There seems to be a slight trend that when merging subtokens, duplicating SRLs when too less predicates is better.
-  \item all 3 worsening are for subtokenized architectures.
-\end{itemize}
-
-
-\begin{figure}
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/XNLI_SRL_GRU_normal_200--01-11-2020_22-12-38_Accuracy.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/XNLI_SRL_GRU_normal_200--01-11-2020_22-12-38_Loss.pdf}
-  \end{minipage}
-  \stepcounter{myfigure}
-  \caption[Best Epoch Selection]{Example of selection of best epoch for XNLI SRL normal, GRU head. \textcolor{blue}{Blue}
-                                = traning set, \textcolor{red}{red} = development set, \textcolor{green}{green} = test set.
-                                On the \textbf{left}: The epoch with the best accuracy on the development
-                                set is selected --- the horizontal drawn through line marks the development accuracy
-                                of this epoch, the dashed through horizontal line marks the test accuracy
-                                for the same epoch. On the \textbf{right}, the same lines mark the losses for
-                                the best epoch.}
-\end{figure}
-
-
-
-To obtain as stable results as possible, I decided to train five models for each architecture
-and configuration, all initialized with different random seeds. Additionally, I ensembled the
-five models, achieving a performance gain of several percentage points (see example of PAWS-X,
-table \ref{tab:pawsx}). In table \ref{tab:results} below, the test set ensemble results for
-each architecture on the non-question answering data set are reported. The results for the
-architecture for the question answering tasks are reported in table \ref{tab:results-qa}.
-
-In a first step, I will discuss on the overall performance of models when the SRLs are added, compared to the same architectures without.
-
-\begin{landscape}\centering
-  % \vspace*{\fill}
-  \tab{tab:results}{Test set accuracy ensemble results (per 5 models) on single sentence and sentence pair tasks.
-                    \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.
-                    In the \emph{Scores} row, the afore mentioned positive extremes are accumulated for $-$SRL and $+$SRL;
-                    note that if both +SRL configurations of an architecture achieved an extreme, it is only counted once.
-
-                    The line marked with light gray --- PAWS-X $\beta$ --- is ``expanded'' in table \ref{tab:pawsx-beta} to illustrate
-                    that each result in this table is actually a majority voting out of an ensembeling of fice models.}{
-    \scalebox{0.90}{
-      \begin{tabular}{llccc|ccc|ccc|ccc|ccc|ccc}
-                                                      &           & \multicolumn{18}{c}{\large \textbf{Classification Data Sets}}  \\ \\
-                                                      &           & \multicolumn{6}{c|}{\textbf{{[}CLS{]} Head}}                                                                                                                                                                                                                      & \multicolumn{6}{c|}{\textbf{FFNN Head}}                                                                                                                                                                                                & \multicolumn{6}{c}{\textbf{GRU Head}}                                                                                                                                                                                                                           \\ \cline{3-20}
-                                                      &           & \multicolumn{3}{c|}{subtokenized}                                                                                               & \multicolumn{3}{c|}{subtokens merged}                                                                                           & \multicolumn{3}{c|}{subtokenized}                                                                                   & \multicolumn{3}{c|}{subtokens merged}                                                                            & \multicolumn{3}{c|}{subtokenized}                                                                                             & \multicolumn{3}{c}{subtokens merged}                                                                                            \\ \cline{3-20}
-                                                      &           & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                        & \multicolumn{1}{c|}{$-$SRL}                & \multicolumn{2}{c|}{+SRL}                                                          & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                          & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                       & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c}{+SRL}                                                      \\ % \cline{3-4}\cline{6-7}\cline{9-10}\cline{12-13}\cline{15-16}\cline{18-19}
-                                                      &           & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}              & \multicolumn{1}{c|}{dupl.}              & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c}{zeros}                 & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.} & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}          & dupl.                      & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}             & dupl.                                  & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & dupl.                                 \\ \hline\hline
-         \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{71.52}                   & \multicolumn{1}{c}{72.19}              & \multicolumn{1}{c|}{71.52}              & \multicolumn{1}{c|}{72.19}                 & \multicolumn{1}{c}{\textit{67.55}}        & \multicolumn{1}{c|}{72.19}             & \multicolumn{1}{c|}{70.86}                     & \multicolumn{1}{c}{\textbf{77.48}}    & \multicolumn{1}{c|}{72.85} & \multicolumn{1}{c|}{74.17}                     & \multicolumn{1}{c}{72.85}          & \multicolumn{1}{c|}{74.17} & \multicolumn{1}{c|}{70.20}                   & \multicolumn{1}{c}{\underline{74.83}} & \multicolumn{1}{c|}{74.17}             & \multicolumn{1}{c|}{73.51}                      & \multicolumn{1}{c}{70.20}             & \multicolumn{1}{c}{71.52}             \\
-         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{71.52}                   & \multicolumn{1}{c}{\underline{74.83}}  & \multicolumn{1}{c|}{\underline{74.83}}  & \multicolumn{1}{c|}{70.86}                 & \multicolumn{1}{c}{70.86}                 & \multicolumn{1}{c|}{72.85}             & \multicolumn{1}{c|}{\underline{74.83}}         & \multicolumn{1}{c}{\textit{68.21}}    & \multicolumn{1}{c|}{70.20} & \multicolumn{1}{c|}{\underline{74.83}}         & \multicolumn{1}{c}{73.51}          & \multicolumn{1}{c|}{70.86} & \multicolumn{1}{c|}{73.51}                   & \multicolumn{1}{c}{\underline{74.83}} & \multicolumn{1}{c|}{72.19}             & \multicolumn{1}{c|}{\textbf{76.82}}             & \multicolumn{1}{c}{70.20}             & \multicolumn{1}{c}{\underline{74.83}} \\ \cline{3-20}
-         \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\underline{85.61}}       & \multicolumn{1}{c}{82.58}              & \multicolumn{1}{c|}{83.71}              & \multicolumn{1}{c|}{83.33}                 & \multicolumn{1}{c}{83.71}                 & \multicolumn{1}{c|}{\underline{85.61}} & \multicolumn{1}{c|}{83.33}                     & \multicolumn{1}{c}{83.71}             & \multicolumn{1}{c|}{84.09} & \multicolumn{1}{c|}{84.09}                     & \multicolumn{1}{c}{\textit{81.44}} & \multicolumn{1}{c|}{84.47} & \multicolumn{1}{c|}{83.71}                   & \multicolumn{1}{c}{83.33}             & \multicolumn{1}{c|}{84.09}             & \multicolumn{1}{c|}{\textbf{85.98}}             & \multicolumn{1}{c}{84.09}             & \multicolumn{1}{c}{83.71}             \\
-         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\underline{86.36}}       & \multicolumn{1}{c}{84.85}              & \multicolumn{1}{c|}{84.47}              & \multicolumn{1}{c|}{85.23}                 & \multicolumn{1}{c}{85.23}                 & \multicolumn{1}{c|}{85.23}             & \multicolumn{1}{c|}{\textbf{86.74}}            & \multicolumn{1}{c}{85.98}             & \multicolumn{1}{c|}{85.23} & \multicolumn{1}{c|}{84.47}                     & \multicolumn{1}{c}{\textit{83.33}} & \multicolumn{1}{c|}{84.09} & \multicolumn{1}{c|}{\textbf{86.74}}          & \multicolumn{1}{c}{85.98}             & \multicolumn{1}{c|}{83.71}             & \multicolumn{1}{c|}{\underline{86.36}}          & \multicolumn{1}{c}{84.09}             & \multicolumn{1}{c}{85.23}             \\ \hline
-         \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{80.63}                   & \multicolumn{1}{c}{81.60}              & \multicolumn{1}{c|}{81.49}              & \multicolumn{1}{c|}{\textit{79.92}}        & \multicolumn{1}{c}{80.63}                 & \multicolumn{1}{c|}{82.51}             & \multicolumn{1}{c|}{81.19}                     & \multicolumn{1}{c}{80.78}             & \multicolumn{1}{c|}{80.07} & \multicolumn{1}{c|}{80.43}                     & \multicolumn{1}{c}{80.02}          & \multicolumn{1}{c|}{80.68} & \multicolumn{1}{c|}{82.26}                   & \multicolumn{1}{c}{82.77}             & \multicolumn{1}{c|}{82.77}             & \multicolumn{1}{c|}{82.82}                      & \multicolumn{1}{c}{\underline{82.87}} & \multicolumn{1}{c}{\textbf{83.53}}    \\
-         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{g|}{87.49}                   & \multicolumn{1}{g}{\underline{88.05}}  & \multicolumn{1}{g|}{\textbf{88.21}}     & \multicolumn{1}{g|}{87.75}                 & \multicolumn{1}{g}{87.24}                 & \multicolumn{1}{g|}{88.00}             & \multicolumn{1}{g|}{86.83}                     & \multicolumn{1}{g}{87.39}             & \multicolumn{1}{g|}{87.09} & \multicolumn{1}{g|}{87.75}                     & \multicolumn{1}{g}{\textit{86.58}} & \multicolumn{1}{g|}{86.68} & \multicolumn{1}{g|}{87.60}                   & \multicolumn{1}{g}{87.60}             & \multicolumn{1}{g|}{87.90}             & \multicolumn{1}{g|}{88.00}                      & \multicolumn{1}{g}{88.00}             & \multicolumn{1}{g}{\underline{88.05}} \\ \cline{3-20}
-         \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{67.34}                   & \multicolumn{1}{c}{\textbf{67.52}}     & \multicolumn{1}{c|}{66.64}              & \multicolumn{1}{c|}{66.94}                 & \multicolumn{1}{c}{66.94}                 & \multicolumn{1}{c|}{\textit{66.26}}    & \multicolumn{1}{c|}{67.20}                     & \multicolumn{1}{c}{\underline{67.42}} & \multicolumn{1}{c|}{67.34} & \multicolumn{1}{c|}{66.38}                     & \multicolumn{1}{c}{67.08}          & \multicolumn{1}{c|}{66.92} & \multicolumn{1}{c|}{66.68}                   & \multicolumn{1}{c}{66.60}             & \multicolumn{1}{c|}{67.14}             & \multicolumn{1}{c|}{66.42}                      & \multicolumn{1}{c}{66.54}             & \multicolumn{1}{c}{66.26}             \\
-         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{68.09}                   & \multicolumn{1}{c}{68.18}              & \multicolumn{1}{c|}{66.84}              & \multicolumn{1}{c|}{67.82}                 & \multicolumn{1}{c}{67.82}                 & \multicolumn{1}{c|}{\underline{68.36}} & \multicolumn{1}{c|}{66.31}                     & \multicolumn{1}{c}{65.60}             & \multicolumn{1}{c|}{66.40} & \multicolumn{1}{c|}{\textit{64.98}}            & \multicolumn{1}{c}{65.51}          & \multicolumn{1}{c|}{65.07} & \multicolumn{1}{c|}{66.84}                   & \multicolumn{1}{c}{67.82}             & \multicolumn{1}{c|}{67.02}             & \multicolumn{1}{c|}{67.64}                      & \multicolumn{1}{c}{66.31}             & \multicolumn{1}{c}{\textbf{68.53}}    \\ \hline\hline
-         \multicolumn{1}{c}{Scores}                   &           & \multicolumn{1}{c|}{\underline{II}}          & \multicolumn{2}{c|}{\textbf{II} \underline{II}}                                  & \multicolumn{1}{c|}{}                      & \multicolumn{2}{c|}{\underline{II}}                                                & \multicolumn{1}{c|}{\textbf{I} \underline{I}}  & \multicolumn{2}{c|}{\textbf{I} \underline{I}}                      & \multicolumn{1}{c|}{\underline{I}}             & \multicolumn{2}{c|}{}                                           & \multicolumn{1}{c|}{\textbf{I}}              & \multicolumn{2}{c|}{\underline{II}}                                            & \multicolumn{1}{c|}{\textbf{II} \underline{I}}  & \multicolumn{2}{c}{\textbf{II} \underline{III}}                               \\ \cline{1-2}
-         \multicolumn{1}{c}{+SRL}                     & \multicolumn{3}{l}{\textbf{5} \underline{10}} \\
-         \multicolumn{1}{c}{$-$SRL}                   & \multicolumn{3}{l}{\textbf{4} \underline{5}}
-      \end{tabular}
-    }
-  }{Results}
-
-  \tab{tab:pawsx-beta}{The ``expanded'' PAWS-X $\beta$ results. The light gray line corresponds to the one in table \ref{tab:results}.
-                       As can be seen, the fluctuations between single models is not too big, {\textcolor{red} which is an indicator that the architecture
-                       is fairly stable.} Ensembeling reliably adds 1.26 percentage points on average.}{
-    \scalebox{0.9}{
-      \begin{tabular}{lccc|ccc|ccc|ccc|ccc|ccc}
-                 & \multicolumn{18}{c}{\large \textbf{PAWS-X $\beta$}}  \\ \\
-                 & \multicolumn{6}{c|}{\textbf{{[}CLS{]} Head}}                                                                                                                                                                                                                      & \multicolumn{6}{c|}{\textbf{FFNN Head}}                                                                                                                                                                                                         & \multicolumn{6}{c}{\textbf{GRU Head}}                                                                                                                                                                                                                           \\ \cline{2-19}
-                 & \multicolumn{3}{c|}{subtokenized}                                                                                               & \multicolumn{3}{c|}{subtokens merged}                                                                                           & \multicolumn{3}{c|}{subtokenized}                                                                                            & \multicolumn{3}{c|}{subtokens merged}                                                                            & \multicolumn{3}{c|}{subtokenized}                                                                                             & \multicolumn{3}{c}{subtokens merged}                                                                                            \\ \cline{2-19}
-                 & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                        & \multicolumn{1}{c|}{$-$SRL}                & \multicolumn{2}{c|}{+SRL}                                                          & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                                   & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                       & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c}{+SRL}                                                      \\
-                 & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}              & \multicolumn{1}{c|}{dupl.}              & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c}{zeros}                 & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.}          & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}          & dupl.                      & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}             & dupl.                                  & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & dupl.                                 \\ \hline\hline
-        Model 1  & \multicolumn{1}{c|}{85.41}                   & \multicolumn{1}{c}{85.36}              & \multicolumn{1}{c|}{86.02}              & \multicolumn{1}{c|}{86.43}                 & \multicolumn{1}{c}{86.53}                 & \multicolumn{1}{c|}{87.04}             & \multicolumn{1}{c|}{85.77}                     & \multicolumn{1}{c}{85.61}             & \multicolumn{1}{c|}{85.77}          & \multicolumn{1}{c|}{86.22}                     & \multicolumn{1}{c}{84.70}          & \multicolumn{1}{c|}{86.53} & \multicolumn{1}{c|}{87.54}                   & \multicolumn{1}{c}{87.49}             & \multicolumn{1}{c|}{86.43}             & \multicolumn{1}{c|}{85.51}                      & \multicolumn{1}{c}{86.93}             & \multicolumn{1}{c}{86.53}             \\
-        Model 2  & \multicolumn{1}{c|}{86.07}                   & \multicolumn{1}{c}{86.83}              & \multicolumn{1}{c|}{86.99}              & \multicolumn{1}{c|}{85.87}                 & \multicolumn{1}{c}{86.32}                 & \multicolumn{1}{c|}{86.68}             & \multicolumn{1}{c|}{86.17}                     & \multicolumn{1}{c}{85.82}             & \multicolumn{1}{c|}{87.39}          & \multicolumn{1}{c|}{85.92}                     & \multicolumn{1}{c}{85.36}          & \multicolumn{1}{c|}{85.26} & \multicolumn{1}{c|}{87.04}                   & \multicolumn{1}{c}{86.99}             & \multicolumn{1}{c|}{85.87}             & \multicolumn{1}{c|}{87.19}                      & \multicolumn{1}{c}{86.07}             & \multicolumn{1}{c}{87.44}             \\
-        Model 3  & \multicolumn{1}{c|}{86.07}                   & \multicolumn{1}{c}{87.49}              & \multicolumn{1}{c|}{86.99}              & \multicolumn{1}{c|}{87.14}                 & \multicolumn{1}{c}{85.26}                 & \multicolumn{1}{c|}{86.73}             & \multicolumn{1}{c|}{86.22}                     & \multicolumn{1}{c}{84.90}             & \multicolumn{1}{c|}{85.36}          & \multicolumn{1}{c|}{85.41}                     & \multicolumn{1}{c}{85.31}          & \multicolumn{1}{c|}{85.71} & \multicolumn{1}{c|}{86.12}                   & \multicolumn{1}{c}{85.66}             & \multicolumn{1}{c|}{86.83}             & \multicolumn{1}{c|}{86.48}                      & \multicolumn{1}{c}{87.09}             & \multicolumn{1}{c}{86.93}             \\
-        Model 4  & \multicolumn{1}{c|}{87.39}                   & \multicolumn{1}{c}{86.32}              & \multicolumn{1}{c|}{86.58}              & \multicolumn{1}{c|}{86.38}                 & \multicolumn{1}{c}{84.04}                 & \multicolumn{1}{c|}{87.65}             & \multicolumn{1}{c|}{86.53}                     & \multicolumn{1}{c}{86.73}             & \multicolumn{1}{c|}{85.61}          & \multicolumn{1}{c|}{85.82}                     & \multicolumn{1}{c}{85.61}          & \multicolumn{1}{c|}{86.38} & \multicolumn{1}{c|}{84.99}                   & \multicolumn{1}{c}{86.02}             & \multicolumn{1}{c|}{87.70}             & \multicolumn{1}{c|}{86.99}                      & \multicolumn{1}{c}{86.68}             & \multicolumn{1}{c}{86.88}             \\
-        Model 5  & \multicolumn{1}{c|}{86.63}                   & \multicolumn{1}{c}{86.43}              & \multicolumn{1}{c|}{86.58}              & \multicolumn{1}{c|}{86.99}                 & \multicolumn{1}{c}{85.26}                 & \multicolumn{1}{c|}{85.56}             & \multicolumn{1}{c|}{86.18}                     & \multicolumn{1}{c}{87.09}             & \multicolumn{1}{c|}{84.75}          & \multicolumn{1}{c|}{87.04}                     & \multicolumn{1}{c}{85.77}          & \multicolumn{1}{c|}{85.82} & \multicolumn{1}{c|}{86.12}                   & \multicolumn{1}{c}{85.82}             & \multicolumn{1}{c|}{86.73}             & \multicolumn{1}{c|}{87.34}                      & \multicolumn{1}{c}{86.73}             & \multicolumn{1}{c}{86.58}             \\ \hline\hline %\hhline{~==================}
-        Average  & \multicolumn{1}{c|}{86.31}                   & \multicolumn{1}{c}{86.49}              & \multicolumn{1}{c|}{86.63}              & \multicolumn{1}{c|}{86.56}                 & \multicolumn{1}{c}{85.48}                 & \multicolumn{1}{c|}{\underline{86.81}} & \multicolumn{1}{c|}{86.22}                     & \multicolumn{1}{c}{86.03}             & \multicolumn{1}{c|}{\textit{85.78}} & \multicolumn{1}{c|}{86.08}                     & \multicolumn{1}{c}{85.35}          & \multicolumn{1}{c|}{85.94} & \multicolumn{1}{c|}{86.35}                   & \multicolumn{1}{c}{86.40}             & \multicolumn{1}{c|}{86.71}             & \multicolumn{1}{c|}{86.70}                      & \multicolumn{1}{c}{86.70}             & \multicolumn{1}{c}{\textbf{86.87}}    \\
-        Ensemble & \multicolumn{1}{g|}{87.49}                   & \multicolumn{1}{g}{\underline{88.05}}  & \multicolumn{1}{g|}{\textbf{88.21}}     & \multicolumn{1}{g|}{87.75}                 & \multicolumn{1}{g}{87.24}                 & \multicolumn{1}{g|}{88.00}             & \multicolumn{1}{g|}{86.83}                     & \multicolumn{1}{g}{87.39}             & \multicolumn{1}{g|}{87.09}          & \multicolumn{1}{g|}{87.75}                     & \multicolumn{1}{g}{\textit{86.58}} & \multicolumn{1}{g|}{86.68} & \multicolumn{1}{g|}{87.60}                   & \multicolumn{1}{g}{87.60}             & \multicolumn{1}{g|}{87.90}             & \multicolumn{1}{g|}{88.00}                      & \multicolumn{1}{g}{88.00}             & \multicolumn{1}{g}{\underline{88.05}} \\ \cline{1-19}
-        Gain     & \multicolumn{1}{c|}{1.18}                    & \multicolumn{1}{c}{1.56}               & \multicolumn{1}{c|}{1.58}               & \multicolumn{1}{c|}{1.19}                  & \multicolumn{1}{c}{1.76}                  & \multicolumn{1}{c|}{1.19}              & \multicolumn{1}{c|}{.65}                       & \multicolumn{1}{c}{1.36}              & \multicolumn{1}{c|}{1.31}           & \multicolumn{1}{c|}{1.67}                      & \multicolumn{1}{c}{1.23}           & \multicolumn{1}{c|}{.74}   & \multicolumn{1}{c|}{1.25}                    & \multicolumn{1}{c}{1.20}              & \multicolumn{1}{c|}{1.19}              & \multicolumn{1}{c|}{1.30}                       & \multicolumn{1}{c}{1.30}              & \multicolumn{1}{c}{1.18}              \\ \cline{1-1}
-        Average  & 1.26 ($\sigma$ 0.28)
-      \end{tabular}
-    }
-  }{Gains Ensemble vs Average}
-  \vfill
-\end{landscape}
-
-
-\tab{tab:token-vs-merged}{Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
-                          compared pairwise. Example case, upper left 4.64**: Comparison of deISEAR $\alpha$, +SRL zero
-                          implementation, [CLS] Head, subtokenized ensemble (72.19\% accuracy) and the merged ensemble (67.55\%
-                          accuracy) --- the subtokenized ensemble performed 4.64\% better, apparently with very high significance (p $<$ 1\%).}{
-  \scalebox{0.90}{
-    \begin{tabular}{llcc|cc|cc}
-                                                 &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                     & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                            & \multicolumn{2}{c}{\textbf{GRU Head}}                                                           \\ \cline{3-8}
-                                                 &           & \multicolumn{1}{c|}{zeros}                      & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c|}{zeros}                        & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c|}{zeros}                    & dupl.                                           \\ \hline\hline
-    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} 4.64**}  & \multicolumn{1}{c|}{\cellcolor{purple} .67}    & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.32}   & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*} & \multicolumn{1}{c}{\cellcolor{yellow} 2.65}     \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} 3.97*}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.98}   & \multicolumn{1}{c|}{\cellcolor{purple} 5.30*}     & \multicolumn{1}{c|}{\cellcolor{purple} .66}    & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*} & \multicolumn{1}{c}{\cellcolor{purple} 2.64}     \\ \cline{3-8}
-    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{purple} 1.13}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.90}   & \multicolumn{1}{c|}{\cellcolor{yellow} 2.27*}     & \multicolumn{1}{c|}{\cellcolor{purple} .38}    & \multicolumn{1}{c|}{\cellcolor{purple} .76}   & \multicolumn{1}{c}{\cellcolor{yellow} .38}      \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{purple} .38}     & \multicolumn{1}{c|}{\cellcolor{purple} .76}    & \multicolumn{1}{c|}{\cellcolor{yellow} 2.65**}    & \multicolumn{1}{c|}{\cellcolor{yellow} 1.14}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.89}  & \multicolumn{1}{c}{\cellcolor{purple} 1.52}     \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} .97*}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.02**} & \multicolumn{1}{c|}{\cellcolor{yellow} .76}       & \multicolumn{1}{c|}{\cellcolor{purple} .61}    & \multicolumn{1}{c|}{\cellcolor{purple} .10}   & \multicolumn{1}{c}{\cellcolor{purple} .76}      \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} .81**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .21}    & \multicolumn{1}{c|}{\cellcolor{yellow} .81*}      & \multicolumn{1}{c|}{\cellcolor{yellow} .41}    & \multicolumn{1}{c|}{\cellcolor{purple} .40}   & \multicolumn{1}{c}{\cellcolor{purple} .15}      \\ \cline{3-8}
-    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} .58**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .38}    & \multicolumn{1}{c|}{\cellcolor{yellow} .34}       & \multicolumn{1}{c|}{\cellcolor{yellow} .42}    & \multicolumn{1}{c|}{\cellcolor{yellow} .06}   & \multicolumn{1}{c}{\cellcolor{yellow} .88**}    \\
-    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} .36}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.52*}  & \multicolumn{1}{c|}{\cellcolor{yellow} .09}       & \multicolumn{1}{c|}{\cellcolor{yellow} 1.33*}  & \multicolumn{1}{c|}{\cellcolor{yellow} 1.51*} & \multicolumn{1}{c}{\cellcolor{purple} 1.51*}    \\
-    \end{tabular}
-  }
-}{Tokenized vs. Merged wo QA}
-
-\tab{tab:configs}{The different hyperparameter configurations for each data set.}{
-  \scalebox{0.9}{
-    \begin{tabular}{ll|ccccc}
-                                                   &             & \# of epochs                           & split set up                           & batch size                               & maximum length                 & SRL implementation        \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}}   &  $\alpha$   & 100                                    & normal                                 & 16                                       & 40                             & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 100                                    & normal                                 & 16                                       & 200                            & normal                    \\
-    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}     &  $\alpha$   & 50                                     & normal                                 & 16                                       & 50                             & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}    &  $\alpha$   & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
-    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}      &  $\alpha$   & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & re-split                               & 16                                       & 100                            & normal                    \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}      &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
-    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}     &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
-    \end{tabular}
-  }
-}{Data Set specific Configs}
-
-\tab{tab:hyper-configs}{General hyperparameter configurations.}{
-  \scalebox{0.9}{
-    \begin{tabular}{ll}
-    learning rate              & 2e-05                         \\
-    SRL embedding dimensions   & 20                            \\
-    SRL GRU hidden size        & 32                            \\
-    SRL number of layers       & 2                             \\
-    SRL bias                   & True                          \\
-    SRL bidirectional          & True                          \\
-    SRL dropout                & 0.1                           \\
-    \end{tabular}
-  }
-}{Stable Hyperparameter Configs}
-
-
-
-\tab{tab:gain-loss}{Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
-                      over $-$SRL for each configuration from table \ref{tab:results}. The better of the +SRL configurations was taken into account:
-                      \customcolorbox{zeros}{blue},
-                      \customcolorbox{duplicate}{dark-blue}.
-                      Light blue denotes that both architectures performed
-                      \customcolorbox{equally}{llight-blue}
-                      (in which case both ensembles were controlled for significance). One asterisk signifies
-                      a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
-    \scalebox{1}{
-      \begin{tabular}{llcccccc}
-                                                   &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                                 & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                                        & \multicolumn{2}{c}{\textbf{GRU Head}}                                                                     \\ \cline{3-8}
-                                                   &           & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                          & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                            & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c}{merged}                          \\ \hline\hline
-      \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .67}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}       & \multicolumn{1}{c|}{\cellcolor{blue} 6.62**}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}         & \multicolumn{1}{c|}{\cellcolor{blue} 4.63**}        & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\
-      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{llight-blue} 3.31}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.99}      & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-4.63$*}   & \multicolumn{1}{c|}{\cellcolor{blue} $-1.32$}          & \multicolumn{1}{c|}{\cellcolor{blue} 1.32}          & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\ \cline{3-8}
-      \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-1.90$*}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.28*}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} .76}        & \multicolumn{1}{c|}{\cellcolor{dark-blue} .38}         & \multicolumn{1}{c|}{\cellcolor{dark-blue} .38}      & \multicolumn{1}{c}{\cellcolor{blue} $-1.89$}        \\
-      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{blue} $-1.51$**}       & \multicolumn{1}{c|}{\cellcolor{llight-blue} .00}     & \multicolumn{1}{c|}{\cellcolor{blue} $-.76$}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-.38$}      & \multicolumn{1}{c|}{\cellcolor{blue} .76}           & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.13$}   \\ \hline
-      \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .97*}            & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.59***}   & \multicolumn{1}{c|}{\cellcolor{blue} $-.41$}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .25}         & \multicolumn{1}{c|}{\cellcolor{llight-blue} .51}     & \multicolumn{1}{c}{\cellcolor{dark-blue} .71}       \\
-      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{dark-blue} .72*}       & \multicolumn{1}{c|}{\cellcolor{dark-blue} .25}       & \multicolumn{1}{c|}{\cellcolor{blue} .56}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-1.07$***}  & \multicolumn{1}{c|}{\cellcolor{dark-blue} .30}      & \multicolumn{1}{c}{\cellcolor{dark-blue} .05}       \\ \cline{3-8}
-      \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .18}             & \multicolumn{1}{c|}{\cellcolor{blue} $-.22$}         & \multicolumn{1}{c|}{\cellcolor{blue} .22}             & \multicolumn{1}{c|}{\cellcolor{blue} .70*}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .46}      & \multicolumn{1}{c}{\cellcolor{dark-blue} .12}       \\
-      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{blue} .09}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .44}       & \multicolumn{1}{c|}{\cellcolor{dark-blue} .09}        & \multicolumn{1}{c|}{\cellcolor{blue} .53}              & \multicolumn{1}{c|}{\cellcolor{blue} .98}           & \multicolumn{1}{c}{\cellcolor{dark-blue} .89}       \\ % \hline\hline
-      % & \multicolumn{2}{l}{Accumulation}                  \\ \cline{2-4}
-      % & \multicolumn{2}{l}{\textbf{Gains} (significant)}  & 32 (5) \\
-      % & \multicolumn{2}{l}{\textbf{Losses} (significant)} & 15 (3) \\
-     \end{tabular}
-    }
-  }{Gain-Loss}
-
-\begin{figure}
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/gain_losses_accumulated.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/gain_losses_SRL.pdf}
-  \end{minipage}
-  \stepcounter{myfigure}
-  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 48 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 48 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
-\end{figure}
-
-\fig{images/all_datasets_gain_dup.pdf}{fig:each-dataset-gains}{Accumulation of statistics for each classification
-                                       datasetclassification. \textbf{Left}: Which SRL architecture performed better.
-                                       \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs.}{15}{Results Accumulation for each Data Set}
-
-\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ merged, +SRL duplicated. (macro F1: 73.52).}{
-  \begin{tabular}{|ll|ccc|}
-    \hline
-                                                    &           & \multicolumn{3}{c|}{Predicted} \\
-                                                    &           & Positive & Neutral & Negative  \\ \hline
-    \multirow{3}{*}{\rotatebox[origin=c]{90}{True}} & Positive  & 149      & 12      & 5         \\
-                                                    & Neutral   & 4        & 11      & 6         \\
-                                                    & Negative  & 3        & 8       & 66        \\ \hline
-  \end{tabular}
-}{Confusion matrix for one SCARE +SRL ensemble}
-
-
-\tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
-  \scalebox{1}{
-    \begin{tabular}{llccc|ccc}
-                                               &           & \multicolumn{6}{c}{\large \textbf{Q\&A Data Sets}}  \\ \\
-                                               &           & \multicolumn{6}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                                                \\ \cline{3-8}
-                                               &           & \multicolumn{3}{c|}{subtokenized}                                                                                                & \multicolumn{3}{c}{subtokens merged}                                                                          \\ \cline{3-8}
-                                               &           & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}         & \multicolumn{2}{c}{+SRL}                                                \\ %\cline{3-4}\cline{6-7}
-                                               &           & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}               & \multicolumn{1}{c}{zeros}          & dupl.                              \\ \hline\hline
-    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}  & $\alpha$  & \multicolumn{1}{c|}{\textbf{30.69}}             & \multicolumn{1}{c}{\underline{29.68}} & \multicolumn{1}{c|}{\underline{29.68}} & \multicolumn{1}{c|}{21.92}          & \multicolumn{1}{c}{21.92}          & \multicolumn{1}{c}{\textit{21.81}} \\
-    \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\textbf{44.75}}             & \multicolumn{1}{c}{\underline{44.55}} & \multicolumn{1}{c|}{43.41}             & \multicolumn{1}{c|}{\textit{41.66}} & \multicolumn{1}{c}{41.86}          & \multicolumn{1}{c}{41.79}          \\ \cline{3-8}
-    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}} & $\alpha$  & \multicolumn{1}{c|}{\textbf{42.01}}             & \multicolumn{1}{c}{\underline{41.42}} & \multicolumn{1}{c|}{41.12}             & \multicolumn{1}{c|}{37.87}          & \multicolumn{1}{c}{36.98}          & \multicolumn{1}{c}{\textit{35.50}} \\
-    \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\underline{46.57}}          & \multicolumn{1}{c}{45.43}             & \multicolumn{1}{c|}{\textbf{46.86}}    & \multicolumn{1}{c|}{37.43}          & \multicolumn{1}{c}{\textit{37.14}} & \multicolumn{1}{c}{39.14}          \\ \hline\hline
-    \multicolumn{1}{c}{Scores}                 &           & \multicolumn{1}{c|}{\textbf{III} \underline{I}} & \multicolumn{2}{c|}{\textbf{I} \underline{III}}                                & \multicolumn{1}{c|}{}               & \multicolumn{2}{c}{}                                                    \\ \cline{1-2}
-    \multicolumn{1}{c}{+SRL}                   & \multicolumn{3}{l}{\textbf{1} \underline{3}} \\
-    \multicolumn{1}{c}{$-$SRL}                 & \multicolumn{3}{l}{\textbf{3} \underline{1}}
-
-    \end{tabular}
-  }
-}{Results-QA}
-
-\tab{tab:qa-gain-loss-token-merged}{\textbf{Left part}: Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
-                       over $-$SRL for the Span Prediction Head from table \ref{tab:results-qa}. The better of the +SRL configurations was taken into
-                       account: \customcolorbox{zeros}{blue},
-                       \customcolorbox{duplicate}{dark-blue}.
-                       Light blue denotes that both architectures performed \customcolorbox{equally}{llight-blue}
-                       (in which case both ensembles were controlled for significance).
-                       One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
-                       \textbf{Right part}: Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
-                          compared pairwise..}{
-  \scalebox{1}{
-    \begin{tabular}{llP{2cm}P{2cm}cP{2cm}P{2cm}}
-                                                 &           & \multicolumn{5}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                   \\
-                                                 &           & \multicolumn{2}{c}{Gains/Losses}                                                                            &  & \multicolumn{2}{c}{subtokenized/merged}                                                            \\ \cline{3-4} \cline{6-7}
-                                                 &           & \multicolumn{1}{P{1.5cm}|}{subtok.}                            & \multicolumn{1}{P{1.5cm}}{merged}                        &  & \multicolumn{1}{P{1.5cm}|}{zeros}                       & \multicolumn{1}{P{1.5cm}}{dupl.}                       \\ \hline\hline
-    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{llight-blue} $-$1.01***} & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .00}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 7.76***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.86***}  \\
-    \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.20}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .20}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 2.69}     & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 1.62}     \\ \cline{3-4} \cline{6-7}
-    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} -.89}         &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 4.44**}   & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 5.62***}  \\
-    \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{dark-blue} .29}          & \multicolumn{1}{P{1.5cm}}{\cellcolor{dark-blue} 1.71}    &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 8.29***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.72***}  \\
-   \end{tabular}
-  }
-}{QA Gain-Loss / QA Tokenized vs. merged}
-
-
-\begin{figure}
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_accumulated.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_SRL2.pdf}
-  \end{minipage}
-  \stepcounter{myfigure}
-  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
-\end{figure}
-
-
-\subsection{Testing for Statistical Significance}
+In this chapter I report the outcomings of my experiments on the GerGLUE dataset. Because there
+were several different implementations of various parameters tested against each other (SRLs duplicated vs.
+SRLs zeroed, BERT tokens merged vs. SRLs splitted, etc.), I provide several aggregated ``views'' on the
+plain numerical results, where one or more of these implementations is paid attention to. Further, I
+document the ourcomings of a human assessment of the quality of the DAMESRL produced SRLs to be able to
+make propositions about the usefulness of those and their effect on the results. Similar to this, the
+general data quality of random samples of two datasets is manually reviewed, for the same reasons.
+Eventually, I carry out a small ablation study, controlling the effect of ghosting out different
+SRL structures to show that the actual, semanticity providing power of SRLs lies in the combination
+of these structures.
+
+Since the different
+dataset types were tested with different heads, I group the them the following way: Results for classification
+datasets (deISEAR, SCARE, PAWS-X, XNLI) are reported together, and the results for question answering datasets
+(MLQA, XQuAD), are grouped together. Since the latter group consists of only two datasets
+addressing the same task, and bearing in mind that there were only experiments
+for one head in this group, the Span Prediction Head, the discussion analyzing these results
+will not be as interesting and substantial as for the first group. For space reaons, and for the sake of straightforwardness,
+only test set results are reported in the tables. However, model selection was always based on development set results (see
+figure {fig:acc-loss} for visualizations of development and test resulst compared).
+
+
+\fig{images/acc_loss-3_sets.pdf}{fig:acc-loss}{Accuracy and loss plots for three experiments
+(\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and \textcolor{std-green}{test} set):
+% \myfootnote{\textbf{deISEAR} +SRL normal duplicate [CLS] head, \textbf{SCARE} SRL merge zeros GRU
+% head, \textbf{XNLI} SRL merge zeros [CLS] head}
+In the deISEAR plot, we see that early stopping
+was triggered after the loss on the development set increased for four contiguous epochs ---
+indicating an overfitting of the model on the training set. Both SCARE and XNLI experiments ran
+until the maximum number of epochs were reached without triggering early stopping. However, the
+SCARE accuracy and loss progressions show much more fluctuations and erratic behavior than the
+XNLI ones, indicating the noisiness of the data and the randomness of the function that needs to
+be learned by the model.
+
+The vertical line marks the epoch with the highest development accuracy, the dashed horizontal
+marks the corresponding test set value, and the drawn through the development value, respectively.
+}{12}{Accuracy/Loss plots of three experiments}
+
+\subsection{Controlling for Statistical Significance}
+
+Before reporting the actual results, I briefly elaborate on my strategy for
+assessing statistical significance, since this is a crucial aspect of empirical
+analysis in general, and in attributing superiority of one model over the other
+on the basis of measured perfmoance on a dataset.
 
 ``if we rely on empirical evaluation to validate our hypotheses and reveal the correct language processing mechanisms, we better be sure that our results are not coincidental.'' \citep{dror2018hitchhiker}
-
 
 $\delta(X) = M(A, X) - M(B, X)$
 
@@ -466,7 +127,7 @@ when in reality, they tend to produce ``positively correlated results''. \citep{
 \subsubsection{Example Case for XNLI}
 
 
-Let's consider the case for the non-merged subtokens setting in the resampled XNLI data set. The test
+Let's consider the case for the non-merged subtokens setting in the resampled XNLI dataset. The test
 set contains 1,125 sentence pairs for which textual entailment must be predicted. From these 1,125
 sentence pairs, 398 bear the gold label \emph{contradiction}, 357 are labeled \emph{entailment},
 and 370 are \emph{neutral}; so, the class distribution of the set is fairly balanced.
@@ -495,7 +156,7 @@ equally wrong or correct predicted by the systems.
 Result zeros p = 14.09\%
 
 In summary it is safe to say that although there is a positive effect of injecting
-SRL information during training over all data sets and architectures, this effect is
+SRL information during training over all datasets and architectures, this effect is
 arguably quite small and unsteady. {\color{red} this is especially in yontrast to
 \cite{zhang2019semantics}, who report more stable and higher effects} In the next
 sections I will try to give an answer as to what are the reasons for these, honestly
@@ -503,16 +164,345 @@ spoken, moderate results. Concretely, I will argue that this is mainly due to no
 present in differing intensities and at various levels in the data I acquired, that
 the model has to cope with:
 
+Afterwards, statistical signifance is indicated by appending one, two, or three asterisks
+to a result that was compared with one or several others: * stands for $p < 10\%$, ** for
+$p < 5\%$, and *** indicates very high significance of $p < 1\%$.
 
-\fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all data sets.
+
+
+\section{Classification Dataset Results}
+
+{\color{red} \begin{itemize}
+  \item conjecture: SRLs are rather adding noise in sequences that are too long. Extreme exmples are the Q\&A datasets.
+  \item GRU architecture is probably strongest: most best models (even though mostly -SRL) and second best models, no worst performance
+  \item 6 sgnificantly better +SRL vs. 3 significantly worse +SRL. There seems to be a slight trend that when merging subtokens, duplicating SRLs when too less predicates is better.
+  \item all 3 worsening are for subtokenized architectures.
+\end{itemize}}
+
+To obtain as stable results as possible, I decided to train five models for each architecture
+and configuration, all initialized with different random seeds. Additionally, I ensembled the
+five models, achieving a performance gain of several percentage points (see example of PAWS-X,
+table \ref{tab:pawsx-beta}).\myfootnote{For ensembling, a straightforward majority vote of the five models
+is implementd.} In table \ref{tab:results} below, the test set ensemble results for
+each architecture on the classification datasets are reported. For each row, i.e. for
+one hyperparameter set-up for one dataset, The best, second best and worst performace over
+all three heads and SRL configurations are marekd. In the last row, Best and second best
+results per head and +/-SRL for each subtokenization settings are accumulated.
+As the Scores indicate, taken the results without controlling for significance,\myfootnote{
+Here I don't control for statistical significance because it is not clear, against what model(s) should
+a peak performance be controlled for: Take the 77.45\% accuracy of the deISEAR $\alpha$, achieved
+by the +SRL, BERT tokens subtokenized, FFNN head: Against what should this results be compared? To all
+other -SRL results? Only to the corresponding -SRL results for the same head?} the +SRL
+configurations achieved 5 times the best, and 10 times the second best results --- compared
+to 4 best and 5 second best results for -SRL. This is a first indicator that adding SRL information
+seems to be able to support plain BERT embeddings in classification tasks.
+
+The accumulations in roman numerals also indicate a further, observable trend: The GRU head
+accumulated 5 best and 6 second best results, independent of with or without SRLs, appears to be better
+suited for classification tasks than the [CLS] (2 best, 6 second bset) and FFNN (2 best, 3 second bset) heads.
+Supporting this, the GRU head never was responsible for the worst performance, which were all
+achieved by the FFNN and [CLS] heads.
+
+In the following table \ref{tab:pawsx-beta}, the ensembling of each of the results in the main table is
+exemplary disaggregated. Each head-SRL configuration is randomly initialized 5 times, resulting in
+5 models achieving a certain performance on the dataset. By ensembling them, a steady gain of, in this case,
+1.26\% compared to the average of the 5 models is achieved. Similar ensembling improvements where
+obseverd in all other datasets.
+
+% In a first step, I will discuss on the overall performance of models when the SRLs are added,
+% compared to the same architectures without.
+
+\begin{landscape}\centering
+  % \vspace*{\fill}
+  \tab{tab:results}{Test set accuracy ensemble results (per 5 models) on single sentence and sentence pair tasks.
+                    \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.
+                    In the \emph{Scores} row, the afore mentioned positive extremes are accumulated for $-$SRL and $+$SRL;
+                    note that if both +SRL configurations of an architecture achieved an extreme, it is only counted once.
+
+                    The line marked with light gray --- PAWS-X $\beta$ --- is ``expanded'' in table \ref{tab:pawsx-beta} to illustrate
+                    that each result in this table is actually a majority voting out of an ensembeling of fice models.}{
+    \scalebox{0.90}{
+      \begin{tabular}{llccc|ccc|ccc|ccc|ccc|ccc}
+                                                      &           & \multicolumn{18}{c}{\large \textbf{Classification Datasets}}  \\ \\
+                                                      &           & \multicolumn{6}{c|}{\textbf{{[}CLS{]} Head}}                                                                                                                                                                                                                      & \multicolumn{6}{c|}{\textbf{FFNN Head}}                                                                                                                                                                                                & \multicolumn{6}{c}{\textbf{GRU Head}}                                                                                                                                                                                                                           \\ \cline{3-20}
+                                                      &           & \multicolumn{3}{c|}{subtokenized}                                                                                               & \multicolumn{3}{c|}{subtokens merged}                                                                                           & \multicolumn{3}{c|}{subtokenized}                                                                                   & \multicolumn{3}{c|}{subtokens merged}                                                                            & \multicolumn{3}{c|}{subtokenized}                                                                                             & \multicolumn{3}{c}{subtokens merged}                                                                                            \\ \cline{3-20}
+                                                      &           & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                        & \multicolumn{1}{c|}{$-$SRL}                & \multicolumn{2}{c|}{+SRL}                                                          & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                          & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                       & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c}{+SRL}                                                      \\ % \cline{3-4}\cline{6-7}\cline{9-10}\cline{12-13}\cline{15-16}\cline{18-19}
+                                                      &           & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}              & \multicolumn{1}{c|}{dupl.}              & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c}{zeros}                 & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.} & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}          & dupl.                      & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}             & dupl.                                  & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & dupl.                                 \\ \hline\hline
+         \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{71.52}                   & \multicolumn{1}{c}{72.19}              & \multicolumn{1}{c|}{71.52}              & \multicolumn{1}{c|}{72.19}                 & \multicolumn{1}{c}{\textit{67.55}}        & \multicolumn{1}{c|}{72.19}             & \multicolumn{1}{c|}{70.86}                     & \multicolumn{1}{c}{\textbf{77.48}}    & \multicolumn{1}{c|}{72.85} & \multicolumn{1}{c|}{74.17}                     & \multicolumn{1}{c}{72.85}          & \multicolumn{1}{c|}{74.17} & \multicolumn{1}{c|}{70.20}                   & \multicolumn{1}{c}{\underline{74.83}} & \multicolumn{1}{c|}{74.17}             & \multicolumn{1}{c|}{73.51}                      & \multicolumn{1}{c}{70.20}             & \multicolumn{1}{c}{71.52}             \\
+         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{71.52}                   & \multicolumn{1}{c}{\underline{74.83}}  & \multicolumn{1}{c|}{\underline{74.83}}  & \multicolumn{1}{c|}{70.86}                 & \multicolumn{1}{c}{70.86}                 & \multicolumn{1}{c|}{72.85}             & \multicolumn{1}{c|}{\underline{74.83}}         & \multicolumn{1}{c}{\textit{68.21}}    & \multicolumn{1}{c|}{70.20} & \multicolumn{1}{c|}{\underline{74.83}}         & \multicolumn{1}{c}{73.51}          & \multicolumn{1}{c|}{70.86} & \multicolumn{1}{c|}{73.51}                   & \multicolumn{1}{c}{\underline{74.83}} & \multicolumn{1}{c|}{72.19}             & \multicolumn{1}{c|}{\textbf{76.82}}             & \multicolumn{1}{c}{70.20}             & \multicolumn{1}{c}{\underline{74.83}} \\ \cline{3-20}
+         \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\underline{85.61}}       & \multicolumn{1}{c}{82.58}              & \multicolumn{1}{c|}{83.71}              & \multicolumn{1}{c|}{83.33}                 & \multicolumn{1}{c}{83.71}                 & \multicolumn{1}{c|}{\underline{85.61}} & \multicolumn{1}{c|}{83.33}                     & \multicolumn{1}{c}{83.71}             & \multicolumn{1}{c|}{84.09} & \multicolumn{1}{c|}{84.09}                     & \multicolumn{1}{c}{\textit{81.44}} & \multicolumn{1}{c|}{84.47} & \multicolumn{1}{c|}{83.71}                   & \multicolumn{1}{c}{83.33}             & \multicolumn{1}{c|}{84.09}             & \multicolumn{1}{c|}{\textbf{85.98}}             & \multicolumn{1}{c}{84.09}             & \multicolumn{1}{c}{83.71}             \\
+         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\underline{86.36}}       & \multicolumn{1}{c}{84.85}              & \multicolumn{1}{c|}{84.47}              & \multicolumn{1}{c|}{85.23}                 & \multicolumn{1}{c}{85.23}                 & \multicolumn{1}{c|}{85.23}             & \multicolumn{1}{c|}{\textbf{86.74}}            & \multicolumn{1}{c}{85.98}             & \multicolumn{1}{c|}{85.23} & \multicolumn{1}{c|}{84.47}                     & \multicolumn{1}{c}{\textit{83.33}} & \multicolumn{1}{c|}{84.09} & \multicolumn{1}{c|}{\textbf{86.74}}          & \multicolumn{1}{c}{85.98}             & \multicolumn{1}{c|}{83.71}             & \multicolumn{1}{c|}{\underline{86.36}}          & \multicolumn{1}{c}{84.09}             & \multicolumn{1}{c}{85.23}             \\ \hline
+         \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{80.63}                   & \multicolumn{1}{c}{81.60}              & \multicolumn{1}{c|}{81.49}              & \multicolumn{1}{c|}{\textit{79.92}}        & \multicolumn{1}{c}{80.63}                 & \multicolumn{1}{c|}{82.51}             & \multicolumn{1}{c|}{81.19}                     & \multicolumn{1}{c}{80.78}             & \multicolumn{1}{c|}{80.07} & \multicolumn{1}{c|}{80.43}                     & \multicolumn{1}{c}{80.02}          & \multicolumn{1}{c|}{80.68} & \multicolumn{1}{c|}{82.26}                   & \multicolumn{1}{c}{82.77}             & \multicolumn{1}{c|}{82.77}             & \multicolumn{1}{c|}{82.82}                      & \multicolumn{1}{c}{\underline{82.87}} & \multicolumn{1}{c}{\textbf{83.53}}    \\
+         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{g|}{87.49}                   & \multicolumn{1}{g}{\underline{88.05}}  & \multicolumn{1}{g|}{\textbf{88.21}}     & \multicolumn{1}{g|}{87.75}                 & \multicolumn{1}{g}{87.24}                 & \multicolumn{1}{g|}{88.00}             & \multicolumn{1}{g|}{86.83}                     & \multicolumn{1}{g}{87.39}             & \multicolumn{1}{g|}{87.09} & \multicolumn{1}{g|}{87.75}                     & \multicolumn{1}{g}{\textit{86.58}} & \multicolumn{1}{g|}{86.68} & \multicolumn{1}{g|}{87.60}                   & \multicolumn{1}{g}{87.60}             & \multicolumn{1}{g|}{87.90}             & \multicolumn{1}{g|}{88.00}                      & \multicolumn{1}{g}{88.00}             & \multicolumn{1}{g}{\underline{88.05}} \\ \cline{3-20}
+         \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{67.34}                   & \multicolumn{1}{c}{\textbf{67.52}}     & \multicolumn{1}{c|}{66.64}              & \multicolumn{1}{c|}{66.94}                 & \multicolumn{1}{c}{66.94}                 & \multicolumn{1}{c|}{\textit{66.26}}    & \multicolumn{1}{c|}{67.20}                     & \multicolumn{1}{c}{\underline{67.42}} & \multicolumn{1}{c|}{67.34} & \multicolumn{1}{c|}{66.38}                     & \multicolumn{1}{c}{67.08}          & \multicolumn{1}{c|}{66.92} & \multicolumn{1}{c|}{66.68}                   & \multicolumn{1}{c}{66.60}             & \multicolumn{1}{c|}{67.14}             & \multicolumn{1}{c|}{66.42}                      & \multicolumn{1}{c}{66.54}             & \multicolumn{1}{c}{66.26}             \\
+         \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{68.09}                   & \multicolumn{1}{c}{68.18}              & \multicolumn{1}{c|}{66.84}              & \multicolumn{1}{c|}{67.82}                 & \multicolumn{1}{c}{67.82}                 & \multicolumn{1}{c|}{\underline{68.36}} & \multicolumn{1}{c|}{66.31}                     & \multicolumn{1}{c}{65.60}             & \multicolumn{1}{c|}{66.40} & \multicolumn{1}{c|}{\textit{64.98}}            & \multicolumn{1}{c}{65.51}          & \multicolumn{1}{c|}{65.07} & \multicolumn{1}{c|}{66.84}                   & \multicolumn{1}{c}{67.82}             & \multicolumn{1}{c|}{67.02}             & \multicolumn{1}{c|}{67.64}                      & \multicolumn{1}{c}{66.31}             & \multicolumn{1}{c}{\textbf{68.53}}    \\ \hline\hline
+         \multicolumn{1}{c}{Scores}                   &           & \multicolumn{1}{c|}{\underline{II}}          & \multicolumn{2}{c|}{\textbf{II} \underline{II}}                                  & \multicolumn{1}{c|}{}                      & \multicolumn{2}{c|}{\underline{II}}                                                & \multicolumn{1}{c|}{\textbf{I} \underline{I}}  & \multicolumn{2}{c|}{\textbf{I} \underline{I}}                      & \multicolumn{1}{c|}{\underline{I}}             & \multicolumn{2}{c|}{}                                           & \multicolumn{1}{c|}{\textbf{I}}              & \multicolumn{2}{c|}{\underline{II}}                                            & \multicolumn{1}{c|}{\textbf{II} \underline{I}}  & \multicolumn{2}{c}{\textbf{II} \underline{III}}                               \\ \cline{1-2}
+         \multicolumn{1}{c}{+SRL}                     & \multicolumn{3}{l}{\textbf{5} \underline{10}} \\
+         \multicolumn{1}{c}{$-$SRL}                   & \multicolumn{3}{l}{\textbf{4} \underline{5}}
+      \end{tabular}
+    }
+  }{Results}
+
+  \tab{tab:pawsx-beta}{The ``expanded'' PAWS-X $\beta$ results. The light gray line corresponds to the one in table \ref{tab:results}.
+                       As can be seen, the fluctuations between single models is not too big, {\textcolor{red} which is an indicator that the architecture
+                       is fairly stable.} Ensembeling reliably leads to a 1.26 percentage points gain on average, with a standard deviation of 0.26\%.}{
+    \scalebox{0.9}{
+      \begin{tabular}{lccc|ccc|ccc|ccc|ccc|ccc}
+                 & \multicolumn{18}{c}{\large \textbf{PAWS-X $\beta$}}  \\ \\
+                 & \multicolumn{6}{c|}{\textbf{{[}CLS{]} Head}}                                                                                                                                                                                                                      & \multicolumn{6}{c|}{\textbf{FFNN Head}}                                                                                                                                                                                                         & \multicolumn{6}{c}{\textbf{GRU Head}}                                                                                                                                                                                                                           \\ \cline{2-19}
+                 & \multicolumn{3}{c|}{subtokenized}                                                                                               & \multicolumn{3}{c|}{subtokens merged}                                                                                           & \multicolumn{3}{c|}{subtokenized}                                                                                            & \multicolumn{3}{c|}{subtokens merged}                                                                            & \multicolumn{3}{c|}{subtokenized}                                                                                             & \multicolumn{3}{c}{subtokens merged}                                                                                            \\ \cline{2-19}
+                 & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                        & \multicolumn{1}{c|}{$-$SRL}                & \multicolumn{2}{c|}{+SRL}                                                          & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                                   & \multicolumn{1}{c|}{$-$SRL}                    & \multicolumn{2}{c|}{+SRL}                                       & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c}{+SRL}                                                      \\
+                 & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}              & \multicolumn{1}{c|}{dupl.}              & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c}{zeros}                 & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.}          & \multicolumn{1}{c|}{}                          & \multicolumn{1}{c}{zeros}          & dupl.                      & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{zeros}             & dupl.                                  & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & dupl.                                 \\ \hline\hline
+        Model 1  & \multicolumn{1}{c|}{85.41}                   & \multicolumn{1}{c}{85.36}              & \multicolumn{1}{c|}{86.02}              & \multicolumn{1}{c|}{86.43}                 & \multicolumn{1}{c}{86.53}                 & \multicolumn{1}{c|}{87.04}             & \multicolumn{1}{c|}{85.77}                     & \multicolumn{1}{c}{85.61}             & \multicolumn{1}{c|}{85.77}          & \multicolumn{1}{c|}{86.22}                     & \multicolumn{1}{c}{84.70}          & \multicolumn{1}{c|}{86.53} & \multicolumn{1}{c|}{87.54}                   & \multicolumn{1}{c}{87.49}             & \multicolumn{1}{c|}{86.43}             & \multicolumn{1}{c|}{85.51}                      & \multicolumn{1}{c}{86.93}             & \multicolumn{1}{c}{86.53}             \\
+        Model 2  & \multicolumn{1}{c|}{86.07}                   & \multicolumn{1}{c}{86.83}              & \multicolumn{1}{c|}{86.99}              & \multicolumn{1}{c|}{85.87}                 & \multicolumn{1}{c}{86.32}                 & \multicolumn{1}{c|}{86.68}             & \multicolumn{1}{c|}{86.17}                     & \multicolumn{1}{c}{85.82}             & \multicolumn{1}{c|}{87.39}          & \multicolumn{1}{c|}{85.92}                     & \multicolumn{1}{c}{85.36}          & \multicolumn{1}{c|}{85.26} & \multicolumn{1}{c|}{87.04}                   & \multicolumn{1}{c}{86.99}             & \multicolumn{1}{c|}{85.87}             & \multicolumn{1}{c|}{87.19}                      & \multicolumn{1}{c}{86.07}             & \multicolumn{1}{c}{87.44}             \\
+        Model 3  & \multicolumn{1}{c|}{86.07}                   & \multicolumn{1}{c}{87.49}              & \multicolumn{1}{c|}{86.99}              & \multicolumn{1}{c|}{87.14}                 & \multicolumn{1}{c}{85.26}                 & \multicolumn{1}{c|}{86.73}             & \multicolumn{1}{c|}{86.22}                     & \multicolumn{1}{c}{84.90}             & \multicolumn{1}{c|}{85.36}          & \multicolumn{1}{c|}{85.41}                     & \multicolumn{1}{c}{85.31}          & \multicolumn{1}{c|}{85.71} & \multicolumn{1}{c|}{86.12}                   & \multicolumn{1}{c}{85.66}             & \multicolumn{1}{c|}{86.83}             & \multicolumn{1}{c|}{86.48}                      & \multicolumn{1}{c}{87.09}             & \multicolumn{1}{c}{86.93}             \\
+        Model 4  & \multicolumn{1}{c|}{87.39}                   & \multicolumn{1}{c}{86.32}              & \multicolumn{1}{c|}{86.58}              & \multicolumn{1}{c|}{86.38}                 & \multicolumn{1}{c}{84.04}                 & \multicolumn{1}{c|}{87.65}             & \multicolumn{1}{c|}{86.53}                     & \multicolumn{1}{c}{86.73}             & \multicolumn{1}{c|}{85.61}          & \multicolumn{1}{c|}{85.82}                     & \multicolumn{1}{c}{85.61}          & \multicolumn{1}{c|}{86.38} & \multicolumn{1}{c|}{84.99}                   & \multicolumn{1}{c}{86.02}             & \multicolumn{1}{c|}{87.70}             & \multicolumn{1}{c|}{86.99}                      & \multicolumn{1}{c}{86.68}             & \multicolumn{1}{c}{86.88}             \\
+        Model 5  & \multicolumn{1}{c|}{86.63}                   & \multicolumn{1}{c}{86.43}              & \multicolumn{1}{c|}{86.58}              & \multicolumn{1}{c|}{86.99}                 & \multicolumn{1}{c}{85.26}                 & \multicolumn{1}{c|}{85.56}             & \multicolumn{1}{c|}{86.18}                     & \multicolumn{1}{c}{87.09}             & \multicolumn{1}{c|}{84.75}          & \multicolumn{1}{c|}{87.04}                     & \multicolumn{1}{c}{85.77}          & \multicolumn{1}{c|}{85.82} & \multicolumn{1}{c|}{86.12}                   & \multicolumn{1}{c}{85.82}             & \multicolumn{1}{c|}{86.73}             & \multicolumn{1}{c|}{87.34}                      & \multicolumn{1}{c}{86.73}             & \multicolumn{1}{c}{86.58}             \\ \hline\hline %\hhline{~==================}
+        Average  & \multicolumn{1}{c|}{86.31}                   & \multicolumn{1}{c}{86.49}              & \multicolumn{1}{c|}{86.63}              & \multicolumn{1}{c|}{86.56}                 & \multicolumn{1}{c}{85.48}                 & \multicolumn{1}{c|}{\underline{86.81}} & \multicolumn{1}{c|}{86.22}                     & \multicolumn{1}{c}{86.03}             & \multicolumn{1}{c|}{\textit{85.78}} & \multicolumn{1}{c|}{86.08}                     & \multicolumn{1}{c}{85.35}          & \multicolumn{1}{c|}{85.94} & \multicolumn{1}{c|}{86.35}                   & \multicolumn{1}{c}{86.40}             & \multicolumn{1}{c|}{86.71}             & \multicolumn{1}{c|}{86.70}                      & \multicolumn{1}{c}{86.70}             & \multicolumn{1}{c}{\textbf{86.87}}    \\
+        Ensemble & \multicolumn{1}{g|}{87.49}                   & \multicolumn{1}{g}{\underline{88.05}}  & \multicolumn{1}{g|}{\textbf{88.21}}     & \multicolumn{1}{g|}{87.75}                 & \multicolumn{1}{g}{87.24}                 & \multicolumn{1}{g|}{88.00}             & \multicolumn{1}{g|}{86.83}                     & \multicolumn{1}{g}{87.39}             & \multicolumn{1}{g|}{87.09}          & \multicolumn{1}{g|}{87.75}                     & \multicolumn{1}{g}{\textit{86.58}} & \multicolumn{1}{g|}{86.68} & \multicolumn{1}{g|}{87.60}                   & \multicolumn{1}{g}{87.60}             & \multicolumn{1}{g|}{87.90}             & \multicolumn{1}{g|}{88.00}                      & \multicolumn{1}{g}{88.00}             & \multicolumn{1}{g}{\underline{88.05}} \\ \cline{1-19}
+        Gain     & \multicolumn{1}{c|}{1.18}                    & \multicolumn{1}{c}{1.56}               & \multicolumn{1}{c|}{1.58}               & \multicolumn{1}{c|}{1.19}                  & \multicolumn{1}{c}{1.76}                  & \multicolumn{1}{c|}{1.19}              & \multicolumn{1}{c|}{.65}                       & \multicolumn{1}{c}{1.36}              & \multicolumn{1}{c|}{1.31}           & \multicolumn{1}{c|}{1.67}                      & \multicolumn{1}{c}{1.23}           & \multicolumn{1}{c|}{.74}   & \multicolumn{1}{c|}{1.25}                    & \multicolumn{1}{c}{1.20}              & \multicolumn{1}{c|}{1.19}              & \multicolumn{1}{c|}{1.30}                       & \multicolumn{1}{c}{1.30}              & \multicolumn{1}{c}{1.18}              \\ \cline{1-1}
+        Average  & 1.26 ($\sigma$ 0.28)
+      \end{tabular}
+    }
+  }{Gains Ensemble vs Average}
+  \vfill
+\end{landscape}
+
+To see whether there can be seen a tendency as to which SRL-BERT aligning strategy turns out
+to be more effective, the results of the main table \ref{tab:results} are aggregated in table
+\ref{tab:token-vs-merged}: For each head, the +SRL results are compared, and the differences are
+reoprted in the table. For example, we look at the [CLS] head on deISEAR $\alpha$ and ask us, which
+strategy --- merging the BERT subtokens back ot ``normal'' tokens, or splitting the SRLs up to
+align with the subtokenized BERT tokens --- worked better. For this, the difference between both
+for +SRL zeros and +SRL duplicate is calculated and controlled for statistical signifcance between
+both ensembles. The subtokenizing strategy (yellow) outperformed the merging strategy (purple) 28
+times, 15 times of it statistically significant, while merging was better 20 times, only 15\% of
+it significantly. Therfore, at least for the GerGLU classification datasets, splitting the SRLs
+up to align with the BERT subtokens seems more effective than merging the BERT subtokens. This
+also makes sense intuitively --- using the merging strategy of averaging the BERT embeddings of
+subtokens leads clearly to an information loss or distortion that cannot be fully balanced by the
+added SRL information.
+
+
+\tab{tab:token-vs-merged}{Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
+                          compared pairwise. Example case, upper left 4.64**: Comparison of deISEAR $\alpha$, +SRL zero
+                          implementation, [CLS] Head, subtokenized ensemble (72.19\% accuracy) and the merged ensemble (67.55\%
+                          accuracy) --- the subtokenized ensemble performed 4.64\% better, apparently with quite high significance (p $<$ 5\%).}{
+  \scalebox{0.90}{
+    \begin{tabular}{llcc|cc|cc}
+                                                 &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                     & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                            & \multicolumn{2}{c}{\textbf{GRU Head}}                                                           \\ \cline{3-8}
+                                                 &           & \multicolumn{1}{c|}{zeros}                      & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c|}{zeros}                        & \multicolumn{1}{c|}{dupl.}                     & \multicolumn{1}{c|}{zeros}                    & dupl.                                           \\ \hline\hline
+    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} 4.64**}  & \multicolumn{1}{c|}{\cellcolor{purple} .67}    & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.32}   & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*} & \multicolumn{1}{c}{\cellcolor{yellow} 2.65}     \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} 3.97*}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.98}   & \multicolumn{1}{c|}{\cellcolor{purple} 5.30*}     & \multicolumn{1}{c|}{\cellcolor{purple} .66}    & \multicolumn{1}{c|}{\cellcolor{yellow} 4.63*} & \multicolumn{1}{c}{\cellcolor{purple} 2.64}     \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{purple} 1.13}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.90}   & \multicolumn{1}{c|}{\cellcolor{yellow} 2.27*}     & \multicolumn{1}{c|}{\cellcolor{purple} .38}    & \multicolumn{1}{c|}{\cellcolor{purple} .76}   & \multicolumn{1}{c}{\cellcolor{yellow} .38}      \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{purple} .38}     & \multicolumn{1}{c|}{\cellcolor{purple} .76}    & \multicolumn{1}{c|}{\cellcolor{yellow} 2.65**}    & \multicolumn{1}{c|}{\cellcolor{yellow} 1.14}   & \multicolumn{1}{c|}{\cellcolor{yellow} 1.89}  & \multicolumn{1}{c}{\cellcolor{purple} 1.52}     \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} .97*}    & \multicolumn{1}{c|}{\cellcolor{purple} 1.02**} & \multicolumn{1}{c|}{\cellcolor{yellow} .76}       & \multicolumn{1}{c|}{\cellcolor{purple} .61}    & \multicolumn{1}{c|}{\cellcolor{purple} .10}   & \multicolumn{1}{c}{\cellcolor{purple} .76}      \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} .81**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .21}    & \multicolumn{1}{c|}{\cellcolor{yellow} .81*}      & \multicolumn{1}{c|}{\cellcolor{yellow} .41}    & \multicolumn{1}{c|}{\cellcolor{purple} .40}   & \multicolumn{1}{c}{\cellcolor{purple} .15}      \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{yellow} .58**}   & \multicolumn{1}{c|}{\cellcolor{yellow} .38}    & \multicolumn{1}{c|}{\cellcolor{yellow} .34}       & \multicolumn{1}{c|}{\cellcolor{yellow} .42}    & \multicolumn{1}{c|}{\cellcolor{yellow} .06}   & \multicolumn{1}{c}{\cellcolor{yellow} .88**}    \\
+    \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{yellow} .36}     & \multicolumn{1}{c|}{\cellcolor{purple} 1.52*}  & \multicolumn{1}{c|}{\cellcolor{yellow} .09}       & \multicolumn{1}{c|}{\cellcolor{yellow} 1.33*}  & \multicolumn{1}{c|}{\cellcolor{yellow} 1.51*} & \multicolumn{1}{c}{\cellcolor{purple} 1.51*}    \\
+    \end{tabular}
+  }
+}{Tokenized vs. Merged wo QA}
+
+\tab{tab:configs}{The different hyperparameter configurations for each dataset.}{
+  \scalebox{0.9}{
+    \begin{tabular}{ll|ccccc}
+                                                   &             & \# of epochs                           & split set up                           & batch size                               & maximum length                 & SRL implementation        \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}}   &  $\alpha$   & 100                                    & normal                                 & 16                                       & 40                             & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 100                                    & normal                                 & 16                                       & 200                            & normal                    \\
+    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}     &  $\alpha$   & 50                                     & normal                                 & 16                                       & 50                             & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}    &  $\alpha$   & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
+    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}      &  $\alpha$   & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & re-split                               & 16                                       & 100                            & normal                    \\ \hline
+    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}      &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
+    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}     &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
+    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
+    \end{tabular}
+  }
+}{Dataset specific Configs}
+
+\tab{tab:hyper-configs}{General hyperparameter configurations.}{
+  \scalebox{0.9}{
+    \begin{tabular}{ll}
+    learning rate              & 2e-05                         \\
+    SRL embedding dimensions   & 20                            \\
+    SRL GRU hidden size        & 32                            \\
+    SRL number of layers       & 2                             \\
+    SRL bias                   & True                          \\
+    SRL bidirectional          & True                          \\
+    SRL dropout                & 0.1                           \\
+    \end{tabular}
+  }
+}{Stable Hyperparameter Configs}
+
+Another accumulating view on the main table \ref{tab:results} is constructed by not just
+looking for the best results ov a whole row, i.e. over all heads, merging strategies,
+and SRL implementations, but instead record the superiority or inferiority of +SRL
+compared to $-$SRL for each pairing: Take for example the deISEAR $\alpha$ subtokenized
+[CLS] head setting: Without SRLs, the ensemble performance was 71.52\%; now the better
+of the two +SRL implementations of this setting is taken into account, in this case
+zeroing apparently was better. The difference, .67\% is controlled for significance and
+reported in the table. The coloring indicates which SRL implementation performed better
+and was taken into account; sometimes both implementations permormed equally, which is
+also reflected in coloring. Negative numbers indicate, of course, that the head produced
+better results when SRL information was \emph{not} added (and this was also controlled
+for significance).
+Looking at the such accumulated results (table \ref{gain-loss}), no clear picture emerges
+at first glance; sometimes zeroing SRLs performed better than duplicating SRLs, sometimes not,
+sometimes +SRLs clearly outperforms $-$SRL, even highly statistically, sometimes it is
+the other way around adding SRLs seems to create a disadvantage for the head.
+
+To add one more abstraction layer and see a more complete picture, this table is again
+summarized in figure \ref{fig:fig:classification-gains}. Doing this, the image
+clkarifies, allowing to stipulate that adding SRLs on GerGLUE classification tasks
+leads to a measurable improvement. The total gains clearly outweigh the losses, and also
+more statistically signifacnt. Regarding the SRL implementation, ther is no clearadvantage
+of one method over the other, only a slight tendency of duplicating being more effective
+than zeroing.
+
+
+\tab{tab:gain-loss}{Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
+                      over $-$SRL for each configuration from table \ref{tab:results}. The better of the +SRL configurations was taken into account:
+                      \customcolorbox{zeros}{blue},
+                      \customcolorbox{duplicate}{dark-blue}.
+                      Light blue denotes that both architectures performed
+                      \customcolorbox{equally}{llight-blue}
+                      (in which case both ensembles were controlled for significance). One asterisk signifies
+                      a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
+    \scalebox{1}{
+      \begin{tabular}{llcccccc}
+                                                   &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                                 & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                                        & \multicolumn{2}{c}{\textbf{GRU Head}}                                                                     \\ \cline{3-8}
+                                                   &           & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                          & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                            & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c}{merged}                          \\ \hline\hline
+      \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .67}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}       & \multicolumn{1}{c|}{\cellcolor{blue} 6.62**}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}         & \multicolumn{1}{c|}{\cellcolor{blue} 4.63**}        & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\
+      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{llight-blue} 3.31}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} 1.99}      & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-4.63$*}   & \multicolumn{1}{c|}{\cellcolor{blue} $-1.32$}          & \multicolumn{1}{c|}{\cellcolor{blue} 1.32}          & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\ \cline{3-8}
+      \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}   & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-1.90$*}   & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.28*}     & \multicolumn{1}{c|}{\cellcolor{dark-blue} .76}        & \multicolumn{1}{c|}{\cellcolor{dark-blue} .38}         & \multicolumn{1}{c|}{\cellcolor{dark-blue} .38}      & \multicolumn{1}{c}{\cellcolor{blue} $-1.89$}        \\
+      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{blue} $-1.51$**}       & \multicolumn{1}{c|}{\cellcolor{llight-blue} .00}     & \multicolumn{1}{c|}{\cellcolor{blue} $-.76$}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-.38$}      & \multicolumn{1}{c|}{\cellcolor{blue} .76}           & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.13$}   \\ \hline
+      \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}  & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .97*}            & \multicolumn{1}{c|}{\cellcolor{dark-blue} 2.59***}   & \multicolumn{1}{c|}{\cellcolor{blue} $-.41$}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .25}         & \multicolumn{1}{c|}{\cellcolor{llight-blue} .51}     & \multicolumn{1}{c}{\cellcolor{dark-blue} .71}       \\
+      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{dark-blue} .72*}       & \multicolumn{1}{c|}{\cellcolor{dark-blue} .25}       & \multicolumn{1}{c|}{\cellcolor{blue} .56}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} $-1.07$***}  & \multicolumn{1}{c|}{\cellcolor{dark-blue} .30}      & \multicolumn{1}{c}{\cellcolor{dark-blue} .05}       \\ \cline{3-8}
+      \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}    & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .18}             & \multicolumn{1}{c|}{\cellcolor{blue} $-.22$}         & \multicolumn{1}{c|}{\cellcolor{blue} .22}             & \multicolumn{1}{c|}{\cellcolor{blue} .70*}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .46}      & \multicolumn{1}{c}{\cellcolor{dark-blue} .12}       \\
+      \multicolumn{1}{c}{}                         & $\beta$   & \multicolumn{1}{c|}{\cellcolor{blue} .09}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .44}       & \multicolumn{1}{c|}{\cellcolor{dark-blue} .09}        & \multicolumn{1}{c|}{\cellcolor{blue} .53}              & \multicolumn{1}{c|}{\cellcolor{blue} .98}           & \multicolumn{1}{c}{\cellcolor{dark-blue} .89}       \\ % \hline\hline
+      % & \multicolumn{2}{l}{Accumulation}                  \\ \cline{2-4}
+      % & \multicolumn{2}{l}{\textbf{Gains} (significant)}  & 32 (5) \\
+      % & \multicolumn{2}{l}{\textbf{Losses} (significant)} & 15 (3) \\
+     \end{tabular}
+    }
+  }{Gain-Loss}
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/gain_losses_accumulated.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/gain_losses_SRL.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \label{fig:classification-gains}
+  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 48 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 48 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+\end{figure}
+
+As described in chapter \ref{chap:3_datasets}, the datasets comiled in GerGLUE are a quite
+heterogenous assemble: Some datasets like deISEAR and, especially, SCARE comprise rather
+informal, colloquial tests, while PAWS-X and XNLI consits of more technical, standardized text.
+Further, as depicted in figure \ref{fig:num_predarg_structs}, over 30\% of the sentences
+in SCARE don't have any predicate-argument structures --- in other words there is no exploitable SRL
+information for the model.
+
+
+\fig{images/all_datasets_gain_dup.pdf}{fig:each-dataset-gains}{Accumulation of statistics for each classification
+                                       datasetclassification. \textbf{Left}: Which SRL architecture performed better.
+                                       \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs.}{15}{Results Accumulation for each Dataset}
+
+\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ merged, +SRL duplicated. (macro F1: 73.52).}{
+  \begin{tabular}{|ll|ccc|}
+    \hline
+                                                    &           & \multicolumn{3}{c|}{Predicted} \\
+                                                    &           & Positive & Neutral & Negative  \\ \hline
+    \multirow{3}{*}{\rotatebox[origin=c]{90}{True}} & Positive  & 149      & 12      & 5         \\
+                                                    & Neutral   & 4        & 11      & 6         \\
+                                                    & Negative  & 3        & 8       & 66        \\ \hline
+  \end{tabular}
+}{Confusion matrix for one SCARE +SRL ensemble}
+
+
+\section{Question Answering Dataset Results}
+
+
+\tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
+  \scalebox{1}{
+    \begin{tabular}{llccc|ccc}
+                                               &           & \multicolumn{6}{c}{\large \textbf{Q\&A Datasets}}  \\ \\
+                                               &           & \multicolumn{6}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                                                \\ \cline{3-8}
+                                               &           & \multicolumn{3}{c|}{subtokenized}                                                                                                & \multicolumn{3}{c}{subtokens merged}                                                                          \\ \cline{3-8}
+                                               &           & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}         & \multicolumn{2}{c}{+SRL}                                                \\ %\cline{3-4}\cline{6-7}
+                                               &           & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c}{zeros}             & \multicolumn{1}{c|}{dupl.}             & \multicolumn{1}{c|}{}               & \multicolumn{1}{c}{zeros}          & dupl.                              \\ \hline\hline
+    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}  & $\alpha$  & \multicolumn{1}{c|}{\textbf{30.69}}             & \multicolumn{1}{c}{\underline{29.68}} & \multicolumn{1}{c|}{\underline{29.68}} & \multicolumn{1}{c|}{21.92}          & \multicolumn{1}{c}{21.92}          & \multicolumn{1}{c}{\textit{21.81}} \\
+    \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\textbf{44.75}}             & \multicolumn{1}{c}{\underline{44.55}} & \multicolumn{1}{c|}{43.41}             & \multicolumn{1}{c|}{\textit{41.66}} & \multicolumn{1}{c}{41.86}          & \multicolumn{1}{c}{41.79}          \\ \cline{3-8}
+    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}} & $\alpha$  & \multicolumn{1}{c|}{\textbf{42.01}}             & \multicolumn{1}{c}{\underline{41.42}} & \multicolumn{1}{c|}{41.12}             & \multicolumn{1}{c|}{37.87}          & \multicolumn{1}{c}{36.98}          & \multicolumn{1}{c}{\textit{35.50}} \\
+    \multicolumn{1}{c}{}                       & $\beta$   & \multicolumn{1}{c|}{\underline{46.57}}          & \multicolumn{1}{c}{45.43}             & \multicolumn{1}{c|}{\textbf{46.86}}    & \multicolumn{1}{c|}{37.43}          & \multicolumn{1}{c}{\textit{37.14}} & \multicolumn{1}{c}{39.14}          \\ \hline\hline
+    \multicolumn{1}{c}{Scores}                 &           & \multicolumn{1}{c|}{\textbf{III} \underline{I}} & \multicolumn{2}{c|}{\textbf{I} \underline{III}}                                & \multicolumn{1}{c|}{}               & \multicolumn{2}{c}{}                                                    \\ \cline{1-2}
+    \multicolumn{1}{c}{+SRL}                   & \multicolumn{3}{l}{\textbf{1} \underline{3}} \\
+    \multicolumn{1}{c}{$-$SRL}                 & \multicolumn{3}{l}{\textbf{3} \underline{1}}
+
+    \end{tabular}
+  }
+}{Results-QA}
+
+\tab{tab:qa-gain-loss-token-merged}{\textbf{Left part}: Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
+                       over $-$SRL for the Span Prediction Head from table \ref{tab:results-qa}. The better of the +SRL configurations was taken into
+                       account: \customcolorbox{zeros}{blue},
+                       \customcolorbox{duplicate}{dark-blue}.
+                       Light blue denotes that both architectures performed \customcolorbox{equally}{llight-blue}
+                       (in which case both ensembles were controlled for significance).
+                       One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
+                       \textbf{Right part}: Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
+                          compared pairwise..}{
+  \scalebox{1}{
+    \begin{tabular}{llP{2cm}P{2cm}cP{2cm}P{2cm}}
+                                                 &           & \multicolumn{5}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                   \\
+                                                 &           & \multicolumn{2}{c}{Gains/Losses}                                                                            &  & \multicolumn{2}{c}{subtokenized/merged}                                                            \\ \cline{3-4} \cline{6-7}
+                                                 &           & \multicolumn{1}{P{1.5cm}|}{subtok.}                            & \multicolumn{1}{P{1.5cm}}{merged}                        &  & \multicolumn{1}{P{1.5cm}|}{zeros}                       & \multicolumn{1}{P{1.5cm}}{dupl.}                       \\ \hline\hline
+    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{llight-blue} $-$1.01***} & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .00}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 7.76***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.86***}  \\
+    \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.20}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .20}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 2.69}     & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 1.62}     \\ \cline{3-4} \cline{6-7}
+    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} -.89}         &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 4.44**}   & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 5.62***}  \\
+    \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{dark-blue} .29}          & \multicolumn{1}{P{1.5cm}}{\cellcolor{dark-blue} 1.71}    &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 8.29***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.72***}  \\
+   \end{tabular}
+  }
+}{QA Gain-Loss / QA Tokenized vs. merged}
+
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_accumulated.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_SRL2.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+\end{figure}
+
+
+
+
+
+\fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
                                                                           \#\# Subtokens represent the amount of tokens that
                                                                           get re-merged in the merged settings (e.g. ``Master''
                                                                           ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''. The amount
                                                                           of tokens that lie outside of the German BERT vocabulary is
-                                                                          in all data sets extremely small (for deISEAR and XNLI
+                                                                          in all datasets extremely small (for deISEAR and XNLI
                                                                           there are no [UNK]s at all); the largest shares of such tokens
                                                                           are present in MLQA and XQuAD with .79\% and .73\%,
-                                                                          respectively.}{14}{Token Types all Data Sets}
+                                                                          respectively.}{14}{Token Types all Datasets}
 
 
 \begin{itemize}
@@ -520,13 +510,13 @@ the model has to cope with:
                                  hypotactic sentence structures (e.g. XQuAD), to highly
                                  informal, elliptic --- even erratic --- structures
                                  (e.g. SCARE).
- \item[\textbf{label noise}] Many of my data sets were constructed either automatically
+ \item[\textbf{label noise}] Many of my datasets were constructed either automatically
                              (e.g. scrambling text automatically to create paraphrase pairs)
                              or employing crowd-sourcing techniques. Either way, the process
                              is prone to erros. There are, e.g., 84 sentence pairs in the trainig
                              set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
  \item[\textbf{translation noise}] Due to the mostly employed semi-automatic translation
-                                   approach for creating the various data sets, errors
+                                   approach for creating the various datasets, errors
                                    have been introduced into the data ranging from typical
                                    translation errors (e.g. English ``bishop'' in the clerical
                                    context translated to the German chess figure counterpart
@@ -646,7 +636,7 @@ Im Jahr 2014 wurde Huston Smith eine autorisierte Biographie von Sawyer veröffe
 
 A major question arising in the context of using automatically assigned Semantic Roles in
 downstream tasks, is how good these Semantic Roles are. Since there is no gold standard
-available for Semantic Role Labels for the data sets I use in my experiments, there is no
+available for Semantic Role Labels for the datasets I use in my experiments, there is no
 straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
 other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
 While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
@@ -654,7 +644,7 @@ is more a scale concerning SRLs.
 
 \fig{images/SRL_assessment.pdf}{fig:SRL-assessment}{Independent evaluation of SRL quality by three people. Regardless of the label attributed to each example, it is obvious, that the total amount of sentences for which the annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}{11}{SRL assessment}
 
-\fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimated quality of SRLs per data set.}{15}{SRL assessment per data sets}
+\fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimated quality of SRLs per dataset.}{15}{SRL assessment per datasets}
 
 
 Fleiss' $\kappa$ = 0.2048 --- this slightly above the threshold of «fair agreement», as defined by \citep{landis1977measurement} (0.20).

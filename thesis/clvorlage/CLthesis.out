@@ -61,19 +61,20 @@
 \BOOKMARK [2][-]{subsection.4.5.2}{Question Answering}{section.4.5}% 61
 \BOOKMARK [3][-]{subsubsection.4.5.2.1}{Span Prediction Head}{subsection.4.5.2}% 62
 \BOOKMARK [0][-]{chapter.5}{Results}{}% 63
-\BOOKMARK [1][-]{section.5.1}{Data Set Results}{chapter.5}% 64
-\BOOKMARK [2][-]{subsection.5.1.1}{Testing for Statistical Significance}{section.5.1}% 65
-\BOOKMARK [3][-]{subsubsection.5.1.1.1}{Example Case for XNLI}{subsection.5.1.1}% 66
-\BOOKMARK [1][-]{section.5.2}{Register Noise}{chapter.5}% 67
-\BOOKMARK [1][-]{section.5.3}{Label Noise}{chapter.5}% 68
-\BOOKMARK [2][-]{subsubsection.5.3.0.1}{Re-annotation}{section.5.3}% 69
-\BOOKMARK [1][-]{section.5.4}{Translation Noise}{chapter.5}% 70
-\BOOKMARK [1][-]{section.5.5}{SRL Noise}{chapter.5}% 71
-\BOOKMARK [1][-]{section.5.6}{Ablation study}{chapter.5}% 72
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 73
-\BOOKMARK [1][-]{section.6.1}{Outlook / Future Work}{chapter.6}% 74
-\BOOKMARK [0][-]{section*.55}{Glossary}{}% 75
-\BOOKMARK [0][-]{section*.57}{References}{}% 76
-\BOOKMARK [0][-]{section*.59}{Lebenslauf}{}% 77
-\BOOKMARK [0][-]{appendix.A}{Tables}{}% 78
-\BOOKMARK [0][-]{appendix.B}{List of something}{}% 79
+\BOOKMARK [1][-]{subsection.5.0.1}{Controlling for Statistical Significance}{chapter.5}% 64
+\BOOKMARK [2][-]{subsubsection.5.0.1.1}{Example Case for XNLI}{subsection.5.0.1}% 65
+\BOOKMARK [1][-]{section.5.1}{Classification Dataset Results}{chapter.5}% 66
+\BOOKMARK [1][-]{section.5.2}{Question Answering Dataset Results}{chapter.5}% 67
+\BOOKMARK [1][-]{section.5.3}{Register Noise}{chapter.5}% 68
+\BOOKMARK [1][-]{section.5.4}{Label Noise}{chapter.5}% 69
+\BOOKMARK [2][-]{subsubsection.5.4.0.1}{Re-annotation}{section.5.4}% 70
+\BOOKMARK [1][-]{section.5.5}{Translation Noise}{chapter.5}% 71
+\BOOKMARK [1][-]{section.5.6}{SRL Noise}{chapter.5}% 72
+\BOOKMARK [1][-]{section.5.7}{Ablation study}{chapter.5}% 73
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 74
+\BOOKMARK [1][-]{section.6.1}{Outlook / Future Work}{chapter.6}% 75
+\BOOKMARK [0][-]{section*.55}{Glossary}{}% 76
+\BOOKMARK [0][-]{section*.57}{References}{}% 77
+\BOOKMARK [0][-]{section*.59}{Lebenslauf}{}% 78
+\BOOKMARK [0][-]{appendix.A}{Tables}{}% 79
+\BOOKMARK [0][-]{appendix.B}{List of something}{}% 80

@@ -28,13 +28,13 @@
 \contentsline {figure}{\numberline {19}{\ignorespaces GRU Head}}{69}{figure.caption.36}
 \contentsline {figure}{\numberline {20}{\ignorespaces Span Prediction Head}}{70}{figure.caption.37}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {21}{\ignorespaces Best Epoch Selection}}{72}{figure.caption.38}
-\contentsline {figure}{\numberline {22}{\ignorespaces Accumulated Gains and Losses.}}{77}{figure.caption.45}
-\contentsline {figure}{\numberline {23}{\ignorespaces Results Accumulation for each Data Set}}{79}{figure.caption.46}
-\contentsline {figure}{\numberline {24}{\ignorespaces Accumulated Gains and Losses.}}{81}{figure.caption.50}
-\contentsline {figure}{\numberline {25}{\ignorespaces Token Types all Data Sets}}{82}{figure.caption.51}
-\contentsline {figure}{\numberline {26}{\ignorespaces SRL assessment}}{85}{figure.caption.52}
-\contentsline {figure}{\numberline {27}{\ignorespaces SRL assessment per data sets}}{86}{figure.caption.53}
+\contentsline {figure}{\numberline {21}{\ignorespaces Accuracy/Loss plots of three experiments}}{77}{figure.caption.38}
+\contentsline {figure}{\numberline {22}{\ignorespaces Accumulated Gains and Losses.}}{83}{figure.caption.45}
+\contentsline {figure}{\numberline {23}{\ignorespaces Results Accumulation for each Dataset}}{84}{figure.caption.46}
+\contentsline {figure}{\numberline {24}{\ignorespaces Accumulated Gains and Losses.}}{86}{figure.caption.50}
+\contentsline {figure}{\numberline {25}{\ignorespaces Token Types all Datasets}}{87}{figure.caption.51}
+\contentsline {figure}{\numberline {26}{\ignorespaces SRL assessment}}{89}{figure.caption.52}
+\contentsline {figure}{\numberline {27}{\ignorespaces SRL assessment per datasets}}{90}{figure.caption.53}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
