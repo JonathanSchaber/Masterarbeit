@@ -38,7 +38,7 @@ same epoch are marked in the same fashion.
 
 \begin{figure}[H]
   \begin{center}
-    \includegraphics[width=11cm]{images/acc_loss-3_sets.pdf}
+    \includegraphics[width=0.9cm]{images/acc_loss-3_sets.pdf}
   \end{center}
   \stepcounter{myfigure}
   \caption[Accuracy/Loss plots of three experiments]{Accuracy and loss plots for three
@@ -344,7 +344,7 @@ align with the subtokenized BERT tokens --- worked better. For this, the differe
 for +SRL zeros and +SRL duplicate is calculated and controlled for statistical significance between
 both ensembles. The subtokenizing strategy (yellow) outperformed the merging strategy (purple) 28
 times, 15 times of it statistically significant, while merging was better 20 times, only 15\% of
-it significantly. Therefore, at least for the GerGLU classification datasets, splitting the SRLs
+it significantly. Therefore, at least for the GerGLUE classification datasets, splitting the SRLs
 up to align with the BERT subtokens seems more effective than merging the BERT subtokens. This
 also makes sense intuitively --- using the merging strategy of averaging the BERT embeddings of
 subtokens leads clearly to an information loss or distortion that cannot be fully balanced by the
@@ -464,12 +464,12 @@ than zeroing.
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/gain_losses_accumulated.pdf}
+    \includegraphics[width=0.9\linewidth]{images/gain_losses_accumulated.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/gain_losses_SRL.pdf}
+    \includegraphics[width=0.9\linewidth]{images/gain_losses_SRL.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \label{fig:classification-gains}
@@ -621,12 +621,12 @@ for a positive influence of SRL enriching which is not reflected in my experimen
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_accumulated.pdf}
+    \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_accumulated.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_SRL2.pdf}
+    \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_SRL2.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \label{fig:qa-tot-gains}
