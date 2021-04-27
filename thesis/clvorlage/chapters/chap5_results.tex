@@ -14,78 +14,146 @@ Eventually, I carry out a small ablation study, controlling the effect of ghosti
 SRL structures to show that the actual, semanticity providing power of SRLs lies in the combination
 of these structures.
 
-Since the different
-dataset types were tested with different heads, I group the them the following way: Results for classification
-datasets (deISEAR, SCARE, PAWS-X, XNLI) are reported together, and the results for question answering datasets
-(MLQA, XQuAD), are grouped together. Since the latter group consists of only two datasets
-addressing the same task, and bearing in mind that there were only experiments
-for one head in this group, the Span Prediction Head, the discussion analyzing these results
-will not be as interesting and substantial as for the first group. For space reaons, and for the sake of straightforwardness,
-only test set results are reported in the tables. However, model selection was always based on development set results (see
-figure {fig:acc-loss} for visualizations of development and test resulst compared).
+Since the different dataset types were tested with different heads, I group the them
+the following way: Results for classification datasets (deISEAR, SCARE, PAWS-X, XNLI)
+are reported together, and the results for question answering datasets (MLQA, XQuAD),
+are grouped together. Since the latter group consists of only two datasets addressing
+the same task, and bearing in mind that there were only experiments for one head in
+this group, the Span Prediction Head, the discussion analyzing these results will not
+be as interesting and substantial as for the first group. For space reasons, and for
+the sake of straightforwardness, only test set results are reported in the tables.
+However, model selection was always based on development set results as is visualized
+in figure \ref{fig:acc-loss}:
 
+Based on the progression of the accuracy value on the development set the epoch with
+the highest accuracy on the development set was chosen and the corresponding test set
+accuracy was taken as best performance for this experiment on the dataset. The vertical
+line in those three example experiments\myfootnote{\textbf{deISEAR} $\beta$ +SRL normal
+duplicate [CLS] head, \textbf{SCARE} $\beta$ +SRL merge zeros GRU head, \textbf{XNLI}
+$\alpha$ +SRL merge zeros [CLS] head.} accuracy and loss progression on development and
+test results compared). marks this epoch, the horizontal dran through line marks the
+development accuarcy (the ``peak'' of the red curve), and the horizontal dotted line
+marks the correpsonding test accuracy. On the right the corresponding losses for the
+same epoch are marked in the same fashion.
 
-\fig{images/acc_loss-3_sets.pdf}{fig:acc-loss}{Accuracy and loss plots for three experiments
-(\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and \textcolor{std-green}{test} set):
-% \myfootnote{\textbf{deISEAR} +SRL normal duplicate [CLS] head, \textbf{SCARE} SRL merge zeros GRU
-% head, \textbf{XNLI} SRL merge zeros [CLS] head}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=11cm]{images/acc_loss-3_sets.pdf}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[Accuracy/Loss plots of three experiments]{Accuracy and loss plots for three
+experiments (\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and
+\textcolor{std-green}{test} set): The vertical line marks the epoch with the highest
+development set accuracy}
+  \label{fig:acc-loss}
+\end{figure}
+
 In the deISEAR plot, we see that early stopping
-was triggered after the loss on the development set increased for four contiguous epochs ---
-indicating an overfitting of the model on the training set. Both SCARE and XNLI experiments ran
-until the maximum number of epochs were reached without triggering early stopping. However, the
-SCARE accuracy and loss progressions show much more fluctuations and erratic behavior than the
-XNLI ones, indicating the noisiness of the data and the randomness of the function that needs to
-be learned by the model.
+was triggered after the loss on the development set increased for four contiguous
+epochs --- indicating an overfitting of the model on the training set. Both SCARE
+and XNLI experiments ran until the maximum number of epochs were reached without
+triggering early stopping. However, the SCARE accuracy and loss progressions show
+much more fluctuations and erratic behavior than the XNLI ones, indicating the
+noisiness of the data and the randomness of the function that needs to be learned
+by the model.
 
-The vertical line marks the epoch with the highest development accuracy, the dashed horizontal
-marks the corresponding test set value, and the drawn through the development value, respectively.
-}{12}{Accuracy/Loss plots of three experiments}
 
-\subsection{Controlling for Statistical Significance}
+% (see figure
+% \ref{fig:acc-loss} for visualizations of example\myfootnote{\textbf{deISEAR} $\beta$
+% +SRL normal duplicate [CLS] head, \textbf{SCARE} $\beta$ +SRL merge zeros GRU head,
+% \textbf{XNLI} $\alpha$ +SRL merge zeros [CLS] head.} accuracy and loss progression on
+% development and test results compared).
+
+
+\section{Controlling for Statistical Significance}
 
 Before reporting the actual results, I briefly elaborate on my strategy for
 assessing statistical significance, since this is a crucial aspect of empirical
 analysis in general, and in attributing superiority of one model over the other
-on the basis of measured perfmoance on a dataset.
-
-``if we rely on empirical evaluation to validate our hypotheses and reveal the correct language processing mechanisms, we better be sure that our results are not coincidental.'' \citep{dror2018hitchhiker}
+on the basis of measured performance on a dataset in particular:
+``if we rely on empirical evaluation to validate our hypotheses and reveal the
+correct language processing mechanisms, we better be sure that our results are
+not coincidental'' \citep{dror2018hitchhiker}. In a formalized way, if we have a
+performance measure $M$ --- in my case accuracy --- to evaluate the predictions
+of a Model $A$ on a dataset $X$, we want to assess, if this performance was better
+than the one of a model $B$:
 
 $\delta(X) = M(A, X) - M(B, X)$
+
+where $\delta(X)$ refers to the test statistic, which will be shortly explained.
+Thus, the null-hypothesis which needs to be rejected, and the corresponding
+alternative hypothesis (that model $A$ \emph{is} in fact truly superior to model
+$B$) are formulated:
 
 $H_0:\delta(X) \leq 0$
 
 $H_1:\delta(X) > 0$
 
-``It is important to have a method at hand that gives us assurances that the
-observed increase in the test score on a test set reflects true improvement in system
-quality.'' \citep{koehn2004statistical}
-
-\citet{koehn2004statistical} focus strongly on significance testing in the context of evaluating
-on a sub-sample of the test set --- due to expensiveness of testing on the whole set ---
-and making statements about the reliability of this subset sample:
-
-``Given a test result of \emph{m} BLEU, we want to compute with a confidence \emph{q} (or
-p-level P = 1 - \emph{q}) that the rue BLEU score lies in an interval [\emph{m} - \emph{d},
-\emph{m} + \emph{d}].'' \citep{koehn2004statistical}
-
-Since the systems under review here predict on the exact same test set, the assumed independence
-of the predictions of the two models holds no longer. \citet{morgan2005statistical} propose
-the following algorithm for testing difference significance:
-
-``When the results are better with the new technique, a question arises as to whether
-these result differences are due to the new technique actually being better or just due to
-chance. Unfortunately, one usually cannot directly answer the question “what is the probability
-that the new technique is better given the results on the test data set”'' \citep{yeh2000more}
-
-``But with statistics, one can answer the following proxy question: if the new technique was
-actually no different than the old technique (the null hypothesis), what is the probability
-that the results on the test set would be at least this skewed in the new technique’s
+However, it is normally not the case that one is able to answer this question --- is the observed
+performance measurement due to true model improvement or simply due to chance --- by simply looking
+at the pure results; ``[b]ut with statistics, one can answer the following proxy question: if the
+new technique was actually no different than the old technique (the null hypothesis), what is the
+probability that the results on the test set would be at least this skewed in the new technique’s
 favor?'' \citep{yeh2000more}
 
-Many evaluation metrics ``have a tendency to underestimate the significance of the results'',
-due to their inherent assumption that the compared systems ``produce independent results''
-when in reality, they tend to produce ``positively correlated results''. \citep{yeh2000more}
+In other words, to be able to recet the above defined null-hypothesis, usually a $p$-value test is
+computed, where $p$ is defined ``as the probability, under the null hypothesis $H_0$, of obtaining
+a result equal to or more extreme than what was actually observe'' \citep[p.~1384]{dror2018hitchhiker}:
 
+$Pr(\delta(X) \geq \delta_{observed} | H_0)$.
+
+There are different approaches as to how this probability can
+be computed: \citep{koehn2004statistical}, e.g., proposes a
+``paired bootstrap resampling'' algorithm he applies to machine
+translation systems. I follow here \cite{morgan2005statistical} who
+argues in favour of an ``approximate randomization '' approach,
+which makes less assumptions about the distribution of the sample
+distributions.\myfootnote{ \citeauthor{koehn2004statistical}
+presupposes that the results to be compared stem from different
+subsamples of the original test set which get re-drawn repeatedly
+with replacement. In my case, this does not hold since my results
+are not obtained from subsamples but the whole test set.}
+
+% ``It is important to have a method at hand that gives us assurances that the
+% observed increase in the test score on a test set reflects true improvement in system
+% quality.'' \citep{koehn2004statistical}
+
+% \citet{koehn2004statistical} focus strongly on significance testing in the context of evaluating
+% on a sub-sample of the test set --- due to expensiveness of testing on the whole set ---
+% and making statements about the reliability of this subset sample:
+
+% ``Given a test result of \emph{m} BLEU, we want to compute with a confidence \emph{q} (or
+% p-level P = 1 - \emph{q}) that the rue BLEU score lies in an interval [\emph{m} - \emph{d},
+% \emph{m} + \emph{d}].'' \citep{koehn2004statistical}
+
+% Since the systems under review here predict on the exact same test set, the assumed independence
+% of the predictions of the two models holds no longer. \citet{morgan2005statistical} propose
+% the following algorithm for testing difference significance:
+
+% ``When the results are better with the new technique, a question arises as to whether
+% these result differences are due to the new technique actually being better or just due to
+% chance. Unfortunately, one usually cannot directly answer the question “what is the probability
+% that the new technique is better given the results on the test data set'' \citep{yeh2000more}
+
+% ``But with statistics, one can answer the following proxy question: if the new technique was
+% actually no different than the old technique (the null hypothesis), what is the probability
+% that the results on the test set would be at least this skewed in the new technique’s
+% favor?'' \citep{yeh2000more}
+
+% Many evaluation metrics ``have a tendency to underestimate the significance of the results'',
+% due to their inherent assumption that the compared systems ``produce independent results''
+% when in reality, they tend to produce ``positively correlated results''. \citep{yeh2000more}
+
+The basic idea is to go through the paired predictions of two models (on
+the same test set) and
+randomly (i.e. with a 50\% chance) flip the predictions between them. If
+this has been completed for the whole test set, the difference $\delta_{perm}$ of the
+evaluation metric between the recomputed performance of them is calculated again
+and it is checked whether $\delta_{perm} \geq \delta_{orig}$. This process is repeated
+$R$ times and if the number of times $\delta_{perm}$ was greater/equal is small
+enough, in statistics, normally 5\%, for a large enough number $R$, we can reject
+the null-hypothesis with good confidence. See the following algorithm \ref{alg:alg:approximate-randomization}
+for a more detailed formulation of this process:
 
 \begin{algorithm}
 \caption{Approximate Randomization Algorithm}
@@ -124,58 +192,57 @@ when in reality, they tend to produce ``positively correlated results''. \citep{
 \end{algorithm}
 
 
-\subsubsection{Example Case for XNLI}
+% \subsubsection{Example Case for XNLI}
 
+% Let's consider the case for the non-merged subtokens setting in the resampled XNLI dataset. The test
+% set contains 1,125 sentence pairs for which textual entailment must be predicted. From these 1,125
+% sentence pairs, 398 bear the gold label \emph{contradiction}, 357 are labeled \emph{entailment},
+% and 370 are \emph{neutral}; so, the class distribution of the set is fairly balanced.
 
-Let's consider the case for the non-merged subtokens setting in the resampled XNLI dataset. The test
-set contains 1,125 sentence pairs for which textual entailment must be predicted. From these 1,125
-sentence pairs, 398 bear the gold label \emph{contradiction}, 357 are labeled \emph{entailment},
-and 370 are \emph{neutral}; so, the class distribution of the set is fairly balanced.
+% I trained and optimized five systems for two architectures on the training and development set
+% of XNLI: One architecture is the plain ``vanilla'' GRU classifier described in section XXX, the
+% other is the same GRU architecture enriched with embedded SRLs (implementing the duplication
+% approach, described in section XXX). The ``vanilla'' system ensemble achieved an accuracy of
+% 66,58\% on the XNLI test set, while the SRL enriched ensemble scored a 68,27\% --- in other
+% words, the SRL enchriched ensemble performed 1,69\% better than the ``vanilla'' ensemble.
 
-I trained and optimized five systems for two architectures on the training and development set
-of XNLI: One architecture is the plain ``vanilla'' GRU classifier described in section XXX, the
-other is the same GRU architecture enriched with embedded SRLs (implementing the duplication
-approach, described in section XXX). The ``vanilla'' system ensemble achieved an accuracy of
-66,58\% on the XNLI test set, while the SRL enriched ensemble scored a 68,27\% --- in other
-words, the SRL enchriched ensemble performed 1,69\% better than the ``vanilla'' ensemble.
+% To check if this difference truly measures the supremacy of the latter model over the first, I
+% apply the above described algorithm \ref{alg:approximate-randomization} for testing significance
+% by permuting the actual ensemble predictions. Note that both ensemble models were equally
+% right or wrong in 1,018 cases out of 1,125.  From this follows, in consequence, that in 90,49\%
+% of the cases the flipping of predictions between the ensemble models will have no effect.
 
-To check if this difference truly measures the supremacy of the latter model over the first, I
-apply the above described algorithm \ref{alg:approximate-randomization} for testing significance
-by permuting the actual ensemble predictions. Note that both ensemble models were equally
-right or wrong in 1,018 cases out of 1,125.  From this follows, in consequence, that in 90,49\%
-of the cases the flipping of predictions between the ensemble models will have no effect.
+% Result p = 4.80\%
 
-Result p = 4.80\%
+% In contrary, if we compare this results to the zero implementation of SRLs, we observe something
+% different: The accuracy of this ensemble was slightly lower than the duplicate architecture;
+% namely 67,73\% or, speaking in differences, 1.15\% better than the vanilly ensemble. The
+% number of equally right or wrong examples was also slightly lower --- 1,010 examples were
+% equally wrong or correct predicted by the systems.
 
-In contrary, if we compare this results to the zero implementation of SRLs, we observe something
-different: The accuracy of this ensemble was slightly lower than the duplicate architecture;
-namely 67,73\% or, speaking in differences, 1.15\% better than the vanilly ensemble. The
-number of equally right or wrong examples was also slightly lower --- 1,010 examples were
-equally wrong or correct predicted by the systems.
+% Result zeros p = 14.09\%
 
-Result zeros p = 14.09\%
+% In summary it is safe to say that although there is a positive effect of injecting
+% SRL information during training over all datasets and architectures, this effect is
+% arguably quite small and unsteady. {\color{red} this is especially in yontrast to
+% \cite{zhang2019semantics}, who report more stable and higher effects} In the next
+% sections I will try to give an answer as to what are the reasons for these, honestly
+% spoken, moderate results. Concretely, I will argue that this is mainly due to noise,
+% present in differing intensities and at various levels in the data I acquired, that
+% the model has to cope with:
 
-In summary it is safe to say that although there is a positive effect of injecting
-SRL information during training over all datasets and architectures, this effect is
-arguably quite small and unsteady. {\color{red} this is especially in yontrast to
-\cite{zhang2019semantics}, who report more stable and higher effects} In the next
-sections I will try to give an answer as to what are the reasons for these, honestly
-spoken, moderate results. Concretely, I will argue that this is mainly due to noise,
-present in differing intensities and at various levels in the data I acquired, that
-the model has to cope with:
-
-Afterwards, statistical signifance is indicated by appending one, two, or three asterisks
-to a result that was compared with one or several others: * stands for $p < 10\%$, ** for
-$p < 5\%$, and *** indicates very high significance of $p < 1\%$.
+% Afterwards, statistical signifance is indicated by appending one, two, or three asterisks
+% to a result that was compared with one or several others: * stands for $p < 10\%$, ** for
+% $p < 5\%$, and *** indicates very high significance of $p < 1\%$.
 
 
 
 \section{Classification Dataset Results}
 
 {\color{red} \begin{itemize}
-  \item conjecture: SRLs are rather adding noise in sequences that are too long. Extreme exmples are the Q\&A datasets.
+  \item conjecture: SRLs are rather adding noise in sequences that are too long. Extreme examples are the Q\&A datasets.
   \item GRU architecture is probably strongest: most best models (even though mostly -SRL) and second best models, no worst performance
-  \item 6 sgnificantly better +SRL vs. 3 significantly worse +SRL. There seems to be a slight trend that when merging subtokens, duplicating SRLs when too less predicates is better.
+  \item 6 significantly better +SRL vs. 3 significantly worse +SRL. There seems to be a slight trend that when merging subtokens, duplicating SRLs when too less predicates is better.
   \item all 3 worsening are for subtokenized architectures.
 \end{itemize}}
 
@@ -183,7 +250,7 @@ To obtain as stable results as possible, I decided to train five models for each
 and configuration, all initialized with different random seeds. Additionally, I ensembled the
 five models, achieving a performance gain of several percentage points (see example of PAWS-X,
 table \ref{tab:pawsx-beta}).\myfootnote{For ensembling, a straightforward majority vote of the five models
-is implementd.} In table \ref{tab:results} below, the test set ensemble results for
+is implemented.} In table \ref{tab:results} below, the test set ensemble results for
 each architecture on the classification datasets are reported. For each row, i.e. for
 one hyperparameter set-up for one dataset, The best, second best and worst performace over
 all three heads and SRL configurations are marekd. In the last row, Best and second best
@@ -271,13 +338,13 @@ obseverd in all other datasets.
 To see whether there can be seen a tendency as to which SRL-BERT aligning strategy turns out
 to be more effective, the results of the main table \ref{tab:results} are aggregated in table
 \ref{tab:token-vs-merged}: For each head, the +SRL results are compared, and the differences are
-reoprted in the table. For example, we look at the [CLS] head on deISEAR $\alpha$ and ask us, which
+reported in the table. For example, we look at the [CLS] head on deISEAR $\alpha$ and ask us, which
 strategy --- merging the BERT subtokens back ot ``normal'' tokens, or splitting the SRLs up to
 align with the subtokenized BERT tokens --- worked better. For this, the difference between both
-for +SRL zeros and +SRL duplicate is calculated and controlled for statistical signifcance between
+for +SRL zeros and +SRL duplicate is calculated and controlled for statistical significance between
 both ensembles. The subtokenizing strategy (yellow) outperformed the merging strategy (purple) 28
 times, 15 times of it statistically significant, while merging was better 20 times, only 15\% of
-it significantly. Therfore, at least for the GerGLU classification datasets, splitting the SRLs
+it significantly. Therefore, at least for the GerGLU classification datasets, splitting the SRLs
 up to align with the BERT subtokens seems more effective than merging the BERT subtokens. This
 also makes sense intuitively --- using the merging strategy of averaging the BERT embeddings of
 subtokens leads clearly to an information loss or distortion that cannot be fully balanced by the
@@ -304,27 +371,27 @@ added SRL information.
   }
 }{Tokenized vs. Merged wo QA}
 
-\tab{tab:configs}{The different hyperparameter configurations for each dataset.}{
-  \scalebox{0.9}{
-    \begin{tabular}{ll|ccccc}
-                                                   &             & \# of epochs                           & split set up                           & batch size                               & maximum length                 & SRL implementation        \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}}   &  $\alpha$   & 100                                    & normal                                 & 16                                       & 40                             & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 100                                    & normal                                 & 16                                       & 200                            & normal                    \\
-    \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}     &  $\alpha$   & 50                                     & normal                                 & 16                                       & 50                             & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}    &  $\alpha$   & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 20                                     & normal                                 & 16                                       & 16                             & normal                    \\
-    \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}      &  $\alpha$   & 50                                     & normal                                 & 16                                       & 100                            & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & 50                                     & re-split                               & 16                                       & 100                            & normal                    \\ \hline
-    \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}      &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & normal                    \\
-    \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}     &  $\alpha$   & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
-    \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                    & \colorbox{blue}{200}                   & \colorbox{blue}{50}                      & \colorbox{blue}{100}           & 100                       \\
-    \end{tabular}
-  }
-}{Dataset specific Configs}
+% \tab{tab:configs}{The different hyperparameter configurations for each dataset.}{
+%   \scalebox{0.9}{
+%     \begin{tabular}{ll|ccccc}
+%                                                    &             & \# of epochs                             & split set up                                & batch size                              & maximum length                 & SRL implementation                          \\ \hline
+%     \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}}   &  $\alpha$   & \multicolumn{1}{c}{\multirow{2}{*}{100}} & \multicolumn{1}{c}{\multirow{2}{*}{normal}} & \multicolumn{1}{c}{\multirow{2}{*}{16}} & 40                             & \multicolumn{1}{c}{\multirow{2}{*}{normal}} \\
+%     \multicolumn{1}{c}{}                           &  $\beta$    &                                          &                                             &                                         & 200                            &                                             \\
+%     \multicolumn{1}{c}{\multirow{2}{*}{SCARE}}     &  $\alpha$   & \multicolumn{1}{c}{\multirow{2}{*}{50}}  & \multicolumn{1}{c}{\multirow{2}{*}{normal}} & \multicolumn{1}{c}{\multirow{2}{*}{16}} & 50                             & \multicolumn{1}{c}{\multirow{2}{*}{normal}} \\
+%     \multicolumn{1}{c}{}                           &  $\beta$    &                                          &                                             &                                         & 100                            &                                             \\ \hline
+%     \multicolumn{1}{c}{\multirow{2}{*}{PAWS-X}}    &  $\alpha$   & 20                                       & normal                                      & 16                                      & 16                             & normal                                      \\
+%     \multicolumn{1}{c}{}                           &  $\beta$    & 20                                       & normal                                      & 16                                      & 16                             & normal                                      \\
+%     \multicolumn{1}{c}{\multirow{2}{*}{XNLI}}      &  $\alpha$   & 50                                       & normal                                      & 16                                      & 100                            & normal                                      \\
+%     \multicolumn{1}{c}{}                           &  $\beta$    & 50                                       & re-split                                    & 16                                      & 100                            & normal                                      \\ \hline
+%     \multicolumn{1}{c}{\multirow{2}{*}{MLQA}}      &  $\alpha$   & \colorbox{blue}{40}                      & \colorbox{blue}{200}                        & \colorbox{blue}{50}                     & \colorbox{blue}{100}           & normal                                      \\
+%     \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                      & \colorbox{blue}{200}                        & \colorbox{blue}{50}                     & \colorbox{blue}{100}           & normal                                      \\
+%     \multicolumn{1}{c}{\multirow{2}{*}{XQuAD}}     &  $\alpha$   & \colorbox{blue}{40}                      & \colorbox{blue}{200}                        & \colorbox{blue}{50}                     & \colorbox{blue}{100}           & 100                                         \\
+%     \multicolumn{1}{c}{}                           &  $\beta$    & \colorbox{blue}{40}                      & \colorbox{blue}{200}                        & \colorbox{blue}{50}                     & \colorbox{blue}{100}           & 100                                         \\
+%     \end{tabular}
+%   }
+% }{Dataset specific Configs}
 
-\tab{tab:hyper-configs}{General hyperparameter configurations.}{
+\tab{tab:hyper-configs}{Stable hyperparameter configurations.}{
   \scalebox{0.9}{
     \begin{tabular}{ll}
     learning rate              & 2e-05                         \\
@@ -334,6 +401,9 @@ added SRL information.
     SRL bias                   & True                          \\
     SRL bidirectional          & True                          \\
     SRL dropout                & 0.1                           \\
+    \# of Epochs               & 50 (deISEAR, SCARE, XNLI, MLQA, XQuAD), 20 (PAWS-X) \\
+    Batch Size                 & 16 (classification datasets) 8 (Q\&A datasets) \\
+    maximum sequence length    & 100 (PAWS-X, XNLI) 512 (MLQA, XQuAD)
     \end{tabular}
   }
 }{Stable Hyperparameter Configs}
@@ -346,7 +416,7 @@ compared to $-$SRL for each pairing: Take for example the deISEAR $\alpha$ subto
 of the two +SRL implementations of this setting is taken into account, in this case
 zeroing apparently was better. The difference, .67\% is controlled for significance and
 reported in the table. The coloring indicates which SRL implementation performed better
-and was taken into account; sometimes both implementations permormed equally, which is
+and was taken into account; sometimes both implementations performed equally, which is
 also reflected in coloring. Negative numbers indicate, of course, that the head produced
 better results when SRL information was \emph{not} added (and this was also controlled
 for significance).
@@ -356,10 +426,10 @@ sometimes +SRLs clearly outperforms $-$SRL, even highly statistically, sometimes
 the other way around adding SRLs seems to create a disadvantage for the head.
 
 To add one more abstraction layer and see a more complete picture, this table is again
-summarized in figure \ref{fig:fig:classification-gains}. Doing this, the image
-clkarifies, allowing to stipulate that adding SRLs on GerGLUE classification tasks
+summarized in figure \ref{fig:classification-gains}. Doing this, the image
+clarifies, allowing to stipulate that adding SRLs on GerGLUE classification tasks
 leads to a measurable improvement. The total gains clearly outweigh the losses, and also
-more statistically signifacnt. Regarding the SRL implementation, ther is no clearadvantage
+more statistically significant. Regarding the SRL implementation, there is no clear advantage
 of one method over the other, only a slight tendency of duplicating being more effective
 than zeroing.
 
@@ -373,7 +443,7 @@ than zeroing.
                       (in which case both ensembles were controlled for significance). One asterisk signifies
                       a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
     \scalebox{1}{
-      \begin{tabular}{llcccccc}
+      \begin{tabular}{llP{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}}
                                                    &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                                 & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                                        & \multicolumn{2}{c}{\textbf{GRU Head}}                                                                     \\ \cline{3-8}
                                                    &           & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                          & \multicolumn{1}{c|}{subtok.}                          & \multicolumn{1}{c|}{merged}                            & \multicolumn{1}{c|}{subtok.}                        & \multicolumn{1}{c}{merged}                          \\ \hline\hline
       \multicolumn{1}{c}{\multirow{2}{*}{deISEAR}} & $\alpha$  & \multicolumn{1}{c|}{\cellcolor{blue} .67}             & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}       & \multicolumn{1}{c|}{\cellcolor{blue} 6.62**}          & \multicolumn{1}{c|}{\cellcolor{dark-blue} .00}         & \multicolumn{1}{c|}{\cellcolor{blue} 4.63**}        & \multicolumn{1}{c}{\cellcolor{dark-blue} $-1.99$}   \\
@@ -406,19 +476,61 @@ than zeroing.
   \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 48 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 48 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
 \end{figure}
 
-As described in chapter \ref{chap:3_datasets}, the datasets comiled in GerGLUE are a quite
-heterogenous assemble: Some datasets like deISEAR and, especially, SCARE comprise rather
-informal, colloquial tests, while PAWS-X and XNLI consits of more technical, standardized text.
+As described in chapter \ref{chap:3_datasets}, the datasets compiled in GerGLUE are a quite
+heterogeneous assemble: Some datasets like deISEAR and, especially, SCARE comprise rather
+informal, colloquial tests, while PAWS-X and XNLI consists of more technical, standardized text.
 Further, as depicted in figure \ref{fig:num_predarg_structs}, over 30\% of the sentences
 in SCARE don't have any predicate-argument structures --- in other words there is no exploitable SRL
 information for the model.
+
+In figure \ref{fig:each-dataset-gains}, the same accumulation process as for the general overview
+% in figure \ref{fig:classification-gains} is conducted for each dataset. The following observations
+can be made: The positive effect of enriching BERT embeddings with SRLs is especially evident for
+the sentence pair classification tasks: PAWS-X has the highest number of experiments where a significant
+improvement over vanilla BERT embeddings could be measured, and has overall clearly gained from adding
+SRLs. While XNLI has only one significant improved experiment, the overall number of experiments
+where a positive effect was measured outweighs the negative one by far.
+
+For the single sentence tasks, however, the picture somewhat darkens. While there were some
+significant improvements for deISEAR, there were also quite some experiments where adding SRLs
+seems to have weakend the model. Generally, deISEAR is the dataset that shows the strongest
+fluctuations ranging from 67.55 to 77.48\% --- a range of staggering 9.93\%. It is not clear
+to me why especially deISEAR shows this behaviour, but the relative small amount of examples
+in the dataset could indicate that it is more prone to unlucky random initializations which
+could be countered with more examples for the models to extrapolate from.
+For SCARE, there is no clear positive effect measurable at all
+--- in contrary, the significant deteriorations outnumber the significant gains. However, this
+is not too surprising taking into account the afore mentioned fact of predicate scarceness in
+SCARE (or at least, ParZu couldn't detect any). Further, the register is highly colloquial with
+very frequent deviations from standard orthography etc. which all probably leads to a collapsing
+of the already not too stable DAMESRL system.
 
 
 \fig{images/all_datasets_gain_dup.pdf}{fig:each-dataset-gains}{Accumulation of statistics for each classification
                                        datasetclassification. \textbf{Left}: Which SRL architecture performed better.
                                        \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs.}{15}{Results Accumulation for each Dataset}
 
-\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ merged, +SRL duplicated. (macro F1: 73.52).}{
+One might ask if a simple accuracy is the right measure for all datasets, since
+it is often common to compute other metrics, especially if class imbalance is
+a known property of datasets. There are two main reasons as to why I chose to
+stay with simple accuracy: (1) I am not interested in building a classifier
+which explicitely handles such a problem, e.g. spam detection tasks. In such
+cases, an F1-score of course is more meaningful because it is more sensibel to
+predictions on underrepresented but task-important classes (such as spam). (2)
+As reported in chapter \ref{chap:3_datasets}, most of my datasets do not show a
+drastic class impbalance. To further substantiate this, I compute some metrics
+for the most significantly imbalanced dataset, namely SCARE: A brute force
+``stupid'' prediction of the majority class on the test set would results in an
+accuracy of 59.09\% and a macro F1 of 24.76. The example confusion of an actual
+experiment is shown in table \ref{tab:confusion-scare}: Altough the algorithm
+overprefers the majority (``Positive'') class, it also predicts to some extent
+the other ones. The measures resulting from this experiment are an accuracy of
+83.71\% compared to the macro F1 of 73.52. Therefore, although the accuracy may
+distort the picture to some extent, this is negligible in the context of this
+thesis.
+
+
+\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ +SRL merged duplicated [CLS] head.}{
   \begin{tabular}{|ll|ccc|}
     \hline
                                                     &           & \multicolumn{3}{c|}{Predicted} \\
@@ -432,6 +544,11 @@ information for the model.
 
 \section{Question Answering Dataset Results}
 
+The reportings of the results for the question answering data sets follows
+the line that was taken for the classification sets: A general table with the
+ensemble test set results is reported in \ref{tab:results-qa}. But the verdict is far more
+devastating: 3 out of 4 best results were achieved by models implementing vanilla BERT
+embeddings and 3 out of 4 times the worst performance was measured for +SRL settings.
 
 \tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
   \scalebox{1}{
@@ -453,6 +570,22 @@ information for the model.
   }
 }{Results-QA}
 
+When accumulated for unfolding subtokenized vs. merged patterns, there emerges a surprisingly
+clear tendency (see left side of table \ref{tab:qa-gain-loss-token-merged}): Splitting SRLs according to
+the BERT subtokenization always showed stronger results than BERT merging. 5 times out of the
+total 8 settings the differences were even highly significant with $p < 1\%$ and one time
+moderately significant with $p < 5\%$. The reason for this rather {\color{red} drastic pattern
+remains unclear to me}; despite tediously controlling the merging algorithm and validating the
+re-computing of start and end indices, I could not make out any error.
+
+Also for the Q\&A datasets, I compare setting-wise the performance of $-$SRL against the better +SRL experiment
+(see right side of table \ref{tab:qa-gain-loss-token-merged}): The only significant result is the MLQA $\alpha$
+subtokenized setting, where the SRL-enriching led to a loss of 1.01\%. The other results are mixed, with $-$SRL
+performing 3 times better than +SRL.
+The only dataset hyperparameter configuration where for both SRL combination methods the +SRL implementation
+performed better was XQuAD $\beta$ --- however in both cases unsignificant.
+
+
 \tab{tab:qa-gain-loss-token-merged}{\textbf{Left part}: Ensemble percentage points gains (positive numbers) / losses (negative numbers) for +SRL
                        over $-$SRL for the Span Prediction Head from table \ref{tab:results-qa}. The better of the +SRL configurations was taken into
                        account: \customcolorbox{zeros}{blue},
@@ -469,12 +602,21 @@ information for the model.
                                                  &           & \multicolumn{1}{P{1.5cm}|}{subtok.}                            & \multicolumn{1}{P{1.5cm}}{merged}                        &  & \multicolumn{1}{P{1.5cm}|}{zeros}                       & \multicolumn{1}{P{1.5cm}}{dupl.}                       \\ \hline\hline
     \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{MLQA}}    & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{llight-blue} $-$1.01***} & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .00}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 7.76***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.86***}  \\
     \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.20}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} .20}          &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 2.69}     & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 1.62}     \\ \cline{3-4} \cline{6-7}
-    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} -.89}         &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 4.44**}   & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 5.62***}  \\
+    \multicolumn{1}{P{1.5cm}}{\multirow{2}{*}{XQuAD}}   & $\alpha$  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{blue} $-$.59}            & \multicolumn{1}{P{1.5cm}}{\cellcolor{blue} $-$.89}         &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 4.44**}   & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 5.62***}  \\
     \multicolumn{1}{P{1.5cm}}{}                         & $\beta$   & \multicolumn{1}{P{1.5cm}|}{\cellcolor{dark-blue} .29}          & \multicolumn{1}{P{1.5cm}}{\cellcolor{dark-blue} 1.71}    &  & \multicolumn{1}{P{1.5cm}|}{\cellcolor{yellow} 8.29***}  & \multicolumn{1}{P{1.5cm}}{\cellcolor{yellow} 7.72***}  \\
    \end{tabular}
   }
 }{QA Gain-Loss / QA Tokenized vs. merged}
 
+
+Therefore, the overall aggregation in figure \ref{fig:qa-tot-gains} does not look too promising for the
+research question of this thesis: For the two question answering datasets in GerGLUE, the effect of enriching
+BERT embeddings with SRL information seems to rather harm the model instead of adding helpful information.
+Interestingly, this contrasts with the findings of \citeauthor{zhang2019semantics}, which reported a gain
+of 4.3\% in accuracy on the SQuAD 2.0 set for their SemBERT implementation.\myfootnote{However, a ``synthetic
+self training'' technique for this results is mentioned which is not elaborated upon any more. For their
+``regular'' SemBERT large implementation the reported gain is 1.9\% --- which still would stand
+for a positive influence of SRL enriching which is not reflected in my experiments.}
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -487,11 +629,9 @@ information for the model.
     \includegraphics[width=1.0\linewidth]{images/QA_gain_losses_SRL2.pdf}
   \end{minipage}
   \stepcounter{myfigure}
+  \label{fig:qa-tot-gains}
   \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
 \end{figure}
-
-
-
 
 
 \fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
@@ -504,6 +644,15 @@ information for the model.
                                                                           are present in MLQA and XQuAD with .79\% and .73\%,
                                                                           respectively.}{14}{Token Types all Datasets}
 
+Main conclusion: SRL information in tendency helpful but the effects are not very stable and even
+negative sometimes
+
+
+After reporting the general results, aggregations and the somewhat disenchanting conclusion, I
+now try to investigate the reasons for this mediocre effect. After investigating the data and
+SRL quality, I found that noise on several levels is present which probably led to too much
+randomness in the complex functions the models needed to approximate. I classify the observed
+data irregularites into the follwing categories:
 
 \begin{itemize}
   \item[\textbf{register noise}] The textual styles vary greatly from iutilizing complex,

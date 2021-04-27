@@ -181,7 +181,7 @@ deISEAR is one of the data sets that are made available without any pre-defined 
 Therefore I shuffle all 1,001 sentences with a 30:15:15 ratio, resulting in a training set of 700, a development set
 of 150 and a test set of 151 sentences.
 
-In figure \ref{fig:fig:deisear-stats}, the length of the sentences and the label distributions in the three data sets are
+In figure \ref{fig:deisear-stats}, the length of the sentences and the label distributions in the three data sets are
 plotted. While the data sets were created randomly, there are some peculiarites observable: The lengths of the sentences
 in the trainig set show a greater variation compared to the development nd test set than one would except.
 % Further, the one extremely long example present in the whole data set ended also up in the training set --- although this is not
@@ -208,12 +208,12 @@ in the trainig set show a greater variation compared to the development nd test 
   \label{fig:deisear-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/deISEAR_subtokenized.pdf}
+    \includegraphics[width=0.9\linewidth]{images/deISEAR_subtokenized.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/deISEAR_label_percentages.pdf}
+    \includegraphics[width=0.9\linewidth]{images/deISEAR_label_percentages.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized deISEAR sentences. Note that one extreme outlier in the
@@ -361,12 +361,12 @@ exmaples where the answer span lies partially or fully outside the maximum lengt
   \label{fig:mlqa-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/MLQA_context.pdf}
+    \includegraphics[width=0.9\linewidth]{images/MLQA_context.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/MLQA_answer.pdf}
+    \includegraphics[width=0.9\linewidth]{images/MLQA_answer.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[MLQA Lengths]{\textbf{Left}: Length of subtokenized MLQA contexts.
@@ -495,7 +495,7 @@ Further, there are sentences XXXXX
 
 \subsubsection{Statistics}
 
-In figure \ref{fig:fig:pawsx-stat} the lenght of the subtokenized sentence pairs are ploted. With
+In figure \ref{fig:pawsx-stat} the lenght of the subtokenized sentence pairs are ploted. With
 the exception of one outlier in the first sentence group in the train set, the first and second
 sentences of all data sets seem to be of very similar lenghs. Taking into account the generation
 of the original PAWS data set, this is no surprise: ``Our automatic generation method is based
@@ -518,12 +518,12 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
   \label{fig:pawsx-stat}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/PAWS-X_subtokenized_sent1.pdf}
+    \includegraphics[width=0.9\linewidth]{images/PAWS-X_subtokenized_sent1.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/PAWS-X_subtokenized_sent2.pdf}
+    \includegraphics[width=0.9\linewidth]{images/PAWS-X_subtokenized_sent2.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[PAWS-X Lengths]{\textbf{Left}: Length of subtokenized PAWS-X first sentences. Note that one extreme outlier in the
@@ -536,12 +536,12 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
   \label{fig:pawsx-stat}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/PAWS-X_num_examples.pdf}
+    \includegraphics[width=0.9\linewidth]{images/PAWS-X_num_examples.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/PAWS-X_labels.pdf}
+    \includegraphics[width=0.9\linewidth]{images/PAWS-X_labels.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[PAWS-X Set Size/Labels]{\textbf{Left}: Number of examples in the PAWS-X split. The automaticall translated
@@ -559,7 +559,7 @@ Test: 38.37 stdev: 24.83
 
 \begin{wrapfigure}{r}{0.45\linewidth}
   \begin{center}
-    \includegraphics[width=1.0\linewidth]{images/PAWS-X_BLEU_scores.pdf}
+    \includegraphics[width=0.9\linewidth]{images/PAWS-X_BLEU_scores.pdf}
   \end{center}
   \stepcounter{myfigure}
   \caption[PAWS-X BLEU]{BLEU scores of the PAWS-X data sets. Clearly visible is the diffence between the training set on the one hand,
@@ -815,12 +815,12 @@ review is the following one:
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/SCARE_labels.pdf}
+    \includegraphics[width=0.9\linewidth]{images/SCARE_labels.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/SCARE_label_stats.pdf}
+    \includegraphics[width=0.9\linewidth]{images/SCARE_label_stats.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[Accumulated Gains and Losses.]{\textbf{Left}: Number of examples per label after heuristically computing them in the SCARE dataset. {\color{red} WRITE MORE ABOUT IMBALANCE, WHAT TO DO ABOUT IT, COMPUTE F1, ETC} \textbf{Right}: Statistics of label generation. For most of the examples, there was a clear majority decision as to which label should be chosen. \emph{Close Majority} means the majority vote was off by 1. The \emph{No Majority}/\emph{No Labels} portions in the graph were labelled \emph{neutral} by default, while \emph{Clear Majority}/\emph{Close Majority}  were labelled according to the majority vote decision.}
@@ -834,7 +834,7 @@ review is the following one:
 
 \begin{wrapfigure}{r}{0.45\linewidth}
   \centering
-    \includegraphics[width=1.0\linewidth]{images/SCARE_subtokenized.pdf}
+    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
   \stepcounter{myfigure}
   \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather short, with an average of approx. 25 subtokens over all sets,
                         but there is quite a number of outliers --- indicating furhter that SCARE is quite a heterogenous data set, also concerning this aspect.}
@@ -1009,7 +1009,7 @@ In contrary to the above described PAWS-X corpus, there are no identical sentenc
 
 \begin{wrapfigure}{r}{0.55\linewidth}
   \begin{center}
-    \includegraphics[width=1.0\linewidth]{images/XNLI_labels.pdf}
+    \includegraphics[width=0.9\linewidth]{images/XNLI_labels.pdf}
   \end{center}
   \stepcounter{myfigure}
   \caption[XNLI labels]{Label distributions of the XNLI data set; apparently, the three classes are very well balanced.}
@@ -1087,12 +1087,12 @@ Test: 178
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/XQuAD_context.pdf}
+    \includegraphics[width=0.9\linewidth]{images/XQuAD_context.pdf}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
-    \includegraphics[width=1.0\linewidth]{images/XQuAD_answer.pdf}
+    \includegraphics[width=0.9\linewidth]{images/XQuAD_answer.pdf}
   \end{minipage}
   \stepcounter{myfigure}
   \caption[XQuAD Lengths]{\textbf{Left}: Length of subtokenized XQuAD contexts.
@@ -1165,6 +1165,12 @@ Accuracy (exact match): 57.6\%
 
 \subsection{Summary}
 
+In the following table \ref{tab:gerglue-overview} gives an overview of all the datasets, some statistics, and
+peculiarities present in them. Note that the ordering is not strictly alphabetical, but follows the folling grouping:
+First, come the single sentence classification tasks, then follow the sentence pair classification task, and lastly
+come the question answering tasks. This order --- classification tasks together, question answering tasks together ---
+will due conceptual reasons also be adhered to in the rest of the thesis.
+
 \tab{tab:gerglue-overview}{Overview of \textit{GerGLUE} data sets and tasks. The number of exmaples represent the size of the
                             set splits after preparing the data sets for the experiment; therefore all datasets have all splits.
                             Note that during the preprocessing some examples had to be excluded (see chapter \ref{chap:3_datasets}
@@ -1173,7 +1179,7 @@ Accuracy (exact match): 57.6\%
   \multicolumn{8}{c}{\large \textbf{GerGLUE}}\\ \\
   \multicolumn{2}{c}{}                                                            & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\{\tiny Train/Dev/Test}} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Register\\{\tiny coll. $<$ mix. $<$ form.}} & \multirowcell{2}{Remarks}                                    \\ \\ \toprule
   \multirow{5}{*}{\rotatebox[origin=c]{90}{\textit{Single}}} &                    & \multicolumn{6}{g}{\textit{Classification}}\\
-                                                             &  deISEAR           & Emotion Detection           & Multi-Class                 & 1001/150/151                                          & -                                   & \multicolumn{1}{c}{mixed}                                    & Boilerplate text structures (``Ich fühlte [?], als ...'')    \\
+                                                             &  deISEAR           & Emotion Detection           & Multi-Class                 & 700/150/151                                          & -                                   & \multicolumn{1}{c}{mixed}                                    & Boilerplate text structures (``Ich fühlte [?], als ...'')    \\
                                                              & SCARE              & Sentiment Analysis          & Multi-Class                 & 1,232/264/264                                         & -                                   & \multicolumn{1}{c}{colloquial}                               & Very informal, ungrammatical, and often short text snippets            \\ \cline{1-2}
   \multirow{8}{*}{\rotatebox[origin=c]{90}{\textit{Pair}}}   & PAWS-X             & Paraphrase Identification   & Binary                      & 48,977/1,932/1,967                                    & Train/Dev/Test                      & \multicolumn{1}{c}{formal}                                   & Translation artifact noise, dev/test splits OOD to train     \\
                                                              & XNLI               & Natural Language Inference  & Multi-Class                 & 2,115/374/5,009                                       & Dev/Test                            & \multicolumn{1}{c}{mixed}                                    & Translation artifact noise, language from different domains  \\ \cline{3-8}
