@@ -1,4 +1,4 @@
-\begin{thebibliography}{99}
+\begin{thebibliography}{109}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -84,6 +84,11 @@ S.~Buchholz and E.~Marsi.
 \newblock In \emph{Proceedings of the tenth conference on computational natural
   language learning (CoNLL-X)}, pages 149--164, 2006.
 
+\bibitem[Bussmann(2006)]{bussmann2006routledge}
+H.~Bussmann.
+\newblock \emph{Routledge dictionary of language and linguistics}.
+\newblock Routledge, 2006.
+
 \bibitem[Caswell et~al.(2021)Caswell, Kreutzer, Wang, Wahab, van Esch,
   Ulzii-Orshikh, Tapo, Subramani, Sokolov, Sikasote, Setyawan, Sarin, Samb,
   Sagot, Rivera, Rios, Papadimitriou, Osei, Suárez, Orife, Ogueji, Niyongabo,
@@ -132,12 +137,29 @@ N.~Chomsky.
 \newblock \emph{Language and Learning: The debate between Jean Piaget and Noam
   Chomsky}, 1980.
 
+\bibitem[Chomsky(2009)]{chomsky2009syntactic}
+N.~Chomsky.
+\newblock \emph{Syntactic structures}.
+\newblock De Gruyter Mouton, 2009.
+
+\bibitem[Chomsky(2014)]{chomsky2014aspects}
+N.~Chomsky.
+\newblock \emph{Aspects of the Theory of Syntax}, volume~11.
+\newblock MIT press, 2014.
+
 \bibitem[Chung et~al.(2014)Chung, Gulcehre, Cho, and
   Bengio]{chung2014empirical}
 J.~Chung, C.~Gulcehre, K.~Cho, and Y.~Bengio.
 \newblock Empirical evaluation of gated recurrent neural networks on sequence
   modeling.
 \newblock \emph{arXiv preprint arXiv:1412.3555}, 2014.
+
+\bibitem[Collobert et~al.(2011)Collobert, Weston, Bottou, Karlen, Kavukcuoglu,
+  and Kuksa]{collobert2011natural}
+R.~Collobert, J.~Weston, L.~Bottou, M.~Karlen, K.~Kavukcuoglu, and P.~Kuksa.
+\newblock Natural language processing (almost) from scratch.
+\newblock \emph{Journal of machine learning research}, 12\penalty0
+  (ARTICLE):\penalty0 2493--2537, 2011.
 
 \bibitem[Conneau et~al.(2018)Conneau, Lample, Rinott, Williams, Bowman,
   Schwenk, and Stoyanov]{conneau2018xnli}
@@ -278,10 +300,21 @@ J.~J. Hopfield.
 \newblock \emph{Proceedings of the national academy of sciences}, 79\penalty0
   (8):\penalty0 2554--2558, 1982.
 
+\bibitem[Hutchins(2005)]{hutchins2005history}
+J.~Hutchins.
+\newblock The history of machine translation in a nutshell.
+\newblock \emph{Retrieved December}, 20\penalty0 (2009):\penalty0 1--1, 2005.
+
 \bibitem[Jackendoff(1972)]{jackendoff1972semantic}
 R.~S. Jackendoff.
 \newblock Semantic interpretation in generative grammar.
 \newblock 1972.
+
+\bibitem[Jaeger(2010)]{jaeger2010redundancy}
+T.~F. Jaeger.
+\newblock Redundancy and reduction: Speakers manage syntactic information
+  density.
+\newblock \emph{Cognitive psychology}, 61\penalty0 (1):\penalty0 23--62, 2010.
 
 \bibitem[Ji et~al.(2020)Ji, Zhou, Liu, and Davuluri]{ji2020dnabert}
 Y.~Ji, Z.~Zhou, H.~Liu, and R.~V. Davuluri.
@@ -357,6 +390,11 @@ Z.~Li, X.~Ding, and T.~Liu.
 \newblock \emph{ACM Transactions on Asian and Low-Resource Language Information
   Processing (TALLIP)}, 20\penalty0 (1):\penalty0 1--20, 2021.
 
+\bibitem[Liddy(2001)]{liddy2001natural}
+E.~D. Liddy.
+\newblock Natural language processing.
+\newblock 2001.
+
 \bibitem[Liu et~al.(2019)Liu, Ott, Goyal, Du, Joshi, Chen, Levy, Lewis,
   Zettlemoyer, and Stoyanov]{liu2019roberta}
 Y.~Liu, M.~Ott, N.~Goyal, J.~Du, M.~Joshi, D.~Chen, O.~Levy, M.~Lewis,
@@ -431,6 +469,12 @@ K.~Papineni, S.~Roukos, T.~Ward, and W.-J. Zhu.
 \newblock In \emph{Proceedings of the 40th annual meeting of the Association
   for Computational Linguistics}, pages 311--318, 2002.
 
+\bibitem[Peng et~al.(2019)Peng, Yan, and Lu]{peng2019transfer}
+Y.~Peng, S.~Yan, and Z.~Lu.
+\newblock Transfer learning in biomedical natural language processing: an
+  evaluation of bert and elmo on ten benchmarking datasets.
+\newblock \emph{arXiv preprint arXiv:1906.05474}, 2019.
+
 \bibitem[Polignano et~al.(2019)Polignano, Basile, De~Gemmis, Semeraro, and
   Basile]{polignano2019alberto}
 M.~Polignano, P.~Basile, M.~De~Gemmis, G.~Semeraro, and V.~Basile.
@@ -438,6 +482,12 @@ M.~Polignano, P.~Basile, M.~De~Gemmis, G.~Semeraro, and V.~Basile.
   challenging tasks based on tweets.
 \newblock In \emph{6th Italian Conference on Computational Linguistics, CLiC-it
   2019}, volume 2481, pages 1--6. CEUR, 2019.
+
+\bibitem[Radford et~al.(2018)Radford, Narasimhan, Salimans, and
+  Sutskever]{radford2018improving}
+A.~Radford, K.~Narasimhan, T.~Salimans, and I.~Sutskever.
+\newblock Improving language understanding with unsupervised learning.
+\newblock 2018.
 
 \bibitem[Ramshaw and Marcus(1999)]{ramshaw1999text}
 L.~A. Ramshaw and M.~P. Marcus.
@@ -548,6 +598,12 @@ Y.~Sun, S.~Wang, Y.~Li, S.~Feng, X.~Chen, H.~Zhang, X.~Tian, D.~Zhu, H.~Tian,
   and H.~Wu.
 \newblock Ernie: Enhanced representation through knowledge integration.
 \newblock \emph{arXiv preprint arXiv:1904.09223}, 2019{\natexlab{b}}.
+
+\bibitem[Tomasello and Carpenter(2007)]{tomasello2007shared}
+M.~Tomasello and M.~Carpenter.
+\newblock Shared intentionality.
+\newblock \emph{Developmental science}, 10\penalty0 (1):\penalty0 121--125,
+  2007.
 
 \bibitem[Troiano et~al.(2019)Troiano, Pad{\'o}, and
   Klinger]{troiano2019crowdsourcing}

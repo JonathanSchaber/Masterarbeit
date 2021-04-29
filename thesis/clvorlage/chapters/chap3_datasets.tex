@@ -431,6 +431,16 @@ models that address the problem of paraphrase identification.
 Since most corpora for this task are available only in English the authors compiled this corpus by
 humanly translate a subset of the original PAWS corpus \cite{zhang2019paws}.
 
+\begin{wrapfigure}{r}{0.45\linewidth}
+  \begin{center}
+    \includegraphics[width=0.9\linewidth]{images/PAWS-X_BLEU_scores.pdf}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[PAWS-X BLEU]{BLEU scores of the PAWS-X data sets. Clearly visible is the diffence between the training set on the one hand,
+                      and the development and test set on the other:}
+\end{wrapfigure}
+
+
 \begin{examples}
   \label{ex:paws-x}
   \item Die Familie zog 1972 nach Camp Hill, wo er die Trinity High School in Harrisburg, Pennsylvania, besuchte.
@@ -548,21 +558,6 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
                            PAWS-X sets.}
 \end{figure}
 
-
-Mean BLEU-scores for sets:
-
-Train: 55.27 stdev: 24.97\\
-Development: 37.33 stdev: 25.57\\
-Test: 38.37 stdev: 24.83
-
-\begin{wrapfigure}{r}{0.45\linewidth}
-  \begin{center}
-    \includegraphics[width=0.9\linewidth]{images/PAWS-X_BLEU_scores.pdf}
-  \end{center}
-  \stepcounter{myfigure}
-  \caption[PAWS-X BLEU]{BLEU scores of the PAWS-X data sets. Clearly visible is the diffence between the training set on the one hand,
-                      and the development and test set on the other:}
-\end{wrapfigure}
 
 
 % all subs in PAWS-X: 2,906,717
@@ -1102,10 +1097,16 @@ translators to keep these symbols in the relevant positions in their translation
 
 \subsubsection{Statistics}
 
-Nxamples: \\
-Train: 820
-Dev: 181
-Test: 178
+XQuAD is also one of the smaller datasets in the GerGLUE corpus --- a total
+of 1,179 examples, without predefined splits, which results in training, development, and test
+splits of 820, 181, and 178 examples each. As for MLQA, the answer spans often consits of
+only a handful of subtokens, due to the fact of many questions asking for only a certain
+name or place mentioned in the context.
+
+% Nxamples: \\
+% Train: 820
+% Dev: 181
+% Test: 178
 
 % all subs in XQuAD: 238,944
 % sharps: 51,154

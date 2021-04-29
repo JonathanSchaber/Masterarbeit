@@ -10,26 +10,76 @@ Problems that have been identified relating to the performance of BERT. Then, I 
 some submitted solutions countering those problems. And lastly, I will describe my approach and
 elucidate the topic of semantic roles.
 
-\section{BERT}
-
-Since the publication of the seminal paper ``BERT: Pre-training of deep bidirectional transformers
-for language understanding'' \cite{devlin2018bert} and the accompanying open-sourcing of its
-architecture\myfootnote{\url{https://github.com/google-research/bert}}, BERT has probably been the
-most studied and cited NLP model since word2vec \cite{mikolov2013distributed} --- amassing over
-17,000 citations on Google Scholar as of April 2021. This massive interest from the NLP community
-in BERT suggests that it somehow must be accomplishing something which is of greater significance
-to the field than regular benchmark SOTA cracking by ``normal'' new or improved architectures.
 
 
-The basic concept of BERT is straight forward: (1) Let a big, sophisticated neural network learn
-contextualized embeddings for words by training it unsupervised on huge amounts of data. (2)
-Use these embeddings as representations for words in downstream tasks, put a very simple neural
-network on top (mostly a simple FFNN) and fine-tune them during training on the downstream task.
+\section{Pretrained Embeddings and Transfer Learning}
+\label{sec:pretrained-embeddings}
 
-One of the surprising findings of \citeauthor{devlin2018bert} was the transferability of
-these word embeddings: Although the task of the pretraining learning has nothing to do
-with the downstream task, where the embeddings are used in, the BERT embeddings can be
-fine-tuned in a lean manner to achieve SOTA results on established NLU datasets.
+In recent years, it has proven to be very effective to use word embeddings computed by
+sentence or document encoders as representations for task-specifi architectures. Pretrained
+word embeddings have the advantage that they don't need to be learned from scratch by system
+solving the task at hand.
+
+\cite{bengio2003neural} first implemented distributed word representations by using
+a neural \textit{n}-gram language model. In ``Natural language processing (almost)
+from scratch'', \cite{collobert2011natural} showed th utility of such embeddings for
+representing text as input for other neural networks which addressed downstream tasks.
+\cite{mikolov2013distributed} proved that such embeddings could be computed using a
+modest one-layer neural network targeted at selfsupervised training obejctives, namely
+CBOW and skip-gram. Context-sensitvity, i.e. taking into account the surrounding words
+in the embeddings, was introduced by the ELMo architecture \cite{peng2019transfer} and
+contextualizing word representations has since become standard in NLP.
+
+
+% `` The general approach to
+% building Deep Learning systems is compelling and powerful: The researcher defines a
+% model architecture and a top-level loss function and then both the parameters and the
+% representations of the model self-organize so as to minimize this loss, in an end-to-end
+% learning framework.'' \citep[p.~703]{manning2015computational}
+
+The architecture computing word embeddings that has caused the most uproar
+recently was probably BERT \cite{devlin2018bert}, an architecture that led to so
+many variants of it, that it created a whole new field inside the NLP community
+--- winkingly baptized as ``BERTology'' \cite{rogers2020primer}. BERT is a good
+example for a typical neural age NLP model: It's architecture is completely
+agnostic of linguistic knowledge about language whatsoever, it ``only'' operates
+on sequental concatenations of symbols; there is also no preprocessing of the
+data --- no POS-tagging, no dependency parsing, no NER.\myfootnote{Because of
+this non linguistic specific architecture, BERT can easily be adapted to operate
+on other sequential data. This has actually been done: \cite{ji2020dnabert} for
+example trained a DNABERT model for successfully deciphering non-coding DNA.}
+Albeit this complete lack of any sort of explicit linguistic knowledge, by only
+extracting statistical patterns and it learns from processing huge amounts of text,
+BERT embeddings achieved several SOTAs on well-established NLU data sets, such
+as GLUE \cite{wang2018glue}.
+
+Since the publication of the seminal paper ``BERT: Pre-training of deep bidirectional
+transformers for language understanding'' \cite{devlin2018bert} and the accompanying
+open-sourcing of its architecture\myfootnote{\url{https://github.com/google-research/bert}},
+BERT has probably been the most studied and cited NLP model producing word embeddings since
+word2vec \cite{mikolov2013distributed} --- amassing over 17,000 citations on Google Scholar
+as of April 2021.
+% This massive interest from the NLP community in BERT suggests that it
+% somehow must be accomplishing something which is of greater significance to the field than
+% regular benchmark SOTA cracking by ``normal'' new or improved architectures.
+
+The basic concept of BERT is described by the authos as being a two-stepped
+framework: (1) Pretrain the model on unlabeled data over different pretraining
+tasks\myfootnote{\citeauthor{devlin2018bert} use the BooksCorpus, consisting
+of 800 million words, plus the English Wikipedia, consisting of 2.5 billion
+words. BERT optimizes its parameters on two training objectives: (1) Presented
+with a sentence containing one random word masked, the model has to predict
+it, and (2) BERT has to decide if, given two randomly sampled sentences, the
+second is a valid continuation of the first. Crucially, both tasks can be
+generated automatically, no tedious human annotation of data is needed.} and
+(2) for downstream tasks, use the embeddings by initializing the model with
+the pretrained parameters and fine-tune all of the parameters by using labeled
+data from the task at hand.
+
+One of the distinctive features of BERT is the minimal difference in architecture between
+pretraining and finetuning: The transformer based network which computes the contextualized
+token emeddings during the language modeling pretraining is also used in downstream task only
+with a so-called task-specific head on top.
 Another advantage of this approach is that the cost, hardware, and data intensive pre-training of the
 embeddings (step one) must only be computed once; the downstream task dependent fine-tunig can then
 be carried out in a lean set up.\myfootnote{To give an impression on the expenses of pre-training
@@ -43,71 +93,53 @@ parameters --- that is approximately 48 times the size of BERT-large (350 millio
 several sides, ranging from ecological and social to linguistic concerns over such models; for
 a good overview of these points see \cite{bender2021dangers}.}
 
-From a more technical point of view is BERT first and foremost a neural
-network architecture. More precise, it is an implementation of the
-self-attention mechanism introduced by \cite{vaswani2017attention}; the
-main difference, and apparently advantage, to other architectures
-that implement the transformer architecture is that  BERT is a bi-directional
-language model.I will not go into too much details here since BERT is
-now a very well-known structure and has been described in a
-plethora of papers, blogs, and videos.%\myfootnote{For a really well made visualization of self-attention
-% in BERT, I can recommend \url{https://www.youtube.com/watch?v=-9vVhYEXeyQ}}.
-In simple terms, BERT takes an input sequence, tokenizes it and computes contextualized vector
-representations for each token via stacked blocks employing self-attention and linear combination.
-Figure \ref{fig:bert-architecture} shows one of these blocks.
+From a more technical point of view is BERT first and foremost a multi-layered bidirectional
+transformer encoder. At it's heart lies an implementation of the self-attention mechanism, the
+transformer, introduced by \cite{vaswani2017attention}; the main difference, and apparently
+advantage, to other architectures that implement the transformer architecture, e.g. Open AI's GPT
+\citep{radford2018improving}, is that BERT is a bi-directional architecture. In simple terms,
+BERT takes an input sequence, tokenizes it and computes contextualized vector representations
+for each token via stacked blocks employing self-attention and linear combination. Figure
+\ref{fig:bert-architecture} depicts one of these blocks. For reasons of space, I will not go into
+more detail here about BERT's architecture.
+% \myfootnote{For a really % well made visualization of
+% self-attention in BERT, I can  recommend \url{https://www.youtube.com/watch?v=-9vVhYEXeyQ}}.
 
 \fig{images/BERT_clipped.png}{fig:bert-architecture}{3D-visualization of the BERT architecture. Nicely illustrated are the 12 attention heads and following linear projections in one block (here called ``Layer''). Credit for the image goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT Architecture}
 
-The computation of the weight matrices and initial vector representations for the tokens is done
-via an unsupervised learning phase, often referred to as pre-training. The basic concept is
-that BERT is given sentence-chunks of large amounts of text (\citeauthor{devlin2018bert} use the BooksCorpus, consisting
-of 800 million words, plus the English Wikipedia, consisting of 2.5 billion words) and BERT
-needs to optimize on two training objectives: (1) One word is randomly masked and BERT has
-to predict it, and (2) BERT has to decide if, given two randomly sampled sentences, the second
-is a valid continuation of the first. Crucially, both tasks can be generated automatically, no
-tedious human annotation of data is needed.
-
-With this ``simple'' approach --- i.e. unsupervised pretraining of contextualized embeddings and
-fin-tuning on target tasks with very simple head on top --- \citeauthor{devlin2018bert} beat the
-hitherto leading architecture on the GLUE benchmark by an outstanding average of 7,0\%. This is
-especially remaking, since BERT is not a highly specialized model\myfootnote{Until then, SOTAs
-were achieved by complex interwiring of some embeddings with a specialized architecture. }, but
-apparently still more effective on most tasks than highly task-specific optimized models.
-Thus, the NLP community was awestruck.
+\citeauthor{devlin2018bert} impressively demonstrated the capabilities of BERT by obtaining
+new SOTA results  on eleven NLU tasks, increasing the GLUE score by 7.7\% absolute improvement.
 
 
 
-
-\subsection{Problems}
+\subsection{Problems, Weak Spots, Semanticity}
 \label{sec:problems}
 
-In recent years, a lot of research went into analyzing, improving, and deluding the BERT architecture;
-in the NLP field, those efforts are often referred to by the notion of ``BERTology'' (cf. \cite{rogers2020primer}).
-While BERT showed to be astonishingly effective on several established data sets and benchmarks such as GLUE \citep{wang2018glue},
-it soon became obvious that it also {\color{red} had} its weak-spots: \citeauthor{ettinger2020bert} confronted
-BERT with three language tasks originally coming from psycholinguistics which are well-known to be difficult
-to tackle, even for humans. They find
+In recent years, a lot of research went into analyzing, improving, and deluding
+the BERT architecture; In the NLP field, those efforts are now being referred to by
+the winking notion of ``BERTology'' (cf. \cite{rogers2020primer}).
 
-\begin{quote}
-that [BERT] shows sensitivity to role reversal and
-same-category distinctions, albeit less than humans, and it succeeds with noun hypernyms,
-but it struggles with challenging inferences and role-based event prediction—and it shows
-clear failures with the meaning of negation.'' \citep[p.~46]{ettinger2020bert}
-\end{quote}
+While BERT showed to be highly effective on several established data sets and benchmarks such as
+GLUE \citep{wang2018glue}, it soon became obvious that it also {\color{red} had} its weak-spots:
+\citeauthor{ettinger2020bert} confronted BERT with three language tasks originally coming from
+psycholinguistics which are well-known to be difficult to tackle. They find, that ``it struggles
+with challenging inferences and role-based event prediction—and it shows clear failures with the
+meaning of negation''.
 
-Apparently, while being able to solve ``regular'' tasks, BERT seems to be prone to fail
-in situations where proper semantic understanding of text sequences is crucial, such as
+Apparently, while being able to solve NLU tasks to a impressing extent, BERT seems to be prone
+to fail in situations where proper semantic understanding of text sequences is crucial, such as
 detecting role reversal or sentence completion tasks.
 
 \cite{jiang2019evaluating} also state ``that despite the high F1 scores, BERT models have
 systematic error patterns'', which for them suggests ``that they still do not capture the
 full complexity of human pragmatic reasoning.''
 
-\cite{jin2020bert}even go further and created so-called adversarial attacks on BERT:
-After observing that BERT seems to rely only on the statistical cues of a small number of the input tokens to
-form its predictions, \citeauthor{jin2020bert} create a sophisticated algorithm to permute
-the input sentences wihtout actually changing its meaning. Following is an example from the
-SNLI \citep{bowman2015snli} dataset, exemplifying one such attack:
+\cite{jin2020bert} go even further and creat so-called adversarial attacks for laying open
+weak spots of BERT: After observing that BERT seems to rely only on the statistical cues of a
+small number of the input tokens to form its predictions, \citeauthor{jin2020bert} create a
+sophisticated algorithm to permute the input sentences wihtout actually changing its meaning.
+Following is an example from the SNLI \citep{bowman2015snli} dataset, exemplifying one such
+attack:
 
 \begin{examples}
   \item \textbf{Premise}: A child with wet hair is holding a butterfly decorated beach ball.
@@ -203,6 +235,7 @@ my \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub repository}.
 
 
 \section{Semantic Roles}
+\label{sec:semantic-roles}
 
 % Traditionally in linguistics, language is analyzed into different structural levels, where
 % different tools for describing these levels, or strata, are used.
@@ -411,11 +444,13 @@ Following some examples of DAMESRL-labelled sentences stemming from the GliBERT 
 \ref{chap:3_datasets}). The sentences are represented vertically with the leftmost column being the
 actual sentence; each column represents one identified verb (B-V) and its predicted semantic roles,
 labelled using the BIO-schema\myfootnote{Introduced by \citep{ramshaw1999text}, the BIO-schema is a
-convenient way of adding a label to each token in a sequence, indicating if it belongs to a certain
+established way of adding a label to each token in a sequence, indicating if it belongs to a certain
 subgroup, or chunk, of the sequence. For example, to mark the prepositional phrase in a syntagma
 like ``He is running from the bear'', one would mark the word beginning the PP with \textbf{B}, any
 other words inside the PP with \textbf{I}, and all other words outside of it, using \textbf{O}:
 ``He[O] is[O] running[O] from[B-PP] the[I-PP] bear[I-PP]''.}
+
+Note that V = Rel, A\textit{N} = Arg\textit{N}
 
 \textbf{deISEAR}
 
@@ -490,74 +525,3 @@ other words inside the PP with \textbf{I}, and all other words outside of it, us
 \end{verbatim}
 
 
-
-
-
-% \label{sec:5_bleuscores}
-%
-% Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
-% %\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
-% \tab{bleuresults}{BLEU scores of different MT systems}
-% {\begin{tabular}{ll|ccc|c}
-% language pair		& ABC	& YYY	\\
-% \hline
-% EN$\rightarrow$DE	& 20.56	& 32.53 \\
-% DE$\rightarrow$EN	& 43.35	& 52.53 \\
-% \hline
-% \end{tabular}
-% }{ABC BLEU scores}
-%
-% And we can reference the large table in the appendix as Table \ref{appendixTable}
-%
-% \section{Evaluation}
-% \label{sec:5_evaluation}
-% We saw in section \ref{sec:5_bleuscores}
-%
-% We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
-%
-% \subsection{More evaluation}
-% \label{subsec:5_moreeval}
-%
-%
-% \section{Citations}
-% Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
-% or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
-%
-% to cite: \cite[30-31]{Koehn2005} \\
-% to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
-%
-% to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
-% only the author(s): \citeauthor{Callison-Burch2006}\\
-% only the year: \citeyear{Callison-Burch2006}\\
-%
-% \section{Graphics}
-%
-% To include a graphic that appears in the list of figures, use the predefined fig command:\\
-% %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-% \fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
-%
-% %\reffig{#1: label}
-% And then reference it as \reffig{fig:rosetta} is easy.
-%
-% \section{Some Linguistics}
-%
-% (With the package 'covington')\\
-%
-% Gloss:
-%
-% \begin{examples}
-%  \item \gll The cat sits on the table.
-% 	    die Katze sitzt auf dem Tisch
-% 	\glt 'Die Katze sitzt auf dem Tisch.'
-%     \glend
-% \end{examples}
-%
-% Gloss with morphology:
-%
-% \begin{examples}
-%  \item \gll La gata duerm -e en la cama.
-% 	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
-% 	\glt 'Die Katze schl\"aft im Bett.'
-%     \glend
-% \end{examples}
-%

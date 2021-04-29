@@ -26,7 +26,7 @@ The core parts of the model are the following:
 	secondly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
 	For this, there exist two approaches:
 	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
-  \item[\textbf{Head module}] At last, the combined representation of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
+  \item[\textbf{Head module}] At last, the combined token representations of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
 \end{description}
 
 \begin{landscape}\centering

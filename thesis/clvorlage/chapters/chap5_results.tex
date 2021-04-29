@@ -38,7 +38,7 @@ same epoch are marked in the same fashion.
 
 \begin{figure}[H]
   \begin{center}
-    \includegraphics[width=0.9cm]{images/acc_loss-3_sets.pdf}
+    \includegraphics[width=11cm]{images/acc_loss-3_sets.pdf}
   \end{center}
   \stepcounter{myfigure}
   \caption[Accuracy/Loss plots of three experiments]{Accuracy and loss plots for three
@@ -655,7 +655,7 @@ randomness in the complex functions the models needed to approximate. I classify
 data irregularites into the follwing categories:
 
 \begin{itemize}
-  \item[\textbf{register noise}] The textual styles vary greatly from iutilizing complex,
+  \item[\textbf{register noise}] The textual styles vary greatly from utilizing complex,
                                  hypotactic sentence structures (e.g. XQuAD), to highly
                                  informal, elliptic --- even erratic --- structures
                                  (e.g. SCARE).
@@ -672,15 +672,30 @@ data irregularites into the follwing categories:
                                    ``Läufer'', not ``Bischof'') to eventually wrongly copied
                                    labels, since the overall meaning changed during
                                    the tranlsation process (e.g. a sentence pair is no more
-                                   contradictive but neutral).
+                                   contradictive but neutral), thus creating label noise.
  \item[\textbf{SRL noise}] The SRLs obtained from DAMESRL are, conservatively formulated,
                            questionable in their quality (e.g. modifiers are completely missing).
 \end{itemize}
 
-In short --- the old GIGO concept from informatics holds mutatis mutandis also in NLP.
+While it is normal for data in NLP to possess noise in some way or the other, this usually does
+not impact the overall performance of a model trainied on it in a severe way, since information
+in language is encoded redundantly, and noise present in one channel can be compensated for by
+uncorrupted information from another channel.\myfootnote{For example, information about which
+constituent takes the syntactic function of the subject is often not marked by using only one
+possibility, e.g. though a case ending. Often, several strategies are present, as in German: The
+subject is marked morphologically through case endigs (which are not always alient), positionally
+(in unmarked contexts), and structurally (in unmarked contexts, normally the proto-agent is
+realized as subject) (cf. \cite{bussmann2006routledge,jaeger2010redundancy})} However, if noise
+is present on too many channels at the same time, reliably recovering structural information may
+break down to some extent. In short --- the good old GIGO concept from informatics holds mutatis
+mutandis also in NLP, and human language in general.
+
+
 
 \section{Register Noise}
 \label{sec:register-noise}
+
+German BERT was pretrained on the German Wikipedia dump, the OpenBooks Corpus and
 
 \section{Label Noise}
 \label{sec:label-noise}
