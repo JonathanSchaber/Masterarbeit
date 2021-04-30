@@ -3,9 +3,9 @@
 
 % \epigraph{Not only the entire ability to think rests on language... but language is also the crux of the misunderstanding of reason with itself.}{\textit{Johann Georg Hamann}}
 
-In this chapter, I will expand a bit further to put the intent of this master's thesis into
-a bigger picture. Therefore, I will line out the general problems and topics of NLU and elaborate
-a little bit on the methods and techniques that were developed to address those questions.
+In this chapter, I will expand a bit further to put the intent of this master's thesis into a
+bigger picture. Therefore, I will line out the general problems and topics of NLU and elaborate
+on the methods and techniques that were developed to address those questions.
 
 Further, I will tie in my {\color{red} approach} with the current research efforts in NLU.
 
@@ -90,7 +90,7 @@ language proficiency tests, such as vocabulary tests, cloze tests, reading compr
 well as various forms of production, interaction, and mediation tests \textelp{}''. Therefore,
 I think it is not completely unsound to assess NLU capabilities of artificial systems
 by measuring their performance on standardized datasets.}
-NLU, therefore aims at producing systems which are able to retreive the semantic
+NLU aims at building systems which are able to retreive the semantic
 content encoded in natural language and are able to further act upon it:
 For example, a chatbot should be capable of ``understanding'' that the questions ``What's
 the weather like?'', ``Can you tell me today's weather forecast, please?'', ``Will I need
@@ -161,7 +161,6 @@ From the 90ies on, a \emph{statistical turn} took place, and NLP turned
 towards data-driven solutions, making use of the increased availability of large
 amounts of electronic text on the one hand and computers with increased speed and
 memory on the other \citep{liddy2001natural}.
-
 NLP problems were now being addressed by learning patterns from huge data collections. One driver
 of this paradigm shift were the various difficulties the traditional systems bore: Their
 development ``requir[ed] a great deal of domain-specific knowledge engineering. In addition,
@@ -266,15 +265,34 @@ benchmark dataset compilation.
 
 \subsection{Text Representations}
 
-Text can be analysed and represented in various ways.\myfootnote{For simplicity, I will
-focus on written language in my thesis, however this applies to other modalities like
-speech and signing as well.} For example, one could represent each word of a sentence as
-a number, e.g. the page number of the Oxford English Dictionary on which the definition
-of the word --- or its lemma base form ---is given: <Every> <event> <has> <a> <cause>
-$\rightarrow$ <234> <229> <388> <12> <176>. However, that would probably not be very
-informative, but if we represent each word of a sequence by its POS, we might be able to
-get some information out of it; especially if both representations, the ``normal'' one
-and the POS one, are combined: <Every DET> <event NOUN> <has VERB> <a DET> <cause NOUN>.
+Text can be analysed and represented in various ways; in fact, those characters on the
+sheet you are reading right now are one form of representing language. However, for an
+algorith language represented by means of an alphabetical script is not a well-suited
+encoding --- since de Saussure it is established that the actual characters are completely
+arbitrary in what they denote \citep{de1989cours}. There is nothing in the properties of
+the character(-sequence) \emph{itsef} which would relate it necessarily to the thing it
+represents. Nothing in the mere shape of the character sequence ``contrary'' implicates
+on what meaning, or signifié, this string, or signifiant, maps onto. As human beings, if
+capable of reading the Latin alphabet and knowing the English language, we decipher the
+string to symbolize the linguistic concept, we pronounce /\textprimstress k\textscripta
+nt\textturnr \textschwa \textturnr i /.\myfootnote{There exist so-called featural writing
+systems which actually encode phonological information in the form of their characters,
+e.g. the Korean Hangul alphabet, which encodes the position of the tongue for producing a
+consonant \citep{sampson1985writing}.} In other words, for a computational system to act
+upon human language input, we must find a way to encode this input in a way, that actually
+represents structural information; depending on what the model is aimed for, this may be
+phonological, syntactical, or semantic properties.
+
+% \myfootnote{For simplicity, I will
+% focus on written language in my thesis, however this applies to other modalities like
+% speech and signing as well.}
+For example, one could represent each word of a sentence as a number, e.g. the page number of the
+Oxford English Dictionary on which the definition of the word --- or its lemma base form ---is
+given: <Every> <event> <has> <a> <cause> $\rightarrow$ <234> <229> <388> <12> <176>. However, that
+would probably not be very informative, but if we represent each word of a sequence by its POS, a
+computational system designed for e.g. identifying Named Entities might retrieve task-supporting
+information from it; especially if both representations, the ``normal'' one and the POS one, are
+combined: <Every DET> <event NOUN> <has VERB> <a DET> <cause NOUN>.
 
 
 \subsubsection*{Embeddings}
@@ -433,17 +451,17 @@ The research questions that shall be answered in this thesis, are:
     \end{itemize}
   \item \label{ques:two} Which head architecture for fine-tuning BERT-based, SRL-enriched text representations is best suited for
                           NLU tasks?
-  \item \label{ques:three} What effects have different representation methods of combinations of BERT-subtokens with SRLs and implementations
-                          regarding the multilayered nature of semantic roles?
+  \item \label{ques:three} What effects have different representation methods of combinations of BERT-subtokens with SRLs and different encoding techniques regarding the multilayered nature of semantic roles?
+    \begin{itemize}
+      \item The number of considered predicate-argument
+            structures is fixed to be three per sentence; is it more effective to fill empty slots with
+            0-SRLs, or duplicating existing SRLs?
+      \item To merge BERT embeddings with SRLs, either
+            the splitted BERT subtokens need to be merged back or the SRLs have to splitted up --- does
+            this lead to different results?
+    \end{itemize}
+
 \end{enumerate}
-
-Question \ref{ques:three} can be broken down into: \textbf{(a)} The number of predicate-argument
-structures is defined to be three per sentence; is it more effective to fill empty slots with
-0-SRLs, or duplicating existing SRLs? \textbf{(b)} To merge BERT embeddings with SRLs, either
-the splitted BERT subtokens need to be merged back or the SRLs have to splitted up --- does
-this lead to different results?
-
-
 
 
 

@@ -105,73 +105,61 @@ may be no predicates at all: ``What a day!''. (2) There might be more than one p
 making use of parsing information from ParZu.
 
 
-\subsection{Finding Predicates}
+\subsection{ParZu}
 
-It is a known problem in the analysis of semantic roles that a proper procedure for predicate
-identification is a problem hard to tackle, consider e.g. the discussion concerning so called
-light verbs: \cite{wittenberg2016light}.
+% It is a known problem in the analysis of semantic roles that a proper procedure for predicate
+% identification is a problem hard to tackle, consider e.g. the discussion concerning so called
+% light verbs: \cite{wittenberg2016light}.
 
-``First, the predicates which assign semantic roles to the constituents are identified prior
-to semantic role labelling proper. They are usually identified as the main verbs which head
-clauses.'' \citep[p.~74]{samardzic2013dynamics} In a dependency framework like the Universal
-Stanford Dependencies (USD) \citep{de2014universal}, which explicitly sets the content
-verb as root, identification of the relevant predicate is straightforward: One has simply
-to look at the dependency parse tree of a given sentence and select the verbal heads ---
-i.e. roots --- of the clauses.  However, the ParZu parser models not content verbs as heads
-but function verbs.\myfootnote{This follows general dependency frameworks proposed for German,
-e.g. \cite{gerdes2001word, gross2015dependency}.}
-
-(interestingly, this stands in contrast to the Pro3Gres parser \citep{schneider2008hybrid} which
-
-``In a constituency parse, the finite verb is the head of a verb phrase or rather sentence.
-A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore
-finite verbs are usually not the head of the sentence.  Hence, the head of a sentence typically
-is the verb containing the meaning.  In that sense, dependency structures are closer to the
-semantics of a sentence.'' \citep[p.~6f.]{aepli2018parsing}
-
-According to the USD, function words are subordinated to content words, which means that
-in a sentence ``He was hit by a ball.'', the infinite participle \textit{hit} would be
-analysed as root, not the finitely inflected \textit{was}.  This is an accordance with the
-view that XXXXXXXXXX However, there is a ``substantial amount of evidence [that] delivers a
-strong argument for the \textelp{} approach, which subordinates full verbs to auxiliaries''
-\cite{gross2015dependency}.
-
-``The parsing scheme that USD advocates takes the division between function word and content
-word as its guiding principle.  One major difficulty with doing this is that the dividing line
-between function word and content word is often not clear.'' \cite{gross2015dependency}
+Before analyzing which semantic roles are present in a given sentence, one
+must determine the predicates in this sentence: ``First, the predicates which
+assign semantic roles to the constituents are identified prior to semantic
+role labelling proper. They are usually identified as the main verbs which
+head clauses'' \citep[p.~74]{samardzic2013dynamics}. In a dependency framework
+like the Universal Stanford Dependencies (USD) \citep{de2014universal},
+which explicitly sets the content verb as root,\myfootnote{Note that is not
+undisputed:``The parsing scheme that USD advocates takes the division between
+function word and content word as its guiding principle. One major difficulty
+with doing this is that the dividing line between function word and content
+word is often not clear'' \cite{gross2015dependency}.} identification of the
+relevant predicate is straightforward: One has simply to look at the dependency
+parse tree of a given sentence and select the verbal heads --- i.e. roots ---
+of the clauses. However, the ParZu parser models not content verbs as heads but
+function verbs.\myfootnote{This follows general dependency frameworks proposed
+for German, e.g. \cite{gerdes2001word, gross2015dependency}.} In other words,
+in the ``He was hit by a ball.'', ``hit'' would be the predicate that assigns
+the semantic roles of proto-patient ``he'' and theme, or instrument ``a ball''.
+The dependency parse tree produced by implementing the USD framework would
+analyze the word ``hit'' as being the root of this sentence, making it easy to
+forward the such annotated sentence to a semantic role labeler which accepts as
+input a list of tokens, and marked which ones are the predicates.
 
 
-Following \cite{foth2006umfassende}
+Since the parse tree of the German equivalent ``Er wurde von einem Ball getroffen'' produced
+by ParZu analyzes the word ``wurde'' as root of the tree, it does not make sense
+to forward this as predicate to DAMESRL.
 
-\begin{examples}
-	\label{ex:one-predicate}
-	\item Die Keita-Dynastie regierte das vorkaiserliche und kaiserliche Mali vom 12. Jahrhundert bis Anfang des 17. Jahrhunderts.
-\end{examples}
+% (interestingly, this stands in contrast to the Pro3Gres parser \citep{schneider2008hybrid} which
 
-\begin{examples}
-	\label{ex:one-predicate-mod}
-	\item Im tibetischen Buddhismus werden die Dharma-Lehrer/innen gewöhnlich als Lama bezeichnet.
-\end{examples}
+% ``In a constituency parse, the finite verb is the head of a verb phrase or rather sentence.
+% A dependency parse, on the other hand, does not consider auxiliaries as heads and therefore
+% finite verbs are usually not the head of the sentence.  Hence, the head of a sentence typically
+% is the verb containing the meaning.  In that sense, dependency structures are closer to the
+% semantics of a sentence.'' \citep[p.~6f.]{aepli2018parsing}
 
-\begin{examples}
-	\label{ex:multiple-predicates}
-	\item Die Klage wurde abgewiesen, was als Sieg beschrieben werden kann.
-\end{examples}
+% According to the USD, function words are subordinated to content words, which means that
+% in a sentence ``He was hit by a ball.'', the infinite participle \textit{hit} would be
+% analysed as root, not the finitely inflected \textit{was}.  This is an accordance with the
+% view that XXXXXXXXXX However, there is a ``substantial amount of evidence [that] delivers a
+% strong argument for the \textelp{} approach, which subordinates full verbs to auxiliaries''
+% \cite{gross2015dependency}.
 
-whose dependency parse tree is shown in \reffig{fig:example-parzu}: This sentence has five
-verbs in it, \textit{wurde}, \textit{abgewiesen}, \textit{beschrieben}, \textit{werden}, and
-\textit{kann} (POS-tag ``V'' in the second row), but only two of them are relevant predicates,
-i.e. predicates that carry ``true'' semantics.
-
-%\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-\fig{images/exampleParzu2.png}{fig:example-parzu}{Example dependency parse tree for a sentence
-with multiple predicates.}{16}{Multiple Predicates Dependency Parse Tree}
-
-I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a sentence
-is or is not a predicate using a heuristic, relying on the token's POS tag that the parser
-predicts.  The ParZu parser's default output follows the CoNLL scheme \citep{buchholz2006conll}
-which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) and fine-grained
-(POSTAG), where the POSTAG corresponds to the token's STTS tag \citep{schiller1999guidelines}.
+I propose the following algorithm \ref{alg:find-predicates} deciding whether a verb in a
+ParZu-parsed sentence is or is not a predicate using a heuristic, relying on the token's
+POS tag that the parser predicts. The ParZu parser's default output follows the CoNLL
+scheme \citep{buchholz2006conll} which means that there are two levels of POS tagging:
+coarse-grained (CPOSTAG) and fine-grained (POSTAG), where the POSTAG corresponds to the
+token's STTS tag \citep{schiller1999guidelines}.
 
 \begin{algorithm}
 \caption{Predicate finding algorithm}
@@ -201,164 +189,151 @@ which means that there are two levels of POS tagging: coarse-grained (CPOSTAG) a
 \end{algorithmic}
 \end{algorithm}
 
-The condition on line 9, that only tokens in the respective subclause are considered, is
-ensured by making sure that if a token \textit{u}'s POS is ``V'' and it points to its head
-\textit{t}, that it is not itself the head of a subclause --- i.e. its dependency relation
-is e.g. ``relative clause''. If that is the case the token \textit{u} is considered to
-belong to another subclause and therefore not preventing token \textit{t} from getting
-labelled as a predicate. Consider again the example \ref{ex:multiple-predicates}: Let's say
-we are in the for-loop at the token \textit{weitergeleitet}. Because it is a verb but not
-a finite full-verb, we enter the else-clause on line 7. If we were now to loop through all
-token of sentence \ref{ex:multiple-predicates} we would find that token \textit{führt} is a
-verb that points to our primary token. Without the above outlined constraint that only verbs
-in the same subclause pointing to our original verb are preventing it from being labelled
-a predicate, \textit{weitergeleitet} would be labelled as non-predicate. This is obviously
-false. Taking into account the above considerations, we see that although \textit{führt}
-points to \textit{weitergeleitet}, its edge label is \textit{rel} --- which means that it's
-the head of a relative subclause --- therefore it is not anymore in the same subclause and
-\textit{weitergeleitet} gets labelled as predicate.
+
+Letting this algorithm run on the dependence parse tree depicted in figure \ref{fig:example-parzu}
+of the sentence
+
+\begin{examples}
+	\label{ex:multiple-predicates}
+	\item Die Klage wurde abgewiesen, was als Sieg beschrieben werden kann.
+\end{examples}
+
+leads to the correct identification of ``abgewiesen'' and ``beschrieben'' as predicates,
+ldisregarding the ight and modal verbs ``wurde'', ``werden'', and ``kann'.
+
+%\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
+\fig{images/exampleParzu2.png}{fig:example-parzu}{Example dependency parse tree for a sentence
+with multiple predicates. Different Information per word is displayed: Th ``normal'' word form, the
+CPOSTAG, the POSTAG, the lemma of the word, morphological information, and the index.}{16}{Multiple Predicates Dependency Parse Tree}
+
+Basically, the algorithm only takes tokens into account which are verbals (have the CPOSTAG
+\emph{V}) ; if the POSTAG is \emph{VVFIN}, i.e. if it is a finitely inflected verb form, it is
+right away considered to be a predicate. Otherwise, if it is a verbal form but not finitely
+inflected, it is checked whether is is dependent on another verbal element of it's subclause,
+if this is the case, it's not labeled as predicate otherwise it is. This leads e.g. to the
+correct selection of ``beschrieben'' as predicate in the subclause of sentence \ref{ex:multiple-predicates},
+since it forms the ``lowest'' verbal element in this clause, only pointing to light verbs modifying
+its grammatical function.
+
+
+% The condition on line 9, that only tokens in the respective subclause are considered, is
+% ensured by making sure that if a token \textit{u}'s POS is ``V'' and it points to its head
+% \textit{t}, that it is not itself the head of a subclause --- i.e. its dependency relation
+% is e.g. ``relative clause''. If that is the case the token \textit{u} is considered to
+% belong to another subclause and therefore not preventing token \textit{t} from getting
+% labelled as a predicate. Consider again the example \ref{ex:multiple-predicates}: Let's say
+% we are in the for-loop at the token \textit{weitergeleitet}. Because it is a verb but not
+% a finite full-verb, we enter the else-clause on line 7. If we were now to loop through all
+% token of sentence \ref{ex:multiple-predicates} we would find that token \textit{führt} is a
+% verb that points to our primary token. Without the above outlined constraint that only verbs
+% in the same subclause pointing to our original verb are preventing it from being labelled
+% a predicate, \textit{weitergeleitet} would be labelled as non-predicate. This is obviously
+% false. Taking into account the above considerations, we see that although \textit{führt}
+% points to \textit{weitergeleitet}, its edge label is \textit{rel} --- which means that it's
+% the head of a relative subclause --- therefore it is not anymore in the same subclause and
+% \textit{weitergeleitet} gets labelled as predicate.
 
 \subsection{Ensuring Tokenization Equivalence}
 
-One of the major difficulties I ran into, was the tokenization differences between different
-parsers. In conrete terms, this means that it is not always possible to correctly align the tokens
-which two parsers produce for the same sequence. % The consequence of this is that for some
+Another difficulty I faced was the tokenization differences between different
+parsers; this means that it is not always possible to correctly align the tokens
+which two parsers produce for the same sequence.
+% The consequence of this is that for some
 % sentences the SRL tokens cannot be properly combined with their corresponding BERT token.
-The DAMESRL system implements the tokenizer provided by the Natural Language
-Toolkit (NLTK)\myfootnote{\url{https://www.nltk.org/}} which implements a linguistically motivated
-tokenizing. {\color{red} explain what that means}
+% The DAMESRL system implements the tokenizer provided by the Natural Language
+% Toolkit (NLTK)\myfootnote{\url{https://www.nltk.org/}} which implements a linguistically motivated
+% tokenizing. {\color{red} explain what that means}
+As shown in figure \ref{fig:architecture}, a sentence passes through two pipelines which both
+apply tokenization to it: The ParZu/DAMESRL/GRU and the BERT pipeline. After both have computed
+numerical representation for the tokens, these must be combined. However, the tokenization of
+ParZu (which would get passed on to DAMESRL and then to the SRL-encoder) and the tokenization of
+BERT differ. ParZu implements the \href{http://www.statmt.org/moses/}{Moses tokenizer}, while
 BERT, in contrast, utilizes an approach called ``WordPieces'', which is a rather information
 processing motivated approach: ``Using wordpieces gives a good balance between the flexibility
 of single characters and the efficiency of full words for decoding, and also sidesteps the need
-for special treatment of unknown words.'' \citep[p.~2]{wu2016google}.
-Although the NLTK algorithm is guided by linguistically informed rules and statistic while the
-WordPieces approach simply reflects distribution properties of assembled letters, both systems
-tokenize sentences in the same way in most cases. However, especially when rare symbols such as
-currencies, units, and the like are present, the tokenization slightly differs What is even
-worse, often the correct alignment of those differing sequences is rather complicated to obtain.
-{\color{red} automatically}
+for special treatment of unknown words.'' \citep[p.~2]{wu2016google}. As a consequence, aligning the
+corresponding tokens to guarantee that the correct information pieces get combined is
+necessary.
 
-
-To illustrate this, consider the following sentence from the PAWS-X data set:
+To illustrate this, consider the following sentence from the XNLI data set:
 
 \begin{examples}
-	\item Die mittlere Oberflächentemperatur wird auf -222 \textdegree{}C ({\fontfamily{ptm}\selectfont\texttildelow}51 K) geschätzt.
-
+	\item Im letzten Jahr spendeten Sie \$10.000.
 \end{examples}
 
-\begin{tabularx}{\textwidth}{@{}l<{}@{\ }X@{}}
-  \textbf{BERT} (merged) & \textbf{NLTK} \\
-  Die                    & Die \\
-  mittlere               & mittlere \\
-  Oberflächentemperatur  & Oberflächentemperatur \\
-  wird                   & wird \\
-  auf                    & auf \\
-  -                      & -222 \\
-  222                    & \textdegree{}C \\
-  {[}UNK{]}              & ( \\
-  (                      & {\fontfamily{ptm}\selectfont\texttildelow}51 \\
-  {\fontfamily{ptm}\selectfont\texttildelow} & K \\
-  51                     &  ) \\
-  K                      & geschätzt \\
-  )                      & . \\
-  geschätzt              & \\
-  .                      & \\
-\end{tabularx}
-
-The first question that arises is: which tokenization should be mapped onto wich? In other
-words: should we try to align the BERT tokens with the corresponding NLTK tokens or vice
-versa? Let's assume we decide to align the tokenization $T$ with fewer items to the one
-with more items --- in this case this would mean aligning $T_{NLTK}$ with $T_{BERT}$. So,
-the first five tokens are no problem, we can align them by simply doing an exact match and
-confirm that the elements correspond.
-But when we reach the sixth token, the exact match fails. To decide whether the token
-$t_{T_{BERT}}$ or the token $t_{T_{NLTK}}$ was split up --- i.e. to determine which token
-must be copied to ensure tokenization equality ---, we need to do a mutual substring match.
-Doing this, we eoudl find out that ``-'' is a substring of ``-222''. In consequence,
-we align the two, duplicate ``-222'' and compare it with token number 7 in $T_{BERT}$. Since
-``222'' is a substring of ``-222'', so we align the two of them.
-
-While it is theoretically possible to align tokens that were differently tokenized by the two
-algorithms, it is nevertheless quite cumbersome. The main problem, however, arises due to the
-[UNK] token BERT introduces for characters --- or character sequences --- which lie out of its
-vocabulary. Since there is obviously no more (sub-)string comparison possible, the process
-gets even more complicated: Suppose you have duplicted the ``-222'' in the NLTK column and are
-now on line 7. In the BERT tokenization you see the ``[UNK]'' token, while in the NLTK you see
-a ``\textdegree{}C''. To find out, what all is containt in the ``[UNK]'', you need to look at
-the token before and after it in the BERT tokenization and compare it with the respective NLTK
-tokens. since the the and so on....
-% \myfootnote{Of course, one could heuristically {\color{red}
-% go on until no [UNK] token is encountered align up in between.}}
-% Eventually, I decided to simply feed into DAMESRL
-the BERT-tokenized sequences, to get around this issue.
-
+The tokenizations produced by BERT and ParZu, i.e. Moses, are
+depicted side-by-side (note that the BERT tokenization has been
+merged for better readability):
 
 \begin{tabularx}{\textwidth}{@{}l<{}@{\ }X@{}}
-  \textbf{BERT} (merged) & \textbf{NLTK} \\
-  Die                                        & Die \\
-  mittlere                                   & mittlere \\
-  Oberflächentemperatur                      & Oberflächentemperatur \\
-  wird                                       & wird \\
-  auf                                        & auf \\
-  -                                          & -222 \\
-  222                                        & \textcolor{blue}{-222}\\
-  {[}UNK{]}                                  & \textdegree{}C \\
-  (                                          & ( \\
-  {\fontfamily{ptm}\selectfont\texttildelow} & {\fontfamily{ptm}\selectfont\texttildelow}51 \\
-  51                                         & \textcolor{blue}{{\fontfamily{ptm}\selectfont\texttildelow}51} \\
-  K                                          & K \\
-  )                                          & ) \\
-  geschätzt                                  & geschätzt \\
-  .                                          & .
+  \textbf{BERT} (merged) & \textbf{Moses}  \\
+  Im                     & Im              \\
+  letzten                & letzten         \\
+  Jahr                   & Jahr            \\
+  spendeten              & spendeten       \\
+  Sie                    & Sie             \\
+  \$                     & \$              \\
+  10                     & 10.000          \\
+  .                      & .               \\
+  000                    &                 \\
+  .                      &                 \\
 \end{tabularx}
 
+First, I tried to device an algorithm which would duplicate the respective tokens
+in the Moses tokenization to lign up with the BERT (sub-)tokenization. However,
+it became clear after some time, that this was too error prone and meticulous,
+that I chose the following strategy:
 
-% \begin{examples}
-%   \item Jetzt Werbung im Kauf-App, eine riesengroße Frechheit!!! Bitte im Premium um Option für Kaffee kochen erweitern, dann bezahle ich gerne weitere 1'000.- €\$£ und mehr.
+Take the ParZu-tokenized and parsed sentence, apply the predicate-finding algorithm to it.
+Then, tokenize the sentence using the BERT tokenizer, identify the afore detected
+predicates and hand the BERT tokenized, predicate marked token sequence to DAMESRL.
 
-% \end{examples}
+
+% The first question that arises is: which tokenization should be mapped onto wich? In other
+% words: should we try to align the BERT tokens with the corresponding NLTK tokens or vice
+% versa? Let's assume we decide to align the tokenization $T$ with fewer items to the one
+% with more items --- in this case this would mean aligning $T_{NLTK}$ with $T_{BERT}$. So,
+% the first five tokens are no problem, we can align them by simply doing an exact match and
+% confirm that the elements correspond.
+% But when we reach the sixth token, the exact match fails. To decide whether the token
+% $t_{T_{BERT}}$ or the token $t_{T_{NLTK}}$ was split up --- i.e. to determine which token
+% must be copied to ensure tokenization equality ---, we need to do a mutual substring match.
+% Doing this, we eoudl find out that ``-'' is a substring of ``-222''. In consequence,
+% we align the two, duplicate ``-222'' and compare it with token number 7 in $T_{BERT}$. Since
+% ``222'' is a substring of ``-222'', so we align the two of them.
+
+% While it is theoretically possible to align tokens that were differently tokenized by the two
+% algorithms, it is nevertheless quite cumbersome. The main problem, however, arises due to the
+% [UNK] token BERT introduces for characters --- or character sequences --- which lie out of its
+% vocabulary. Since there is obviously no more (sub-)string comparison possible, the process
+% gets even more complicated: Suppose you have duplicted the ``-222'' in the NLTK column and are
+% now on line 7. In the BERT tokenization you see the ``[UNK]'' token, while in the NLTK you see
+% a ``\textdegree{}C''. To find out, what all is containt in the ``[UNK]'', you need to look at
+% the token before and after it in the BERT tokenization and compare it with the respective NLTK
+% tokens. since the the and so on....
+% % \myfootnote{Of course, one could heuristically {\color{red}
+% % go on until no [UNK] token is encountered align up in between.}}
+% % Eventually, I decided to simply feed into DAMESRL
+% the BERT-tokenized sequences, to get around this issue.
+
 
 % \begin{tabularx}{\textwidth}{@{}l<{}@{\ }X@{}}
 %   \textbf{BERT} (merged) & \textbf{NLTK} \\
-%   Jetzt                  & Jetzt \\
-%   Werbung                & Werbung \\
-%   im                     & im \\
-%   Kauf                   & Kauf-App \\
-%   -                      & \\
-%   App                    & \\
-%   ,                      & , \\
-%   eine                   & eine \\
-%   riesengroße            & riesengroße \\
-%   Frechheit              & Frechheit \\
-%   !                      & ! \\
-%   !                      & ! \\
-%   !                      & ! \\
-%   Bitte                  & Bitte \\
-%   im                     & im \\
-%   Premium                & Premium \\
-%   um                     & um \\
-%   Option                 & Option \\
-%   für                    & für \\
-%   Kaffee                 & Kaffee \\
-%   kochen                 & kochen \\
-%   erweitern              & erweitern \\
-%   ,                      & , \\
-%   dann                   & dann \\
-%   bezahle                & bezahle \\
-%   ich                    & ich \\
-%   gerne                  & gerne \\
-%   weitere                & weitere \\
-%   1                      & 1'000.- \\
-%   '                      & \\
-%   000                    & \\
-%   .                      & \\
-%   -                      & \\
-%   €                      & € \\
-%   \$                     & \$ \\
-%   {[}UNK{]}              & £ \\
-%   und                    & und \\
-%   mehr                   & mehr \\
-%   .                      & .
+%   Die                                        & Die \\
+%   mittlere                                   & mittlere \\
+%   Oberflächentemperatur                      & Oberflächentemperatur \\
+%   wird                                       & wird \\
+%   auf                                        & auf \\
+%   -                                          & -222 \\
+%   222                                        & \textcolor{blue}{-222}\\
+%   {[}UNK{]}                                  & \textdegree{}C \\
+%   (                                          & ( \\
+%   {\fontfamily{ptm}\selectfont\texttildelow} & {\fontfamily{ptm}\selectfont\texttildelow}51 \\
+%   51                                         & \textcolor{blue}{{\fontfamily{ptm}\selectfont\texttildelow}51} \\
+%   K                                          & K \\
+%   )                                          & ) \\
+%   geschätzt                                  & geschätzt \\
+%   .                                          & .
 % \end{tabularx}
 
 
@@ -377,13 +352,19 @@ The DAMSRL predictor receives the BERT-tokenized sentence along with the informa
 in it are predicates (zero or more). For each token labelled as predicate in a sequence it predicts
 for each other token in the sequence its SRL.
 
-\subsection{GRU}
+\fig{images/num_predarg_structs.pdf}{fig:num-predarg-structs}{Number of predicate-argument structures in all data sets.
+                                                              Due to it's boilerplate template form, deISEAR shows a peculiar distribution:
+                                                              Since it's examples always begin with ``Ich [\textsubscript{PRED} fühlte] $X$, als ....'',
+                                                              it's guaranteed that at least one predicate is identifed, and it is very probable,
+                                                              because of this sentence structure, that another will occur.
+                                                              The other curious pattern exhibits SCARE: In no other
+                                                              data set the amount of sentences where ParZu couldn't detect any predicates
+                                                              is that high.
 
-Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated
-to the vectors which are computed by BERT. The ``classic'', pre-transformer age times, way
-of encoding sequential data would be to employ a recurrent neural network architecture.
-I decided to use GRUs, since they are less computational intesive and research has found
-both architectures mostly performing on par (cf. \cite{chung2014empirical}).
+                                                              Besides the noted peculiarities, it is safe to say that setting the maximum number of
+                                                              predicate-argument structures to three does probably not lead to much information loss;
+                                                              on average over all datasets, 92.73\% of all sentences have three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
+
 
 In most cases, a sentences contains not exactly one predicate which distributes semantic roles,
 but several, especially in longer sentences, --- or even none, especially in colloquial, short
@@ -391,12 +372,8 @@ sentences. Research by \citeauthor{zhang2019semantics} suggests that fixing the 
 predicate-argument structures to three yields the best results; so I adopt this number. In
 other words, if a sentence has more than three argument-predicate structures, I only care about
 the first three predicates identified (if proceeding from left to right through the sequence),
-and disregard the others. However, if there are fewer than three predicate-argument structures
-present, I test and report results for two strategies: The first solution (the left sentence
-in SRL \ref{srl:zeros-duplicate}) lies in filling the ``unfilled'' predicate-slots with the
-special ``0''-SRL. The second (the right sentence in SRL \ref{srl:zeros-duplicate}) simply
-copies the first predicate-argument structure to the unfilled slots, thus amplifying the signal
-from the first predicate-argument structure.
+and disregard the others.
+
 
 
 \begingroup
@@ -442,7 +419,24 @@ Restlichen  I-C-A1   0        0
                 \textbf{Right}: The first SRL structure gets duplicated until all slots
                 are filled.}
   \label{srl:zeros-duplicate}
-\endgroup
+
+However, if there are fewer than three predicate-argument structures
+present, I test and report results for two strategies: The first solution (the left sentence
+in SRL \ref{srl:zeros-duplicate}) lies in filling the ``unfilled'' predicate-slots with the
+special ``0''-SRL. The second (the right sentence in SRL \ref{srl:zeros-duplicate}) simply
+copies the first predicate-argument structure to the unfilled slots, thus amplifying the signal
+from the first predicate-argument structure.
+
+
+\endgroup\subsection{GRU}
+
+Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated
+to the vectors which are computed by BERT. The ``classic'', pre-transformer age times, way
+of encoding sequential data would be to employ a recurrent neural network architecture.
+I decided to use GRUs, since they are less computational intesive and research has found
+both architectures for many tasks and datasets performing on par (cf. \cite{chung2014empirical}).
+
+
 
 \begin{itemize}
   \item number of predicates equals 3
@@ -457,19 +451,6 @@ Restlichen  I-C-A1   0        0
 	\item add meta-SRLs [CLS], [SEP]
 	\item duplicate if less preds than 3 vs. fill with zeros
 \end{itemize}
-
-\fig{images/num_predarg_structs.pdf}{fig:num-predarg-structs}{Number of predicate-argument structures in all data sets.
-                                                              Due to it's boilerplate template form, deISEAR shows a peculiar distribution:
-                                                              Since it's examples always begin with ``Ich [\textsubscript{PRED} fühlte] $X$, als ....'',
-                                                              it's guaranteed that at least one predicate is identifed, and it is very probable,
-                                                              because of this sentence structure, that another will occur.
-                                                              The other curious pattern exhibits SCARE: In no other
-                                                              data set the amount of sentences where ParZu couldn't detect any predicates
-                                                              is that high.
-
-                                                              Besides the noted peculiarities, it is safe to say that setting the maximum number of
-                                                              predicate-argument structures to three does probably not lead to much information loss;
-                                                              on average over all datasets, 92.73\% of all sentences have three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
 
 
 \section{combination}
@@ -650,72 +631,3 @@ the SRL embeddings is used, the start and end span indexes have to be recomputed
 
 
 
-% \section{BLEU Scores}
-% \label{sec:5_bleuscores}
-%
-% Table \ref{bleuresults} shows how to use the predefined tab command to have it listed.
-% %\tab{#1: label}{#2: long caption}{#3: the table content}{#4: short caption}
-% \tab{bleuresults}{BLEU scores of different MT systems}
-% {\begin{tabular}{ll|ccc|c}
-% language pair		& ABC	& YYY	\\
-% \hline
-% EN$\rightarrow$DE	& 20.56	& 32.53 \\
-% DE$\rightarrow$EN	& 43.35	& 52.53 \\
-% \hline
-% \end{tabular}
-% }{ABC BLEU scores}
-%
-% And we can reference the large table in the appendix as Table \ref{appendixTable}
-%
-% \section{Evaluation}
-% \label{sec:5_evaluation}
-% We saw in section \ref{sec:5_bleuscores}
-%
-% We will see in subsection \ref{subsec:5_moreeval} some more evaluations.
-%
-% \subsection{More evaluation}
-% \label{subsec:5_moreeval}
-%
-%
-% \section{Citations}
-% Although BLEU scores should be taken with caution (see \citet{Callison-Burch2006})
-% or if you prefer to cite like this: \citep{Callison-Burch2006} \ldots
-%
-% to cite: \cite[30-31]{Koehn2005} \\
-% to cite within parentheses/brackets: \citep{Koehn2005}, \citep[30-32]{Koehn2005}\\ %\usepackage[square]{natbib} => square brackets
-%
-% to cite within the text: \citet{Koehn2005}, \citet[37]{Koehn2005}\\
-% only the author(s): \citeauthor{Callison-Burch2006}\\
-% only the year: \citeyear{Callison-Burch2006}\\
-%
-% \section{Graphics}
-%
-% To include a graphic that appears in the list of figures, use the predefined fig command:\\
-% %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-% \fig{images/Rosetta_Stone.jpg}{fig:rosetta}{The Rosetta Stone}{10}{Rosetta}
-%
-% %\reffig{#1: label}
-% And then reference it as \reffig{fig:rosetta} is easy.
-%
-% \section{Some Linguistics}
-%
-% (With the package 'covington')\\
-%
-% Gloss:
-%
-% \begin{examples}
-%  \item \gll The cat sits on the table.
-% 	    die Katze sitzt auf dem Tisch
-% 	\glt 'Die Katze sitzt auf dem Tisch.'
-%     \glend
-% \end{examples}
-%
-% Gloss with morphology:
-%
-% \begin{examples}
-%  \item \gll La gata duerm -e en la cama.
-% 	    Art.Fem.Sg Katze schlaf -3.Sg in Art.Fem.Sg Bett
-% 	\glt 'Die Katze schl\"aft im Bett.'
-%     \glend
-% \end{examples}
-%

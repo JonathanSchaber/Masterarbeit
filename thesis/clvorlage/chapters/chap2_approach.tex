@@ -4,11 +4,13 @@
 % \epigraph{\textgreek{πάντες ἄνθρωποι τοῦ εἰδέναι}}{\textit{Heraclitus of Ephesus}}
 
 
-In this chapter, I will give a brief overview of several things: In a first step, I present
-the BERT architecture and its impact on NLP in recent years. Secondly, I will shortly demonstrate
-Problems that have been identified relating to the performance of BERT. Then, I will point out
-some submitted solutions countering those problems. And lastly, I will describe my approach and
-elucidate the topic of semantic roles.
+In this chapter, I will give a brief overview of several things: In a first step, I
+will elaborate on the topic of pretrained embeddings, transfer learning, and BERT,
+which is probably the most successful architecture implementing these concepts. .
+Secondly, I will shortly demonstrate problems that have been identified relating to
+the performance of BERT. Then, I will point out some submitted solutions countering
+those problems. Lastly, I will describe my approach and finally elucidate the topic of
+semantic roles.
 
 
 
@@ -197,14 +199,17 @@ Note however that this is by no means an exhaustive presentation of all BERT-var
 
 \section{GliBERT}
 
-Infected by the pandemic BERT-fever and slightly annoyed by the hegemony of English, I decided to
-enqueue in this illustrious list by combining two of the {\color{red} advancement startegies}: I try to improve
-the German BERT by enhancing it with structured, linguistic information during fine-tuning.
+Infected by the pandemic BERT-fever and persuaded by the proven transfer-learning
+strength of BERT, I decide to also use BERT as pretrained, contextualized word
+representations in my architecture.
 
-Since it is common practice to give your enhanced/variegated BERT architecture an appropriate name --- you may have spotted
-a pattern in the sections before --- I decided to not deviate from this tradition, and decided to call my breed
-\textbf{G}erman \textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{GliBERT}.
-And thus a new
+% slightly annoyed by the hegemony of English, I decided to enqueue in this illustrious list by using
+% BERT combining two of the {\color{red} advancement startegies}: I try to improve the German BERT by
+% enhancing it with structured, linguistic information during fine-tuning.
+
+Since it is common practice to give your enhanced/variegated BERT architecture an appropriate
+name I decided to not deviate from this tradition, and decided to call my breed \textbf{G}erman
+\textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{GliBERT}.
 
 There exist several linguistic structures which could be hypothetically included into BERT:
 \href{https://uni-tuebingen.de/en/faculties/faculty-of-humanities/departments/modern-languages/department-of-linguistics/chairs/general-and-computational-linguistics/ressources/lexica/germanet/}{GermaNet} \citep{hamp1997germanet}

@@ -564,24 +564,12 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
 % all sharps: 684,155
 % all unks: 9,880
 
-Er ist der derzeitige Weltmeister und Olympiasieger im Einzel und gilt mit einem Olympiasieg, drei WM- und zwei
-World-Cup-Titeln, sechs Siegen bei den World Tour Grand Finals und zahlreichen weiteren Titeln als
-einer der erfolgreichsten Tischtennisspieler überhaupt. Er ist Rechtshänder und verwendet als Schlägerhaltung den europäischen Shakehand-Stil.
-Er ist der derzeitige Weltmeister und Olympiasieger im Einzel und gilt mit einem Olympiasieg, drei WM- und zwei
-World-Cup-Titeln, sechs Siegen bei den World Tour Grand Finals und zahlreichen weiteren Titeln als
-einer der erfolgreichsten Tischtennisspieler überhaupt. Er ist Rechtshänder und verwendet als Schlägerhaltung den europäischen Shakehand-Stil.
-Er ist der derzeitige Weltmeister und Olympiasieger im Einzel und gilt mit einem Olympiasieg, drei WM- und zwei
-World-Cup-Titeln, sechs Siegen bei den World Tour Grand Finals und zahlreichen weiteren Titeln als
-einer der erfolgreichsten Tischtennisspieler überhaupt. Er ist Rechtshänder und verwendet als Schlägerhaltung den europäischen Shakehand-Stil.
 
 
-% \fig{images/PAWS-X_BLEU_scores.pdf}{fig:PAWS-X-BLEU}{PAWS-X: BLEU scores of data sets.}{8}{PAWS-X-BLEU}
-
-
-Number of instances: \\
-Train: 48,977 \\
-Dev: 1,932 \\
-Test: 1,967
+% Number of instances: \\
+% Train: 48,977 \\
+% Dev: 1,932 \\
+% Test: 1,967
 
 % \textbf{merged} \\
 % average lenght sentence 1 train: 21.0 (sigma 6.5) \\
@@ -668,6 +656,16 @@ a part of it, that are not based on (objective) facts but on individual opinions
 the reviewers'' \citep[p.~1116]{sanger2016scare}. In other words, aspects are facts
 about the App and subjective phrases are user opinions regarding them.
 
+\begin{wrapfigure}[20]{r}{0.45\linewidth}
+  \centering
+    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
+  \stepcounter{myfigure}
+  \label{fig:scare-subtokenized}
+  \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather short, with an average of approx. 25 subtokens over all sets,
+                        but there is quite a number of outliers --- indicating furhter that SCARE is quite a heterogenous data set, also concerning this aspect.}
+\end{wrapfigure}
+
+
 This fine level of annotations leads often to several annotations per review, the sentiment of
 which may not always match.
 As illustration, consider the following review:
@@ -690,15 +688,6 @@ polarity is normal):
 As is clear from this example, in a given review there may be several aspects with a corresponding
 subjective phrase per review. It is well possible, as in the provided example, that the sentiment
 of these is not always the same.
-
-\begin{wrapfigure}[21]{r}{0.45\linewidth}
-  \centering
-    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
-  \stepcounter{myfigure}
-  \label{fig:scare-subtokenized}
-  \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather short, with an average of approx. 25 subtokens over all sets,
-                        but there is quite a number of outliers --- indicating furhter that SCARE is quite a heterogenous data set, also concerning this aspect.}
-\end{wrapfigure}
 
 % Example from .txt file:
 
