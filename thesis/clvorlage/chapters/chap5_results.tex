@@ -433,7 +433,7 @@ added SRL information.
 % }{Dataset specific Configs}
 
 Another accumulating view on the main table \ref{tab:results} is constructed by not just
-looking for the best results ov a whole row, i.e. over all heads, merging strategies,
+looking for the best results of a whole row, i.e. over all heads, merging strategies,
 and SRL implementations, but instead record the superiority or inferiority of +SRL
 compared to $-$SRL for each pairing: Take for example the deISEAR $\alpha$ subtokenized
 [CLS] head setting: Without SRLs, the ensemble performance was 71.52\%; now the better
@@ -461,11 +461,11 @@ the other way around adding SRLs seems to create a disadvantage for the head.
   \end{minipage}
   \stepcounter{myfigure}
   \label{fig:heatmap-gains}
-  \caption[Heatmaps subtokenizd and merged]{Gain/Loss heatmaps from the gain/loss values in table \ref{tab:gain-loss}. \textbf{Left}: Subtokenized. \textbf{Right}: Merged.}
+  \caption[Heatmaps subtokenizd and merged]{Gain/loss heat maps from the gain/loss values in table \ref{tab:gain-loss}. \textbf{Left}: Subtokenized. \textbf{Right}: Merged.}
 \end{figure}
 
-In figure \ref{fig:heatmap-gains} the absolute gains and losses are plotted in two heatmaps:
-In the heatmap for the subtokenized settings, the pattern seems to be that for the single
+In figure \ref{fig:heatmap-gains} the absolute gains and losses are plotted in two heat maps:
+In the heat map for the subtokenized settings, the pattern seems to be that for the single
 sentence classification tasks there is more fluctuation; especially for deISEAR FFNN, where
 for the $\alpha$ setting, there was the biggest gain in all subtokenized experiments, but
 also the biggest loss in all subtokenized settings for deISEAR $\beta$. The SCARE [CLS] head
@@ -694,6 +694,22 @@ for a positive influence of SRL enriching which is not reflected in my experimen
   \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
 \end{figure}
 
+One of the main differences between the classification and question answering datasets is the size of
+the examples: While for the classifications task the model needs to extract semantic
+information out of a handful sentences, for the question answering tasks thi is rather the exception ---
+normally the context from which the answer span must be extracted is multiple sentences long. My suspicion
+is that SRL information can highlight some crucial semantic relations present in a sequence which would be
+hard for the vanilla BERT to extract; mabye because it is in marked passive voice, not obiously negated etc.
+However, for extracting answer spans out of a long text sequence consisting of several sentences, each having
+potentially 3 predicate-argument structures present, the SRL information may not display a helpful signal to the
+head, which then relies mor on information present in the vanilla BERT subtokens. This hypothesis is further
+substantiated by the analyis of BERT-SRL combination strategy superiority, depicted in table \ref{tab:qa-gain-loss-token-merged}:
+Maintaining the BERT inherent subtokenization structure outperforms the merging approach by far, indicating that
+the head relies heavily on information encoded in the BERT subtokens.
+
+
+
+
 
 \fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
                                                                           \#\# Subtokens represent the amount of tokens that
@@ -806,8 +822,8 @@ is a chance that the gold labels are not that clear. Further, thorugh the creati
 datasets by means of semi-automatically translating English datasets, additional tranlsation
 noise might additionally pollute the data.
 
-To show this, I conducted a relabelling of 20 random examples from XNLI and PAWS-X, each, by
-2 humans.
+To examine this more systematically for XNLI and PAWS-X, I conduct a relabelling of 20 random
+examples each  where the predictions of the best model contradicted the gold label by 2 humans.
 
 
 \subsubsection{Re-annotation}
