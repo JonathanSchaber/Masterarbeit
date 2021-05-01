@@ -14,6 +14,45 @@ Eventually, I carry out a small ablation study, controlling the effect of ghosti
 SRL structures to show that the actual, semanticity providing power of SRLs lies in the combination
 of these structures.
 
+For each dataset, two
+rounds of experiments where computed with one hyperparameter difference, resulting in
+an $\alpha$ and beta $\beta$ for each dataset. The hyperparameters which were kept stable
+over all experiments are listen in table \ref{tab:hyper-configs}.
+
+\tab{tab:tab:hyper-configs}{Stable hyperparameter configurations.}{
+  \scalebox{0.9}{
+    \begin{tabular}{ll}
+    learning rate              & 2e-05                         \\
+    SRL embedding dimensions   & 20                            \\
+    SRL GRU hidden size        & 32                            \\
+    SRL number of layers       & 2                             \\
+    SRL bias                   & True                          \\
+    SRL bidirectional          & True                          \\
+    SRL dropout                & 0.1                           \\
+    \# of Epochs               & 50 (deISEAR, SCARE, XNLI, MLQA, XQuAD), 20 (PAWS-X) \\
+    Batch Size                 & 16 (classification datasets) 8 (Q\&A datasets) \\
+    maximum sequence length    & 100 (PAWS-X, XNLI) 512 (MLQA, XQuAD)
+    \end{tabular}
+  }
+}{Stable Hyperparameter Configs}
+
+In table \ref{tab:alpha-beta}
+the different hyperparameter for the two runs is listed for each dataset.
+
+\tab{tab:alpha-beta}{Differences betwenn $\alpha$ and $\beta$ runs for each dataset.}{
+  \scalebox{0.9}{
+    \begin{tabular}{lll}
+                               & $\alpha$                   & $\beta$                    \\ \hline
+    deISEAR                    & maximum length: 100        & maximum length: 40         \\
+    SCARE                      & maximum length: 100        & maximum length: 50         \\
+    PAWS-X                     & Examples train set: 8,000  & Examples train set: 48,977 \\
+    XNLI                       & Normal predefined splits   & Resplitted 70:15:15        \\
+    MLQA                       & Normal predefined splits   & Resplitted 70:15:15        \\
+    XQuAD                      & SRLs encoded sentence wise & Regular SRL encoding       \\
+    \end{tabular}
+  }
+}{$\alpha$-$\beta$ differences}
+
 Since the different dataset types were tested with different heads, I group the them
 the following way: Results for classification datasets (deISEAR, SCARE, PAWS-X, XNLI)
 are reported together, and the results for question answering datasets (MLQA, XQuAD),
@@ -238,6 +277,7 @@ for a more detailed formulation of this process:
 
 
 \section{Classification Dataset Results}
+\label{sec:classification-results}
 
 {\color{red} \begin{itemize}
   \item conjecture: SRLs are rather adding noise in sequences that are too long. Extreme examples are the Q\&A datasets.
@@ -251,18 +291,19 @@ and configuration, all initialized with different random seeds. Additionally, I 
 five models, achieving a performance gain of several percentage points (see example of PAWS-X,
 table \ref{tab:pawsx-beta}).\myfootnote{For ensembling, a straightforward majority vote of the five models
 is implemented.} In table \ref{tab:results} below, the test set ensemble results for
-each architecture on the classification datasets are reported. For each row, i.e. for
-one hyperparameter set-up for one dataset, The best, second best and worst performace over
-all three heads and SRL configurations are marekd. In the last row, Best and second best
-results per head and +/-SRL for each subtokenization settings are accumulated.
-As the Scores indicate, taken the results without controlling for significance,\myfootnote{
-Here I don't control for statistical significance because it is not clear, against what model(s) should
-a peak performance be controlled for: Take the 77.45\% accuracy of the deISEAR $\alpha$, achieved
-by the +SRL, BERT tokens subtokenized, FFNN head: Against what should this results be compared? To all
-other -SRL results? Only to the corresponding -SRL results for the same head?} the +SRL
-configurations achieved 5 times the best, and 10 times the second best results --- compared
-to 4 best and 5 second best results for -SRL. This is a first indicator that adding SRL information
-seems to be able to support plain BERT embeddings in classification tasks.
+each architecture on the classification datasets are reported.
+
+The best, second best and worst performace over all three heads and SRL configurations
+are marekd. In the last row, Best and second best results per head and +/-SRL for each
+subtokenization settings are accumulated. As the Scores indicate, taken the results without
+controlling for significance,\myfootnote{ Here I don't control for statistical significance
+because it is not clear, against what model(s) should a peak performance be controlled
+for: Take the 77.45\% accuracy of the deISEAR $\alpha$, achieved by the +SRL, BERT tokens
+subtokenized, FFNN head: Against what should this results be compared? To all other -SRL
+results? Only to the corresponding -SRL results for the same head?} the +SRL configurations
+achieved 5 times the best, and 10 times the second best results --- compared to 4 best and
+5 second best results for -SRL. This is a first indicator that adding SRL information seems
+to be able to support plain BERT embeddings in classification tasks.
 
 The accumulations in roman numerals also indicate a further, observable trend: The GRU head
 accumulated 5 best and 6 second best results, independent of with or without SRLs, appears to be better
@@ -391,23 +432,6 @@ added SRL information.
 %   }
 % }{Dataset specific Configs}
 
-\tab{tab:hyper-configs}{Stable hyperparameter configurations.}{
-  \scalebox{0.9}{
-    \begin{tabular}{ll}
-    learning rate              & 2e-05                         \\
-    SRL embedding dimensions   & 20                            \\
-    SRL GRU hidden size        & 32                            \\
-    SRL number of layers       & 2                             \\
-    SRL bias                   & True                          \\
-    SRL bidirectional          & True                          \\
-    SRL dropout                & 0.1                           \\
-    \# of Epochs               & 50 (deISEAR, SCARE, XNLI, MLQA, XQuAD), 20 (PAWS-X) \\
-    Batch Size                 & 16 (classification datasets) 8 (Q\&A datasets) \\
-    maximum sequence length    & 100 (PAWS-X, XNLI) 512 (MLQA, XQuAD)
-    \end{tabular}
-  }
-}{Stable Hyperparameter Configs}
-
 Another accumulating view on the main table \ref{tab:results} is constructed by not just
 looking for the best results ov a whole row, i.e. over all heads, merging strategies,
 and SRL implementations, but instead record the superiority or inferiority of +SRL
@@ -424,6 +448,38 @@ Looking at the such accumulated results (table \ref{gain-loss}), no clear pictur
 at first glance; sometimes zeroing SRLs performed better than duplicating SRLs, sometimes not,
 sometimes +SRLs clearly outperforms $-$SRL, even highly statistically, sometimes it is
 the other way around adding SRLs seems to create a disadvantage for the head.
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=0.9\linewidth]{images/heatmap_subtokenized_eq.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=0.9\linewidth]{images/heatmap_merged_eq.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \label{fig:heatmap-gains}
+  \caption[Heatmaps subtokenizd and merged]{Gain/Loss heatmaps from the gain/loss values in table \ref{tab:gain-loss}. \textbf{Left}: Subtokenized. \textbf{Right}: Merged.}
+\end{figure}
+
+In figure \ref{fig:heatmap-gains} the absolute gains and losses are plotted in two heatmaps:
+In the heatmap for the subtokenized settings, the pattern seems to be that for the single
+sentence classification tasks there is more fluctuation; especially for deISEAR FFNN, where
+for the $\alpha$ setting, there was the biggest gain in all subtokenized experiments, but
+also the biggest loss in all subtokenized settings for deISEAR $\beta$. The SCARE [CLS] head
+seems also clearly to suffer from subtokenizing SRLs tokens, while gining in other settings.
+However, for the sentence pair tasks, subtokenizing mostly adds a smaller, but constant gain,
+vizualized by the uniformly distributed purple shades in this dataset rows.
+
+For the merged settings, the correlation axis appears slightly to change: Before, positive or
+negative influence of the BERT-SRL combining technique has shown some correlation with datasets
+(tendency to lead to slight gains in sentence pair tasks, and irregular behaviour on single
+sentence tasks), now while this holds still slightly, it seems that especially the FFNN and GRU
+head seem to negativaly affected by merging SRLs, while the [CLS] head shows a trend towards
+gaining from it. Note also, that the subtokenized settings showes a greater range of gains and
+losses (from $-$4.63 to + 6.62) compared to the merging approach ($-$1.99 to +2.59).
 
 To add one more abstraction layer and see a more complete picture, this table is again
 summarized in figure \ref{fig:classification-gains}. Doing this, the image
@@ -460,6 +516,8 @@ than zeroing.
      \end{tabular}
     }
   }{Gain-Loss}
+
+
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -698,21 +756,58 @@ mutandis also in NLP, and human language in general.
 \section{Register Noise}
 \label{sec:register-noise}
 
-German BERT was pretrained on the German Wikipedia dump, the OpenBooks Corpus and
+German BERT, according to deepset, was pretrained on the German Wikipedia dump, the OpenLegalData dump and
+news articles. All of this corpora comprise grammatical, to the standards of orthography adhering text
+belonging to a rather formal, ``professional'' register. Three of the six datasets in GerGLUE, namely
+deISEAR, SCARE, and XNLI, however, can be described as representing a rather colloquial register of
+language, even displaying feautures of transcribed speech as e.g. in XNLI:
+
+\begin{examples}
+  \item Ja und wir haben es irgendwie behalten, äh irgendwie äh, es war eine Überraschungs-Geburtstagsparty für sie, das war es Sie liebte die Überraschungsfeier.
+\end{examples}
+
+Naturally, since the German BERT module probably wasn't confronted with texts coming from such a register,
+the BERT embeddings will probably conatin some noise regarding the classification task at hand. Also, ParZu
+is aimed at parsing ``clean'', correct sentences, showing of course problems at processing examples as the
+one above, which leads to the known error propagation and amplification through DAMESRL.
+
+In other words, it is expectable for GliBERT to show difficulties on the aforesaid datasets, which
+was also observed during the analyses of the results in section \ref{sec:classification-results}.
+
 
 \section{Label Noise}
 \label{sec:label-noise}
 
-As \citep{caswell2021quality} point out,
+As \citep{caswell2021quality} point out, apparently there is often a lack of
+prudence observable when multilingual datasets get compiled --- especially for
+low resoursce languages they report devastating discoveries of ungrammatical
+and even non-sense texts for these.
 
 
-PAWS-X sentence number 45061, labelled as non-paraphrases:
+However, especiall for sentence pair datasets, one of the sentences needs to be constructed. This
+can happen by automaticall construct these sentences (PAWS-X) or let humans come up with those
+sentences (as for XNLI). In both cases, there might happen errors, and the label assigned to a
+sentence pair may be actually wrong. This is obvious for PAWS-X, where e.g. in the training set,
+there are 84 identical sentence pairs are labelled as non-paraphrases, which is obviously false,
+since the other 3,125 exact identical sentence pairs are labelled as paraphrases. E.g. sentence pair
+number 45061 (in the original English PAWS and the German PAWS-X datasets), both labelled as
+non-paraphrases:
 
-Riverton was a parliamentary electorate in the New Zealand region of Southland .
-Riverton was a parliamentary electorate in the New Zealand region of Southland .
+\begin{examples}
+  \item Riverton was a parliamentary electorate in the New Zealand region of Southland .\\
+        Riverton was a parliamentary electorate in the New Zealand region of Southland .
 
-Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
-Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
+  \item Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.\\
+        Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
+\end{examples}
+
+But also for human created sentence pairs, there
+is a chance that the gold labels are not that clear. Further, thorugh the creation of the German
+datasets by means of semi-automatically translating English datasets, additional tranlsation
+noise might additionally pollute the data.
+
+To show this, I conducted a relabelling of 20 random examples from XNLI and PAWS-X, each, by
+2 humans.
 
 
 \subsubsection{Re-annotation}

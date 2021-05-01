@@ -11,10 +11,10 @@
 \@writefile{loe}{\addvspace {10\p@ }}
 \newlabel{chap:4_architecture}{{4}{53}{Architecture}{chapter.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.1}Overview}{53}{section.4.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces GliBERT Architecture}}{53}{figure.caption.26}}
-\newlabel{fig:architecture}{{12}{53}{GliBERT Architecture}{figure.caption.26}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces GliBERT Architecture detail}}{55}{figure.caption.27}}
-\newlabel{fig:architecture-big}{{13}{55}{GliBERT Architecture detail}{figure.caption.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces GliBERT Architecture}}{53}{figure.caption.25}}
+\newlabel{fig:architecture}{{11}{53}{GliBERT Architecture}{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces GliBERT Architecture detail}}{55}{figure.caption.26}}
+\newlabel{fig:architecture-big}{{12}{55}{GliBERT Architecture detail}{figure.caption.26}{}}
 \citation{devlin2018bert}
 \citation{wolf2019transformers}
 \citation{loshchilov2019decoupled}
@@ -38,16 +38,16 @@
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Predicate finding algorithm\relax }}{59}{algorithm.1}}
 \newlabel{alg:find-predicates}{{1}{59}{Predicate finding algorithm\relax }{algorithm.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{59}{subsection.4.3.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{60}{figure.caption.28}}
-\newlabel{fig:example-parzu}{{14}{60}{Multiple Predicates Dependency Parse Tree}{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{60}{figure.caption.27}}
+\newlabel{fig:example-parzu}{{13}{60}{Multiple Predicates Dependency Parse Tree}{figure.caption.27}{}}
 \citation{do2018flexible}
 \citation{zhang2019semantics}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}DAMESRL}{61}{subsection.4.3.3}}
 \@writefile{loe}{\contentsline {srl}{\numberline {4.1}{\ignorespaces The two strategies for dealing with less than three predicates: \textbf  {Left}: The open SRL slots get filled with the special SRL \emph  {0}. \textbf  {Right}: The first SRL structure gets duplicated until all slots are filled.\relax }}{61}{srl.4.1}}
 \newlabel{srl:zeros-duplicate}{{4.1}{61}{The two strategies for dealing with less than three predicates: \textbf {Left}: The open SRL slots get filled with the special SRL \emph {0}. \textbf {Right}: The first SRL structure gets duplicated until all slots are filled.\relax }{srl.4.1}{}}
 \citation{chung2014empirical}
-\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Percentage of Predicate-Argument Structures per Sentence in all Data Sets}}{62}{figure.caption.29}}
-\newlabel{fig:num-predarg-structs}{{15}{62}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Percentage of Predicate-Argument Structures per Sentence in all Data Sets}}{62}{figure.caption.28}}
+\newlabel{fig:num-predarg-structs}{{14}{62}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}{figure.caption.28}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}GRU}{62}{subsection.4.3.4}}
 \citation{wu2016google}
 \citation{wu2016google}
@@ -59,4 +59,71 @@
 \citation{devlin2018bert}
 \citation{zhang2019semantics}
 \citation{zhang2019semantics}
-\@writefile{t
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Head Module}{64}{section.4.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Classifiction}{64}{subsection.4.5.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces BERT-Classification}}{64}{figure.caption.29}}
+\newlabel{fig:BERT-classification}{{15}{64}{BERT-Classification}{figure.caption.29}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1.1}[CLS] Head}{65}{subsubsection.4.5.1.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces {[}CLS{]} Head}}{65}{figure.caption.30}}
+\newlabel{fig:cls-head}{{16}{65}{{[}CLS{]} Head}{figure.caption.30}{}}
+\citation{zhang2019semantics}
+\citation{myagmar2019transferable}
+\citation{hopfield1982neural}
+\citation{hochreiter1997long}
+\citation{cho2014learning}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1.2}FFNN Head}{66}{subsubsection.4.5.1.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1.3}GRU Head}{66}{subsubsection.4.5.1.3}}
+\citation{devlin2018bert}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces FFNN Head}}{67}{figure.caption.31}}
+\newlabel{fig:lloa-head}{{17}{67}{FFNN Head}{figure.caption.31}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Question Answering}{67}{subsection.4.5.2}}
+\newlabel{sec:question-answering}{{4.5.2}{67}{Question Answering}{subsection.4.5.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2.1}Span Prediction Head}{67}{subsubsection.4.5.2.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces GRU Head}}{68}{figure.caption.32}}
+\newlabel{fig:gru-head}{{18}{68}{GRU Head}{figure.caption.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Span Prediction Head}}{69}{figure.caption.33}}
+\newlabel{fig:Span-Prediction-Head}{{19}{69}{Span Prediction Head}{figure.caption.33}{}}
+\@setckpt{chapters/chap4_architecture}{
+\setcounter{page}{70}
+\setcounter{equation}{5}
+\setcounter{enumi}{4}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{3}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{4}
+\setcounter{section}{5}
+\setcounter{subsection}{2}
+\setcounter{subsubsection}{1}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{9}
+\setcounter{table}{0}
+\setcounter{NAT@ctr}{0}
+\setcounter{treecount}{0}
+\setcounter{branchcount}{0}
+\setcounter{equationsave}{2}
+\setcounter{covexercise}{0}
+\setcounter{float@type}{32}
+\setcounter{algorithm}{1}
+\setcounter{ALC@unique}{21}
+\setcounter{ALC@line}{21}
+\setcounter{ALC@rem}{0}
+\setcounter{ALC@depth}{0}
+\setcounter{parentequation}{0}
+\setcounter{FancyVerbLine}{12}
+\setcounter{ContinuedFloat}{0}
+\setcounter{nlinenum}{0}
+\setcounter{srl}{1}
+\setcounter{lofdepth}{1}
+\setcounter{lotdepth}{1}
+\setcounter{myfigure}{19}
+\setcounter{mytable}{3}
+\setcounter{Item}{75}
+\setcounter{bookmark@seq@number}{61}
+\setcounter{myfootnote}{3}
+\setcounter{example}{0}
+\setcounter{section@level}{0}
+}

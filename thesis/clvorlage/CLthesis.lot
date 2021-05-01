@@ -1,0 +1,30 @@
+\babel@toc {english}{}
+\renewcommand *{\addvspace }[1]{}
+\babel@toc {ngerman}{}
+\babel@toc {english}{}
+\babel@toc {ngerman}{}
+\babel@toc {english}{}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1}{\ignorespaces GLUE}}{28}{table.caption.13}
+\contentsline {table}{\numberline {2}{\ignorespaces GerGLUE}}{28}{table.caption.14}
+\contentsline {table}{\numberline {3}{\ignorespaces Summary GerGLUE}}{52}{table.caption.24}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4}{\ignorespaces Stable Hyperparameter Configs}}{70}{table.caption.34}
+\contentsline {table}{\numberline {5}{\ignorespaces $\alpha $-$\beta $ differences}}{71}{table.caption.35}
+\contentsline {table}{\numberline {6}{\ignorespaces Results}}{77}{table.caption.37}
+\contentsline {table}{\numberline {7}{\ignorespaces Gains Ensemble vs Average}}{78}{table.caption.38}
+\contentsline {table}{\numberline {8}{\ignorespaces Tokenized vs. Merged wo QA}}{79}{table.caption.39}
+\contentsline {table}{\numberline {9}{\ignorespaces Gain-Loss}}{81}{table.caption.41}
+\contentsline {table}{\numberline {10}{\ignorespaces Confusion matrix for one SCARE +SRL ensemble}}{85}{table.caption.45}
+\contentsline {table}{\numberline {11}{\ignorespaces Results-QA}}{85}{table.caption.46}
+\contentsline {table}{\numberline {12}{\ignorespaces QA Gain-Loss / QA Tokenized vs. merged}}{86}{table.caption.47}
+\contentsline {table}{\numberline {13}{\ignorespaces Ablation Study}}{95}{table.caption.52}
+\addvspace {10\p@ }
+\babel@toc {ngerman}{}
+\babel@toc {english}{}
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {14}{\ignorespaces Some large table}}{109}{table.caption.59}
+\addvspace {10\p@ }
