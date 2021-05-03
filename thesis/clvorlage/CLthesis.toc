@@ -67,19 +67,19 @@
 \contentsline {chapter}{\numberline {5}Results}{70}{chapter.5}
 \contentsline {section}{\numberline {5.1}Controlling for Statistical Significance}{73}{section.5.1}
 \contentsline {section}{\numberline {5.2}Classification Dataset Results}{75}{section.5.2}
-\contentsline {section}{\numberline {5.3}Question Answering Dataset Results}{84}{section.5.3}
-\contentsline {section}{\numberline {5.4}Register Noise}{88}{section.5.4}
+\contentsline {section}{\numberline {5.3}Question Answering Dataset Results}{85}{section.5.3}
+\contentsline {section}{\numberline {5.4}Register Noise}{89}{section.5.4}
 \contentsline {section}{\numberline {5.5}Label Noise}{89}{section.5.5}
 \contentsline {subsubsection}{\numberline {5.5.0.1}Re-annotation}{90}{subsubsection.5.5.0.1}
-\contentsline {section}{\numberline {5.6}Translation Noise}{91}{section.5.6}
-\contentsline {section}{\numberline {5.7}SRL Noise}{92}{section.5.7}
-\contentsline {section}{\numberline {5.8}Ablation study}{93}{section.5.8}
-\contentsline {chapter}{\numberline {6}Conclusion}{96}{chapter.6}
-\contentsline {section}{\numberline {6.1}Outlook / Future Work}{96}{section.6.1}
-\contentsline {chapter}{Glossary}{97}{section*.53}
-\contentsline {chapter}{References}{98}{section*.55}
-\contentsline {chapter}{Lebenslauf}{108}{section*.57}
+\contentsline {section}{\numberline {5.6}Translation Noise}{92}{section.5.6}
+\contentsline {section}{\numberline {5.7}SRL Noise}{93}{section.5.7}
+\contentsline {section}{\numberline {5.8}Ablation study}{94}{section.5.8}
+\contentsline {chapter}{\numberline {6}Conclusion}{98}{chapter.6}
+\contentsline {section}{\numberline {6.1}Outlook / Future Work}{98}{section.6.1}
+\contentsline {chapter}{Glossary}{99}{section*.53}
+\contentsline {chapter}{References}{100}{section*.55}
+\contentsline {chapter}{Lebenslauf}{110}{section*.57}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{109}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{110}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{111}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{112}{appendix.B}

@@ -241,6 +241,18 @@ answer out of a list of options given the answer (compare \cite{welbl2017crowdso
 The subsort of question answering MLQA addresses is so called \emph{span prediction question answering}.
 The goal here is to extract the correct answer span out of a context text given the question.
 
+\cite{lewis2019mlqa} compiled the MLQA data set using Wikipedia articles. First, they
+``automatically identify sentences from \textelp{} articles which have the same or
+similar meaning in multiple languages.''\myfootnote{However, taking the sometimes huge
+contexts into account, I think the better formulation would have been ``paragraphs''
+with similar meaning, instead of ``sentences''.} Secondly, they crowdsourced questions
+for the english paragraphs, let them humanly translate into the target languages,
+and finally annotate the answer spans in the corresponding paragraphs.\myfootnote{If
+this was done manually or by implementing some other techniques is, unfortunately,
+not reported. The presence of sometimes strange offsets (included commas, misssing
+prepositions as in example \ref{itm:mlqa-strange-answer-span} etc.) seem to indicate a
+not fully hand-made annotation --- at least to me.}
+
 Following are five random examples out of the MLQA data set:
 
 \begin{examples}
@@ -324,17 +336,7 @@ for the model and you, you would only be allowed to read the context once...):
         \textbf{Question}: Was war die Position der Berliner Gerichts gegenüber Großbritannien und Russland?\\
 \end{examples}
 
-\cite{lewis2019mlqa} compiled this data set using Wikipedia articles. First, they
-``automatically identify sentences from \textelp{} articles which have the same or
-similar meaning in multiple languages.''\myfootnote{However, taking the sometimes huge
-contexts into account, I think the better formulation would have been ``paragraphs''
-with similar meaning, instead of ``sentences''.} Secondly, they crowdsourced questions
-for the english paragraphs, let them humanly translate into the target languages,
-and finally annotate the answer spans in the corresponding paragraphs.\myfootnote{If
-this was done manually or by implementing some other techniques is, unfortunately,
-not reported. The presence of sometimes strange offsets (included commas, misssing
-prepositions as in example \ref{itm:mlqa-strange-answer-span} etc.) seem to indicate a
-not fully hand-made annotation --- at least to me.}
+
 
 \subsubsection{Statistics}
 
@@ -1038,12 +1040,17 @@ Employing this startegy, the authors obtain an accuracy on the German test set o
 
 \subsection{XQuAD}
 
-``XQuAD consists of a subset of 240 paragraphs and 1190 question-answer pairs from the development
-set of SQuAD v1.1 together with their translations into ten languages \textelp{} In order to
-facilitate easy annotations of answer spans, we choose the most frequent answer for each question
-and mark its beginning and end in the context paragraph using special symbols, instructing
-translators to keep these symbols in the relevant positions in their translations''
-\cite{artetxe2019cross}.
+Like MLQA, XQuAD \citep{artetxe2019cross} is a question answering dataset, where an answer span
+needs to be identified given a context and a corresponding question. In contrast to MLQA, where the
+contexts are text sequences from Wikipedia articles, XQuAD was constructed by humanly translate 240
+paragraphs and 1190 question-answer pairs from SQuAD 1.1 \citep{rajpurkar2016squad}.
+
+% ``XQuAD consists of a subset of 240 paragraphs and 1190 question-answer pairs from the development
+% set of SQuAD v1.1 together with their translations into ten languages \textelp{} In order to
+% facilitate easy annotations of answer spans, we choose the most frequent answer for each question
+% and mark its beginning and end in the context paragraph using special symbols, instructing
+% translators to keep these symbols in the relevant positions in their translations''
+% \cite{artetxe2019cross}.
 
 \begin{examples}
   \label{ex:xquad}
@@ -1082,8 +1089,6 @@ translators to keep these symbols in the relevant positions in their translation
         \textbf{Answer}: unnatürlichen
 \end{examples}
 
-\cite{artetxe2019cross}
-
 \subsubsection{Statistics}
 
 XQuAD is also one of the smaller datasets in the GerGLUE corpus --- a total
@@ -1115,6 +1120,9 @@ name or place mentioned in the context.
   \caption[XQuAD Lengths]{\textbf{Left}: Length of subtokenized XQuAD contexts.
                          \textbf{Right}: Length of subtokenized XQuAD answers. Note the difference in y-axis scaling between the two plots.}
 \end{figure}
+
+Again,you can test you own performance on this dataset by answering the following questions relating
+to the given context:
 
 \begin{examples}
   \item \label{itm:xquad} \textbf{Context}: Da sowohl Präsident Kenyatta als auch Vizepräsident William Ruto
