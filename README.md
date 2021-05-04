@@ -34,8 +34,10 @@ Download the data and adhere to the following folder structure (it is important 
 
 
 	/<path>/<to>/MLQA/
-			├─dev/dev-context-de-question-de.tsv
-			├─test/test-context-de-question-de.json
+			├─dev/
+			    ├─dev-context-de-question-de.json
+			├─test/
+			    ├─test-context-de-question-de.json
 
 	/<path>/<to>/PAWS-X/
 			├─de/
@@ -126,7 +128,7 @@ This will create in each data set directory the following three files, their nam
 
 First, adjust the paths in `config.json` to conform to the structure on your machine. The paths for the dataset point to the directory, where the `Gli_BERT*.tsv` files lie.
 
-    python gliBert.py \
+    python gli_bert.py \
         -l <local/rattle> \
         -c config.json \
         -d <data set> \
