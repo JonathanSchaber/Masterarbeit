@@ -124,6 +124,14 @@ This will create in each data set directory the following three files, their nam
 
 # Training a model
 
+First, adjust the paths in `config.json` to conform to the structure on your machine. The paths for the dataset point to the directory, where the `Gli_BERT*.tsv` files lie.
+
+    python gliBert.py \
+        -l <local/rattle> \
+        -c config.json \
+        -d <data set> \
+        -s <file name result files>
+
 # Evaluating / Ensemble predict
 
 # Miscallenaoues (Plotting graphs, etc.)
