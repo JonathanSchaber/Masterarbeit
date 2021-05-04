@@ -46,8 +46,8 @@ the different hyperparameter for the two runs is listed for each dataset.
     deISEAR                    & maximum length: 100        & maximum length: 40         \\
     SCARE                      & maximum length: 100        & maximum length: 50         \\
     PAWS-X                     & Examples train set: 8,000  & Examples train set: 48,977 \\
-    XNLI                       & Normal predefined splits   & Resplitted 70:15:15        \\
-    MLQA                       & Normal predefined splits   & Resplitted 70:15:15        \\
+    XNLI                       & Predefined splits          & Resplitted 70:15:15        \\
+    MLQA                       & Predefined splits          & Resplitted 70:15:15        \\
     XQuAD                      & SRLs encoded sentence wise & Regular SRL encoding       \\
     \end{tabular}
   }
@@ -722,16 +722,6 @@ the head relies heavily on information encoded in the BERT subtokens.
 
 
 
-\fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
-                                                                          \#\# Subtokens represent the amount of tokens that
-                                                                          get re-merged in the merged settings (e.g. ``Master''
-                                                                          ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''. The amount
-                                                                          of tokens that lie outside of the German BERT vocabulary is
-                                                                          in all datasets extremely small (for deISEAR and XNLI
-                                                                          there are no [UNK]s at all); the largest shares of such tokens
-                                                                          are present in MLQA and XQuAD with .79\% and .73\%,
-                                                                          respectively.}{14}{Token Types all Datasets}
-
 
 Main conclusions:
 
@@ -746,30 +736,30 @@ After reporting the general results, aggregations and the somewhat disenchanting
 now try to investigate the reasons for this mediocre effect. After investigating the data and
 SRL quality, I found that noise on several levels is present which probably led to too much
 randomness in the complex functions the models needed to approximate. I classify the observed
-data irregularites into the follwing categories:
+data irregularites into the following \textbf{noise} categories:
 
 
 \begin{itemize}
-  \item[\textbf{register noise}] The textual styles vary greatly from utilizing complex,
-                                 hypotactic sentence structures (e.g. XQuAD), to highly
-                                 informal, elliptic --- even erratic --- structures
-                                 (e.g. SCARE).
- \item[\textbf{label noise}] Many of my datasets were constructed either automatically
-                             (e.g. scrambling text automatically to create paraphrase pairs)
-                             or employing crowd-sourcing techniques. Either way, the process
-                             is prone to erros. There are, e.g., 84 sentence pairs in the trainig
-                             set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
- \item[\textbf{translation noise}] Due to the mostly employed semi-automatic translation
-                                   approach for creating the various datasets, errors
-                                   have been introduced into the data ranging from typical
-                                   translation errors (e.g. English ``bishop'' in the clerical
-                                   context translated to the German chess figure counterpart
-                                   ``Läufer'', not ``Bischof'') to eventually wrongly copied
-                                   labels, since the overall meaning changed during
-                                   the tranlsation process (e.g. a sentence pair is no more
-                                   contradictive but neutral), thus creating label noise.
- \item[\textbf{SRL noise}] The SRLs obtained from DAMESRL are, conservatively formulated,
-                           questionable in their quality (e.g. modifiers are completely missing).
+  \item[\textbf{register}] The textual styles vary greatly from utilizing complex,
+                           hypotactic sentence structures (e.g. XQuAD), to highly
+                           informal, elliptic --- even erratic --- structures
+                           (e.g. SCARE).
+ \item[\textbf{data set}] Many of my datasets were constructed either automatically
+                         (e.g. scrambling text automatically to create paraphrase pairs)
+                         or employing crowd-sourcing techniques. Either way, the process
+                         is prone to erros. There are, e.g., 84 sentence pairs in the trainig
+                         set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
+ \item[\textbf{translation}] Due to the mostly employed semi-automatic translation
+                             approach for creating the various datasets, errors
+                             have been introduced into the data ranging from typical
+                             translation errors (e.g. English ``bishop'' in the clerical
+                             context translated to the German chess figure counterpart
+                             ``Läufer'', not ``Bischof'') to eventually wrongly copied
+                             labels, since the overall meaning changed during
+                             the tranlsation process (e.g. a sentence pair is no more
+                             contradictive but neutral), thus creating label noise.
+ \item[\textbf{SRL}] The SRLs obtained from DAMESRL are, conservatively formulated,
+                     questionable in their quality (e.g. modifiers are completely missing).
 \end{itemize}
 
 While it is normal for data in NLP to possess noise in some way or the other, this usually does
@@ -808,8 +798,24 @@ one above, which leads to the known error propagation and amplification through 
 In other words, it is expectable for GliBERT to show difficulties on the aforesaid datasets, which
 was also observed during the analyses of the results in section \ref{sec:classification-results}.
 
+Interestingly, the discrepancy between the German BERT pretraining text register and the text
+present in some GerGLUE datasets, the analysis of the German BERT tokenizetion statistics shows
+that also in those problematic datasets, there are very little out of vocabulary items, which
+would be represented by the catch-all [UNK] BERT token:
 
-\section{Label Noise}
+\fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
+                                                                          \#\# Subtokens represent the amount of tokens that
+                                                                          get re-merged in the merged settings (e.g. ``Master''
+                                                                          ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''. The amount
+                                                                          of tokens that lie outside of the German BERT vocabulary is
+                                                                          in all datasets extremely small (for deISEAR and XNLI
+                                                                          there are no [UNK]s at all); the largest shares of such tokens
+                                                                          are present in MLQA and XQuAD with .79\% and .73\%,
+                                                                          respectively.}{14}{Token Types all Datasets}
+
+
+
+\section{Data Set Noise}
 \label{sec:label-noise}
 
 As \citep{caswell2021quality} point out, apparently there is often a lack of
@@ -1181,9 +1187,9 @@ By telling the model exclusively about where arguments are located in sentences 
 mostly also insignificant. For three out of four datasets, informing the model about both SRL information structures
 in combination leads to a further significant increase of accuracy.
 
-Apparently, the crucial aspect of information the heads improve from having knowledge about
-semantic roles lies in its relational character: It is not so much an ``annotation'' of certain
-parts of sentences, but the indication of the relationship in which those sequences stand to each
-other.
+Apparently, the crucial aspect of information the GliBERT heads improve from having knowledge
+about semantic roles lies in its relational character: It is not so much an ``annotation''
+of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
+relationship in which those sequences stand to each other.
 
 

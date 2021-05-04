@@ -19,11 +19,11 @@ The core parts of the model are the following:
 
 \begin{description}
 	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence and sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
-  \item[\textbf{SRL module}] This modules actually consists of two submodules: First, the sequence is processed by \href{https://github.com/rsennrich/ParZu}{ParZu} \citep{sennrich2009new} to identify predicates.
+  \item[\textbf{SRL module}] This modules actually consists of three submodules: First, the sequence is processed by \href{https://github.com/rsennrich/ParZu}{ParZu} \citep{sennrich2009new} to identify predicates.
 	Second, the sequence with the information about which tokens are predicates is handed to the \href{https://liir.cs.kuleuven.be/software_pages/damesrl.php}{DAMESRL} model \citep{do2018flexible} which predicts actual SRLs.
-	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as a list of tokens to DAMESRL.
-  \item[\textbf{combination}] To combine the BERT embeddings and SRLs, first the SRLs are transformed into numerical representations, or, in other words, are embedded into a comparably lo-dimensional space.
-	secondly, the BERT and SRL embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
+	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as a list of tokens to DAMESRL. In a last step,
+	the SRL squence gets numerically encoded.
+  \item[\textbf{combination}] In this step the BERT and SRL representation get combined: to do this, the embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
 	For this, there exist two approaches:
 	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
   \item[\textbf{Head module}] At last, the combined token representations of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
@@ -72,6 +72,7 @@ is simply done by passing the computed loss to the specified loss funtion (I use
 AdamW loss function \citep{loshchilov2019decoupled}, a modification of the well-known
 Adam (Adaptive Moment Estimation) loss function \citep{kingma2014adam}, implementing
 weight decay), which updates the BERT weight matrices.
+
 
 In the \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub} repository, in
 the file \texttt{load\_data.py}, the data gets tokenized and loaded, and in
@@ -363,7 +364,7 @@ for each other token in the sequence its SRL.
 
                                                               Besides the noted peculiarities, it is safe to say that setting the maximum number of
                                                               predicate-argument structures to three does probably not lead to much information loss;
-                                                              on average over all datasets, 92.73\% of all sentences have three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
+                                                              on average over all datasets, 92.73\% of all sentences possess three or less such structures.}{14}{Percentage of Predicate-Argument Structures per Sentence in all Data Sets}
 
 
 In most cases, a sentences contains not exactly one predicate which distributes semantic roles,
@@ -418,7 +419,9 @@ Restlichen  I-C-A1   0        0
                 The open SRL slots get filled with the special SRL \emph{0}.
                 \textbf{Right}: The first SRL structure gets duplicated until all slots
                 are filled.}
-  \label{srl:zeros-duplicate}
+\label{srl:zeros-duplicate}
+\endgroup
+
 
 However, if there are fewer than three predicate-argument structures
 present, I test and report results for two strategies: The first solution (the left sentence
@@ -428,7 +431,8 @@ copies the first predicate-argument structure to the unfilled slots, thus amplif
 from the first predicate-argument structure.
 
 
-\endgroup\subsection{GRU}
+
+\subsection{GRU}
 
 Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated
 to the vectors which are computed by BERT. The ``classic'', pre-transformer age times, way
@@ -436,26 +440,55 @@ of encoding sequential data would be to employ a recurrent neural network archit
 I decided to use GRUs, since they are less computational intesive and research has found
 both architectures for many tasks and datasets performing on par (cf. \cite{chung2014empirical}).
 
+For this, the three SRLs for each token get transformed into their numerical representation
+via look-up in the SRL dictionary of the GRU model, such that euch SRL token is a vector
+$\mathbb{R^{20}}$. Then, the numerical representations for each token get concatenated and
+those 60-dimensial vectors form then the input for the bi-directional two-layer GRU which
+computes hidden states for all the inputs.
+
+Because of the subsequent goal of combining BERT embeddings with SRL embeddings, the following
+considerations need to be taken into account.
 
 
-\begin{itemize}
-  \item number of predicates equals 3
-  \item duplicate or zeros when not enough predicates
-  \item concatenate all sentences and then encode vs. encode each sentence and then concat
-  \item ...
-\end{itemize}
+BERT adds several special meta tokens to sequences it embeds: (1) At the start of each
+seqeuence, be it a single sentence or sentence pair one, it inserts a special [CLS] token; CLS
+standing for classification. (2) At the the end of a sequence and between sentence pairs, BERT
+insert a separation token [SEP], which signals the end of a sequence. (3) If the sequence
+is shorter than the defined maximum length, it gets filled up with [PAD] tokens. A XNLI sentence
+pair with maximum length 25 woudl thus be represented as tokenizer BERT sequence the following
+way (for better readability, the BERT sutokens are surrounded by brackets):
 
-\begin{itemize}
-	\item Embed each sentence alone vs. concatenate all sentences
-	\item same for text\_1, text\_2
-	\item add meta-SRLs [CLS], [SEP]
-	\item duplicate if less preds than 3 vs. fill with zeros
-\end{itemize}
+\begin{examples}
+  \item Du musst dort nicht bleiben.\\
+        An genau der Stelle musst du stehenbleiben!
+
+        [CLS] [Du] [muss] [\#\#t] [dort] [nicht] [bleiben] [.] [SEP] [An] [genau] [der] [Stelle] [muss] [\#\#t] [du] [stehen] [\#\#bleiben] [!] [SEP] [PAD]  [PAD]  [PAD]  [PAD]  [PAD]
+\end{examples}
+
+One of the goals of my experiments is to compare the standard BERT implementation with the SRL
+enriched GLiBERT variant. Since the vanilla classification head predicts only using the last
+hidden state of the [CLS] token I need to represent SRL information also on this special
+token. Therefore, I follow \cite{zhang2019semantics} and add a meta-SRL [CLS], which represents
+the meta semantic role of the [CLS] special token.
+
+Another question that arises concerncs the SRL encoding of multiple sentences:
+Suppose we have a sequence consisting of several sentences (highlighted with brackets):
+
+\begin{examples}
+  \item {[}\textsubscript{A} Die Ereignisse von Oni finden im oder nach dem Jahr 2032 statt und beschreiben ein dystopisches Zukunftsbild der Erde.] [\textsubscript{B} Die Welt ist so verschmutzt, dass nur noch kleine Teile bewohnbar sind.] [\textsubscript{C} Um die internationale Wirtschaftskrise zu lösen, haben sich alle Völker unter einer Weltregierung vereinigt.]
+\end{examples}
+
+Should each sentence  $A$, $B$, and $C$ be encoded separately and the represenatations than
+be combined with the aligned BERT subtokens? Or is it more
+effective to ``glue'' all sentences together (or rather, the concatenated SRL tokens in those
+sentences) and embedd this sequence? Further, also meta SRLs for [SEP] and [PAD] tokens could be added ---
+so that also sentence pair tasks are embedded as one long sequence of SRL tokens. All experiments
+except for XQuAD $\alpha$ were conducted implementing the latter approach, proving that the model
+profits more from the second architecture.
+
 
 
 \section{combination}
-
-\subsection{Aligning BERT subtokens with SRL tokens}
 
 A crucial part in the overall architecture is the combining of the numeric representation
 of (sub-)words computed by the BERT network and the embedded SRLs. One difficulty lies in
@@ -482,56 +515,85 @@ the general difference in parsing a sentence that exist.
 
 \section{Head Module}
 
+Since the vanilla classification and question answering heads differ quite
+starkly --- classification only takes into account the [CLS] token while
+the start end end index probabilities need to be computed on every token
+in the sequence --- I cover them in separate subsections.
+
+Additionally, for classifiaction tasks, I found more ways in tackling these
+with different heads, while for the question answering task I only saw one
+possibility for a GliBERT head which is virtually the vanilly head, except
+that SRL information may be added to the BERT subtokens.
+
 
 \subsection{Classifiction}
 
-While for question answering there was little tweeking needed to adapt to the extended BERT
-embeddings, for classification the situation looks a bit more complex. The standard BERT way
-of doing classification tasks runs as follows:
+% While for question answering there was little tweeking needed to adapt to the extended BERT
+% embeddings, for classification the situation looks a bit more complex. The standard BERT way
+% of doing classification tasks runs as follows:
 
-\begin{itemize}
-  \item Prepare the data: add a [CLS] token at the beginning, a [SEP] token between the two sentences (if there are), and pad with the [PAD] token
-  \item Send the prepared examples through the BERT network
-  \item Select only the embedding for the first token  --- i.e. the [CLS] ---, send it through a dense layer with a softmax and predict the class for this example
-\end{itemize}
+% \begin{itemize}
+%   \item Prepare the data: add a [CLS] token at the beginning, a [SEP] token between the two sentences (if there are), and pad with the [PAD] token
+%   \item Send the prepared examples through the BERT network
+%   \item Select only the embedding for the first token  --- i.e. the [CLS] ---, send it through a dense layer with a softmax and predict the class for this example
+% \end{itemize}
 
-\cite{devlin2018bert} visualize this as can be seen in figure \ref{fig:BERT-classification}.
+% \cite{devlin2018bert} visualize this as can be seen in figure \ref{fig:BERT-classification}.
+
+
+% The problem now is that in the above described standard implementation, there is no straigthforward
+% way to enrich the BERT embeddings with SRLs, since the only embedding that is used for prediction
+% is the [CLS] token; since this is a special BERT token it is not present in the original sentence
+% and, therefore, it does not have a corresponding SRL. However, as I lais out in the section before,
+% I add several meta SRLs which are added to the regular SRLs, to have numerical SRL representations
+% also for these special tokens.
+
+For both, single sentence and sentenc pair tasks, the vanilla BERT head considers
+only the last hidden state of the [CLS] token, after the sequence was sent through
+the transformer blocks and predicts class probabilities only relying on the
+information present in this vector $\in \mathbb{R}^{786}$:
 
 \fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification. Figure taken from \citep{devlin2018bert}.}{13}{BERT-Classification}
 
+Follwing, I present the three classification heads I used for my experiments: The [CLS]
+head, similar to the vanilla classifiaction head, the FFNN head, which consideres the
+numeric representation of all tokens in the sequence, and the GRU head, which implements
+a biderectional recurrent neural network which computes a condensed representation of
+the whole sequence before predicting the actual class porbabilities.\myfootnote{Early in
+the experimental phase, I also devised a CNN head, however, the preliminary results were
+not promising, so i concentrated on the other three heads.}
 
-The problem now is that in the above described standard implementation, there
-is no straigthforward way to enrich the BERT embeddings with SRLs, since the
-only embedding that is used for prediction is the [CLS] token; since this is a
-special BERT token it is not present in the original sentence and, therefore,
-it does not have a corresponding SRL. (And what should that be? Since it is a
-meta-token it rcan't really have a SRL?
 
-To tackle this problem, I remodeled the architecture from \cite{zhang2019semantics} on the one
-hand, and on the other hand tested several other final layer designs.
 
 \subsubsection{[CLS] Head}
 
-In their paper for SemBERT, \cite{zhang2019semantics} do not really address the
-issue laid out above. To the contrary, the differnt pieces of information they
-provide are rather conflicting, only after inspecting the code they released on
-\href{https://github.com/cooelf/SemBERT/}{GitHub}, the picture somewhat cleared:
+\cite{zhang2019semantics} follow in their implementation the vanilla BERT classification
+head, as proposed by \cite{devlin2018bert}:
 
-After predicitng the SRLs for a given input, they add pseudo-SRLs for the [CLS] and [SEP] tokens.
-In the look-up table of the BiGRU that consumes the SRLs, they then simply add the corresponding
-keys --- so that besides regular SRLs as ``B-V'' (beginning of predicate) or ``I-A0'' (inside
-or end of argument zero), there are also the labels ``[CLS]'' and ``[PRED]'' After sending this
-sequence through the BiGRU, they concatenate the two hidden states of the [CLS] SRL with the
-[CLS] BERT embedding and predict on that vector % Applying this strategy, now there \emph{is} a
-SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended
-to its BERT embedding vector
+After adding corresponding SRLs for the special BERT tokens and embedding the SRL sequence,
+the last hidden state representation for the BERT+SRL combind [CLS] token is selected
+and softmax-scaled probabilities for all classes are computed.
+
+% In their paper for SemBERT, \cite{zhang2019semantics} do not really address the
+% issue laid out above. To the contrary, the differnt pieces of information they
+% provide are rather conflicting, only after inspecting the code they released on
+% \href{https://github.com/cooelf/SemBERT/}{GitHub}, the picture somewhat cleared:
+
+% After predicitng the SRLs for a given input, they add pseudo-SRLs for the [CLS] and [SEP] tokens.
+% In the look-up table of the BiGRU that consumes the SRLs, they then simply add the corresponding
+% keys --- so that besides regular SRLs as ``B-V'' (beginning of predicate) or ``I-A0'' (inside
+% or end of argument zero), there are also the labels ``[CLS]'' and ``[PRED]'' After sending this
+% sequence through the BiGRU, they concatenate the two hidden states of the [CLS] SRL with the
+% [CLS] BERT embedding and predict on that vector % Applying this strategy, now there \emph{is} a
+% SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended
+% to its BERT embedding vector
 
 Formally, the [CLS] Head is a one layer Fullyconnected Feedforwrd Neural Network. The
 prediction is the results of sending the embedding of the [CLS] token through the network:
 $\hat{y} = softmax(L_1)$. The input dimensions of the layer vary according to the setting,
 i. e. if the SRLs are included, or not. if not, then the demsion is simply the standard
-BERT hidden size $h_i \in \mathbb{R}^768$, if the SRL embedding is appended, then $h_i \in
-\mathbb{R}^788$. the output dimensionality of the network depends on the number of classes
+BERT hidden size $h_i \in \mathbb{R}^{768}$, if the SRL embedding is appended, then $h_i \in
+\mathbb{R}^{788}$. the output dimensionality of the network depends on the number of classes
 for the task: This number ranges from 2 (PAWS-X, \emph{true}, \emph{false}) to 7 (deISEAR,
 \emph{Traurigkeit, Scham, Freude, Angst, Wut, Ekel, Schuld}).
 
@@ -539,8 +601,9 @@ for the task: This number ranges from 2 (PAWS-X, \emph{true}, \emph{false}) to 7
 \fig{images/head-cls.png}{fig:cls-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural
     \textbf{N}etwork on the [CLS]-token}{10}{{[}CLS{]} Head}
 
-In table XYZ I report the gains, losses this strategy yields for the four classifications data sets
-in my corpus.
+Intuitively, I expected this head to not show too big differences between the +SRL $-$SRL settings,
+since the SRL information, which is essentially a relational, sequential mark-up of the sequence is
+boied down into one token. However, as is also confirmed by the results of \cite{zhang2019semantics},
 
 
 \subsubsection{FFNN Head}
@@ -594,6 +657,9 @@ and explofing gradient problems, \citep{hochreiter1997long} proposed the LSTM ar
     \textbf{N}etwork on the concatenated last hidden states of the bi-directional GRU.}{10}{GRU Head}
 
 
+
+
+
 \subsection{Question Answering}
 \label{sec:question-answering}
 
@@ -605,6 +671,17 @@ B embedding. We only introduce a start vector $S \in \mathbb{R}^H$ and an end ve
 \mathbb{R}^H$ during fine-tuning. The probability of word $i$ being the start of the answer
 span is computed as a dot product between $T_i$ and $S$ followed by a softmax over all of the
 words in the paragraph: $P_i = \frac{e^{S\cdot T_i}}{\sum_{j}^{} e^{S\cdot T_j}}$.'' \citep{devlin2018bert}
+
+% \fig{images/bert_qa.png}{fig:BERT-QA}{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}{13}{BERT-QA}
+\begin{wrapfigure}[16]{r}{0.45\linewidth}
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
+\end{wrapfigure}
+
+
 
 \subsubsection{Span Prediction Head}
 
