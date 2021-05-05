@@ -205,6 +205,11 @@ mlqa = c(889, 17471, 9364, 3747, 1336, 795)
 xquad = c(120, 3303, 2267, 1226, 472, 307)
 
 deisear_percentage = mapply(function(x){x/sum(deisear)*100}, deisear)
+scare_percentage = mapply(function(x){x/sum(scare)*100}, scare)
+paws_percentage = mapply(function(x){x/sum(paws)*100}, paws)
+xnli_percentage = mapply(function(x){x/sum(xnli)*100}, xnli)
+mlqa_percentage = mapply(function(x){x/sum(mlqa)*100}, mlqa)
+xquad_percentage = mapply(function(x){x/sum(xquad)*100}, xquad)
 
 df3 <- data.frame(
         sets = c(rep("deISEAR", 6), rep("SCARE", 6), rep("PAWS-X", 6), rep("XNLI", 6), rep("MLQA", 6), rep("XQuAD", 6))
