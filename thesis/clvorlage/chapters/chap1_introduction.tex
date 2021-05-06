@@ -27,8 +27,8 @@ these statistical input cues to \emph{hierarchical} structures : ``The issue tha
 to this particular POS problem is tacit knowledge by the child that grammatical rules apply to
 such [hierarchical] structures'' \citep{berwick2013poverty} --- there is no behavioral explanation
 for the tacit knowledge about hierarchical structures in the mind of the child. Therefore,
-the POS argument still holds, although it has been somewhat weakend by empirical findings about
-acquisition driven by statisitcal insights.}
+the POS argument still holds, although it has been somewhat weakened by empirical findings about
+acquisition driven by statistical insights.}
 
 %(POS, Chomsky etc) Another astonishing fact about human language
 % is the overwhelming amount of languages that exist today, even that number was probably much
@@ -36,15 +36,15 @@ acquisition driven by statisitcal insights.}
 % of possible change may be, lots of questions are still open, and there remains enough work
 % to do.
 
-But maybe the most trivial and enigmatic trait about human language
-is that we actually \emph{understand} each other so well: That during
-a discourse, person X can retrieve the meaning of expressions uttered
-by person Y, and vice versa. Further, we are able to reconstruct a lot
-information that is not explicitly stated in an expression, and uphold
-such a mutually shared belief of state of affairs during a discourse.
-In fact, this ``shared intentionality'' is hypothesized as being one
-of the traits that separates human cognition and language from other
-animals (cf. \cite{tomasello2007shared}).
+One of the most trivial and enigmatic traits about human language and communication is
+that we actually \emph{understand} each other so well: That during a discourse, person
+X can reliably recover the encoded meaning of the expressions in the language signal
+uttered by person Y, and vice versa, especially given the ``noisy channel'' problem (cf.
+\cite{plotkin2000language}), which is elaborated on a little more below. Further, we are
+able to reconstruct a lot information that is not explicitly stated in an expression, and
+uphold such a mutually shared belief of state of affairs during a discourse. In fact,
+this ``shared intentionality'' is hypothesized as being one of the traits that separates
+human cognition and language from other animals (cf. \cite{tomasello2007shared}).
 
 Because {\color{red} rational} thinking, reasoning, and cognition in general are being perceived
 as essentially linked to human linguistic competences, communicative abilities have been proposed
@@ -90,7 +90,7 @@ language proficiency tests, such as vocabulary tests, cloze tests, reading compr
 well as various forms of production, interaction, and mediation tests \textelp{}''. Therefore,
 I think it is not completely unsound to assess NLU capabilities of artificial systems
 by measuring their performance on standardized datasets.}
-NLU aims at building systems which are able to retreive the semantic
+NLU aims at building systems which are able to retrieve the semantic
 content encoded in natural language and are able to further act upon it:
 For example, a chatbot should be capable of ``understanding'' that the questions ``What's
 the weather like?'', ``Can you tell me today's weather forecast, please?'', ``Will I need
@@ -188,19 +188,21 @@ algorithms are itself learning the features that are the most informative for a 
 human part in the process is reduced to design the overall model architecture and compile large
 enough amounts of data that are, in the best case, also of good quality.
 
-While the roughly sketched methods above apply to a wide ranges of applications in NLP, I will now
-point to some of the enquiries NLU aims at: Simply put, NLP is concernced with the structural side
-of natural language text, while NLU looks at the content of these utterances. For example, typical
-NLP tasks such as dependency parsing, POS-tagging, and coreference soltution don't require a
-semantic representation of words or phrases --- often, it suffices to look at structural properties
-such as morphology, simple frequency statstics, or transition probablities to solve such problems
-to an acceptable extent. On the other hand, NLU tries to process language more in a manner as
-humans do it: We infer something from language, answer questions, detect logical inconsistencies
-etc.
+While the roughly sketched methods above apply to a wide ranges of
+applications in NLP, I will now point to some of the enquiries NLU aims
+at: Simply put, NLP is concernced with the structural side of natural
+language text, while NLU looks at the content of these utterances. For
+example, typical NLP tasks such as dependency parsing, POS-tagging, and
+coreference soltution don't require a semantic representation of words
+or phrases --- often, it suffices to look at structural properties such
+as morphology, simple frequency statstics, or transition probablities
+to solve such problems to an acceptable extent. On the other hand, NLU
+tries to process language more in a manner like humans do it: We infer
+something from language, recocile communication information with our
+world knowledge, answer questions, detect logical inconsistencies etc.
 
-{\color{red} A concise summary of the scope of the NLU and the numerous, non-intuitive pitfalls is given by
-\cite{mcshane2017natural} in her paper on NLU in cognitive agents, where she also argues that
-truly NLU-capable systems's abilities must go beyond ``mere'' symbol processing:
+{\color{red} \cite{mcshane2017natural} in her paper on NLU in cognitive agents argues that truly
+NLU-capable systems's abilities must go beyond ``mere'' symbol processing:
 
 \begin{quote}
   cognitive agents must be nimble in the face of incomplete interpretations since even people do not
@@ -235,10 +237,11 @@ As the endeavor of building a holistic, fully NLU capable agent is probably an o
 ambitious to achieve at once, the strategy in modern computational linguistics is to break it
 down into smaller ``subproblems'':
 
-Several core NLU {\color{red} skills} have been identified and datasets tailored at those
-have been constructed.
+Several core building blocks of NLU have been identified and datasets comprising data  tailored at those
+have been compiled. The performance of new models and approaches on such data sets is often taken as
+a proxy for attesting NLU capabilities targeted at the task.
 
-For example:
+Some of these proposed subproblems or proto-tasks of NLU are the following:
 
 \begin{description}
   \item[Sentiment Detection] Given a sentence, we can normally assess if the emotion transmitted by
@@ -259,8 +262,18 @@ For example:
       1422.'', a system would would need to extract the span ``Henry V''.
 \end{description}
 
-Datasets addressing those tasks are listed in table ref{tab:original-GLUE} describing the GLUE
-benchmark dataset compilation.
+Since each of these tasks and datasets are focused on a specific subpart of general NLU and
+it is by no means implied that a system which e.g. performs well on entailment recognition
+will be able to extract answer spans to an acceptable degree. Therefore, to assert that some
+model or approach does indeed capture some properties of real NLU, it has become standard
+to evaluate on several of those subtasks. One of the best established compilations of such
+subtasks is the GLUE benchmark citep{wang2018glue}, `` a collection of NLU tasks including
+question answering, sentiment analysis, and textual entailment, and an associated online
+platform for model evaluation, comparison, and analysis.'' \citep{wang2018glue}.
+
+Since my thesis is concerned with German and there is no such standardized benchmark, I
+compiled one for myself --- GerGLUE. GLUE and GerGLUE are described in more detail in
+chapter \ref{chap:3_datasets}.
 
 
 \subsection{Text Representations}
@@ -297,12 +310,6 @@ combined: <Every DET> <event NOUN> <has VERB> <a DET> <cause NOUN>.
 
 \subsubsection*{Embeddings}
 
-{\color{red} ``Where has Deep Learning helped NLP? The gains so far have not so much been from
-true Deep Learning (use of a hierarchy of more abstract representations to promote
-generalization) as from the use of distributed word representations—through the use
-of real-valued vector representations of words and concepts. Having a dense, multi-
-dimensional representation of similarity between all words is incredibly useful in NLP,
-but not only in NLP.'' \citep[p.~703]{manning2015computational}}
 
 Most NLU models don't operate on the text as it is, i.e. as an array of UTF-8 encoded
 signs. Often, it is easier to implement an algorithm that process text in some way, to
@@ -344,6 +351,16 @@ changes in semantics and grammatical function are present.}, a word representati
 framework which does not account for this, will clearly fail to adequatly interpret
 such sentences.
 
+The afore mentioned neural approaches in NLP have proven to be very apt at
+producing such representations: ``The gains so far [from Deep Learning] have
+not so much been from true Deep Learning (use of a hierarchy of more abstract
+representations to promote generalization) as from the use of distributed word
+representations—through the use of real-valued vector representations of words
+and concepts.'' \citep[p.~703]{manning2015computational}
+
+% CONTUNIATION OF QUOTA: Having a dense, multi-dimensional representation of similarity between all
+% words is incredibly useful in NLP, but not only in NLP.
+
 One effective framework of producing such contextualized word embeddings is BERT \citep{devlin2018bert},
 which I also will employ for the experiments in my thesis. The general concpts of contextualized
 word embeddings, transfer learning, and BERT in particular will be described in the next chapter
@@ -381,22 +398,22 @@ model the semantic equivalence of grammatical and syntactical quite different se
 \end{examples}
 
 Although ``break'' is a transitive verb in the first sentence while in the second
-an intransitive; although ``window'' is the grammatical object in the prior whil
+an intransitive; although ``window'' is the grammatical object in the prior while
 the grammatical object in the latter --- the expressed action is both times that
 an object, the window, was shattered.
 
 Semantic Roles are an attempt to formalize this by attributing each constituent
 a generalizable label. In this case, ``the window'' would be labelled as \emph{patient}
-, i.e. the particiapnt undergoing a change of state, in both sentences.
-In thge first, where there is also a clear initiator of this change, ``John''
+, i.e. the participant undergoing a change of state, in both sentences.
+In the first, where there is also a clear initiator of this change, ``John''
 would be labelled as the \emph{agent} of the event.
 
 A more detailed clarification of the concept semantic roles and its history wil be
 given in chapter \ref{chap:2_approach}, section \ref{sec:semantic-roles}.
 
-Thus, any sentence can be represented by the words in it replaced by their Semnantic Role Label
+Thus, any sentence can be represented by the words in it replaced by their Semantic Role Label
 (SRL): <John> <broke> <the> <window> $\rightarrow$ <AGENT> <PREDICATE> <PATIENT> <PATIENT>.
-(Or, as mentioned before, a combination of the ``normal'' text represenatation combined with SRLs)
+(Or, as mentioned before, a combination of the ``normal'' text representation combined with SRLs)
 
 
 
@@ -413,24 +430,24 @@ architecture and sound analysis of the results are {\color{red} rather meager}\m
 exmample, it is not clear \emph{what} results for the datasets are being reported: The best
 run out of several experiments, the average performance of several experiments, etc. (due to
 the random initialization of the weight matrices of the head modules and SRL encoder, there
-are expectable fluctations in performance, which makes it highly improbably that only one
+are expectable fluctuations in performance, which makes it highly improbably that only one
 model per task was trained). Neither control \citeauthor{zhang2019semantics} for statistical
 significance, which makes sound statements about architecture superiority quite disputable.}
 
 Although my approach stands in the tradition of recent machine learning trends in NLP --- i.e.
-traning a model on data and evaluating on test data for assessing model capabilities --- I
+training a model on data and evaluating on test data for assessing model capabilities --- I
 nevertheless view it also as an attempt at re-integrating linguistically motivated structures
 into NLP: ``Recently at ACL conferences, there has been an over-focus on numbers, on beating the
 state of the art. Call it playing the Kaggle game'' \citep[p.~702]{manning2015computational}.
 Despite the apparent success of linguistic-agnostic architectures on NLP benchmarks, those
-models tell us little about the nature of human language and the strctural properties of it;
+models tell us little about the nature of human language and the structural properties of it;
 \citeauthor{manning2015computational} continuing: ``It would be good to return some emphasis
 within NLP to cognitive and scientific investigation of language rather than almost exclusively
 using an engineering model of research'' \citep[p.~706]{manning2015computational}
 
-By implementing textual representations more grounded in linguistic theries, I see one of the
+By implementing textual representations more grounded in linguistic theories, I see one of the
 contributions of my model also in antagonizing the tendency of modern NLP to becoming more a
-data engineering and less a research endeavour motivated by insight in the inner workings
+data engineering and less a research endeavor motivated by insight in the inner workings
 of human language.
 
 

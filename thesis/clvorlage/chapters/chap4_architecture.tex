@@ -81,6 +81,7 @@ defined in the \texttt{fine\_tune\_BERT()} function.
 
 
 \section{SRL Module}
+\label{sec:srl-module}
 
 A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a
 given input text.\myfootnote{This may be one or multiple sentences.}
@@ -685,7 +686,7 @@ words in the paragraph: $P_i = \frac{e^{S\cdot T_i}}{\sum_{j}^{} e^{S\cdot T_j}}
 
 \subsubsection{Span Prediction Head}
 
-The ``standard'' implementation of the Q\&A BERT head consists of one simple FFNN which predicts
+The ``standard'' implementation of the Q\&A BERT head consists of one one-layer FFNN which predicts
 on each input token the probability of it being the start of the answer span and the end of the
 answer span, respectively. After both probabilities are computed for all tokens, the ones with
 the highest probability get selected; no further logic is enforced, such as that the index of

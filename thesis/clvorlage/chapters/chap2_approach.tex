@@ -265,98 +265,114 @@ my \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub repository}.
 % }{Levels of language}
 
 One difficulty a system targeted at NLU must tackle is the ability to cope with the vast amount of
-flexibility and freedom in natural language to express things. In NLU, often one would probably
-talk about propositions: Facts about the world are being stated and properties of this propositions
-need to be understood or processed in some way or the other.
-{\color{red} Problems now arise due to t}
+flexibility and freedom in natural language to express or describe the same state of affairs:
 
 \begin{examples}
-  \label{ex:semantics}
   \item Due to the big waves, the ship was severely damaged and went down.
-  \item The stormy ocean caused the vessel to sink.
+  \item \label{ex:sinking-sent} Severely damaged by the hurricane, the vessel sank to the ground.
   \item Unable to save the stricken freighter, the crew had to be evacuated.
 \end{examples}
 
 Although these three sentences make use of very different vocabulary --- an unweighted BLEU score
 is virtually zero between them --- it is obvious to a speaker of English that they all convey more
-or less the same meaning, that all of them tell the same state of affairs: A ship sank because of the
-forces of nature.
+or less the same meaning, that all of them tell the same state of affairs: A ship sank because
+of the forces of nature. In linguistics, this is often reffered to as proposition: The ``lexical
+kernel of of a sentence that determines its truth conditions, regardless of the syntactic form and
+lexical filling of the given form of expression'' \cite[p.~959]{bussmann2006routledge}. In other
+words, the three sentences above describe the same states of affairs, which means that they are
+verified or falsified by the same conditions in the real world --- i.e. \emph{if} what they are
+denoting \emph{is} really the case.
 
-Maybe the most obvious way of saying the same thing with different words is synonymy: ``Ship'',
-``vessel'', and ``freighter'' all refer to the same object in the examples above; having several
-options when choosing a word to denote something is a paramount feature of human language.
+Maybe the most obvious way of encoding the same proposition with different words is
+synonymy: ``Ship'', ``vessel'', and ``freighter'' all refer to the same object in the
+examples above; having several options when choosing a word to denote something is a
+paramount feature of human language.
 
-Further, the communication of one and the same event, e.g. the sinking
-of a ship, can be transmitted in various ways: In the second sentence,
-the process is denominated explicitly using the verb ``to sink''; in
-the first, the semantically more obscure semi-fixed expression ``to go
-down'' is used to inform about that very situation; while in the third
-the sinking of the ship is not mentioned explicitly but inferable from
-the circumstance of ``not being able to save'' it.
+Further, the description of one and the same event, e.g. the proposition of the sinking incident
+of a ceratin ship, can be linguistically encoded in various ways: In the second sentence, the
+process is denominated explicitly using the verb ``to sink''; in the first, the semantically more
+obscure semi-fixed expression ``to go down'' is used to inform about that very situation; while in
+the third the sinking of the ship is not mentioned explicitly but inferable from the circumstance
+of ``not being able to save'' it.
 
-For a human speaker, all this disentangling, recognizing coreference,
-reconstructing not explicitly mentioned context, etc. happens effortless
-and automatic --- for an algorithm, however, phenomena like the ones
-mentioned before pose serious challenges.
+For a human speaker, all this disentangling, recognizing coreference, reconstructing
+not explicitly mentioned information, etc. happens effortless and automatic --- for an
+algorithm, however, phenomena like the ones mentioned before pose serious challenges.
 
-``For computers to make effective use of information encoded in text, it is essential that
-they be able to detect the events that are being described and the event participants.''
-\citep{palmer2010semantic}
+Therefore, a way of equipping an NLU algorithm with tools aimed at semantic interpretation
+capabilites is a core issue that needs to be addressed: ``For computers to make effective
+use of information encoded in text, it is essential that they be able to detect the events
+that are being described and the event participants.'' \citep{palmer2010semantic}
 
-As I laid out in section \ref{sec:problems}, a modern, unsupervised model
-like BERT seems to perform surprisingly good in tasks where such ``understanding'' of
+As I laid out in section \ref{sec:problems}, in modern, attention-based models like BERT,
+all linguistic, semantic, and factual knowledge the model acquires, is infered, or learned
+by it from raw text data. Nevertheless, and this is what also what intrigued the NLU field
+to it, BERT seems to perform surprisingly good in tasks where such ``understanding'' of
 events are being tested.\myfootnote{Of course, one does not really measure epistemical
-understanding in such tests, {\color{red} but this is maybe the closest we get} (cf. \cite{sahlgren2021singleton})}
-Simultaneously, some investigated failures of BERT seem to indicate that this ``understanding''
-goes not too deep.
+understanding in such tests, {\color{red} but this is maybe the closest we get} (cf.
+\cite{sahlgren2021singleton})} Simultaneously, some investigated failures of BERT seem
+to indicate that this ``understanding'' goes not too deep and e.g. the recognition of
+proposition equivalency between sentences is partially poor.
 
-Semantic Roles are an attempt at creating an instrument with which it is possible to analyze
-sentences as \ref{ex:semantics} and capture the semantic similarity between them. The central
-idea hereby is that every utterance has an underlying semantic structure\myfootnote{Often,
-especially in Generative Grammar traditions, this level is also known as deep structure, or
-D-structure.} (sloppily phrased: ``Who did What to Whom, and How, When and Where?'') which
-can be realized in different surface structures. There have been various undertakings in
-creating a vocabulary for describing such structures, putting the focus on different aspects and showing varying degrees of {\color{red} analytic detail}.
+Semantic Roles are an attempt at creating an instrument with which it is possible to analyze the
+meaning of sentences in a structured manner and being able to express in generalizable terms
+their semantic properties, e.g. that two sentences express the same proposition. The central idea
+hereby is that every utterance has an underlying semantic structure\myfootnote{Often, especially
+in Generative Grammar traditions, this level is also known as deep structure, or D-structure.}
+(sloppily phrased: ``Who did What to Whom, and How, When and Where?'') which can be realized in
+different surface structures. There have been various undertakings in creating a vocabulary for
+describing such structures, putting the focus on different aspects and showing varying degrees of
+{\color{red} analytic detail}.
 
-The paper ``The Case for Case'' \citep{fillmore1967case} is often seen as the starting point for
-the theory of semantic roles in modern linguistics. \citeauthor{fillmore1967case} argued in it
-that what he called ``Deep-Cases'' play a crucial role in the Deep-Structure of sentences ---
-the hitherto prevalent view in Generative Grammar was that case was a purely Surface-Structure
-related phenomenon and only one of several possibilities to realize syntactic relationships.
-Interestingly, these ``Deep-Cases'' were semantically-motivated; he proposed
-seven Deep-Cases, e.g. the ``Agentive'': `` [T]he case of the typically animate perceived instigator of the
-action identified by the verb'', or the so-called ``Factitive'': `` [T]he case of the object or being resulting from the action or
-state identified by the verb, or understood as a part of the meaning of the verb'' \citep[p.~46]{fillmore1967case}.
-The observable Surface-From cases could than through elaborate tests give insights as to what the
-underlying Deep-Cases were.
+The work ``The Case for Case'' \citep{fillmore1967case} is often seen as the starting point
+for the theory of semantic roles in modern linguistics. \citeauthor{fillmore1967case}
+argued in it that what he called ``Deep-Cases'' play a crucial role in the Deep-Structure
+of sentences --- the hitherto prevalent view in Generative Grammar was that case was a
+purely Surface-Structure related phenomenon and only one of several possibilities to realize
+syntactic relationships. Interestingly, these ``Deep-Cases'' were semantically-motivated; in
+combination with so called verb-framesm these cases would capture the semantic core of the
+proposition embedded in the Deep-Structure: A verb like \emph{open} would e.g. form a frame
+denoting an ``opening event'' involving an actor, the ``Opener'', and an object, ``the thing
+opened'' (cf. \cite[p.~46f.]{fillmore1967case}). Seven of such Deep-Cases were proposed by
+him, e.g. the ``Agentive'': `` [T]he case of the typically animate perceived instigator of
+the action identified by the verb'', or the so-called ``Factitive'': `` [T]he case of the
+object or being resulting from the action or state identified by the verb, or understood as
+a part of the meaning of the verb'' \citep[p.~46]{fillmore1967case}. The Deep-Structure of
+a sentence would then be realized via certain transformational rules as actual, linguistic
+utterance; e.g. the question ``Did he really go to school in XYZ?'' and ``He went to school
+in XYZ'' are realizations of the same underlying Deep-Structure. Once these transformational
+rules and Deep-Structures would be understood and described in a sufficient manner, one could
+turn the analysis around and by examining the observable surface structures of an utterance
+via the mapping rules to the underlying Deep-Structures would provide an instrument of
+retrieving the underlying semantic structure, or proposition.
 
-Building upon those core concepts introduced by Fillmore, other linguists added features
-to the project of formalizing the core semantic structures found in language, as summarized by
-\citeauthor{palmer2010semantic}:
-In the beginnings of the 70ies, \cite{jackendoff1972semantic} expanded and refined Fillmore's
-model by introducing the concept of primitive conceptual predicates and their property of governing
-arguments, which were conceptualized as bearing some proto-semantics, similar to the Fillmorian
-Deep-Cases. This approach, known as ``Lexical Conceptual Structure'' (LCS), proved to be
-an elegant theory and capable of generalizing well between different verbs; in the 90ies LCS
-was implemented as system for representing semantics in early NLU and translation models \citep{palmer2010semantic}.
-But, due to its detailed analysis of verbs into (several) primitive predicates and the highly verb specific
-conceptualized semantic roles of them, LCS turned out to be cumbersome to extend to the whole range
+Building upon those core concepts introduced by Fillmore, other linguists added
+features to the project of formalizing the core semantic structures of propositions,
+as summarized by \citeauthor{palmer2010semantic}: In the beginnings of the 70ies,
+\cite{jackendoff1972semantic} expanded and refined Fillmore's model by introducing the
+concept of primitive conceptual predicates and their property of governing arguments,
+which were conceptualized as bearing some proto-semantics, similar to the Fillmorian
+Deep-Cases. This approach, known as ``Lexical Conceptual Structure'' (LCS), proved
+to be an elegant theory and capable of generalizing well between different verbs; in
+the 90ies LCS was implemented as system for representing semantics in early NLU and
+translation models \citep{palmer2010semantic}. But, due to its detailed analysis of
+verbs into (several) primitive predicates and the highly verb specific conceptualized
+semantic roles of them, LCS turned out to be cumbersome to extend to the whole range
 of a vocabulary of a language.
 
-\cite{dowty1991thematic} in contrast, approached the problem of constructing
-a framework for analyzing core conceptual semantic structures from a different
-angle: Instead of providing a detailed description of the primitive predicate and
-idiomatic argument structure for each individual verb, he attempted to identify
-general functions of noun phrases, what he called ``thematic proto-roles'',
-present in sentences. To accomplish this, \citeauthor{dowty1991thematic} drew
-from the theory of ``family resemblance'' and defined a set of attributes which
-would indicate such a thematic role.
-``The hypothesis put forth here about thematic roles is suggested by the
-reflection that we may have had a hard time pinning down the traditional role
-types because role types are simply not discrete categories at all, but rather
-are cluster concepts \textelp{}'' \citep[p.~571]{dowty1991thematic}
+\cite{dowty1991thematic} in contrast, approached the problem of constructing a framework for
+analyzing core conceptual semantic structures from a different angle: Instead of providing
+a detailed description of the primitive predicate and idiomatic argument structure for each
+individual verb, he attempted to identify general functions of noun phrases in what he called
+``thematic proto-roles''. To accomplish this, \citeauthor{dowty1991thematic} drew from the
+theory of ``family resemblance'' and defined a set of attributes which would indicate such
+a thematic role. ``The hypothesis put forth here about thematic roles is suggested by the
+reflection that we may have had a hard time pinning down the traditional role types because
+role types are simply not discrete categories at all, but rather are cluster concepts
+\textelp{}'' \citep[p.~571]{dowty1991thematic}
 
-Proto-Agent properties (after \citep[p.~572]{dowty1991thematic}):
+For example, \citep[p.~572]{dowty1991thematic} defines the property bundle of semantic Proto-Agents
+as follows:
 
 \begin{enumerate}[label=\alph*]
   \item volitional involvement in the event or state
@@ -366,32 +382,23 @@ Proto-Agent properties (after \citep[p.~572]{dowty1991thematic}):
   \item (exists independently of the event named by the verb)
 \end{enumerate}
 
-{\color{red} I will not elaborate this further, but other theories have been put forward.}
+Similar clusters of characteristics can also be defined for other proto-roles, like
+patients or themes etc. However, like most theories in linguistics, Semantic Roles
+remain a disputed topic in the field until today: ``There may be general agreement on
+the cases (or Thematic Roles or Semantic Roles) \textelp{}, but there is substantial
+disagreement on exactly when and where they can be assigned and which \textelp{}
+should be added, if any'' \citep{palmer2010semantic}. However, the general, agreed
+upon objective of semantic roles and similar concepts may be paraphrased as follows:
 
-Like many theories in linguistics, Semantic Roles remain a disputed topic in the field until today:
-``There may be general agreement on the cases (or Thematic Roles or Semantic Roles) \textelp{},
-but there is substantial disagreement on exactly when and where they can be assigned and which
-additional cases should be added, if any.'' \citep{palmer2010semantic}
+\begin{examples}
+  \item \textbf{Semantic Roles are systematic abstractions of semantic functions that are attributed
+  to the participants in a proposition expressed in human language.}
+\end{examples}
 
-% \begin{itemize}
-%   \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
-%   \item different syntactic constituents can bear same SR
-%   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
-% \end{itemize}
-
-However, different resources have been created, implementing some variety of the various Semantic Roles frameworks.
-One of these is the PropBank \citep{kingsbury2002treebank}.
-
-
-Semantic Roles are systematic abstractions of semantic functions that are attributed to the participants
-in a factual situation: The volitional acting entity in a situation is abstracted as ``(Proto-)Agent''; regardless
-of the actual, concrete act. Similarly, noun phrases which denote participants that
-
-``Because verbs generally provide the bulk of the event semantics of any given sentence, verbs have
-been the target of most of the existing two million words of PropBank annotation. Nonetheless,
-to fully capture event relations, annotations must recognize the potential for their expression
-in the form of nouns, adjectives and multi-word expressions, such as Light Verb Constructions
-(LVCs).'' \citep[p.~3014]{bonial2014propbank}
+The volitional acting entity in a situation, e.g. is
+abstracted as ``(Proto-)Agent''; regardless of the actual, concrete event denoted by
+the verb. Similarly, noun phrases which denote participants that undergo some state
+of change are captured as ``proto-patients''.
 
 \begin{examples}
   \item He fears bears.
@@ -399,8 +406,70 @@ in the form of nouns, adjectives and multi-word expressions, such as Light Verb 
   \item He is afraid of bears.
 \end{examples}
 
+For some time now there are lexical resources implementing one approach of structural annotation
+layer of predicate-argument information, or semantic role labels, to the syntactic structures
+of the Penn Treebasinking-sentFrameNet Severely dacitep{palmer2005proposition}, which adds maged bycause of thurricanewhich, ``sankemanti to the groundc
+descriptions of several thousand English lexical items and backing up these descriptions with
+semantically annotated attestations from contemporary English corpora.''
+
+% \begin{itemize}
+%   \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
+%   \item different syntactic constituents can bear same SR
+%   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
+% \end{itemize}
+
+I focus here on the PropBank approach since the semantic role labeler I use in my architecture
+was trained on the German CoNLL `09 citep{hajivc2009conll} part, which consisted in semantic
+role labelling according to the PropBank scheme.
+In PropBank each verb or rather, each verb sense gets a so-called frame attributed: This consists
+of a definition of the event denoted by that particalur verb sense and the semantic arguments
+associated with. For exmample, the verb \emph{to sink} is analysed as follows:
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+      \emph{sink.01} (cause to) go down, esp into water, downward motion\\
+
+      Roles:
+      \begin{description}
+        \item[Arg0-PAG] causer of sinking (vnrole: 45.4-agent)
+        \item[Arg1-PPT] thing sinking (vnrole: 45.4-patient)
+        \item[Arg2-EXT] EXT
+        \item[Arg3-DIR] start point
+        \item[Arg4-GOL] end point, destination
+        \item[Arg5-MNR] instrument (vnrole: 45.4-instrument)
+      \end{description}
+    }%
+}
+
+Concretely, this woudl lead to the following PropBank annotation of sentence \ref{ex:sinking-sent}:
+
+\begin{examples}
+  \item Severely damaged [\textsubscript{Arg0-PAG} by the hurricane], [\textsubscript{Arg1-PPT} the vessel] [\textsubscript{Rel} sank] [\textsubscript{Arg4-GOL} to the ground].
+\end{examples}
+
+% ``An individual verb’s semantic arguments are numbered, beginning with zero.
+% For a particular verb, Arg0 is generally the argument exhibiting features of a Pro-
+% totypical Agent (Dowty 1991), while Arg1 is a Prototypical Patient or Theme. No
+% consistent generalizations can be made across verbs for the higher-numbered
+% arguments, though an effort has been made to consistently define roles across mem-
+% bers of VerbNet classes. In addition to verb-specific numbered roles, PropBank defines
+% several more general roles that can apply to any verb.'' \citep[p.~75]{palmer2005proposition}
+
+``Because verbs generally provide the bulk of the event semantics of any given sentence,
+verbs have been the target of most of the existing two million words of PropBank annotation.
+Nonetheless, to fully capture event relations, annotations must recognize the potential for
+their expression in the form of nouns, adjectives and multi-word expressions, such as Light
+Verb Constructions (LVCs)'' \citep[p.~3014]{bonial2014propbank}. Since my approach relies on
+dependency pyrsing for identifying predicates, I only focus on verb predicates since these
+are reliably extractable from the dependency parse tree (see section \ref{sec:srl-module}),
+contrary to the mentioned non-verbal predicates.
+
+% Although, as is exemplified by the third sentence, in the following list, that the
+% predication information might also be carried by a noun phrase or complex predicate
+% (e.g. light verb + adjective):
+
 \cite{bonial2012english} define the following proto-roles for the numbered arguments, modifiers,
-and relations:
+and relations which correspond to the PropBank roles:
 
 \begin{description}
   \item[\customcolorbox{\textbf{Arg0}}{blue}] agent
@@ -429,21 +498,24 @@ relations, I include only verbal ``Rel''s in the examples:
 
 NOTE: \myfootnote{To me, not all annotations in PropBank are beyond all doubt; for example, in sentence \ref{itm:wrongsrl} ``an investment banker'' is labelled as agent ``maximzing'' the the patient ``shareholder value'' --- however, I would argue that it's rather the ``alternative'' that take proto-agentive role in maximizing the shareholder values.}
 
-``The main reason computational systems use semantic roles is to act as a shallow meaning
+{\color{red} ``The main reason computational systems use semantic roles is to act as a shallow meaning
 representation that can let us make simple inferences that aren’t possible from the pure surface
 string of words, or even from the parse tree.'' \cite[p.~375]{jurafsky2019speech}
 
-In the literature, often \cite{gildea2002automatic} is considered to have formally defined the
-task of automatic SRL.
+% In the literature, often \cite{gildea2002automatic} is considered to have formally defined the
+% task of automatic SRL.
 
 ``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any
-system for natural language understanding.'' \citep{palmer2010semantic}
+system for natural language understanding.'' \citep{palmer2010semantic}}
 
-PropBank Roles, according to \cite{bonial2012english}:
-
-Thanks to lexical resources such as the PropBank, a multitude of models aiming at labeling
-sentences with semantic roles are now available. DAMESRL \citep{do2018flexible}, trained on
-the CoNLL '09 \citep{hajivc2009conll} data (which implements PropBank style SRLs).
+Thanks to lexical resources such as the PropBank, a multitude of models aiming at
+labeling sentences with semantic roles are now available. For German, there is e.g.
+DAMESRL \citep{do2018flexible}, trained on the CoNLL '09 \citep{hajivc2009conll}
+data (which implements PropBank style SRLs). This is also the semantic role labeler
+I employ in my system. Since I treat the sematnic role labeller essentially as a blackbox
+in my architecture and use it only as an out-of-the-shelf SRL predictor, I will not
+go into details about the different approaches to automatic semantic role labelling --- the
+interested reader is referred to XXXXXX.
 
 Following some examples of DAMESRL-labelled sentences stemming from the GliBERT corpus (see chapter
 \ref{chap:3_datasets}). The sentences are represented vertically with the leftmost column being the
@@ -455,7 +527,12 @@ like ``He is running from the bear'', one would mark the word beginning the PP w
 other words inside the PP with \textbf{I}, and all other words outside of it, using \textbf{O}:
 ``He[O] is[O] running[O] from[B-PP] the[I-PP] bear[I-PP]''.}
 
-Note that V = Rel, A\textit{N} = Arg\textit{N}
+Following are some example sentences from three GerGLUE datasets with the SRLs
+produced by DAMESRL. Every column right to the verticalized sentence represents one
+argument-predicate structure for this sentence. Note that the different labels are
+slightly differently labelled than in the PropBank, as listerd before: \texttt{V}
+(``Verb'') stands for \texttt{Rel} (``relation''), \texttt{A}\textit{n} stands for
+\texttt{Arg}\textit{n} (both are abbreviations for ``argument'').
 
 \textbf{deISEAR}
 
