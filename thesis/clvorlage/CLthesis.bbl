@@ -5,21 +5,17 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Aepli(2018)]{aepli2018parsing}
-N.~Aepli.
-\newblock \emph{Parsing Approaches for Swiss German}.
-\newblock PhD thesis, University of Zurich, 2018.
-
 \bibitem[Artetxe et~al.(2019)Artetxe, Ruder, and Yogatama]{artetxe2019cross}
 M.~Artetxe, S.~Ruder, and D.~Yogatama.
 \newblock On the cross-lingual transferability of monolingual representations.
 \newblock \emph{arXiv preprint arXiv:1910.11856}, 2019.
 
-\bibitem[Auer et~al.(2007)Auer, Bizer, Kobilarov, Lehmann, Cyganiak, and
-  Ives]{auer2007dbpedia}
-S.~Auer, C.~Bizer, G.~Kobilarov, J.~Lehmann, R.~Cyganiak, and Z.~Ives.
-\newblock Dbpedia: A nucleus for a web of open data.
-\newblock In \emph{The semantic web}, pages 722--735. Springer, 2007.
+\bibitem[Baker et~al.(1998)Baker, Fillmore, and Lowe]{baker1998berkeley}
+C.~F. Baker, C.~J. Fillmore, and J.~B. Lowe.
+\newblock The berkeley framenet project.
+\newblock In \emph{36th Annual Meeting of the Association for Computational
+  Linguistics and 17th International Conference on Computational Linguistics,
+  Volume 1}, pages 86--90, 1998.
 
 \bibitem[Bender et~al.(2021)Bender, Gebru, McMillan-Major, and
   Shmitchell]{bender2021dangers}
@@ -54,12 +50,6 @@ C.~Bonial, J.~Hwang, J.~Bonn, K.~Conger, O.~Babko-Malaya, and M.~Palmer.
 \newblock English propbank annotation guidelines.
 \newblock \emph{Center for Computational Language and Education Research
   Institute of Cognitive Science University of Colorado at Boulder}, 48, 2012.
-
-\bibitem[Bonial et~al.(2014)Bonial, Bonn, Conger, Hwang, and
-  Palmer]{bonial2014propbank}
-C.~Bonial, J.~Bonn, K.~Conger, J.~D. Hwang, and M.~Palmer.
-\newblock Propbank: Semantics of new predicate types.
-\newblock In \emph{LREC}, pages 3013--3019. Citeseer, 2014.
 
 \bibitem[Bowman et~al.(2015)Bowman, Angeli, Potts, and Manning]{bowman2015snli}
 S.~R. Bowman, G.~Angeli, C.~Potts, and C.~D. Manning.
@@ -154,6 +144,11 @@ J.~Chung, C.~Gulcehre, K.~Cho, and Y.~Bengio.
   modeling.
 \newblock \emph{arXiv preprint arXiv:1412.3555}, 2014.
 
+\bibitem[Clark et~al.(2019)Clark, Khandelwal, Levy, and Manning]{clark2019does}
+K.~Clark, U.~Khandelwal, O.~Levy, and C.~D. Manning.
+\newblock What does bert look at? an analysis of bert's attention.
+\newblock \emph{arXiv preprint arXiv:1906.04341}, 2019.
+
 \bibitem[Collobert et~al.(2011)Collobert, Weston, Bottou, Karlen, Kavukcuoglu,
   and Kuksa]{collobert2011natural}
 R.~Collobert, J.~Weston, L.~Bottou, M.~Karlen, K.~Kavukcuoglu, and P.~Kuksa.
@@ -174,6 +169,11 @@ M.-C. De~Marneffe, T.~Dozat, N.~Silveira, K.~Haverinen, F.~Ginter, J.~Nivre,
   and C.~D. Manning.
 \newblock Universal stanford dependencies: A cross-linguistic typology.
 \newblock In \emph{LREC}, volume~14, pages 4585--4592, 2014.
+
+\bibitem[De~Saussure(1989)]{de1989cours}
+F.~De~Saussure.
+\newblock \emph{Cours de linguistique g{\'e}n{\'e}rale}, volume~1.
+\newblock Otto Harrassowitz Verlag, 1989.
 
 \bibitem[de~Vries et~al.(2019)de~Vries, van Cranenburgh, Bisazza, Caselli, van
   Noord, and Nissim]{de2019bertje}
@@ -225,11 +225,6 @@ C.~Fillmore.
 L.~Floridi and M.~Chiriatti.
 \newblock Gpt-3: Its nature, scope, limits, and consequences.
 \newblock \emph{Minds and Machines}, 30\penalty0 (4):\penalty0 681--694, 2020.
-
-\bibitem[Foth(2006)]{foth2006umfassende}
-K.~A. Foth.
-\newblock Eine umfassende constraint-dependenz-grammatik des deutschen.
-\newblock 2006.
 
 \bibitem[Furnas et~al.(1988)]{furnas1988using}
 G.~Furnas et~al.
@@ -347,11 +342,6 @@ D.~P. Kingma and J.~Ba.
 \newblock Adam: A method for stochastic optimization.
 \newblock \emph{arXiv preprint arXiv:1412.6980}, 2014.
 
-\bibitem[Kingsbury and Palmer(2002)]{kingsbury2002treebank}
-P.~R. Kingsbury and M.~Palmer.
-\newblock From treebank to propbank.
-\newblock In \emph{LREC}, pages 1989--1993. Citeseer, 2002.
-
 \bibitem[Koehn(2004)]{koehn2004statistical}
 P.~Koehn.
 \newblock Statistical significance tests for machine translation evaluation.
@@ -456,6 +446,13 @@ B.~Myagmar, J.~Li, and S.~Kimura.
   Intelligence (ICAI)}, pages 135--141. The Steering Committee of The World
   Congress in Computer Science, Computer~…, 2019.
 
+\bibitem[Palmer et~al.(2005)Palmer, Gildea, and
+  Kingsbury]{palmer2005proposition}
+M.~Palmer, D.~Gildea, and P.~Kingsbury.
+\newblock The proposition bank: An annotated corpus of semantic roles.
+\newblock \emph{Computational linguistics}, 31\penalty0 (1):\penalty0 71--106,
+  2005.
+
 \bibitem[Palmer et~al.(2010)Palmer, Gildea, and Xue]{palmer2010semantic}
 M.~Palmer, D.~Gildea, and N.~Xue.
 \newblock Semantic role labeling.
@@ -475,6 +472,12 @@ Y.~Peng, S.~Yan, and Z.~Lu.
   evaluation of bert and elmo on ten benchmarking datasets.
 \newblock \emph{arXiv preprint arXiv:1906.05474}, 2019.
 
+\bibitem[Plotkin and Nowak(2000)]{plotkin2000language}
+J.~B. Plotkin and M.~A. Nowak.
+\newblock Language evolution and information theory.
+\newblock \emph{Journal of Theoretical Biology}, 205\penalty0 (1):\penalty0
+  147--159, 2000.
+
 \bibitem[Polignano et~al.(2019)Polignano, Basile, De~Gemmis, Semeraro, and
   Basile]{polignano2019alberto}
 M.~Polignano, P.~Basile, M.~De~Gemmis, G.~Semeraro, and V.~Basile.
@@ -488,6 +491,12 @@ M.~Polignano, P.~Basile, M.~De~Gemmis, G.~Semeraro, and V.~Basile.
 A.~Radford, K.~Narasimhan, T.~Salimans, and I.~Sutskever.
 \newblock Improving language understanding with unsupervised learning.
 \newblock 2018.
+
+\bibitem[Rajpurkar et~al.(2016)Rajpurkar, Zhang, Lopyrev, and
+  Liang]{rajpurkar2016squad}
+P.~Rajpurkar, J.~Zhang, K.~Lopyrev, and P.~Liang.
+\newblock Squad: 100,000+ questions for machine comprehension of text.
+\newblock \emph{arXiv preprint arXiv:1606.05250}, 2016.
 
 \bibitem[Ramshaw and Marcus(1999)]{ramshaw1999text}
 L.~A. Ramshaw and M.~P. Marcus.
@@ -517,6 +526,11 @@ T.~Samardzic.
   structure of verbs: a computational approach based on parallel corpora}.
 \newblock PhD thesis, University of Geneva, 2013.
 
+\bibitem[Sampson(1985)]{sampson1985writing}
+G.~Sampson.
+\newblock Writing systems.
+\newblock \emph{London, UK: H utchinson}, 1985.
+
 \bibitem[S{\"a}nger et~al.(2016)S{\"a}nger, Leser, Kemmerer, Adolphs, and
   Klinger]{sanger2016scare}
 M.~S{\"a}nger, U.~Leser, S.~Kemmerer, P.~Adolphs, and R.~Klinger.
@@ -543,11 +557,6 @@ K.~R. Scherer and H.~G. Wallbott.
 A.~Schiller, S.~Teufel, C.~St{\"o}ckert, and C.~Thielen.
 \newblock Guidelines f{\"u}r das tagging deutscher textcorpora.
 \newblock \emph{University of Stuttgart/University of T{\"u}bingen}, 1999.
-
-\bibitem[Schneider(2008)]{schneider2008hybrid}
-G.~Schneider.
-\newblock \emph{Hybrid long-distance functional dependency parsing}.
-\newblock PhD thesis, University of Zurich, 2008.
 
 \bibitem[Schwartz et~al.(2019)Schwartz, Dodge, Smith, and
   Etzioni]{schwartz2019green}
@@ -644,12 +653,6 @@ A.~Williams, N.~Nangia, and S.~R. Bowman.
 \newblock A broad-coverage challenge corpus for sentence understanding through
   inference.
 \newblock \emph{arXiv preprint arXiv:1704.05426}, 2017.
-
-\bibitem[Wittenberg(2016)]{wittenberg2016light}
-E.~Wittenberg.
-\newblock \emph{With light verb constructions from syntax to concepts},
-  volume~7.
-\newblock Universit{\"a}tsverlag Potsdam, 2016.
 
 \bibitem[Wolf et~al.(2019)Wolf, Debut, Sanh, Chaumond, Delangue, Moi, Cistac,
   Rault, Louf, Funtowicz, et~al.]{wolf2019transformers}

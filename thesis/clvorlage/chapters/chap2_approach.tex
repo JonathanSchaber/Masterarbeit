@@ -4,33 +4,34 @@
 % \epigraph{\textgreek{πάντες ἄνθρωποι τοῦ εἰδέναι}}{\textit{Heraclitus of Ephesus}}
 
 
-In this chapter, I will give a brief overview of several things: In a first step, I
-will elaborate on the topic of pretrained embeddings, transfer learning, and BERT,
-which is probably the most successful architecture implementing these concepts. .
-Secondly, I will shortly demonstrate problems that have been identified relating to
-the performance of BERT. Then, I will point out some submitted solutions countering
-those problems. Lastly, I will describe my approach and finally elucidate the topic of
-semantic roles.
+In this chapter, I will give a brief overview of several things: In a first step, I will
+elaborate on the topic of pretrained embeddings, transfer learning, and BERT, which is
+probably the most successful architecture implementing these concepts. Secondly, I will
+shortly demonstrate problems that have been identified relating to the performance of
+BERT and its relation to semantics. Follwoing, I will point out some submitted solutions
+countering those problems. Lastly, I will describe my approach and finally elucidate the
+topic of semantic roles.
 
 
 
 \section{Pretrained Embeddings and Transfer Learning}
 \label{sec:pretrained-embeddings}
 
-In recent years, it has proven to be very effective to use word embeddings computed by
-sentence or document encoders as representations for task-specifi architectures. Pretrained
-word embeddings have the advantage that they don't need to be learned from scratch by system
-solving the task at hand.
+In recent years, it has proven to be very effective to use word embeddings pre-computed by sentence
+or document encoders as input representations for task-specific architectures, which may fin-tune
+those embeddings while learning the task at hand. Pretrained word embeddings have the advantage
+that they don't need to be learned from scratch by system solving the task at hand.
 
-\cite{bengio2003neural} first implemented distributed word representations by using
-a neural \textit{n}-gram language model. In ``Natural language processing (almost)
-from scratch'', \cite{collobert2011natural} showed th utility of such embeddings for
-representing text as input for other neural networks which addressed downstream tasks.
-\cite{mikolov2013distributed} proved that such embeddings could be computed using a
-modest one-layer neural network targeted at selfsupervised training obejctives, namely
-CBOW and skip-gram. Context-sensitvity, i.e. taking into account the surrounding words
-in the embeddings, was introduced by the ELMo architecture \cite{peng2019transfer} and
-contextualizing word representations has since become standard in NLP.
+
+\cite{bengio2003neural} first implemented distributed word representations by using a neural
+\textit{n}-gram language model which could be re-uesd in downstream tasks. In ``Natural language
+processing (almost) from scratch'', \cite{collobert2011natural} showed tHE utility of such
+embeddings for representing text as input for other neural networks which addressed a multitude
+of classical NLP tasks. \cite{mikolov2013distributed} proved that such embeddings could be
+computed using a modest one-layer neural network targeted at selfsupervised training obejctives,
+namely CBOW and skip-gram. Context-sensitvity, i.e. taking into account the surrounding words in
+the embeddings, was introduced by the ELMo architecture \cite{peng2019transfer} and representing
+words using pretrained, contextualizing embeddings has since become standard in NLP.
 
 
 % `` The general approach to
@@ -39,51 +40,53 @@ contextualizing word representations has since become standard in NLP.
 % representations of the model self-organize so as to minimize this loss, in an end-to-end
 % learning framework.'' \citep[p.~703]{manning2015computational}
 
-The architecture computing word embeddings that has caused the most uproar
-recently was probably BERT \cite{devlin2018bert}, an architecture that led to so
-many variants of it, that it created a whole new field inside the NLP community
---- winkingly baptized as ``BERTology'' \cite{rogers2020primer}. BERT is a good
-example for a typical neural age NLP model: It's architecture is completely
-agnostic of linguistic knowledge about language whatsoever, it ``only'' operates
-on sequental concatenations of symbols; there is also no preprocessing of the
-data --- no POS-tagging, no dependency parsing, no NER.\myfootnote{Because of
-this non linguistic specific architecture, BERT can easily be adapted to operate
-on other sequential data. This has actually been done: \cite{ji2020dnabert} for
-example trained a DNABERT model for successfully deciphering non-coding DNA.}
-Albeit this complete lack of any sort of explicit linguistic knowledge, by only
-extracting statistical patterns and it learns from processing huge amounts of text,
-BERT embeddings achieved several SOTAs on well-established NLU data sets, such
-as GLUE \cite{wang2018glue}.
+The architecture computing contextualized word embeddings that has caused the most uproar
+recently was probably BERT \cite{devlin2018bert}, a model that led to so many variants of
+it, that it created a whole new field inside the NLP community --- winkingly baptized as
+``BERTology'' \cite{rogers2020primer}. BERT is a good example for a typical neural age NLP
+model: It's architecture is completely agnostic of symbolic, or structural knowledge about
+language whatsoever, it ``only'' operates on sequental concatenations of symbols; it also
+does not employ preprocessing of the data of any kind --- no POS-tagging, no dependency
+parsing, no NER.\myfootnote{Because of this non linguistic specific architecture, BERT
+can easily be adapted to operate on other sequential data. This has actually been done:
+\cite{ji2020dnabert} for example trained a DNABERT model for successfully deciphering
+non-coding DNA.} Albeit this complete lack of any sort of explicit linguistic knowledge,
+by only extracting statistical patterns which it learns from processing huge amounts of
+text targeted at its pretraining tasks, the resulting BERT embeddings achieved several
+SOTAs on well-established NLU data sets, such as GLUE \cite{wang2018glue}.
 
-Since the publication of the seminal paper ``BERT: Pre-training of deep bidirectional
-transformers for language understanding'' \cite{devlin2018bert} and the accompanying
-open-sourcing of its architecture\myfootnote{\url{https://github.com/google-research/bert}},
-BERT has probably been the most studied and cited NLP model producing word embeddings since
-word2vec \cite{mikolov2013distributed} --- amassing over 17,000 citations on Google Scholar
-as of April 2021.
+% Since the publication of the seminal paper ``BERT: Pre-training of deep bidirectional
+% transformers for language understanding'' \cite{devlin2018bert} and the accompanying
+% open-sourcing of its architecture\myfootnote{\url{https://github.com/google-research/bert}},
+% BERT has probably been the most studied and cited NLP model producing word embeddings since
+% word2vec \cite{mikolov2013distributed} --- amassing over 17,000 citations on Google Scholar
+% as of April 2021.
 % This massive interest from the NLP community in BERT suggests that it
 % somehow must be accomplishing something which is of greater significance to the field than
 % regular benchmark SOTA cracking by ``normal'' new or improved architectures.
 
-The basic concept of BERT is described by the authos as being a two-stepped
-framework: (1) Pretrain the model on unlabeled data over different pretraining
-tasks\myfootnote{\citeauthor{devlin2018bert} use the BooksCorpus, consisting
-of 800 million words, plus the English Wikipedia, consisting of 2.5 billion
-words. BERT optimizes its parameters on two training objectives: (1) Presented
-with a sentence containing one random word masked, the model has to predict
-it, and (2) BERT has to decide if, given two randomly sampled sentences, the
-second is a valid continuation of the first. Crucially, both tasks can be
-generated automatically, no tedious human annotation of data is needed.} and
-(2) for downstream tasks, use the embeddings by initializing the model with
-the pretrained parameters and fine-tune all of the parameters by using labeled
-data from the task at hand.
+The basic concept of BERT is described by the \citeauthor{devlin2018bert} as
+being a two-stepped framework: (1) Pretrain the model on unlabeled data over
+different pretraining tasks\myfootnote{\citeauthor{devlin2018bert} use the
+BooksCorpus, consisting of 800 million words, plus the English Wikipedia,
+consisting of 2.5 billion words. BERT optimizes its parameters on two training
+objectives: (1) Presented with a sentence containing one random word masked,
+the model has to predict it, and (2) BERT has to decide if, given two randomly
+sampled sentences, the second is a valid continuation of the first. Crucially,
+both tasks can be generated automatically, no tedious human annotation of data
+is needed.} and (2) for downstream tasks, use the embeddings by initializing
+the model with the pretrained parameters and fine-tune all of the parameters
+by using labeled data from the task at hand.
 
 One of the distinctive features of BERT is the minimal difference in architecture between
 pretraining and finetuning: The transformer based network which computes the contextualized
-token emeddings during the language modeling pretraining is also used in downstream task only
-with a so-called task-specific head on top.
-Another advantage of this approach is that the cost, hardware, and data intensive pre-training of the
-embeddings (step one) must only be computed once; the downstream task dependent fine-tunig can then
+token emeddings during the language modeling pretraining is also used in downstream tasks only
+with a so-called task-specific head on top of it. This makes re-implementing the BERT model in
+other architectures quite convenient, which is one of the reasons I decided to implement BERT
+in my approach as well.
+
+Another advantage of BERT is that the cost, hardware, and data intensive pre-training of the
+embeddings must only be computed once; the downstream task dependent fine-tunig can then
 be carried out in a lean set up.\myfootnote{To give an impression on the expenses of pre-training
 the BERT architecture: \cite{schwartz2019green} estimate the pre-training for BERT-large to have lasted four days
 on 64 TPU chips, resulting in power expenditures of about \$7,000. However, this has to be considered
@@ -95,22 +98,30 @@ parameters --- that is approximately 48 times the size of BERT-large (350 millio
 several sides, ranging from ecological and social to linguistic concerns over such models; for
 a good overview of these points see \cite{bender2021dangers}.}
 
-From a more technical point of view is BERT first and foremost a multi-layered bidirectional
+\fig{images/BERT_clipped.png}{fig:bert-architecture}{3D-visualization of the BERT architecture.
+The 12 attention heads and following linear projections in one block (here called ``Layer'')
+are vividly representend. The information flow is top-down, with the tokenized input sentence
+starting with the [CLS] token on top, and the computed embeddings on bottom. Credit for the image
+goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT
+Architecture}
+
+From a more technical point of view, BERT is first and foremost a multi-layered bidirectional
 transformer encoder. At it's heart lies an implementation of the self-attention mechanism, the
 transformer, introduced by \cite{vaswani2017attention}; the main difference, and apparently
 advantage, to other architectures that implement the transformer architecture, e.g. Open AI's GPT
-\citep{radford2018improving}, is that BERT is a bi-directional architecture. In simple terms,
-BERT takes an input sequence, tokenizes it and computes contextualized vector representations
-for each token via stacked blocks employing self-attention and linear combination. Figure
-\ref{fig:bert-architecture} depicts one of these blocks. For reasons of space, I will not go into
-more detail here about BERT's architecture.
+\citep{radford2018improving}, is that BERT is a bi-directional architecture. In simple terms, BERT
+takes an input sequence, tokenizes it and computes contextualized vector representations for each
+token via stacked blocks, depicted in figure \ref{fig:bert-architecture}, employing self-attention
+and linear combination. For reasons of space, I will not go into more detail here about BERT's
+architecture; the interested reader is referred to the original paper, as well as \cite{clark2019does},
+which provide an insight into the inner workings of BERT's attention mechanisms.
+
 % \myfootnote{For a really % well made visualization of
 % self-attention in BERT, I can  recommend \url{https://www.youtube.com/watch?v=-9vVhYEXeyQ}}.
 
-\fig{images/BERT_clipped.png}{fig:bert-architecture}{3D-visualization of the BERT architecture. Nicely illustrated are the 12 attention heads and following linear projections in one block (here called ``Layer''). Credit for the image goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT Architecture}
 
-\citeauthor{devlin2018bert} impressively demonstrated the capabilities of BERT by obtaining
-new SOTA results  on eleven NLU tasks, increasing the GLUE score by 7.7\% absolute improvement.
+% \citeauthor{devlin2018bert} impressively demonstrated the capabilities of BERT by obtaining
+% new SOTA results  on eleven NLU tasks, increasing the GLUE score by 7.7\% absolute improvement.
 
 
 
@@ -200,40 +211,48 @@ Note however that this is by no means an exhaustive presentation of all BERT-var
 \section{GliBERT}
 
 Infected by the pandemic BERT-fever and persuaded by the proven transfer-learning
-strength of BERT, I decide to also use BERT as pretrained, contextualized word
-representations in my architecture.
+capabilities of BERT, I decide to also use BERT as pretrained, contextualized word
+representations in my architecture; precisely, I concentrate on German and chose
+the \href{https://deepset.ai/german-bert}{German BERT}, pretrained and provided
+by deepset. Concentrating on the weak spots identified relating to semantic
+understanding of language, my approach will combine those BERT embeddings with
+structured linguistic information to counter those shortcomings.
 
-% slightly annoyed by the hegemony of English, I decided to enqueue in this illustrious list by using
-% BERT combining two of the {\color{red} advancement startegies}: I try to improve the German BERT by
-% enhancing it with structured, linguistic information during fine-tuning.
+There exist several linguistic structures which could be hypothetically included into BERT:
+\href{https://uni-tuebingen.de/en/faculties/faculty-of-humanities/departments/modern-languages/department-of-linguistics/chairs/general-and-computational-linguistics/ressources/lexica/germanet/}{GermaNet}
+\citep{hamp1997germanet} is a large lexical-semantic net that relates noun, verbs, and
+adjectives semantically by grouping lexical units that express the same concept into synsets
+and by defining semantic relations between these synsets; it can also be characterized as a
+thesaurus or a light-weight ontology. One difficulty relating to such structures is
+that the encoding of such hierarchical information and the sucsequent combining with
+contigouus data --- the sequence of BERT-embedded tokens in a text --- is not straight forward
+and requires an elaborate pipeline of different subsystems.
+
+Another, more plain, possibility would be to implement some linguistic-semantic ``mark-up'' of
+the tokens in a text: E.g. Dependency-parse the text and concatenate the BERT-embedded head tokens
+with a numerically encoded representation of the directed binary grammatical relation
+that it govern (``direct object'', ``determiner'', etc.).
+
+% E.g.identify named entities, include the encoded structured information
+% related to them, using the DBpedia \citep{auer2007dbpedia}, and enrich the BERT embeddings
+% with them.
+
+However, I decide to employ semantic roles for several reasons: \citeauthor{zhang2019semantics}
+demonstrated successfully the feasibility of this undertaking for English. Further, it occurred to
+me to be a good balance between two extremes: (1) Including sophisticated knowledge structures, or
+semantic information, which would require extensive preprocessing (stemming, identifying content
+words, potential word sense disambiguation, look-up in the knowledge base) and rather cumbersome
+encoding; and (2) straight forward, on the fly ``mark-up'' of input text, with low information
+substance in the case of named entities. with semantic roles, I get the best from both worlds:
+Relatively easy to implement structured information, as will be seen, while --- hopefully ---
+truly adding semantic substance to the vanilla BERT embeddings.
+
+Semantic Roles and their goals, history, and applications are described in more detail
+in the following section.
 
 Since it is common practice to give your enhanced/variegated BERT architecture an appropriate
 name I decided to not deviate from this tradition, and decided to call my breed \textbf{G}erman
 \textbf{l}inguistic \textbf{i}nformed BERT, or short: \textbf{GliBERT}.
-
-There exist several linguistic structures which could be hypothetically included into BERT:
-\href{https://uni-tuebingen.de/en/faculties/faculty-of-humanities/departments/modern-languages/department-of-linguistics/chairs/general-and-computational-linguistics/ressources/lexica/germanet/}{GermaNet} \citep{hamp1997germanet}
-is a large lexical-semantic net that relates noun, verbs, and adjectives semantically by
-grouping lexical units that express the same concept into synsets and by defining semantic
-relations between these synsets. It can also be characterized as a thesaurus or a light-weight
-ontology.
-
-Another, much simpler, possibility would be to identify named entities
-and include the encoded structured
-information related to them, e.g. using the DBpedia \citep{auer2007dbpedia}, and enrich
-the BERT embeddings with them.
-
-However, I decided to concentrate on semantic roles for several reasons: \citeauthor{zhang2019semantics}
-demonstrated the feasibility of this undertaking for English. Further, it occurred to me to be a good
-balance between two extremes: (1) Including sophisticated knowledge structures, which would
-require extensive preprocessing (stemming, identifying content words, potential word sense
-disambiguation, look-up in the knowledge base) and rather cumbersome encoding; and (2)
-stright-forward on the fly ``mark-up'' of input text, with low information substance in the
-case of named entities. with semantic roles, I get the best from both worlds: Easy to implement
-structured information, while --- hopefully --- truly adding semantic substance to the vanilla
-BERT embeddings.
-
-
 
 All code relating to the following dataset set ups, GliBERT architecture, and training can be found in
 my \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub repository}.
@@ -264,32 +283,42 @@ my \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub repository}.
 % \end{tabular}
 % }{Levels of language}
 
-One difficulty a system targeted at NLU must tackle is the ability to cope with the vast amount of
-flexibility and freedom in natural language to express or describe the same state of affairs:
+One difficulty a system targeted at NLU must tackle is the ability to cope with the
+vast amount of flexibility and freedom in natural language to express or describe
+one and the same state of affairs. There may be subtle differences in emphasis,
+markedness, or style, but the following sentences all roughly speak about the same
+states of affairs:\myfootnote{Of course, from an aesthetic, literary point of view,
+the chose of the right words is crucial and should by no means be played down ---
+``The difference between the almost right word and the right word is really a large
+matter. 'tis the difference between the lightning bug and the lightning'', as Mark
+Twain famously put it.}
 
 \begin{examples}
-  \item Due to the big waves, the ship was severely damaged and went down.
+  \item The ship leaked critically due to the big waves and went down.
   \item \label{ex:sinking-sent} Severely damaged by the hurricane, the vessel sank to the ground.
-  \item Unable to save the stricken freighter, the crew had to be evacuated.
+  \item The crew --- unable to save the stricken freighter --- had to be evacuated by air.
 \end{examples}
 
 Although these three sentences make use of very different vocabulary --- an unweighted BLEU score
 is virtually zero between them --- it is obvious to a speaker of English that they all convey more
 or less the same meaning, that all of them tell the same state of affairs: A ship sank because
-of the forces of nature. In linguistics, this is often reffered to as proposition: The ``lexical
+of the forces of nature. In linguistics, this is often referred to as proposition: The ``lexical
 kernel of of a sentence that determines its truth conditions, regardless of the syntactic form and
 lexical filling of the given form of expression'' \cite[p.~959]{bussmann2006routledge}. In other
 words, the three sentences above describe the same states of affairs, which means that they are
 verified or falsified by the same conditions in the real world --- i.e. \emph{if} what they are
 denoting \emph{is} really the case.
 
-Maybe the most obvious way of encoding the same proposition with different words is
-synonymy: ``Ship'', ``vessel'', and ``freighter'' all refer to the same object in the
-examples above; having several options when choosing a word to denote something is a
-paramount feature of human language.
+Maybe the most obvious way of encoding the same proposition with different words is synonymy:
+``Ship'', ``vessel'', and ``freighter'' all refer to the same object in the examples above;
+having several options when choosing a word to denote something is a paramount feature of human
+language. As section \ref{sec:problems} showed, simply exchanging a small subset of the words
+in a sentence by synonyms ot them, has potentially severe impact on models which are aimed at
+NLU tasks on such sentences. In other words, BERT apparently fails often to recognize that two
+sightly different word sequences had the same meaning.
 
 Further, the description of one and the same event, e.g. the proposition of the sinking incident
-of a ceratin ship, can be linguistically encoded in various ways: In the second sentence, the
+of a certain ship, can be linguistically encoded in various ways: In the second sentence, the
 process is denominated explicitly using the verb ``to sink''; in the first, the semantically more
 obscure semi-fixed expression ``to go down'' is used to inform about that very situation; while in
 the third the sinking of the ship is not mentioned explicitly but inferable from the circumstance
@@ -297,22 +326,27 @@ of ``not being able to save'' it.
 
 For a human speaker, all this disentangling, recognizing coreference, reconstructing
 not explicitly mentioned information, etc. happens effortless and automatic --- for an
-algorithm, however, phenomena like the ones mentioned before pose serious challenges.
+algorithm, however, phenomena like the ones mentioned before pose serious challenges. In
+other words, despite the differences that may be encountered on several linguistic levels, as in
+vocabulary, word ordering, emphasis, etc., there is a remarkable capability in human
+language processing which reliably extracts the propositional content out of any
+linguistic statement.
 
 Therefore, a way of equipping an NLU algorithm with tools aimed at semantic interpretation
-capabilites is a core issue that needs to be addressed: ``For computers to make effective
+capabilities is a core issue that needs to be addressed: ``For computers to make effective
 use of information encoded in text, it is essential that they be able to detect the events
 that are being described and the event participants.'' \citep{palmer2010semantic}
 
-As I laid out in section \ref{sec:problems}, in modern, attention-based models like BERT,
-all linguistic, semantic, and factual knowledge the model acquires, is infered, or learned
-by it from raw text data. Nevertheless, and this is what also what intrigued the NLU field
-to it, BERT seems to perform surprisingly good in tasks where such ``understanding'' of
-events are being tested.\myfootnote{Of course, one does not really measure epistemical
-understanding in such tests, {\color{red} but this is maybe the closest we get} (cf.
-\cite{sahlgren2021singleton})} Simultaneously, some investigated failures of BERT seem
-to indicate that this ``understanding'' goes not too deep and e.g. the recognition of
-proposition equivalency between sentences is partially poor.
+As I laid out in section \ref{sec:problems}, in modern, purely data-driven models like
+BERT, all linguistic, semantic, and factual knowledge the model acquires, is infered,
+or learned by it implicitly from raw text data. Nevertheless, and this is what also
+what intrigued the NLU field to it, BERT seems to perform surprisingly good in tasks
+where such ``understanding'' of events are being tested.\myfootnote{Of course, one
+does not really measure epistemic understanding in such tests, {\color{red} but this
+is maybe the closest we get} (cf. \cite{sahlgren2021singleton})} Simultaneously, some
+investigated failures of BERT seem to indicate that this ``understanding'' goes not too
+deep and e.g. the recognition of proposition equivalency between sentences is partially
+poor.
 
 Semantic Roles are an attempt at creating an instrument with which it is possible to analyze the
 meaning of sentences in a structured manner and being able to express in generalizable terms
@@ -330,7 +364,7 @@ argued in it that what he called ``Deep-Cases'' play a crucial role in the Deep-
 of sentences --- the hitherto prevalent view in Generative Grammar was that case was a
 purely Surface-Structure related phenomenon and only one of several possibilities to realize
 syntactic relationships. Interestingly, these ``Deep-Cases'' were semantically-motivated; in
-combination with so called verb-framesm these cases would capture the semantic core of the
+combination with so called verb-frames these cases would capture the semantic core of the
 proposition embedded in the Deep-Structure: A verb like \emph{open} would e.g. form a frame
 denoting an ``opening event'' involving an actor, the ``Opener'', and an object, ``the thing
 opened'' (cf. \cite[p.~46f.]{fillmore1967case}). Seven of such Deep-Cases were proposed by
@@ -406,11 +440,13 @@ of change are captured as ``proto-patients''.
   \item He is afraid of bears.
 \end{examples}
 
-For some time now there are lexical resources implementing one approach of structural annotation
-layer of predicate-argument information, or semantic role labels, to the syntactic structures
-of the Penn Treebasinking-sentFrameNet Severely dacitep{palmer2005proposition}, which adds maged bycause of thurricanewhich, ``sankemanti to the groundc
-descriptions of several thousand English lexical items and backing up these descriptions with
-semantically annotated attestations from contemporary English corpora.''
+For some time now there are lexical resources implementing one approach of structural
+semantic annotation: For example the PropBank \citep{palmer2005proposition}, which adds
+``a layer of predicate-argument information, or semantic role labels, to the syntactic
+structures of the Penn Treebank''; or FrameNet \citep{baker1998berkeley}, which produces
+``frame-semantic descriptions of several thousand English lexical items and backing up
+these descriptions with semantically annotated attestations from contemporary English
+corpora''.
 
 % \begin{itemize}
 %   \item ``conceptual relations that the referents of the noun phrases play with respect to the verb'' \citep{palmer2010semantic}
@@ -418,12 +454,14 @@ semantically annotated attestations from contemporary English corpora.''
 %   \item Linking theory: Map from syntactic surface structure to underlying predicate argument semantics
 % \end{itemize}
 
-I focus here on the PropBank approach since the semantic role labeler I use in my architecture
-was trained on the German CoNLL `09 citep{hajivc2009conll} part, which consisted in semantic
-role labelling according to the PropBank scheme.
-In PropBank each verb or rather, each verb sense gets a so-called frame attributed: This consists
-of a definition of the event denoted by that particalur verb sense and the semantic arguments
-associated with. For exmample, the verb \emph{to sink} is analysed as follows:
+I focus here on the PropBank approach since the semantic role labeler I use in my
+architecture was trained on the German CoNLL `09 \citep{hajivc2009conll} part, which
+consisted in semantic role labeling according to the PropBank scheme. In PropBank
+each verb or rather, each verb sense gets a so-called frame attributed: This consists
+of a definition of the event denoted by that particalur verb sense and the semantic
+arguments associated with. For example, the first frame of the verb \emph{to
+sink}\myfootnote{\url{http://verbs.colorado.edu/propbank/framesets-english-aliases/sink.html}}
+is analysed as follows:
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
@@ -441,35 +479,19 @@ associated with. For exmample, the verb \emph{to sink} is analysed as follows:
     }%
 }
 
-Concretely, this woudl lead to the following PropBank annotation of sentence \ref{ex:sinking-sent}:
+Applied on the sentence  \ref{ex:sinking-sent}, this would lead to the following PropBank annotation:
 
 \begin{examples}
   \item Severely damaged [\textsubscript{Arg0-PAG} by the hurricane], [\textsubscript{Arg1-PPT} the vessel] [\textsubscript{Rel} sank] [\textsubscript{Arg4-GOL} to the ground].
 \end{examples}
 
-% ``An individual verb’s semantic arguments are numbered, beginning with zero.
-% For a particular verb, Arg0 is generally the argument exhibiting features of a Pro-
-% totypical Agent (Dowty 1991), while Arg1 is a Prototypical Patient or Theme. No
-% consistent generalizations can be made across verbs for the higher-numbered
-% arguments, though an effort has been made to consistently define roles across mem-
-% bers of VerbNet classes. In addition to verb-specific numbered roles, PropBank defines
-% several more general roles that can apply to any verb.'' \citep[p.~75]{palmer2005proposition}
 
-``Because verbs generally provide the bulk of the event semantics of any given sentence,
-verbs have been the target of most of the existing two million words of PropBank annotation.
-Nonetheless, to fully capture event relations, annotations must recognize the potential for
-their expression in the form of nouns, adjectives and multi-word expressions, such as Light
-Verb Constructions (LVCs)'' \citep[p.~3014]{bonial2014propbank}. Since my approach relies on
-dependency pyrsing for identifying predicates, I only focus on verb predicates since these
-are reliably extractable from the dependency parse tree (see section \ref{sec:srl-module}),
-contrary to the mentioned non-verbal predicates.
-
-% Although, as is exemplified by the third sentence, in the following list, that the
-% predication information might also be carried by a noun phrase or complex predicate
-% (e.g. light verb + adjective):
-
-\cite{bonial2012english} define the following proto-roles for the numbered arguments, modifiers,
-and relations which correspond to the PropBank roles:
+Although the propbank annotations are verb-specific, there are some generalizations in the first
+number of arguments as to what proto-role they denote, as the authors of PropBank write: ``For
+a particular verb, Arg0 is generally the argument exhibiting features of a Prototypical Agent
+\textelp{}, while Arg1 is a Prototypical Patient or Theme'' \citep[p.~75]{palmer2005proposition}.
+In their English PropBank Annotation Guideluines, \cite{bonial2012english} nevertheless propose
+generalizations even for the higher arguments:
 
 \begin{description}
   \item[\customcolorbox{\textbf{Arg0}}{blue}] agent
@@ -481,11 +503,42 @@ and relations which correspond to the PropBank roles:
   \item[\customcolorbox{\textbf{Rel}}{llight-blue}] Relation (can be a verb, noun, or adjective)
 \end{description}
 
-Following are some exmample sentences from the PropBank frames\myfootnote{accessible through this
-\href{https://github.com/propbank/propbank-frames.git}{GitHub repository}}. Semantic roles are
-highlighted using the colors from the previous list. Note that only one relation is marked in the
-sentences, even if there are multiple. Since DAMESRL only treats verbs as semantic roles distributing
-relations, I include only verbal ``Rel''s in the examples:
+That is to say, even if the higher numbered argument's proto role is semantically somewhat
+fuzzier than for argument zero and one, there are potentially generalizable patterns from
+which a model which is provided with such annotated sentences might still be able to detect
+task-supportive structures in the data.
+
+% ``An individual verb’s semantic arguments are numbered, beginning with zero.
+% For a particular verb, Arg0 is generally the argument exhibiting features of a Pro-
+% totypical Agent (Dowty 1991), while Arg1 is a Prototypical Patient or Theme. No
+% consistent generalizations can be made across verbs for the higher-numbered
+% arguments, though an effort has been made to consistently define roles across mem-
+% bers of VerbNet classes. In addition to verb-specific numbered roles, PropBank defines
+% several more general roles that can apply to any verb.'' \citep[p.~75]{palmer2005proposition}
+
+% ``Because verbs generally provide the bulk of the event semantics of any given sentence,
+% verbs have been the target of most of the existing two million words of PropBank annotation.
+% Nonetheless, to fully capture event relations, annotations must recognize the potential for
+% their expression in the form of nouns, adjectives and multi-word expressions, such as Light
+% Verb Constructions (LVCs)'' \citep[p.~3014]{bonial2014propbank}. Since my approach relies on
+% dependency parsing for identifying predicates, I only focus on verb predicates since these
+% are reliably extractable from the dependency parse tree (see section \ref{sec:srl-module}),
+% contrary to the mentioned non-verbal predicates.
+
+% Although, as is exemplified by the third sentence, in the following list, that the
+% predication information might also be carried by a noun phrase or complex predicate
+% (e.g. light verb + adjective):
+
+Following are some exmample sentences from the PropBank frames\myfootnote{accessible
+through this \href{https://github.com/propbank/propbank-frames.git}{GitHub repository}}.
+Semantic roles are highlighted using the colors from the previous list. Note that only
+one relation is marked in the sentences, even if there are multiple. Since DAMESRL only
+treats verbs as semantic roles distributing relations, I include only verbal ``Rel''s in
+the examples:\myfootnote{To me, not all annotations in PropBank are beyond all doubt; for
+example, in sentence \ref{itm:wrongsrl} ``an investment banker'' is labelled as agent
+``maximzing'' the the patient ``shareholder value'' --- however, I would argue that it's
+rather the ``alternative'' that take proto-agentive role in maximizing the shareholder
+values.}
 
 \begin{examples}
   \item \customcolorbox{[\textsubscript{Arg0} Yasser Arafat]}{blue} has \customcolorbox{[\textsubscript{Rel} written]}{llight-blue} \customcolorbox{[\textsubscript{Arg2} to the chairman of the International Olympic Committee]}{yellow}, asking him to back a Palestinian bid to join the committee.
@@ -496,43 +549,42 @@ relations, I include only verbal ``Rel''s in the examples:
   \item \customcolorbox{[\textsubscript{Arg0} He]}{blue} \customcolorbox{[\textsubscript{ArgM-mod} would]}{sage} scream and \customcolorbox{[\textsubscript{Rel} cut]}{llight-blue} \customcolorbox{[\textsubscript{Arg1} himself]}{green} \customcolorbox{[\textsubscript{Arg3} with rocks]}{red}.
 \end{examples}
 
-NOTE: \myfootnote{To me, not all annotations in PropBank are beyond all doubt; for example, in sentence \ref{itm:wrongsrl} ``an investment banker'' is labelled as agent ``maximzing'' the the patient ``shareholder value'' --- however, I would argue that it's rather the ``alternative'' that take proto-agentive role in maximizing the shareholder values.}
 
-{\color{red} ``The main reason computational systems use semantic roles is to act as a shallow meaning
-representation that can let us make simple inferences that aren’t possible from the pure surface
-string of words, or even from the parse tree.'' \cite[p.~375]{jurafsky2019speech}
+% {\color{red} ``The main reason computational systems use semantic roles is to act as a shallow meaning
+% representation that can let us make simple inferences that aren’t possible from the pure surface
+% string of words, or even from the parse tree.'' \cite[p.~375]{jurafsky2019speech}
 
 % In the literature, often \cite{gildea2002automatic} is considered to have formally defined the
 % task of automatic SRL.
 
-``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any
-system for natural language understanding.'' \citep{palmer2010semantic}}
+% ``Analysis of semantic relations and predicate-argument structure is one of the core pieces of any
+% system for natural language understanding.'' \citep{palmer2010semantic}}
 
-Thanks to lexical resources such as the PropBank, a multitude of models aiming at
-labeling sentences with semantic roles are now available. For German, there is e.g.
-DAMESRL \citep{do2018flexible}, trained on the CoNLL '09 \citep{hajivc2009conll}
-data (which implements PropBank style SRLs). This is also the semantic role labeler
-I employ in my system. Since I treat the sematnic role labeller essentially as a blackbox
-in my architecture and use it only as an out-of-the-shelf SRL predictor, I will not
-go into details about the different approaches to automatic semantic role labelling --- the
-interested reader is referred to XXXXXX.
+Thanks to lexical resources such as the PropBank, a multitude of models
+aiming at labeling sentences with semantic roles are now available. For
+German, there is e.g. DAMESRL \citep{do2018flexible}, trained on the CoNLL
+'09 \citep{hajivc2009conll} data (which implements PropBank style SRLs).
+This is also the semantic role labeler I employ in my GliBERT system.
+Since I treat the semantic role labeler essentially as a blackbox in my
+architecture and use it an out-of-the-shelf SRL predictor, I will not go
+into details about the concrete implementation of DAMESERL, as well as the
+different approaches to automatic semantic role labeling in general ---
+the interested reader is referred to \cite{do2018flexible} for the former
+and e.g. \cite{palmer2010semantic} for the latter.
 
-Following some examples of DAMESRL-labelled sentences stemming from the GliBERT corpus (see chapter
-\ref{chap:3_datasets}). The sentences are represented vertically with the leftmost column being the
-actual sentence; each column represents one identified verb (B-V) and its predicted semantic roles,
-labelled using the BIO-schema\myfootnote{Introduced by \citep{ramshaw1999text}, the BIO-schema is a
-established way of adding a label to each token in a sequence, indicating if it belongs to a certain
-subgroup, or chunk, of the sequence. For example, to mark the prepositional phrase in a syntagma
-like ``He is running from the bear'', one would mark the word beginning the PP with \textbf{B}, any
-other words inside the PP with \textbf{I}, and all other words outside of it, using \textbf{O}:
-``He[O] is[O] running[O] from[B-PP] the[I-PP] bear[I-PP]''.}
-
-Following are some example sentences from three GerGLUE datasets with the SRLs
-produced by DAMESRL. Every column right to the verticalized sentence represents one
-argument-predicate structure for this sentence. Note that the different labels are
-slightly differently labelled than in the PropBank, as listerd before: \texttt{V}
-(``Verb'') stands for \texttt{Rel} (``relation''), \texttt{A}\textit{n} stands for
-\texttt{Arg}\textit{n} (both are abbreviations for ``argument'').
+Following are some examples of DAMESRL-labelled sentences stemming from the GliBERT corpus (see
+chapter \ref{chap:3_datasets}). The sentences are represented vertically with the leftmost column
+being the actual sentence; each column represents one identified verb (B-V) and its predicted
+semantic roles, labelled using the BIO-schema\myfootnote{Introduced by \citep{ramshaw1999text}, the
+BIO-schema is a established way of adding a label to each token in a sequence, indicating if it
+belongs to a certain subgroup, or chunk, of the sequence. For example, to mark the prepositional
+phrase in a syntagma like ``He is running from the bear'', one would mark the word beginning the
+PP with \textbf{B}, any other words inside the PP with \textbf{I}, and all other words outside of
+it, using \textbf{O}: ``He[O] is[O] running[O] from[B-PP] the[I-PP] bear[I-PP]''.} Every column
+right to the verticalized sentence represents one argument-predicate structure for this sentence.
+Note that the different labels are slightly differently labelled than in the PropBank, as listerd
+before: \texttt{V} (``Verb'') stands for \texttt{Rel} (``relation''), \texttt{A}\textit{n} stands
+for \texttt{Arg}\textit{n} (both are abbreviations for ``argument'').
 
 \textbf{deISEAR}
 

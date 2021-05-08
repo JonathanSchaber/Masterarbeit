@@ -6,22 +6,22 @@
 \babel@toc {english}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces BERT Architecture}}{16}{figure.caption.12}
+\contentsline {figure}{\numberline {1}{\ignorespaces BERT Architecture}}{15}{figure.caption.12}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2}{\ignorespaces XNLI Lengths}}{33}{figure.caption.15}
-\contentsline {figure}{\numberline {3}{\ignorespaces MLQA Lengths}}{37}{figure.caption.16}
-\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X BLEU}}{39}{figure.caption.17}
+\contentsline {figure}{\numberline {2}{\ignorespaces XNLI Lengths}}{34}{figure.caption.15}
+\contentsline {figure}{\numberline {3}{\ignorespaces MLQA Lengths}}{38}{figure.caption.16}
+\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X BLEU}}{40}{figure.caption.17}
 \contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X Set Size/Labels}}{41}{figure.caption.18}
-\contentsline {figure}{\numberline {6}{\ignorespaces SCARE Lengths}}{42}{figure.caption.19}
+\contentsline {figure}{\numberline {6}{\ignorespaces SCARE Lengths}}{43}{figure.caption.19}
 \contentsline {figure}{\numberline {7}{\ignorespaces Accumulated Gains and Losses.}}{45}{figure.caption.20}
-\contentsline {figure}{\numberline {8}{\ignorespaces XNLI labels}}{47}{figure.caption.21}
+\contentsline {figure}{\numberline {8}{\ignorespaces XNLI labels}}{48}{figure.caption.21}
 \contentsline {figure}{\numberline {9}{\ignorespaces XNLI Lengths}}{49}{figure.caption.22}
 \contentsline {figure}{\numberline {10}{\ignorespaces XQuAD Lengths}}{51}{figure.caption.23}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {11}{\ignorespaces GliBERT Architecture}}{54}{figure.caption.25}
 \contentsline {figure}{\numberline {12}{\ignorespaces GliBERT Architecture detail}}{56}{figure.caption.26}
 \contentsline {figure}{\numberline {13}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{61}{figure.caption.27}
-\contentsline {figure}{\numberline {14}{\ignorespaces Percentage of Predicate-Argument Structures per Sentence in all Data Sets}}{63}{figure.caption.28}
+\contentsline {figure}{\numberline {14}{\ignorespaces Predicate-Argument Structures}}{63}{figure.caption.28}
 \contentsline {figure}{\numberline {15}{\ignorespaces BERT-Classification}}{66}{figure.caption.29}
 \contentsline {figure}{\numberline {16}{\ignorespaces {[}CLS{]} Head}}{67}{figure.caption.30}
 \contentsline {figure}{\numberline {17}{\ignorespaces FFNN Head}}{68}{figure.caption.31}

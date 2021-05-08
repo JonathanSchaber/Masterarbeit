@@ -19,33 +19,20 @@
 \contentsline {section}{\numberline {1.4}Thesis Structure}{12}{section.1.4}
 \contentsline {chapter}{\numberline {2}Approach}{13}{chapter.2}
 \contentsline {section}{\numberline {2.1}Pretrained Embeddings and Transfer Learning}{13}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Problems, Weak Spots, Semanticity}{15}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.1}Problems, Weak Spots, Semanticity}{16}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}Solutions / Related Work}{17}{subsection.2.1.2}
 \contentsline {section}{\numberline {2.2}GliBERT}{18}{section.2.2}
 \contentsline {section}{\numberline {2.3}Semantic Roles}{19}{section.2.3}
-\contentsline {chapter}{\numberline {3}Data Sets}{28}{chapter.3}
-\contentsline {section}{\numberline {3.1}GerGLUE}{28}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}General Issues}{29}{subsection.3.1.1}
-\contentsline {section}{\numberline {3.2}Corpora}{30}{section.3.2}
+\contentsline {chapter}{\numberline {3}Data Sets}{29}{chapter.3}
+\contentsline {section}{\numberline {3.1}GerGLUE}{29}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}General Issues}{30}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}Corpora}{31}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}deISEAR}{31}{subsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.1.1}Statistics}{32}{subsubsection.3.2.1.1}
-\contentsline {subsubsection}{\numberline {3.2.1.2}SOTA}{33}{subsubsection.3.2.1.2}
 \contentsline {subsection}{\numberline {3.2.2}MLQA}{33}{subsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.1}Statistics}{36}{subsubsection.3.2.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2.2}SOTA}{37}{subsubsection.3.2.2.2}
 \contentsline {subsection}{\numberline {3.2.3}PAWS-X}{38}{subsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.3.1}Preprocessing}{39}{subsubsection.3.2.3.1}
-\contentsline {subsubsection}{\numberline {3.2.3.2}Statistics}{40}{subsubsection.3.2.3.2}
-\contentsline {subsubsection}{\numberline {3.2.3.3}SOTA}{41}{subsubsection.3.2.3.3}
-\contentsline {subsection}{\numberline {3.2.4}SCARE}{41}{subsection.3.2.4}
-\contentsline {subsubsection}{\numberline {3.2.4.1}Statistics}{44}{subsubsection.3.2.4.1}
-\contentsline {subsubsection}{\numberline {3.2.4.2}SOTA}{46}{subsubsection.3.2.4.2}
+\contentsline {subsection}{\numberline {3.2.4}SCARE}{42}{subsection.3.2.4}
 \contentsline {subsection}{\numberline {3.2.5}XNLI}{46}{subsection.3.2.5}
-\contentsline {subsubsection}{\numberline {3.2.5.1}Statistics}{48}{subsubsection.3.2.5.1}
-\contentsline {subsubsection}{\numberline {3.2.5.2}SOTA}{49}{subsubsection.3.2.5.2}
 \contentsline {subsection}{\numberline {3.2.6}XQuAD}{49}{subsection.3.2.6}
-\contentsline {subsubsection}{\numberline {3.2.6.1}Statistics}{50}{subsubsection.3.2.6.1}
-\contentsline {subsubsection}{\numberline {3.2.6.2}SOTA}{52}{subsubsection.3.2.6.2}
 \contentsline {subsection}{\numberline {3.2.7}Summary}{52}{subsection.3.2.7}
 \contentsline {chapter}{\numberline {4}Architecture}{54}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{54}{section.4.1}
