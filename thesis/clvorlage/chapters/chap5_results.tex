@@ -16,10 +16,10 @@ of these structures.
 
 For each dataset, two
 rounds of experiments where computed with one hyperparameter difference, resulting in
-an $\alpha$ and beta $\beta$ for each dataset. The hyperparameters which were kept stable
+an $\alpha$ and $\beta$ for each dataset. The hyperparameters which were kept stable
 over all experiments are listen in table \ref{tab:hyper-configs}.
 
-\tab{tab:tab:hyper-configs}{Stable hyperparameter configurations.}{
+\tab{tab:hyper-configs}{Stable hyperparameter configurations.}{
   \scalebox{0.9}{
     \begin{tabular}{ll}
     learning rate              & 2e-05                         \\
@@ -460,8 +460,8 @@ the other way around adding SRLs seems to create a disadvantage for the head.
     \includegraphics[width=0.9\linewidth]{images/heatmap_merged_eq.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \label{fig:heatmap-gains}
   \caption[Heatmaps subtokenizd and merged]{Gain/loss heat maps from the gain/loss values in table \ref{tab:gain-loss}. \textbf{Left}: Subtokenized. \textbf{Right}: Merged.}
+  \label{fig:heatmap-gains}
 \end{figure}
 
 In figure \ref{fig:heatmap-gains} the absolute gains and losses are plotted in two heat maps:
@@ -530,8 +530,8 @@ than zeroing.
     \includegraphics[width=0.9\linewidth]{images/gain_losses_SRL.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \label{fig:classification-gains}
   \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 48 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 48 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+  \label{fig:classification-gains}
 \end{figure}
 
 As described in chapter \ref{chap:3_datasets}, the datasets compiled in GerGLUE are a quite
@@ -701,8 +701,8 @@ for a positive influence of SRL enriching which is not reflected in my experimen
     \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_SRL2.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \label{fig:qa-tot-gains}
   \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+  \label{fig:qa-tot-gains}
 \end{figure}
 
 One of the main differences between the classification and question answering datasets is the size of
@@ -1087,8 +1087,8 @@ gain (or loss, respectively).
       Augusta    \colorbox{llight-blue}{I-A1}
       .          \colorbox{white}{O}
     \end{BVerbatim}
-    \label{srl:normal}
     \caption{Normal SRLs.}
+    \label{srl:normal}
   \end{srl}
 \end{minipage}
 

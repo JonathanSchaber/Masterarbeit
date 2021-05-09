@@ -72,7 +72,7 @@ similarity dataset.
 
 \subsection{General Issues}
 
-There are a few remarks and strategi decisions that apply to all collected dataset in GerGLUE:
+There are a few remarks and strategic decisions that apply to all collected dataset in GerGLUE:
 
 (1) All of the datasets except for deISEAR are not monolingual, i.e. German, sources, but bi-
 or multilingual corpora. To compile a German GLUE corpus I only use the German subset of
@@ -88,11 +88,11 @@ the latter case, I split the data sets into train, development, and test splits 
 mostly provide only a development and test portion. To ensure that my results are comparable
 with those that the authors of the different data sets report, I leave the test split as it
 is, and split the development set into a train and development set, implementing a 85:15
-ratio. The only dataset having explicitely predefined training, development, and test splits
+ratio. The only dataset having explicitly predefined training, development, and test splits
 is PAWS-X.
 
-(3) Several of thedata sets were constructud by translating existing monolingual English sources
-(semi-)automatically into the different target languages. As I show in chapter \ref{chap:results},
+(3) Several of the datasets were constructed by translating existing monolingual English sources
+(semi-)automatically into the different target languages. As I show in chapter \ref{chap:5_results},
 this does not come without introducing noise into the data.
 
 % The following differences to the original GLUE corpus must be noted:
@@ -112,7 +112,6 @@ this does not come without introducing noise into the data.
 % acceptability in German.
 
 
-
 \section{Corpora}
 
 In this section, I give a detailed description of the selected data sets in alphabetical order:
@@ -127,7 +126,7 @@ datasets, the GliBERT performance is on par with what the authors report.
 
 \subsection{deISEAR}
 
-This data set addresses the task of Emotion recognition, a sub-task of Sentiment Analysis.
+This data set addresses the task of Emotion Recognition, a sub-task of Sentiment Analysis \citep{cambria2017affective}.
 Technically, it is a sequence classification problem: Given a sequence of tokens $x_1 \dotso x_n$, predict the
 correct label $y$ from a fixed set of emotions $Y$. Or. in a more natural way of speaking, what emotion
 expresses a ceratin statement?
@@ -213,7 +212,6 @@ in the trainig set show a greater variation compared to the development nd test 
 % \fig{images/deISEAR_subtokenized_all.pdf}{fig:out-deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
 
 \begin{figure}
-  \label{fig:deisear-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=0.9\linewidth]{images/deISEAR_subtokenized.pdf}
@@ -226,6 +224,7 @@ in the trainig set show a greater variation compared to the development nd test 
   \stepcounter{myfigure}
   \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized deISEAR sentences. Note that one extreme outlier in the
                           development set comprising 300 BERT-subtokens is not included in the plot. \textbf{Right}: Label distributions of deISEAR datasets.}
+  \label{fig:deisear-stats}
 \end{figure}
 
 
@@ -368,7 +367,6 @@ cut off after the maximum length and are kept in the data set for the experiment
 exmaples where the answer span lies partially or fully outside the maximum length were dropped.
 
 \begin{figure}
-  \label{fig:mlqa-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=0.9\linewidth]{images/MLQA_context.pdf}
@@ -383,6 +381,7 @@ exmaples where the answer span lies partially or fully outside the maximum lengt
                          \textbf{Right}: Length of subtokenized MLQA answers. Note the difference in y-axis scaling between the two plots:
                          The contexts are longer by orders of magnitude to the answer spans. In fact, most answer spans consist of only a handful of
                          (subtokenized) words.}
+  \label{fig:mlqa-stats}
 \end{figure}
 
 % all subs in MLQA: 883,394
@@ -559,7 +558,6 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
 
 
 \begin{figure}
-  \label{fig:pawsx-stat}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=0.9\linewidth]{images/PAWS-X_num_examples.pdf}
@@ -574,6 +572,7 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
                            trainin set contains way more examples than the humanly translated development and test set.
                            \textbf{Right}: Distribution of paraphrase (True) and non-paraphrase (False) examples in the
                            PAWS-X sets.}
+  \label{fig:pawsx-stat}
 \end{figure}
 
 
@@ -798,7 +797,7 @@ review is the following one:
   \item Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!
 \end{examples}
 
-Figure \ref{fig:scare-fig:scare-statistics-preprocess} shows the outcome of this preprocessing and
+Figure \ref{fig:scare-fig:scare-stats} shows the outcome of this preprocessing and
 the confidence of the such generated labels for the examples. Following are 5 sentences with their
 generated labels --- as you can see, at least for a human judge, the labels seem to capture the
 overall sentiment of the sentences quite good.
@@ -836,7 +835,6 @@ reveals that the positive class amasses the most exmples on itself (1,071), whil
 GliBERT predictions in chapter \ref{chap:results} reveals, the does not simply overweigh the majority class.
 
 \begin{figure}
-  \label{fig:scare-stats}
   \begin{minipage}{0.45\linewidth}
   \vspace{0pt}
     \includegraphics[width=0.9\linewidth]{images/SCARE_labels.pdf}
@@ -847,8 +845,8 @@ GliBERT predictions in chapter \ref{chap:results} reveals, the does not simply o
     \includegraphics[width=0.9\linewidth]{images/SCARE_label_stats.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \label{fig:scare-statistics-preprocess}
   \caption[Accumulated Gains and Losses.]{\textbf{Left}: Number of examples per label after heuristically computing them in the SCARE dataset. {\color{red} WRITE MORE ABOUT IMBALANCE, WHAT TO DO ABOUT IT, COMPUTE F1, ETC} \textbf{Right}: Statistics of label generation. For most of the examples, there was a clear majority decision as to which label should be chosen. \emph{Close Majority} means the majority vote was off by 1. The \emph{No Majority}/\emph{No Labels} portions in the graph were labelled \emph{neutral} by default, while \emph{Clear Majority}/\emph{Close Majority}  were labelled according to the majority vote decision.}
+  \label{fig:scare-stats}
 \end{figure}
 
 
@@ -1048,8 +1046,8 @@ up with a comparatively short {\color{red} and easy} question.
     \includegraphics[width=0.9\linewidth]{images/XNLI_hypo_subtokenized.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \label{fig:xnli-subtokenized}
   \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized XNLI premises. \textbf{Right}: Length of subtokenized XNLI hypotheses.}
+  \label{fig:xnli-subtokenized}
 \end{figure}
 
 
@@ -1146,6 +1144,7 @@ name or place mentioned in the context.
   \stepcounter{myfigure}
   \caption[XQuAD Lengths]{\textbf{Left}: Length of subtokenized XQuAD contexts.
                          \textbf{Right}: Length of subtokenized XQuAD answers. Note the difference in y-axis scaling between the two plots.}
+  \label{fig:xquad-stats}
 \end{figure}
 
 Again,you can test you own performance on this dataset by answering the following questions relating

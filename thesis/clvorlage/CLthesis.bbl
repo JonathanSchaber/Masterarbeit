@@ -79,6 +79,13 @@ H.~Bussmann.
 \newblock \emph{Routledge dictionary of language and linguistics}.
 \newblock Routledge, 2006.
 
+\bibitem[Cambria et~al.(2017)Cambria, Das, Bandyopadhyay, and
+  Feraco]{cambria2017affective}
+E.~Cambria, D.~Das, S.~Bandyopadhyay, and A.~Feraco.
+\newblock Affective computing and sentiment analysis.
+\newblock In \emph{A practical guide to sentiment analysis}, pages 1--10.
+  Springer, 2017.
+
 \bibitem[Caswell et~al.(2021)Caswell, Kreutzer, Wang, Wahab, van Esch,
   Ulzii-Orshikh, Tapo, Subramani, Sokolov, Sikasote, Setyawan, Sarin, Samb,
   Sagot, Rivera, Rios, Papadimitriou, Osei, Suárez, Orife, Ogueji, Niyongabo,
@@ -639,10 +646,6 @@ A.~Wang, A.~Singh, J.~Michael, F.~Hill, O.~Levy, and S.~R. Bowman.
 \newblock Glue: A multi-task benchmark and analysis platform for natural
   language understanding.
 \newblock \emph{arXiv preprint arXiv:1804.07461}, 2018.
-
-\bibitem[Warstadt et~al.(2019)Warstadt, Singh, and Bowman]{warstadt2019neural}
-A.~Warstadt, A.~Singh, and S.~R. Bowman.
-\newblock Neural network acceptability judgments, 2019.
 
 \bibitem[Welbl et~al.(2017)Welbl, Liu, and Gardner]{welbl2017crowdsourcing}
 J.~Welbl, N.~F. Liu, and M.~Gardner.

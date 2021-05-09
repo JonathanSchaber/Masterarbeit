@@ -28,43 +28,43 @@ Warning--empty journal in liddy2001natural
 Warning--empty journal in radford2018improving
 You've used 109 entries,
             2773 wiz_defined-function locations,
-            1172 strings with 26896 characters,
-and the built_in function-call counts, 58455 in all, are:
-= -- 4970
-> -- 4271
-< -- 78
-+ -- 1443
-- -- 1332
-* -- 4810
-:= -- 9017
-add.period$ -- 329
+            1174 strings with 26969 characters,
+and the built_in function-call counts, 58677 in all, are:
+= -- 4996
+> -- 4280
+< -- 79
++ -- 1446
+- -- 1335
+* -- 4828
+:= -- 9048
+add.period$ -- 331
 call.type$ -- 109
-change.case$ -- 759
+change.case$ -- 760
 chr.to.int$ -- 107
 cite$ -- 225
-duplicate$ -- 2498
-empty$ -- 4207
-format.name$ -- 1482
-if$ -- 12194
+duplicate$ -- 2512
+empty$ -- 4223
+format.name$ -- 1485
+if$ -- 12248
 int.to.chr$ -- 3
 int.to.str$ -- 1
-missing$ -- 106
-newline$ -- 548
+missing$ -- 107
+newline$ -- 549
 num.names$ -- 436
-pop$ -- 1625
+pop$ -- 1626
 preamble$ -- 1
-purify$ -- 656
+purify$ -- 657
 quote$ -- 0
-skip$ -- 2148
+skip$ -- 2153
 stack$ -- 0
-substring$ -- 1667
-swap$ -- 395
-text.length$ -- 34
+substring$ -- 1686
+swap$ -- 400
+text.length$ -- 35
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 1174
 warning$ -- 7
-while$ -- 456
+while$ -- 459
 width$ -- 0
-write$ -- 1367
+write$ -- 1371
 (There were 7 warnings)
