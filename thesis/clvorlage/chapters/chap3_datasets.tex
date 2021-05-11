@@ -126,34 +126,76 @@ datasets, the GliBERT performance is on par with what the authors report.
 
 \subsection{deISEAR}
 
-This data set addresses the task of Emotion Recognition, a sub-task of Sentiment Analysis \citep{cambria2017affective}.
-Technically, it is a sequence classification problem: Given a sequence of tokens $x_1 \dotso x_n$, predict the
-correct label $y$ from a fixed set of emotions $Y$. Or. in a more natural way of speaking, what emotion
-expresses a ceratin statement?
-Following the original study ``International Survey on Emotion Antecedents and Reactions''
-\citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed their data set for German:
+This data set addresses the task of Emotion Recognition, a sub-task of Sentiment Analysis
+\citep{cambria2017affective}. Technically, it is a sequence classification problem: Given a
+sequence of tokens $x_1 \dotso x_n$, predict the correct label $y$ from a fixed set of emotions
+$Y$. Or, in a more natural way of speaking, to automatically determine what emotion a certain
+statement expresses. Following the original study ``International Survey on Emotion Antecedents
+and Reactions'' \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed the
+deISEAR data set for German:
 
-In a first step, the authors presented annotators with one of seven emotions, and asked them to
-come up with a textual description of an event in which they felt that emotion.
-The task was formulated as a sentence completion problem, so the annotators, which were recruited via a
-crowdsourcing platform, had to complete sentences having the following structure: ``Ich fühlte
-\emph{emotion}, als/weil/dass ...''.
-Seven emotions were given for which the descriptions had to be constructed:
-Traurigkeit, Ekel, Schuld, Wut, Angst, Scham, Freude.\myfootnote{Interestingly, out of these
-seven emotions, six represent rather negative emotions --- only \emph{Freude} is a clearly positive sensation.
-Maybe negative emotions are more lucidly detactable (by humans and/or machines) than positive ones, I leave
-this question for the reader to further explore.}
+In a first step, the authors presented annotators with one of seven emotions, and asked them
+to come up with a textual description of an event in which they felt that emotion. The task
+was formulated as a sentence completion problem, so the annotators which were recruited via
+a crowdsourcing platform, had to complete sentences having the following structure: ``Ich
+fühlte \emph{emotion}, als/weil/dass ...''. The seven emotions that were given for which
+the descriptions had to be constructed were: Traurigkeit, Ekel, Schuld, Wut, Angst, Scham,
+Freude.\myfootnote{Interestingly, out of these seven emotions, six represent rather negative
+emotions --- only \emph{Freude} is a clearly positive sensation. Maybe negative emotions are
+more lucidly detactable (by humans and/or machines) than positive ones and therefore the study
+focused on it.}
 
-The second phase of the data generation process comprised of re-labeling the generates sentences
-such that five annotators annotate each sentence. The emotion word was omitted, and the annotators
-had the list of seven emotions at hand.
-The authors report that for approximately half of all sentences, the inter-annotator agreement was perfect;
-i.e. each of the five annotators attributed the same emotion. However, some emotions seem to be prone for
-not being clearly separable: Shame, for example, gets confused with guilt in 35\% of the cases.
-The authors do not report any coefficient, but since they provided the complete results of phase 2,
-I was abe to compute the Fleiss' $\kappa$, a standard metric for estimating annotator agreement, and thus,
-reliabilty of these labels; the computed value equals to 0.66, which corresponds to ``substantial'' agreement
-in the interpretation scale for th variable, proposed by \cite{landis1977measurement}.
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=0.9\linewidth]{images/deISEAR_subtokenized.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=0.9\linewidth]{images/deISEAR_label_percentages.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized deISEAR sentences. Note that one extreme outlier in the
+                          development set comprising 300 BERT-subtokens is not included in the plot. \textbf{Right}: Label distributions of deISEAR datasets.}
+  \label{fig:deisear-stats}
+\end{figure}
+
+The second phase of the data generation process comprised of re-labeling the generated sentences
+such that five annotators each re-annotate every sentence. The emotion word was omitted, and
+the annotators had the list of seven emotions at hand. \citeauthor{troiano2019crowdsourcing}
+report that for approximately half of all sentences, the inter-annotator agreement was perfect;
+i.e. each of the five annotators attributed the same emotion. However, some emotions seem to
+be prone for not being clearly separable: Shame, for example, gets confused with guilt and vice versa
+in 17\% and 19\% of the cases, respectively. Remarkably, this pattern is not visible for the GLiBERT
+predictions, as is exemplified for one exnsemble in table \ref{tab:confusion-deISEAR}: Shame and guilt
+are reliably told apart by the model, however, it seems to have more general problems in recognizing
+sadness and anger.
+
+\tab{tab:confusion-deisear}{Confusion matrix for the best deISEAR ensemble ($\alpha$ +SRL subtokenized zeros FFNN head). Interestingly, the observed confounding
+                            of Shame and Guilt in the human re-annotations is not present for the GliBERT predictions. However, the overall most difficult, i.e. most
+                            often confused emotions for the reported GliBERT head seem to be sadness and anger.}{
+  \begin{tabular}{|ll|ccccccc|}
+    \hline
+                                                    &             & \multicolumn{7}{c|}{Predicted} \\
+                                                    &             & Angst    & Ekel    & Freude   & Scham    & Schuld   & Traurigkeit & Wut       \\ \hline
+    \multirow{7}{*}{\rotatebox[origin=c]{90}{True}} & Angst       & 17       & 0       & 0        & 0        & 4        & 0           & 2         \\
+                                                    & Ekel        & 0        & 18      & 0        & 0        & 2        & 0           & 2         \\
+                                                    & Freude      & 1        & 0       & 22       & 0        & 1        & 2           & 2         \\
+                                                    & Scham       & 0        & 4       & 2        & 10       & 1        & 0           & 0         \\
+                                                    & Schuld      & 0        & 2       & 1        & 3        & 17       & 0           & 0         \\
+                                                    & Traurigkeit & 2        & 1       & 0        & 2        & 2        & 13          & 1         \\
+                                                    & Wut         & 2        & 1       & 1        & 1        & 2        & 2           & 8         \\ \hline
+  \end{tabular}
+}{Confusion matrix for one deISEAR +SRL ensemble}
+
+The authors do not report any metric regarding the reliablity of their labels based
+on the human re-classifications, but since they provided the complete results of
+phase 2, I was abe to compute the Fleiss' $\kappa$, a standard metric for estimating
+annotator agreement, and thus, the reliabilty of these labels; the computed value
+equals to 0.66, which corresponds to ``substantial'' agreement in the interpretation
+scale for th variable, proposed by \cite{landis1977measurement}.
+
 
 Following are seven example sentence randomly picked out of the deISEAR corpus, one for each emotion.
 
@@ -184,13 +226,14 @@ The possible emotions are \textbf{Angst, Ekel, Freude, Scham, Schuld, Traurigkei
 
 % \subsubsection{Statistics}
 
-deISEAR is one of the data sets that are made available without any pre-defined training/development/test splits.
-Therefore I shuffle all 1,001 sentences with a 30:15:15 ratio, resulting in a training set of 700, a development set
-of 150 and a test set of 151 sentences.
+deISEAR is one of the data sets that are made available without any pre-defined
+training/development/test splits. Therefore I shuffle all 1,001 sentences and
+split with a 70:15:15 ratio, resulting in a training set of 700, a development
+set of 150 and a test set of 151 sentences.
 
 In figure \ref{fig:deisear-stats}, the length of the sentences and the label distributions in the three data sets are
-plotted. While the data sets were created randomly, there are some peculiarites observable: The lengths of the sentences
-in the trainig set show a greater variation compared to the development nd test set than one would except.
+plotted. While the data sets were created randomly, there are some peculiarities observable: The lengths of the sentences
+in the training set show a greater variation compared to the development and test set than one would except.
 % Further, the one extremely long example present in the whole data set ended also up in the training set --- although this is not
 % too unexpected.
 
@@ -211,27 +254,11 @@ in the trainig set show a greater variation compared to the development nd test 
 % \fig{images/deISEAR_subtokenized.pdf}{fig:deISEAR-context}{deISEAR: Length of subtokenized Sentences.}{8}{deISEAR-Length}
 % \fig{images/deISEAR_subtokenized_all.pdf}{fig:out-deISEAR-context}{deISEAR: Length of subtokenized Sentences (with one extreme outlier).}{8}{deISEAR-Length}
 
-\begin{figure}
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=0.9\linewidth]{images/deISEAR_subtokenized.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=0.9\linewidth]{images/deISEAR_label_percentages.pdf}
-  \end{minipage}
-  \stepcounter{myfigure}
-  \caption[XNLI Lengths]{\textbf{Left}: Length of subtokenized deISEAR sentences. Note that one extreme outlier in the
-                          development set comprising 300 BERT-subtokens is not included in the plot. \textbf{Right}: Label distributions of deISEAR datasets.}
-  \label{fig:deisear-stats}
-\end{figure}
-
 
 % \subsubsection{SOTA}
 
 \cite{troiano2019crowdsourcing} train a maximum entropy classifier with L2 regularization with
-boolean unigram features on the original ISEAR corpus (7665 instances).
+boolean unigram features on the original ISEAR corpus (7,665 instances).
 Since the original ISEAR study and data collection was carried out in English, they then machine
 translate the 1,001 deISEAR examples and evaluate on them.
 Using this strategy, the authors accomplish an average micro F$_1$ of 47. (Note: micro F$_1$ in settings where each example gets
