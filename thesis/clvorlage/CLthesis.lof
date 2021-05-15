@@ -9,34 +9,35 @@
 \contentsline {figure}{\numberline {1}{\ignorespaces BERT Architecture}}{15}{figure.caption.12}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2}{\ignorespaces XNLI Lengths}}{32}{figure.caption.15}
-\contentsline {figure}{\numberline {3}{\ignorespaces MLQA Lengths}}{38}{figure.caption.17}
-\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X BLEU}}{41}{figure.caption.18}
+\contentsline {figure}{\numberline {3}{\ignorespaces MLQA Lengths}}{36}{figure.caption.17}
+\contentsline {figure}{\numberline {4}{\ignorespaces PAWS-X BLEU}}{39}{figure.caption.18}
 \contentsline {figure}{\numberline {5}{\ignorespaces PAWS-X Set Size/Labels}}{42}{figure.caption.19}
 \contentsline {figure}{\numberline {6}{\ignorespaces SCARE Lengths}}{43}{figure.caption.20}
 \contentsline {figure}{\numberline {7}{\ignorespaces Accumulated Gains and Losses.}}{46}{figure.caption.21}
-\contentsline {figure}{\numberline {8}{\ignorespaces XNLI labels}}{48}{figure.caption.22}
-\contentsline {figure}{\numberline {9}{\ignorespaces XNLI Lengths}}{50}{figure.caption.23}
+\contentsline {figure}{\numberline {8}{\ignorespaces XNLI Lengths}}{48}{figure.caption.22}
+\contentsline {figure}{\numberline {9}{\ignorespaces XNLI labels}}{50}{figure.caption.23}
 \contentsline {figure}{\numberline {10}{\ignorespaces XQuAD Lengths}}{52}{figure.caption.24}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {11}{\ignorespaces GliBERT Architecture}}{55}{figure.caption.26}
 \contentsline {figure}{\numberline {12}{\ignorespaces GliBERT Architecture detail}}{57}{figure.caption.27}
-\contentsline {figure}{\numberline {13}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{62}{figure.caption.28}
-\contentsline {figure}{\numberline {14}{\ignorespaces Predicate-Argument Structures}}{64}{figure.caption.29}
-\contentsline {figure}{\numberline {15}{\ignorespaces BERT-Classification}}{67}{figure.caption.30}
-\contentsline {figure}{\numberline {16}{\ignorespaces {[}CLS{]} Head}}{68}{figure.caption.31}
-\contentsline {figure}{\numberline {17}{\ignorespaces FFNN Head}}{69}{figure.caption.32}
-\contentsline {figure}{\numberline {18}{\ignorespaces GRU Head}}{70}{figure.caption.33}
-\contentsline {figure}{\numberline {20}{\ignorespaces Span Prediction Head}}{72}{figure.caption.35}
+\contentsline {figure}{\numberline {13}{\ignorespaces Multiple Predicates Dependency Parse Tree}}{62}{figure.caption.29}
+\contentsline {figure}{\numberline {14}{\ignorespaces Predicate-Argument Structures}}{64}{figure.caption.30}
+\contentsline {figure}{\numberline {15}{\ignorespaces BERT-Classification}}{67}{figure.caption.31}
+\contentsline {figure}{\numberline {16}{\ignorespaces {[}CLS{]} Head}}{68}{figure.caption.32}
+\contentsline {figure}{\numberline {17}{\ignorespaces FFNN Head}}{69}{figure.caption.33}
+\contentsline {figure}{\numberline {18}{\ignorespaces GRU Head}}{70}{figure.caption.34}
+\contentsline {figure}{\numberline {19}{\ignorespaces BERT Q\&A}}{71}{figure.caption.35}
+\contentsline {figure}{\numberline {20}{\ignorespaces Span Prediction Head}}{71}{figure.caption.36}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {21}{\ignorespaces Accuracy/Loss plots of three experiments}}{75}{figure.caption.38}
-\contentsline {figure}{\numberline {22}{\ignorespaces Heatmaps subtokenizd and merged}}{83}{figure.caption.42}
-\contentsline {figure}{\numberline {23}{\ignorespaces Accumulated Gains and Losses.}}{84}{figure.caption.44}
-\contentsline {figure}{\numberline {24}{\ignorespaces Results Accumulation for each Dataset}}{86}{figure.caption.45}
-\contentsline {figure}{\numberline {25}{\ignorespaces Results Accumulation for each Dataset}}{87}{figure.caption.46}
-\contentsline {figure}{\numberline {26}{\ignorespaces Accumulated Gains and Losses.}}{89}{figure.caption.50}
-\contentsline {figure}{\numberline {27}{\ignorespaces Token Types all Datasets}}{92}{figure.caption.51}
-\contentsline {figure}{\numberline {28}{\ignorespaces SRL assessment}}{97}{figure.caption.52}
-\contentsline {figure}{\numberline {29}{\ignorespaces SRL assessment per datasets}}{98}{figure.caption.53}
+\contentsline {figure}{\numberline {21}{\ignorespaces Accuracy/Loss plots of three experiments}}{74}{figure.caption.39}
+\contentsline {figure}{\numberline {22}{\ignorespaces Heatmaps subtokenizd and merged}}{81}{figure.caption.43}
+\contentsline {figure}{\numberline {23}{\ignorespaces Accumulated Gains and Losses.}}{83}{figure.caption.45}
+\contentsline {figure}{\numberline {24}{\ignorespaces Results Accumulation for each Dataset}}{84}{figure.caption.46}
+\contentsline {figure}{\numberline {25}{\ignorespaces Results Accumulation for each Dataset}}{85}{figure.caption.47}
+\contentsline {figure}{\numberline {26}{\ignorespaces Accumulated Gains and Losses.}}{88}{figure.caption.51}
+\contentsline {figure}{\numberline {27}{\ignorespaces Token Types all Datasets}}{91}{figure.caption.52}
+\contentsline {figure}{\numberline {28}{\ignorespaces SRL assessment}}{95}{figure.caption.53}
+\contentsline {figure}{\numberline {29}{\ignorespaces SRL assessment per datasets}}{96}{figure.caption.54}
 \addvspace {10\p@ }
 \babel@toc {ngerman}{}
 \babel@toc {english}{}

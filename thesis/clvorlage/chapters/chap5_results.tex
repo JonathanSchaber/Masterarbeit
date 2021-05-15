@@ -279,13 +279,6 @@ for a more detailed formulation of this process:
 \section{Classification Dataset Results}
 \label{sec:classification-results}
 
-{\color{red} \begin{itemize}
-  \item conjecture: SRLs are rather adding noise in sequences that are too long. Extreme examples are the Q\&A datasets.
-  \item GRU architecture is probably strongest: most best models (even though mostly -SRL) and second best models, no worst performance
-  \item 6 significantly better +SRL vs. 3 significantly worse +SRL. There seems to be a slight trend that when merging subtokens, duplicating SRLs when too less predicates is better.
-  \item all 3 worsening are for subtokenized architectures.
-\end{itemize}}
-
 To obtain as stable results as possible, I decided to train five models for each architecture
 and configuration, all initialized with different random seeds. Additionally, I ensembled the
 five models, achieving a performance gain of several percentage points (see example of PAWS-X,
@@ -393,8 +386,11 @@ added SRL information.
 
 
 \tab{tab:token-vs-merged}{Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
-                          compared pairwise. Example case, upper left 4.64**: Comparison of deISEAR $\alpha$, +SRL zero
-                          implementation, [CLS] Head, subtokenized ensemble (72.19\% accuracy) and the merged ensemble (67.55\%
+                          compared pairwise. Clearly, the subtokenized ensembles showed better classification performances
+                          than the merged ones.
+
+                          Example case, upper left 4.64**: Comparison of deISEAR $\alpha$, +SRL zero
+                          implementation [CLS] Head from table \ref{tab:results}: Subtokenized ensemble (72.19\% accuracy) and the merged ensemble (67.55\%
                           accuracy) --- the subtokenized ensemble performed 4.64\% better, apparently with quite high significance (p $<$ 5\%).}{
   \scalebox{0.90}{
     \begin{tabular}{llcc|cc|cc}
@@ -497,7 +493,11 @@ than zeroing.
                       Light blue denotes that both architectures performed
                       \customcolorbox{equally}{llight-blue}
                       (in which case both ensembles were controlled for significance). One asterisk signifies
-                      a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.}{
+                      a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
+
+                      Example case upper left 0.67\%: The better +SRL ensemble for deISEAR $\alpha$ [CLS] head
+                      was the zero implementation (72.19\%), surpassing the $-$SRL ensemble (71.52\%) by 0.67
+                      percentage point; but apparently not statistically significant.}{
     \scalebox{1}{
       \begin{tabular}{llP{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}}
                                                    &           & \multicolumn{2}{c|}{\textbf{{[}CLS{]} Head}}                                                                 & \multicolumn{2}{c|}{\textbf{FFNN Head}}                                                                        & \multicolumn{2}{c}{\textbf{GRU Head}}                                                                     \\ \cline{3-8}
@@ -615,6 +615,7 @@ thesis.
 
 
 \section{Question Answering Dataset Results}
+\label{sec:qa-results}
 
 The reportings of the results for the question answering data sets follows
 the line that was taken for the classification sets: A general table with the
@@ -732,6 +733,10 @@ Main conclusions:
 \end{itemize}
 
 
+\section{GliBERT Noise Nuisance Analysis}
+\ref{sec:glinoise}
+
+
 After reporting the general results, aggregations and the somewhat disenchanting conclusion, I
 now try to investigate the reasons for this mediocre effect. After investigating the data and
 SRL quality, I found that noise on several levels is present which probably led to too much
@@ -777,7 +782,7 @@ mutandis also in NLU, and NLP in general.
 
 
 
-\section{Register Noise}
+\subsection{Register Noise}
 \label{sec:register-noise}
 
 German BERT, according to deepset, was pretrained on the German Wikipedia dump, the OpenLegalData dump and
@@ -815,7 +820,7 @@ would be represented by the catch-all [UNK] BERT token:
 
 
 
-\section{Data Set Noise}
+\subsection{Data Set Noise}
 \label{sec:label-noise}
 
 As \citep{caswell2021quality} point out, apparently there is often a lack of
@@ -966,7 +971,7 @@ datasets are by no means to be taken as undoubtedly indicating true classificati
 
 
 
-\section{Translation Noise}
+\subsection{Translation Noise}
 \label{sec:translation-noise}
 
 Automatic translation has come a long way and systems nowadays produces often qualitatively high results ---
@@ -995,7 +1000,7 @@ a wrongly labelled training instance was created.
 
 
 
-\section{SRL Noise}
+\subsection{SRL Noise}
 \label{sec:srl-noise}
 
 A major question arising in the context of using automatically assigned Semantic Roles in

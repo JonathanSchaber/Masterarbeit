@@ -69,10 +69,6 @@ not even aware of it:
   \item[Common world knowledge] Normally the information we encode in ordinary conversation is highly condensed and as scarce as possible --- most of the actual information is reconstructed by the receiver, making use of general knowledge about the world (factual knowledge, such as ``Bern is the capital of Switzerland'' and ``Switzerland lies in Europe'', which together with logical reasoning, e.g. the \textit{modus ponendo pones}, lead to true deductions like ``Bern must be geographically located in Europe'') and the actual situation, time, and place the conversation takes place.
 \end{description}
 
-% ``The engineering side of computational linguistics, often called natural language processing
-% (NLP), is largely concerned with building computational tools that do useful things with
-% language'' \cite{johnson2009statistical}
-
 So, every system that is built aiming at processing natural language in a ``deep'', human-like
 manner must cope with this inherent fuzzinesses of human communication. In the field of
 applied computational linguistics, often referred to as Natural Language Processing (NLP),
@@ -90,16 +86,16 @@ language proficiency tests, such as vocabulary tests, cloze tests, reading compr
 well as various forms of production, interaction, and mediation tests \textelp{}''. Therefore,
 I think it is not completely unsound to assess NLU capabilities of artificial systems
 by measuring their performance on standardized datasets.}
-NLU aims at building systems which are able to retrieve the semantic
-content encoded in natural language and are able to further act upon it:
-For example, a chatbot should be capable of ``understanding'' that the questions ``What's
-the weather like?'', ``Can you tell me today's weather forecast, please?'', ``Will I need
-an umbrella today?'' all have more or less the same meaning and should provoke the same
-answer.\myfootnote{Although one could argue that the third question differs from the first
-two since it is a polar question; i.e. a simple ``yes'' or ``no'' would be grammatically
-correct --- however, I have the strong feeling one would perceive this as a very dry, or
-even rude, answer and would expect a more elaborated answer in a regular conversation
-context.}
+NLU aims at building systems which are able to retrieve the semantic content encoded
+in natural language and are able to further act upon it: For example, a chatbot should
+be capable of ``understanding'' that the questions ``What's the weather like?'', ``Can
+you tell me today's weather forecast, please?'', ``Will I need an umbrella today?'' all
+have more or less the same meaning and should provoke the same answer and/or reaction
+of the system.\myfootnote{Although one could argue that the third question differs from
+the first two since it is a polar question; i.e. a simple ``yes'' or ``no'' would be
+grammatically correct --- however, I have the strong feeling one would perceive this as
+a very dry, or even rude, answer and would expect a more elaborated answer in a regular
+conversation context.}
 
 % TODO: embed this quote
 
@@ -147,6 +143,17 @@ context.}
 % purely functional explanation.'' \cite{sahlgren2021singleton}
 
 % The subsection of NLP that deals with the semantics, i.e. meanings, of utterances, is NLU.
+
+
+NLP, and NLU as a sub-discipline of it, is ``[t]he engineering side of computational
+linguistics'', that is ``largely concerned with building computational tools that do
+useful things with language'' \cite{johnson2009statistical}. Therefore, the main goal
+of NLP is not to describe or explain structures in human language employing computational
+theories but rather to solve a specific problem regarding human language: For example, one
+wants to design and implement a system that automatically detects the emotion that is
+transported in a given text snippet. In the relatively young history of the field of
+NLP, there are three d phases identifiable regarding the main architectural strategies of these
+models or systems, which I will briefly outline:
 
 During the first, or \emph{symbolic}, phase of NLP that lasted approximately from the 1950ies
 until the 1980ies, systems addressing tasks such as machine translation were architectures that
@@ -198,16 +205,17 @@ the full force of the tsunami hit the major Natural Language Processing (NLP) co
 \citep[p.~701]{manning2015computational}. Nevertheless, deep learning approaches are by now an integral
 part of the vast majority NLP applications.
 
-In contrast to the statistical period's main challenge --- the identification and extraction of
-suitable features ---, now the algorithms are itself learning the features that are the most
-informative for a given task from raw data. This is probably most obvious in computer vision
-contexts, where the input data for neural models is the raw RGB pixel image data, in contrast
-to pre-deep learning algorithms, where the input of a machine learning system would be a data
-structure produced by some feature detection transfomation, such as SIFT \citep{o2019deep}. For
-text, however, the case is not as clear as to what the ``raw'' representation of it for a model
-would be, as will be shown in the next chapter. The human part in the process is now ``reduced''
-to design the overall model architecture and compile large enough amounts of data that are, in
-the best case, also of good quality.
+In contrast to the statistical period's main challenge --- the identification and extraction
+of suitable features ---, now the algorithms are itself learning the features that are the
+most informative for a given task from raw data.\myfootnote{This is probably most obvious in
+computer vision contexts, where the input data for neural models is the raw RGB pixel image
+data, in contrast to pre-deep learning algorithms, where the input of a machine learning
+system would be a data structure produced by some feature detection d algorithm, such as SIFT
+\citep{lowe1999object}. For text, however, the case is not as clear as to what the ``raw''
+representation of it for a model would be, as will be shown in the next chapter.} The human
+part in the process is now ``reduced'' to design the overall model architecture, define the
+hypaerparameters of the model and the training set up, and compile large enough amounts of
+data that are, in the best case, also of good quality.
 
 While the roughly sketched methods above apply to a wide ranges of
 applications in NLP, I will now point to some of the enquiries NLU aims
@@ -258,7 +266,7 @@ As the endeavor of building a holistic, fully NLU capable agent is probably an o
 ambitious to achieve at once, the strategy in modern computational linguistics is to break it
 down into smaller ``subproblems'':
 
-Several core building blocks of NLU have been identified and datasets comprising data  tailored at those
+Several core building blocks of NLU have been identified and datasets comprising examples tailored at those
 have been compiled. The performance of new models and approaches on such data sets is often taken as
 a proxy for attesting NLU capabilities targeted at the task.
 
@@ -465,7 +473,7 @@ Despite the apparent success of linguistic-agnostic architectures on NLP benchma
 models tell us little about the nature of human language and the structural properties of it;
 \citeauthor{manning2015computational} continuing: ``It would be good to return some emphasis
 within NLP to cognitive and scientific investigation of language rather than almost exclusively
-using an engineering model of research'' \citep[p.~706]{manning2015computational}
+using an engineering model of research.''
 
 By implementing textual representations more grounded in linguistic theories, I see one of
 the contributions of my model also in antagonizing the tendency of modern NLP of becoming

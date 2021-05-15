@@ -12,7 +12,7 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}History, Methods, Problems of NLP and NLU}{4}{subsection.1.1.1}
-\contentsline {subsection}{\numberline {1.1.2}Subtasks of Solving NLU}{5}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.2}Subtasks of Solving NLU}{6}{subsection.1.1.2}
 \contentsline {subsection}{\numberline {1.1.3}Text Representations}{7}{subsection.1.1.3}
 \contentsline {section}{\numberline {1.2}Contributions/Goals}{10}{section.1.2}
 \contentsline {section}{\numberline {1.3}Research Questions}{11}{section.1.3}
@@ -22,21 +22,21 @@
 \contentsline {subsection}{\numberline {2.1.1}Problems, Weak Spots, Semanticity}{16}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}Solutions / Related Work}{17}{subsection.2.1.2}
 \contentsline {section}{\numberline {2.2}GliBERT}{18}{section.2.2}
-\contentsline {section}{\numberline {2.3}Semantic Roles}{19}{section.2.3}
+\contentsline {section}{\numberline {2.3}Semantic Roles}{20}{section.2.3}
 \contentsline {chapter}{\numberline {3}Data Sets}{29}{chapter.3}
 \contentsline {section}{\numberline {3.1}GerGLUE}{29}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}General Issues}{30}{subsection.3.1.1}
 \contentsline {section}{\numberline {3.2}Corpora}{31}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}deISEAR}{31}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}MLQA}{34}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{39}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.3}PAWS-X}{38}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}SCARE}{42}{subsection.3.2.4}
 \contentsline {subsection}{\numberline {3.2.5}XNLI}{47}{subsection.3.2.5}
 \contentsline {subsection}{\numberline {3.2.6}XQuAD}{50}{subsection.3.2.6}
 \contentsline {subsection}{\numberline {3.2.7}Summary}{53}{subsection.3.2.7}
 \contentsline {chapter}{\numberline {4}Architecture}{55}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{55}{section.4.1}
-\contentsline {section}{\numberline {4.2}BERT module}{58}{section.4.2}
+\contentsline {section}{\numberline {4.2}BERT Module}{58}{section.4.2}
 \contentsline {section}{\numberline {4.3}SRL Module}{59}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}ParZu}{59}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Ensuring Tokenization Equivalence}{61}{subsection.4.3.2}
@@ -50,22 +50,23 @@
 \contentsline {subsubsection}{\numberline {4.5.1.3}GRU Head}{70}{subsubsection.4.5.1.3}
 \contentsline {subsection}{\numberline {4.5.2}Question Answering}{70}{subsection.4.5.2}
 \contentsline {subsubsection}{\numberline {4.5.2.1}Span Prediction Head}{71}{subsubsection.4.5.2.1}
-\contentsline {chapter}{\numberline {5}Results}{73}{chapter.5}
-\contentsline {section}{\numberline {5.1}Controlling for Statistical Significance}{76}{section.5.1}
-\contentsline {section}{\numberline {5.2}Classification Dataset Results}{78}{section.5.2}
-\contentsline {section}{\numberline {5.3}Question Answering Dataset Results}{88}{section.5.3}
-\contentsline {section}{\numberline {5.4}Register Noise}{91}{section.5.4}
-\contentsline {section}{\numberline {5.5}Data Set Noise}{92}{section.5.5}
-\contentsline {subsubsection}{\numberline {5.5.0.1}Re-annotation}{93}{subsubsection.5.5.0.1}
-\contentsline {section}{\numberline {5.6}Translation Noise}{96}{section.5.6}
-\contentsline {section}{\numberline {5.7}SRL Noise}{96}{section.5.7}
-\contentsline {section}{\numberline {5.8}Ablation study}{98}{section.5.8}
-\contentsline {chapter}{\numberline {6}Conclusion}{101}{chapter.6}
-\contentsline {section}{\numberline {6.1}Outlook / Future Work}{101}{section.6.1}
-\contentsline {chapter}{Glossary}{103}{section*.55}
-\contentsline {chapter}{References}{104}{section*.57}
-\contentsline {chapter}{Lebenslauf}{114}{section*.59}
+\contentsline {chapter}{\numberline {5}Results}{72}{chapter.5}
+\contentsline {section}{\numberline {5.1}Controlling for Statistical Significance}{75}{section.5.1}
+\contentsline {section}{\numberline {5.2}Classification Dataset Results}{77}{section.5.2}
+\contentsline {section}{\numberline {5.3}Question Answering Dataset Results}{86}{section.5.3}
+\contentsline {section}{\numberline {5.4}GliBERT Noise Nuisance Analysis}{88}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Register Noise}{90}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Data Set Noise}{90}{subsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.2.1}Re-annotation}{92}{subsubsection.5.4.2.1}
+\contentsline {subsection}{\numberline {5.4.3}Translation Noise}{94}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}SRL Noise}{95}{subsection.5.4.4}
+\contentsline {section}{\numberline {5.5}Ablation study}{96}{section.5.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{99}{chapter.6}
+\contentsline {section}{\numberline {6.1}Outlook / Future Work}{99}{section.6.1}
+\contentsline {chapter}{Glossary}{101}{section*.56}
+\contentsline {chapter}{References}{102}{section*.58}
+\contentsline {chapter}{Lebenslauf}{112}{section*.60}
 \babel@toc {ngerman}{}
 \babel@toc {english}{}
-\contentsline {chapter}{\numberline {A}Tables}{115}{appendix.A}
-\contentsline {chapter}{\numberline {B}List of something}{116}{appendix.B}
+\contentsline {chapter}{\numberline {A}Tables}{113}{appendix.A}
+\contentsline {chapter}{\numberline {B}List of something}{114}{appendix.B}

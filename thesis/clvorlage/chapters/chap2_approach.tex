@@ -85,6 +85,12 @@ with a so-called task-specific head on top of it. This makes re-implementing the
 other architectures quite convenient, which is one of the reasons I decided to implement BERT
 in my approach as well.
 
+Further, the numerical embeddings BERT ``learned'' during the pre-training phase show to
+be very apt at transfering to a wide range of down-stream tasks: As \citeauthor{devlin2018bert}
+demonstrate, with marginal architecture adaption, i.e. the so-called ``head'', to the task at hand,
+vanilla BERT embeddings echieved several SOTA results on tasks ranging from natural language inference (NLI)
+to question answering.
+
 Another advantage of BERT is that the cost, hardware, and data intensive pre-training of the
 embeddings must only be computed once; the downstream task dependent fine-tunig can then
 be carried out in a lean set up.\myfootnote{To give an impression on the expenses of pre-training
