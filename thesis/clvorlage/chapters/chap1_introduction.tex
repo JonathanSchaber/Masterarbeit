@@ -6,8 +6,9 @@
 In this chapter, I will expand a bit further to put the intent of this master's thesis into a
 bigger picture. Therefore, I will line out the general problems and topics of NLU and elaborate
 on the methods and techniques that were developed to address those questions.
-
-Further, I will tie in my {\color{red} approach} with the current research efforts in NLU.
+Further, I will tie in my approach with the current research efforts in NLU and
+outline the research questions of my thesis, along with a short description of the structure
+of this thesis.
 
 
 \section{Motivation}
@@ -19,7 +20,7 @@ are exposed to (cf. \cite{lust2006child, lewis2001learnability}).\myfootnote{The
 phenomenon, ``Poverty of Stimulus'' (POS), was coined by \cite{chomsky1980cognitive}, arguing for
 an innate language learning/processing faculty. This has led to a fierce debate over that issue:
 Many researchers claim that the POS-motivated necessity for such an innate, human-specific,
-genetic trait does not hold, and humans learn language simply by means of extremely sophisticated
+genetic trait does not hold, and humans learn language by means of extremely sophisticated
 statistic analysis. It has indeed been shown that infants are amazingly apt at extracting
 statistical information from auditive input \citep{saffran1996statistical}. However, as was
 countered by Chomsky and others, this does not fully explain the ability of children to apply
@@ -38,35 +39,56 @@ acquisition driven by statistical insights.}
 
 One of the most trivial and enigmatic traits about human language and communication is
 that we actually \emph{understand} each other so well: That during a discourse, person
-X can reliably recover the encoded meaning of the expressions in the language signal
-uttered by person Y, and vice versa, especially given the ``noisy channel'' problem (cf.
+$X$ can reliably recover the encoded meaning of the expressions in the language signal
+transmitted by person $Y$, and vice versa, especially given the ``noisy channel'' problem (cf.
 \cite{plotkin2000language}), which is elaborated on a little more below. Further, we are
-able to reconstruct a lot information that is not explicitly stated in an expression, and
+able to reconstruct a lot of information that is not explicitly stated in an expression, and
 uphold such a mutually shared belief of state of affairs during a discourse. In fact,
 this ``shared intentionality'' is hypothesized as being one of the traits that separates
 human cognition and language from other animals (cf. \cite{tomasello2007shared}).
 
 Because {\color{red} rational} thinking, reasoning, and cognition in general are being perceived
 as essentially linked to human linguistic competences, communicative abilities have been proposed
-to act as a proxy for attesting intelligence to non-human entities. \cite{turing1950computing}
+to act as a proxy for attesting intelligence to non-human entities. E. g. \cite{turing1950computing}
 suggested his renowned ``Turing-Test'' as method for determining the capabilities of artificial
-intelligence systems: If the communicative behavior of an agent is indistinguishable from that of
+intelligence systems: If the communicative behavior of any agent is indistinguishable from that of
 a human agent, it is justifiable, according to this view, to attribute ``intelligence'' to such a
 system.
 
-However, reproducing human linguistic capabilities has turned out to be much harder
-than was predicted during the 50ies, where scientists were enthused by then recent
-developments of computers and predicted that machine translation would be a solved
-problem by a few years \citep{hutchins2005history}. This is mainly due to the fact
-that humans are incredibly apt at handling the various complexities present in the
-linguistic signal; we handle those with such unconscious ease that we are mostly
-not even aware of it:
+However, reproducing human linguistic capabilities has turned out to be much harder than was
+predicted during the 50ies, where scientists were enthused by then recent developments of
+computers.\myfootnote{It was e.g. prognosticated in 1954 by researchers of the Georgetown
+University and IBM that machine translation would be a solved problem within a few years
+\citep{hutchins2005history}.} This is mainly due to the fact that humans are incredibly apt
+at handling the various complexities present in the linguistic signal; we handle those with
+such unconscious ease that we are mostly not even aware of it:
 
 \begin{description}
-  \item[Vagueness] We have no problem dealing with vague statements like ``Most people never heard of it''; in a specific conversation situation we rely on extra-linguistic cues like pragmatics and common world knowledge to decide if ``most'' means 7.5 billion people, or 70\% of our friends, or if the approximate number is even relevant.
-  \item[Ambiguity] The fact that a linguistic sign can't be interpreted in only one way, is an ubiquitous phenomenon in human language that is present on all levels: phonological, lexical, syntactic, semantic, pragmatic. A classic example for syntactic ambiguity would be the phrase ``He saw the elephant with a telescope''.
-  \item[Corruption] Contrary to how we perceive language when speaking to each other, utterances are mostly not well-formed, grammatical sentences, but show a varying degree of stutter, incomplete phrases, repetitions, and other ``mistakes''. While not as present in written language, depending on the domain, there still is quite some noise present, e.g. in online chat threads etc. Still, we mostly have no problems at all, reconstructing the encoded information from such a corrupted signal --- contrary to algorithmic models as will become obvious during the course thesis.
-  \item[Common world knowledge] Normally the information we encode in ordinary conversation is highly condensed and as scarce as possible --- most of the actual information is reconstructed by the receiver, making use of general knowledge about the world (factual knowledge, such as ``Bern is the capital of Switzerland'' and ``Switzerland lies in Europe'', which together with logical reasoning, e.g. the \textit{modus ponendo pones}, lead to true deductions like ``Bern must be geographically located in Europe'') and the actual situation, time, and place the conversation takes place.
+  \item[Vagueness] We have no problem dealing with vague statements like ``Most people never heard of it''; in a
+    specific conversation situation we rely on extra-linguistic cues like pragmatics and common
+    world knowledge to decide if ``most'' means 7.5 billion people, or 70\% of our friends, or if
+    the approximate number is even relevant.
+  \item[Ambiguity] The fact that plenty linguistic signs can't be interpreted in only one way, is an ubiquitous
+    phenomenon in human language that is present on all levels: phonological, lexical, syntactic,
+    semantic, pragmatic. A classic example for syntactic ambiguity would be the phrase ``He saw
+    the elephant with a telescope''.
+  \item[Corruption] Contrary to how we perceive language when speaking to each other, utterances are mostly
+    not well-formed, grammatical sentences, but show a varying degree of stutter, incomplete
+    phrases, repetitions,grammatical flaws, and other ``mistakes''. While not as present in
+    written language, depending on the domain, there still is quite some noise present, e.g.
+    in online chat threads ``Wers nocj wach??!!'' etc. Still, we mostly have no problems at
+    all reconstructing the encoded information from such a corrupted signal --- contrary to
+    algorithmic models as will become obvious during the course thesis.
+  \item[Common world knowledge] Normally the information we encode in ordinary conversation is highly condensed and as scarce
+    as possible to enable swift conversation --- most of the actual information is reconstructed by the receiver, making use
+    of general knowledge about the world (factual knowledge, such as ``Bern is the capital of
+    Switzerland'' and ``Switzerland lies in Europe'', which together with logical reasoning, e.g.
+    the \textit{modus ponendo pones}, leads to true deductions like ``Bern must be geographically
+    located in Europe'') and the actual situation, time, and place the conversation takes place.
+    A good counter-example would be legal texts, where every detail and implication of a judicial text
+    must be tediously mentioned --- a circumstance which actually makes law documents nearly incomprehensible for the
+    untrained reader.
+
 \end{description}
 
 So, every system that is built aiming at processing natural language in a ``deep'', human-like
@@ -76,7 +98,7 @@ this subfield of research is known as Natural Language Understanding (NLU).\myfo
 that I will not engage in the discussion about whether it is philosophically appropriate
 to claim that computational models ``understand'' human language. A lot of controversy has
 arisen around this issue, with positions ranging from completely denying language models any
-sort of (linguistic) understanding \citep{bender2021dangers} to the current trend of simply
+sort of (linguistic) understanding \citep{bender2021dangers} to the current trend of 
 concentrating on beating NLU SOTAs with ever larger models and blindly taking this as proof
 of building architectures capable of learning human language. I would argue that the thruth
 lies somewhere in between: Of course it is not enough to perform well on a standardized data
@@ -92,8 +114,8 @@ be capable of ``understanding'' that the questions ``What's the weather like?'',
 you tell me today's weather forecast, please?'', ``Will I need an umbrella today?'' all
 have more or less the same meaning and should provoke the same answer and/or reaction
 of the system.\myfootnote{Although one could argue that the third question differs from
-the first two since it is a polar question; i.e. a simple ``yes'' or ``no'' would be
-grammatically correct --- however, I have the strong feeling one would perceive this as
+the first two since it is a polar question and therefore a simple ``yes'' or ``no'' would be
+grammatically correct, I would argue that one would perceive this as
 a very dry, or even rude, answer and would expect a more elaborated answer in a regular
 conversation context.}
 
@@ -190,9 +212,9 @@ the language data for solving the task at hand.
 % algorithm, e.g. a naive-bayes classifier, can now be trained on this dataset to ``learn'' the
 % likelihood functions according to which an unseen mail then can by classified.
 
-With this orientation towards data-driven NLP solutions came also the {\color{red} technique}
+With this orientation towards data-driven NLP solutions came also the evaluation method
 of comparing different architectures on standardized data sets to evaluate their capabilities
-regarding the problem the dataset was constructed to {\color{red} image/abbilden}.
+regarding the problem the dataset was constructed to display.
 
 For half a decade now the next stage in NLU and NLP in general was entered: we are now in the
 middle of the \emph{neural age} of computational linguistics, where models are constructed
@@ -214,21 +236,21 @@ system would be a data structure produced by some feature detection d algorithm,
 \citep{lowe1999object}. For text, however, the case is not as clear as to what the ``raw''
 representation of it for a model would be, as will be shown in the next chapter.} The human
 part in the process is now ``reduced'' to design the overall model architecture, define the
-hypaerparameters of the model and the training set up, and compile large enough amounts of
+hyperparameters of the model and the training set up, and compile large enough amounts of
 data that are, in the best case, also of good quality.
 
-While the roughly sketched methods above apply to a wide ranges of
-applications in NLP, I will now point to some of the enquiries NLU aims
-at: Simply put, NLP is concernced with the structural side of natural
-language text, while NLU looks at the content of these utterances. For
-example, typical NLP tasks such as dependency parsing, POS-tagging, and
-coreference soltution don't require a semantic representation of words
-or phrases --- often, it suffices to look at structural properties such
-as morphology, simple frequency statstics, or transition probablities
-to solve such problems to an acceptable extent. On the other hand, NLU
-tries to process language more in a manner like humans do it: We infer
-something from language, recocile communication information with our
-world knowledge, answer questions, detect logical inconsistencies etc.
+While the roughly sketched methods above apply to a wide ranges of applications in NLP,
+I will now point to some of the inquiries NLU aims at: Simply put, NLP is concerned with
+the structural side of natural language text, while NLU looks at the content of these
+utterances. For example, typical NLP tasks such as dependency parsing, POS-tagging, and
+coreference soltution don't require a semantic representation of words or phrases ---
+often, it suffices to analyze structural properties such as morphology, unsophisticated
+frequency statistic, or transition probabilities to solve such problems to an acceptable
+extent (cf. \cite{kumawat2015pos}). On the other hand, NLU tries to process language more
+in a manner like humans do it: We infer something from language, reconcile communication
+information with our world knowledge, answer questions, detect logical inconsistencies
+etc. NLU is the endeavor of building artificial agents that are able to do these things
+as well.
 
 % \cite{mcshane2017natural} in her paper on NLU in cognitive agents argues that truly
 % NLU-capable systems's abilities must go beyond ``mere'' symbol processing:
@@ -252,17 +274,17 @@ world knowledge, answer questions, detect logical inconsistencies etc.
 %   OntoAgent.
 % \end{quote}
 
-All disagreements about the very nature of ``understanding'' and ``communication'' set aside,
-there is probably consensus that we are far from being able to construct a system that
-would pass the Turing test.
-As laid out in the quote above, such a model would need
-to be equipped with
+However, all disagreements about the very nature of ``understanding'' and ``communication'' set aside,
+there probably is consensus that the field is far from being able to construct a system that
+would pass the Turing test, i.e. an agent which communicative abilities are on par with a human being.
+Therefore, the strategy is to analyze the general human communicative, ``understanding'' capability
+and identify core building blocks of it, which are then addressed in isolation.
 
 
 
 \subsection{Subtasks of Solving NLU}
 
-As the endeavor of building a holistic, fully NLU capable agent is probably an objective too
+As thj endeavor of building a holistic, fully NLU capable agent is probably an objective too
 ambitious to achieve at once, the strategy in modern computational linguistics is to break it
 down into smaller ``subproblems'':
 
@@ -291,12 +313,12 @@ Some of these proposed subproblems or proto-tasks of NLU are the following:
       1422.'', a system would would need to extract the span ``Henry V''.
 \end{description}
 
-Since each of these tasks and datasets are focused on a specific subpart of general NLU and
+Since each of these tasks and datasets are focused on a specific subpart of general NLU,
 it is by no means implied that a system which e.g. performs well on entailment recognition
 will be able to extract answer spans to an acceptable degree. Therefore, to assert that some
-model or approach does indeed capture some properties of real NLU, it has become standard
+model or approach does indeed capture some properties of general NLU, it has become standard
 to evaluate on several of those subtasks. One of the best established compilations of such
-subtasks is the GLUE benchmark citep{wang2018glue}, `` a collection of NLU tasks including
+subtasks is the GLUE benchmark \citep{wang2018glue}, `` a collection of NLU tasks including
 question answering, sentiment analysis, and textual entailment, and an associated online
 platform for model evaluation, comparison, and analysis.'' \citep{wang2018glue}.
 
@@ -307,7 +329,7 @@ chapter \ref{chap:3_datasets}.
 
 \subsection{Text Representations}
 
-Text can be analysed and represented in various ways; in fact, those characters on the
+Text can be analyzed and represented in various ways; in fact, those characters on the
 sheet you are reading right now are one form of representing language. However, for an
 algorith language represented by means of an alphabetical script is not a well-suited
 encoding --- since de Saussure it is established that the actual characters are completely
@@ -359,20 +381,20 @@ Therefore, other methods of representing word sequences numerically have been de
 to each word in a sequence a numeral representation, thus preserving the sequential information.
 Examples of such a representation would be Latent Semantic Analysis \citep{furnas1988using}, which
 generates word vectors by reducing high-dimensional word co-occurrence matrices via singular value
-decomposotion, or word2vec \citep{mikolov2013distributed} which showed the possibility of letting a
+decomposition, or word2vec \citep{mikolov2013distributed} which showed the possibility of letting a
 neural model compute those embeddings applying a language modeling objective.
 
 
 
 \paragraph*{Contextualized Word Embeddings}
 
-Research on the generation algorriths of such numerical word embeddings which can
+Research on the generation algorithms of such numerical word embeddings which can
 be used as text representations for various NLP tasks has experienced tremendous
-intereset in recent years, producing various architectures, and frameworks, leading
+interest in recent years, producing various architectures, and frameworks, leading
 to the now state of the art of contextualized word embeddings: Such implementations
 account for the fact that the semantic function of a word is heavily dependent on
 the context in which it appears: The word ``building'' has quite different semantic
-and syntactic funtions in the followng sentences: ``This is a very high building!''
+and syntactic functions in the following sentences: ``This is a very high building!''
 and ``She was building an empire'' --- in this obvious example\myfootnote{The two
 sentences exemplify the problem of homonymy: Two different lemmata having the same
 word form. However, even if the same lemma is used in different context, subtle
@@ -391,7 +413,7 @@ and concepts.'' \citep[p.~703]{manning2015computational}
 % words is incredibly useful in NLP, but not only in NLP.
 
 One effective framework of producing such contextualized word embeddings is BERT \citep{devlin2018bert},
-which I also will employ for the experiments in my thesis. The general concpts of contextualized
+which I also will employ for the experiments in my thesis. The general concepts of contextualized
 word embeddings, transfer learning, and BERT in particular will be described in the next chapter
 \ref{chap:2_approach}, section \ref{sec:pretrained-embeddings}.
 
@@ -404,7 +426,7 @@ between a query and a set of texts for information retrieval, one can also try t
 some structural information of the sentence at hand.
 To support a model with information about what grammatical relations between
 parts of a sentence are present, one could provide the algorithm with the syntax parse
-tree of the sentence. This way, the difference between the afore mentioned
+tree of the sentence. This way, the difference between the before mentioned
 two ``hitting''-sentences would be clearly distinguishable.
 
 \paragraph*{Semantic Role Labels}
@@ -518,19 +540,19 @@ In this first chapter I gave a very brief overview of general trends in
 NLP over the past decades and highlighted some
 
 Chapter \ref{chap:2_approach} introduces the basic concept of BERT,
-its {\color{red} shortcomings} and presented solution or improvements. Further,
+its shortcomings and presented solutions or improvements. Further,
 I explain my approach and the relating linguistic concepts.
 
-The datasets I compiled to test my models on are described in detail
-in chapter \ref{chap:3_datasets}.
+The datasets I compiled in my GerGLUE collection to test my models on are described in detail in
+chapter \ref{chap:3_datasets}.
 
 In chapter \ref{chap:4_architecture}, I describe the details of the architecture of
-my BERT-variant in all detail: The identification and encoding of the semantic role
+my GliBERT model in all detail: The identification and encoding of the semantic role
 labels, the different combination procedures of the BERT embeddings with these, as
 well as the different head architectures.
 
 The overview and discussion of the performance of the various model architectures on
 the GerGLUE data set is made in chapter \ref{chap:5_results}.
 
-Finally, I draw some insights and conclusions in the last chapter \ref{chap:6_conclusion}.
+Finally, I draw some conclusions and summarize the gained insights in the last chapter \ref{chap:6_conclusion}.
 

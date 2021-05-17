@@ -83,7 +83,8 @@ same epoch are marked in the same fashion.
   \caption[Accuracy/Loss plots of three experiments]{Accuracy and loss plots for three
 experiments (\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and
 \textcolor{std-green}{test} set): The vertical line marks the epoch with the highest
-development set accuracy}
+development set accuracy; the test set accurracy for this epoch is taken as peak performance
+of the model.}
   \label{fig:acc-loss}
 \end{figure}
 
@@ -1104,7 +1105,7 @@ can be experimentally tested, I identify two easily separatable and testable asp
 take for example the sentence depicted in figure \ref{srl:normal}: Firstly, the information
 what parts of a sentence are the predicates. The intuition behind this is that maybe the
 head relies mostly on the information as to which tokens carry information about the events
-that happen in a given sentence. To test this, I simply drop the information about all SRLs,
+that happen in a given sentence. To test this, I drop the information about all SRLs,
 except the information that a token is a predicate (left side of figure \ref{srl:ablation}).
 In the second case, the hypothesis is reversed: Maybe the head is able to get the most useful
 hints about the information which inidcates what role certain token groups play in a given

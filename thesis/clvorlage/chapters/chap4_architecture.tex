@@ -89,9 +89,9 @@ pretrained BERT, and with another function, \texttt{BertTokenizer.from\_pretrain
 one instantiates the BERT tokenizer.
 After encoding a sentence using the tokenizer's method \texttt{.encode\_plus()}, the
 encoded sentence is sent through BERT via its \texttt{.forward()}-method --- or
-called implicitly, by simply passing the sentence to the model --- which returns the
+called implicitly, by passing the sentence to the model --- which returns the
 vectors for all input tokens, which can then be used in downstream tasks. Fine-tuning
-is simply done by passing the computed loss to the specified loss funtion (I use the
+is done by passing the computed loss to the specified loss funtion (I use the
 AdamW loss function \citep{loshchilov2019decoupled}, a modification of the well-known
 Adam (Adaptive Moment Estimation) loss function \citep{kingma2014adam}, implementing
 additional weight decay), which updates BERT's weight matrices.
@@ -152,7 +152,7 @@ undisputed:``The parsing scheme that USD advocates takes the division between
 function word and content word as its guiding principle. One major difficulty
 with doing this is that the dividing line between function word and content
 word is often not clear'' \cite{gross2015dependency}.} identification of the
-relevant predicate is straightforward: One has simply to look at the dependency
+relevant predicate is straightforward: One needs just to look at the dependency
 parse tree of a given sentence and select the verbal heads --- i.e. roots ---
 of the clauses. However, the ParZu parser models not content verbs as heads but
 function verbs.\myfootnote{This follows general dependency frameworks proposed
@@ -517,7 +517,7 @@ profits more from the second architecture.
 
 
 
-\section{combination}
+\section{Combination}
 
 A crucial part in the overall architecture is the combining of the numeric representation
 of (sub-)words computed by the BERT network and the embedded SRLs. One difficulty lies in

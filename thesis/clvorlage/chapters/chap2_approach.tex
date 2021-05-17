@@ -8,7 +8,7 @@ In this chapter, I will give a brief overview of several things: In a first step
 elaborate on the topic of pretrained embeddings, transfer learning, and BERT, which is
 probably the most successful architecture implementing these concepts. Secondly, I will
 shortly demonstrate problems that have been identified relating to the performance of
-BERT and its relation to semantics. Follwoing, I will point out some submitted solutions
+BERT and its relation to semantics. Following, I will point out some submitted solutions
 countering those problems. Lastly, I will describe my approach and finally elucidate the
 topic of semantic roles.
 
@@ -20,7 +20,7 @@ topic of semantic roles.
 In recent years, it has proven to be very effective to use word embeddings pre-computed by sentence
 or document encoders as input representations for task-specific architectures, which may fin-tune
 those embeddings while learning the task at hand. Pretrained word embeddings have the advantage
-that they don't need to be learned from scratch by system solving the task at hand.
+that they don't need to be learned from scratch by the system solving the task at hand.
 
 
 \cite{bengio2003neural} first implemented distributed word representations by using a neural
@@ -28,7 +28,7 @@ that they don't need to be learned from scratch by system solving the task at ha
 processing (almost) from scratch'', \cite{collobert2011natural} showed tHE utility of such
 embeddings for representing text as input for other neural networks which addressed a multitude
 of classical NLP tasks. \cite{mikolov2013distributed} proved that such embeddings could be
-computed using a modest one-layer neural network targeted at selfsupervised training obejctives,
+computed using a modest one-layer neural network targeted at self-supervised training objectives,
 namely CBOW and skip-gram. Context-sensitvity, i.e. taking into account the surrounding words in
 the embeddings, was introduced by the ELMo architecture \cite{peng2019transfer} and representing
 words using pretrained, contextualizing embeddings has since become standard in NLP.
@@ -44,8 +44,8 @@ The architecture computing contextualized word embeddings that has caused the mo
 recently was probably BERT \cite{devlin2018bert}, a model that led to so many variants of
 it, that it created a whole new field inside the NLP community --- winkingly baptized as
 ``BERTology'' \cite{rogers2020primer}. BERT is a good example for a typical neural age NLP
-model: It's architecture is completely agnostic of symbolic, or structural knowledge about
-language whatsoever, it ``only'' operates on sequental concatenations of symbols; it also
+system: It's architecture is completely agnostic of symbolic, or structural knowledge about
+language whatsoever, it ``only'' operates on sequential concatenations of symbols; it also
 does not employ preprocessing of the data of any kind --- no POS-tagging, no dependency
 parsing, no NER.\myfootnote{Because of this non linguistic specific architecture, BERT
 can easily be adapted to operate on other sequential data. This has actually been done:
@@ -80,15 +80,15 @@ by using labeled data from the task at hand.
 
 One of the distinctive features of BERT is the minimal difference in architecture between
 pretraining and finetuning: The transformer based network which computes the contextualized
-token emeddings during the language modeling pretraining is also used in downstream tasks only
+token embeddings during the language modeling pretraining is also used in downstream tasks only
 with a so-called task-specific head on top of it. This makes re-implementing the BERT model in
 other architectures quite convenient, which is one of the reasons I decided to implement BERT
 in my approach as well.
 
 Further, the numerical embeddings BERT ``learned'' during the pre-training phase show to
-be very apt at transfering to a wide range of down-stream tasks: As \citeauthor{devlin2018bert}
+be very apt at transferring to a wide range of down-stream tasks: As \citeauthor{devlin2018bert}
 demonstrate, with marginal architecture adaption, i.e. the so-called ``head'', to the task at hand,
-vanilla BERT embeddings echieved several SOTA results on tasks ranging from natural language inference (NLI)
+vanilla BERT embeddings achieved several SOTA results on tasks ranging from natural language inference (NLI)
 to question answering.
 
 Another advantage of BERT is that the cost, hardware, and data intensive pre-training of the
@@ -106,7 +106,7 @@ a good overview of these points see \cite{bender2021dangers}.}
 
 \fig{images/BERT_clipped.png}{fig:bert-architecture}{3D-visualization of the BERT architecture.
 The 12 attention heads and following linear projections in one block (here called ``Layer'')
-are vividly representend. The information flow is top-down, with the tokenized input sentence
+are vividly represented. The information flow is top-down, with the tokenized input sentence
 starting with the [CLS] token on top, and the computed embeddings on bottom. Credit for the image
 goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT
 Architecture}
@@ -176,7 +176,7 @@ by such attacks and changes its predictions.
 
 For SNLI, \citeauthor{jin2020bert} report to bring down BERT's original accuracy of
 89,4\% to an astonishing 4,0\% by permuting 18,5\% of the input tokens. Recall that
-the permutations are, simply put, nothing else than exchanging words with identical meanings.
+the permutations are essentially nothing else than exchanging words with identical meanings.
 
 
 
@@ -185,11 +185,11 @@ the permutations are, simply put, nothing else than exchanging words with identi
 
 \subsection{Solutions / Related Work}
 
-But the NLP community was not only passive and/or destructive concerning BERT, it also
-produced a vast number of adaptions, variations, and improvements to the ``vanilla''-BERT.
-The motivations behind all those BERTlings are as manifold as one can think: some are simply
-adaptions to other languages than English, some are general variations (in hope of improvement)
-of the BERT architecture, other are explicitly addressing above outlined problems.
+But the NLP community was not only passive and/or destructive concerning BERT, it also produced a
+vast number of adaptions, variations, and improvements to the ``vanilla''-BERT. The motivations
+behind all those BERTlings are as manifold as one can think: some are adaptions to other languages
+than English, some are general variations (in hope of improvement) of the BERT architecture, other
+are explicitly addressing above outlined problems.
 
 The following overview sheds some light on the iridescent potpourri of the BERT
 family.\myfootnote{This compilation is partly drawn from the towards-data-science article
@@ -230,8 +230,8 @@ There exist several linguistic structures which could be hypothetically included
 adjectives semantically by grouping lexical units that express the same concept into synsets
 and by defining semantic relations between these synsets; it can also be characterized as a
 thesaurus or a light-weight ontology. One difficulty relating to such structures is
-that the encoding of such hierarchical information and the sucsequent combining with
-contigouus data --- the sequence of BERT-embedded tokens in a text --- is not straight forward
+that the encoding of such hierarchical information and the subsequent combining with
+contiguous data --- the sequence of BERT-embedded tokens in a text --- is not straight forward
 and requires an elaborate pipeline of different subsystems.
 
 Another, more plain, possibility would be to implement some linguistic-semantic ``mark-up'' of
@@ -492,7 +492,7 @@ Applied on the sentence  \ref{ex:sinking-sent}, this would lead to the following
 \end{examples}
 
 
-Although the propbank annotations are verb-specific, there are some generalizations in the first
+Although the PropBank annotations are verb-specific, there are some generalizations in the first
 number of arguments as to what proto-role they denote, as the authors of PropBank write: ``For
 a particular verb, Arg0 is generally the argument exhibiting features of a Prototypical Agent
 \textelp{}, while Arg1 is a Prototypical Patient or Theme'' \citep[p.~75]{palmer2005proposition}.
@@ -535,7 +535,7 @@ task-supportive structures in the data.
 % predication information might also be carried by a noun phrase or complex predicate
 % (e.g. light verb + adjective):
 
-Following are some exmample sentences from the PropBank frames\myfootnote{accessible
+Following are some example sentences from the PropBank frames\myfootnote{accessible
 through this \href{https://github.com/propbank/propbank-frames.git}{GitHub repository}}.
 Semantic roles are highlighted using the colors from the previous list. Note that only
 one relation is marked in the sentences, even if there are multiple. Since DAMESRL only

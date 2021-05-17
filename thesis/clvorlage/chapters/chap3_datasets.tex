@@ -7,7 +7,7 @@
 
 Because semantics is such a fuzzy, hard to formalize property of language, it is not easy to
 assess the capabilities of an architecture designed at solving problems related to meaning. In
-the data-driven NLP community today, it is common practise to measure the {\color{red} power of
+the data-driven NLP community today, it is common practice to measure the {\color{red} power of
 a model} by measuring it's performance on some standardized data set. However, a model aiming at
 capturing semantics of human langauge ``must be able to process language in a way that is not
 exclusive to a single task, genre, or dataset'', as \cite{wang2018glue} correctly point out.
@@ -189,10 +189,10 @@ sadness and anger.
   \end{tabular}
 }{Confusion matrix for one deISEAR +SRL ensemble}
 
-The authors do not report any metric regarding the reliablity of their labels based
+The authors do not report any metric regarding the reliability of their labels based
 on the human re-classifications, but since they provided the complete results of
 phase 2, I was abe to compute the Fleiss' $\kappa$, a standard metric for estimating
-annotator agreement, and thus, the reliabilty of these labels; the computed value
+annotator agreement, and thus, the reliability of these labels; the computed value
 equals to 0.66, which corresponds to ``substantial'' agreement in the interpretation
 scale for th variable, proposed by \cite{landis1977measurement}.
 
@@ -282,10 +282,10 @@ correct answer span out of a context text given the question.
 similar meaning in multiple languages.''\myfootnote{However, taking the sometimes huge
 contexts into account, I think the better formulation would have been ``paragraphs''
 with similar meaning, instead of ``sentences''.} Secondly, they crowdsourced questions
-for the english paragraphs, let them humanly translate into the target languages,
+for the English paragraphs, let them humanly translate into the target languages,
 and finally annotate the answer spans in the corresponding paragraphs.\myfootnote{If
 this was done manually or by implementing some other techniques is, unfortunately,
-not reported. The presence of sometimes strange offsets (included commas, misssing
+not reported. The presence of sometimes strange offsets (included commas, missing
 prepositions as in example \ref{itm:mlqa-strange-answer-span} etc.) seem to indicate a
 not fully hand-made annotation --- at least to me.}
 
@@ -407,7 +407,7 @@ As can bee seen in the left figure of \ref{fig:mlqa-stats}, MLQA comprises quite
 of examples --- 868, to be precise --- which do not fit subtokenized into a normal BERT model.
 However, those examples where the answer span lies inside the maximum BERT sequence are simply
 cut off after the maximum length and are kept in the data set for the experiments. Only the 22
-exaples where the answer span lies partially or fully outside the maximum length were dropped.
+examples where the answer span lies partially or fully outside the maximum length were dropped.
 
 % all subs in MLQA: 883,394
 % sharps: 188,445
@@ -474,7 +474,7 @@ in chapter \ref{chap:5_results}, section \ref{sec:qa-results}.
 
 The PAWS-X corpus \cite{yang2019paws} was compiled to provide a multilingual source for
 training models that address the NLU problem of paraphrase identification. This task
-is typically formalized as a binary classifiaction task: given two sentences $S_1$ and
+is typically formalized as a binary classification task: given two sentences $S_1$ and
 $S_2$, the model must determine whether they convey the same meaning --- performing well
 on such a dataset is often taken as an indicator of reliably capturing the semantics
 of an utterance \citep{mckeown1980paraphrasing}. Since most corpora for this task are
@@ -521,7 +521,7 @@ the whole German part of PAWS-X:
 % TODO: new stats figure!
 %\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
 
-You are invited to test yourself and detext if the following sentence pairs are in fact rephrasings
+You are invited to test yourself and predict if the following sentence pairs are in fact rephrasings
 of the same semantic content. The gold labels are in this footnote\myfootnote{\rotatebox{180}{\ref{itm:paws-x1}:
 False, \ref{itm:paws-x2}: True}}.
 
@@ -542,7 +542,7 @@ False, \ref{itm:paws-x2}: True}}.
 The average lengths of the sentences is very regularly distributed with averages of 27.5
 ($\sigma$ 8.6), 27.7 ($\sigma$ 8.4), and 28.1 ($\sigma$ 8.4) for the subtokenized training,
 development, and test sets. Also, the lenght differences between the first and second
-sentence in each example is virtually inexistent, which is not surprising if the creation
+sentence in each example is virtually nonexistent, which is not surprising if the creation
 of the original PAWS dataset is taken into account: ``Our automatic generation method is
 based on two ideas. The first swaps words to generate a sentence pair with the same BOW,
 controlled by a language model. The second uses back translation to generate paraphrases
@@ -588,7 +588,7 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
     \includegraphics[width=0.9\linewidth]{images/PAWS-X_labels.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \caption[PAWS-X Set Size/Labels]{\textbf{Left}: Number of examples in the PAWS-X split. The automaticall translated
+  \caption[PAWS-X Set Size/Labels]{\textbf{Left}: Number of examples in the PAWS-X split. The automatically translated
                            trainin set contains way more examples than the humanly translated development and test set.
                            \textbf{Right}: Distribution of paraphrase (True) and non-paraphrase (False) examples in the
                            PAWS-X sets.}
@@ -641,7 +641,7 @@ and test sets were translated from English to German by humans, the huge trainin
 automatically translated. Since the original differences in the sentence pair might well
 have been rather subtle, it is no surprise that an algorithm might exhibit difficulties in
 grasping those differences; resulting in similar translations for two similar sentences.
-Note that due to the difficulties mentioned before, the automic translation resulted in
+Note that due to the difficulties mentioned before, the automatic translation resulted in
 3,209 sentence pairs (6.6\% of all the sentence pairs) with a BLEU score of 100.00 in the
 training set --- which means they are identical.\myfootnote{I reported this to the authors
 of the corpus, but didn't receive an answer from them.}
@@ -810,9 +810,9 @@ model needs only to predict one sentiment label for each example. Since there ex
 multiple annotations for each review in this data set, the data needs to be pre-processed
 in a way, so that there is one review-label per example.
 
-To generate the review-label, I simply carry out a majority class decision:
+To generate the review-label, I carry out a majority class decision:
 The polarity that is most often annotated for a given review is also the review-label; in the
-example above comprisign three aspect-subjective polarities, two of them positive, one negative,
+example above comprising three aspect-subjective polarities, two of them positive, one negative,
 the whole example would be labelled as positive.
 If there is no majority label, the review-label is set to ``neutral''.
 This is also the chosen strategy for 51 reviews that had no labels at all; an example of such a
@@ -846,7 +846,7 @@ overall sentiment of the sentences quite good.
         \textbf{Negative}
 \end{examples}
 
-Follwoing are three examples to test for yourself with the gold labels in this
+Following are three examples to test for yourself with the gold labels in this
 footnote\myfootnote{\rotatebox{180}{\ref{itm:scare1}: Negative, \ref{itm:scare2}:
 Positive, \ref{itm:scare3}: Positive}}.
 
@@ -857,9 +857,9 @@ Positive, \ref{itm:scare3}: Positive}}.
 \end{examples}
 
 Analyzing the label distributions after turning the original aspect-based SCARE into an emotion detection dataset
-reveals that the positive class amasses the most exmples on itself (1,071), while the neutral class only comprises
+reveals that the positive class amasses the most examples on itself (1,071), while the neutral class only comprises
 193 items out of a total of 1,760 examples (cf. figure \ref{fig:scare-stats}). However, as the analysis of the
-GliBERT predictions in chapter \ref{chap:results} discloses, the models do not simply overweigh the majority class.
+GliBERT predictions in chapter \ref{chap:results} discloses, the models do not simply favour the majority class.
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -948,19 +948,19 @@ different from formal logic deduction in that its emphasis ``is on informal reas
 lexical semantic knowledge, and variability of linguistic expression, rather than on
 long chains of formal reasoning'' \citep{maccartney2009natural}.
 
-\cite{conneau2018xnli} built the XNLI corpus by employing professional translators to tranlsate
+\cite{conneau2018xnli} built the XNLI corpus by employing professional translators to translate
 7,500 English sentence pairs from the Multi-Genre Natural Language Inference (MultiNLI) corpus
 \cite{williams2017broad} into fifteen languages. First, they randomly sample 750 examples from each
 of the ten text source used in MultiNLI, which is in English, and then let the same MultiNLI worker
 pool generate three hypothesis for each sentence, one for each possible label (\emph{entailment},
 \emph{contradicion}, \emph{neutral}). Each sentence pair was then assigned a gold label that was
 retrieved by carrying out a majority vote between the label that was assigned by the person who
-created the hypothesis and the labels that were assigend indepentently to the sentence pair by
+created the hypothesis and the labels that were assigned independently to the sentence pair by
 four other people. Finally, all the sentence pairs were translated into the different languages by
-tranlators. In addition, \cite{conneau2018xnli} carry out some tests to verify that the original
+translators. In addition, \cite{conneau2018xnli} carry out some tests to verify that the original
 gold label still holds in the translated sentences: They recruited two bilingual annotators to
 reevaluate 100 examples in English and French, i.e. they had to re-assign the labels given the
-sentence pairs. For the English examples, \citeauthor{conneau2018xnli} find a 85\% concesus on the
+sentence pairs. For the English examples, \citeauthor{conneau2018xnli} find a 85\% consensus on the
 gold labels, and for French a corresponding 83\%, from which the authors conclude that the overall
 semantic relationship between the two languages has been preserved.
 
@@ -1154,7 +1154,7 @@ paragraphs and 1190 question-answer pairs from SQuAD 1.1 \citep{rajpurkar2016squ
 
 XQuAD is also one of the smaller datasets in the GerGLUE corpus --- a total
 of 1,179 examples, without predefined splits, which results in training, development, and test
-splits of 820, 181, and 178 examples each. As for MLQA, the answer spans often consits of
+splits of 820, 181, and 178 examples each. As for MLQA, the answer spans often consists of
 only a handful of subtokens, due to the fact of many questions asking for only a certain
 name or place mentioned in the context.
 
@@ -1235,7 +1235,7 @@ to the given context:
 % \subsubsection{SOTA}
 
 As benchamrk results on XQuAD, \citeauthor{artetxe2019cross} employ a very peculiar architecture
-that consits in re-training a monolingual English BERT model on Wikipedia and transfer it to the
+that consists in re-training a monolingual English BERT model on Wikipedia and transfer it to the
 target languages, following these steps:
 
 \begin{enumerate}
@@ -1253,9 +1253,9 @@ Accuracy (exact match): 57.6\%
 
 In the following table \ref{tab:gerglue-overview} an overview of all the datasets is given;
 the NLP and corresponding ML tasks the dataset is designed for, the numbers of examples of
-the splits and nature of the splits (predifined or not), the style or register of the text
+the splits and nature of the splits (predefined or not), the style or register of the text
 present in the dataset, as well as some important distinctiveness of each dataset. Note that
-the ordering is not strictly alphabetical, but follows the folling grouping: First, come the
+the ordering is not strictly alphabetical, but follows the following grouping: First, come the
 single sentence classification tasks, then follow the sentence pair classification task,
 and lastly come the question answering tasks. This order --- classification tasks together,
 question answering tasks together --- will due conceptual reasons also be adhered to in the
