@@ -676,4 +676,17 @@ abbreviations for ``argument'').
   .            O          O               O
 \end{verbatim}
 
+A detailed discussion of the SRLs produced by DAMESRL will be done in chapter
+\ref{chap:5_results}, section \ref{sec:sec:srl-noise}. In advance, it should be
+noted that the automatically predicted SRLs seem to capture semantic properties
+quite well (e.g. the second SRL-layer of the first sentence, where the predicate
+``getrunken'', the agent ``ich'' and the theme ``schlechte Milch'' are correctly
+identifed). However, there are some irritating results as well (e.g. the third
+layer in the last example, where there is an uninterpretable Arg5 ``zu von einem
+30'', interrupted by the predicate ``werfen'').
+
+In the next chapter \ref{chap:3_datasets}, I will present the GerGLUE NLU corpus, and
+the subsequent chapter \ref{chap:4_architecture}, the GliBERT architecture and actual
+implementation of SRLs into the BERT architecture are described.
+
 
