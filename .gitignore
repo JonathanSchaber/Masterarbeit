@@ -2,6 +2,17 @@ gliBert_nodevtest.py
 first20_SRL.txt
 .*.swp
 *.pyc
+**/*.aux
+**/*.log
+**/*.bbl
+**/*.blg
+**/*.glo
+**/*.idx
+**/*.lof
+**/*.log
+**/*.lot
+**/*.out
+**/*.toc
 log.txt
 results/*
 tags
