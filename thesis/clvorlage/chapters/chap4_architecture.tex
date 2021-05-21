@@ -2,6 +2,10 @@
 \newchap{Architecture}
 \label{chap:4_architecture}
 
+In this chapter, I describe the different parts of the GliBERT model, how they
+interact and what a priori decisions were taken during designing its architecture
+(e.g. the number of predicate-argument structures considered, etc.).
+
 To eliminate possible misunderstandings and establish a ``standard'' vocabulary discussing the GliBERT
 architecture, I define the following terms which will be used in the specified sense throughout
 this thesis:
@@ -11,7 +15,7 @@ this thesis:
     than an actual linguistic sentence.''
   \item A ``model'' or ``system'' denotes any algorithm that is tailored at a specific task and designed
     to handle natural language as input.
-  \item As mentioned in the introduction, natural language can be communicated in over different modes (speech, singing, text)
+  \item As mentioned in the introduction, natural language can be communicated through different channels (speech, singing, text)
     --- I am, however, only concerned with textual representations of language.
 \end{itemize}
 
@@ -23,47 +27,56 @@ this thesis:
 \section{Overview}
 
 GliBERT is an architecture that combines different, pre-existing models and
-tools to solve the classification or questionn answering task at hand. The
+tools to solve the classification or question answering task at hand. The
 general way an input sequence is processed by GliBERT is depicted in figure
 \ref{fig:architecture}:
 
 
 \fig{images/architecture_grob}{fig:architecture}{General architecture of GliBERT, exemplified for  the deISEAR task.}{14}{GliBERT Architecture}
 
-An input sentence gets processed in parallel by two models to produce two numerical
-representations of its tokens. These represenatations get combined and are sent
-through a head module which producec the actual predictions. The core parts of the
-model are the following:
+An input sentence gets processed in parallel by two systems, the vanilla German BERT
+and the SRL producing and encoding module, to produce two numerical representations
+of its tokens. These represenatations get combined and are sent through a head module
+which producec the actual predictions. The core parts of the model are the following:
 
 \begin{description}
-	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence and sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
-  \item[\textbf{SRL module}] This modules actually consists of three submodules: First, the sequence is processed by \href{https://github.com/rsennrich/ParZu}{ParZu} \citep{sennrich2009new} to identify predicates.
-	Second, the sequence with the information about which tokens are predicates is handed to the \href{https://liir.cs.kuleuven.be/software_pages/damesrl.php}{DAMESRL} model \citep{do2018flexible} which predicts actual SRLs.
-	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as a list of tokens to DAMESRL. In a last step,
-	the SRL squence gets numerically encoded.
+	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence, sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
+  \item[\textbf{SRL module}] This modules actually consists of three submodules: First, the sequence is processed by the \href{https://github.com/rsennrich/ParZu}{ParZu} \citep{sennrich2009new} parser to identify predicates.
+	Secondly, the sequence along the information about which tokens are predicates is handed to the \href{https://liir.cs.kuleuven.be/software_pages/damesrl.php}{DAMESRL} model \citep{do2018flexible} which predicts actual SRLs.
+	To ensure there are no tokenization mix-ups between BERT and DAMESRL (because these differences are not reversible as will be seen later), the sequence gets tokenized BERT-style and is passed as this list of tokens to DAMESRL. In a last step,
+	the SRL squence gets numerically encoded, using a bi-directional two-layer GRU.
   \item[\textbf{combination}] In this step the BERT and SRL representation get combined: to do this, the embeddings need to be processed, i.e. splittet or merged, respectively, so that they can be concatenated.
 	For this, there exist two approaches:
-	(A) Fuse the subtokens of BERT back to tokens, (B) Split the SRLs according to the subtokens of BERT.
-  \item[\textbf{Head module}] At last, the combined token representations of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can be applied here: FFNNs, GRUs, CNNs, etc.
+	(A) Fuse the subtokens of BERT back to tokens, or (B) split the SRLs according to the subtokens of BERT.
+  \item[\textbf{Head module}] At last, the combined token representations of the input is fed through the final network that transforms it to predict task-dependent output. Several architectures can potentially be applied here: FFNNs, GRUs, CNNs, etc.
 \end{description}
 
 \begin{landscape}\centering
   % \vspace*{\fill}
-  \fig{images/architecture.png}{fig:architecture-big}{Detailed architecture of GliBERT: On the left, the input sentence is passed through two paths: On top, through the German BERT, with the optional subtoken fusion module on top. On the bottom, through ParZu and DAMESRL, with subsequent embedding via a GRU model; after that an optional split token module follows. The bold arrows on the right side show information flow, when BERT subtokens are fusioned for appending with SRLs. The dotted arrows represent the information flow when the SRLs are splitted to match with the BERT subtokens.}{24}{GliBERT Architecture detail}
+  \fig{images/architecture.png}{fig:architecture-big}{
+    Detailed architecture of GliBERT: On the left, the input sentence is passed through two paths:
+    On top, through the German BERT, with the optional subtoken fusion module on top. On the bottom,
+    through ParZu and DAMESRL, with subsequent embedding via a GRU model; after that an optional
+    split token module follows. The bold arrows on the right side show information flow, if BERT
+    subtokens are fusioned for appending with SRLs. The dotted arrows represent the information flow
+    if the SRLs are splitted to match with the BERT subtokens.}{24}{GliBERT Architecture detail}
   % \vfill
 \end{landscape}
 
 
 \section{BERT Module}
 
-Since its publishing two years ago, BERT \citep{devlin2018bert} has often been
-viewed as a ``turning-point'' in NLP: The embeddings it computed by implementing
-massive ``unsophisticated'' self-supervised pretraining proved to be very potent
-representations of language and were successfully implemented in a wide array of
-downstream tasks. Pretrained models and APIs for BERT are vastly available for
-a multitude of langauges --- I chose to use the \texttt{bert-base-german-cased}
-model from \href{https://deepset.ai/german-bert}{deepset} which is available in
-\texttt{pyTorch} through the hugging face's \texttt{transformer} library\cite{wolf2019transformers}.
+Since its publishing two years ago, BERT \citep{devlin2018bert} has
+often been viewed as a turning-point in NLP: The embeddings it computes
+by implementing massive self-supervised pre-training proved to be very
+potent representations of language and were successfully implemented in
+a wide array of applications addressing downstream tasks via transfer
+learning (see chapter \ref{chap:2_approach}). Pretrained models and
+APIs for BERT are by now vastly available for a multitude of langauges
+--- I chose to use the \texttt{bert-base-german-cased} model from
+\href{https://deepset.ai/german-bert}{deepset} which is available
+in \texttt{pyTorch} through the hugging face's \texttt{transformer}
+library\cite{wolf2019transformers}.
 
 While the original BERT was presented in two different sized variants --- \emph{base}
 and \emph{large} --- deepset only provides a BERT base model which has the following
@@ -91,11 +104,12 @@ After encoding a sentence using the tokenizer's method \texttt{.encode\_plus()},
 encoded sentence is sent through BERT via its \texttt{.forward()}-method --- or
 called implicitly, by passing the sentence to the model --- which returns the
 vectors for all input tokens, which can then be used in downstream tasks. Fine-tuning
-is done by passing the computed loss to the specified loss funtion (I use the
-AdamW loss function \citep{loshchilov2019decoupled}, a modification of the well-known
-Adam (Adaptive Moment Estimation) loss function \citep{kingma2014adam}, implementing
-additional weight decay), which updates BERT's weight matrices.
-
+is done by passing the computed loss to the specified optimizer funtion (I use the
+AdamW optimizer \citep{loshchilov2019decoupled}, a modification of the well-known
+Adam (Adaptive Moment Estimation) optimizing function \citep{kingma2014adam}, implementing
+additional weight decay), which updates BERT's weight matrices.\myfootnote{After wiring
+all the different parts together, GliBERT is one big model having one loss function, which means that all
+weights of all layers in the system get update by the AdamW optimizer, not just BERT.}
 
 In the \href{https://github.com/JonathanSchaber/Masterarbeit}{GitHub} repository, in
 the file \texttt{load\_data.py}, the data gets tokenized and loaded, and in
@@ -106,33 +120,35 @@ defined in the \texttt{fine\_tune\_BERT()} function.
 \section{SRL Module}
 \label{sec:srl-module}
 
-A Semantic Role Labeller (SRL) is a system, that assigns automatically semantic roles to a
+A Semantic Role Labeller (SRL) is a system, that assigns automatically Semantic Roles to a
 given input text.\myfootnote{This may be one or multiple sentences.}
 
-State-of-the-art semantic role labellers (SRLs) are end-to-end models, nowadays often
-implementing deep learning techniques, like RNNs or self-attention mechanisms, that render
-tedious feature engineering unnecessary.  For my system, I implement the DAMESRL, a model
-presented by \cite{do2018flexible}.  I use their pre-trained German Character-Attention
-configuration which, according to the authors, achieved an F1 score of 73.5\% on the CoNLL'09 task
-\citep{hajivc2009conll}.  However, their SRL needs as input not only the sentence, but also
+State-of-the-art SRLs are end-to-end models, in the sense that there is no need of
+complex pre-processing of the input sentence, such as POS-tagging, syntax parsing, etc.
+in advance before the actual labeling takes place. However, as is the case for the model
+I employ, some pre-processing remains. For GliBERT, I implement the DAMESRL, a model
+presented by \cite{do2018flexible}. I use their pre-trained German Character-Attention
+configuration which, according to the authors, achieved an F1 score of 73.5\% on the
+CoNLL'09 task \citep{hajivc2009conll}. Despite bein g characterized as an end-to-end
+model by the authors, their SRL needs as input not only the tokenized sentence, but also
 ``its predicate $w_p$ as input'' \citep{do2018flexible}. In other words, DAMESRL expects
-as input a sentence $s$ as list of tokens $[ t_1, t_2, \dotsc t_{n-1}, t_n ]$, where for each
-token there is an attribute defined whether it functions as predicate in $s$ or not.
+as input a sentence $s$ as list of tokens $[ t_1, t_2, \dotsc t_{n-1}, t_n ]$, where for
+each token there is an attribute defined whether it functions as predicate in $s$ or
+not.
 
 % ``A major advantage of dependency grammars is their ability to deal with languages that are
 % morphologically rich and have a relatively free word order.'' \citep[p.~274]{jurafsky2019speech}
-For extracting predicates, I rely on the dependency tree the ParZu parser
-\cite{sennrich2013exploiting} generates for a given sentence. Given the
-parsed sentence, I have to decide what tokens in it are predicates, and
-which are not. While this may seem like a straightforward task --- just
-find the verb as in a simple sentence like ``He \emph{ate} the apple.''
----, there are actually a few caveats (predicates are emphasised): (1)
-There may be no predicates at all: ``What a day!''. (2) There might be
-more than one predicate: ``We \emph{saw} her \emph{leave} the room''. (3)
-Not all verbs might be predicates, e.g. because they play grammatically
-the role of a light verb: ``I can \emph{hear} you''. In the following
-section, I will describe how I tackle these problems by making use of
-parsing information from ParZu.
+For extracting predicates, I rely on the dependency parse tree the ParZu parser
+\cite{sennrich2013exploiting} generates for a German sentence. Given the parsed
+sentence, I need to decide which tokens in it are predicates, and which are not.
+While this may seem like a straightforward task --- just find the verb as in a
+simple sentence like ``He \emph{ate} the apple.'' ---, there are actually a few
+caveats that need to be considered, e.g. (predicates are emphasised): (1) There
+may be no predicates at all: ``What a day!''. (2) There might be more than one
+predicate: ``We \emph{saw} her \emph{leave} the room''. (3) Not all verbs might
+be predicates, e.g. because they play grammatically the role of a light verb: ``I
+can \emph{hear} you''. In the following section, I will describe how I tackle
+these problems by making use of the parse tree information of ParZu.
 
 
 \subsection{ParZu}
@@ -224,26 +240,28 @@ Letting this algorithm run on the dependence parse tree depicted in figure \ref{
 of the sentence
 
 \begin{examples}
-	\label{ex:multiple-predicates}
-	\item Die Klage wurde abgewiesen, was als Sieg beschrieben werden kann.
+	\item \label{ex:multiple-predicates} Die Klage wurde abgewiesen, was als Sieg beschrieben werden kann.
 \end{examples}
 
 leads to the correct identification of ``abgewiesen'' and ``beschrieben'' as predicates,
-ldisregarding the ight and modal verbs ``wurde'', ``werden'', and ``kann'.
+disregarding the light and modal verbs ``wurde'', ``werden'', and ``kann'.
 
 %\fig{#1: filename}{#2: label}{#3: long caption}{#4: width}{#5: short caption}
-\fig{images/exampleParzu2.png}{fig:example-parzu}{Example ParZu dependency parse tree for a sentence
-with multiple predicates. Different Information per word is displayed: The normal word form, the
-CPOSTAG, the POSTAG, the lemma of the word, morphological information, and the index.}{16}{Multiple Predicates Dependency Parse Tree}
+\fig{images/exampleParzu2.png}{fig:example-parzu}{
+  Example ParZu dependency parse tree for a sentence with two predicates out of several verbal
+  forms. Different Information per word is displayed: The normal word form, the CPOSTAG, the
+  POSTAG, the lemma of the word, morphological information, and the index.
+}{16}{Multiple Predicates Dependency Parse Tree}
 
 Basically, the algorithm only takes tokens into account which are verbals (have the CPOSTAG
-\emph{V}) ; if the POSTAG is \emph{VVFIN}, i.e. if it is a finitely inflected verb form, it is
-right away considered to be a predicate. Otherwise, if it is a verbal form but not finitely
-inflected, it is checked whether is is dependent on another verbal element of it's subclause,
-if this is the case, it's not labeled as predicate otherwise it is. This leads e.g. to the
-correct selection of ``beschrieben'' as predicate in the subclause of sentence \ref{ex:multiple-predicates},
-since it forms the ``lowest'' verbal element in this clause, only pointing to light verbs modifying
-its grammatical function.
+\emph{V}) ; if the POSTAG is \emph{VVFIN}, i.e. if it is a finitely inflected verb form,
+it is right away considered to be a predicate. Otherwise, if it is a verbal form but not
+finitely inflected, it is checked whether it is dependent on another verbal element of its
+subclause, if this is the case, it's not labeled as predicate, otherwise it is. This leads
+e.g. to the correct selection of ``beschrieben'' as predicate in the subclause of sentence
+\ref{ex:multiple-predicates}, since it forms the ``lowest'' verbal element in this clause,
+only pointing to a light verb which modifies its grammatical function, which in turn points
+to another light verb which is the head of the subclause.
 
 
 % The condition on line 9, that only tokens in the respective subclause are considered, is
@@ -265,58 +283,71 @@ its grammatical function.
 
 \subsection{Ensuring Tokenization Equivalence}
 
-Another difficulty I faced was the tokenization differences between different
-parsers; this means that it is not always possible to correctly align the tokens
+Another difficulty I faced was the tokenization differences between different parsers; which can
+lead to sitautions where it is actually impossible to correctly automatically align the tokens
 which two parsers produce for the same sequence.
 % The consequence of this is that for some
 % sentences the SRL tokens cannot be properly combined with their corresponding BERT token.
 % The DAMESRL system implements the tokenizer provided by the Natural Language
 % Toolkit (NLTK)\myfootnote{\url{https://www.nltk.org/}} which implements a linguistically motivated
 % tokenizing. {\color{red} explain what that means}
-As shown in figure \ref{fig:architecture}, a sentence passes through two pipelines which both
-apply tokenization to it: The ParZu/DAMESRL/GRU and the BERT pipeline. After both have computed
-numerical representation for the tokens, these must be combined. However, the tokenization of
-ParZu (which would get passed on to DAMESRL and then to the SRL-encoder) and the tokenization of
-BERT differ. ParZu implements the \href{http://www.statmt.org/moses/}{Moses tokenizer}, while
-BERT, in contrast, utilizes an approach called ``WordPieces'', which is a rather information
-processing motivated approach: ``Using wordpieces gives a good balance between the flexibility
-of single characters and the efficiency of full words for decoding, and also sidesteps the need
-for special treatment of unknown words.'' \citep[p.~2]{wu2016google}. As a consequence, aligning the
-corresponding tokens to guarantee that the correct information pieces get combined is
-necessary.
+For GliBERT, this problem occurs at the interface where the embeddings of the BERT
+module and the embeddings for the SRLs, which are based on the ParZu tokenization,
+need to be aligned. As shown in figure \ref{fig:architecture}, a sentence passes
+through two pipelines which both apply tokenization to it: The ParZu/DAMESRL/GRU
+and the BERT pipeline. After both have computed numerical representation for the
+tokens, these must be combined. However, the tokenization of ParZu (which would
+get passed on to DAMESRL and then to the SRL-encoder) and the tokenization of BERT
+differ. ParZu implements the \href{http://www.statmt.org/moses/}{Moses tokenizer},
+while BERT, in contrast, utilizes an approach called ``WordPieces'', which is a
+rather information processing motivated approach, rather then the linguistically
+motivated Moses: ``Using wordpieces gives a good balance between the flexibility of
+single characters and the efficiency of full words for decoding, and also sidesteps
+the need for special treatment of unknown words.'' \citep[p.~2]{wu2016google}. As
+a consequence, aligning the corresponding tokens to guarantee that the correct
+information pieces get combined is necessary.
 
-To illustrate this, consider the following sentence from the XNLI data set:
+To illustrate this, consider the following made-up but not unplausible text snippet:
 
 \begin{examples}
-	\item Im letzten Jahr spendeten Sie \$10.000.
+	\item \label{itm:tok-sentence} Anstieg um 4° zwischen 1990-2010
 \end{examples}
 
-The tokenizations produced by BERT and ParZu, i.e. Moses, are
+The tokenizations produced by ParZu, i.e. Moses, and BERT are
 depicted side-by-side (note that the BERT tokenization has been
 merged for better readability):
 
-\begin{tabularx}{\textwidth}{@{}l<{}@{\ }X@{}}
-  \textbf{BERT} (merged) & \textbf{Moses}  \\
-  Im                     & Im              \\
-  letzten                & letzten         \\
-  Jahr                   & Jahr            \\
-  spendeten              & spendeten       \\
-  Sie                    & Sie             \\
-  \$                     & \$              \\
-  10                     & 10.000          \\
-  .                      & .               \\
-  000                    &                 \\
-  .                      &                 \\
+% \begin{tabularx}{\textwidth}{@{}l<{}@{\ }l<{}@{\ }X@{}}
+\tab{tab:tokenization}{Tokenization aligning difficulties displayed on example
+sentence \ref{itm:tok-sentence}. Note that in this case both tokenization sequences would need duplication.
+Achieving this reliably for all potential edge cases is nearly impossible.}
+{\begin{tabularx}{\textwidth}{m{3.4cm}m{3.4cm}|m{3.4cm}m{3.4cm}}
+  \multicolumn{2}{c}{\textbf{normal}} & \multicolumn{2}{c}{\textbf{aligend}} \\
+  \texttt{BERT}  & \texttt{Moses}     & \texttt{BERT}                    & \texttt{Moses}                        \\ \hline
+  Anstieg        & Anstieg            & \customcolorbox{Anstieg}{white}  & \customcolorbox{Anstieg}{white}       \\
+  um             & um                 & \customcolorbox{um}{white}       & \customcolorbox{um}{white}            \\
+  {[}UNK{]}      & 4                  & \customcolorbox{[UNK]}{white}    & \customcolorbox{4}{white}             \\
+  zwischen       & \textdegree{}      & \customcolorbox{[UNK]}{blue}     & \customcolorbox{\textdegree{}}{white} \\
+  1990           & zwischen           & \customcolorbox{zwischen}{white} & \customcolorbox{zwischen}{white}      \\
+  -              & 1990-2021          & \customcolorbox{1990}{white}     & \customcolorbox{1990-2021}{white}     \\
+  2021           &                    & \customcolorbox{-}{white}        & \customcolorbox{1990-2021}{blue}      \\
+                 &                    & \customcolorbox{2021}{white}     & \customcolorbox{1990-2021}{blue}      \\
 \end{tabularx}
+}{Tonekization Alignment}
 
-First, I tried to device an algorithm which would duplicate the respective tokens
-in the Moses tokenization to lign up with the BERT (sub-)tokenization. However,
-it became clear after some time, that this was too error prone and meticulous,
-that I chose the following strategy:
+In the beginning, I attempted to device an algorithm which would duplicate the respective
+tokens in the Moses tokenization to lign up with the BERT (sub-)tokenization. However, it soon
+became clear that this was an endeavor too error prone and meticulous: It is e.g. not a priori
+clear which tokenization is the shorter one and therefore needs to be duplicated (sometimes, as
+in table \ref{tab:tokenization}, both sequences need duplication); BERT tokenizes tokens which
+are out-of-vocabulary (OOV) or which contain OOV subtokens as [UNK] further excessively comlicates the picture etc.
+Therefore, I chose the following strategy which avoids all these problems:
 
-Take the ParZu-tokenized and parsed sentence, apply the predicate-finding algorithm to it.
-Then, tokenize the sentence using the BERT tokenizer, identify the afore detected
-predicates and hand the BERT tokenized, predicate marked token sequence to DAMESRL.
+(1) Take the ParZu-tokenized and parsed sentence, apply the predicate-finding algorithm to
+it. Then, (2) tokenize the sentence using the BERT tokenizer, identify the afore detected
+predicates\myfootnote{Since predicates are normally verbal forms without any special characters
+in them, a string comparison search suffices to achieve this.} and hand the BERT tokenized,
+predicate marked token sequence to DAMESRL.
 
 
 % The first question that arises is: which tokenization should be mapped onto wich? In other
