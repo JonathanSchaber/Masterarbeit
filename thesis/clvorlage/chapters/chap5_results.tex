@@ -42,13 +42,13 @@ the different hyperparameter for the two runs is listed for each dataset.
 \tab{tab:alpha-beta}{Differences betwenn $\alpha$ and $\beta$ runs for each dataset.}{
   \scalebox{0.9}{
     \begin{tabular}{lll}
-                               & $\alpha$                   & $\beta$                    \\ \hline
-    deISEAR                    & maximum length: 40         & maximum length: 200        \\
-    SCARE                      & maximum length: 50         & maximum length: 100        \\
-    PAWS-X                     & Examples train set: 8,000  & Examples train set: 48,977 \\
-    XNLI                       & Predefined splits          & Resplitted 70:15:15        \\
-    MLQA                       & Predefined splits          & Resplitted 70:15:15        \\
-    XQuAD                      & SRLs encoded sentence wise & Regular SRL encoding       \\
+                               & $\alpha$                   & $\beta$                          \\ \hline
+    deISEAR                    & maximum length: 40         & maximum length: 200              \\
+    SCARE                      & maximum length: 50         & maximum length: 100              \\
+    PAWS-X                     & Examples train set: 8,000  & Examples train set: 48,977 (all) \\
+    XNLI                       & Predefined splits          & Resplitted 70:15:15              \\
+    MLQA                       & Predefined splits          & Resplitted 70:15:15              \\
+    XQuAD                      & SRLs encoded sentence wise & Regular GliBERT SRL encoding     \\
     \end{tabular}
   }
 }{$\alpha$-$\beta$ differences}
@@ -192,7 +192,7 @@ evaluation metric between the recomputed performance of them is calculated again
 and it is checked whether $\delta_{perm} \geq \delta_{orig}$. This process is repeated
 $R$ times and if the number of times $\delta_{perm}$ was greater/equal is small
 enough, in statistics, normally 5\%, for a large enough number $R$, we can reject
-the null-hypothesis with good confidence. See the following algorithm \ref{alg:alg:approximate-randomization}
+the null-hypothesis with good confidence. See the following algorithm \ref{alg:approximate-randomization}
 for a more detailed formulation of this process:
 
 \begin{algorithm}
@@ -208,7 +208,7 @@ for a more detailed formulation of this process:
     \STATE $e(\hat{Y},Y) =$ evaluation function for gold labels $\hat{Y}$ and predictions $Y$
     \STATE $t_{original} =\ \mid e(O_{gold},O_A) - e(O_{gold},O_B) \mid$
     \STATE $rand() =$ returns $0$ or $1$, randomly
-    \STATE $swap(x,y) =$ exchanges elements $x \in A,y \in B$ such that $y \in A, x \in B$
+    \STATE $swap(x,y) =$ exchanges elements $x \in A, y \in B$ such that $y \in A, x \in B$
     \STATE $r \leftarrow 0$
     \STATE $R \leftarrow 0$
     \STATE $threshold \leftarrow 1,000$

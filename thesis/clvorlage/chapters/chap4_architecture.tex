@@ -722,15 +722,6 @@ As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis,
 fully-connected feed forward layer produces fairly good results (in fact, it performs the best
 in the different architectures they tested for their task).
 
-\begin{wrapfigure}[20]{r}{0.45\linewidth}
-  \begin{center}
-    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
-  \end{center}
-  \stepcounter{myfigure}
-  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
-  \label{fig:bert-qa}
-\end{wrapfigure}
-
 Implementing a fully-connected feed forward network as final layer counters the problem
 of the information deprecation that is present in the [CLS] approach: Every token's BERT
 embedding gets concatenated with the token's SRL embeddding. The whole sequence of length
@@ -739,6 +730,15 @@ of size $\mathbbm{R}^{n\times(768+60)}$.
 
 
 \subsubsection{GRU Head}
+
+\begin{wrapfigure}[17]{r}{0.45\linewidth}
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
+  \label{fig:bert-qa}
+\end{wrapfigure}
 
 Since the SRLs are essentially a sequential ``mark-up'' of the sentences, the thought of
 encoding them with an architecture designed for sequential data is not too far. Inspired
