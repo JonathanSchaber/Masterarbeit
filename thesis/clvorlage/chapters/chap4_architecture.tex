@@ -491,6 +491,19 @@ special ``0''-SRL. The second (the right sentence in SRL \ref{srl:zeros-duplicat
 copies the first predicate-argument structure to the unfilled slots, thus amplifying the signal
 from the first predicate-argument structure.
 
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  The slot-filling mode can be controlled via the \texttt{zeros} attribute in
+  the \texttt{config.json} file: If it is set to \texttt{true}, then the empty
+  predicate-argument slots are filled up with \texttt{0}-SRLs, if it is
+  set to \texttt{false}, the first predicate-argument structure gets copied
+  to the empty slots.
+
+\end{tcolorbox}
+
 
 
 \subsection{GRU}
@@ -592,6 +605,18 @@ For all experiments, I run both variants, reporting in chapter \ref{chap:5_resul
 which indicate that variant 1, i.e. merging BERT subtokens back to tokens to align with the SRL,
 leads to information loss, and therefore weakens the general model performance.
 
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  The aligning mode can be controlled via the \texttt{merge\_subtokens} attribute
+  in the \texttt{config.json} file: If it is set to \texttt{true}, then the BERT
+  embeddings of subtokens get merged into one token emebdding, if it is set to
+  \texttt{false}, the SRL embeddings are duplicated to match up with the BERT
+  subtokens.
+\end{tcolorbox}
+
 
 \section{Head Module}
 
@@ -600,13 +625,16 @@ starkly --- classification only takes into account the [CLS] token while
 the start end end index probabilities need to be computed on every token
 in the sequence --- I cover them in separate subsections.
 
+\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for
+  sentence pair (left) and single sentence (right) classification. Figure
+  taken from \citep{devlin2018bert}.}{13}{BERT-Classification}
+
 Additionally, for classifiaction tasks, I found more ways in tackling these
 with different heads, while for the question answering task I only saw one
 possibility for a GliBERT head which is virtually the vanilly head, except
 that SRL information may be added to the BERT subtokens.
 
-
-\subsection{Classifiction}
+\subsection{Classification}
 
 % While for question answering there was little tweeking needed to adapt to the extended BERT
 % embeddings, for classification the situation looks a bit more complex. The standard BERT way
@@ -632,8 +660,6 @@ For both, single sentence and sentenc pair tasks, the vanilla BERT head consider
 only the last hidden state of the [CLS] token, after the sequence was sent through
 the transformer blocks and predicts class probabilities only relying on the
 information present in this vector $\in \mathbb{R}^{786}$:
-
-\fig{images/bert_classification.png}{fig:BERT-classification}{Schema for sentence pair (left) and single sentence (right) classification. Figure taken from \citep{devlin2018bert}.}{13}{BERT-Classification}
 
 Follwing, I present the three classification heads I used for my experiments: The [CLS]
 head, similar to the vanilla classifiaction head, the FFNN head, which consideres the
@@ -722,6 +748,15 @@ As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis,
 fully-connected feed forward layer produces fairly good results (in fact, it performs the best
 in the different architectures they tested for their task).
 
+\begin{wrapfigure}[14]{r}{0.45\linewidth}
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
+  \label{fig:bert-qa}
+\end{wrapfigure}
+
 Implementing a fully-connected feed forward network as final layer counters the problem
 of the information deprecation that is present in the [CLS] approach: Every token's BERT
 embedding gets concatenated with the token's SRL embeddding. The whole sequence of length
@@ -730,15 +765,6 @@ of size $\mathbbm{R}^{n\times(768+60)}$.
 
 
 \subsubsection{GRU Head}
-
-\begin{wrapfigure}[17]{r}{0.45\linewidth}
-  \begin{center}
-    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
-  \end{center}
-  \stepcounter{myfigure}
-  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
-  \label{fig:bert-qa}
-\end{wrapfigure}
 
 Since the SRLs are essentially a sequential ``mark-up'' of the sentences, the thought of
 encoding them with an architecture designed for sequential data is not too far. Inspired
@@ -813,6 +839,24 @@ dimensionality, which results in the vector representation $\mathbb{R}^{768+60}$
 SRL-enriched token. Secondly, when the setting of merging the BERT subtokens before adding
 the SRL embeddings is used, the start and end span indexes have to be recomputed.
 
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  In the file \texttt{gli\_bert.py}, the head modules are defined as the following classes:
+
+  \begin{itemize}
+    \itemsep0em
+    \item[] \texttt{GliBERTClassifierCLS}
+    \item[] \texttt{GliBERTClassifierFFNN}
+    \item[] \texttt{GliBERTClassifierGRU}
+    \item[] \texttt{GliBERTSpanPrediction}
+  \end{itemize}
+
+  In the configuration file \texttt{config.json} the head to be used is to be
+  specified under the attribute \texttt{bert\_head} (remember to pass it as string, e.g. \texttt{"GliBERTClassifierCLS"}).
+\end{tcolorbox}
 
 
 
