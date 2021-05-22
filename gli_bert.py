@@ -581,7 +581,7 @@ class GliBertClassifierCLS(BertBase):
         return proba
 
 
-class GliBertClassifierLastHiddenStateAll(BertBase):
+class GliBertClassifierFFNN(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
@@ -655,7 +655,7 @@ class GliBertClassifierLastHiddenStateAll(BertBase):
         return proba
 
 
-class GliBertClassifierLastHiddenStateNoCLS(BertBase):
+class GliBertClassifierFFNNNoCLS(BertBase):
     def __init__(self, config, num_classes, max_len):
         super(BertBase, self).__init__()
         self.config = config
