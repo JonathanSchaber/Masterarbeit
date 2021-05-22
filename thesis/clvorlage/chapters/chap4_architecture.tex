@@ -116,6 +116,19 @@ the file \texttt{load\_data.py}, the data gets tokenized and loaded, and in
 the file \texttt{gli\_bert.py}, the forward pass and weight-updating is
 defined in the \texttt{fine\_tune\_BERT()} function.
 
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  In the configuration file \texttt{config.json} you are able to control if the vanilla BERT
+  embeddings should be combined with SRL information via the \texttt{combine\_SRLs} attribute:
+  If it is set to \texttt{true}, the SRL module is activated and the BERT+SRL combined
+  representations are used for the task, if it is set to \texttt{false}, only the vanilla
+  BERT embeddings are used.
+
+\end{tcolorbox}
+
 
 \section{SRL Module}
 \label{sec:srl-module}
