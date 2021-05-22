@@ -310,7 +310,7 @@ information pieces get combined is necessary.
 To illustrate this, consider the following made-up but not unplausible text snippet:
 
 \begin{examples}
-	\item \label{itm:tok-sentence} Anstieg um 4° zwischen 1990-2010
+	\item \label{itm:tok-sentence} Anstiege um 4° zwischen 1990-2010
 \end{examples}
 
 The tokenizations produced by ParZu, i.e. Moses, and BERT are
@@ -318,13 +318,15 @@ depicted side-by-side (note that the BERT tokenization has been
 merged for better readability):
 
 % \begin{tabularx}{\textwidth}{@{}l<{}@{\ }l<{}@{\ }X@{}}
-\tab{tab:tokenization}{Tokenization aligning difficulties displayed on example
-sentence \ref{itm:tok-sentence}. Note that in this case both tokenization sequences would need duplication.
+\tab{tab:tokenization}{Tokenization aligning difficulties displayed on example sentence
+\ref{itm:tok-sentence}. Note that the BERT subtokens are already merged back to tokens for
+better readability (``Anstieg'', ``\#\#e'' = ``Anstiege''). In this case both tokenization
+sequences would need duplication (duplicated tokens are highlighted in blue).
 Achieving this reliably for all potential edge cases is nearly impossible.}
 {\begin{tabularx}{\textwidth}{m{3.4cm}m{3.4cm}|m{3.4cm}m{3.4cm}}
   \multicolumn{2}{c}{\textbf{normal}} & \multicolumn{2}{c}{\textbf{aligend}} \\
   \texttt{BERT}  & \texttt{Moses}     & \texttt{BERT}                    & \texttt{Moses}                        \\ \hline
-  Anstieg        & Anstieg            & \customcolorbox{Anstieg}{white}  & \customcolorbox{Anstieg}{white}       \\
+  Anstiege       & Anstiege           & \customcolorbox{Anstiege}{white} & \customcolorbox{Anstiege}{white}      \\
   um             & um                 & \customcolorbox{um}{white}       & \customcolorbox{um}{white}            \\
   {[}UNK{]}      & 4                  & \customcolorbox{[UNK]}{white}    & \customcolorbox{4}{white}             \\
   zwischen       & \textdegree{}      & \customcolorbox{[UNK]}{blue}     & \customcolorbox{\textdegree{}}{white} \\
@@ -343,11 +345,12 @@ in table \ref{tab:tokenization}, both sequences need duplication); BERT tokenize
 are out-of-vocabulary (OOV) or which contain OOV subtokens as [UNK] further excessively comlicates the picture etc.
 Therefore, I chose the following strategy which avoids all these problems:
 
-(1) Take the ParZu-tokenized and parsed sentence, apply the predicate-finding algorithm to
-it. Then, (2) tokenize the sentence using the BERT tokenizer, identify the afore detected
-predicates\myfootnote{Since predicates are normally verbal forms without any special characters
-in them, a string comparison search suffices to achieve this.} and hand the BERT tokenized,
-predicate marked token sequence to DAMESRL.
+(1) Take the ParZu-tokenized and parsed sentence, apply the predicate-finding algorithm to it.
+Then, (2) tokenize the sentence using the BERT tokenizer, merge subtokenized tokens back to
+regular tokens, identify the afore detected predicates\myfootnote{Since predicates are normally
+verbal forms without any special characters in them, a string comparison search suffices to
+achieve this.} and hand the BERT tokenized, predicate marked token sequence to DAMESRL.
+
 
 
 % The first question that arises is: which tokenization should be mapped onto wich? In other
@@ -400,14 +403,14 @@ predicate marked token sequence to DAMESRL.
 
 \subsection{DAMESRL}
 
-There are not too many SOTA SRL frameworks available for German that come with a pre-trained model,
+There are not too many end-toend SOTA SRL frameworks available for German that come with a pre-trained model,
 especially such ones that can be conveniently integrated in a pipeline of a bigger system.
 
-\cite{do2018flexible} fill exactly this hole: They introduce DAMESRL, an SRL framework that
-implements SOTA architecture, namely self-attention mechanisms, similar to BERT's. They report
-an F1 score of 73.5 for their best model configuration on the German data set of CoNLL '09.
-This best configuration is based on word as well as character embeddings, self-attention and a
-softmax layer on top.
+\cite{do2018flexible} fill exactly this hole: They introduce DAMESRL, an SRL framework
+that implements SOTA architecture, namely self-attention mechanisms, similar to BERT's.
+They report an F1 score of 73.5 for their best model configuration on the German data set
+of CoNLL '09. This best configuration is based on word embeddings as well as character
+embeddings, self-attention and a softmax layer on top.
 
 The DAMSRL predictor receives the BERT-tokenized sentence along with the information which tokens
 in it are predicates (zero or more). For each token labelled as predicate in a sequence it predicts
@@ -434,8 +437,6 @@ predicate-argument structures to three yields the best results; so I adopt this 
 other words, if a sentence has more than three argument-predicate structures, I only care about
 the first three predicates identified (if proceeding from left to right through the sequence),
 and disregard the others.
-
-
 
 \begingroup
 \begin{srl}[!h]
@@ -494,11 +495,14 @@ from the first predicate-argument structure.
 
 \subsection{GRU}
 
-Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated
-to the vectors which are computed by BERT. The ``classic'', pre-transformer age times, way
-of encoding sequential data would be to employ a recurrent neural network architecture.
-I decided to use GRUs, since they are less computational intesive and research has found
-both architectures for many tasks and datasets performing on par (cf. \cite{chung2014empirical}).
+Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated to
+the vectors which are computed by BERT. The ``classic'', pre-transformer age, way of encoding
+sequential data would be to employ a recurrent neural network architecture. Typically, one would
+implement an architecture that counteracts the well-known vanishin / exploding gradients problem
+of vanilla RNNs (cf. \citep{bengio1994learning}), such as LSTMs \citep{hochreiter1997long} or
+GRUs \citep{cho2014learning}. I decided to use GRUs, since they are less computational intensive
+and research has found both architectures for many tasks and datasets performing on par (cf.
+\cite{chung2014empirical}).
 
 For this, the three SRLs for each token get transformed into their numerical representation
 via look-up in the SRL dictionary of the GRU model, such that euch SRL token is a vector $v \in
@@ -513,65 +517,76 @@ considerations need to be taken into account.
 BERT adds several special meta tokens to sequences it embeds: (1) At the start of each
 seqeuence, be it a single sentence or sentence pair one, it inserts a special [CLS] token; CLS
 standing for classification. (2) At the the end of a sequence and between sentence pairs, BERT
-insert a separation token [SEP], which signals the end of a sequence. (3) If the sequence
+inserts a separation token [SEP], which signals the end of a sequence. (3) If the sequence
 is shorter than the defined maximum length, it gets filled up with [PAD] tokens. An XNLI sentence
 pair with maximum length 25 woudl thus be represented as tokenizer BERT sequence the following
-way (for better readability, the BERT sutokens are surrounded by brackets):
+way (for better readability, the BERT subtokens are marked blue):
 
 \begin{examples}
   \item Du musst dort nicht bleiben.\\
         An genau der Stelle musst du stehenbleiben!
 
-        [CLS] [Du] [muss] [\#\#t] [dort] [nicht] [bleiben] [.] [SEP] [An] [genau] [der] [Stelle] [muss] [\#\#t] [du] [stehen] [\#\#bleiben] [!] [SEP] [PAD]  [PAD]  [PAD]  [PAD]  [PAD]
+        \customcolorbox{[CLS]}{blue} \customcolorbox{Du}{blue} \customcolorbox{muss}{blue} \customcolorbox{\#\#t}{blue} \customcolorbox{dort}{blue} \customcolorbox{nicht}{blue} \customcolorbox{bleiben}{blue} \customcolorbox{.}{blue} \customcolorbox{[SEP]}{blue} \customcolorbox{An}{blue} \customcolorbox{genau}{blue} \customcolorbox{der}{blue} \customcolorbox{Stelle}{blue} \customcolorbox{muss}{blue} \customcolorbox{\#\#t}{blue} \customcolorbox{du}{blue} \customcolorbox{stehen}{blue} \customcolorbox{\#\#bleiben}{blue} \customcolorbox{!}{blue} \customcolorbox{[SEP]}{blue} \customcolorbox{[PAD]}{blue}  \customcolorbox{[PAD]}{blue}  \customcolorbox{[PAD]}{blue}  \customcolorbox{[PAD]}{blue}  \customcolorbox{[PAD]}{blue}
 \end{examples}
 
 One of the goals of my experiments is to compare the standard BERT implementation with the SRL
 enriched GLiBERT variant. Since the vanilla classification head predicts only using the last
-hidden state of the [CLS] token I need to represent SRL information also on this special
+hidden state of the [CLS] token, I need to represent SRL information also on this special
 token. Therefore, I follow \cite{zhang2019semantics} and add a meta-SRL [CLS], which represents
 the meta semantic role of the [CLS] special token.
 
 Another question that arises concerncs the SRL encoding of multiple sentences:
-Suppose we have a sequence consisting of several sentences (highlighted with brackets):
+Suppose we have a sequence consisting of several sentences (separated by brackets and indexed by $A$, $B$, and $C$):
 
 \begin{examples}
   \item {[}\textsubscript{A} Die Ereignisse von Oni finden im oder nach dem Jahr 2032 statt und beschreiben ein dystopisches Zukunftsbild der Erde.] [\textsubscript{B} Die Welt ist so verschmutzt, dass nur noch kleine Teile bewohnbar sind.] [\textsubscript{C} Um die internationale Wirtschaftskrise zu lösen, haben sich alle Völker unter einer Weltregierung vereinigt.]
 \end{examples}
 
-Should each sentence  $A$, $B$, and $C$ be encoded separately and the represenatations than
-be combined with the aligned BERT subtokens? Or is it more
-effective to ``glue'' all sentences together (or rather, the concatenated SRL tokens in those
-sentences) and embedd this sequence? Further, also meta SRLs for [SEP] and [PAD] tokens could be added ---
-so that also sentence pair tasks are embedded as one long sequence of SRL tokens. All experiments
-except for XQuAD $\alpha$ were conducted implementing the latter approach, proving that the model
-profits more from the second architecture.
+Should each sentence $A$, $B$, and $C$ be encoded separately and these represenatations than
+be combined with the aligned BERT subtokens? Or is it more effective to ``glue'' all sentences
+together (or rather, the concatenated SRL tokens in those sentences) and embedd this sequence?
+Further, also meta SRLs for [SEP] and [PAD] tokens could be added --- so that also sentence
+pair tasks are embedded as one long sequence of SRL tokens. All experiments except for XQuAD
+$\alpha$ were conducted implementing the latter approach, proving that the model profits more
+from the second architecture.
 
 
 
 \section{Combination}
 
-A crucial part in the overall architecture is the combining of the numeric representation
-of (sub-)words computed by the BERT network and the embedded SRLs. One difficulty lies in
-the fact that, as already mentioned above, BERT has its own tokenizer which implements
-a so-called sub-word or wordpiece \cite{wu2016google} encoding strategy: BERT has a
-fixed length of vocabulary it can hold, namely 30,000 tokens. The wordpiece tokenization
-approach is a balance between word and character tokenization in that that it ``gives
-a good balance between the flexibility of single characters and the efficiency of full
-words for decoding, and also sidesteps the need for special treatment of unknown words''
-\citep[p.~2]{wu2016google}. As a consequence, BERT tokenizes a sentence quite differently
-than a traditional parser, since the latter adheres to the full tokens. Consider the
-following example:
+The combing of a token's BERT embedding with its correpsonding SRL embedding is done
+straightforwardly; both numerical vectors are concatenated:
 
-\begin{examples}
-	\label{ex:tokenization-diff}
-	\item Es ist der Sitz des Bezirks Zerendi in der Region Akmola.
-	\item ParZu: Es ist der Sitz des Bezirks Zerendi in der Region Akmola .
-	\item GermanBERT: Es ist der Sitz des Bezirks Zer \#\#end \#\#i in der Region Ak \#\#mol \#\#a .
-\end{examples}
+Take, the first token $t_1$ of the sentence in \ref{srl:zeros-duplicate},
+``Wir'': After being consumed by the BERT module, it has a BERT embedding
+vector representation $b \in \mathbb{R}^{768}$. Its SRL representation,
+let's say the zero-filled variant \texttt{B-A0+0+0}, has a GRU-embedded
+representation $s \in \mathbb{R}^{60}$. The final numerical representation
+$w_1$ of the token $t_1$ ``Wir'' plus its SRL \texttt{B-A0+0+0} is computed
+as:
 
+$w \in \mathbb{R}^{788} = b \cdot  s$
 
-A further challenge besides the alignment of traditional tokenization and wordpiece tokenization is
-the general difference in parsing a sentence that exist.
+where $\cdot$ denotes the concatenation operation.
+
+Because the tokenization of the SRL module is based on the merged BERT tokeniazation,
+there remain two ways of combining BERT embeddings and SRL embeddings, however: (1) The
+embeddings of subtokenized tokens in BERT are merged back to token level, or (2) SRL
+embeddings of tokens which were subtokenized in the BERT module get duplicated to align
+with the BERT embeddings. Consider the following word as example: ``Restlichen'' has one
+SRL in \ref{srl:zeros-duplicate}, \texttt{I-C-A1+0+0} (in the duplicated variant), which
+would lead to one vector $s$ as numerical representation, while it would be tokenized as
+``Rest'', ``\#\#lichen'' inside BERT, leading to two vectors $b_1$, $b_2$ as numerical
+representation. In the first scenario, $b_1$ and $b_2$ would be merged into one vector
+$b$, by averaging all dimensions; this vector would then be concatenated with $s$ to
+form the final representation $w$ of ``Restlichen''. In the second variant, $s$ would be
+copied once to align with the BERT vectors, which would lead to the final representation
+of ``Restlichen'' as two vectors: $w_1$ = $b_1 \cdot s$ and $w_2 = b_2 \cdot s'$.
+
+For all experiments, I run both variants, reporting in chapter \ref{chap:5_results} the results,
+which indicate that variant 1, i.e. merging BERT subtokens back to tokens to align with the SRL,
+leads to information loss, and therefore weakens the general model performance.
+
 
 \section{Head Module}
 
