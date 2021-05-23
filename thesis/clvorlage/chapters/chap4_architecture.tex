@@ -130,10 +130,24 @@ defined in the \texttt{fine\_tune\_BERT()} function.
 \end{tcolorbox}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{SRL Module}
 \label{sec:srl-module}
 
-A Semantic Role Labeller (SRL) is a system, that assigns automatically Semantic Roles to a
+A Semantic Role Labeller (SRL) is a system, thaltl assigns automatically Semantic Roles to a
 given input text.\myfootnote{This may be one or multiple sentences.}
 
 State-of-the-art SRLs are end-to-end models, in the sense that there is no need of
@@ -509,7 +523,7 @@ from the first predicate-argument structure.
   colframe=blue!75!black,
   title={\centering Code}]
 
-  The slot-filling mode can be controlled via the \texttt{zeros} attribute in
+  The predicate-filling mode can be controlled via the \texttt{zeros} attribute in
   the \texttt{config.json} file: If it is set to \texttt{true}, then the empty
   predicate-argument slots are filled up with \texttt{0}-SRLs, if it is
   set to \texttt{false}, the first predicate-argument structure gets copied
@@ -575,6 +589,29 @@ Further, also meta SRLs for [SEP] and [PAD] tokens could be added --- so that al
 pair tasks are embedded as one long sequence of SRL tokens. All experiments except for XQuAD
 $\alpha$ were conducted implementing the latter approach, proving that the model profits more
 from the second architecture.
+
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  The hyperparameters for the GRU that embeds the SRLs are specified in the configuration file
+  \texttt{config.json}. The following hyperparameter configuration was used in the experiments
+  of this thesis:
+
+  \begin{itemize}
+    \itemsep0em
+    \item[] GRU\_head\_hidden\_size: 712
+	  \item[] GRU\_head\_dropout: 0.5
+	  \item[] SRL\_embedding\_dim: 20
+	  \item[] SRL\_hidden\_size: 32
+	  \item[] SRL\_num\_layers: 2
+	  \item[] SRL\_bias: true
+	  \item[] SRL\_bidirectional: true
+	  \item[] SRL\_dropout: 0.3
+  \end{itemize}
+
+\end{tcolorbox}
 
 
 

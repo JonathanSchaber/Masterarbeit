@@ -53,16 +53,6 @@ the different hyperparameter for the two runs is listed for each dataset.
   }
 }{$\alpha$-$\beta$ differences}
 
-\begin{tcolorbox}[
-  colback=blue!5!white,
-  colframe=blue!75!black,
-  title={\centering Code}]
-
-  In the configuration file \texttt{config.json} you are able to control several hyper parameters,
-  such as: XXXXXXXXXXX
-
-\end{tcolorbox}
-
 Since the different dataset types were tested with different heads, I group the them
 the following way: Results for classification datasets (deISEAR, SCARE, PAWS-X, XNLI)
 are reported together, and the results for question answering datasets (MLQA, XQuAD),
@@ -106,6 +96,24 @@ triggering early stopping. However, the SCARE accuracy and loss progressions sho
 much more fluctuations and erratic behavior than the XNLI ones, indicating the
 noisiness of the data and the randomness of the function that needs to be learned
 by the model.
+
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  To evaluate several models in ensemble mode, run the following command (make sure the
+\texttt{conda} environment is activated):
+
+  \begin{verbatim}
+    $ python ensemble_predict.py -r  \
+                       <file_1>.json \
+                       <file_2>.json \
+                       ...
+                       <file_n>.json
+  \end{verbatim}
+
+\end{tcolorbox}
 
 
 % (see figure
