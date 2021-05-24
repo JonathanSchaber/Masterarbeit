@@ -111,7 +111,7 @@ cat all the .csv files into one .csv files:
 
 For each data set, run the following command:
 
-	python preprocess_data.py \
+	$ python preprocess_data.py \
 		-d <data set> \
 		-p /<path>/<to>/<data set>/ \
 		-a /<path>/<to>/DAMESRL/<config>/srl_char_att_ger_infer.ini
@@ -128,7 +128,7 @@ This will create in each data set directory the following three files, their nam
 
 First, adjust the paths in `config.json` to conform to the structure on your machine. The paths for the dataset point to the directory, where the `Gli_BERT*.tsv` files lie.
 
-    python gli_bert.py \
+    $ python gli_bert.py \
         -l <local/rattle> \
         -c config.json \
         -d <data set> \
@@ -146,9 +146,25 @@ file is simply written to it) and for each epoch the loss and accurracy for all 
 In the latter, the actual predictions and gold labels for teh development and test set for each epoch
 are written.
 
-To quickly see in which epoch(s) the development set accuracy was the highest, run
+To quickly see in which epoch(s) the development set accuracy was the highest, run:
 
     $ max_acc.sh <file name result files>.json
+
+For evaluating a model ensemble, run the following:
+
+    $ python ensemble_predict.py -r \
+        <file name result files 1>.json \
+        <file name result files 2>.json \
+        ... \
+        <file name result files n>.json
+
+You will see the following output: For each model, the best development set epoch gets selected
+according to the accuracy the model achieved (if there are multiple epochs with the same development
+set accuracy, the first gets selected). Then, the actual predictions for each model on the respective
+best epoch get ensembled and a majority vote is carried out.
+
+![ensemble_predic.py outpu](miscellaneous/ensemble_predict.png)
+
 
 
 # Miscallenaoues (Plotting graphs, etc.)
