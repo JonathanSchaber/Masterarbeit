@@ -143,12 +143,16 @@ After training a model, its results and actual predictions get written to two fi
 
 The former contains information about the hyperparameters used during training (the passed config
 file is simply written to it) and for each epoch the loss and accurracy for all sets are reported.
-In the latter, the actual predictions and gold labels for teh development and test set for each epoch
+In the latter, the actual predictions and gold labels for the development and test set for each epoch
 are written.
 
 To quickly see in which epoch(s) the development set accuracy was the highest, run:
 
     $ max_acc.sh <file name result files>.json
+
+The script shows some metrics about the best epoch:
+
+![max_acc.sh output](miscellaneous/max_acc.png)
 
 For evaluating a model ensemble, run the following:
 
@@ -161,9 +165,9 @@ For evaluating a model ensemble, run the following:
 You will see the following output: For each model, the best development set epoch gets selected
 according to the accuracy the model achieved (if there are multiple epochs with the same development
 set accuracy, the first gets selected). Then, the actual predictions for each model on the respective
-best epoch get ensembled and a majority vote is carried out.
+best epoch get ensembled and a majority vote is carried out:
 
-![ensemble_predic.py outpu](miscellaneous/ensemble_predict.png)
+![ensemble_predic.py output](miscellaneous/ensemble_predict.png)
 
 
 
