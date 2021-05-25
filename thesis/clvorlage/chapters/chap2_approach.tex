@@ -81,13 +81,13 @@ by using labeled data from the task at hand.
 One of the distinctive features of BERT is the minimal difference in architecture between
 pretraining and finetuning: The transformer based network which computes the contextualized
 token embeddings during the language modeling pretraining is also used in downstream tasks,
-only with a so-called task-specific head on top of it. This makes re-implementing the BERT
+only with a task-specific head on top of it. This makes re-implementing the BERT
 model in other architectures quite convenient, which is one of the reasons I decided to
 implement BERT in my approach as well.
 
 Further, the numerical embeddings BERT ``learned'' to compute during the pre-training phase show to
 be very apt at transferring to a wide range of down-stream tasks: As \citeauthor{devlin2018bert}
-demonstrate, with marginal architecture adaption, i.e. the so-called ``head'', to the task at hand,
+demonstrate, with marginal architecture adaption, i.e. the ``head'', to the task at hand,
 vanilla BERT embeddings achieved several SOTA results on tasks ranging from natural language inference (NLI)
 to question answering.
 
@@ -108,7 +108,7 @@ a good overview of these points see \cite{bender2021dangers}.}
 The 12 attention heads and following linear projections in one block (here called ``Layer'')
 are vividly represented. The information flow is top-down, with the tokenized input sentence
 starting with the [CLS] token on top, and the computed embeddings on bottom. Credit for the image
-goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}}{11}{BERT
+goes to \href{https://peltarion.com/blog/data-science/illustration-3d-bert}{Peltarion}.}{11}{BERT
 Architecture}
 
 From a more technical point of view, BERT is first and foremost a multi-layered bidirectional
@@ -120,7 +120,7 @@ BERT takes an input sequence, tokenizes it and computes contextualized vector re
 for each token via stacked blocks, depicted in figure \ref{fig:bert-architecture}, employing
 self-attention and linear combination. For reasons of space, I will not go into more detail
 here about BERT's architecture; the interested reader is referred to the original BERT paper by
-cite{devlin2018bert}, as well as \cite{clark2019does}, which provides insight into the inner
+\cite{devlin2018bert}, as well as \cite{clark2019does}, which provides insight into the inner
 workings of BERT's attention mechanisms.
 
 % \myfootnote{For a really % well made visualization of
@@ -155,10 +155,10 @@ detecting role reversal or sentence completion tasks.
 systematic error patterns'', which for them suggests ``that they still do not capture the
 full complexity of human pragmatic reasoning.''
 
-\cite{jin2020bert} go even further and create so-called adversarial attacks for laying open
+\cite{jin2020bert} go even further and create what are called adversarial attacks for laying open
 weak spots of BERT: After observing that BERT seems to rely only on the statistical cues of
 a small number of the input tokens to form its predictions, \citeauthor{jin2020bert} built a
-sophisticated algorithm to permute the input sentences wihtout actually changing its meaning.
+sophisticated algorithm to permute the input sentences without actually changing its meaning.
 Taken from the SNLI \citep{bowman2015snli} dataset, here is an example for such an attack:
 
 \begin{examples}
@@ -177,7 +177,7 @@ by such attacks and changes its predictions.
 
 For SNLI, \citeauthor{jin2020bert} report to bring down BERT's original accuracy of 89,4\%
 to an astonishing 4,0\% by permuting 18,5\% of the input tokens. Given that the permutations
-are essentially nothing other than exchanging a word with a synonym or a semantically related
+are essentially nothing more than exchanging a word with a synonym or a semantically related
 substitute, this outcome does not speak for BERT's quality.
 
 
@@ -218,13 +218,12 @@ Note, however, that this is by no means an exhaustive presentation of all BERT-v
 
 \section{GliBERT}
 
-Infected by the pandemic BERT-fever and persuaded by its proven transfer-learning
-capabilities, I decide to also use BERT as pretrained, contextualized word
-representations in my architecture. Specifically, I concentrate on German and choose
-the \href{https://deepset.ai/german-bert}{German BERT}, pretrained and provided
-by deepset. Concentrating on the weak spots identified relating to the semantic
-understanding of language, my approach will combine the German BERT embeddings with
-structured linguistic information to counter those shortcomings.
+Infected by the pandemic BERT-fever and persuaded by its proven transfer-learning capabilities,
+I decide to also use BERT as pretrained, contextualized word representations in my architecture.
+Specifically, I concentrate on German and choose the German BERT, pretrained and provided by
+deepset\myfootnote{\url{https://deepset.ai/german-bert}}. Concentrating on the weak spots
+identified relating to the semantic understanding of language, my approach will combine the
+German BERT embeddings with structured linguistic information to counter those shortcomings.
 
 There exist several linguistic structures which could
 be hypothetically included into BERT. For example
@@ -257,7 +256,7 @@ good balance between two extremes: (1) Including sophisticated knowledge structu
 semantic information, which would require extensive preprocessing (stemming, identifying
 content words, potential word sense disambiguation, look-up in the knowledge base) and
 rather cumbersome encoding; and (2) straightforward, on the fly ``mark-up'' of input text,
-With low information substance in the case of named entities. with semantic roles, I get
+with low information substance in the case of named entities. With semantic roles, I get
 the best of both worlds: Structured information which is relatively easy to implement, as
 discussed below, while --- hopefully --- truly adding semantic substance to the vanilla
 BERT embeddings. In addition to outlining their goals, history and applications, the next
@@ -313,14 +312,17 @@ Twain famously put it.}
   \item The crew --- unable to save the stricken freighter --- had to be evacuated by air.
 \end{examples}
 
-Although these three sentences make use of very different vocabulary --- an unweighted BLEU score
-is virtually zero between them --- it is obvious to a speaker of English that they all convey more
-or less the same meaning, that all of them refer to the same state of affairs: A ship sank because
-of the forces of nature. In linguistics, this is often referred to as proposition: The ``lexical
-kernel of a sentence that determines its truth conditions, regardless of the syntactic form and
-lexical filling of the given form of expression'' \cite[p.~959]{bussmann2006routledge}. In other
-words, the three sentences above describe the same states of affairs, which means that they are
-verified or falsified by the same conditions in the real world --- i.e. \emph{if} what they are
+Although these three sentences make use of very different vocabulary --- an unweighted
+BLEU score\myfootnote{BLUE is a metric which captures \textit{n}-gram overlap between
+two ore more sentences, see chapter \ref{chap:3_datasets}, section \ref{sec:paws-x} for
+more details.} is virtually zero between them --- it is obvious to a speaker of English
+that they all convey more or less the same meaning, that all of them refer to the same
+state of affairs: A ship sank because of the forces of nature. In linguistics, this is
+often referred to as proposition: The ``lexical kernel of a sentence that determines
+its truth conditions, regardless of the syntactic form and lexical filling of the given
+form of expression'' \cite[p.~959]{bussmann2006routledge}. In other words, the three
+sentences above describe the same states of affairs, which means that they are verified
+or falsified by the same conditions in the real world --- i.e. \emph{if} what they are
 denoting \emph{is} really the case.
 
 Maybe the most obvious way of encoding the same proposition with different words is synonymy:
@@ -583,7 +585,7 @@ German, there is e.g. DAMESRL \citep{do2018flexible}, trained on the CoNLL
 '09 \citep{hajivc2009conll} data (which implements PropBank style SRLs).
 This is also the semantic role labeler I employ in my GliBERT system.
 Since I treat the semantic role labeler essentially as a blackbox in my
-architecture and use it as an out-of-the-shelf SRL predictor, I will not go
+architecture and use it as an off-the-shelf SRL predictor, I will not go
 into details about the concrete implementation of DAMESRL, as well as the
 different approaches to automatic semantic role labeling in general ---
 the interested reader is referred to \cite{do2018flexible} for the former
@@ -677,7 +679,7 @@ abbreviations for ``argument'').
 \end{verbatim}
 
 A detailed discussion of the SRLs produced by DAMESRL will be done in chapter
-\ref{chap:5_results}, section \ref{sec:sec:srl-noise}. In advance, it should be
+\ref{chap:5_results}, section \ref{sec:srl-noise}. In advance, it should be
 noted that the automatically predicted SRLs seem to capture semantic properties
 quite well (e.g. the second SRL-layer of the first sentence, where the predicate
 ``getrunken'', the agent ``ich'' and the theme ``schlechte Milch'' are correctly

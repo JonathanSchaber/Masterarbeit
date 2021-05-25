@@ -3,7 +3,7 @@
 \label{chap:4_architecture}
 
 In this chapter, I describe the different parts of the GliBERT model, how they
-interact and what a priori decisions were taken during designing its architecture
+interact and what a priori decisions were taken during the design of its architecture
 (e.g. the number of predicate-argument structures considered, etc.).
 
 To eliminate possible misunderstandings and establish a ``standard'' vocabulary discussing the GliBERT
@@ -17,6 +17,12 @@ this thesis:
     to handle natural language as input.
   \item As mentioned in the introduction, natural language can be communicated through different channels (speech, singing, text)
     --- I am, however, only concerned with textual representations of language.
+  \item Following \cite{goldberg2017neural}, I use uppercase letters $W, X, Z$ to represent matrices and lowercase
+    letters $b, x, y$ to represent vectors. Moreover, keeping consistent with \citeauthor{goldberg2017neural},
+    vectors are assumed to be row vectors, leading to right-side matrix multiplication: $xW + b$.
+  \item I do assume the reader to be fond of the basic mathematical and theoretical concepts of machine learning,
+    keeping mathematical demonstration to a minimum. For a sound introduction into concepts, terms, and mathematical
+    reasoning behind deep learning in NLP, I can highly recommend ``Neural Network Methods for Natural Language Processing'' \citep{goldberg2017neural}.
 \end{itemize}
 
 
@@ -36,8 +42,8 @@ general way an input sequence is processed by GliBERT is depicted in figure
 
 An input sentence gets processed in parallel by two systems, the vanilla German BERT
 and the SRL producing and encoding module, to produce two numerical representations
-of its tokens. These represenatations get combined and are sent through a head module
-which producec the actual predictions. The core parts of the model are the following:
+of its tokens. These representations get combined and are sent through a head module
+which produces the actual predictions. The core parts of the model are the following:
 
 \begin{description}
 	\item[\textbf{BERT module}] This is the vanilla BERT base model: It tokenizes the input sequence, sends it through its twelve transformer layers and outputs the final hidden states of each (sub-)token.
@@ -59,30 +65,30 @@ which producec the actual predictions. The core parts of the model are the follo
     through ParZu and DAMESRL, with subsequent embedding via a GRU model; after that an optional
     split token module follows. The bold arrows on the right side show information flow, if BERT
     subtokens are fusioned for appending with SRLs. The dotted arrows represent the information flow
-    if the SRLs are splitted to match with the BERT subtokens.}{24}{GliBERT Architecture detail}
+    if the SRLs are split to match with the BERT subtokens.}{24}{GliBERT Architecture detail}
   % \vfill
 \end{landscape}
 
 
 \section{BERT Module}
 
-Since its publishing two years ago, BERT \citep{devlin2018bert} has
+Since its publishing three years ago, BERT \citep{devlin2018bert} has
 often been viewed as a turning-point in NLP: The embeddings it computes
 by implementing massive self-supervised pre-training proved to be very
 potent representations of language and were successfully implemented in
 a wide array of applications addressing downstream tasks via transfer
 learning (see chapter \ref{chap:2_approach}). Pretrained models and
-APIs for BERT are by now vastly available for a multitude of langauges
+APIs for BERT are by now vastly available for a multitude of languages
 --- I chose to use the \texttt{bert-base-german-cased} model from
 \href{https://deepset.ai/german-bert}{deepset} which is available
 in \texttt{pyTorch} through the hugging face's \texttt{transformer}
-library\cite{wolf2019transformers}.
+library \cite{wolf2019transformers}.
 
 While the original BERT was presented in two different sized variants --- \emph{base}
 and \emph{large} --- deepset only provides a BERT base model which has the following
 specifications according to it's configuration file:
 
-\tab{tab:bert-yuperconfigs}{German BERT hyperparameter configuration.}{
+\tab{tab:bert-hyperconfigs}{German BERT hyperparameter configuration.}{
   \scalebox{0.9}{
     \begin{tabular}{ll}
       Transformer Blocks         & 12             \\
@@ -104,7 +110,7 @@ After encoding a sentence using the tokenizer's method \texttt{.encode\_plus()},
 encoded sentence is sent through BERT via its \texttt{.forward()}-method --- or
 called implicitly, by passing the sentence to the model --- which returns the
 vectors for all input tokens, which can then be used in downstream tasks. Fine-tuning
-is done by passing the computed loss to the specified optimizer funtion (I use the
+is carried out by passing the computed loss to the specified optimizer funtion (I use the
 AdamW optimizer \citep{loshchilov2019decoupled}, a modification of the well-known
 Adam (Adaptive Moment Estimation) optimizing function \citep{kingma2014adam}, implementing
 additional weight decay), which updates BERT's weight matrices.\myfootnote{After wiring
@@ -132,18 +138,6 @@ defined in the \texttt{fine\_tune\_BERT()} function.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 \section{SRL Module}
 \label{sec:srl-module}
 
@@ -156,7 +150,7 @@ in advance before the actual labeling takes place. However, as is the case for t
 I employ, some pre-processing remains. For GliBERT, I implement the DAMESRL, a model
 presented by \cite{do2018flexible}. I use their pre-trained German Character-Attention
 configuration which, according to the authors, achieved an F1 score of 73.5\% on the
-CoNLL'09 task \citep{hajivc2009conll}. Despite bein g characterized as an end-to-end
+CoNLL'09 task \citep{hajivc2009conll}. Despite being characterized as an end-to-end
 model by the authors, their SRL needs as input not only the tokenized sentence, but also
 ``its predicate $w_p$ as input'' \citep{do2018flexible}. In other words, DAMESRL expects
 as input a sentence $s$ as list of tokens $[ t_1, t_2, \dotsc t_{n-1}, t_n ]$, where for
@@ -170,7 +164,7 @@ For extracting predicates, I rely on the dependency parse tree the ParZu parser
 sentence, I need to decide which tokens in it are predicates, and which are not.
 While this may seem like a straightforward task --- just find the verb as in a
 simple sentence like ``He \emph{ate} the apple.'' ---, there are actually a few
-caveats that need to be considered, e.g. (predicates are emphasised): (1) There
+caveats that need to be considered, e.g. (predicates are emphasized): (1) There
 may be no predicates at all: ``What a day!''. (2) There might be more than one
 predicate: ``We \emph{saw} her \emph{leave} the room''. (3) Not all verbs might
 be predicates, e.g. because they play grammatically the role of a light verb: ``I
@@ -200,7 +194,7 @@ parse tree of a given sentence and select the verbal heads --- i.e. roots ---
 of the clauses. However, the ParZu parser models not content verbs as heads but
 function verbs.\myfootnote{This follows general dependency frameworks proposed
 for German, e.g. \cite{gerdes2001word, gross2015dependency}.} In other words,
-in the ``He was hit by a ball.'', ``hit'' would be the predicate that assigns
+in the sentence ``He was hit by a ball.'', ``hit'' would be the predicate that assigns
 the semantic roles of proto-patient ``he'' and theme, or instrument ``a ball''.
 The dependency parse tree produced by implementing the USD framework would
 analyze the word ``hit'' as being the root of this sentence, making it easy to
@@ -369,7 +363,7 @@ tokens in the Moses tokenization to lign up with the BERT (sub-)tokenization. Ho
 became clear that this was an endeavor too error prone and meticulous: It is e.g. not a priori
 clear which tokenization is the shorter one and therefore needs to be duplicated (sometimes, as
 in table \ref{tab:tokenization}, both sequences need duplication); BERT tokenizes tokens which
-are out-of-vocabulary (OOV) or which contain OOV subtokens as [UNK] further excessively comlicates the picture etc.
+are out-of-vocabulary (OOV) or which contain OOV subtokens as [UNK] further excessively complicates the picture etc.
 Therefore, I chose the following strategy which avoids all these problems:
 
 (1) Take the ParZu-tokenized and parsed sentence, apply the predicate-finding algorithm to it.
@@ -430,7 +424,7 @@ achieve this.} and hand the BERT tokenized, predicate marked token sequence to D
 
 \subsection{DAMESRL}
 
-There are not too many end-toend SOTA SRL frameworks available for German that come with a pre-trained model,
+There are only a few end-to-end SOTA SRL frameworks available for German that come with a pre-trained model,
 especially such ones that can be conveniently integrated in a pipeline of a bigger system.
 
 \cite{do2018flexible} fill exactly this hole: They introduce DAMESRL, an SRL framework
@@ -538,14 +532,14 @@ from the first predicate-argument structure.
 Finally, the predicted SRLs need to be encoded in a numeric way so they can be concatenated to
 the vectors which are computed by BERT. The ``classic'', pre-transformer age, way of encoding
 sequential data would be to employ a recurrent neural network architecture. Typically, one would
-implement an architecture that counteracts the well-known vanishin / exploding gradients problem
+implement an architecture that counteracts the well-known vanishing / exploding gradients problem
 of vanilla RNNs (cf. \citep{bengio1994learning}), such as LSTMs \citep{hochreiter1997long} or
 GRUs \citep{cho2014learning}. I decided to use GRUs, since they are less computational intensive
 and research has found both architectures for many tasks and datasets performing on par (cf.
 \cite{chung2014empirical}).
 
 For this, the three SRLs for each token get transformed into their numerical representation
-via look-up in the SRL dictionary of the GRU model, such that euch SRL token is a vector $v \in
+via look-up in the SRL dictionary of the GRU model, such that each SRL token is a vector $v \in
 \mathbb{R}^{20}$. Then, the numerical representations for each token get concatenated and
 those 60-dimensial vectors form then the input for the bi-directional two-layer GRU which
 computes hidden states for all the inputs.
@@ -617,7 +611,7 @@ from the second architecture.
 
 \section{Combination}
 
-The combing of a token's BERT embedding with its correpsonding SRL embedding is done
+The combing of a token's BERT embedding with its corresponding SRL embedding is done
 straightforwardly; both numerical vectors are concatenated:
 
 Take, the first token $t_1$ of the sentence in \ref{srl:zeros-duplicate},
@@ -632,11 +626,11 @@ $w \in \mathbb{R}^{828} = b \cdot  s$
 
 where $\cdot$ denotes the concatenation operation.
 
-Because the tokenization of the SRL module is based on the merged BERT tokeniazation,
+Because the tokenization of the SRL module is based on the merged BERT tokenization,
 there remain two ways of combining BERT embeddings and SRL embeddings, however: (1) The
 embeddings of subtokenized tokens in BERT are merged back to token level, or (2) SRL
 embeddings of tokens which were subtokenized in the BERT module get duplicated to align
-with the BERT embeddings. Consider the following word as example: ``Restlichen'' has one
+with the BERT embeddings. Consider the following word as an example: ``Restlichen'' has one
 SRL in \ref{srl:zeros-duplicate}, \texttt{I-C-A1+0+0} (in the duplicated variant), which
 would lead to one vector $s$ as numerical representation, while it would be tokenized as
 ``Rest'', ``\#\#lichen'' inside BERT, leading to two vectors $b_1$, $b_2$ as numerical
@@ -660,9 +654,9 @@ leads to information loss, and therefore weakens the general model performance.
   colframe=blue!75!black,
   title={\centering Code}]
 
-  The aligning mode can be controlled via the \texttt{merge\_subtokens} attribute
+  The BERT-SRL-combination mode can be controlled via the \texttt{merge\_subtokens} attribute
   in the \texttt{config.json} file: If it is set to \texttt{true}, then the BERT
-  embeddings of subtokens get merged into one token emebdding, if it is set to
+  embeddings of subtokens get merged into one token embedding, if it is set to
   \texttt{false}, the SRL embeddings are duplicated to match up with the BERT
   subtokens.
 \end{tcolorbox}
@@ -672,16 +666,16 @@ leads to information loss, and therefore weakens the general model performance.
 
 Since the vanilla classification and question answering heads differ quite
 starkly --- classification only takes into account the [CLS] token while
-the start end end index probabilities need to be computed on every token
+the start and end index probabilities need to be computed on every token
 in the sequence --- I cover them in separate subsections.
 
 \fig{images/bert_classification.png}{fig:BERT-classification}{Schema for
   sentence pair (left) and single sentence (right) classification. Figure
   taken from \citep{devlin2018bert}.}{13}{BERT-Classification}
 
-Additionally, for classifiaction tasks, I found more ways in tackling these
+Additionally, for classification tasks, I found more ways in tackling these
 with different heads, while for the question answering task I only saw one
-possibility for a GliBERT head which is virtually the vanilly head, except
+possibility for a GliBERT head which is virtually the vanilla head, except
 that SRL information may be added to the BERT subtokens.
 
 \subsection{Classification}
@@ -706,29 +700,38 @@ that SRL information may be added to the BERT subtokens.
 % I add several meta SRLs which are added to the regular SRLs, to have numerical SRL representations
 % also for these special tokens.
 
-For both, single sentence and sentenc pair tasks, the vanilla BERT head considers
+For both, single sentence and sentence pair tasks, the vanilla BERT head considers
 only the last hidden state of the [CLS] token, after the sequence was sent through
 the transformer blocks and predicts class probabilities only relying on the
-information present in this vector $\in \mathbb{R}^{786}$:
+information present in this vector $w \in \mathbb{R}^{786}$:
 
-Follwing, I present the three classification heads I used for my experiments: The [CLS]
-head, similar to the vanilla classifiaction head, the FFNN head, which consideres the
+In what follows, I present the three classification heads I used for my experiments: The
+[CLS] head, similar to the vanilla classification head, the FFNN head, which considers the
 numeric representation of all tokens in the sequence, and the GRU head, which implements
-a biderectional recurrent neural network which computes a condensed representation of
-the whole sequence before predicting the actual class porbabilities.\myfootnote{Early in
-the experimental phase, I also devised a CNN head, however, the preliminary results were
-not promising, so i concentrated on the other three heads.}
+a bidirectional recurrent neural network that computes a condensed representation of the
+whole sequence before predicting the actual class probabilities.\myfootnote{Early in the
+experimental phase, I also devised a Convolutional Neural Network (CNN) head, however, the
+preliminary results were not promising, therefore I concentrated on the other three heads.}
 
 
 
 \subsubsection{[CLS] Head}
 
-\cite{zhang2019semantics} follow in their implementation the vanilla BERT classification
-head, as proposed by \cite{devlin2018bert}:
+The vanilla BERT classification approach, as proposed by \cite{devlin2018bert}, feeds
+``the \texttt{[CLS]} representation \textelp{} into an output layer for classification,
+such as entailment or sentiment analysis.''
 
-After adding corresponding SRLs for the special BERT tokens and embedding the SRL sequence,
-the last hidden state representation for the BERT+SRL combind [CLS] token is selected
-and softmax-scaled probabilities for all classes are computed.
+In other words, to predict a label in a classification task like sentiment analyis, BERT
+encodes the whole sequence, i.e. adds its special [CLS], [SEP], and [PAD] tokens, and
+sends it through its twelve transformer blocks. After that, only the numeric representation
+of the [CLS] token is fed into a layer, wchich outputs the label probabilities.
+
+The GliBERT [CLS] head operates the same way, except that it is also capable of
+handling additional SRL input: After adding corresponding SRLs for the special BERT
+tokens and embedding the SRL sequence, the last hidden state representation for the
+BERT+SRL combined [CLS] token is selected and softmax-scaled probabilities for all
+classes are computed. This is also the approach \cite{zhang2019semantics} employ in
+their SemBERT architecture.
 
 % In their paper for SemBERT, \cite{zhang2019semantics} do not really address the
 % issue laid out above. To the contrary, the differnt pieces of information they
@@ -744,61 +747,143 @@ and softmax-scaled probabilities for all classes are computed.
 % SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended
 % to its BERT embedding vector
 
-Formally, the [CLS] Head is a one layer Fullyconnected Feedforwrd Neural Network. The
-prediction is the results of sending the embedding of the [CLS] token through the network:
-$\hat{y} = softmax(L_1)$. The input dimensions of the layer vary according to the setting,
-i. e. if the SRLs are included, or not. if not, then the demsion is simply the standard
-BERT hidden size $h_i \in \mathbb{R}^{768}$, if the SRL embedding is appended, then $h_i \in
-\mathbb{R}^{828}$. the output dimensionality of the network depends on the number of classes
-for the task: This number ranges from 2 (PAWS-X, \emph{true}, \emph{false}) to 7 (deISEAR,
-\emph{Traurigkeit, Scham, Freude, Angst, Wut, Ekel, Schuld}).
+Formally, the [CLS] Head is a one-layer Fully connected Feedforward Neural Network (FFNN) without a
+non-linear activation function. A prediction $\hat{y}$ is the result of sending the embedding
+of the [CLS] token --- or the the embedding of the [CLS]+SRL token, respectively ---, i.e. the
+first token in the sequence, $w_{0}$ through the network layer $W$, normalizing the outputs
+by applying the $softmax$ function\myfootnote{The $softmax$ function takes as input a vector
+$x \in \mathbb{R}^{n}$ and normalizies it such that all dimensions are positive and add up to
+1. In other words, it computes a probability distribution over the input vector's dimension.
+Mathematically, the $softmax$ function $\sigma : \mathbb{R}^{n} \rightarrow [0,1]^{n}$ is
+defined as: \[ \sigma (x)_i = \frac{e^{x_i}}{\sum_{j=1}^{n} e^{x_j}} \] for $i = 1, \dotso ,
+n$.} to it, and selecting the dimensionality, i.e. class, with the highest probablity:
 
+$\hat{y} = max(softmax(Ww_{0}+b))$
+
+where $W^{I\times J}$ is the weight matrix of the FFNN layer and $b$ is a bias term learned during
+fine-tuning. The dimenionalities ($I$ and $J$) of $W$ vary according to the setting and dataset:
+while $J$ is the number of classes for the task --- this number ranges from 2 (PAWS-X, \emph{true},
+\emph{false}) to 7 (deISEAR, \emph{Angst, Wut, Ekel, Freude, Scham, Schuld, Traurigkeit}) ---, $I$
+is either equal to 768 (no SRL information) or equal to 828 (plus SRL information).
+
+In figure \ref{fig:cls-head}, the information flow through GliBERT's network and the final FFNN
+layer on the [CLS] token is visualized.
 
 \fig{images/head-cls.png}{fig:cls-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward
   \textbf{N}eural \textbf{N}etwork on the [CLS]-token. This corresponds to the vanilla BERT
   classification head.}{10}{{[}CLS{]} Head}
 
-Intuitively, I expected this head to not show too big differences between the +SRL $-$SRL settings,
+During training, the loss $\ell $ is computed implementing the negative log likelihood loss
+(NLLL)\myfootnote{Mathematically, the NLLL is defined as \[ \ell (x, y) = \sum_{n=1}^{N}
+\frac{1}{\sum_{n=1}^{N} w_{y_n}}l_n \] with $l_n = -w_{y_n}x_{n, y_n}$ where $x$ is
+the input, $y$ is the target, $w$ is the weight, and $N$ is the batch size (cf.
+\url{https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html}).} batch-wise and
+backpropagating it through the network. The NLLLoss is the loss function applied to all
+heads and will therefore not be mentioned in the following head descriptions.
+
+Intuitively, I expected this head to not show stark differences between the +SRL $-$SRL settings,
 since the SRL information, which is essentially a relational, sequential mark-up of the sequence is
-boied down into one token. However, as is also confirmed by the results of \cite{zhang2019semantics},
+boiled down into one token. However, as is also confirmed by the results of \cite{zhang2019semantics},
+the [CLS] head definitely profits from SRL information.
 
 
 \subsubsection{FFNN Head}
 
-FFNN stands for Feed Forward Neural Network. While th [CLS] Head procudes predictions based on the
-weights of the last layer output of the [CLS]-token, this head takes the last layer output of all
-tokens and concatenates them.
-While the approach implemented by \cite{zhang2019semantics} is able to improve the vanilla
-BERT approach, it does not lead to an improvement on others, or worse, brings the perormance
-down. I suspect a reason for this may lie in the manner of how the SRLs are processed in this
-approach. The information SRLs provide is, what may be called, sub-sentence specific and
-cannot be adequately represented as a single information piece. By this I mean that it does
-not suffice to know that given an utterance $x$ that there is a specific SR in it; rather the
-information \emph{where} is crucial. Consider the following example (the pseudo SRL [CLS] is
-added):
+% FFNN stands for \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork. This
+% is a standard network, where the input --- normally, a real-valued vector --- gets sent
+% linearly through the layers of the network, without feedback-looping it through the same
+% weights again(RNNs), or having weights influencing each other (CNNs). In fact, the small
+% network, which predicted on the last hidden state of the [CLS] token, also is an FFNN.
 
+While the [CLS] head computes class predictions based on the weights of the last layer
+output of the [CLS]-token, this head takes the last layer output of all tokens $w_0,
+w_1, \dotso , w_n$, concatenates them into one large vector $w = w_0\cdot w_1\cdot \dotso
+\cdot w_n$, and sends this vector $w$ through a one-layer FFNN to predict a class label
+$\hat{y}$ (depicted in figure \ref{fig:ffnn-head}):
 
-[\textsubscript{[CLS]} ] [\textsubscript{A-0} The man] [\textsubscript{predicate} asked] [\textsubscript{A-1} his friend] .
+$\hat{y} = max(softmax(Ww+b))$
 
-After the subscripted SRLs were consumed by the BiGRU, there is some information about all
-SLRs in the hidden states of the [CLS] token. While there may be some information about there
-being a predicate, an argument zero, and an argument 1 present, it is completely impossibly
-to determine from which tokens these signals came. Especially in sentence pair tasks, such
-as paraphrase identification, this information is however absolutely crucial. As can be seen
-from results \ref{tab:results}, this hypothesis is also supported by the results:
+where $W^{I\times J}$ is the weight matrix of the FFNN layer and $b$ is a bias term learned during
+fine-tuning. While $J$ still is equal to the number of classes for the task at hand, $I$ is the
+dimensionality of the input vector $w$: If the setting is such that no SRL information is added,
+$I$ will amount to $n * 768$, while in the setting where SRL information is added, $I$ equals to $n
+* (768+60)$. $n$ denotes the number of tokens, which means that in a +SRL setting with a maximum
+length of 100 tokens, $w \in \mathbb{R}^{82800}$ and therefore also $I = 82,800$.
 
-\fig{images/head-lhsa.png}{fig:lloa-head}{Head with a one-layer
+\fig{images/head-lhsa.png}{fig:ffnn-head}{Head with a one-layer
   \textbf{F}eed \textbf{F}orward \textbf{N}eural \textbf{N}etwork on
   the concatenated token sequence. In difference to the vanilla BERT
   classification head, not only the embedding of the [CLS] token is
   used for predicting classes, but the whole sequence of vectors is
   concatenated and fed into the final head layer.}{10}{FFNN Head}
 
-As has been shown by e.g. \cite{myagmar2019transferable} for sentiment analysis, a simply final
-fully-connected feed forward layer produces fairly good results (in fact, it performs the best
-in the different architectures they tested for their task).
+The motivation for the FFNN head lies in the fact that the SRL information, which is essentially
+a mark-up of a sequence, is condensed inot one vector for the [CLS] head. Intuitively, I would
+suspect that it is difficult for the model to extract reliable, useful information out of this
+single token. Consider the following example (the pseudo SRL [CLS] is added):
 
-\begin{wrapfigure}[14]{r}{0.45\linewidth}
+
+[\textsubscript{[CLS]} ] [\textsubscript{A-0} The man] [\textsubscript{predicate} asked] [\textsubscript{A-1} his friend] .
+
+After the subscripted SRLs were consumed by the BiGRU, there is some information about all SLRs
+in the hidden states of the [CLS] token. While there may be some information about there being a
+predicate, an argument zero, and an argument 1 present, it is impossible to determine from which
+tokens these signals came. Especially in sentence pair tasks, such as paraphrase identification,
+however, this information is absolutely crucial. By concatenating all embedded tokens into one
+large vector, the positional information of the SRLs don't get lost.
+
+As has been shown by e.g. \cite{myagmar2019transferable} for Sentiment Analysis, concatenating
+BERT embeddings and sending them trough a FFNN produces good results (in fact, it performs the
+best in the different architectures the authors tested for their task and the dataset on which
+they evaluated.).\myfootnote{In contrast to GliBERT where the FFNN consists of only one layer
+without activation function, \citeauthor{myagmar2019transferable} employ a two-layered FFNN
+with the ReLU activation function in between.}
+
+
+\subsubsection{GRU Head}
+
+As was assessed in the section before, SRLs can be understood as being essentially a
+token-wise, sequential ``mark-up'' of a sentence. Therefore, encoding a sequence marked up
+with SRLs employing an architecture designed for sequential data is not too far off.
+
+The concept of Recurrent Neural Networks (RNNs), i.e. networks whose connections form a directed
+graph such that output of the model is re-fed as input into itself, has been around since the
+late 1980s, with \citep{hopfield1982neural} often being credited as having implemented the first
+recurrent neural network. RNNs were developed for being able to process sequential data, where
+not only the information present in the single parts are important, but also the sequential
+ordering of those parts conveys information.\myfootnote{Cf. English ``The dog bites the cat.''
+vs. ``The cat bites the dog.''} To overcome the problems of the vanishing and exploding gradient
+problems that vanilla RNNs expose, \citep{hochreiter1997long} proposed the Long Short-Term
+Memory LSTM architecture, which implements a special cell architecture which can mathematically
+``forget'' and ``memorize'' the gradients to which the weights get updated via backpropagation.
+Before the advent of the transformer architecture, LSTMs with additional attention mechanism
+where the SOTA architecture for many NLP and NLU applications.
+
+\fig{images/head-gru.png}{fig:gru-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural
+  \textbf{N}etwork on the concatenated last hidden states of the bi-directional GRU.}{10}{GRU Head}
+
+\citep{cho2014learning} presented the GRU architecture, which similarly to the LSTM
+implements a mathematical solution to the vanishing/exploding gradiant problem, but
+being a slimmer architecture. As for the SRL embedding network in the SRL module
+\ref{sec:srl-module}, I chose GRU over LSTM because of leaner architecture.
+
+Formally, the embedded token sequence $w_0, w_1, \dotso , w_n$ gets consumed by a
+forward and a backward operating GRU, which compute hidden states $h_i$ for each token
+$w_i$ in the sequence --- so, for each token $w_i$ there are two hidden representations:
+$\overrightarrow{h_i} \in \mathbb{R}^{712}$ for the forward and $\overleftarrow{h_n} \in
+\mathbb{R}^{712}$ for the backward GRU, respectively. The last hidden states of these
+networks, $\overrightarrow{h_n}$ and $\overleftarrow{h_n}$ get concatenated, and this
+vector $w = \overrightarrow{h_n} \cdot \overleftarrow{h_n}$ gets fed into a final dense
+layer, which computes class probabilities, similar to the [CLS] and FFNN head final
+layers.\myfootnote{Note that the $n$th hidden state of the backward network is actually
+the state corresponding to the token $t_0$, i.e. the first token, in the sequence.} This
+process is illustrated in figure \ref{fig:gru-head}.
+
+
+\subsection{Question Answering}
+\label{sec:question-answering}
+
+\begin{wrapfigure}[21]{r}{0.45\linewidth}
   \begin{center}
     \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
   \end{center}
@@ -807,53 +892,16 @@ in the different architectures they tested for their task).
   \label{fig:bert-qa}
 \end{wrapfigure}
 
-Implementing a fully-connected feed forward network as final layer counters the problem
-of the information deprecation that is present in the [CLS] approach: Every token's BERT
-embedding gets concatenated with the token's SRL embeddding. The whole sequence of length
-$n$ is then flattened, i.e. all BERT+SRL vectors get concatenated into one large vector
-of size $\mathbbm{R}^{n\times(768+60)}$.
-
-
-\subsubsection{GRU Head}
-
-Since the SRLs are essentially a sequential ``mark-up'' of the sentences, the thought of
-encoding them with an architecture designed for sequential data is not too far. Inspired
-by the biological properties of the brain, the concept of recurrent neural networks has
-been around since the late 1980s, with \citep{hopfield1982neural} often being credited
-as having implemented the first recurrent neural network. To overcome the problems of
-the vanishing and explofing gradient problems, \citep{hochreiter1997long} proposed the
-Long Short-Term Memory LSTM architecture, which implements a special cell architecture
-which can mathematically ``forget'' and ``memorize'' the gradients to which the weights
-get updated via backpropagation. Before the advent of the transformer architecture, LSTMs
-with additional attention mechansism where the SOTA architecture for many NLP and NLU
-applications.
-
-\fig{images/head-gru.png}{fig:gru-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural
-  \textbf{N}etwork on the concatenated last hidden states of the bi-directional GRU. Predictions are made
-  on the concatenated last hidden states of the forward and backward layer.}{10}{GRU Head}
-
-\citep{cho2014learning} presented the GRU architecture, which similarly to the LSTM
-implements a mathematical solution to the vanishing/exploding gradiant problem, but
-being a slimmer architecture. As for the SRL embedding network in the SRL module
-\ref{sec:srl-module}, I chose GRU over LST because of leaner architecture.
-
-
-
-
-\subsection{Question Answering}
-\label{sec:question-answering}
-
-
 As was mentioned earlier, there exist several different formulations of question answering tasks
 (cf. chapter \ref{chap:3_datasets}, section \ref{sec:mlqa}). However, Question Answering tasks are
 often formulated as essentially token-wise classification tasks:
 
 \citeauthor{devlin2018bert} encode the question and context text pair as one sequence
-seperated by the special [SEP] token (as for sentence pair classification tasks). For
+separated by the special [SEP] token (as for sentence pair classification tasks). For
 extracting the answer span, a FFNN predicts for each token $i$ in the sequence its
-probability for being the start of the answer span, and its probabilty of being the
+probability for being the start of the answer span, and its probability of being the
 end of the answer span (see figure \ref{fig:bert-qa}). After applying a softmax over
-all start/end probabilities, the token with the highest start probabilty is selected
+all start/end probabilities, the token with the highest start probability is selected
 as beginning of the answer span and the corresponding end token is selected.
 
 
@@ -878,7 +926,7 @@ as beginning of the answer span and the corresponding end token is selected.
 The standard implementation of the Q\&A BERT head consists of one one-layer FFNN which predicts
 on each input token the probability of it being the start of the answer span and the end of the
 answer span, respectively. After both probabilities are computed for all tokens, the ones with
-the highest probability get selected; no further logic is enforced, such as that the index of
+the highest pRobability get selected; no further logic is enforced, such as that the index of
 the start token should be smaller than the one of the end token, or that the answer span may
 not lie inside the question (i. e. before the first [SEP] token), etc.
 

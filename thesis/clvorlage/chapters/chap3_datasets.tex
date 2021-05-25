@@ -168,8 +168,8 @@ report that for approximately half of all sentences, the inter-annotator agreeme
 i.e. each of the five annotators attributed the same emotion. However, some emotions seem to
 be prone for not being clearly separable: Shame, for example, gets confused with guilt and vice versa
 in 17\% and 19\% of the cases, respectively. Remarkably, this pattern is not visible for the GLiBERT
-predictions, as is exemplified for one exnsemble in table \ref{tab:confusion-deISEAR}: Shame and guilt
-are reliably told apart by the model, however, it seems to have more general problems in recognizing
+predictions, as is exemplified for one ensemble in table \ref{tab:confusion-deisear}: Shame and guilt
+are reliably told apart by the model, however, it has more general problems in recognizing
 sadness and anger.
 
 \tab{tab:confusion-deisear}{Confusion matrix for the best deISEAR ensemble ($\alpha$ +SRL subtokenized zeros FFNN head). Interestingly, the observed confounding
@@ -262,7 +262,7 @@ boolean unigram features on the original ISEAR corpus (7,665 instances).
 Since the original ISEAR study and data collection was carried out in English, they then machine
 translate the 1,001 deISEAR examples and evaluate on them.
 Using this strategy, the authors accomplish an average micro F$_1$ of 47. (Note: micro F$_1$ in settings where each example gets
-exactly one label assigned is the same as accuracy)
+exactly one label assigned is the same as accuracy.)
 
 \subsection{MLQA}
 \label{sec:mlqa}
@@ -397,8 +397,8 @@ und prorussisch}} for the following context-question pair:
 MLQA is a set that comes with pre-defined development and test splits. The test set
 contains 4,499 examples, while the dev set is made up of 509 examples. As for all the
 other pre-splitted data sets, a training set is not part of the splits, this has to do
-with the approach how \cite{lewis2019mlqa} intend to use their data set, which will
-be explained a little further down. In a first set up, I treat the MLQA development
+with the approach that \cite{lewis2019mlqa} intend to use their data set, which will
+be explained later on. In a first set up, I treat the MLQA development
 set as training set and split off a 15\% portion of it as development set, resulting
 in 432 training instances and 77 development examples. In a second set up I shuffle
 the pre-defined splits and create a more suiting 70:15:15 set ratio; resulting in the
@@ -443,14 +443,14 @@ examples where the answer span lies partially or fully outside the maximum lengt
 % \subsubsection{SOTA}
 \label{chap:mlqa-sota}
 
-\citeauthor{lewis2019mlqa} define two tasks tey use to evaluate model performance on
+\citeauthor{lewis2019mlqa} define two tasks they use to evaluate model performance on
 MLQA: The first one, cross-lingual transfer (XLT), means training models in English,
 conducting model selection on the development set, and evaluating on the test sets for
 the various languages. The second case, generalized cross-lingual transfer (G-XLT), is
 not of interest to my thesis, since it involves a mixing of languages: the context is
 presented in one language and the question in another. The authors include two models
 for the zero-shot transfer approach: multilingual BERT and XLM and use SQuAD (100,00
-instances) as training set.
+instances) as the training set.
 
 The best results for German in the XLT mode \citeauthor{lewis2019mlqa} reoprt, is a 47.6\% exact
 match accuracy, achieved by XLM. However, as the training procedure and amount of traning data
@@ -463,6 +463,7 @@ in chapter \ref{chap:5_results}, section \ref{sec:qa-results}.
 
 
 \subsection{PAWS-X}
+\label{sec:paws-x}
 
 \begin{wrapfigure}[21]{l}{0.45\linewidth}
   \begin{center}
@@ -522,7 +523,7 @@ the whole German part of PAWS-X:
 % TODO: new stats figure!
 %\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
 
-You are invited to test yourself and predict if the following sentence pairs are in fact rephrasings
+You are invited to test the examples yourself and predict if the following sentence pairs are in fact rephrasings
 of the same semantic content. The gold labels are in this footnote\myfootnote{\rotatebox{180}{\ref{itm:paws-x1}:
 False, \ref{itm:paws-x2}: True}}.
 
@@ -553,13 +554,18 @@ Really striking about PAWS-X is the enormous difference in examples per set
 as depicted in figure \ref{fig:pawsx-stat} --- the training set encompasses
 twelve times as many examples as the development and test set combined.
 
-Since the training data are solely machine-translated while the development and test data are
-human-translated, there needs to be some clarification as to how differently those sets are.
-One measure to capture similarities between sentences is the BLEU score \cite{papineni2002bleu}:
-This score measures the overlap of n-grams between two sentences, such that XXX
-The BLEU score is a value between 0 (no n-gram overlaps) to 1 (perfect n-gram overlaps), where a
-BLEU score of 1 means that the two sentences are identical. As for other measures, like accuracy
-e.g., the value is sometimes multiplied by 100 for better readability, which I will also do here.
+Since the training data are solely machine-translated while the development and test data
+are human-translated, there needs to be some clarification as to how differently those sets
+are. One measure to capture similarities between sentences is the \textbf{B}i\textbf{l}ingual
+\textbf{E}valuation \textbf{U}nderstudy (BLEU) score \cite{papineni2002bleu}: This score
+measures the overlap of \textit{n}-grams between two sentences, thus asserting the similarity
+between them.\myfootnote{BLEU was developed to automatically rank machine translation candidate
+sentences by comparing them to human translations --- the higher the BLEU metric, the more
+similar to the human sentence a translation is, and therefore, at least often, perceived as
+more natural.} The BLEU score is a value between 0 (no \textit{n}-gram overlaps) to 1 (perfect
+\textit{n}-gram overlaps), where a BLEU score of 1 means that the two sentences are identical.
+As for other measures, like accuracy e.g., the value is sometimes multiplied by 100 for better
+readability, which I will also do here.
 
 % \begin{figure}
 %   \label{fig:pawsx-stat}
@@ -635,7 +641,7 @@ e.g., the value is sometimes multiplied by 100 for better readability, which I w
 % Test: 27, wrong labelled: 0
 
 
-The BLEU scores indicate that the sentence pairs in the training set are in tendency much
+The BLEU scores indicate that the sentence pairs in the training set are much
 more similar to each other than in the development and test set. Taken into account how
 the data sets were generated, this makes actually sense, however: While the development
 and test sets were translated from English to German by humans, the huge training set was
@@ -823,9 +829,9 @@ review is the following one:
   \item Ich bin die erfuinderin \textbar \textbar\ Ich bin die erfunden!!!!!!!!!!!!!!!!!!!!!!!!!
 \end{examples}
 
-Figure \ref{fig:scare-fig:scare-stats} shows the outcome of this preprocessing and
-the confidence of the such generated labels for the examples. Following are 5 sentences with their
-generated labels --- as you can see, at least for a human judge, the labels seem to capture the
+Figure \ref{fig:scare-stats} shows the outcome of this preprocessing and
+the confidence of the such generated labels for the examples. Below are 5 sentences with their
+generated labels --- as is apparent, at least for a human judge, the labels seem to capture the
 overall sentiment of the sentences quite good.
 
 
@@ -860,7 +866,7 @@ Positive, \ref{itm:scare3}: Positive}}.
 Analyzing the label distributions after turning the original aspect-based SCARE into an emotion detection dataset
 reveals that the positive class amasses the most examples on itself (1,071), while the neutral class only comprises
 193 items out of a total of 1,760 examples (cf. figure \ref{fig:scare-stats}). However, as the analysis of the
-GliBERT predictions in chapter \ref{chap:results} discloses, the models do not simply favour the majority class.
+GliBERT predictions in chapter \ref{chap:chap:5_results} discloses, the models do not simply favour the majority class.
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -878,15 +884,16 @@ GliBERT predictions in chapter \ref{chap:results} discloses, the models do not s
 \end{figure}
 
 
-One could argue that the \texttt{title \textbar \textbar\ comment} structure of the reviews could be encoded
-as sentence pair, in the style of PAWS-X and XNLI. But by examining the data, a lot of reviews seemed to
-be of the following structure:
+The peculiar \texttt{title \textbar \textbar\ comment} structure of the reviews suggests that it
+could be encoded as sentence pair, in the style of PAWS-X and XNLI. But by examining the data, a
+lot of reviews are actually of the following structure:
 
 \begin{examples}
   \item Erkennt Drucker nicht... \textbar \textbar\ ...,wenn er als Netzwerkdrucker an der FritzBox hängt, und eine manuelle Konfiguration über IP-Adresse ist nicht möglich.
 \end{examples}
 
-i.e. that the title and the text of the review form one continuous sequence. Nevertheless, the
+i.e. that the title and the text of the review form one continuous sequence, rendering a introduction
+of the [SEP] special token rather superfluous, if not harmful. Nevertheless, the
 separator symbol arguably ``\textbar \textbar'' introduces some noise, especially for the ParZu
 parser, which needs to parse the sequence.
 
@@ -1235,14 +1242,14 @@ to the given context:
 
 % \subsubsection{SOTA}
 
-As benchamrk results on XQuAD, \citeauthor{artetxe2019cross} employ a very peculiar architecture
+As benchamrk results on XQuAD, \citeauthor{artetxe2019cross} employ a sophisticated technique
 that consists in re-training a monolingual English BERT model on Wikipedia and transfer it to the
 target languages, following these steps:
 
 \begin{enumerate}
     \item Pre-train a monolingual BERT in English with original pretraining objectives
     \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is frozen) with original pretraining objectives
-    \item Fine-tune transformer for downstream task in English (transformer body is freezed)
+    \item Fine-tune transformer for downstream task in English (topken embeddings are frozen)
     \item Zero-shot transfer this model to $L_2$ by swapping the English token embeddings with the $L_2$ embeddings
 \end{enumerate}
 
