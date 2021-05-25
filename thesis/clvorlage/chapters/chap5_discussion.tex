@@ -1,0 +1,481 @@
+\newchap{Discussion}
+\label{chap:5_discussion}
+
+
+One of the main differences between the classification and question answering datasets is the size of
+the examples: While for the classifications task the model needs to extract semantic
+information out of a handful sentences, for the question answering tasks this is rather the exception ---
+normally the context from which the answer span must be extracted is multiple sentences long. My suspicion
+is that SRL information can highlight some crucial semantic relations present in a sequence which would be
+hard for the vanilla BERT to extract; maybe because it is in marked passive voice, not obviously negated etc.
+However, for extracting answer spans out of a long text sequence consisting of several sentences, each having
+potentially 3 predicate-argument structures present, the SRL information may not display a helpful signal to the
+head, which then relies more on information present in the vanilla BERT subtokens. This hypothesis is further
+substantiated by the analysis of BERT-SRL combination strategy superiority, depicted in table \ref{tab:qa-gain-loss-token-merged}:
+Maintaining the BERT inherent subtokenization structure outperforms the merging approach by far, indicating that
+the head relies heavily on information encoded in the BERT subtokens.
+
+
+\section{GliBERT Noise Nuisance Analysis}
+\label{sec:glinoise}
+
+
+After reporting the general results, aggregations and the somewhat disenchanting conclusion, I
+now try to investigate the reasons for this mediocre effect. After investigating the data and
+SRL quality, I found that noise on several levels is present which probably led to too much
+randomness in the complex functions the models needed to approximate. I classify the observed
+data irregularites into the following \textbf{noise} categories:
+
+
+\begin{itemize}
+  \item[\textbf{register}] The textual styles vary greatly from utilizing complex,
+                           hypotactic sentence structures (e.g. XQuAD), to highly
+                           informal, elliptic --- even erratic --- structures
+                           (e.g. SCARE).
+ \item[\textbf{data set}] Many of my datasets were constructed either automatically
+                         (e.g. scrambling text automatically to create paraphrase pairs)
+                         or employing crowd-sourcing techniques. Either way, the process
+                         is prone to erros. There are, e.g., 84 sentence pairs in the trainig
+                         set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
+ \item[\textbf{translation}] Due to the mostly employed semi-automatic translation
+                             approach for creating the various datasets, errors
+                             have been introduced into the data ranging from typical
+                             translation errors (e.g. English ``bishop'' in the clerical
+                             context translated to the German chess figure counterpart
+                             ``Läufer'', not ``Bischof'') to eventually wrongly copied
+                             labels, since the overall meaning changed during
+                             the tranlsation process (e.g. a sentence pair is no more
+                             contradictive but neutral), thus creating label noise.
+ \item[\textbf{SRL}] The SRLs obtained from DAMESRL are, conservatively formulated,
+                     questionable in their quality (e.g. modifiers are completely missing).
+\end{itemize}
+
+While it is normal for data in NLP to possess noise in some way or the other, this usually does
+not impact the overall performance of a model trainied on it in a severe way, since information
+in language is encoded redundantly, and noise present in one channel can be compensated for by
+uncorrupted information from another channel.\myfootnote{For example, information about which
+constituent takes the syntactic function of the subject is often not marked by using only one
+possibility, e.g. though a case ending. Often, several strategies are present, as in German: The
+subject is marked morphologically through case endigs (which are not always alient), positionally
+(in unmarked contexts), and structurally (in unmarked contexts, normally the proto-agent is
+realized as subject) (cf. \cite{bussmann2006routledge,jaeger2010redundancy})} However, if noise
+is present on too many channels at the same time, reliably recovering structural information may
+break down to some extent.
+% In short --- the good old GIGO concept from informatics holds mutatis
+% mutandis also in NLU, and NLP in general.
+
+
+
+\subsection{Register Noise}
+\label{sec:register-noise}
+
+German BERT, according to deepset, was pretrained on the German Wikipedia dump, the OpenLegalData dump and
+news articles. All of this corpora comprise grammatical, to the standards of orthography adhering text
+belonging to a rather formal, ``professional'' register. Three of the six datasets in GerGLUE, namely
+deISEAR, SCARE, and XNLI, however, can be described as representing a rather colloquial register of
+language, even displaying feautures of transcribed speech as e.g. in XNLI:
+
+\begin{examples}
+  \item Ja und wir haben es irgendwie behalten, äh irgendwie äh, es war eine Überraschungs-Geburtstagsparty für sie, das war es Sie liebte die Überraschungsfeier.
+\end{examples}
+
+Naturally, since the German BERT module probably wasn't confronted with texts coming from such a register,
+the BERT embeddings will probably conatin some noise regarding the classification task at hand. Also, ParZu
+is aimed at parsing ``clean'', correct sentences, showing of course problems at processing examples as the
+one above, which leads to the known error propagation and amplification through DAMESRL.
+
+In other words, it is expectable for GliBERT to show difficulties on the aforesaid datasets, which
+was also observed during the analyses of the results in section \ref{sec:classification-results}.
+
+Interestingly, the discrepancy between the German BERT pretraining text register and the text
+present in some GerGLUE datasets, the analysis of the German BERT tokenizetion statistics shows
+that also in those problematic datasets, there are very little out of vocabulary items, which
+would be represented by the catch-all [UNK] BERT token:
+
+\fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
+                                                                          \#\# Subtokens represent the amount of tokens that
+                                                                          get re-merged in the merged settings (e.g. ``Master''
+                                                                          ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''. The amount
+                                                                          of tokens that lie outside of the German BERT vocabulary is
+                                                                          in all datasets extremely small (for deISEAR and XNLI
+                                                                          there are no [UNK]s at all); the largest shares of such tokens
+                                                                          are present in MLQA and XQuAD with .79\% and .73\%,
+                                                                          respectively.}{14}{Token Types all Datasets}
+
+
+
+\subsection{Data Set Noise}
+\label{sec:label-noise}
+
+As \citep{caswell2021quality} point out, apparently there is often a lack of
+prudence observable when multilingual datasets get compiled --- especially for
+low resoursce languages they report devastating discoveries of ungrammatical
+and even non-sense texts for these.
+
+
+However, especiall for sentence pair datasets, one of the sentences needs to be constructed. This
+can happen by automaticall construct these sentences (PAWS-X) or let humans come up with those
+sentences (as for XNLI). In both cases, there might happen errors, and the label assigned to a
+sentence pair may be actually wrong. This is obvious for PAWS-X, where e.g. in the training set,
+there are 84 identical sentence pairs are labelled as non-paraphrases, which is obviously false,
+since the other 3,125 exact identical sentence pairs are labelled as paraphrases. E.g. sentence pair
+number 45061 (in the original English PAWS and the German PAWS-X datasets), both labelled as
+non-paraphrases:
+
+\begin{examples}
+  \item Riverton was a parliamentary electorate in the New Zealand region of Southland .\\
+        Riverton was a parliamentary electorate in the New Zealand region of Southland .
+
+  \item Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.\\
+        Riverton war ein Parlamentswähler in der neuseeländischen Region Southland.
+\end{examples}
+
+But also for human created sentence pairs, there
+is a chance that the gold labels are not that clear. Further, thorugh the creation of the German
+datasets by means of semi-automatically translating English datasets, additional tranlsation
+noise might additionally pollute the data.
+
+To examine this more systematically for XNLI and PAWS-X, I conduct a relabelling of 20 random
+examples each  where the predictions of the best model contradicted the gold labels in the dataset.
+
+
+\subsubsection{Re-annotation}
+
+\paragraph*{PAWS-X}
+
+For the 20 re-annotated examples in PAWS-X the Fleiss' $\kappa$ of 0.68 indicates ``substantial'' agreement
+between the two human annotators; however, if the coefficient is computed between the two human annotators
+and the gold labels of those 20 examples, the value drops to 0.35, indicating substantive disagreement
+as to what sentence pairs are to be considered paraphrases and which don't.
+
+Even more interestingly, in 30\% of the considered cases, the model and the human annotators unanimously
+disagree with the gold labels present in PAWS-X:
+
+% 2 human annotators re-label 20 examples of PAWS-X where gold != predicted.
+% Fleiss' $\kappa$ between 2 annotators: 0.68
+% Fleiss' $\kappa$ between 2 annotators and gold: 0.3541
+% Fleiss' 4\kappa$ between all $-$0.07
+
+% 6 examples where both annotators agree with predictions, disagree with gold:
+
+\begin{examples}
+  \item Der NVIDIA TITAN V wurde von Nvidia am 7. Dezember 2017 offiziell angekündigt.\\
+        Am 07. Dezember 2017, verkündete NVIDIA offiziell Nvidia TITAN V.
+
+        humans \& model: False, Gold: True
+  \item Die Schäfte sind sehr kurz oder oft nicht vorhanden.\\
+        Es sind entweder wenig Landschaften vorhanden oder sie fehlen in den meisten Fällen.
+
+        humans \& model: False, Gold: True
+  \item 1963 trat Roy der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen in Bansdroni in Kalkutta.\\
+        Roy trat 1963 der Kommunistischen Partei Indiens bei und leitete Gewerkschaftsbewegungen im Kolkata-Gebiet von Bansdroni.
+
+        humans \& model: True, Gold:False
+  \item Der Kanal ist einer der ältesten schiffbaren Kanäle Europas und sogar Belgiens.\\
+        Der Kanal ist einer der ältesten befahrbaren Kanäle in Belgien und Europa.
+
+        humans \& model: True, Gold:False
+  \item Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Gastropoden-Mollusk in der Familie der Lepetidae.\\
+        Propilidium pelseneeri ist eine Art der Meeresschnecken, eine wahre Napfschnecke und Meeres-Gastropoden-Mollusk der Familie der Lepetidae.
+
+        humans \& model: True, Gold:False
+  \item Die Chicago Bears sanken auf die Giants 27:21, und verloren 0:6 zum ersten Mal seit 1976.\\
+        Die Chicago Bears verloren 21:27 gegen die Bears und standen erstmals seit 1976 bei 0:6.
+
+        humans \& model: False, Gold:True
+\end{examples}
+
+In all of this cases it seems to be the case that the given gold labels actually are false,
+leading to the conclusion that the evaluation and measured performance on such a dataset must
+be taken with caution, and not just blindly accepted as ultimate truth.
+
+
+{% PAWS-X; different repair-strategies $\rightarrow$ different labels (gold: false)
+
+% Sawyers autorisierte Biografie wurde 2014 von Huston Smith veröffentlicht.
+% Im Jahr 2014 wurde Huston Smith eine autorisierte Biographie von Sawyer veröffentlicht.
+
+
+% Im Jahr 2014 wurde {\color{red} «}Huston Smith{\color{red} », } eine autorisierte Biographie von Sawyer{\color{red} ,} veröffentlicht.
+
+% Im Jahr 2014 wurde {\color{red} von|für|durch|trotz|wegen} Huston Smith eine autorisierte Biographie von Sawyer veröffentlicht.
+
+% Im Jahr 2014 wurde Huston Smith eine autorisierte Biographie von Sawyer veröffentlicht.
+
+
+\paragraph*{XNLI}
+
+For XNLI, where in contrast to PAWS-X each example can have one of three labels instead of
+binary classification, the findings differ to some extent: While the agreement only between
+the two re-annotators is measured as a low Fleiss' $\kappa$ of 0.36, it raises to 0.48
+when the gold labels are also taken into account, indicating ``moderate agreement''. For
+one example the humans and model were on the same page regarding the label but disagreed
+with the gold label:
+
+% 2 human annotators re-label 20 examples of XNLI where gold != predicted.
+% Fleiss' $\kappa$ between 2 annotators: 0.36
+% Fleiss' $\kappa$ between 2 annotators and gold: 0.4787
+% Fleiss' 4\kappa$ between all 0.08
+
+% 1 example where 2 humans == model and 2 humans != Gold
+
+\begin{examples}
+  \item Bato ist ein Jahrhunderte altes Wort, das man als Kerl oder Kumpel übersetzen kann.\\
+        Bato (oder Vato) ist ein spanisches Wort, das Typ oder Typ bedeutet.
+
+        humans \& model: neutral, Gold: Entailment
+\end{examples}
+
+% 1 example where 2 humans != model and 2 humans != Gold
+Since the notion of ``spanisch'' is only encountered in the hypothesis but missing from the premise,
+I would argue that the humans and the model are right about the ``neutral'' label and the gold label
+is false.
+In another example, all three ``agents'' --- the two humans, the model, and the gold labels --- disagreed:
+
+\begin{examples}
+  \item Oh, ich sehe oh der Staat braucht es nicht gut, das ist eher das, das ist eher ungewöhnlich, nicht wahr?\\
+        Das macht Sinn, dass der Staat es benötigt.
+
+        humans: neutral, model: entailment, Gold: contradiction
+\end{examples}
+
+The latter is also a further exemplification of the register diversity in XNLI: The premise above seems as if it
+was a transcription of an utterance torn out of the context an actual conversation; because of that for a human
+reader there is essential information missing, making it a rather strange and vague case for attributing
+a specific entailment regarding any hypothesis.
+
+
+Both re-labellings have led to the finding that the quality of semi-automatically
+created datasets is often doubtful: (1) As the many ``neutral'' re-labellings of
+XNLI examples by the human annotators indicate, often there seems not be a clear
+preference towards a certain label --- rather, as in the examples above, there is
+too much ambiguity and lacking of needed information around to make a clear decision
+of the relation between those sentences. (2) Further, the predefined labels in such
+datasets are by no means to be taken as undoubtedly indicating true classifications.
+
+
+
+\subsection{Translation Noise}
+\label{sec:translation-noise}
+
+Automatic translation has come a long way and systems nowadays produces often qualitatively high results ---
+at least for translation between high resource languages, such as English and German.
+But still, especially for delicate, subtle expressions, errors can happen and a (partial) mistranslation
+is produced. While this potentially leads to translation artifacts, which may confuse the model, there
+also exists the possibility of additionally introducing label noise.
+
+Take for example the following XNLI English original premise-hypothesis pair and its automaticall
+translated German counterparts:
+
+\begin{examples}
+  \item and that's a lot of it is due to the fact that the mothers are on drugs\\
+        The mothers take drugs.
+
+  \item Und vieles davon liegt daran, dass die Mütter Medikamente nehmen.\\
+        Die Mütter nehmen Drogen.
+\end{examples}
+
+The English term ``drug'' indeed is an ambiguous word, which either can refer to a pharmaceutical
+product that is used as medicine or to an abusively taken substance (which may be of the first
+type).\myfootnote{\url{https://dictionary.cambridge.org/dictionary/english/drug}} However, since
+the label of the original sentence pair is \emph{entailment}, the term would have needed
+to be translated in the same meaning both times. However, this did not happen, and thus
+a wrongly labelled training instance was created.
+
+
+
+\subsection{SRL Noise}
+\label{sec:srl-noise}
+
+A major question arising in the context of using automatically assigned Semantic Roles in
+downstream tasks, is how precise these predicted Semantic Role are. Since there is no gold standard
+available for Semantic Role Labels for the datasets I use in my experiments, there is no
+straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
+other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
+While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
+{\color{red} is more a scale} concerning SRLs.
+
+As for the data quality / label noise assessment, I conduct an human evaluation study
+for determining the SRL quality: Three people evaluated the SRL quality of examples regarding
+whether they estimate them to be helpful, neutral, or harmful to the model for solving
+the task at hand.\myfootnote{For single sentence tasks, 20 examples were randomly sampled, for
+sentence pair tasks 10 examples, and for question answering tasks 2 examples (since the context
+comprises often umpteen sentences.}
+
+\fig{images/SRL_assessment.pdf}{fig:SRL-assessment}{Independent evaluation of SRL quality by three people. Regardless of the label attributed to each example, it is obvious, that the total amount of sentences for which the annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}{11}{SRL assessment}
+
+In figure \ref{fig:SRL-assessment} the aggregated evaluations per human are summed up:
+Evidently, the predicted SRLs were mostly estimated to be neither of great help to the model
+nor severely distract it. It has to be noted, however, that the inter-annotator agreement between
+the the three people was very low, the computed Fleiss' $\kappa$ was only 0.20 --- indicating
+an agreement slightly above randomness.
+
+If the annotations are summed up over each dataset, as in figure \ref{fig:data-set-SRL-assessment},
+this impression gets tightened: Only a small subset of the usefulness attributions were unisono,
+i.e. all annotators picked the same label (indicated by darker color shades).
+
+\fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimated quality of SRLs per dataset.}{15}{SRL assessment per datasets}
+
+Interestingly, for PAWS-X was comparatively high agreement between the annotators that the SRLs would
+rather harm the model, however, as is shown in the right figure of \ref{fig:classification-gains}, PAWS-X
+is one of the datasets were the performance gain from adding SRL information was rather clear.
+
+
+
+% Fleiss' $\kappa$ = 0.2048 --- this slightly above the threshold of «fair agreement», as defined by \citep{landis1977measurement} (0.20).
+
+% The $\kappa$ for helpful vs. other is even worse: 0.1944
+
+% for individual datasets:
+
+% deISEAR: 0.0814
+
+% SCARE: 0.2401
+
+% PAWS-X: 0.1245
+
+% XNLI: 0.2475
+
+% MLQA: -0.3636
+
+% XQuAD: -0.5
+
+
+
+\section{Ablation study}
+\label{sec:ablation}
+
+To be able to make substantial claims about the positive influence about a new algorithm over an
+established one, it is common ground to conduct an ablation study. In such a study, one tries to
+determine which aspects of the proposed architecture contribute how much to the overall performance
+gain (or loss, respectively).
+
+\begin{minipage}{1.0\linewidth}
+  \begin{srl}
+  \centering
+    \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
+      Ich        \colorbox{llight-blue}{B-A0}         \colorbox{white}{O}
+      weiß       \colorbox{blue}{B-V}          \colorbox{white}{O}
+      nicht      \colorbox{white}{O}            \colorbox{white}{O}
+      ob         \colorbox{llight-blue}{B-A1}         \colorbox{white}{O}
+      er         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A0}
+      danach     \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      in         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A1}
+      Augusta    \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{I-A1}
+      geblieben  \colorbox{llight-blue}{I-A1}         \colorbox{blue}{B-V}
+      ist        \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      .          \colorbox{white}{O}            \colorbox{white}{O}
+      ==============================
+      Er         \colorbox{llight-blue}{B-A0}
+      wohnte     \colorbox{blue}{B-V}
+      weiterhin  \colorbox{white}{O}
+      in         \colorbox{llight-blue}{B-A1}
+      Augusta    \colorbox{llight-blue}{I-A1}
+      .          \colorbox{white}{O}
+    \end{BVerbatim}
+    \caption{Normal SRLs.}
+    \label{srl:normal}
+  \end{srl}
+\end{minipage}
+
+In my case, i.e. the attempt to improve the performance of BERT regarding NLU tasks, the
+following question would need some ablation experiments to be answered: What part of the SRLs
+is most responsible for the performance boost? To be able to formulate this in a matter which
+can be experimentally tested, I identify two easily separable and testable aspects of SRLs,
+take for example the sentence depicted in figure \ref{srl:normal}: Firstly, the information
+what parts of a sentence are the predicates. The intuition behind this is that maybe the
+head relies mostly on the information as to which tokens carry information about the events
+that happen in a given sentence. To test this, I drop the information about all SRLs,
+except the information that a token is a predicate (left side of figure \ref{srl:ablation}).
+In the second case, the hypothesis is reversed: Maybe the head is able to get the most useful
+hints about the information which indicates what role certain token groups play in a given
+sentence. To test for this all information about predicates is dropped and only information
+about arguments is preserved (right side of figure \ref{srl:ablation}).
+
+\begingroup
+\begin{srl}[!h]
+\centering
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
+    Ich        \colorbox{white}{O}           \colorbox{white}{O}
+    weiß       \colorbox{blue}{B-V}         \colorbox{white}{O}
+    nicht      \colorbox{white}{O}           \colorbox{white}{O}
+    ob         \colorbox{white}{O}           \colorbox{white}{O}
+    er         \colorbox{white}{O}           \colorbox{white}{O}
+    danach     \colorbox{white}{O}           \colorbox{white}{O}
+    in         \colorbox{white}{O}           \colorbox{white}{O}
+    Augusta    \colorbox{white}{O}           \colorbox{white}{O}
+    geblieben  \colorbox{white}{O}           \colorbox{blue}{B-V}
+    ist        \colorbox{white}{O}           \colorbox{white}{O}
+    .          \colorbox{white}{O}           \colorbox{white}{O}
+    ==============================
+    Er         \colorbox{white}{O}
+    wohnte     \colorbox{blue}{B-V}
+    weiterhin  \colorbox{white}{O}
+    in         \colorbox{white}{O}
+    Augusta    \colorbox{white}{O}
+    .          \colorbox{white}{O}
+    \end{BVerbatim}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
+      Ich        \colorbox{llight-blue}{B-A0}         \colorbox{white}{O}
+      weiß       \colorbox{white}{O}            \colorbox{white}{O}
+      nicht      \colorbox{white}{O}            \colorbox{white}{O}
+      ob         \colorbox{llight-blue}{B-A1}         \colorbox{white}{O}
+      er         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A0}
+      danach     \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      in         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A1}
+      Augusta    \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{I-A1}
+      geblieben  \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      ist        \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+      .          \colorbox{white}{O}            \colorbox{white}{O}
+      ==============================
+      Er         \colorbox{llight-blue}{B-A0}
+      wohnte     \colorbox{white}{O}
+      weiterhin  \colorbox{white}{O}
+      in         \colorbox{llight-blue}{B-A1}
+      Augusta    \colorbox{llight-blue}{I-A1}
+      .          \colorbox{white}{O}
+    \end{BVerbatim}
+  \end{minipage}
+\end{srl}
+\label{srl:ablation}
+\captionof{srl}{\textbf{Left}: Only predicate SRLs. \textbf{Right}:  Only argument SRLs.}
+\endgroup
+
+To see the influence of these SRL ghosting techniques, for each classification dataset, I take a
+configuration from table \ref{tab:results} where +SRL showed positive influence and recomputed 5
+models for each configuration (preserving only predicate information vs. only argument information).
+In table \ref{tab:srl-abl} I report the results from this ablation experiments.
+
+
+\tab{tab:srl-abla}{Ablation on effect of PREDs and ARGs information isolated. Note that mostly only the combination of both information structures leads to a significant improvement over vanilly BERT embeddings ($-$SRL)}{
+  \scalebox{0.9}{
+    \begin{tabular}{llcccc}
+                     &                               & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{3}{c}{+SRL}                                                                                                 \\
+                     &                               & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{only PREDs}         & \multicolumn{1}{c}{only ARGs}           & \multicolumn{1}{c}{normal}            \\ \cline{3-6}
+    deISEAR $\alpha$ & FFNN Head subtok. zeros       & \multicolumn{1}{c|}{\textit{70.86}}          & \multicolumn{1}{c}{72.19}              & \multicolumn{1}{c}{\underline{75.50**}} & \multicolumn{1}{c}{\textbf{77.48**}}  \\
+    SCARE $\alpha$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{83.33}}          & \multicolumn{1}{c}{84.47}              & \multicolumn{1}{c}{\underline{85.23}}   & \multicolumn{1}{c}{\textbf{85.61*}}   \\
+    PAWS-X $\beta$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{79.92}}          & \multicolumn{1}{c}{80.53}              & \multicolumn{1}{c}{\underline{80.68}}   & \multicolumn{1}{c}{\textbf{82.51***}} \\
+    XNLI $\beta$     & GRU Head subtok. zeros        & \multicolumn{1}{c|}{\textit{66.84}}          & \multicolumn{1}{c}{67.02}              & \multicolumn{1}{c}{\textbf{68.00}}      & \multicolumn{1}{c}{\underline{67.82}} \\
+    \end{tabular}
+  }
+}{Ablation Study}
+
+
+As can be seen, SRL information only displays its full positive effect when both information parts are combined: Providing
+the model only with predicate information already leads to a slight, but insignificant improvement in all experiments.
+By telling the model exclusively about where arguments are located in sentences leads to a greater advancement, but
+mostly also insignificant. For three out of four datasets, informing the model about both SRL information structures
+in combination leads to a further significant increase of accuracy.
+
+Apparently, the crucial aspect of information the GliBERT heads improve from having knowledge
+about semantic roles lies in its relational character: It is not so much an ``annotation''
+of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
+relationship in which those sequences stand to each other.
+
+

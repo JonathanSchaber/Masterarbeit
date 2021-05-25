@@ -832,6 +832,15 @@ tokens these signals came. Especially in sentence pair tasks, such as paraphrase
 however, this information is absolutely crucial. By concatenating all embedded tokens into one
 large vector, the positional information of the SRLs don't get lost.
 
+\begin{wrapfigure}[21]{r}{0.45\linewidth}
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
+  \label{fig:bert-qa}
+\end{wrapfigure}
+
 As has been shown by e.g. \cite{myagmar2019transferable} for Sentiment Analysis, concatenating
 BERT embeddings and sending them trough a FFNN produces good results (in fact, it performs the
 best in the different architectures the authors tested for their task and the dataset on which
@@ -842,9 +851,12 @@ with the ReLU activation function in between.}
 
 \subsubsection{GRU Head}
 
-As was assessed in the section before, SRLs can be understood as being essentially a
+In the section before, it was assessed that SRLs can be understood as being essentially a
 token-wise, sequential ``mark-up'' of a sentence. Therefore, encoding a sequence marked up
 with SRLs employing an architecture designed for sequential data is not too far off.
+
+\fig{images/head-gru.png}{fig:gru-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural
+  \textbf{N}etwork on the concatenated last hidden states of the bi-directional GRU.}{10}{GRU Head}
 
 The concept of Recurrent Neural Networks (RNNs), i.e. networks whose connections form a directed
 graph such that output of the model is re-fed as input into itself, has been around since the
@@ -859,13 +871,10 @@ Memory LSTM architecture, which implements a special cell architecture which can
 Before the advent of the transformer architecture, LSTMs with additional attention mechanism
 where the SOTA architecture for many NLP and NLU applications.
 
-\fig{images/head-gru.png}{fig:gru-head}{Head with a one-layer \textbf{F}eed \textbf{F}orward \textbf{N}eural
-  \textbf{N}etwork on the concatenated last hidden states of the bi-directional GRU.}{10}{GRU Head}
-
-\citep{cho2014learning} presented the GRU architecture, which similarly to the LSTM
-implements a mathematical solution to the vanishing/exploding gradiant problem, but
+\cite{cho2014learning} presented the GRU architecture, which similarly to the LSTM
+implements a mathematical solution to the vanishing/exploding gradient problem, but
 being a slimmer architecture. As for the SRL embedding network in the SRL module
-\ref{sec:srl-module}, I chose GRU over LSTM because of leaner architecture.
+\ref{sec:srl-module}, I chose GRU over LSTM because of the leaner architecture.
 
 Formally, the embedded token sequence $w_0, w_1, \dotso , w_n$ gets consumed by a
 forward and a backward operating GRU, which compute hidden states $h_i$ for each token
@@ -883,15 +892,6 @@ process is illustrated in figure \ref{fig:gru-head}.
 \subsection{Question Answering}
 \label{sec:question-answering}
 
-\begin{wrapfigure}[21]{r}{0.45\linewidth}
-  \begin{center}
-    \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
-  \end{center}
-  \stepcounter{myfigure}
-  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
-  \label{fig:bert-qa}
-\end{wrapfigure}
-
 As was mentioned earlier, there exist several different formulations of question answering tasks
 (cf. chapter \ref{chap:3_datasets}, section \ref{sec:mlqa}). However, Question Answering tasks are
 often formulated as essentially token-wise classification tasks:
@@ -900,11 +900,9 @@ often formulated as essentially token-wise classification tasks:
 separated by the special [SEP] token (as for sentence pair classification tasks). For
 extracting the answer span, a FFNN predicts for each token $i$ in the sequence its
 probability for being the start of the answer span, and its probability of being the
-end of the answer span (see figure \ref{fig:bert-qa}). After applying a softmax over
+end of the answer span (see figure \ref{fig:bert-qa}). After applying a $softmax$ over
 all start/end probabilities, the token with the highest start probability is selected
 as beginning of the answer span and the corresponding end token is selected.
-
-
 
 % ``\textelp{} in the question answering task, we represent the input question and passage as
 % a single packed sequence, with the question using the A embedding and the passage using the
@@ -917,25 +915,33 @@ as beginning of the answer span and the corresponding end token is selected.
 
 \subsubsection{Span Prediction Head}
 
-\fig{images/head-span_pred.png}{fig:Span-Prediction-Head}{The GliBERT head for span prediction
+The standard implementation of the Q\&A BERT head consists of one one-layer FFNN which predicts
+on each input token the probability of it being the start of the answer span and the end of the
+answer span, respectively (as seen in figure \ref{fig:span-pred-head}. After both probabilities are computed for all tokens, the ones with
+the highest probability get selected; no further logic is enforced, such as that the index of
+the start token should be smaller than the one of the end token, or that the answer span may
+not lie inside the question (i. e. before the first [SEP] token), etc. The computation of the
+$index_{start}$ and $index_{end}$ of the answer span can be formalized as:
+
+$index_{start} = max(softmax(\hat{y}_{0_[0]}, \hat{y}_{1_[0]}, \dotso , \hat{y}_{n_[0]})$
+
+$index_{end} = max(softmax(\hat{y}_{0_[1]}, \hat{y}_{1_[1]}, \dotso , \hat{y}_{n_[1]})$
+
+where $\hat{y}_i = Ww_i+b$ for the $i$-th input token with $\hat{y} \in \mathbb{R}^2$ and
+the rectangular brackets denote dimension selection.
+
+Since the standard implementation already implements a model that predicts on each token,
+the SRL-embedding enriching is relatively straight forward:
+First, the input layer of the small head FFNN needs to be adapted to the BERT embedding + SRL
+dimensionality, which results in the vector representation $\mathbb{R}^{768+60}$ for each
+SRL-enriched token. Secondly, when the setting of merging the BERT subtokens before adding
+the SRL embeddings is selected, the start and end span indexes have to be recomputed.
+
+\fig{images/head-span_pred.png}{fig:span-pred-head}{The GliBERT head for span prediction
     in Question Answering Tasks. After the Tokens and SRLs were consumed by BERT and the SRL
     embedding module, one FFNN predict on each token in the sequence, how likely it is first
     and the last token of the answer span. After these predictions have been made for all tokens, the token
     with the highest value for each position gets selected.}{10}{Span Prediction Head}
-
-The standard implementation of the Q\&A BERT head consists of one one-layer FFNN which predicts
-on each input token the probability of it being the start of the answer span and the end of the
-answer span, respectively. After both probabilities are computed for all tokens, the ones with
-the highest pRobability get selected; no further logic is enforced, such as that the index of
-the start token should be smaller than the one of the end token, or that the answer span may
-not lie inside the question (i. e. before the first [SEP] token), etc.
-
-Since the standard implementation already implements a model that predicts on each token,
-the SRL-embedding enriching is relatively straight forward:
-First, the input layer of the small head FFNN needs to be adapted to the BERT-token + SRL
-dimensionality, which results in the vector representation $\mathbb{R}^{768+60}$ for each
-SRL-enriched token. Secondly, when the setting of merging the BERT subtokens before adding
-the SRL embeddings is used, the start and end span indexes have to be recomputed.
 
 \begin{tcolorbox}[
   colback=blue!5!white,
