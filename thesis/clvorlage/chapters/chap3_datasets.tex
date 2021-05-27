@@ -553,8 +553,8 @@ with high BOW overlap but different word order'' \citep{zhang2019paws}.
 Really striking about PAWS-X is the enormous difference in examples per set --- the training
 set encompasses twelve times as many examples as the development and test set combined: There
 are 48,977 instances in the training set versus approx. 2,000 examples in the development and
-test set, each. The labels are very uniformyl distributed over all sets, each of the three
-labels comprising virtually one third of the examples.
+test set, each. The labels are very uniformly distributed over all sets, each of the two
+labels comprising virtually one half of the examples.
 
 Since the training data are solely machine-translated while the development and test data
 are human-translated, there needs to be some clarification as to how differently those sets
@@ -662,6 +662,18 @@ following model architecture:
 They train a multilingual BERT on all languages, including the original English pairs and the
 machine-translated data in all other languages and evaluate on the individual languages.
 
+\begin{wrapfigure}[23]{r}{0.45\linewidth}
+  \centering
+    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
+  \stepcounter{myfigure}
+  \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather
+    short, with an average of 25.29 subtokens over all sets, but there is quite a number of
+    outliers --- indicating further that it is quite a heterogeneous data set, also concerning
+    this aspect. Note that there is one extreme outlier in the train set, comprising 452 BERT
+    subtokens, which is not included in the figure.}
+  \label{fig:scare-subtokenized}
+\end{wrapfigure}
+
 During the preprocessing of this data set, the following considerations are taken into account: In
 the predefined development and test splits, there are some examples where one or both sentences
 consist only of the string ``NS''. I decided to not include this examples into the data used for
@@ -675,18 +687,6 @@ more detail rigor in chapter \ref{chap:5_results}, section \ref{sec:glinoise}.
 
 \subsection{SCARE}
 
-\begin{wrapfigure}[24]{r}{0.45\linewidth}
-  \centering
-    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
-  \stepcounter{myfigure}
-  \label{fig:scare-subtokenized}
-  \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather
-    short, with an average of 25.29 subtokens over all sets, but there is quite a number of
-    outliers --- indicating further that it is quite a heterogeneous data set, also concerning
-    this aspect. Note that there is one extreme outlier in the train set, comprising 452 BERT
-    subtokens, which is not included in the figure.}
-\end{wrapfigure}
-
 SCARE is a dataset assembled for sentiment analysis, i.e. the task of assessing the
 transmitted emotion of an utterance. The data collected for the \textbf{S}entiment
 \textbf{C}orpus of \textbf{A}pp \textbf{Re}views stems, as the name suggests, from
@@ -694,16 +694,17 @@ product reviews in the Google Play Store in German. \cite{sanger2016scare} descr
 the language contained in the dataset the following way:
 
 \begin{quote}
-  Unlike product reviews of other domains, e.g. household appliances, consumer electronics or
-  movies, application reviews offer a couple of peculiarities which deserve special treatment:
-  The way in which users express their opinion in app reviews is shorter and more concise than
-  in other product reviews. Moreover, due to the frequent use of colloquial words and a flexible
-  use of grammar, app reviews can be considered to be more similiar [sic] to Twitter messages
-  (“Tweets”) than reviews of products from other domains or platforms \textelp{}.
+  Unlike product reviews of other domains, \textelp{} application reviews
+  offer a couple of peculiarities which deserve special treatment: The way
+  in which users express their opinion in app reviews is shorter and more
+  concise than in other product reviews. Moreover, due to the frequent use
+  of colloquial words and a flexible use of grammar, app reviews can be
+  considered to be more similiar [sic] to Twitter messages (“Tweets”) than
+  reviews of products from other domains or platforms
 \end{quote}
 
 In contrast to other datasets, e.g. \citep{socher2013recursive, go2009twitter},
-that attributes one sentiment label to a whole text (may it be a review, a tweet,
+that attribute one sentiment label to a whole text (may it be a review, a tweet,
 etc.), \cite{sanger2016scare} annotated their dataset on an aspect-based manner:
 Not each review gets labelled for a certain polarity --- i.e. \emph{positive},
 \emph{negative}, or \emph{neutral} --- but what the authors call \emph{aspects} and
@@ -867,7 +868,7 @@ Positive, \ref{itm:scare3}: Positive}}.
 Analyzing the label distributions after turning the original aspect-based SCARE into an emotion detection dataset
 reveals that the positive class amasses the most examples on itself (1,071), while the neutral class only comprises
 193 items out of a total of 1,760 examples (cf. figure \ref{fig:scare-stats}). However, as the analysis of the
-GliBERT predictions in chapter \ref{chap:chap:5_results} discloses, the models do not simply favour the majority class.
+GliBERT predictions in chapter \ref{chap:5_results} discloses, the models do not simply favour the majority class.
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -906,7 +907,7 @@ without predefined splits, I split it regularly into a 70\% training, 15\% devel
 and 15\% test set. As \citeauthor{sanger2016scare} stated in the passage quoted at the
 beginning of the description of this section, online reviews tend to be rather short,
 colloquial text snippets, which is confirmed by plotting the number of BERT subtokens in
-figure \ref{fig:fig:scare-subtokenized}. However, since the texts contain many typos,
+figure \ref{fig:scare-subtokenized}. However, since the texts contain many typos,
 doublings of characters, and other distortions, the number of ``actual'' words is
 considerably lower on average than the number of BERT subtokens: Take a sentence such
 as ``Unterirdisch, laaaaangsaaaaam mit WLAN seid neuestem nur'' which would be subtokenized by German BERT as:

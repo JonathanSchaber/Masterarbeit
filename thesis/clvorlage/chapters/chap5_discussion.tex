@@ -268,11 +268,12 @@ datasets are by no means to be taken as undoubtedly indicating true classificati
 \subsection{Translation Noise}
 \label{sec:translation-noise}
 
-Automatic translation has come a long way and systems nowadays produces often qualitatively high results ---
-at least for translation between high resource languages, such as English and German.
-But still, especially for delicate, subtle expressions, errors can happen and a (partial) mistranslation
-is produced. While this potentially leads to translation artifacts, which may confuse the model, there
-also exists the possibility of additionally introducing label noise.
+Automatic translation has come a long way and systems nowadays produce often qualitatively
+high results --- at least for translations between high resource languages, such as English
+and German. But still, especially for delicate, subtle expressions, errors can happen and
+(partial) mistranslations are being produced. While this potentially leads to translation
+artifacts, which may confuse the model, there also exists the possibility of additionally
+introducing label noise.
 
 Take for example the following XNLI English original premise-hypothesis pair and its aromatically
 translated German counterparts:
@@ -303,7 +304,18 @@ available for Semantic Role Labels for the datasets I use in my experiments, the
 straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
 other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
 While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
-{\color{red} is more a scale} concerning SRLs.
+is more a scalar concerning the correctness of SRLs.
+
+\begin{wrapfigure}[19]{l}{0.65\linewidth}
+  \begin{center}
+    \includegraphics[width=0.9\linewidth]{images/SRL_assessment.pdf}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[SRL assessment]{Independent evaluation of SRL quality by three people. Regardless of the
+    label attributed to each example, it is obvious, that the total amount of sentences for which the
+    annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}
+    \label{fig:SRL-assessment}
+\end{wrapfigure}
 
 As for the data quality / label noise assessment, I conduct an human evaluation study
 for determining the SRL quality: Three people evaluated the SRL quality of examples regarding
@@ -311,8 +323,6 @@ whether they estimate them to be helpful, neutral, or harmful to the model for s
 the task at hand.\myfootnote{For single sentence tasks, 20 examples were randomly sampled, for
 sentence pair tasks 10 examples, and for question answering tasks 2 examples (since the context
 comprises often umpteen sentences.}
-
-\fig{images/SRL_assessment.pdf}{fig:SRL-assessment}{Independent evaluation of SRL quality by three people. Regardless of the label attributed to each example, it is obvious, that the total amount of sentences for which the annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}{11}{SRL assessment}
 
 In figure \ref{fig:SRL-assessment} the aggregated evaluations per human are summed up:
 Evidently, the predicted SRLs were mostly estimated to be neither of great help to the model
@@ -360,33 +370,35 @@ established one, it is common ground to conduct an ablation study. In such a stu
 determine which aspects of the proposed architecture contribute how much to the overall performance
 gain (or loss, respectively).
 
-\begin{minipage}{1.0\linewidth}
-  \begin{srl}
+\begin{wrapfigure}[16]{r}{0pt}
+\begin{minipage}{0.45\linewidth}
   \centering
-    \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
-      Ich        \colorbox{llight-blue}{B-A0}         \colorbox{white}{O}
-      weiß       \colorbox{blue}{B-V}          \colorbox{white}{O}
-      nicht      \colorbox{white}{O}            \colorbox{white}{O}
-      ob         \colorbox{llight-blue}{B-A1}         \colorbox{white}{O}
-      er         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A0}
-      danach     \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
-      in         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A1}
-      Augusta    \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{I-A1}
-      geblieben  \colorbox{llight-blue}{I-A1}         \colorbox{blue}{B-V}
-      ist        \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
-      .          \colorbox{white}{O}            \colorbox{white}{O}
-      ==============================
-      Er         \colorbox{llight-blue}{B-A0}
-      wohnte     \colorbox{blue}{B-V}
-      weiterhin  \colorbox{white}{O}
-      in         \colorbox{llight-blue}{B-A1}
-      Augusta    \colorbox{llight-blue}{I-A1}
-      .          \colorbox{white}{O}
-    \end{BVerbatim}
-    \caption{Normal SRLs.}
-    \label{srl:normal}
-  \end{srl}
+    \begin{srl}
+      \begin{BVerbatim}[commandchars=\\\{\}, fontsize=\footnotesize]
+    Ich        \colorbox{llight-blue}{B-A0}         \colorbox{white}{O}
+    weiß       \colorbox{blue}{B-V}          \colorbox{white}{O}
+    nicht      \colorbox{white}{O}            \colorbox{white}{O}
+    ob         \colorbox{llight-blue}{B-A1}         \colorbox{white}{O}
+    er         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A0}
+    danach     \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+    in         \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{B-A1}
+    Augusta    \colorbox{llight-blue}{I-A1}         \colorbox{llight-blue}{I-A1}
+    geblieben  \colorbox{llight-blue}{I-A1}         \colorbox{blue}{B-V}
+    ist        \colorbox{llight-blue}{I-A1}         \colorbox{white}{O}
+    .          \colorbox{white}{O}            \colorbox{white}{O}
+    ==============================
+    Er         \colorbox{llight-blue}{B-A0}
+    wohnte     \colorbox{blue}{B-V}
+    weiterhin  \colorbox{white}{O}
+    in         \colorbox{llight-blue}{B-A1}
+    Augusta    \colorbox{llight-blue}{I-A1}
+    .          \colorbox{white}{O}
+      \end{BVerbatim}
+      \caption{Regular SRLs.}
+      \label{srl:normal}
+    \end{srl}
 \end{minipage}
+\end{wrapfigure}
 
 In my case, i.e. the attempt to improve the performance of BERT regarding NLU tasks, the
 following question would need some ablation experiments to be answered: What part of the SRLs
@@ -460,7 +472,7 @@ about arguments is preserved (right side of figure \ref{srl:ablation}).
 To see the influence of these SRL ghosting techniques, for each classification dataset, I take a
 configuration from table \ref{tab:results} where +SRL showed positive influence and recomputed 5
 models for each configuration (preserving only predicate information vs. only argument information).
-In table \ref{tab:srl-abl} I report the results from this ablation experiments.
+In table \ref{tab:srl-abla} I report the results from this ablation experiments.
 
 
 \tab{tab:srl-abla}{Ablation on effect of PREDs and ARGs information isolated. Note that mostly only the combination of both information structures leads to a significant improvement over vanilly BERT embeddings ($-$SRL)}{
