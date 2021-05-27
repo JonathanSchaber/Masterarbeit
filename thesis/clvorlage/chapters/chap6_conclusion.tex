@@ -2,32 +2,37 @@
 \label{chap:6_conclusion}
 
 
-In a first paragraph, I will quickly point out the core elements of my thesis. In a second part, I
-locate my findings in the current debate; and lastly, I will look into further steps that could be
-taken from this point on.
+% In a first paragraph, I will quickly point out the core contributions of my thesis. In a second part, I
+% come back to the research question ; and lastly, I will look into further steps that could be
+% taken from this point on.
 
-My thesis consists mainly of three components: (1) The compilation of a German NLU
-dataset, \emph{GerGLUE}, incorporating different tasks and modalities, as well as
-including domain-specific language, ranging from colloquial to highly stylized texts.
-(2) A pipeline which brings all data sets in the same workable format, computes SRLs
-by implementing two freely available tools (ParZu, DAMESRL) and several instruments
-for training and analyzing models. (3) \emph{GliBERT}, a BERT-based architecture
-which combines vanilla BERT-embeddings with embedded SRLs during fine-tuning, with
-several heads on top.
+The core contributions of my thesis consist mainly of three components: (1) The compilation
+of a German NLU dataset, \emph{GerGLUE}, incorporating different tasks and modalities, as well
+as including domain-specific language, ranging from colloquial to highly stylized texts. (2) A
+pipeline that brings all data sets in the same workable format, computes SRLs by implementing
+two freely available tools (ParZu, DAMESRL) and several instruments for training and analyzing
+models. (3) \emph{GliBERT}, a BERT-based architecture which combines vanilla BERT-embeddings
+with embedded SRLs during fine-tuning, comprising several heads, and convenient hyperparameter
+adjusting.
 
-After carrying out a multitude of experiments with different heads, SRL implementations,
-and merging techniques, I come to a guarded conclusion: For classification tasks, combining
-embedded SRL information with contextualized word represenations during finetuning leads to
-a performance gain as was demonstrated for German BERT embeddings. But the findings are not
-too clear, sometimes there was even a negative effect observed for certain data sets and
-configurations. However, it has to be kept in mind that there was noise detected on several
-levels of the used data and implemented instruments, so that hypothetically, with cleaner
-data and better SRLs, the effect would probably be clearly positive. For the both question
-answering tasks, there was no positive effect of SRL information observable --- in contrary,
-the effect was clearly negative. On the reasons for this, I can only speculate, and need
-to delay this investigation for the other points on the list for future research in this field.
+Extensive experimentation and subsequent result analysis indicate that providing NLU-targeted
+models with contextualized word embeddings from German BERT merged with additional, encoded SRL
+information leads to performance gains compared to the vanilla representations on most tested
+datasets. These results imply that self-supervised pre-trained representations learned from
+unstructured, raw text data generally profit from additional, explicit linguistic information
+made available during fine-tuning.
 
-% TODO: elaborate more on general take aways
+% After carrying out a multitude of experiments with different heads, SRL implementations,
+% and merging techniques, I come to a guarded conclusion: For classification tasks, combining
+% embedded SRL information with contextualized word representations during fine-tuning leads to
+% a performance gain as was demonstrated for German BERT embeddings. But the findings are not
+% too clear, sometimes there was even a negative effect observed for certain data sets and
+% configurations. However, it has to be kept in mind that there was noise detected on several
+% levels of the used data and implemented instruments, so that hypothetically, with cleaner
+% data and better SRLs, the effect would probably be clearly positive. For the both question
+% answering tasks, there was no positive effect of SRL information observable --- in contrary,
+% the effect was clearly negative. On the reasons for this, I can only speculate, and need
+% to delay this investigation for the other points on the list for future research in this field.
 
 
 \section{Outlook / Future Work}

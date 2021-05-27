@@ -2,6 +2,16 @@
 \label{chap:5_discussion}
 
 
+Based on the results presented in the previous chapter \ref{chap:5_results}, A first, preliminary
+insight can be formulated: Adding numericall embedded SRL information to the German  BERT embeddings
+leads to overall enhancing in classification tasks. For question answering, however, the SRL information
+leads to a clear decrease in performance. Additionally, while there was no clear advantage of one aligning strategy
+over the other for the classification tasks, the situation for question answering is crystal clear:
+
+The reason for this rather {\color{red} drastic pattern
+remains unclear to me}; despite tediously controlling the merging algorithm and validating the
+re-computing of start and end indices, I could not make out any error.
+
 One of the main differences between the classification and question answering datasets is the size of
 the examples: While for the classifications task the model needs to extract semantic
 information out of a handful sentences, for the question answering tasks this is rather the exception ---
@@ -24,7 +34,7 @@ After reporting the general results, aggregations and the somewhat disenchanting
 now try to investigate the reasons for this mediocre effect. After investigating the data and
 SRL quality, I found that noise on several levels is present which probably led to too much
 randomness in the complex functions the models needed to approximate. I classify the observed
-data irregularites into the following \textbf{noise} categories:
+data irregularities into the following \textbf{noise} categories:
 
 
 \begin{itemize}
@@ -35,7 +45,7 @@ data irregularites into the following \textbf{noise} categories:
  \item[\textbf{data set}] Many of my datasets were constructed either automatically
                          (e.g. scrambling text automatically to create paraphrase pairs)
                          or employing crowd-sourcing techniques. Either way, the process
-                         is prone to erros. There are, e.g., 84 sentence pairs in the trainig
+                         is prone to errors. There are, e.g., 84 sentence pairs in the training
                          set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
  \item[\textbf{translation}] Due to the mostly employed semi-automatic translation
                              approach for creating the various datasets, errors
@@ -44,19 +54,19 @@ data irregularites into the following \textbf{noise} categories:
                              context translated to the German chess figure counterpart
                              ``Läufer'', not ``Bischof'') to eventually wrongly copied
                              labels, since the overall meaning changed during
-                             the tranlsation process (e.g. a sentence pair is no more
-                             contradictive but neutral), thus creating label noise.
+                             the translation process (e.g. a sentence pair is no more
+                             contradicting but neutral), thus creating label noise.
  \item[\textbf{SRL}] The SRLs obtained from DAMESRL are, conservatively formulated,
                      questionable in their quality (e.g. modifiers are completely missing).
 \end{itemize}
 
 While it is normal for data in NLP to possess noise in some way or the other, this usually does
-not impact the overall performance of a model trainied on it in a severe way, since information
+not impact the overall performance of a model trained on it in a severe way, since information
 in language is encoded redundantly, and noise present in one channel can be compensated for by
-uncorrupted information from another channel.\myfootnote{For example, information about which
+non-corrupted information from another channel.\myfootnote{For example, information about which
 constituent takes the syntactic function of the subject is often not marked by using only one
 possibility, e.g. though a case ending. Often, several strategies are present, as in German: The
-subject is marked morphologically through case endigs (which are not always alient), positionally
+subject is marked morphological through case endings (which are not always salient), positional
 (in unmarked contexts), and structurally (in unmarked contexts, normally the proto-agent is
 realized as subject) (cf. \cite{bussmann2006routledge,jaeger2010redundancy})} However, if noise
 is present on too many channels at the same time, reliably recovering structural information may
@@ -73,14 +83,14 @@ German BERT, according to deepset, was pretrained on the German Wikipedia dump, 
 news articles. All of this corpora comprise grammatical, to the standards of orthography adhering text
 belonging to a rather formal, ``professional'' register. Three of the six datasets in GerGLUE, namely
 deISEAR, SCARE, and XNLI, however, can be described as representing a rather colloquial register of
-language, even displaying feautures of transcribed speech as e.g. in XNLI:
+language, even displaying features of transcribed speech as e.g. in XNLI:
 
 \begin{examples}
   \item Ja und wir haben es irgendwie behalten, äh irgendwie äh, es war eine Überraschungs-Geburtstagsparty für sie, das war es Sie liebte die Überraschungsfeier.
 \end{examples}
 
 Naturally, since the German BERT module probably wasn't confronted with texts coming from such a register,
-the BERT embeddings will probably conatin some noise regarding the classification task at hand. Also, ParZu
+the BERT embeddings will probably contain some noise regarding the classification task at hand. Also, ParZu
 is aimed at parsing ``clean'', correct sentences, showing of course problems at processing examples as the
 one above, which leads to the known error propagation and amplification through DAMESRL.
 
@@ -88,9 +98,9 @@ In other words, it is expectable for GliBERT to show difficulties on the aforesa
 was also observed during the analyses of the results in section \ref{sec:classification-results}.
 
 Interestingly, the discrepancy between the German BERT pretraining text register and the text
-present in some GerGLUE datasets, the analysis of the German BERT tokenizetion statistics shows
+present in some GerGLUE datasets, the analysis of the German BERT tokenization statistics shows
 that also in those problematic datasets, there are very little out of vocabulary items, which
-would be represented by the catch-all [UNK] BERT token:
+would be encoded by the catch-all [UNK] BERT token:
 
 \fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
                                                                           \#\# Subtokens represent the amount of tokens that
@@ -109,12 +119,12 @@ would be represented by the catch-all [UNK] BERT token:
 
 As \citep{caswell2021quality} point out, apparently there is often a lack of
 prudence observable when multilingual datasets get compiled --- especially for
-low resoursce languages they report devastating discoveries of ungrammatical
+low resource languages they report devastating discoveries of ungrammatical
 and even non-sense texts for these.
 
 
-However, especiall for sentence pair datasets, one of the sentences needs to be constructed. This
-can happen by automaticall construct these sentences (PAWS-X) or let humans come up with those
+However, especially for sentence pair datasets, one of the sentences needs to be constructed. This
+can happen by automatically construct these sentences (PAWS-X) or let humans come up with those
 sentences (as for XNLI). In both cases, there might happen errors, and the label assigned to a
 sentence pair may be actually wrong. This is obvious for PAWS-X, where e.g. in the training set,
 there are 84 identical sentence pairs are labelled as non-paraphrases, which is obviously false,
@@ -131,11 +141,11 @@ non-paraphrases:
 \end{examples}
 
 But also for human created sentence pairs, there
-is a chance that the gold labels are not that clear. Further, thorugh the creation of the German
-datasets by means of semi-automatically translating English datasets, additional tranlsation
+is a chance that the gold labels are not that clear. Further, through the creation of the German
+datasets by means of semi-automatically translating English datasets, additional translation
 noise might additionally pollute the data.
 
-To examine this more systematically for XNLI and PAWS-X, I conduct a relabelling of 20 random
+To examine this more systematically for XNLI and PAWS-X, I conduct a re-labeling of 20 random
 examples each  where the predictions of the best model contradicted the gold labels in the dataset.
 
 
@@ -227,7 +237,7 @@ with the gold label:
 \end{examples}
 
 % 1 example where 2 humans != model and 2 humans != Gold
-Since the notion of ``spanisch'' is only encountered in the hypothesis but missing from the premise,
+Since the specification of ``spanisch'' is only encountered in the hypothesis but missing from the premise,
 I would argue that the humans and the model are right about the ``neutral'' label and the gold label
 is false.
 In another example, all three ``agents'' --- the two humans, the model, and the gold labels --- disagreed:
@@ -245,8 +255,8 @@ reader there is essential information missing, making it a rather strange and va
 a specific entailment regarding any hypothesis.
 
 
-Both re-labellings have led to the finding that the quality of semi-automatically
-created datasets is often doubtful: (1) As the many ``neutral'' re-labellings of
+Both re-labelings have led to the finding that the quality of semi-automatically
+created datasets is often doubtful: (1) As the many ``neutral'' re-labelings of
 XNLI examples by the human annotators indicate, often there seems not be a clear
 preference towards a certain label --- rather, as in the examples above, there is
 too much ambiguity and lacking of needed information around to make a clear decision
@@ -264,7 +274,7 @@ But still, especially for delicate, subtle expressions, errors can happen and a 
 is produced. While this potentially leads to translation artifacts, which may confuse the model, there
 also exists the possibility of additionally introducing label noise.
 
-Take for example the following XNLI English original premise-hypothesis pair and its automaticall
+Take for example the following XNLI English original premise-hypothesis pair and its aromatically
 translated German counterparts:
 
 \begin{examples}
@@ -478,4 +488,44 @@ about semantic roles lies in its relational character: It is not so much an ``an
 of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
 relationship in which those sequences stand to each other.
 
+\section{Summary}
+
+\paragraph*{Does the combination of BERT embeddings with structured SRL information
+have a positive, measurable effect on NLU tasks?}
+
+For classification datasets, a modest, but clear gain of overall 0.8\% in accuracy
+was determined.\myfootnote{Only the significant results from table \ref{tab:gain-loss}
+were taken into account} For question answering datasets no positive, measurable effect
+could be asserted.
+
+\cite{zhang2019semantics}, who implemented SRL-enriching for the English BERT model, report
+an overall performance increase of SemBERT of 2.4\% on the GLUE classifiction datasets.
+Since the authors do not report
+significancy and the model selection approach that led to these results, it is difficult to
+explain the performance gap between the two models. However, as is indicated by the results
+of the CoNLL '09 \citep{hajivc2009conll} , English Semantic Role Labelling is significantly
+better than for German; which would partly explain the superiority of SemBERT over GliBERT.
+
+Further, GliBERT showed varying performance according to the task at hand: The most reliable
+gains were found on sentence pair classification data sets, followed
+by single-sentence classification tasks. For question answering tasks no positive
+effect of SRL information could be measured.
+
+However, not only the tasks at hand influences the effectiveness of SRL information,
+also the quality of the data has a decisive influence of the performance of the
+combined representations: Especially datasets that were created by (semi-)automatically
+translate English corpora into a target langauge expose translation noise, sometimes
+leading to wrong gold labels, which hinder reliable model fitting and selection.
+
+Outcomes of the ablation study
+
+
+
+\paragraph*{Which head architecture for fine-tuning BERT-based, SRL-enriched text rep-
+resentations is best suited for NLU tasks?}
+
+
+\paragraph*{What are the effects of different representation methods of combinations of
+BERT-subtokens with SRLs and different encoding techniques on the multi-
+layered nature of semantic roles?}
 

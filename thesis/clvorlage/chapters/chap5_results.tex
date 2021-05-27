@@ -39,7 +39,7 @@ over all experiments are listen in table \ref{tab:hyper-configs}.
 In table \ref{tab:alpha-beta}
 the different hyperparameter for the two runs is listed for each dataset.
 
-\tab{tab:alpha-beta}{Differences betwenn $\alpha$ and $\beta$ runs for each dataset.}{
+\tab{tab:alpha-beta}{Differences between $\alpha$ and $\beta$ runs for each dataset.}{
   \scalebox{0.9}{
     \begin{tabular}{lll}
                                & $\alpha$                   & $\beta$                          \\ \hline
@@ -635,11 +635,34 @@ thesis.
 \section{Question Answering Dataset Results}
 \label{sec:qa-results}
 
-The reportings of the results for the question answering data sets follows
-the line that was taken for the classification sets: A general table with the
-ensemble test set results is reported in \ref{tab:results-qa}. But the verdict is far more
-devastating: 3 out of 4 best results were achieved by models implementing vanilla BERT
-embeddings and 3 out of 4 times the worst performance was measured for +SRL settings.
+The reportings of the results for the question answering data sets follows the line that was taken
+for the classification sets: A general table with the ensemble test set results is reported in
+\ref{tab:results-qa}. Because there is only one head for the question answering task, the table is
+much smaller than for the classification task; however, the same facts are highlighted: The best,
+second best, and worst ensemble results in one hyperparameter setting ($\alpha$ or $\beta$) over
+all other configurations (merged/subtokenized, +SRL/$-$SRL, etc.) are highlighted.
+
+\begin{figure}
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_accumulated.pdf}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\linewidth}
+  \vspace{0pt}
+    \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_SRL2.pdf}
+  \end{minipage}
+  \stepcounter{myfigure}
+  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss-token-merged}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+  \label{fig:qa-tot-gains}
+\end{figure}
+
+In sharp contrast to the classification task restuls, the verdict here is far more devastating
+regarding the positive effect of SRLs: 3 out of 4 best results were achieved by models implementing
+vanilla BERT embeddings and 3 out of 4 times the worst performance was measured for +SRL settings.
+Only in the XQuAD $\beta$ setting (regular SRL sequence encoding, see table \ref{tab:alpha-beta}),
+a +SRL setting performed best --- however, when compared to the corresponding $-$SRL setting, this
+0.29\% gain is not statistical significant (see table \ref{tab:qa-gain-loss-token-merged}).
 
 \tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
   \scalebox{1}{
@@ -706,21 +729,6 @@ of 4.3\% in accuracy on the SQuAD 2.0 set for their SemBERT implementation.\myfo
 self training'' technique for this results is mentioned which is not elaborated upon any more. For their
 ``regular'' SemBERT large implementation the reported gain is 1.9\% --- which still would stand
 for a positive influence of SRL enriching which is not reflected in my experiments.}
-
-\begin{figure}
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_accumulated.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_SRL2.pdf}
-  \end{minipage}
-  \stepcounter{myfigure}
-  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
-  \label{fig:qa-tot-gains}
-\end{figure}
 
 
 Main conclusions:

@@ -5,24 +5,46 @@
 
 \section*{Abstract}
 
-In recent years, employing pretrained word embeddings from large language models as input
-representations in NLP has become state-of-the-art in many applications. Taking the general
-trend of outsourcing linguistic analysis to machine learning to the extreme, BERT computes
-these embeddings through self-supervised pre-training, completely lacking any linguistic
-framework.
-Despite this, BERT embeddings have proven to transfer remarkably well to Natural Language Understanding
-tasks. However, quickly there were flaws and short comings detected, suggesting that BERT fails in certain
---- often trivial --- contexts reliably recognizing the semantic content of a sentence.
-The results of this thesis indicate that providing BERT with additional linguistic, semanticity
-providing, information leads to a performance improvement on such tasks.
-However, significant gain relies on two key factors: First, the generation of this
-linguistic information is paramount --- in this thesis, this process is automated,
-leading to modest quality of this semantic mark-up, which in turn is reflected in
-noise pruning the generalization capabilities of a model relying on it. Second,
-the suitability of the core data on which the model is trained for specific tasks
-similarly stands and falls with its quality --- e.g. a lot of non-English datasets
-are created by automatically translating English corpora, thereby introducing translation
-artifacts which circumvent the learning of a clear objective function.
+Employing pretrained word embeddings from large language models as input representations has
+become state-of-the-art (SOTA) in many Natural Language Processing (NLP) Tasks. Contextualized
+representations of modern transformer based architectures lead to SOTA results on standardized
+Natural Language Understanding (NLU) datasets like General Language Understanding Evaluation
+(GLUE), often on par with measured human performance. This is all the more astonishing given
+that models like Bidirectional Encoder Representations from Transformers (BERT) learn their
+embeddings from raw text lacking additional explicit linguistic structures by implementing
+self-supervised pre-training. Despite this, BERT embeddings have proven to transfer remarkably
+well to NLU tasks through few-shot fine-tuning on small task-dependent datasets. Subsequent
+research, however, exposed that BERT's NLU capabilities are considerably limited: BERT fails
+in certain, often trivial, linguistic contexts to reliably extract the semantic content of a
+sentence --- for example, BERT is surprisingly error-prone in recognizing profound changes in
+meaning triggered by negative polarity items. In this thesis, I investigate if enriching pure
+BERT embeddings with explicit linguistic information counteracts those deficiencies. To this
+end, I concatenate BERT embeddings with numerically encoded, automatically generated Semantic
+Role Labels (SRLs) as input representation for an end-to-end system on downstream tasks. To
+assess semanticity increase, I devise several head architectures and compare the performance
+differences of the enriched to the pure embeddings on the GerGLUE dataset comprising various
+NLU tasks in German, which I compiled for this thesis. The results indicate that combining
+raw, contextualized word embeddings with explicit linguistic information leads to significant
+performance increases, suggesting enhanced semanticity capabilities of these representations.
+However, dataset and SRL quality are paramount --- translation noise, deficient SRL detection,
+and insufficient training data lead to suboptimal model fitting and selection.
+
+% Taking the general
+% trend of outsourcing linguistic analysis to machine learning to the extreme, BERT computes
+% these embeddings through self-supervised pre-training, completely lacking any linguistic
+% framework.
+% However, quickly there were flaws and short comings detected, suggesting that BERT fails in certain
+% --- often trivial --- contexts reliably recognizing the semantic content of a sentence.
+% The results of this thesis indicate that providing BERT with additional linguistic, semanticity
+% providing, information leads to a performance improvement on such tasks.
+% However, significant gain relies on two key factors: First, the generation of this
+% linguistic information is paramount --- in this thesis, this process is automated,
+% leading to modest quality of this semantic mark-up, which in turn is reflected in
+% noise pruning the generalization capabilities of a model relying on it. Second,
+% the suitability of the core data on which the model is trained for specific tasks
+% similarly stands and falls with its quality --- e.g. a lot of non-English datasets
+% are created by automatically translating English corpora, thereby introducing translation
+% artifacts which in turn lead to suboptimal model fitting and selection.
 
 
 
