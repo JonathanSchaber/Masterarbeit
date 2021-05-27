@@ -6,21 +6,39 @@
 % come back to the research question ; and lastly, I will look into further steps that could be
 % taken from this point on.
 
-The core contributions of my thesis consist mainly of three components: (1) The compilation
-of a German NLU dataset, \emph{GerGLUE}, incorporating different tasks and modalities, as well
-as including domain-specific language, ranging from colloquial to highly stylized texts. (2) A
-pipeline that brings all data sets in the same workable format, computes SRLs by implementing
-two freely available tools (ParZu, DAMESRL) and several instruments for training and analyzing
-models. (3) \emph{GliBERT}, a BERT-based architecture which combines vanilla BERT-embeddings
-with embedded SRLs during fine-tuning, comprising several heads, and convenient hyperparameter
-adjusting.
+The core contributions of this thesis consist mainly of three components: (1)
+The compilation of a German NLU dataset, \emph{GerGLUE}, incorporating different
+tasks and modalities, as well as including domain-specific language, ranging from
+colloquial to highly stylized texts. (2) A pipeline that brings all data sets in
+the same workable format, computes SRLs by implementing two freely available tools
+(ParZu, DAMESRL) and several instruments for training and analyzing models. (3)
+\emph{GliBERT}, a BERT-based architecture which combines vanilla BERT-embeddings
+with embedded SRLs during fine-tuning, comprising several heads, and convenient
+hyperparameter adjusting.\myfootnote{All code relating to this thesis is availabel
+under \url{https://github.com/JonathanSchaber/Masterarbeit}.}
 
 Extensive experimentation and subsequent result analysis indicate that providing NLU-targeted
-models with contextualized word embeddings from German BERT merged with additional, encoded SRL
-information leads to performance gains compared to the vanilla representations on most tested
-datasets. These results imply that self-supervised pre-trained representations learned from
-unstructured, raw text data generally profit from additional, explicit linguistic information
-made available during fine-tuning.
+models with contextualized word embeddings from German BERT merged with additional, numerically
+encoded SRL information leads to performance gains compared to the vanilla representations on most
+tested datasets. These results imply that self-supervised pre-trained representations learned from
+unstructured, raw text data generally profit from additional, explicit linguistic information made
+available during fine-tuning.
+
+Further research elucidated the importance of the relational nature of SRLs: The core
+features of SRLs are (1) the marking of the predicate and (2) the highlighting of its
+arguments and their respective roles --- while each of these two basic characteristics
+in isolation does moderately leverage the model's performance, only the combination of
+them leads to reliable significant gains.
+
+Another key insight of this thesis is the confirmation of the well-known dependence of data-driven
+machine learning models on data quality: Several noise sources in the data of this thesis that
+hinder reliable weight parametrization were identified and analyzed. Especially the soundness of
+the automatically predicted, explicit linguistic information is crucial: The predicted SRLs of the
+implemented system are of questionable grade, e.g. completely lacking the ability of detecting
+modifiers and negation particles. A conceivable improvement in the predicted SRLs would presumably
+lead to a substantial overall NLU capability enhancement.
+
+
 
 % After carrying out a multitude of experiments with different heads, SRL implementations,
 % and merging techniques, I come to a guarded conclusion: For classification tasks, combining
@@ -35,18 +53,44 @@ made available during fine-tuning.
 % to delay this investigation for the other points on the list for future research in this field.
 
 
-\section{Outlook / Future Work}
+\section*{Outlook / Future Work}
 
-In the following list I scetch loosely further experiments, open questions, and topics which
-seem to me worthy of investigation:
+During the course of the experimental phase of this thesis, several ideas and possible paths
+disclosed itself which could not be pursuited due to the limited scope of this thesis. In the
+following list I scetch loosely those which seem to me worthy of investigation:
 
-\begin{itemize}
-  \item better SRL system (bspw. mit MOD-NEG detection)
-  \item ``sincere'' hyper-param search
-  \item more thoroughful SRL quality estimation
-  \item compile data sets targeted at weaknesses of BERT
-  \item ``Manually'' add negation particle from parse tree information
-  \item Inspect weight matrices for further analysis of models
-\end{itemize}
+\begin{description}
+  \item[Better SRL-predicting system] Re-run experiments with an off-th-shelf SRL-predictor that reliably
+    predicts SRLs and modifiers, especially negation. My expectations are that the performance boost would
+    be remarkably higher, given the poor quality of the used SRLs.
+  \item[Manually add negation particle] The negation particles could be detected in the ParZu parse
+    tree and added manually as \texttt{MOD-NEG} to the SRLs.
+  \item[Serious hyper-parameter search] For my experiments, I tested several different hyperparameter
+    settings (such as the SRL embedding size, learning rate, etc.) and implemented the ones that
+    showed the best preliminary performance. Executing systematic hyperparameter space searching may
+    lead to additional increases in performance.
+  % \item more thoroughful SRL quality estimation
+  \item[Phenomenon-targeted data set creation] For confidently assessing the counteracting of semanticity
+    weak spots of BERT through SRL information, datasets compiled at targeting those would be of more
+    explanatory power than general performance on regular NLU datasets.
+  \item[Model weights analysis] To further assess that the model relies on the additional SRL information for
+    making better predictions, analyses of the actual weight matrices of the GliBERT model could be carried out.
+  \item[Other word embeddings / linguistic information] In this thesis the general hypothesis of providing
+    contextualized word embeddings with explicit linguistic information was demonstrated for BERT and SRLs.
+    It would be interesting, if the positive results could be replicated for different word embeddings like
+    ELMo and other explicit linguistic information like e.g. knowledge graphs.
+\end{description}
 
+Reassured by the outcome of this thesis, I am convinced that future work in
+NLU and NLP in general will see a comeback of linguistic instrumentary into
+the field: In order to reasonably handle the highly variable input of natural
+language, future NLP models will probably continue to implement some form of
+weight parametrization that will be streamlined data-driven by learning from
+real-world data. However, a complete averting of implementing linguistically
+motivated instruments is clearly not advisable, as the various results of
+analyzing the errors such models make unambiguously demonstrate. I see GliBERT
+as an exemplification of the fertile combination of deep learning techniques
+with structured linguistic knowledge representations.
 
+% Therefore, neuro-symbolic architectures, i.e. models that learn epistemically from data while implementing
+% mechanisms of symbolic reasoning, are in my opinion unavoidable for further progress in the field.

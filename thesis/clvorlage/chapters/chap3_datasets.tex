@@ -447,7 +447,7 @@ examples where the answer span lies partially or fully outside the maximum lengt
 MLQA: The first one, cross-lingual transfer (XLT), means training models in English,
 conducting model selection on the development set, and evaluating on the test sets for
 the various languages. The second case, generalized cross-lingual transfer (G-XLT), is
-not of interest to my thesis, since it involves a mixing of languages: the context is
+not of interest to this thesis, since it involves a mixing of languages: the context is
 presented in one language and the question in another. The authors include two models
 for the zero-shot transfer approach: multilingual BERT and XLM and use SQuAD (100,00
 instances) as the training set.
@@ -550,9 +550,11 @@ based on two ideas. The first swaps words to generate a sentence pair with the s
 controlled by a language model. The second uses back translation to generate paraphrases
 with high BOW overlap but different word order'' \citep{zhang2019paws}.
 
-Really striking about PAWS-X is the enormous difference in examples per set
-as depicted in figure \ref{fig:pawsx-stat} --- the training set encompasses
-twelve times as many examples as the development and test set combined.
+Really striking about PAWS-X is the enormous difference in examples per set --- the training
+set encompasses twelve times as many examples as the development and test set combined: There
+are 48,977 instances in the training set versus approx. 2,000 examples in the development and
+test set, each. The labels are very uniformyl distributed over all sets, each of the three
+labels comprising virtually one third of the examples.
 
 Since the training data are solely machine-translated while the development and test data
 are human-translated, there needs to be some clarification as to how differently those sets
@@ -568,7 +570,6 @@ As for other measures, like accuracy e.g., the value is sometimes multiplied by 
 readability, which I will also do here.
 
 % \begin{figure}
-%   \label{fig:pawsx-stat}
 %   \begin{minipage}{0.45\linewidth}
 %   \vspace{0pt}
 %     \includegraphics[width=0.9\linewidth]{images/PAWS-X_subtokenized_sent1.pdf}
@@ -584,23 +585,23 @@ readability, which I will also do here.
 %                            \textbf{Right}: Length of subtokenized PAWS-X second sentences.}
 % \end{figure}
 
-\begin{figure}
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=0.9\linewidth]{images/PAWS-X_num_examples.pdf}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\linewidth}
-  \vspace{0pt}
-    \includegraphics[width=0.9\linewidth]{images/PAWS-X_labels.pdf}
-  \end{minipage}
-  \stepcounter{myfigure}
-  \caption[PAWS-X Set Size/Labels]{\textbf{Left}: Number of examples in the PAWS-X split. The automatically translated
-                           trainin set contains way more examples than the humanly translated development and test set.
-                           \textbf{Right}: Distribution of paraphrase (True) and non-paraphrase (False) examples in the
-                           PAWS-X sets.}
-  \label{fig:pawsx-stat}
-\end{figure}
+% \begin{figure}
+%   \begin{minipage}{0.45\linewidth}
+%   \vspace{0pt}
+%     \includegraphics[width=0.9\linewidth]{images/PAWS-X_num_examples.pdf}
+%   \end{minipage}
+%   \hfill
+%   \begin{minipage}{0.45\linewidth}
+%   \vspace{0pt}
+%     \includegraphics[width=0.9\linewidth]{images/PAWS-X_labels.pdf}
+%   \end{minipage}
+%   \stepcounter{myfigure}
+%   \caption[PAWS-X Set Size/Labels]{\textbf{Left}: Number of examples in the PAWS-X split. The automatically translated
+%                            trainin set contains way more examples than the humanly translated development and test set.
+%                            \textbf{Right}: Distribution of paraphrase (True) and non-paraphrase (False) examples in the
+%                            PAWS-X sets.}
+%   \label{fig:pawsx-stat}
+% \end{figure}
 
 % all subs in PAWS-X: 2,906,717
 % all sharps: 684,155
@@ -992,6 +993,14 @@ semantic relationship between the two languages has been preserved.
 Here are some randomly sampled German XNLI hypothesis-premis sentence pairs with the
 corresponding gold labels.
 
+\begin{wrapfigure}[20]{r}{0.45\linewidth}
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{images/XNLI_labels.pdf}
+  \end{center}
+  \stepcounter{myfigure}
+  \caption[XNLI labels]{Label distributions of the XNLI data set; apparently, the three classes are very well balanced.}
+\end{wrapfigure}
+
 \begin{examples}
   \label{ex:xnli}
   \item Ich wusste nicht was ich vorhatte oder so, ich musste mich an einen bestimmten Ort in Washington melden.
@@ -1047,14 +1056,6 @@ small dev set of only 374 examples. As will be seen afterwards, this is of cours
 up --- therefore I resample the complete XNLI data set, split it into normal sets (5,248, 1,125,
 and 1,125 examples, respectively), compute a second round of experiments on this splits and
 obtain indeed better results.
-
-\begin{wrapfigure}[20]{r}{0.45\linewidth}
-  \begin{center}
-    \includegraphics[width=1.0\linewidth]{images/XNLI_labels.pdf}
-  \end{center}
-  \stepcounter{myfigure}
-  \caption[XNLI labels]{Label distributions of the XNLI data set; apparently, the three classes are very well balanced.}
-\end{wrapfigure}
 
 The lenghts of premises and hypothesis reported in figure \ref{fig:xnli-subtokenized} confirm the
 impression from the sample sentences that hypothesis are significantly shorter than premises;

@@ -11,7 +11,7 @@ architecture, I define the following terms which will be used in the specified s
 this thesis:
 
 \begin{itemize}
-  \item Following \cite{devlin2018bert}, in my thesis ``a `sentence' can be an arbitrary span of contiguous text, rather
+  \item Following \cite{devlin2018bert}, in this thesis ``a `sentence' can be an arbitrary span of contiguous text, rather
     than an actual linguistic sentence.''
   \item A ``model'' or ``system'' denotes any algorithm that is tailored at a specific task and designed
     to handle natural language as input.
@@ -923,9 +923,9 @@ the start token should be smaller than the one of the end token, or that the ans
 not lie inside the question (i. e. before the first [SEP] token), etc. The computation of the
 $index_{start}$ and $index_{end}$ of the answer span can be formalized as:
 
-$index_{start} = max(softmax(\hat{y}_{0_[0]}, \hat{y}_{1_[0]}, \dotso , \hat{y}_{n_[0]})$
+$index_{start} = max(softmax(\hat{y}_{0_{[0]}}, \hat{y}_{1_{[0]}}, \dotso , \hat{y}_{n_{[0]}})$
 
-$index_{end} = max(softmax(\hat{y}_{0_[1]}, \hat{y}_{1_[1]}, \dotso , \hat{y}_{n_[1]})$
+$index_{end} = max(softmax(\hat{y}_{0_{[1]}}, \hat{y}_{1_{[1]}}, \dotso , \hat{y}_{n_{[1]}})$
 
 where $\hat{y}_i = Ww_i+b$ for the $i$-th input token with $\hat{y} \in \mathbb{R}^2$ and
 the rectangular brackets denote dimension selection.
