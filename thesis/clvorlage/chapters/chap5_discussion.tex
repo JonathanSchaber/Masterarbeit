@@ -563,16 +563,20 @@ the outlined research questions from chapter \ref{chap:1_intro}, \ref{sec:resear
 
 \paragraph*{General effects of SRL information on BERT embeddings}
 
-For classification datasets, a modest, but clear gain of 0.8\% in overall accuracy
-was determined.\myfootnote{Only the significant results from table \ref{tab:gain-loss}
-were taken into account} For question answering datasets no positive, measurable effect
-could be asserted.
+For classification datasets, a modest, but clear gain of 0.8\% in overall accuracy was
+determined.\myfootnote{Only the significant results from table \ref{tab:gain-loss} were
+taken into account for the computation of the overall gain.} For question answering datasets
+no positive, measurable effect could be asserted; while one half of the experiments led to
+an increase of the model's performance, the other half led to a decrease in accuracy, with
+the only significant result being a deterioration of 1.01\%.\myfootnote{If all results from
+table \ref{tab:qa-gain-loss-token-merged} were taken into account, an average decrease of
+0.07\% after adding SRLs over all experiments would be measured.}
 
 \cite{zhang2019semantics}, who implemented SRL-enriching for the English BERT model, report an
 overall performance increase of SemBERT of 2.4\% on the GLUE classification datasets. Since the
 authors do not report significance and the model selection approach that led to these results,
 it is difficult to explain the performance gap between the two models. However, as is indicated
-by the results of the CoNLL '09 \citep{hajivc2009conll} , English Semantic Role Labelling is
+by the results of the CoNLL '09 \citep{hajivc2009conll} , English Semantic Role Labeling is
 significantly better than for German; which would partly explain the superiority of SemBERT over
 GliBERT regarding performance on NLU datasets.
 
@@ -585,7 +589,7 @@ However, not only the tasks at hand influences the effectiveness of SRL informat
 also the quality of the data has a decisive influence of the performance of the
 combined representations: Especially datasets that were created by (semi-)automatically
 translate English corpora into a target language expose translation noise, sometimes
-leading to wrong gold labels, which hinder reliable model fitting and selection. Therfore,
+leading to wrong gold labels, which hinder reliable model fitting and selection. Therefore,
 more data of higher quality would most likely results in constantly higher overall performance.
 
 As the ablation study revealed, a pivotal benefit SRLs offer to plain contextualized embeddings is
@@ -621,18 +625,20 @@ experiments, adding SRL information led to a performance decrease.
 \paragraph*{Differences of SRL implementation modes}
 
 When a sentence has less than three predicate-argument structures, there were two
-approaches presented as well: Duplicating the first predicate-argument structure to
+coping approaches presented: Duplicating the first predicate-argument structure to
 fill the empty slots versus filling the empty predicate-argument structures with a
 special \texttt{0}-SRL. Here, duplicating the first predicate-argument structure has
 shown to be slightly more effective than the zero-filling approach on most datasets:
 Only for XNLI and the question answering datasets the duplicating strategy showed a
 weaker performance in tendency compared to the zero-filling approach.
 
-For merging the SRL embeddings with the BERT embeddings, two modes were proposed: Merging
-BERT subtokens back to token level by averaging the respective vectors, or duplicating the
-SRLs to match up with the BERT subtokens. Over all datasets, and for question answering
-datasets in particular, duplicating the SRLs and preserving the BERT subtoken embeddings
-clearly led to better results than the latter approach. Presumably, this has to do with
-the inevitable information loss during the subtokens avering process.
+For merging the SRL embeddings with the BERT embeddings, also two modes were proposed: Merging BERT
+subtokens back to token level by averaging the respective vectors, or duplicating the SRLs to match
+up with the BERT subtokens. Over all datasets, and for question answering datasets in particular,
+duplicating the SRLs and preserving the BERT subtoken embeddings clearly led to better results than
+the latter approach: Out of total 56 experiments, 36 times the BERT subtokens preserving approach
+performed better than the merging approach --- 61.11\% of it statistically significant. From the 20
+times the merging approach was better, only 4 of them were statistically significant. Presumably,
+this has to do with the inevitable information loss during the subtokens averaging process.
 
 
