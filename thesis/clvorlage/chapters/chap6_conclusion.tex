@@ -22,13 +22,10 @@ models with contextualized word embeddings from German BERT merged with addition
 encoded SRL information leads to performance gains compared to the vanilla representations on
 most tested datasets. The improvements were found to be most stable if the enriched word
 embeddings were processed by a small neural network designed for processing sequential data
-before performing the actual prediction for the task at hand. These results imply that models
-employing self-supervised pre-trained representations learned from unstructured, raw text
-data generally profit from additional, explicit linguistic information made available during
-fine-tuning.
+before performing the actual prediction for the task at hand.
 
-Since a model that it employs enriched contextualized word embeddings still considerably relies on
-the information stemming from the extensive language modelling, it is reasonable to corrupt this
+Since a model that employs enriched contextualized word embeddings still considerably relies on
+the information stemming from the extensive language modeling, it is reasonable to corrupt this
 information as little as possible: In the case for BERT and SRLs, this means that when aligning the
 BERT subtokens with the ``regular'' SRL tokens, the experiments confirmed that merging the BERT
 subtokens back to token level via embedding averaging leads to irreversible numerical blurring of
@@ -42,14 +39,16 @@ in isolation does moderately leverage the model's performance, only the combinat
 them leads to reliable and significant gains.
 
 Another key insight of this thesis is the confirmation of the well-known dependence of data-driven
-machine learning models on data quality: Several noise sources in the data of this thesis that
+machine learning algorithms on data quality: Several noise sources in the data of this thesis that
 hinder reliable weight parametrization were identified and analyzed. Especially the soundness of
 the automatically predicted, explicit linguistic information is crucial: The predicted SRLs of the
 implemented system are of questionable grade, e.g. completely lacking the ability of detecting
 modifiers and negation particles. A conceivable improvement in the predicted SRLs would presumably
 lead to a substantial overall NLU capability enhancement.
 
-
+All these results imply that models employing self-supervised pre-trained representations learned
+from unstructured, raw text data generally profit from additional, explicit linguistic information
+made available during fine-tuning.
 
 % After carrying out a multitude of experiments with different heads, SRL implementations,
 % and merging techniques, I come to a guarded conclusion: For classification tasks, combining
