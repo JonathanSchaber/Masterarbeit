@@ -6,35 +6,80 @@ Based on the results presented in the previous chapter \ref{chap:5_results}, A f
 insight can be formulated: Adding numericall embedded SRL information to the German  BERT embeddings
 leads to overall enhancing in classification tasks. For question answering, however, the SRL information
 leads to a clear decrease in performance. Additionally, while there was no clear advantage of one aligning strategy
-over the other for the classification tasks, the situation for question answering is crystal clear:
+over the other for the classification tasks, the situation for question answering is crystal clear: Preserving
+the BERT subtokens and duplicating SRLs clearly outperform the subtokens merging approach.
 
-The reason for this rather {\color{red} drastic pattern
-remains unclear to me}; despite tediously controlling the merging algorithm and validating the
-re-computing of start and end indices, I could not make out any error.
+The reasons for these rather drastic differences between classification and question answering
+tasks remain unclear to me; especially the negative impact of SRLs for question answering tasks
+--- despite tediously controlling the merging algorithm and validating the re-computing of start
+and end indices, I could not make out any error.
 
-One of the main differences between the classification and question answering datasets is the size of
-the examples: While for the classifications task the model needs to extract semantic
-information out of a handful sentences, for the question answering tasks this is rather the exception ---
-normally the context from which the answer span must be extracted is multiple sentences long. My suspicion
-is that SRL information can highlight some crucial semantic relations present in a sequence which would be
-hard for the vanilla BERT to extract; maybe because it is in marked passive voice, not obviously negated etc.
-However, for extracting answer spans out of a long text sequence consisting of several sentences, each having
-potentially 3 predicate-argument structures present, the SRL information may not display a helpful signal to the
-head, which then relies more on information present in the vanilla BERT subtokens. This hypothesis is further
-substantiated by the analysis of BERT-SRL combination strategy superiority, depicted in table \ref{tab:qa-gain-loss-token-merged}:
-Maintaining the BERT inherent subtokenization structure outperforms the merging approach by far, indicating that
-the head relies heavily on information encoded in the BERT subtokens.
+My speculation towards an explanation would be, that one of the main differences between
+the classification and question answering datasets is the size of the examples: While for
+the classifications task the model needs to extract semantic information out of a handful
+sentences, for the question answering tasks this is rather the exception --- normally
+the context from which the answer span must be extracted is multiple sentences long. My
+suspicion is that SRL information can highlight some crucial semantic relations present in a
+sequence which would be hard for the vanilla BERT to extract; maybe because it is in marked
+passive voice, not obviously negated etc. However, for extracting answer spans out of a long
+text sequence consisting of several sentences, each having potentially 3 predicate-argument
+structures present, the SRL information may not display a helpful signal to the head, which
+then relies more on information present in the vanilla BERT subtokens. This hypothesis is
+further substantiated by the analysis of BERT-SRL combination strategy superiority, depicted
+in table \ref{tab:qa-gain-loss-token-merged}: Maintaining the BERT inherent subtokenization
+structure outperforms the merging approach by far, indicating that the head relies heavily
+on information encoded in the BERT subtokens.
 
+For the classification tasks, there was a modest tendency in the results suggesting that
+SRL information is of more support in sentence pair tasks, compared to single question datasets.
+However, this conjecture needs also to take into account that the register in the sentence
+pair tasks was generally of a higher standard than in the single sentence tasks; the
+extreme being SCARE, with its colloquial,
+
+One might ask if a simple accuracy is the right metric to make this substantial claims
+about model performances and the utility of SRL-enriched embeddings. Moreover, it is
+often common to compute other metrics like F1-scores, especially if class imbalance
+is a known property of datasets. There are two main reasons as to why I chose to stay
+with simple accuracy: (1) I am not interested in building a classifier which explicitly
+addresses problems related to failure avoidance or class discrimination, e.g. spam
+detection tasks. In such cases, an F1-score of course is more meaningful because it
+is more sensible to predictions on underrepresented but task-important classes (such
+as spam). In this thesis, however classification performance without focusing on a
+particular class is of interest. (2) As reported in chapter \ref{chap:3_datasets}, most
+of my datasets do not show signs of class imbalance, and their ``examples are assumed
+to be identically and independently distributed (IID)'', in which case the accuracy measure is
+``the most used empirical measure'' \citep{sokolova2006beyond}. To further substantiate
+this, I compute some metrics for the most significantly imbalanced dataset, namely
+SCARE: A brute force ``stupid'' prediction of the majority class on the test set would
+results in an accuracy of 59.09\% and a macro F1 of 24.76. The example confusion
+matrix of an actual experiment is shown in table \ref{tab:confusion-scare}: Although
+the algorithm overpredicts the majority (``Positive'') class, it also predicts to some
+extent the other ones. The measures resulting from this experiment are an accuracy of
+83.71\% compared to the macro F1 of 73.52. Therefore, although the accuracy may distort
+the picture to some extent, this is negligible in the context of this thesis.
+
+
+\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ +SRL merged duplicated [CLS] head.}{
+  \begin{tabular}{|ll|ccc|}
+    \hline
+                                                    &           & \multicolumn{3}{c|}{Predicted} \\
+                                                    &           & Positive & Neutral & Negative  \\ \hline
+    \multirow{3}{*}{\rotatebox[origin=c]{90}{True}} & Positive  & 149      & 12      & 5         \\
+                                                    & Neutral   & 4        & 11      & 6         \\
+                                                    & Negative  & 3        & 8       & 66        \\ \hline
+  \end{tabular}
+}{Confusion matrix for one SCARE +SRL ensemble}
 
 \section{GliBERT Noise Nuisance Analysis}
 \label{sec:glinoise}
 
 
-After reporting the general results, aggregations and the somewhat disenchanting conclusion, I
-now try to investigate the reasons for this mediocre effect. After investigating the data and
-SRL quality, I found that noise on several levels is present which probably led to too much
-randomness in the complex functions the models needed to approximate. I classify the observed
-data irregularities into the following \textbf{noise} categories:
+After reporting the general results, aggregations and the somewhat disenchanting conclusions
+regarding the positive effects of enriching BERT embeddings with SRLs, I now try to investigate
+the reasons for this mediocre effect. After investigating the data and SRL quality, I found that
+noise on several levels is present which probably led to too much randomness in the complex
+functions the models needed to approximate. I classify the observed data irregularities into the
+following \textbf{noise} categories:
 
 
 \begin{itemize}
@@ -298,13 +343,15 @@ a wrongly labelled training instance was created.
 \subsection{SRL Noise}
 \label{sec:srl-noise}
 
-A major question arising in the context of using automatically assigned Semantic Roles in
-downstream tasks, is how precise these predicted Semantic Role are. Since there is no gold standard
-available for Semantic Role Labels for the datasets I use in my experiments, there is no
-straight-forward way to evaluate their quality {\color{red} automatically}. In contrast to
-other tagging tasks like POS prediction or NER, Semantic Roles are not as black and white:
-While it is relatively easy to decide if a predicted POS tag is correct or incorrect, it
-is more a scalar concerning the correctness of SRLs.
+A major question arising in the context of using automatically assigned Semantic
+Roles in downstream tasks, is how precise these predicted Semantic Role are. Since
+there is no gold standard available for Semantic Role Labels for the datasets I
+use in my experiments, there is no straight-forward way to evaluate their quality
+automatically. Additionally, in contrast to other tagging tasks like POS prediction
+or NER, Semantic Roles are not as black and white: While it is relatively easy to
+decide if a predicted POS tag is correct or incorrect, it is more a scalar value
+concerning the correctness of SRLs; often, a semantic role labelled squence is not
+completely ``false'' but rather not really informative or precise.
 
 \begin{wrapfigure}[19]{l}{0.65\linewidth}
   \begin{center}
@@ -317,7 +364,7 @@ is more a scalar concerning the correctness of SRLs.
     \label{fig:SRL-assessment}
 \end{wrapfigure}
 
-As for the data quality / label noise assessment, I conduct an human evaluation study
+Therefore, as for the data quality / label noise assessment, I conduct an human evaluation study
 for determining the SRL quality: Three people evaluated the SRL quality of examples regarding
 whether they estimate them to be helpful, neutral, or harmful to the model for solving
 the task at hand.\myfootnote{For single sentence tasks, 20 examples were randomly sampled, for
@@ -375,7 +422,7 @@ established one, it is common ground to conduct an ablation study. In such a stu
 determine which aspects of the proposed architecture contribute how much to the overall performance
 gain (or loss, respectively).
 
-\begin{wrapfigure}[16]{r}{0pt}
+\begin{wrapfigure}[17]{r}{0pt}
 \begin{minipage}{0.45\linewidth}
   \centering
     \begin{srl}
@@ -415,9 +462,40 @@ head relies mostly on the information as to which tokens carry information about
 that happen in a given sentence. To test this, I drop the information about all SRLs,
 except the information that a token is a predicate (left side of figure \ref{srl:ablation}).
 In the second case, the hypothesis is reversed: Maybe the head is able to get the most useful
-hints about the information which indicates what role certain token groups play in a given
+hints from the information which indicates what role certain token groups play in a given
 sentence. To test for this all information about predicates is dropped and only information
 about arguments is preserved (right side of figure \ref{srl:ablation}).
+
+To see the influence of these SRL ghosting techniques, for each classification dataset, I take a
+configuration from table \ref{tab:results} where +SRL showed positive influence and recomputed 5
+models for each configuration (preserving only predicate information vs. only argument information).
+In table \ref{tab:srl-abla} I report the results from this ablation experiments.
+
+
+\tab{tab:srl-abla}{Ablation on effect of PREDs and ARGs information isolated. Note that mostly only the combination of both information structures leads to a significant improvement over vanilly BERT embeddings ($-$SRL)}{
+  \scalebox{0.9}{
+    \begin{tabular}{llcccc}
+                     &                               & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{3}{c}{+SRL}                                                                                                 \\
+                     &                               & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{only PREDs}         & \multicolumn{1}{c}{only ARGs}           & \multicolumn{1}{c}{normal}            \\ \cline{3-6}
+    deISEAR $\alpha$ & FFNN Head subtok. zeros       & \multicolumn{1}{c|}{\textit{70.86}}          & \multicolumn{1}{c}{72.19}              & \multicolumn{1}{c}{\underline{75.50**}} & \multicolumn{1}{c}{\textbf{77.48**}}  \\
+    SCARE $\alpha$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{83.33}}          & \multicolumn{1}{c}{84.47}              & \multicolumn{1}{c}{\underline{85.23}}   & \multicolumn{1}{c}{\textbf{85.61*}}   \\
+    PAWS-X $\beta$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{79.92}}          & \multicolumn{1}{c}{80.53}              & \multicolumn{1}{c}{\underline{80.68}}   & \multicolumn{1}{c}{\textbf{82.51***}} \\
+    XNLI $\beta$     & GRU Head subtok. zeros        & \multicolumn{1}{c|}{\textit{66.84}}          & \multicolumn{1}{c}{67.02}              & \multicolumn{1}{c}{\textbf{68.00}}      & \multicolumn{1}{c}{\underline{67.82}} \\
+    \end{tabular}
+  }
+}{Ablation Study}
+
+
+As can be seen, SRL information only displays its full positive effect when both information parts are combined: Providing
+the model only with predicate information already leads to a slight, but insignificant improvement in all experiments.
+By telling the model exclusively about where arguments are located in sentences leads to a greater advancement, but
+mostly also insignificant. For three out of four datasets, informing the model about both SRL information structures
+in combination leads to a further significant increase of accuracy.
+
+Apparently, the crucial aspect of information the GliBERT heads improve from having knowledge
+about semantic roles lies in its relational character: It is not so much an ``annotation''
+of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
+relationship in which those sequences stand to each other.
 
 \begingroup
 \begin{srl}[!h]
@@ -474,38 +552,14 @@ about arguments is preserved (right side of figure \ref{srl:ablation}).
 \captionof{srl}{\textbf{Left}: Only predicate SRLs. \textbf{Right}:  Only argument SRLs.}
 \endgroup
 
-To see the influence of these SRL ghosting techniques, for each classification dataset, I take a
-configuration from table \ref{tab:results} where +SRL showed positive influence and recomputed 5
-models for each configuration (preserving only predicate information vs. only argument information).
-In table \ref{tab:srl-abla} I report the results from this ablation experiments.
 
-
-\tab{tab:srl-abla}{Ablation on effect of PREDs and ARGs information isolated. Note that mostly only the combination of both information structures leads to a significant improvement over vanilly BERT embeddings ($-$SRL)}{
-  \scalebox{0.9}{
-    \begin{tabular}{llcccc}
-                     &                               & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{3}{c}{+SRL}                                                                                                 \\
-                     &                               & \multicolumn{1}{c|}{}                        & \multicolumn{1}{c}{only PREDs}         & \multicolumn{1}{c}{only ARGs}           & \multicolumn{1}{c}{normal}            \\ \cline{3-6}
-    deISEAR $\alpha$ & FFNN Head subtok. zeros       & \multicolumn{1}{c|}{\textit{70.86}}          & \multicolumn{1}{c}{72.19}              & \multicolumn{1}{c}{\underline{75.50**}} & \multicolumn{1}{c}{\textbf{77.48**}}  \\
-    SCARE $\alpha$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{83.33}}          & \multicolumn{1}{c}{84.47}              & \multicolumn{1}{c}{\underline{85.23}}   & \multicolumn{1}{c}{\textbf{85.61*}}   \\
-    PAWS-X $\beta$   & [CLS] Head merged duplicate   & \multicolumn{1}{c|}{\textit{79.92}}          & \multicolumn{1}{c}{80.53}              & \multicolumn{1}{c}{\underline{80.68}}   & \multicolumn{1}{c}{\textbf{82.51***}} \\
-    XNLI $\beta$     & GRU Head subtok. zeros        & \multicolumn{1}{c|}{\textit{66.84}}          & \multicolumn{1}{c}{67.02}              & \multicolumn{1}{c}{\textbf{68.00}}      & \multicolumn{1}{c}{\underline{67.82}} \\
-    \end{tabular}
-  }
-}{Ablation Study}
-
-
-As can be seen, SRL information only displays its full positive effect when both information parts are combined: Providing
-the model only with predicate information already leads to a slight, but insignificant improvement in all experiments.
-By telling the model exclusively about where arguments are located in sentences leads to a greater advancement, but
-mostly also insignificant. For three out of four datasets, informing the model about both SRL information structures
-in combination leads to a further significant increase of accuracy.
-
-Apparently, the crucial aspect of information the GliBERT heads improve from having knowledge
-about semantic roles lies in its relational character: It is not so much an ``annotation''
-of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
-relationship in which those sequences stand to each other.
-
+\newpage
 \section{Summary}
+
+To wrap up my findings, I conclude this chapter by summarizing the afore described observed
+phenomena and findings. The structure of the following synopsis adheres to the outlined
+research questions from chapter \ref{chap:1_intro}, \ref{sec:research-question}.
+
 
 \paragraph*{General effects of SRL information on BERT embeddings}
 
@@ -514,13 +568,13 @@ was determined.\myfootnote{Only the significant results from table \ref{tab:gain
 were taken into account} For question answering datasets no positive, measurable effect
 could be asserted.
 
-\cite{zhang2019semantics}, who implemented SRL-enriching for the English BERT model, report
-an overall performance increase of SemBERT of 2.4\% on the GLUE classification datasets.
-Since the authors do not report
-significance and the model selection approach that led to these results, it is difficult to
-explain the performance gap between the two models. However, as is indicated by the results
-of the CoNLL '09 \citep{hajivc2009conll} , English Semantic Role Labelling is significantly
-better than for German; which would partly explain the superiority of SemBERT over GliBERT.
+\cite{zhang2019semantics}, who implemented SRL-enriching for the English BERT model, report an
+overall performance increase of SemBERT of 2.4\% on the GLUE classification datasets. Since the
+authors do not report significance and the model selection approach that led to these results,
+it is difficult to explain the performance gap between the two models. However, as is indicated
+by the results of the CoNLL '09 \citep{hajivc2009conll} , English Semantic Role Labelling is
+significantly better than for German; which would partly explain the superiority of SemBERT over
+GliBERT regarding performance on NLU datasets.
 
 Further, GliBERT showed varying performance according to the task at hand: The most reliable
 gains were found on sentence pair classification datasets, followed
@@ -531,7 +585,14 @@ However, not only the tasks at hand influences the effectiveness of SRL informat
 also the quality of the data has a decisive influence of the performance of the
 combined representations: Especially datasets that were created by (semi-)automatically
 translate English corpora into a target language expose translation noise, sometimes
-leading to wrong gold labels, which hinder reliable model fitting and selection.
+leading to wrong gold labels, which hinder reliable model fitting and selection. Therfore,
+more data of higher quality would most likely results in constantly higher overall performance.
+
+As the ablation study revealed, a pivotal benefit SRLs offer to plain contextualized embeddings is
+the reliable, structural encoding of functional, relational links that hold between the different
+agents in a predicatively denoted proposition: The essential semantic functions that are expressed
+between agents, predicates, and patients, for example, are captured in the SRLs and support a
+subsequent head in solving the down-stream task.
 
 
 \paragraph*{Differences in head architectures}
@@ -549,8 +610,8 @@ head: The positive and negative effects of adding SRL information almost balance
 
 Processing the token embeddings by a recurrent architecture is the most reliable approach: The GRU
 head improves in 75\% of all experiments when SRL information is added. Often these gains are not
-statistically significant when considered in isolation, but the overall tendency of the GRU head is
-clearly suggests the NLU supporting character of SRLs.
+statistically significant when considered in isolation, but the overall tendency of the GRU head
+clearly suggests its superior capability of processing the NLU supporting character of SRLs.
 
 For question answering, the GliBERT adapted vanilla head does not benefit from embedded SRL
 information --- all improvements were statistically insignificant and in the majority of the
@@ -559,13 +620,6 @@ experiments, adding SRL information led to a performance decrease.
 
 \paragraph*{Differences of SRL implementation modes}
 
-For merging the SRL embeddings with the BERT embeddings, two modes were proposed: Merging
-BERT subtokens back to token level by averaging the respective vectors, or duplicating the
-SRLs to match up with the BERT subtokens. Over all datasets, and for question answering
-datasets in particular, duplicating the SRLs and preserving the BERT subtoken embeddings
-clearly led to better results than the latter approach. Presumably, this has to do with
-the inevitable information loss during the subtokens avering process.
-
 When a sentence has less than three predicate-argument structures, there were two
 approaches presented as well: Duplicating the first predicate-argument structure to
 fill the empty slots versus filling the empty predicate-argument structures with a
@@ -573,5 +627,12 @@ special \texttt{0}-SRL. Here, duplicating the first predicate-argument structure
 shown to be slightly more effective than the zero-filling approach on most datasets:
 Only for XNLI and the question answering datasets the duplicating strategy showed a
 weaker performance in tendency compared to the zero-filling approach.
+
+For merging the SRL embeddings with the BERT embeddings, two modes were proposed: Merging
+BERT subtokens back to token level by averaging the respective vectors, or duplicating the
+SRLs to match up with the BERT subtokens. Over all datasets, and for question answering
+datasets in particular, duplicating the SRLs and preserving the BERT subtoken embeddings
+clearly led to better results than the latter approach. Presumably, this has to do with
+the inevitable information loss during the subtokens avering process.
 
 

@@ -592,7 +592,7 @@ of the already not too stable DAMESRL system.
 In figure \ref{fig:each-head-gains} the accumulation of gains and losses is done head-wise; i.e.
 for both BERT-SRL combination settings --- subtokenized and merged ---, the gains and losses
 are added together and the significant ones are indicated. The [CLS] head amasses the most
-significant gains, while at the same time having led to 2 significant losses.
+significant gains, while at the same time having led to two significant losses.
 Clearly, the FFNN head shows the weakest performance of the tested heads; the overall losses are the heighest
 of all the heads and the significant gains and losses are on par. The GRU head accumulated the
 most gains but only one of them being significant.
@@ -600,37 +600,9 @@ most gains but only one of them being significant.
 \fig{images/all_heads_gain_dup.pdf}{fig:each-head-gains}{Accumulation of statistics for each head. \textbf{Left}: Which SRL architecture performed better.
                                        \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs. Darker Colors indicate significant runs; light green stands for a neutral run, i.e. where adding SRLs information performed equally to the vanilla architecture}{15}{Results Accumulation for each Dataset}
 
-One might ask if a simple accuracy is the right measure for all datasets, since
-it is often common to compute other metrics, especially if class imbalance is
-a known property of datasets. There are two main reasons as to why I chose to
-stay with simple accuracy: (1) I am not interested in building a classifier
-which explicitly handles such a problem, e.g. spam detection tasks. In such
-cases, an F1-score of course is more meaningful because it is more sensible to
-predictions on underrepresented but task-important classes (such as spam). (2)
-As reported in chapter \ref{chap:3_datasets}, most of my datasets do not show a
-drastic class imbalance. To further substantiate this, I compute some metrics
-for the most significantly imbalanced dataset, namely SCARE: A brute force
-``stupid'' prediction of the majority class on the test set would results in an
-accuracy of 59.09\% and a macro F1 of 24.76. The example confusion of an actual
-experiment is shown in table \ref{tab:confusion-scare}: Although the algorithm
-overpredicts the majority (``Positive'') class, it also predicts to some extent
-the other ones. The measures resulting from this experiment are an accuracy of
-83.71\% compared to the macro F1 of 73.52. Therefore, although the accuracy may
-distort the picture to some extent, this is negligible in the context of this
-thesis.
-
-
-\tab{tab:confusion-scare}{Confusion matrix for SCARE $\alpha$ +SRL merged duplicated [CLS] head.}{
-  \begin{tabular}{|ll|ccc|}
-    \hline
-                                                    &           & \multicolumn{3}{c|}{Predicted} \\
-                                                    &           & Positive & Neutral & Negative  \\ \hline
-    \multirow{3}{*}{\rotatebox[origin=c]{90}{True}} & Positive  & 149      & 12      & 5         \\
-                                                    & Neutral   & 4        & 11      & 6         \\
-                                                    & Negative  & 3        & 8       & 66        \\ \hline
-  \end{tabular}
-}{Confusion matrix for one SCARE +SRL ensemble}
-
+Still, the sheer number of experiments where adding SRL structure compared to the four experiments
+where it had an negative impact makes the GRU head the most realible extracting task-supporting
+features out of SRL-enriched BERT embeddings.
 
 \section{Question Answering Dataset Results}
 \label{sec:qa-results}
@@ -731,11 +703,11 @@ self training'' technique for this results is mentioned which is not elaborated 
 for a positive influence of SRL enriching which is not reflected in my experiments.}
 
 
-Main conclusions:
+% Main conclusions:
 
-\begin{itemize}
-  \item SRLs in tendency helpful
-  \item not for Q\&A
-  \item results somewhat unclear
-\end{itemize}
+% \begin{itemize}
+%   \item SRLs in tendency helpful
+%   \item not for Q\&A
+%   \item results somewhat unclear
+% \end{itemize}
 

@@ -7,27 +7,28 @@
 
 Employing pretrained word embeddings from large language models as input representations has
 become state-of-the-art (SOTA) in many Natural Language Processing (NLP) Tasks. Contextualized
-representations of modern transformer based architectures lead to SOTA results on standardized
+representations of modern transformer-based architectures lead to SOTA results on standardized
 Natural Language Understanding (NLU) datasets like General Language Understanding Evaluation
-(GLUE), often on par with measured human performance. This is all the more astonishing given that
-models like Bidirectional Encoder Representations from Transformers (BERT) learn their embeddings
-from raw text lacking additional explicit linguistic structures by implementing self-supervised
-pre-training. Despite this, BERT embeddings have proven to transfer remarkably well to NLU tasks
-through few-shot fine-tuning on small task-dependent datasets. Subsequent research, however,
-exposed that BERT's NLU capabilities are considerably limited: BERT fails in certain, often
-trivial, linguistic contexts to reliably extract the semantic content of a sentence --- for
-example, BERT is surprisingly error-prone in recognizing profound changes in meaning triggered
-by negative polarity items. In this thesis, I investigate if enriching pure BERT embeddings
-with explicit linguistic information counteracts those deficiencies. To this end, I concatenate
-pretrained BERT embeddings with numerically encoded, automatically predicted Semantic Role
-Labels (SRLs) as input representation for an end-to-end system on downstream tasks. To assess
-semanticity increase, I devise several head architectures and compare the performance differences
-of the enriched to the pure embeddings on the GerGLUE dataset comprising various NLU tasks in
-German, which I compiled for this thesis. The results indicate that combining raw, contextualized
-word embeddings with explicit linguistic information leads to significant performance increases,
-suggesting enhanced semanticity capabilities of these representations. However, dataset and SRL
-quality are paramount --- translation noise, deficient SRL detection, and insufficient training
-data lead to suboptimal model fitting and selection.
+(GLUE), often on par with measured human performance. This is all the more astonishing given
+that models like Bidirectional Encoder Representations from Transformers (BERT) learn their
+embeddings from raw text lacking additional explicit linguistic structures by implementing
+self-supervised pre-training. Despite this, BERT embeddings have proven to transfer remarkably
+well to NLU tasks through few-shot fine-tuning on small task-specific datasets. Subsequent
+research, however, exposed that BERT's NLU capabilities are considerably limited: BERT fails
+in certain, often trivial, linguistic contexts to reliably extract the semantic content of a
+sentence --- for example, BERT is surprisingly error-prone in recognizing profound changes in
+meaning triggered by negative polarity items. In this thesis, I investigate if enriching pure
+BERT embeddings with explicit linguistic information counteracts those deficiencies. To this
+end, I concatenate pretrained BERT embeddings with numerically encoded, automatically predicted
+Semantic Role Labels (SRLs) as input representation for an end-to-end system on downstream
+NLU tasks. To assess the increase in semanticity, I devise several head architectures and
+compare the performance differences between the enriched and the pure embeddings on the newly
+compiled GerGLUE dataset, which comprises various NLU tasks in German. Dataset and SRL quality
+are paramount for obtaining conclusive results --- the experiments of this thesis reveald
+that translation noise, deficient SRL detection, and insufficient training data can lead to
+suboptimal model fitting and selection. Nevertheless, the results indicate that combining
+raw, contextualized word embeddings with explicit linguistic information leads to significant
+performance increases, suggesting enhanced semantic capabilities of these representations.
 
 % Taking the general
 % trend of outsourcing linguistic analysis to machine learning to the extreme, BERT computes
