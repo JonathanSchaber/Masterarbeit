@@ -8,17 +8,17 @@
 Because semantics is such a fuzzy, hard to formalize property of language, it is not easy to
 assess the capabilities of an architecture designed at solving problems related to meaning. In
 the data-driven NLP community today, it is common practice to measure the {\color{red} power of
-a model} by measuring it's performance on some standardized data set. However, a model aiming at
+a model} by measuring it's performance on some standardized dataset. However, a model aiming at
 capturing semantics of human langauge ``must be able to process language in a way that is not
 exclusive to a single task, genre, or dataset'', as \cite{wang2018glue} correctly point out.
 
 To provide a standardized collection of datasets for the NLP community to compare different NLU-targeted
 models, \citeauthor{wang2018glue} compiled the General Language Understanding Evaluation benchmark, in short
-GLUE. It consists of nine data sets addressing different NLU problems; from acceptability
+GLUE. It consists of nine datasets addressing different NLU problems; from acceptability
 tasks (is the phrase ``Saw the man the dog.'' an acceptable English sentence?) to detecting
 textual entailment (is the meaning of ``A boy is at the beach'' entailed by the sentence
 ``Two kids are building a sandcastle at the beach''?). See table \ref{tab:original-GLUE} for
-a list of all GLUE data sets, their tasks and further characteristics.
+a list of all GLUE datasets, their tasks and further characteristics.
 
 % Therefore, ``it
 % must be able to process language in a way that is not exclusive to a single task,
@@ -26,7 +26,7 @@ a list of all GLUE data sets, their tasks and further characteristics.
 % To assess that an architecture designed for tackling NLU problems surpasses another technology indeed,
 % it is not probably not enough
 
-\tab{tab:original-GLUE}{Original GLUE data sets and tasks (following the table from \cite{wang2018glue}).}{
+\tab{tab:original-GLUE}{Original GLUE datasets and tasks (following the table from \cite{wang2018glue}).}{
   \resizebox{\textwidth}{!}{
     \begin{tabular}{l|llll}
       Data Set & NLP Task                   & ML Task                    & \# Examples & Splits \\ \hline\hline
@@ -39,7 +39,7 @@ a list of all GLUE data sets, their tasks and further characteristics.
       MRPC     & Paraphrase Identification  & Binary Classification      & 3.7k/1.7k & train/test \\
       QNLI     & Question Answering         & Binary Classification\myfootnote{\cite{wang2018glue} reformulate the original SQuAD task CITE of predicting an answer span in the context into a sentence pair binary classification task: They pair each sentence in the context with the question and predict whether or not the context sentence includes the answer span.} &  105k/5.4k & train/test \\
       QQP      & Paraphrase Identification  & Binary Classification      &  364k/391k & train/test \\
-      RTE      & Natural Language Inference & Binary Classification\myfootnote{\cite{wang2018glue} combine several data sets into RTE; for data sets that have three labels --- \emph{entailment}, \emph{neutral}, and \emph{contradiction} --- they collapse the latter two into one label \emph{not\_entailment}.} &  2.5k/3k & train/test \\
+      RTE      & Natural Language Inference & Binary Classification\myfootnote{\cite{wang2018glue} combine several datasets into RTE; for datasets that have three labels --- \emph{entailment}, \emph{neutral}, and \emph{contradiction} --- they collapse the latter two into one label \emph{not\_entailment}.} &  2.5k/3k & train/test \\
       STS-B    & Sentence Similarity        & Regression (1 - 5)         & 7k/1.4k & train/test \\
       WNLI     & Coreference Resolution     & Binary Classification\myfootnote{In the original Winograd Schema Challenge CITE, the task is to choose the correct referent of a pronoun from a list. \cite{wang2018glue} reformulate this to a sentence pair classification task, where the original sentence is paired with the original sentence with each pronoun substituted from the list and then predicting whether the substituted sentence is entailed by the original one.} &  634/146 & train/test
     \end{tabular}
@@ -52,7 +52,7 @@ tasks. Unfortunately, the data availability for German is not as extensive as fo
 not for all tasks in the original GLUE there was a German counter part; e.g. I couldn't find a sentence
 similarity dataset.
 
-\tab{tab:overview-data-sets}{GerGLUE data sets and tasks.}{
+\tab{tab:overview-data-sets}{GerGLUE datasets and tasks.}{
   \resizebox{\textwidth}{!}{
     \begin{tabular}{l|llll}
       Data Set & NLP Task                   & ML Task                    & \# Examples        & Splits \\ \hline\hline
@@ -76,17 +76,17 @@ There are a few remarks and strategic decisions that apply to all collected data
 
 (1) All of the datasets except for deISEAR are not monolingual, i.e. German, sources, but bi-
 or multilingual corpora. To compile a German GLUE corpus I only use the German subset of
-those corpora. For example, the MLQA data set provides all 49 combinations of the languages
+those corpora. For example, the MLQA dataset provides all 49 combinations of the languages
 it contains: Context in Arabic, question in Hindi; context in English, question in Spanish,
-etc. Also in this case, I choose only the German-German part of the data set for my corpus.
+etc. Also in this case, I choose only the German-German part of the dataset for my corpus.
 
-(2) The data sets I chose for my GerGLUE corpus are being provided in different modes: While
+(2) The datasets I chose for my GerGLUE corpus are being provided in different modes: While
 three of the corpora, namely MLQA, PAWS-X, and XNLI, come with predefined splits, the others
 are made available in one set, without defining training, development, and test parts. In
-the latter case, I split the data sets into train, development, and test splits using a 0.7,
-0.15, and 0.15 portion, respectively. Interestingly, the data sets that come with splits,
+the latter case, I split the datasets into train, development, and test splits using a 0.7,
+0.15, and 0.15 portion, respectively. Interestingly, the datasets that come with splits,
 mostly provide only a development and test portion. To ensure that my results are comparable
-with those that the authors of the different data sets report, I leave the test split as it
+with those that the authors of the different datasets report, I leave the test split as it
 is, and split the development set into a train and development set, implementing a 85:15
 ratio. The only dataset having explicitly predefined training, development, and test splits
 is PAWS-X.
@@ -105,7 +105,7 @@ this does not come without introducing noise into the data.
 % vs bi- or multiple sentence tasks, classification vs. span detection, different semantic problems
 % such as emotion detection, question answering etc.), I could not compile all tasks that appear in
 % GLUE into my semantic dataset compilation.
-% For example, there are data sets that concern linguistic acceptability in the original GLUE
+% For example, there are datasets that concern linguistic acceptability in the original GLUE
 % corpus, such as  e.g. CoLA \cite{warstadt2019neural}, or XXX .
 % To disregard this task was not an intentional decision, but due to fact that there are simply not
 % as many datasets available for German and apparently there are no datasets addressing linguistic
@@ -114,7 +114,7 @@ this does not come without introducing noise into the data.
 
 \section{Corpora}
 
-In this section, I give a detailed description of the selected data sets in alphabetical order:
+In this section, I give a detailed description of the selected datasets in alphabetical order:
 What kind of task is addressed, what is the text variety, and report some statistical measures,
 e.g. the average length of examples in the different sub-sets (Training, Development, Test). I
 also document the SOTA benchmark results that the authors specify on their datasets; anyhow,
@@ -126,24 +126,24 @@ datasets, the GliBERT performance is on par with what the authors report.
 
 \subsection{deISEAR}
 
-This data set addresses the task of Emotion Recognition, a sub-task of Sentiment Analysis
+This dataset addresses the task of Emotion Recognition, a sub-task of Sentiment Analysis
 \citep{cambria2017affective}. Technically, it is a sequence classification problem: Given a
 sequence of tokens $x_1 \dotso x_n$, predict the correct label $y$ from a fixed set of emotions
 $Y$. Or, in a more natural way of speaking, to automatically determine what emotion a certain
 statement expresses. Following the original study ``International Survey on Emotion Antecedents
 and Reactions'' \citep{scherer1994evidence}, \cite{troiano2019crowdsourcing} constructed the
-deISEAR data set for German:
+deISEAR dataset for German:
 
 In a first step, the authors presented annotators with one of seven emotions, and asked them
 to come up with a textual description of an event in which they felt that emotion. The task
 was formulated as a sentence completion problem, so the annotators which were recruited via
 a crowdsourcing platform, had to complete sentences having the following structure: ``Ich
 fühlte \emph{emotion}, als/weil/dass ...''. The seven emotions that were given for which
-the descriptions had to be constructed were: Traurigkeit, Ekel, Schuld, Wut, Angst, Scham,
-Freude.\myfootnote{Interestingly, out of these seven emotions, six represent rather negative
-emotions --- only \emph{Freude} is a clearly positive sensation. Maybe negative emotions are
-more lucidly detactable (by humans and/or machines) than positive ones and therefore the study
-focused on it.}
+the descriptions had to be constructed were: Traurigkeit (sadness), Ekel (disgust), Schuld
+(guilt), Wut (anger), Angst (fear), Scham (guilt), Freude (joy).\myfootnote{Interestingly,
+out of these seven emotions, six represent rather negative emotions --- only \emph{Freude}
+is a clearly positive sensation. Maybe negative emotions are more lucidly detactable (by
+humans and/or machines) than positive ones and therefore the study focused on it.}
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -209,7 +209,7 @@ Following are seven example sentence randomly picked out of the deISEAR corpus, 
   \item Ich fühlte \textbf{[Schuld]}, dass ich meinen besten Kumpel versetzt habe.
 \end{examples}
 
-Now it is up to you: Here are four sentences with masked emotions --- try to assign what you thin is the correct one.
+Now it is up to you: Here are four sentences with masked emotions --- try to assign what you think is the correct one.
 The possible emotions are \textbf{Angst, Ekel, Freude, Scham, Schuld, Traurigkeit, Wut}.\myfootnote{\rotatebox{180}{\ref{itm:deisear1}: Freude, \ref{itm:deisear2}: Scham, \ref{itm:deisear3}: Wut, \ref{itm:deisear4}: Angst}}
 
 
@@ -222,19 +222,19 @@ The possible emotions are \textbf{Angst, Ekel, Freude, Scham, Schuld, Traurigkei
 
 %The searched emotion is \emph{Traurigkeit} in example \ref{ex:deisear}.
 
-%\fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR data set.}{15}{deISEAR statistics}
+%\fig{images/deISEAR_traindevtest.png}{fig:deISEAR-devtest}{Distribution of emotions in the deISEAR dataset.}{15}{deISEAR statistics}
 
 % \subsubsection{Statistics}
 
-deISEAR is one of the data sets that are made available without any pre-defined
+deISEAR is one of the datasets that are made available without any pre-defined
 training/development/test splits. Therefore I shuffle all 1,001 sentences and
 split with a 70:15:15 ratio, resulting in a training set of 700, a development
 set of 150 and a test set of 151 sentences.
 
-In figure \ref{fig:deisear-stats}, the length of the sentences and the label distributions in the three data sets are
-plotted. While the data sets were created randomly, there are some peculiarities observable: The lengths of the sentences
+In figure \ref{fig:deisear-stats}, the length of the sentences and the label distributions in the three datasets are
+plotted. While the datasets were created randomly, there are some peculiarities observable: The lengths of the sentences
 in the training set show a greater variation compared to the development and test set than one would except.
-% Further, the one extremely long example present in the whole data set ended also up in the training set --- although this is not
+% Further, the one extremely long example present in the whole dataset ended also up in the training set --- although this is not
 % too unexpected.
 
 % number of subtokens in deISEAR: 18,679
@@ -267,18 +267,18 @@ exactly one label assigned is the same as accuracy.)
 \subsection{MLQA}
 \label{sec:mlqa}
 
-The term question answering subsumes several related tasks or problems: In it's most
+The term question answering subsumes several related tasks or problems: In its most
 general form, question answering refers to the ability to give a meaningful answer
 to any possible inquiry. This variety is normally termed \emph{open-domain question
 answering} and models addressing this task require a whole pipeline of algorithms in
 the background to produce acceptable results (cf. \cite{chen-yih-2020-open}). Another
 form is so called \emph{multi-choice question answering}, where the task for the
 model is to select the correct answer out of a list of options given the answer (cf.
-\cite{welbl2017crowdsourcing}). The subsort of question answering MLQA addresses is
+\cite{welbl2017crowdsourcing}). The kind of question answering MLQA addresses is
 so called \emph{span prediction question answering}. The goal here is to extract the
 correct answer span out of a context text given the question.
 
-\cite{lewis2019mlqa} compiled the MLQA data set using Wikipedia articles. First, they
+\cite{lewis2019mlqa} compiled the MLQA dataset using Wikipedia articles. First, they
 ``automatically identify sentences from \textelp{} articles which have the same or
 similar meaning in multiple languages.''\myfootnote{However, taking the sometimes huge
 contexts into account, I think the better formulation would have been ``paragraphs''
@@ -308,7 +308,7 @@ not fully hand-made annotation --- at least to me.}
   \label{fig:mlqa-stats}
 \end{figure}
 
-Following are five random examples out of the MLQA data set:
+Following are five random examples out of the MLQA dataset:
 
 \begin{examples}
   \item \textbf{Context}:
@@ -396,19 +396,20 @@ und prorussisch}} for the following context-question pair:
 
 MLQA is a set that comes with pre-defined development and test splits. The test set
 contains 4,499 examples, while the dev set is made up of 509 examples. As for all the
-other pre-splitted data sets, a training set is not part of the splits, this has to do
-with the approach that \cite{lewis2019mlqa} intend to use their data set, which will
-be explained later on. In a first set up, I treat the MLQA development
+other pre-splitted datasets, a training set is not part of the splits, this has to do
+with the approach that \cite{lewis2019mlqa} intended to use their dataset, which will
+be explained later on. In a first set-up, I treat the MLQA development
 set as training set and split off a 15\% portion of it as development set, resulting
 in 432 training instances and 77 development examples. In a second set up I shuffle
 the pre-defined splits and create a more suiting 70:15:15 set ratio; resulting in the
 following numbers of examples per set: Training 3,506, development 751, test 751.
 
 As can bee seen in the left figure of \ref{fig:mlqa-stats}, MLQA comprises quite a high number
-of examples --- 868, to be precise --- which do not fit subtokenized into a normal BERT model.
-However, those examples where the answer span lies inside the maximum BERT sequence are simply
-cut off after the maximum length and are kept in the data set for the experiments. Only the 22
-examples where the answer span lies partially or fully outside the maximum length were dropped.
+of examples --- 868, to be precise --- which do not fit subtokenized into the regular BERT
+model, which is able to process sequences that have 512 subtokens at maximum. However, those
+examples where the answer span lies inside the maximum BERT sequence are simply cut off after
+the maximum length and are kept in the dataset for the experiments. Only the 22 examples where
+the answer span lies partially or fully outside the maximum length were dropped.
 
 % all subs in MLQA: 883,394
 % sharps: 188,445
@@ -452,7 +453,7 @@ presented in one language and the question in another. The authors include two m
 for the zero-shot transfer approach: multilingual BERT and XLM and use SQuAD (100,00
 instances) as the training set.
 
-The best results for German in the XLT mode \citeauthor{lewis2019mlqa} reoprt, is a 47.6\% exact
+The best results for German in the XLT mode \citeauthor{lewis2019mlqa} report, is a 47.6\% exact
 match accuracy, achieved by XLM. However, as the training procedure and amount of traning data
 differs quite drastically from my set up, it's not possible to directly compare their benchmark
 with my results. Detailed GliBERT results on the GerGLUE question answering tasks are reported
@@ -470,7 +471,7 @@ in chapter \ref{chap:5_results}, section \ref{sec:qa-results}.
     \includegraphics[width=0.9\linewidth]{images/PAWS-X_BLEU_scores.pdf}
   \end{center}
   \stepcounter{myfigure}
-  \caption[PAWS-X BLEU]{BLEU scores of the PAWS-X data sets. Clearly visible is the diffence between the training set on the one hand,
+  \caption[PAWS-X BLEU]{BLEU scores of the PAWS-X datasets. Clearly visible is the diffence between the training set on the one hand,
                       and the development and test set on the other:}
 \end{wrapfigure}
 
@@ -481,7 +482,7 @@ $S_2$, the model must determine whether they convey the same meaning --- perform
 on such a dataset is often taken as an indicator of reliably capturing the semantics
 of an utterance \citep{mckeown1980paraphrasing}. Since most corpora for this task are
 available only in English the authors compiled this corpus by humanly translate a subset
-of the original English PAWS corpus \cite{zhang2019paws}.
+of the original English PAWS corpus \citep{zhang2019paws}.
 
 Concretely, \citeauthor{yang2019paws} ``translate the Wikipedia portion of the original PAWS
 corpus from English'' to six target languages. Out of these, I include the German part into
@@ -521,7 +522,7 @@ the whole German part of PAWS-X:
 
 
 % TODO: new stats figure!
-%\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X data set.}{15}{PAWS-X statistics}
+%\fig{}{fig:PAWS-X-devtest}{Distribution of paraphrases (True) versus non-paraphrases (False) in the PAWS-X dataset.}{15}{PAWS-X statistics}
 
 You are invited to test the examples yourself and predict if the following sentence pairs are in fact rephrasings
 of the same semantic content. The gold labels are in this footnote\myfootnote{\rotatebox{180}{\ref{itm:paws-x1}:
@@ -644,7 +645,7 @@ readability, which I will also do here.
 
 The BLEU scores indicate that the sentence pairs in the training set are much
 more similar to each other than in the development and test set. Taken into account how
-the data sets were generated, this makes actually sense, however: While the development
+the datasets were generated, this makes actually sense, however: While the development
 and test sets were translated from English to German by humans, the huge training set was
 automatically translated. Since the original differences in the sentence pair might well
 have been rather subtle, it is no surprise that an algorithm might exhibit difficulties in
@@ -668,18 +669,18 @@ machine-translated data in all other languages and evaluate on the individual la
   \stepcounter{myfigure}
   \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather
     short, with an average of 25.29 subtokens over all sets, but there is quite a number of
-    outliers --- indicating further that it is quite a heterogeneous data set, also concerning
+    outliers --- indicating further that it is quite a heterogeneous dataset, also concerning
     this aspect. Note that there is one extreme outlier in the train set, comprising 452 BERT
     subtokens, which is not included in the figure.}
   \label{fig:scare-subtokenized}
 \end{wrapfigure}
 
-During the preprocessing of this data set, the following considerations are taken into account: In
+During the preprocessing of this dataset, the following considerations are taken into account: In
 the predefined development and test splits, there are some examples where one or both sentences
 consist only of the string ``NS''. I decided to not include this examples into the data used for
 training and evaluating my models, since those examples don't contribute any useful features for
 the model.\myfootnote{The authors don't comment on these obscure sentences, so I do not know what
-was the reasoning behind including these into the data sets.} Further, some examples consist of
+was the reasoning behind including these into the datasets.} Further, some examples consist of
 empty strings; I treat those the same way as the examples mentioned before. Upon non-systematic
 manual inspection, there were indications of problematic data in PAWS-X, which will be examined in
 more detail rigor in chapter \ref{chap:5_results}, section \ref{sec:glinoise}.
@@ -810,16 +811,16 @@ of these is not always the same.
 % Besides their carefully, hand-annotated corpus, the authors also provide a dataset comprising of
 % 802,860 reviews along with the rating --- one to five stars ---, that were available in German on
 % the Google Play Store.
-% This data set is much larger than the annotated one: Due to the great expenses of generating those
+% This dataset is much larger than the annotated one: Due to the great expenses of generating those
 % fine-grained annotations, the authors were able to annotate only 0.22\% of all reviews available.
 
 For integrating the SCARE corpus into my GerBLUE corpus, I need to prepare the data, so it
 can be handled by the model architecture; following the original GLUE sentiment task, the
 model needs only to predict one sentiment label for each example. Since there exist mostly
-multiple annotations for each review in this data set, the data needs to be pre-processed
-in a way, so that there is one review-label per example.
+multiple annotations for each review in this dataset, the data needs to be pre-processed
+in a way, so that there is one review label per example.
 
-To generate the review-label, I carry out a majority class decision:
+To generate the review label, I carry out a majority class decision:
 The polarity that is most often annotated for a given review is also the review-label; in the
 example above comprising three aspect-subjective polarities, two of them positive, one negative,
 the whole example would be labelled as positive.
@@ -944,7 +945,7 @@ They report results for exact matches as well as partial matches.
 For the aspects, they achieve an exact match F1 score of 62\% and 63\% for subjective phrases, respectively.
 Since predicting fine-grained aspect and subjective phrase spans is much more difficult than
 extrapolating an overall sentiment of the same utterance, a comparison between the outcomes of the
-two tasks are not really comparable.
+two tasks is not possible.
 % Furthermore,
 
 
@@ -999,7 +1000,7 @@ corresponding gold labels.
     \includegraphics[width=1.0\linewidth]{images/XNLI_labels.pdf}
   \end{center}
   \stepcounter{myfigure}
-  \caption[XNLI labels]{Label distributions of the XNLI data set; apparently, the three classes are very well balanced.}
+  \caption[XNLI labels]{Label distributions of the XNLI dataset; apparently, the three classes are very well balanced.}
 \end{wrapfigure}
 
 \begin{examples}
@@ -1054,7 +1055,7 @@ XNLI is a medium sized dataset in the context of GerGLUE: It comprises a total o
 predefined in a development and test set of 2,489 and 5,009 examples, respectively. From the
 development set, there are a further 2,115 examples split off as training set, leading to a very
 small dev set of only 374 examples. As will be seen afterwards, this is of course not an ideal set
-up --- therefore I resample the complete XNLI data set, split it into normal sets (5,248, 1,125,
+up --- therefore I resample the complete XNLI dataset, split it into normal sets (5,248, 1,125,
 and 1,125 examples, respectively), compute a second round of experiments on this splits and
 obtain indeed better results.
 
@@ -1102,7 +1103,7 @@ up naturally with a comparatively short, concise question.
 
 % \subsubsection{SOTA}
 
-The best system \cite{conneau2018xnli} report for German on their XNLI data set is a model that
+The best system \cite{conneau2018xnli} report for German on their XNLI dataset is a model that
 relies heavily on translation: They train a BiLSTM on the MultiNLI data (432,702 instances) and
 translate the test set of the given language to English and predict on this data. Employing this
 strategy, the authors obtain an accuracy on the German test set of 68.7\%.
@@ -1114,7 +1115,7 @@ strategy, the authors obtain an accuracy on the German test set of 68.7\%.
 Like MLQA, XQuAD \citep{artetxe2019cross} is a question answering dataset, where an answer span
 needs to be identified given a context and a corresponding question. In contrast to MLQA, where the
 contexts are text sequences from Wikipedia articles, XQuAD was constructed by humanly translate 240
-paragraphs and 1190 question-answer pairs from SQuAD 1.1 \citep{rajpurkar2016squad}.
+paragraphs and 1,190 question-answer pairs from SQuAD 1.1 \citep{rajpurkar2016squad}.
 
 % ``XQuAD consists of a subset of 240 paragraphs and 1190 question-answer pairs from the development
 % set of SQuAD v1.1 together with their translations into ten languages \textelp{} In order to
@@ -1164,7 +1165,7 @@ paragraphs and 1190 question-answer pairs from SQuAD 1.1 \citep{rajpurkar2016squ
 
 XQuAD is also one of the smaller datasets in the GerGLUE corpus --- a total
 of 1,179 examples, without predefined splits, which results in training, development, and test
-splits of 820, 181, and 178 examples each. As for MLQA, the answer spans often consists of
+splits of 820, 181, and 178 examples each. As for MLQA, the answer spans often consist of
 only a handful of subtokens, due to the fact of many questions asking for only a certain
 name or place mentioned in the context.
 
@@ -1193,7 +1194,7 @@ name or place mentioned in the context.
   \label{fig:xquad-stats}
 \end{figure}
 
-Again,you can test you own performance on this dataset by answering the following questions relating
+Again, you can test you own performance on this dataset by answering the following questions relating
 to the given context:
 
 \begin{examples}
@@ -1244,14 +1245,14 @@ to the given context:
 
 % \subsubsection{SOTA}
 
-As benchamrk results on XQuAD, \citeauthor{artetxe2019cross} employ a sophisticated technique
+As benchmark results on XQuAD, \citeauthor{artetxe2019cross} employ a sophisticated technique
 that consists in re-training a monolingual English BERT model on Wikipedia and transfer it to the
 target languages, following these steps:
 
 \begin{enumerate}
     \item Pre-train a monolingual BERT in English with original pretraining objectives
     \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is frozen) with original pretraining objectives
-    \item Fine-tune transformer for downstream task in English (topken embeddings are frozen)
+    \item Fine-tune transformer for downstream task in English (token embeddings are frozen)
     \item Zero-shot transfer this model to $L_2$ by swapping the English token embeddings with the $L_2$ embeddings
 \end{enumerate}
 
@@ -1277,8 +1278,8 @@ rest of the thesis.
 
 \begin{landscape}
 
-\tab{tab:gerglue-overview}{Overview of \textit{GerGLUE} data sets and tasks. The number of examples represent the size of the
-                            set splits after preparing the data sets for the experiment; therefore all datasets have all splits.
+\tab{tab:gerglue-overview}{Overview of \textit{GerGLUE} datasets and tasks. The number of examples represent the size of the
+                            set splits after preparing the datasets for the experiment; therefore all datasets have all splits.
                             Note that during the preprocessing some examples had to be excluded (see chapter \ref{chap:3_datasets}
                             for more details), that's why some numbers do not coincide with those of table \ref{tab:overview-data-sets}.}
 {\begin{tabularx}{\linewidth}{ll|lllllX}
@@ -1291,7 +1292,7 @@ rest of the thesis.
                                                              & XNLI               & Natural Language Inference  & Multi-Class                 & 2,115/374/5,009                                       & Dev/Test                            & \multicolumn{1}{c}{mixed}                                    & Translation artifact noise, language from different domains  \\ \cline{3-8}
                                                              &                    & \multicolumn{6}{g}{\textit{Question Answering}}\\
                                                              & MLQA               & Question Answering          & Span Prediction             & 432/77/4,499                                          & Dev/Test                            & \multicolumn{1}{c}{formal}                                   & Highly imbalanced splits regarding number of examples        \\
-                                                             & XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                           & -                                   & \multicolumn{1}{c}{formal}                                   & Small data set
+                                                             & XQuAD              & Question Answering          & Span Prediction             & 820/181/178                                           & -                                   & \multicolumn{1}{c}{formal}                                   & Small dataset
 \end{tabularx}
 }{Summary GerGLUE}
 

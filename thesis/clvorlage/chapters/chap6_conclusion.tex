@@ -9,7 +9,7 @@
 The core contributions of this thesis consist mainly of three components: (1)
 The compilation of a German NLU dataset, \emph{GerGLUE}, incorporating different
 tasks and modalities, as well as including domain-specific language, ranging from
-colloquial to highly stylized texts. (2) A pipeline that brings all data sets in
+colloquial to highly stylized texts. (2) A pipeline that brings all datasets in
 the same workable format, computes SRLs by implementing two freely available tools
 (ParZu, DAMESRL) and several instruments for training and analyzing models. (3)
 \emph{GliBERT}, a BERT-based architecture which combines vanilla BERT-embeddings
@@ -19,16 +19,27 @@ under \url{https://github.com/JonathanSchaber/Masterarbeit}.}
 
 Extensive experimentation and subsequent result analysis indicate that providing NLU-targeted
 models with contextualized word embeddings from German BERT merged with additional, numerically
-encoded SRL information leads to performance gains compared to the vanilla representations on most
-tested datasets. These results imply that self-supervised pre-trained representations learned from
-unstructured, raw text data generally profit from additional, explicit linguistic information made
-available during fine-tuning.
+encoded SRL information leads to performance gains compared to the vanilla representations on
+most tested datasets. The improvements were found to be most stable if the enriched word
+embeddings were processed by a small neural network designed for processing sequential data
+before performing the actual prediction for the task at hand. These results imply that models
+employing self-supervised pre-trained representations learned from unstructured, raw text
+data generally profit from additional, explicit linguistic information made available during
+fine-tuning.
+
+Since a model that it employs enriched contextualized word embeddings still considerably relies on
+the information stemming from the extensive language modelling, it is reasonable to corrupt this
+information as little as possible: In the case for BERT and SRLs, this means that when aligning the
+BERT subtokens with the ``regular'' SRL tokens, the experiments confirmed that merging the BERT
+subtokens back to token level via embedding averaging leads to irreversible numerical blurring of
+the resulting embedding, which in turn leads to an overall model performance decrease --- in this
+case, it showed to be more feasible to duplicate the SRLs to align with the BERT subtokens.
 
 Further research elucidated the importance of the relational nature of SRLs: The core
 features of SRLs are (1) the marking of the predicate and (2) the highlighting of its
 arguments and their respective roles --- while each of these two basic characteristics
 in isolation does moderately leverage the model's performance, only the combination of
-them leads to reliable significant gains.
+them leads to reliable and significant gains.
 
 Another key insight of this thesis is the confirmation of the well-known dependence of data-driven
 machine learning models on data quality: Several noise sources in the data of this thesis that
@@ -44,7 +55,7 @@ lead to a substantial overall NLU capability enhancement.
 % and merging techniques, I come to a guarded conclusion: For classification tasks, combining
 % embedded SRL information with contextualized word representations during fine-tuning leads to
 % a performance gain as was demonstrated for German BERT embeddings. But the findings are not
-% too clear, sometimes there was even a negative effect observed for certain data sets and
+% too clear, sometimes there was even a negative effect observed for certain datasets and
 % configurations. However, it has to be kept in mind that there was noise detected on several
 % levels of the used data and implemented instruments, so that hypothetically, with cleaner
 % data and better SRLs, the effect would probably be clearly positive. For the both question
@@ -70,7 +81,7 @@ following list I scetch loosely those which seem to me worthy of investigation:
     showed the best preliminary performance. Executing systematic hyperparameter space searching may
     lead to additional increases in performance.
   % \item more thoroughful SRL quality estimation
-  \item[Phenomenon-targeted data set creation] For confidently assessing the counteracting of semanticity
+  \item[Phenomenon-targeted dataset creation] For confidently assessing the counteracting of semanticity
     weak spots of BERT through SRL information, datasets compiled at targeting those would be of more
     explanatory power than general performance on regular NLU datasets.
   \item[Model weights analysis] To further assess that the model relies on the additional SRL information for

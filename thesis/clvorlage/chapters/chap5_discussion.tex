@@ -42,7 +42,7 @@ data irregularities into the following \textbf{noise} categories:
                            hypotactic sentence structures (e.g. XQuAD), to highly
                            informal, elliptic --- even erratic --- structures
                            (e.g. SCARE).
- \item[\textbf{data set}] Many of my datasets were constructed either automatically
+ \item[\textbf{dataset}] Many of my datasets were constructed either automatically
                          (e.g. scrambling text automatically to create paraphrase pairs)
                          or employing crowd-sourcing techniques. Either way, the process
                          is prone to errors. There are, e.g., 84 sentence pairs in the training
@@ -336,9 +336,14 @@ i.e. all annotators picked the same label (indicated by darker color shades).
 
 \fig{images/SRL_assessment_data_set.pdf}{fig:data-set-SRL-assessment}{Estimated quality of SRLs per dataset.}{15}{SRL assessment per datasets}
 
-Interestingly, for PAWS-X was comparatively high agreement between the annotators that the SRLs would
-rather harm the model, however, as is shown in the right figure of \ref{fig:classification-gains}, PAWS-X
-is one of the datasets were the performance gain from adding SRL information was rather clear.
+Interestingly, for PAWS-X there is comparatively high agreement observable between the annotators:
+The bar which indicates harmful judgement is quite high, with a substantial unisono part. However,
+as is shown in the right figure of \ref{fig:classification-gains}, PAWS-X is one of the datasets
+where there was a clear performance gain from adding SRL information. This is another sign which
+indicates that it is difficult for humans to estimate if a certain information will be helpful for
+a machine learning model --- even if the intuitive judgement of the quality of the SRLs is rather
+negative, there might still be patterns which are of help for an algorithm for solving the task at
+hand.
 
 
 
@@ -518,7 +523,7 @@ of the CoNLL '09 \citep{hajivc2009conll} , English Semantic Role Labelling is si
 better than for German; which would partly explain the superiority of SemBERT over GliBERT.
 
 Further, GliBERT showed varying performance according to the task at hand: The most reliable
-gains were found on sentence pair classification data sets, followed
+gains were found on sentence pair classification datasets, followed
 by single-sentence classification tasks. For question answering tasks no positive
 effect of SRL information could be measured.
 
