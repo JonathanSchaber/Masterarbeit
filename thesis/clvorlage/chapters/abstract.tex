@@ -8,7 +8,7 @@
 Employing pretrained word embeddings from large language models as input representations has
 become state-of-the-art (SOTA) in many Natural Language Processing (NLP) Tasks. Contextualized
 representations of modern transformer-based architectures lead to SOTA results on standardized
-Natural Language Understanding (NLU) datasets like General Language Understanding Evaluation
+Natural Language Understanding (NLU) benchmarks like General Language Understanding Evaluation
 (GLUE), often on par with measured human performance. This is all the more astonishing given
 that models like Bidirectional Encoder Representations from Transformers (BERT) learn their
 embeddings from raw text lacking additional explicit linguistic structures by implementing
@@ -30,30 +30,44 @@ suboptimal model fitting and selection. Nevertheless, the results indicate that 
 raw, contextualized word embeddings with explicit linguistic information leads to significant
 performance increases, suggesting enhanced semantic capabilities of these representations.
 
-% Taking the general
-% trend of outsourcing linguistic analysis to machine learning to the extreme, BERT computes
-% these embeddings through self-supervised pre-training, completely lacking any linguistic
-% framework.
-% However, quickly there were flaws and short comings detected, suggesting that BERT fails in certain
-% --- often trivial --- contexts reliably recognizing the semantic content of a sentence.
-% The results of this thesis indicate that providing BERT with additional linguistic, semanticity
-% providing, information leads to a performance improvement on such tasks.
-% However, significant gain relies on two key factors: First, the generation of this
-% linguistic information is paramount --- in this thesis, this process is automated,
-% leading to modest quality of this semantic mark-up, which in turn is reflected in
-% noise pruning the generalization capabilities of a model relying on it. Second,
-% the suitability of the core data on which the model is trained for specific tasks
-% similarly stands and falls with its quality --- e.g. a lot of non-English datasets
-% are created by automatically translating English corpora, thereby introducing translation
-% artifacts which in turn lead to suboptimal model fitting and selection.
-
-
 
 
 \selectlanguage{ngerman}
 \section*{Zusammenfassung}
 
-Und hier sollte die Zusammenfassung auf Deutsch erscheinen.
+Vortrainierte Wortrepräsentationen grosser Language Models in Form reellwertiger,
+hochdimensionaler Vektoren als Input für Natural Language Processing (NLP)-Tasks zu
+verwenden, ist mittlerweile state-of-the-art (SOTA) in vielen Applikation-Pipelines.
+Moderne, Transformer-basierte Architekturen, die kontextualisierte Wortrepräsentation
+berechnen, ermöglichen SOTA-Resultate --- oft auf Augenhöhe mit vergleichbarer menschlicher
+Leistung --- auf normierten, auf Natural Language Understanding (NLU)-spezialisierten
+Benchmark-Datensets wie beispielsweise General Language Understanding Evaluation (GLUE).
+Dies ist umso erstaunlicher, gegeben den Umstand, dass diese Repräsentationen auf
+unstrukturierten, rohen Textdaten gelernt werden, gänzlich ohne linguistische Vorannahmen
+oder symblische, grammatisch-spezifische Algorithmen. Nichtsdestotrotz lassen sich solche
+Embeddings, beispielsweise von Bidirectional Encoder Representations from Transformers
+(BERT), erstaunlich gut mittels few-shot fine-tuning auf spezifische NLU tasks gerichtet
+hin transferieren. Allerdings legte die anschliessende Forschung nahe, dass das semantische
+Verständnis, welches BERT aufgrund der erstaunlichen Performanz auf NLU Tasks attribuiert
+wurde, nicht allzu tief geht: So scheitert BERT an oftmals trivialen Problemstellungen wie
+beispielsweise der Erkennung der Verneinung einer Proposition durch Negationspartikel.
+Diese Arbeit untersucht, inwieweit BERTs semantische Kapazitäten verbessert werden können,
+wenn seine Embeddings durch strukturierte, linguistische Information angereichert werden.
+Zu diesem Zweck werden numerisch kodierte, automatisch berechnete Semantische Rollen Labels
+(SRLs) an die BERT-Embeddings konkateniert, als Input-Repräsentationen in NLP-Systeme
+gespeist und end-to-end optimiert. Um eine tatsächliche Vertiefung der Semantizität dieser
+Embeddings feststellen zu können, wird die Performanz verschiedener Head-Architekturen,
+die einerseits die regulären, und andererseits die linguistisch-angereicherten Inputs
+verarbeiten, auf dem eigens dafür kreierten GerGLUE-Datenset getestet, das verschiedenste
+deutsche NLU Korpora umfasst. Im Verlaufe der Experimente kristallisierte sich heraus,
+dass unter anderem die Textdatenqualität und der Informationsgehalt der SRLs für
+belastbare, positive Ergebnisse entscheidend sind --- Signalrauschen aufgrund maschineller
+Übersetzungsfehler, uninformative SRLs, und ungenügende Trainingsdaten zeitigen potenziell
+negativen Einfluss auf optimale Modellparametrisierung und -selektion. Ungeachtet dessen
+indizieren die Resultate, dass das Anreichern kontextualisierter Wortrepräsentationen mit
+strukturierter linguistischer Information tatsächlich stabile Performanzverbesserungen auf
+NLU-Tasks nach sich zieht.
+
 
 \selectlanguage{english}
 \end{abstract}
