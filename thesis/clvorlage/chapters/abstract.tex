@@ -17,18 +17,21 @@ well to NLU tasks through few-shot fine-tuning on small task-specific datasets. 
 research, however, exposed that BERT's NLU capabilities are considerably limited: BERT fails
 in certain, often trivial, linguistic contexts to reliably extract the semantic content of a
 sentence --- for example, BERT is surprisingly error-prone in recognizing profound changes in
-meaning triggered by negative polarity items. In this thesis, I investigate if enriching pure
-BERT embeddings with explicit linguistic information counteracts those deficiencies. To this
-end, I concatenate pretrained BERT embeddings with numerically encoded, automatically predicted
-Semantic Role Labels (SRLs) as input representation for an end-to-end system on downstream
-NLU tasks. To assess the increase in semanticity, I devise several head architectures and
-compare the performance differences between the enriched and the pure embeddings on the newly
-compiled GerGLUE dataset, which comprises various NLU tasks in German. Dataset and SRL quality
-are paramount for obtaining conclusive results --- the experiments of this thesis reveald
-that translation noise, deficient SRL detection, and insufficient training data can lead to
-suboptimal model fitting and selection. Nevertheless, the results indicate that combining
-raw, contextualized word embeddings with explicit linguistic information leads to significant
-performance increases, suggesting enhanced semantic capabilities of these representations.
+meaning triggered by negative polarity items.
+
+In this thesis, I investigate if enriching pure BERT embeddings with explicit linguistic
+information counteracts those deficiencies. To this end, I concatenate pretrained BERT
+embeddings with numerically encoded, automatically predicted Semantic Role Labels (SRLs)
+as input representation for an end-to-end system on downstream NLU tasks. To assess the
+increase in semanticity, I devise several head architectures and compare the performance
+differences between the enriched and the pure embeddings on the newly compiled GerGLUE
+dataset, which comprises various NLU tasks in German. Dataset and SRL quality are
+paramount for obtaining conclusive results --- the experiments of this thesis reveald
+that translation noise, deficient SRL detection, and insufficient training data can
+lead to suboptimal model fitting and selection. Nevertheless, the results indicate that
+combining raw, contextualized word embeddings with explicit linguistic information leads
+to significant performance increases, suggesting enhanced semantic capabilities of these
+representations.
 
 
 
@@ -37,36 +40,36 @@ performance increases, suggesting enhanced semantic capabilities of these repres
 
 Vortrainierte Wortrepräsentationen grosser Language Models in Form reellwertiger,
 hochdimensionaler Vektoren als Input für Natural Language Processing (NLP)-Tasks zu
-verwenden, ist mittlerweile state-of-the-art (SOTA) in vielen Applikation-Pipelines.
-Moderne, Transformer-basierte Architekturen, die kontextualisierte Wortrepräsentation
+verwenden, ist mittlerweile state-of-the-art (SOTA) in vielen Applikations-Pipelines.
+Moderne, Transformer-basierte Architekturen, die kontextualisierte Embeddings
 berechnen, ermöglichen SOTA-Resultate --- oft auf Augenhöhe mit vergleichbarer menschlicher
 Leistung --- auf normierten, auf Natural Language Understanding (NLU)-spezialisierten
 Benchmark-Datensets wie beispielsweise General Language Understanding Evaluation (GLUE).
 Dies ist umso erstaunlicher, gegeben den Umstand, dass diese Repräsentationen auf
 unstrukturierten, rohen Textdaten gelernt werden, gänzlich ohne linguistische Vorannahmen
-oder symblische, grammatisch-spezifische Algorithmen. Nichtsdestotrotz lassen sich solche
+oder symbolische, grammatisch-spezifische Algorithmen. Nichtsdestotrotz lassen sich solche
 Embeddings, beispielsweise von Bidirectional Encoder Representations from Transformers
-(BERT), erstaunlich gut mittels few-shot fine-tuning auf spezifische NLU tasks gerichtet
+(BERT), bemerkenswert effizient mittels few-shot fine-tuning auf spezifische NLU-Probleme gerichtet
 hin transferieren. Allerdings legte die anschliessende Forschung nahe, dass das semantische
-Verständnis, welches BERT aufgrund der erstaunlichen Performanz auf NLU Tasks attribuiert
-wurde, nicht allzu tief geht: So scheitert BERT an oftmals trivialen Problemstellungen wie
+Verständnis, welches BERT aufgrund der erstaunlichen Performanz auf NLU-Tasks attribuiert
+wurde, nicht allzu tief geht; so scheitert BERT an oftmals trivialen Problemstellungen wie
 beispielsweise der Erkennung der Verneinung einer Proposition durch Negationspartikel.
-Diese Arbeit untersucht, inwieweit BERTs semantische Kapazitäten verbessert werden können,
-wenn seine Embeddings durch strukturierte, linguistische Information angereichert werden.
-Zu diesem Zweck werden numerisch kodierte, automatisch berechnete Semantische Rollen Labels
-(SRLs) an die BERT-Embeddings konkateniert, als Input-Repräsentationen in NLP-Systeme
+
+Diese Arbeit untersucht, inwieweit die semantischen Kapazitäten von BERT-{\selectlanguage{english}
+Embeddings} verbessert werden können, indem man sie mit strukturierter linguistischer Information
+anreichert. Zu diesem Zweck werden numerisch kodierte, automatisch berechnete Semantische Rollen
+Labels (SRLs) an die BERT-Embeddings konkateniert, als Input-Repräsentationen in NLP-Systeme
 gespeist und end-to-end optimiert. Um eine tatsächliche Vertiefung der Semantizität dieser
-Embeddings feststellen zu können, wird die Performanz verschiedener Head-Architekturen,
-die einerseits die regulären, und andererseits die linguistisch-angereicherten Inputs
-verarbeiten, auf dem eigens dafür kreierten GerGLUE-Datenset getestet, das verschiedenste
-deutsche NLU Korpora umfasst. Im Verlaufe der Experimente kristallisierte sich heraus,
-dass unter anderem die Textdatenqualität und der Informationsgehalt der SRLs für
-belastbare, positive Ergebnisse entscheidend sind --- Signalrauschen aufgrund maschineller
-Übersetzungsfehler, uninformative SRLs, und ungenügende Trainingsdaten zeitigen potenziell
-negativen Einfluss auf optimale Modellparametrisierung und -selektion. Ungeachtet dessen
-indizieren die Resultate, dass das Anreichern kontextualisierter Wortrepräsentationen mit
-strukturierter linguistischer Information tatsächlich stabile Performanzverbesserungen auf
-NLU-Tasks nach sich zieht.
+Embeddings feststellen zu können, wird die Performanz verschiedener Head-Architekturen, die
+einerseits die regulären, und andererseits die linguistisch-angereicherten Inputs verarbeiten,
+auf dem eigens dafür kreierten GerGLUE-Datenset getestet, das verschiedenste deutsche NLU
+Korpora umfasst. Im Verlaufe der Experimente kristallisierte sich heraus, dass unter anderem
+die Textdatenqualität und der Informationsgehalt der SRLs für belastbare, positive Ergebnisse
+entscheidend sind --- Signalrauschen aufgrund maschineller Übersetzungsfehler, uninformative
+SRLs, und ungenügende Trainingsdaten zeitigen potenziell negativen Einfluss auf optimale
+Modellparametrisierung und -selektion. Ungeachtet dessen indizieren die Resultate, dass das
+Anreichern kontextualisierter Wortrepräsentationen mit strukturierter linguistischer Information
+tatsächlich stabile Performanzverbesserungen auf NLU-Tasks nach sich zieht.
 
 
 \selectlanguage{english}
