@@ -55,21 +55,21 @@ Verständnis, welches BERT aufgrund der erstaunlichen Performanz auf NLU-Tasks a
 wurde, nicht allzu tief geht; so scheitert BERT an oftmals trivialen Problemstellungen wie
 beispielsweise der Erkennung der Verneinung einer Proposition durch Negationspartikel.
 
-Diese Arbeit untersucht, inwieweit die semantischen Kapazitäten von BERT-{\selectlanguage{english}
-Embeddings} verbessert werden können, indem man sie mit strukturierter linguistischer Information
-anreichert. Zu diesem Zweck werden numerisch kodierte, automatisch berechnete Semantische Rollen
-Labels (SRLs) an die BERT-Embeddings konkateniert, als Input-Repräsentationen in NLP-Systeme
-gespeist und end-to-end optimiert. Um eine tatsächliche Vertiefung der Semantizität dieser
-Embeddings feststellen zu können, wird die Performanz verschiedener Head-Architekturen, die
-einerseits die regulären, und andererseits die linguistisch-angereicherten Inputs verarbeiten,
-auf dem eigens dafür kreierten GerGLUE-Datenset getestet, das verschiedenste deutsche NLU
-Korpora umfasst. Im Verlaufe der Experimente kristallisierte sich heraus, dass unter anderem
-die Textdatenqualität und der Informationsgehalt der SRLs für belastbare, positive Ergebnisse
-entscheidend sind --- Signalrauschen aufgrund maschineller Übersetzungsfehler, uninformative
-SRLs, und ungenügende Trainingsdaten zeitigen potenziell negativen Einfluss auf optimale
-Modellparametrisierung und -selektion. Ungeachtet dessen indizieren die Resultate, dass das
-Anreichern kontextualisierter Wortrepräsentationen mit strukturierter linguistischer Information
-tatsächlich stabile Performanzverbesserungen auf NLU-Tasks nach sich zieht.
+Diese Arbeit untersucht, inwieweit die semantischen Kapazitäten von rohen, kontextualisierten
+Wortrepräsentationen verbessert werden können, indem man sie mit strukturierter linguistischer
+Information anreichert. Zu diesem Zweck werden numerisch kodierte, automatisch berechnete
+Semantische Rollen Labels (SRLs) an BERT-Embeddings konkateniert, als Input-Repräsentationen in
+NLP-Systeme gespeist und end-to-end optimiert. Um eine tatsächliche Vertiefung der Semantizität
+dieser Embeddings feststellen zu können, wird die Performanz verschiedener Head-Architekturen,
+die einerseits die regulären, und andererseits die linguistisch-angereicherten Inputs
+verarbeiten, auf dem eigens dafür kreierten GerGLUE-Datenset getestet, das mehrere deutsche
+NLU Korpora umfasst. Im Verlauf der Experimente kristallisierte sich heraus, dass unter
+anderem die Textdatenqualität und der Informationsgehalt der SRLs für belastbare, positive
+Ergebnisse entscheidend sind --- Signalrauschen aufgrund maschineller Übersetzungsfehler,
+uninformative SRLs, und ungenügende Trainingsdaten zeitigen potenziell negativen Einfluss auf
+optimale Modellparametrisierung und -selektion. Ungeachtet dessen indizieren die Resultate,
+dass das Anreichern kontextualisierter Wortrepräsentationen mit strukturierter linguistischer
+Information tatsächlich stabile Performanzverbesserungen auf NLU-Tasks nach sich zieht.
 
 
 \selectlanguage{english}
