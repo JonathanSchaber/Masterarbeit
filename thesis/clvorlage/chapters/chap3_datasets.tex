@@ -941,7 +941,7 @@ as ``Unterirdisch, laaaaangsaaaaam mit WLAN seid neuestem nur'' which would be s
 \cite{sanger2016scare} don't predict a sentiment for each instance, but predict fine-grained
 aspect and subjective phrase spans using a CRF-based model.
 They report results for exact matches as well as partial matches.
-For the aspects, they achieve an exact match F1 score of 62\% and 63\% for subjective phrases, respectively.
+For the aspects, they achieve an exact match $F_1$ score of 62\% and 63\% for subjective phrases, respectively.
 Since predicting fine-grained aspect and subjective phrase spans is much more difficult than
 extrapolating an overall sentiment of the same utterance, a comparison between the outcomes of the
 two tasks is not possible.
@@ -1256,20 +1256,19 @@ target languages, following these steps:
 \end{enumerate}
 
 The authors report the following results for the German part of XQuAD:
-F1: 73.6
+$F_1$: 73.6
 Accuracy (exact match): 57.6\%
 
 \subsection{Summary}
 
-In the following table \ref{tab:gerglue-overview} an overview of all the datasets is given;
-the NLP and corresponding ML tasks the dataset is designed for, the numbers of examples of
-the splits and nature of the splits (predefined or not), the style or register of the text
-present in the dataset, as well as some important distinctiveness of each dataset. Note that
-the ordering is not strictly alphabetical, but follows the following grouping: First, come the
-single sentence classification tasks, then follow the sentence pair classification task,
-and lastly come the question answering tasks. This order --- classification tasks together,
-question answering tasks together --- will due conceptual reasons also be adhered to in the
-rest of the thesis.
+In the following table \ref{tab:gerglue-overview} an overview of all the datasets is given; the NLP
+and corresponding ML tasks the dataset is designed for, the numbers of examples of the splits and
+nature of the splits (predefined or not), the style or register of the text present in the dataset,
+as well as some important distinctiveness of each dataset. Note that the ordering is not strictly
+alphabetical, but follows the following grouping: First, come the single sentence classification
+tasks, then follow the sentence pair classification task, and lastly come the question answering
+tasks. This ordering of datasets --- classification tasks grouped together and question answering
+tasks clustered --- will, due to conceptual reasons, also be adhered to in the rest of the thesis.
 
 % In conclusion, I will point the reader to the following properties of GerGLUE datasets to keep in mind:
 
@@ -1279,8 +1278,8 @@ rest of the thesis.
 
 \tab{tab:gerglue-overview}{Overview of \textit{GerGLUE} datasets and tasks. The number of examples represent the size of the
                             set splits after preparing the datasets for the experiment; therefore all datasets have all splits.
-                            Note that during the preprocessing some examples had to be excluded (see chapter \ref{chap:3_datasets}
-                            for more details), that's why some numbers do not coincide with those of table \ref{tab:overview-data-sets}.}
+                            Note that during the preprocessing some examples had to be discarded (see e.g. section \ref{sec:paws-x}
+                            for more details), leading to some numbers not coinciding with those of table \ref{tab:overview-data-sets}.}
 {\begin{tabularx}{\linewidth}{ll|lllllX}
   \multicolumn{8}{c}{\large \textbf{GerGLUE}}\\ \\
   \multicolumn{2}{c}{}                                                            & \multirowcell{2}{NLP Task}  & \multirowcell{2}{ML Task}   & \multirowcell{2}{\# Examples\\{\tiny Train/Dev/Test}} & \multirowcell{2}{Predefined Splits} & \multirowcell{2}{Register\\{\tiny coll. $<$ mix. $<$ form.}} & \multirowcell{2}{Remarks}                                    \\ \\ \toprule

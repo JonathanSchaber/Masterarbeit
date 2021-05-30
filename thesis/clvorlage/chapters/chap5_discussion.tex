@@ -39,11 +39,11 @@ showing
 
 One might ask if a simple accuracy is the right metric to make this substantial claims
 about model performances and the utility of SRL-enriched embeddings. Moreover, it is
-often common to compute other metrics like F1-scores, especially if class imbalance
+often common to compute other metrics like $F_1$-scores, especially if class imbalance
 is a known property of datasets. There are two main reasons as to why I chose to stay
 with simple accuracy: (1) I am not interested in building a classifier which explicitly
 addresses problems related to failure avoidance or class discrimination, e.g. spam
-detection tasks. In such cases, an F1-score of course is more meaningful because it
+detection tasks. In such cases, an $F_1$-score of course is more meaningful because it
 is more sensible to predictions on underrepresented but task-important classes (such
 as spam). In this thesis, however classification performance without focusing on a
 particular class is of interest. (2) As reported in chapter \ref{chap:3_datasets}, most
@@ -52,11 +52,11 @@ to be identically and independently distributed (IID)'', in which case the accur
 ``the most used empirical measure'' \citep{sokolova2006beyond}. To further substantiate
 this, I compute some metrics for the most significantly imbalanced dataset, namely
 SCARE: A brute force ``stupid'' prediction of the majority class on the test set would
-results in an accuracy of 59.09\% and a macro F1 of 24.76. The example confusion
+results in an accuracy of 59.09\% and a macro $F_1$ of 24.76. The example confusion
 matrix of an actual experiment is shown in table \ref{tab:confusion-scare}: Although
 the algorithm overpredicts the majority (``Positive'') class, it also predicts to some
 extent the other ones. The measures resulting from this experiment are an accuracy of
-83.71\% compared to the macro F1 of 73.52. Therefore, although the accuracy may distort
+83.71\% compared to the macro $F_1$ of 73.52. Therefore, although the accuracy may distort
 the picture to some extent, this is negligible in the context of this thesis.
 
 
