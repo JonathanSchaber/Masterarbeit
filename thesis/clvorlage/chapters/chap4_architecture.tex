@@ -2,9 +2,9 @@
 \newchap{Architecture}
 \label{chap:4_architecture}
 
-In this chapter, I describe the different parts of the GliBERT model, how they
-interact and what a priori decisions were taken during the design of its architecture
-(e.g. the number of predicate-argument structures considered, etc.).
+In this chapter, I describe the different parts of the GliBERT model, how they interact and
+what a priori decisions were taken during the design of its architecture, such as the number
+of predicate-argument structures considered, etc.
 
 To eliminate possible misunderstandings and establish a ``standard'' vocabulary discussing the GliBERT
 architecture, I define the following terms which will be used in the specified sense throughout
@@ -38,7 +38,7 @@ general way an input sequence is processed by GliBERT is depicted in figure
 \ref{fig:architecture}:
 
 
-\fig{images/architecture_grob}{fig:architecture}{General architecture of GliBERT, exemplified for  the deISEAR task.}{14}{GliBERT Architecture}
+\fig{images/architecture_grob}{fig:architecture}{General architecture of GliBERT, exemplified on a deISEAR dataset instance.}{14}{GliBERT Architecture}
 
 An input sentence gets processed in parallel by two systems, the vanilla German BERT
 and the SRL producing and encoding module, to produce two numerical representations

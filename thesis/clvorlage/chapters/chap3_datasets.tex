@@ -74,10 +74,10 @@ similarity dataset.
 
 There are a few remarks and strategic decisions that apply to all collected dataset in GerGLUE:
 
-(1) All of the datasets except for deISEAR are not monolingual, i.e. German, sources, but bi-
-or multilingual corpora. To compile a German GLUE corpus I only use the German subset of
-those corpora. For example, the MLQA dataset provides all 49 combinations of the languages
-it contains: Context in Arabic, question in Hindi; context in English, question in Spanish,
+(1) All of the datasets except for deISEAR are not monolingual German sources, but bi- or
+multilingual corpora. To compile a German GLUE corpus I only use the German subset of those
+corpora. For example, the MLQA dataset provides all 49 combinations of the seven languages
+it contains: Context in Arabic, question in Hindi, context in English, question in Spanish,
 etc. Also in this case, I choose only the German-German part of the dataset for my corpus.
 
 (2) The datasets I chose for my GerGLUE corpus are being provided in different modes: While
@@ -173,7 +173,7 @@ are reliably told apart by the model, however, it has more general problems in r
 sadness and anger.
 
 \tab{tab:confusion-deisear}{Confusion matrix for the best deISEAR ensemble ($\alpha$ +SRL subtokenized zeros FFNN head). Interestingly, the observed confounding
-                            of Shame and Guilt in the human re-annotations is not present for the GliBERT predictions. However, the overall most difficult, i.e. most
+                            of shame and guilt in the human re-annotations is not present for the GliBERT predictions. However, the overall most difficult, i.e. most
                             often confused emotions for the reported GliBERT head seem to be sadness and anger.}{
   \begin{tabular}{|ll|ccccccc|}
     \hline
@@ -189,12 +189,12 @@ sadness and anger.
   \end{tabular}
 }{Confusion matrix for one deISEAR +SRL ensemble}
 
-The authors do not report any metric regarding the reliability of their labels based
-on the human re-classifications, but since they provided the complete results of
-phase 2, I was abe to compute the Fleiss' $\kappa$, a standard metric for estimating
-annotator agreement, and thus, the reliability of these labels; the computed value
-equals to 0.66, which corresponds to ``substantial'' agreement in the interpretation
-scale for th variable, proposed by \cite{landis1977measurement}.
+The authors do not report any metric regarding the reliability of their labels based on the human
+re-classifications, but since they provided the complete results of phase 2, I was abe to compute
+the Fleiss' $\kappa$ \citep{fleiss1973equivalence}, a standard metric for estimating annotator
+agreement, and thus, the reliability of these labels; the computed value equals to 0.66, which
+corresponds to ``substantial'' agreement in the interpretation scale for th variable, proposed by
+\cite{landis1977measurement}.
 
 
 Following are seven example sentence randomly picked out of the deISEAR corpus, one for each emotion.
@@ -257,26 +257,25 @@ in the training set show a greater variation compared to the development and tes
 
 % \subsubsection{SOTA}
 
-\cite{troiano2019crowdsourcing} train a maximum entropy classifier with L2 regularization with
-boolean unigram features on the original ISEAR corpus (7,665 instances).
-Since the original ISEAR study and data collection was carried out in English, they then machine
-translate the 1,001 deISEAR examples and evaluate on them.
-Using this strategy, the authors accomplish an average micro F$_1$ of 47. (Note: micro F$_1$ in settings where each example gets
-exactly one label assigned is the same as accuracy.)
+\cite{troiano2019crowdsourcing} train a maximum entropy classifier with boolean unigram features
+and L2 regularization on the original ISEAR corpus (7,665 instances). Since the original ISEAR
+study and data collection was carried out in English, they then machine translate the 1,001
+deISEAR examples and evaluate on them. Using this strategy, the authors accomplish an average
+micro F$_1$ of 47.\myfootnote{Note that micro F$_1$ in settings where each example gets exactly
+one label assigned is the same as accuracy.}
 
 \subsection{MLQA}
 \label{sec:mlqa}
 
-The term question answering subsumes several related tasks or problems: In its most
-general form, question answering refers to the ability to give a meaningful answer
-to any possible inquiry. This variety is normally termed \emph{open-domain question
-answering} and models addressing this task require a whole pipeline of algorithms in
-the background to produce acceptable results (cf. \cite{chen-yih-2020-open}). Another
-form is so called \emph{multi-choice question answering}, where the task for the
-model is to select the correct answer out of a list of options given the answer (cf.
-\cite{welbl2017crowdsourcing}). The kind of question answering MLQA addresses is
-so called \emph{span prediction question answering}. The goal here is to extract the
-correct answer span out of a context text given the question.
+The term question answering subsumes several related tasks or problems: In its most general form,
+question answering refers to the ability to give a meaningful answer to any possible inquiry.
+This variety is normally termed \emph{open-domain question answering} and models addressing this
+task require a whole pipeline of algorithms in the background to produce acceptable results (cf.
+\cite{chen-yih-2020-open}). Another form is \emph{multi-choice question answering}, where the
+task for the model is to select the correct answer out of a list of options given the answer (cf.
+\cite{welbl2017crowdsourcing}). The kind of question answering MLQA addresses is commonly referred
+to as \emph{span prediction question answering}. The goal here is to extract the correct answer
+span out of a context text given the question.
 
 \cite{lewis2019mlqa} compiled the MLQA dataset using Wikipedia articles. First, they
 ``automatically identify sentences from \textelp{} articles which have the same or
@@ -663,18 +662,6 @@ following model architecture:
 They train a multilingual BERT on all languages, including the original English pairs and the
 machine-translated data in all other languages and evaluate on the individual languages.
 
-\begin{wrapfigure}[23]{r}{0.45\linewidth}
-  \centering
-    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
-  \stepcounter{myfigure}
-  \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather
-    short, with an average of 25.29 subtokens over all sets, but there is quite a number of
-    outliers --- indicating further that it is quite a heterogeneous dataset, also concerning
-    this aspect. Note that there is one extreme outlier in the train set, comprising 452 BERT
-    subtokens, which is not included in the figure.}
-  \label{fig:scare-subtokenized}
-\end{wrapfigure}
-
 During the preprocessing of this dataset, the following considerations are taken into account: In
 the predefined development and test splits, there are some examples where one or both sentences
 consist only of the string ``NS''. I decided to not include this examples into the data used for
@@ -703,6 +690,18 @@ the language contained in the dataset the following way:
   considered to be more similiar [sic] to Twitter messages (“Tweets”) than
   reviews of products from other domains or platforms
 \end{quote}
+
+\begin{wrapfigure}[24]{r}{0.45\linewidth}
+  \centering
+    \includegraphics[width=0.9\linewidth]{images/SCARE_subtokenized.pdf}
+  \stepcounter{myfigure}
+  \caption[SCARE Lengths]{Length of subtokenized SCARE reviews. Mostly, the reviews are rather
+    short, with an average of 25.29 subtokens over all sets, but there is quite a number of
+    outliers --- indicating further that it is quite a heterogeneous dataset, also concerning
+    this aspect. Note that there is one extreme outlier in the train set, comprising 452 BERT
+    subtokens, which is not included in the figure.}
+  \label{fig:scare-subtokenized}
+\end{wrapfigure}
 
 In contrast to other datasets, e.g. \citep{socher2013recursive, go2009twitter},
 that attribute one sentiment label to a whole text (may it be a review, a tweet,
@@ -814,7 +813,7 @@ of these is not always the same.
 % This dataset is much larger than the annotated one: Due to the great expenses of generating those
 % fine-grained annotations, the authors were able to annotate only 0.22\% of all reviews available.
 
-For integrating the SCARE corpus into my GerBLUE corpus, I need to prepare the data, so it
+For integrating the SCARE corpus into my GerGLUE corpus, I need to prepare the data, so it
 can be handled by the model architecture; following the original GLUE sentiment task, the
 model needs only to predict one sentiment label for each example. Since there exist mostly
 multiple annotations for each review in this dataset, the data needs to be pre-processed
@@ -1250,8 +1249,8 @@ that consists in re-training a monolingual English BERT model on Wikipedia and t
 target languages, following these steps:
 
 \begin{enumerate}
-    \item Pre-train a monolingual BERT in English with original pretraining objectives
-    \item Transfer model to new language $L_2$, but learn only token embeddings new (transformer body is frozen) with original pretraining objectives
+    \item Pre-train a monolingual BERT in language $L_1$, English, with original pretraining objectives
+    \item Transfer this model to new language $L_2$, but learn only token embeddings new (transformer body is frozen) with original pretraining objectives
     \item Fine-tune transformer for downstream task in English (token embeddings are frozen)
     \item Zero-shot transfer this model to $L_2$ by swapping the English token embeddings with the $L_2$ embeddings
 \end{enumerate}

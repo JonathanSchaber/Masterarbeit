@@ -14,12 +14,12 @@ tasks remain unclear to me; especially the negative impact of SRLs for question 
 --- despite tediously controlling the merging algorithm and validating the re-computing of start
 and end indices, I could not make out any error.
 
-My speculation towards an explanation would be, that one of the main differences between
+My speculation towards an explanation would be that one of the main differences between
 the classification and question answering datasets is the size of the examples: While for
 the classifications task the model needs to extract semantic information out of a handful
 sentences, for the question answering tasks this is rather the exception --- normally
 the context from which the answer span must be extracted is multiple sentences long. My
-suspicion is that SRL information can highlight some crucial semantic relations present in a
+hypothesis is that SRL information can highlight some crucial semantic relations present in a
 sequence which would be hard for the vanilla BERT to extract; maybe because it is in marked
 passive voice, not obviously negated etc. However, for extracting answer spans out of a long
 text sequence consisting of several sentences, each having potentially 3 predicate-argument
@@ -28,13 +28,14 @@ then relies more on information present in the vanilla BERT subtokens. This hypo
 further substantiated by the analysis of BERT-SRL combination strategy superiority, depicted
 in table \ref{tab:qa-gain-loss-token-merged}: Maintaining the BERT inherent subtokenization
 structure outperforms the merging approach by far, indicating that the head relies heavily
-on information encoded in the BERT subtokens.
+on information encoded in the BERT subtokens and less on SRL information.
 
 For the classification tasks, there was a modest tendency in the results suggesting that
 SRL information is of more support in sentence pair tasks, compared to single question datasets.
 However, this conjecture needs also to take into account that the register in the sentence
 pair tasks was generally of a higher standard than in the single sentence tasks; the
-extreme being SCARE, with its colloquial,
+extreme being SCARE, with its colloquial, short, and often ungrammatical text snippets. Nevertheless,
+showing
 
 One might ask if a simple accuracy is the right metric to make this substantial claims
 about model performances and the utility of SRL-enriched embeddings. Moreover, it is
@@ -76,7 +77,7 @@ the picture to some extent, this is negligible in the context of this thesis.
 
 After reporting the general results, aggregations and the somewhat disenchanting conclusions
 regarding the positive effects of enriching BERT embeddings with SRLs, I now try to investigate
-the reasons for this mediocre effect. After investigating the data and SRL quality, I found that
+the reasons for this mediocre impact. After investigating the data and SRL quality, I found that
 noise on several levels is present which probably led to too much randomness in the complex
 functions the models needed to approximate. I classify the observed data irregularities into the
 following \textbf{noise} categories:
@@ -84,25 +85,25 @@ following \textbf{noise} categories:
 
 \begin{itemize}
   \item[\textbf{register}] The textual styles vary greatly from utilizing complex,
-                           hypotactic sentence structures (e.g. XQuAD), to highly
-                           informal, elliptic --- even erratic --- structures
-                           (e.g. SCARE).
+                         hypotactic sentence structures (e.g. XQuAD), to highly
+                         informal, elliptic --- even erratic --- structures
+                         (e.g. SCARE).
  \item[\textbf{dataset}] Many of my datasets were constructed either automatically
                          (e.g. scrambling text automatically to create paraphrase pairs)
                          or employing crowd-sourcing techniques. Either way, the process
                          is prone to errors. There are, e.g., 84 sentence pairs in the training
                          set of PAWS-X that are 100\% identical, yet labelled as non-paraphrases.
  \item[\textbf{translation}] Due to the mostly employed semi-automatic translation
-                             approach for creating the various datasets, errors
-                             have been introduced into the data ranging from typical
-                             translation errors (e.g. English ``bishop'' in the clerical
-                             context translated to the German chess figure counterpart
-                             ``Läufer'', not ``Bischof'') to eventually wrongly copied
-                             labels, since the overall meaning changed during
-                             the translation process (e.g. a sentence pair is no more
-                             contradicting but neutral), thus creating label noise.
+                         approach for creating the various datasets, errors
+                         have been introduced into the data ranging from typical
+                         translation errors (e.g. English ``bishop'' in the clerical
+                         context translated to the German chess figure counterpart
+                         ``Läufer'', not ``Bischof'') to eventually wrongly copied
+                         labels, since the overall meaning changed during
+                         the translation process (e.g. a sentence pair is no more
+                         contradicting but neutral), thus creating label noise.
  \item[\textbf{SRL}] The SRLs obtained from DAMESRL are, conservatively formulated,
-                     questionable in their quality (e.g. modifiers are completely missing).
+                         questionable in their quality (e.g. modifiers are completely missing).
 \end{itemize}
 
 While it is normal for data in NLP to possess noise in some way or the other, this usually does
@@ -124,11 +125,14 @@ break down to some extent.
 \subsection{Register Noise}
 \label{sec:register-noise}
 
-German BERT, according to deepset, was pretrained on the German Wikipedia dump, the OpenLegalData dump and
-news articles. All of this corpora comprise grammatical, to the standards of orthography adhering text
-belonging to a rather formal, ``professional'' register. Three of the six datasets in GerGLUE, namely
-deISEAR, SCARE, and XNLI, however, can be described as representing a rather colloquial register of
-language, even displaying features of transcribed speech as e.g. in XNLI:
+German BERT, according to deepset, was pretrained on the
+\href{https://dumps.wikimedia.org/dewiki/}{German Wikipedia dump}, the
+\href{http://openlegaldata.io/research/2019/02/19/court-decision-dataset.html}{OpenLegalData}
+dump and news articles. All of this corpora comprise grammatical, to the standards of
+orthography adhering text belonging to a rather formal, ``professional'' register. Three
+of the six datasets in GerGLUE, namely deISEAR, SCARE, and XNLI, however, can be described
+as representing a more colloquial register of language, even displaying features of
+transcribed speech as e.g. in this XNLI premise:
 
 \begin{examples}
   \item Ja und wir haben es irgendwie behalten, äh irgendwie äh, es war eine Überraschungs-Geburtstagsparty für sie, das war es Sie liebte die Überraschungsfeier.
