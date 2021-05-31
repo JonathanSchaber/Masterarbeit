@@ -126,7 +126,9 @@ This will create in each data set directory the following three files, their nam
 
 # Training a model
 
-First, adjust the paths in `config.json` to conform to the structure on your machine. The paths for the dataset point to the directory, where the `Gli_BERT*.tsv` files lie.
+First, adjust the paths in `config.json` to conform to the structure on your
+machine and/on the remote machine you intend to train on. The paths for the
+dataset point to the directory, where the `Gli_BERT*.tsv` files lie.
 
     $ python gli_bert.py \
         -l <local/remote> \
@@ -170,7 +172,7 @@ best epoch get ensembled and a majority vote is carried out:
 ![ensemble_predic.py output](miscellaneous/ensemble_predict.png)
 
 To control for two models, or ensembles, if the differences between the control
-(-c) and test (-t) one are statistically significant, run the following command:
+(`-c`) and test (`-t) one are statistically significant, run the following command:
 
     $ python test_significanc.py -c \
         <control file 1>.json \
