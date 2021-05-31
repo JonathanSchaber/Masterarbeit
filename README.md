@@ -129,7 +129,7 @@ This will create in each data set directory the following three files, their nam
 First, adjust the paths in `config.json` to conform to the structure on your machine. The paths for the dataset point to the directory, where the `Gli_BERT*.tsv` files lie.
 
     $ python gli_bert.py \
-        -l <local/rattle> \
+        -l <local/remote> \
         -c config.json \
         -d <data set> \
         -s <file name result files>

@@ -55,7 +55,7 @@ def parse_cmd_args():
             "--location",
             type=str,
             help="Indicate where model will be trained",
-            choices=["local", "rattle"]
+            choices=["local", "remote"]
             )
     parser.add_argument(
             "-s",
