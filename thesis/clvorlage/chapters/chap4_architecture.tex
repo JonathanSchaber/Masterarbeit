@@ -228,7 +228,9 @@ ParZu-parsed sentence is or is not a predicate using a heuristic, relying on the
 POS tag that the parser predicts. The ParZu parser's default output follows the CoNLL
 scheme \citep{buchholz2006conll} which means that there are two levels of POS tagging:
 coarse-grained (CPOSTAG) and fine-grained (POSTAG), where the POSTAG corresponds to the
-token's STTS tag \citep{schiller1999guidelines}.
+token's STTS tag\myfootnote{The Stuttgart-Tübingen-TagSet (STTS) \citep{schiller1999guidelines}
+is the de facto standard for tagging POS in German with the vast majority of POS-annotated
+corpora for German implementing STTS.}.
 
 \begin{algorithm}
 \caption{Predicate finding algorithm}
@@ -275,7 +277,7 @@ disregarding the light and modal verbs ``wurde'', ``werden'', and ``kann'.
   information per word is displayed: The token surface form, the CPOSTAG, the POSTAG, the lemma
   of the word, morphological information, and the index. Algorithm \ref{alg:find-predicates}
   correctly identifies ``abgewiesen'' and ``beschrieben'' as predicates for which SRLs can be
-  predicted.
+  predicted. Visualization taken from \url{https://pub.cl.uzh.ch/demo/parzu/}.
 }{16}{Multiple Predicates Dependency Parse Tree}
 
 Basically, the algorithm only takes tokens into account which are verbals (have the CPOSTAG
@@ -751,7 +753,7 @@ their SemBERT architecture.
 % SRL for the [CLS] token after the sequence was sent through the BiGRU which then can be appended
 % to its BERT embedding vector
 
-Formally, the [CLS] Head is a one-layer Fully connected Feedforward Neural Network (FFNN) without a
+Formally, the [CLS] head is a one-layer Fully connected Feedforward Neural Network (FFNN) without a
 non-linear activation function. A prediction $\hat{y}$ is the result of sending the embedding
 of the [CLS] token --- or the embedding of the [CLS]+SRL token, respectively ---, i.e. the
 first token in the sequence, $w_{0}$ through the network layer $W$, normalizing the outputs
