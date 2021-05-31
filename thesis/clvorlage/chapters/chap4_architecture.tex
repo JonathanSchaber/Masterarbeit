@@ -105,17 +105,16 @@ the following specifications according to its configuration file:
 The handling of the BERT model is straightforward through huggingface's \texttt{transformer}
 library: With a simple function call \texttt{BertModel.from\_pretrained()} one loads the
 pretrained BERT, and with another function, \texttt{BertTokenizer.from\_pretrained()},
-one instantiates the BERT tokenizer.
-After encoding a sentence using the tokenizer's method \texttt{.encode\_plus()}, the
-encoded sentence is sent through BERT via its \texttt{.forward()}-method --- or
-called implicitly, by passing the sentence to the model --- which returns the
-vectors for all input tokens, which can then be used in downstream tasks. Fine-tuning
-is carried out by passing the computed loss to the specified optimizer funtion (I use the
-AdamW optimizer \citep{loshchilov2019decoupled}, a modification of the well-known
+one instantiates the BERT tokenizer. After encoding a sentence using the tokenizer's
+method \texttt{.encode\_plus()}, the encoded sentence is sent through BERT via its
+\texttt{.forward()}-method --- or called implicitly, by passing the sentence to the model ---
+which returns the vectors for all input tokens, which can then be used in downstream tasks.
+Fine-tuning is carried out by passing the computed loss to the specified optimizer funtion
+(I use the AdamW optimizer \citep{loshchilov2019decoupled}, a modification of the well-known
 Adam (Adaptive Moment Estimation) optimizing function \citep{kingma2014adam}, implementing
-additional weight decay), which updates BERT's weight matrices.\myfootnote{After wiring
-all the different parts together, GliBERT is one big model having one loss function, which means that all
-weights of all layers in the system get update by the AdamW optimizer, not just BERT.}
+additional weight decay), which updates BERT's weight matrices.\myfootnote{After plugging all
+the different modules together, GliBERT is one large model whose shared parameters all get
+updated by the AdamW optimizer according to the loss, not just BERT's weights.}
 
 \begin{tcolorbox}[
   colback=blue!5!white,
@@ -620,7 +619,7 @@ only the second SRL implementation was applied.
 The combing of a token's BERT embedding with its corresponding SRL embedding is done
 straightforwardly; both numerical vectors are concatenated:
 
-Take, the first token $t_1$ of the sentence in \ref{srl:zeros-duplicate},
+Take the first token $t_1$ of the sentence in \ref{srl:zeros-duplicate},
 ``Wir'': After being consumed by the BERT module, it has a BERT embedding
 vector representation $b \in \mathbb{R}^{768}$. Its SRL representation,
 let's say the zero-filled variant \texttt{B-A0+0+0}, has a GRU-embedded

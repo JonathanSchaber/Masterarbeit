@@ -14,7 +14,7 @@ the same workable format, computes SRLs by implementing two freely available too
 (ParZu, DAMESRL) and several instruments for training and analyzing models. (3)
 \emph{GliBERT}, a BERT-based architecture which combines vanilla BERT-embeddings
 with embedded SRLs during fine-tuning, comprising several heads, and convenient
-hyperparameter adjusting.\myfootnote{All code relating to this thesis is availabel
+hyperparameter setting.\myfootnote{All code relating to this thesis is availabel
 under \url{https://github.com/JonathanSchaber/Masterarbeit}.}
 
 Extensive experimentation and subsequent result analysis indicate that providing
@@ -23,7 +23,7 @@ with additional, numerically encoded SRL information leads to performance gains 
 two thirds of the GerGLUE datasets compared to the vanilla representations on most
 tested datasets. The improvements were found to be most stable if the enriched
 word embeddings were processed by the \emph{GRU Head} for the classifiction tasks.
-For question answering, SRLs showed very little performance increasing.
+For question answering, SRLs showed very little performance increase.
 
 Since a model that employs enriched contextualized word embeddings still considerably relies on the
 information stemming from the extensive language modeling, this information should be corrupted as
@@ -31,7 +31,7 @@ little as possible: In the case for BERT and SRLs, this means that when aligning
 with the ``regular'' SRL tokens, the experiments confirmed that merging the BERT subtokens back
 to token level via embedding averaging leads to irreversible numerical blurring of the resulting
 embedding, which in turn leads to an overall model performance decrease --- in this case, it showed
-to be more feasible to repeat the SRLs to align with the BERT subtokens.
+to be more efficient to repeat the SRLs to align with the BERT subtokens.
 
 Further research elucidated the importance of the relational nature of SRLs: The core
 features of SRLs are (1) the marking of the predicate and (2) the highlighting of its
@@ -77,11 +77,11 @@ following list sketches some of these which seem worthy of investigation to me:
     be remarkably higher, given the comparably low informationality of the used SRLs.
   \item[Manually add negation particle] Virtually all NLU tasks are highly sensitice to
     meaning changes introduced by negativity polarity items. Since DAMESRL is not capable
-    of detecting them, negation particles could be detected in the ParZu parse tree and
+    of detecting them --- at least for German ---, negation particles could be detected in the ParZu parse tree and
     added manually as \texttt{MOD-NEG} to the SRLs.
-  \item[Serious hyper-parameter search] For my experiments, I tested several different hyperparameter
+  \item[Systematic hyper-parameter search] For my experiments, I tested several different hyperparameter
     settings (such as the SRL embedding size, learning rate, etc.) and implemented the ones that
-    showed the best preliminary performance. Executing systematic hyperparameter space searching may
+    showed the best preliminary performance. Executing systematic hyperparameter space search, implementing e.g. grid search, may
     lead to additional increases in performance.
   % \item more thoroughful SRL quality estimation
   \item[Phenomenon-targeted dataset creation] For confidently assessing the counteracting of semanticity
@@ -101,8 +101,8 @@ order to reasonably handle the highly variable input of natural language, future
 models will probably continue to implement some form of weight parametrization that
 will be streamlined data-driven by learning from large corpora of real-world examples.
 However, a complete abandoning of linguistically motivated instruments is clearly not
-constructive, as the various results of analyzing the limited NLU capabilities of
-such models make unambiguously demonstrate. In order to build systems which are able
+constructive, as various results of analyzing the limited NLU capabilities of
+such models unambiguously demonstrate. In order to build systems that are able
 to process natural language in a deep, semantics conveying way, systematic employment
 of tools provided by linguistic insights into the inner workings of human language
 are indispensable. I see GliBERT as such a case of the fertile combination of deep

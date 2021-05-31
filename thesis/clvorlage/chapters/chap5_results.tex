@@ -70,9 +70,9 @@ line in those three example experiments\myfootnote{\textbf{deISEAR} $\beta$ +SRL
 duplicate [CLS] head, \textbf{SCARE} $\beta$ +SRL merge zeros GRU head, \textbf{XNLI}
 $\alpha$ +SRL merge zeros [CLS] head.} accuracy and loss progression on development and
 test results compared). marks this epoch, the horizontal drawn through line marks the
-development accuarcy (the ``peak'' of the red curve), and the horizontal dotted line
+development accuarcy (the global maximum of the red curve), and the horizontal dotted line
 marks the correpsonding test accuracy. On the right the corresponding losses for the
-same epoch are marked in the same fashion.
+same epoch are marked in the same manner.
 
 \begin{figure}[H]
   \begin{center}
@@ -82,7 +82,7 @@ same epoch are marked in the same fashion.
   \caption[Accuracy/Loss plots of three experiments]{Accuracy and loss plots for three
 experiments (\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and
 \textcolor{std-green}{test} set): The vertical line marks the epoch with the highest
-development set accuracy; the test set accurracy for this epoch is taken as peak performance
+development set accuracy; the test set accurracy for this epoch is taken as reference performance
 of the model.}
   \label{fig:acc-loss}
 \end{figure}
@@ -102,7 +102,7 @@ by the model.
   title={\centering Code}]
 
   To evaluate several models in ensemble mode, run the following command (make sure the
-\texttt{conda} environment is activated):
+  \texttt{conda} environment is activated):
 
   \begin{verbatim}
     $ python ensemble_predict.py -r  \
@@ -243,11 +243,35 @@ for a more detailed formulation of this process:
       \STATE $R \mathrel{+}= 1$
     \ENDWHILE
     \IF{$\frac{r+1}{R+1} < p$}
-      \STATE system $A$ truly better than system $B$
+      \STATE system $A$ significantly better than system $B$
     \ENDIF
   \end{algorithmic}
 \end{algorithm}
 
+
+\begin{tcolorbox}[
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  title={\centering Code}]
+
+  To control for two models, or ensembles, if the differences between the control (-c) and test
+  (-t) one are statistically significant, run the following command (make sure the \texttt{conda}
+  environment is activated):
+
+  \begin{verbatim}
+    $ python test_significanc.py -c          \
+                       <control_file_1>.json \
+                       <control_file_2>.json \
+                       ...
+                       <control_file_n>.json \
+                       -t                    \
+                       <test_file_1>.json    \
+                       <test_file_2>.json    \
+                       ...
+                       <test_file_n>.json
+  \end{verbatim}
+
+\end{tcolorbox}
 
 % \subsubsection{Example Case for XNLI}
 
@@ -305,15 +329,15 @@ is implemented.} In table \ref{tab:results} below, the test set ensemble results
 each architecture on the classification datasets are reported.
 
 The best, second best and worst performance over all three heads and SRL configurations
-are marked. In the last row, best and second best results per head and +/-SRL for each
+are marked. In the last row, best and second best results per head and +/$-$SRL for each
 subtokenization settings are accumulated. As the Scores indicate, taken the results without
 controlling for significance,\myfootnote{ Here I don't control for statistical significance
 because it is not clear, against what model(s) should a peak performance be controlled
 for: Take the 77.45\% accuracy of the deISEAR $\alpha$, achieved by the +SRL, BERT tokens
-subtokenized, FFNN head: Against what should this results be compared? To all other -SRL
-results? Only to the corresponding -SRL results for the same head?} the +SRL configurations
+subtokenized, FFNN head: Against what should this results be compared? To all other $-$SRL
+results? Only to the corresponding $-$SRL results for the same head?} the +SRL configurations
 achieved 5 times the best, and 10 times the second best results --- compared to 4 best and
-5 second best results for -SRL. This is a first indicator that adding SRL information seems
+5 second best results for $-$SRL. This is a first indicator that adding SRL information seems
 to be able to support plain BERT embeddings in classification tasks.
 
 The accumulations in roman numerals also indicate a further, observable trend: The GRU head
@@ -326,7 +350,7 @@ In the following table \ref{tab:pawsx-beta}, the ensembling of each of the resul
 exemplary disaggregated. Each head-SRL configuration is randomly initialized 5 times, resulting in
 5 models achieving slightly different performances on the dataset. By ensembling them, a steady gain of, in this case,
 1.26\% compared to the average of the 5 models is achieved. Similar ensembling improvements where
-observed in all other datasets.
+observed for all other datasets.
 
 % In a first step, I will discuss on the overall performance of models when the SRLs are added,
 % compared to the same architectures without.
@@ -339,7 +363,7 @@ observed in all other datasets.
                     note that if both +SRL configurations of an architecture achieved an extreme, it is only counted once.
 
                     The line marked with light gray --- PAWS-X $\beta$ --- is ``expanded'' in table \ref{tab:pawsx-beta} to illustrate
-                    that each result in this table is actually a majority voting out of an ensembeling of fice models.}{
+                    that each result in this table is actually a majority voting out of an ensembeling of five models.}{
     \scalebox{0.90}{
       \begin{tabular}{llccc|ccc|ccc|ccc|ccc|ccc}
                                                       &           & \multicolumn{18}{c}{\large \textbf{Classification Datasets}}  \\ \\
@@ -696,11 +720,11 @@ performed better was XQuAD $\beta$ --- however in both cases insignificant.
 Therefore, the overall aggregation in figure \ref{fig:qa-tot-gains} does not look too promising for the
 research question of this thesis: For the two question answering datasets in GerGLUE, the effect of enriching
 BERT embeddings with SRL information seems to rather harm the model instead of adding helpful information.
-Interestingly, this contrasts with the findings of \citeauthor{zhang2019semantics}, which reported a gain
+Interestingly, this contrasts with the findings of \citeauthor{zhang2019semantics}, who reported a gain
 of 4.3\% in accuracy on the SQuAD 2.0 set for their SemBERT implementation.\myfootnote{However, a ``synthetic
-self training'' technique for this results is mentioned which is not elaborated upon any more. For their
-``regular'' SemBERT large implementation the reported gain is 1.9\% --- which still would stand
-for a positive influence of SRL enriching which is not reflected in my experiments.}
+self training'' technique leading to these results is mentioned, but which is unfortunately not elaborated upon any more. For their
+``regular'' SemBERT large implementation the reported gain is 1.9\% --- which would still stand
+for a positive influence of SRL enriching which is not reproduced through my experiments.}
 
 
 % Main conclusions:
