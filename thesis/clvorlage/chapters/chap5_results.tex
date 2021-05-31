@@ -5,36 +5,36 @@
 
 In this chapter I report the outcomes of my experiments on the GerGLUE dataset. Because there
 were several different implementations of various parameters tested against each other (SRLs duplicated vs.
-SRLs zeroed, BERT tokens merged vs. SRLs splitted, etc.), I provide several aggregated ``views'' on the
+SRLs zeroed, BERT tokens merged vs. SRLs split, etc.), I provide several aggregated ``views'' on the
 plain numerical results, where one or more of these implementations is paid attention to. Further, I
-document the ourcomings of a human assessment of the quality of the DAMESRL produced SRLs to be able to
-make propositions about the usefulness of those and their effect on the results. Similar to this, the
+document the outcomings of a human assessment of the quality of the DAMESRL produced SRLs to be able to
+make statements about the usefulness of those and their effect on the results. Similar to this, the
 general data quality of random samples of two datasets is manually reviewed, for the same reasons.
 Eventually, I carry out a small ablation study, controlling the effect of ghosting out different
-SRL structures to show that the actual, semanticity providing power of SRLs lies in the combination
+SRL structure parts to show that the actual, semanticity providing power of SRLs lies in the combination
 of these structures.
 
 For each dataset, two
 rounds of experiments where computed with one hyperparameter difference, resulting in
 an $\alpha$ and $\beta$ for each dataset. The hyperparameters which were kept stable
-over all experiments are listen in table \ref{tab:hyper-configs}.
+over all experiments are listed in table \ref{tab:hyper-configs}.
 
 \tab{tab:hyper-configs}{Stable hyperparameter configurations.}{
   \scalebox{0.9}{
     \begin{tabular}{ll}
-    learning rate              & 2e-05                         \\
-    SRL embedding dimensions   & 20                            \\
-    SRL GRU hidden size        & 32                            \\
-    SRL number of layers       & 2                             \\
-    SRL bias                   & True                          \\
-    SRL bidirectional          & True                          \\
-    SRL dropout                & 0.1                           \\
+    Learning Rate              & 2e-05                         \\
+    SRL Embedding Dimensions   & 20                            \\
+    SRL GRU Hidden Size        & 32                            \\
+    SRL Number of Layers       & 2                             \\
+    SRL Bias                   & True                          \\
+    SRL Bidirectional          & True                          \\
+    SRL Dropout                & 0.1                           \\
     \# of Epochs               & 50 (deISEAR, SCARE, XNLI, MLQA, XQuAD), 20 (PAWS-X) \\
     Batch Size                 & 16 (classification datasets) 8 (Q\&A datasets) \\
-    maximum sequence length    & 100 (PAWS-X, XNLI) 512 (MLQA, XQuAD)
+    Maximum Sequence Length    & 100 (PAWS-X, XNLI) 512 (MLQA, XQuAD)
     \end{tabular}
   }
-}{Stable Hyperparameter Configs}
+}{Fixed Hyperparameter Configs}
 
 In table \ref{tab:alpha-beta}
 the different hyperparameter for the two runs is listed for each dataset.
@@ -43,36 +43,34 @@ the different hyperparameter for the two runs is listed for each dataset.
   \scalebox{0.9}{
     \begin{tabular}{lll}
                                & $\alpha$                   & $\beta$                          \\ \hline
-    deISEAR                    & maximum length: 40         & maximum length: 200              \\
-    SCARE                      & maximum length: 50         & maximum length: 100              \\
-    PAWS-X                     & Examples train set: 8,000  & Examples train set: 48,977 (all) \\
-    XNLI                       & Predefined splits          & Resplitted 70:15:15              \\
-    MLQA                       & Predefined splits          & Resplitted 70:15:15              \\
-    XQuAD                      & SRLs encoded sentence wise & Regular GliBERT SRL encoding     \\
+    deISEAR                    & Maximum Length: 40         & Maximum Length: 200              \\
+    SCARE                      & Maximum Length: 50         & Maximum Length: 100              \\
+    PAWS-X                     & Examples Train Set: 8,000  & Examples Train Set: 48,977 (all) \\
+    XNLI                       & Predefined splits          & New Splits 70:15:15              \\
+    MLQA                       & Predefined splits          & New Splits 70:15:15              \\
+    XQuAD                      & SRLs Encoded Sentence-wise & Regular GliBERT SRL Encoding     \\
     \end{tabular}
   }
 }{$\alpha$-$\beta$ differences}
 
-Since the different dataset types were tested with different heads, I group the them the following
+Since the different dataset types were tested with different heads, I group them the following
 way: Results for classification datasets (deISEAR, SCARE, PAWS-X, XNLI) are reported together, and
 the results for question answering datasets (MLQA, XQuAD), are grouped together. Since the latter
 group consists of only two datasets addressing the same task, and bearing in mind that there were
 only experiments for one head in this group, the Span Prediction Head, the discussion analyzing
 these results will not be as interesting and substantial as for the first group. Because of the
-limited scope of this thesis, and for the sake of straightforwardness, only test set results are
+limited scope of this thesis, and for reasons of space, only test set results are
 reported in the tables. However, model selection was always based on development set results as is
 visualized in figure \ref{fig:acc-loss}:
-
-Based on the progression of the accuracy value on the development set the epoch with
-the highest accuracy on the development set was chosen and the corresponding test set
-accuracy was taken as best performance for this experiment on the dataset. The vertical
-line in those three example experiments\myfootnote{\textbf{deISEAR} $\beta$ +SRL normal
-duplicate [CLS] head, \textbf{SCARE} $\beta$ +SRL merge zeros GRU head, \textbf{XNLI}
-$\alpha$ +SRL merge zeros [CLS] head.} accuracy and loss progression on development and
-test results compared). marks this epoch, the horizontal drawn through line marks the
-development accuarcy (the global maximum of the red curve), and the horizontal dotted line
-marks the correpsonding test accuracy. On the right the corresponding losses for the
-same epoch are marked in the same manner.
+The epoch having the best development set results is selected and the
+corresponding accuary on the test set is reported. The vertical line in
+those three example experiments\myfootnote{\textbf{deISEAR} $\beta$ +SRL
+normal duplicate [CLS] head, \textbf{SCARE} $\beta$ +SRL merge zeros GRU
+head, \textbf{XNLI} $\alpha$ +SRL merge zeros [CLS] head.} marks this
+epoch, the horizontal drawn through line marks the development accuarcy
+(the global maximum of the red curve), and the horizontal dotted line
+marks the correpsonding test accuracy. On the right the corresponding
+losses for the same epoch are marked in the same manner.
 
 \begin{figure}[H]
   \begin{center}
@@ -101,8 +99,7 @@ by the model.
   colframe=blue!75!black,
   title={\centering Code}]
 
-  To evaluate several models in ensemble mode, run the following command (make sure the
-  \texttt{conda} environment is activated):
+  To evaluate several models in ensemble mode, run the following command:
 
   \begin{verbatim}
     $ python ensemble_predict.py -r  \
@@ -254,9 +251,8 @@ for a more detailed formulation of this process:
   colframe=blue!75!black,
   title={\centering Code}]
 
-  To control for two models, or ensembles, if the differences between the control (-c) and test
-  (-t) one are statistically significant, run the following command (make sure the \texttt{conda}
-  environment is activated):
+  To control for two models, or ensembles, if the differences between the control (\texttt{-c}) and test
+  (\texttt{-t}) one are statistically significant, run the following command:
 
   \begin{verbatim}
     $ python test_significanc.py -c          \
@@ -330,24 +326,24 @@ each architecture on the classification datasets are reported.
 
 The best, second best and worst performance over all three heads and SRL configurations
 are marked. In the last row, best and second best results per head and +/$-$SRL for each
-subtokenization settings are accumulated. As the Scores indicate, taken the results without
-controlling for significance,\myfootnote{ Here I don't control for statistical significance
+subtokenization settings are accumulated. As the scores indicate, the results taken without
+controlling for significance,\myfootnote{ Here I don't test for statistical significance
 because it is not clear, against what model(s) should a peak performance be controlled
 for: Take the 77.45\% accuracy of the deISEAR $\alpha$, achieved by the +SRL, BERT tokens
-subtokenized, FFNN head: Against what should this results be compared? To all other $-$SRL
+subtokenized, FFNN head: Against what should this results be compared to? To all other $-$SRL
 results? Only to the corresponding $-$SRL results for the same head?} the +SRL configurations
 achieved 5 times the best, and 10 times the second best results --- compared to 4 best and
 5 second best results for $-$SRL. This is a first indicator that adding SRL information seems
-to be able to support plain BERT embeddings in classification tasks.
+to be able to improve plain BERT embeddings for classification tasks.
 
 The accumulations in roman numerals also indicate a further, observable trend: The GRU head
 accumulated 5 best and 6 second best results, independent of with or without SRLs, appears to be better
 suited for classification tasks than the [CLS] (2 best, 6 second best) and FFNN (2 best, 3 second best) heads.
 Supporting this, the GRU head never was responsible for the worst performance, which were all
-achieved by the FFNN and [CLS] heads.
+computed by the FFNN and [CLS] heads.
 
 In the following table \ref{tab:pawsx-beta}, the ensembling of each of the results in the main table is
-exemplary disaggregated. Each head-SRL configuration is randomly initialized 5 times, resulting in
+disaggregated as an example. Each head-SRL configuration is randomly initialized 5 times, resulting in
 5 models achieving slightly different performances on the dataset. By ensembling them, a steady gain of, in this case,
 1.26\% compared to the average of the 5 models is achieved. Similar ensembling improvements where
 observed for all other datasets.
@@ -359,7 +355,7 @@ observed for all other datasets.
   % \vspace*{\fill}
   \tab{tab:results}{Test set accuracy ensemble results (per 5 models) on single sentence and sentence pair tasks.
                     \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.
-                    In the \emph{Scores} row, the afore mentioned positive extremes are accumulated for $-$SRL and $+$SRL;
+                    In the \emph{Scores} row, the aforementioned positive extremes are accumulated for $-$SRL and $+$SRL;
                     note that if both +SRL configurations of an architecture achieved an extreme, it is only counted once.
 
                     The line marked with light gray --- PAWS-X $\beta$ --- is ``expanded'' in table \ref{tab:pawsx-beta} to illustrate
@@ -411,11 +407,11 @@ observed for all other datasets.
   \vfill
 \end{landscape}
 
-To see whether there can be seen a tendency as to which SRL-BERT aligning strategy turns out
+To determine whether there is a tendency as to which SRL-BERT aligning strategy turns out
 to be more effective, the results of the main table \ref{tab:results} are aggregated in table
 \ref{tab:token-vs-merged}: For each head, the +SRL results are compared, and the differences
 are reported in the table. For example, we look at the [CLS] head on deISEAR $\alpha$ and ask
-us, which strategy --- merging the BERT subtokens back ot ``normal'' tokens, or splitting the
+us, which strategy --- merging the BERT subtokens back to ``normal'' tokens, or splitting the
 SRLs up to align with the subtokenized BERT tokens --- worked better. For this, the difference
 between both for +SRL zeros and +SRL duplicate is calculated and controlled for statistical
 significance between both ensembles. The subtokenizing strategy (yellow) outperformed the
@@ -472,20 +468,20 @@ information loss or distortion that cannot be fully balanced by the added SRL in
 
 Another accumulating view on the main table \ref{tab:results} is constructed by not just
 looking for the best results of a whole row, i.e. over all heads, merging strategies,
-and SRL implementations, but instead record the superiority or inferiority of +SRL
+and SRL implementations, but instead by recording the superiority or inferiority of +SRL
 compared to $-$SRL for each pairing: Take for example the deISEAR $\alpha$ subtokenized
 [CLS] head setting: Without SRLs, the ensemble performance was 71.52\%; now the better
 of the two +SRL implementations of this setting is taken into account, in this case
-zeroing apparently was better. The difference, .67\% is controlled for significance and
+zeroing apparently was better. The difference, 0.67\% is tested for significance and
 reported in the table. The coloring indicates which SRL implementation performed better
 and was taken into account; sometimes both implementations performed equally, which is
 also reflected in coloring. Negative numbers indicate, of course, that the head produced
 better results when SRL information was \emph{not} added (and this was also controlled
 for significance).
-Looking at the such accumulated results (table \ref{tab:gain-loss}), no clear picture emerges
+Looking at these accumulated results (table \ref{tab:gain-loss}), no clear picture emerges
 at first glance; sometimes zeroing SRLs performed better than duplicating SRLs, sometimes not.
-Sometimes +SRL clearly outperforms $-$SRL, even highly statistically, sometimes it is
-the other way around adding SRLs seems to create a disadvantage for the head.
+Sometimes +SRL clearly outperforms $-$SRL, even highly statistically significant, sometimes it is
+the other way around and adding SRLs seems to create a disadvantage for the head.
 
 \begin{figure}
   \begin{minipage}{0.45\linewidth}
@@ -514,7 +510,7 @@ visualized by the uniformly distributed purple shades in this dataset rows.
 For the merged settings, the correlation axis appears slightly to change: Before, positive or
 negative influence of the BERT-SRL combining technique has shown some correlation with datasets
 (tendency to lead to slight gains in sentence pair tasks, and irregular behavior on single
-sentence tasks), now while this still holds slightly, it seems that especially the FFNN and GRU
+sentence tasks), now while this still holds to some degree, it seems that especially the FFNN and GRU
 head are negatively affected by merging SRLs, while the [CLS] head shows a trend towards
 gaining from it. Note also, that the subtokenized settings shows a greater range of gains and
 losses (from $-$4.63 to + 6.62) compared to the merging approach ($-$1.99 to +2.59).
@@ -576,9 +572,9 @@ than zeroing.
   \label{fig:classification-gains}
 \end{figure}
 
-As described in chapter \ref{chap:3_datasets}, the datasets compiled in GerGLUE are a quite
+As described in chapter \ref{chap:3_datasets}, the datasets compiled in GerGLUE are a
 heterogeneous assembly: Some datasets like deISEAR and, especially, SCARE comprise rather
-informal, colloquial tests, while PAWS-X and XNLI consists of more technical, standardized text.
+informal, colloquial texts, while PAWS-X and XNLI consists of more technical, standardized language.
 Further, as depicted in figure \ref{fig:num-predarg-structs}, over 30\% of the sentences
 in SCARE don't have any predicate-argument structures --- in other words there is no exploitable SRL
 information for the model.
@@ -597,32 +593,34 @@ where a positive effect was measured outweighs the negative one by far.
 For the single sentence tasks, however, the picture somewhat darkens. While there were some
 significant improvements for deISEAR, there were also quite some experiments where adding SRLs
 seems to have weakened the model. Generally, deISEAR is the dataset that shows the strongest
-fluctuations ranging from 67.55 to 77.48\% --- a range of staggering 9.93\%. It is not clear
-to me why especially deISEAR shows this behavior, but the relative small amount of examples
-in the dataset could indicate that it is more prone to unlucky random initializations which
-could be countered with more examples for the models to extrapolate from.
-For SCARE, there is no clear positive effect measurable at all
---- in contrary, the significant deteriorations outnumber the significant gains. However, this
-is not too surprising taking into account the afore mentioned fact of predicate scarceness in
-SCARE (or at least, ParZu couldn't detect any). Further, the register is highly colloquial with
-very frequent deviations from standard orthography etc. which all probably leads to a collapsing
-of the already not too stable DAMESRL system.
+accuracy fluctuations ranging from 67.55 to 77.48\% --- a range of staggering 9.93 percentage
+points. It is not clear to me why especially deISEAR shows this behavior, but the relative
+small amount of examples in the dataset could indicate that it is more prone to unlucky random
+initializations which could be countered by more examples for the models to extrapolate from.
+For SCARE, there is no clear positive effect measurable at all --- in contrary, the significant
+deteriorations outnumber the significant gains. However, this is not too surprising taking into
+account the afore mentioned fact of predicate scarceness in SCARE. Further, the register is
+highly colloquial with very frequent deviations from standard orthography, elliptic structures,
+etc. which all probably leads to a collapsing of the already not too stable DAMESRL system.
 
 
 \fig{images/all_datasets_gain_dup.pdf}{fig:each-dataset-gains}{Accumulation of statistics for each classification
                                        dataset \textbf{Left}: Which SRL architecture performed better.
-                                       \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs. Darker Colors indicate significant runs; light green stands for a neutral run, i.e. where adding SRLs information performed equally to the vanilla architecture}{15}{Results Accumulation for each Dataset}
+                                       \textbf{Right}: Comparison of accuray points gained/lost
+                                        after adding SRLs. Darker Colors indicate significant runs; light green stands for a neutral run,
+                                        i.e. where adding SRLs information performed equally to the vanilla architecture.}{15}{Results
+                                        Accumulation for each Dataset}
 
-In figure \ref{fig:each-head-gains} the accumulation of gains and losses is done head-wise; i.e.
+In figure \ref{fig:each-head-gains} the accumulation of gains and losses is done head-wise,; i.e.
 for both BERT-SRL combination settings --- subtokenized and merged ---, the gains and losses
 are added together and the significant ones are indicated. The [CLS] head amasses the most
 significant gains, while at the same time having led to two significant losses.
 Clearly, the FFNN head shows the weakest performance of the tested heads; the overall losses are the heighest
 of all the heads and the significant gains and losses are on par. The GRU head accumulated the
-most gains but only one of them being significant.
+most gains but with only one of them being significant.
 
 \fig{images/all_heads_gain_dup.pdf}{fig:each-head-gains}{Accumulation of statistics for each head. \textbf{Left}: Which SRL architecture performed better.
-                                       \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs. Darker Colors indicate significant runs; light green stands for a neutral run, i.e. where adding SRLs information performed equally to the vanilla architecture}{15}{Results Accumulation for each Dataset}
+                                       \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs. Darker Colors indicate significant runs; light green stands for a neutral run, i.e. where adding SRLs information performed equally compared to the vanilla architecture}{15}{Results Accumulation for each Dataset}
 
 Still, the sheer number of experiments where adding SRL structure compared to the four experiments
 where it had an negative impact makes the GRU head the most realible extracting task-supporting
@@ -649,16 +647,19 @@ all other configurations (merged/subtokenized, +SRL/$-$SRL, etc.) are highlighte
     \includegraphics[width=0.9\linewidth]{images/QA_gain_losses_SRL2.pdf}
   \end{minipage}
   \stepcounter{myfigure}
-  \caption[Accumulated Gains and Losses.]{Accumulated scores from table \ref{tab:qa-gain-loss-token-merged}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
+  \caption[Accumulated Gains and Losses.]{Accumulated scores of the question answering experiments from table \ref{tab:qa-gain-loss-token-merged}. \textbf{Left}: Which SRL mode performed stronger out of a total of 8 settings. The bars indicate a slight outperforming of duplicating SRLs instead of adding zeros. \textbf{Right}: Counts for Gains and Losses in all 8 settings. Darker shades indicate significant results. The light green tip stands for settings where the gain equals 0.00.}
   \label{fig:qa-tot-gains}
 \end{figure}
 
-In sharp contrast to the classification task restuls, the verdict here is far more devastating
-regarding the positive effect of SRLs: 3 out of 4 best results were achieved by models implementing
-vanilla BERT embeddings and 3 out of 4 times the worst performance was measured for +SRL settings.
-Only in the XQuAD $\beta$ setting (regular SRL sequence encoding, see table \ref{tab:alpha-beta}),
-a +SRL setting performed best --- however, when compared to the corresponding $-$SRL setting, this
-0.29\% gain is not statistical significant (see table \ref{tab:qa-gain-loss-token-merged}).
+In contrast to the classification task restuls, there was no measurable
+positive effect of adding SRLs to the German BERT embeddings: Three
+out of four best results were achieved by models implementing vanilla
+BERT embeddings and three out of four times the worst performance was
+measured for +SRL settings. Only in the XQuAD $\beta$ setting (regular
+SRL sequence encoding, see table \ref{tab:alpha-beta}), a +SRL setting
+performed best --- however, when compared to the corresponding $-$SRL
+setting, this 0.29\% gain is not statistically significant (see table
+\ref{tab:qa-gain-loss-token-merged}).
 
 \tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
   \scalebox{1}{
@@ -680,7 +681,7 @@ a +SRL setting performed best --- however, when compared to the corresponding $-
   }
 }{Results-QA}
 
-When accumulated for unfolding subtokenized vs. merged patterns, there emerges a surprisingly
+When accumulated for subtokenized vs. merged patterns, there emerges a surprisingly
 clear tendency (see left side of table \ref{tab:qa-gain-loss-token-merged}): Splitting SRLs according to
 the BERT subtokenization always showed stronger results than BERT merging. 5 times out of the
 total 8 settings the differences were even highly significant with $p < 1\%$ and one time
@@ -699,7 +700,7 @@ performed better was XQuAD $\beta$ --- however in both cases insignificant.
                        account: \customcolorbox{zeros}{blue},
                        \customcolorbox{duplicate}{dark-blue}.
                        Light blue denotes that both architectures performed \customcolorbox{equally}{llight-blue}
-                       (in which case both ensembles were controlled for significance).
+                       (in which case both ensembles were tested for significance).
                        One asterisk signifies a $p$-value $<$ 10\%, two stand for $p <$ 5\% and three for $p <$ 1\%.
                        \textbf{Right part}: Performance of architectures when BERT \customcolorbox{subtokenized}{yellow} vs. \customcolorbox{merged}{purple}. Both SRL implementations were
                           compared pairwise..}{
@@ -722,9 +723,9 @@ research question of this thesis: For the two question answering datasets in Ger
 BERT embeddings with SRL information seems to rather harm the model instead of adding helpful information.
 Interestingly, this contrasts with the findings of \citeauthor{zhang2019semantics}, who reported a gain
 of 4.3\% in accuracy on the SQuAD 2.0 set for their SemBERT implementation.\myfootnote{However, a ``synthetic
-self training'' technique leading to these results is mentioned, but which is unfortunately not elaborated upon any more. For their
+self training'' technique leading to these results is mentioned, but which is unfortunately not elaborated upon furthermore. For their
 ``regular'' SemBERT large implementation the reported gain is 1.9\% --- which would still stand
-for a positive influence of SRL enriching which is not reproduced through my experiments.}
+for a positive influence of SRL enrichment, which is not reproduced through my experiments.}
 
 
 % Main conclusions:

@@ -14,7 +14,7 @@ the same workable format, computes SRLs by implementing two freely available too
 (ParZu, DAMESRL) and several instruments for training and analyzing models. (3)
 \emph{GliBERT}, a BERT-based architecture which combines vanilla BERT-embeddings
 with embedded SRLs during fine-tuning, comprising several heads, and convenient
-hyperparameter setting.\myfootnote{All code relating to this thesis is availabel
+hyperparameter setting.\myfootnote{All code relating to this thesis is available
 under \url{https://github.com/JonathanSchaber/Masterarbeit}.}
 
 Extensive experimentation and subsequent result analysis indicate that providing
@@ -79,7 +79,7 @@ following list sketches some of these which seem worthy of investigation to me:
     meaning changes introduced by negativity polarity items. Since DAMESRL is not capable
     of detecting them --- at least for German ---, negation particles could be detected in the ParZu parse tree and
     added manually as \texttt{MOD-NEG} to the SRLs.
-  \item[Systematic hyper-parameter search] For my experiments, I tested several different hyperparameter
+  \item[Systematic hyperparameter search] For my experiments, I tested several different hyperparameter
     settings (such as the SRL embedding size, learning rate, etc.) and implemented the ones that
     showed the best preliminary performance. Executing systematic hyperparameter space search, implementing e.g. grid search, may
     lead to additional increases in performance.
@@ -105,7 +105,7 @@ constructive, as various results of analyzing the limited NLU capabilities of
 such models unambiguously demonstrate. In order to build systems that are able
 to process natural language in a deep, semantics conveying way, systematic employment
 of tools provided by linguistic insights into the inner workings of human language
-are indispensable. I see GliBERT as such a case of the fertile combination of deep
+are indispensable. I see GliBERT as a case of such a fertile combination of deep
 learning techniques with structured linguistic knowledge representations.
 
 % Therefore, neuro-symbolic architectures, i.e. models that learn epistemically from data while implementing

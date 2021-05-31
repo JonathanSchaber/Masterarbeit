@@ -2,7 +2,7 @@
 \label{chap:5_discussion}
 
 
-Based on the results presented in the previous chapter \ref{chap:5_results}, A first, preliminary
+Based on the results presented in the previous chapter \ref{chap:5_results}, a first, preliminary
 insight can be formulated: Adding numericall embedded SRL information to the German  BERT embeddings
 leads to overall enhancing in classification tasks. For question answering, however, the SRL information
 leads to a clear decrease in performance. Additionally, while there was no clear advantage of one aligning strategy
@@ -12,9 +12,9 @@ the BERT subtokens and duplicating SRLs clearly outperform the subtokens merging
 The reasons for these rather drastic differences between classification and question answering
 tasks remain unclear to me; especially the negative impact of SRLs for question answering tasks
 --- despite tediously controlling the merging algorithm and validating the re-computing of start
-and end indices, I could not make out any error.
+and end indices, I could not find out any implementation errors.
 
-My speculation towards an explanation would be that one of the main differences between
+A possible explanation Could be that one of the main differences between
 the classification and question answering datasets is the size of the examples: While for
 the classifications task the model needs to extract semantic information out of a handful
 sentences, for the question answering tasks this is rather the exception --- normally
@@ -34,25 +34,24 @@ For the classification tasks, there was a modest tendency in the results suggest
 SRL information is of more support in sentence pair tasks, compared to single question datasets.
 However, this conjecture needs also to take into account that the register in the sentence
 pair tasks was generally of a higher standard than in the single sentence tasks; the
-extreme being SCARE, with its colloquial, short, and often ungrammatical text snippets. Nevertheless,
-showing
+extreme being SCARE, with its colloquial, short, and often ungrammatical text snippets.
 
-One might ask if a simple accuracy is the right metric to make this substantial claims
+One might ask if accuracy is the right metric to make this substantial claims
 about model performances and the utility of SRL-enriched embeddings. Moreover, it is
 often common to compute other metrics like $F_1$-scores, especially if class imbalance
 is a known property of datasets. There are two main reasons as to why I chose to stay
 with simple accuracy: (1) I am not interested in building a classifier which explicitly
 addresses problems related to failure avoidance or class discrimination, e.g. spam
-detection tasks. In such cases, an $F_1$-score of course is more meaningful because it
+detection tasks. In such cases, a macro $F_1$-score of course is more meaningful because it
 is more sensible to predictions on underrepresented but task-important classes (such
 as spam). In this thesis, however classification performance without focusing on a
 particular class is of interest. (2) As reported in chapter \ref{chap:3_datasets}, most
 of my datasets do not show signs of class imbalance, and their ``examples are assumed
 to be identically and independently distributed (IID)'', in which case the accuracy measure is
 ``the most used empirical measure'' \citep{sokolova2006beyond}. To further substantiate
-this, I compute some metrics for the most significantly imbalanced dataset, namely
-SCARE: A brute force ``stupid'' prediction of the majority class on the test set would
-results in an accuracy of 59.09\% and a macro $F_1$ of 24.76. The example confusion
+this, I compute some metrics for the most imbalanced dataset, namely
+SCARE: A brute force prediction of the majority class on the test set would
+result in an accuracy of 59.09\% and a macro $F_1$ of 24.76. The example confusion
 matrix of an actual experiment is shown in table \ref{tab:confusion-scare}: Although
 the algorithm overpredicts the majority (``Positive'') class, it also predicts to some
 extent the other ones. The measures resulting from this experiment are an accuracy of
@@ -102,8 +101,10 @@ following \textbf{noise} categories:
                          labels, since the overall meaning changed during
                          the translation process (e.g. a sentence pair is no more
                          contradicting but neutral), thus creating label noise.
- \item[\textbf{SRL}] The SRLs obtained from DAMESRL are, conservatively formulated,
-                         questionable in their quality (e.g. modifiers are completely missing).
+ \item[\textbf{SRL}] The SRLs obtained from DAMESRL are, conservatively formulated, questionable
+                         regarding their informativeness (e.g. modifiers are completely missing). Especially the lack of
+                         recognizing detecting negation particles is a considerable deficiency regarding NLU tasks where
+                         recocnizing the semantic reversal triggered by sich items is crucial.
 \end{itemize}
 
 While it is normal for data in NLP to possess noise in some way or the other, this usually does
@@ -143,18 +144,18 @@ the BERT embeddings will probably contain some noise regarding the classificatio
 is aimed at parsing ``clean'', correct sentences, showing of course problems at processing examples as the
 one above, which leads to the known error propagation and amplification through DAMESRL.
 
-In other words, it is expectable for GliBERT to show difficulties on the aforesaid datasets, which
+In other words, it is expected for GliBERT to show difficulties on the aforesaid datasets, which
 was also observed during the analyses of the results in section \ref{sec:classification-results}.
 
 Interestingly, the discrepancy between the German BERT pretraining text register and the text
 present in some GerGLUE datasets, the analysis of the German BERT tokenization statistics shows
-that also in those problematic datasets, there are very little out of vocabulary items, which
+that also in those problematic datasets, there are very little out-of-vocabulary (OOD) items, which
 would be encoded by the catch-all [UNK] BERT token:
 
 \fig{images/all_data_sets_token_stats.pdf}{fig:all-data-sets-token-stats}{Percentages of token-types in all datasets.
                                                                           \#\# Subtokens represent the amount of tokens that
                                                                           get re-merged in the merged settings (e.g. ``Master''
-                                                                          ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''. The amount
+                                                                          ``\#\#arbeit'' $\rightarrow$ ``Masterarbeit''). The amount
                                                                           of tokens that lie outside of the German BERT vocabulary is
                                                                           in all datasets extremely small (for deISEAR and XNLI
                                                                           there are no [UNK]s at all); the largest shares of such tokens
@@ -192,10 +193,11 @@ non-paraphrases:
 But also for human created sentence pairs, there
 is a chance that the gold labels are not that clear. Further, through the creation of the German
 datasets by means of semi-automatically translating English datasets, additional translation
-noise might additionally pollute the data.
+noise might furthermore pollute the data.
 
-To examine this more systematically for XNLI and PAWS-X, I conduct a re-labeling of 20 random
-examples each  where the predictions of the best model contradicted the gold labels in the dataset.
+To examine this more systematically for XNLI and PAWS-X, I conduct a re-labeling experiment with
+two independents annotators of 20 random examples each where the predictions of the best model
+contradicted the gold labels in the dataset.
 
 
 \subsubsection{Re-annotation}
@@ -289,7 +291,7 @@ with the gold label:
 Since the specification of ``spanisch'' is only encountered in the hypothesis but missing from the premise,
 I would argue that the humans and the model are right about the ``neutral'' label and the gold label
 is false.
-In another example, all three ``agents'' --- the two humans, the model, and the gold labels --- disagreed:
+In another example, all three ``annotators'' --- the two humans, the model, and the gold labels --- disagreed:
 
 \begin{examples}
   \item Oh, ich sehe oh der Staat braucht es nicht gut, das ist eher das, das ist eher ungewöhnlich, nicht wahr?\\
@@ -299,18 +301,18 @@ In another example, all three ``agents'' --- the two humans, the model, and the 
 \end{examples}
 
 The latter is also a further exemplification of the register diversity in XNLI: The premise above seems as if it
-was a transcription of an utterance torn out of the context an actual conversation; because of that for a human
+was a transcription of an utterance torn out of the context of an actual conversation; because of that for a human
 reader there is essential information missing, making it a rather strange and vague case for attributing
 a specific entailment regarding any hypothesis.
 
 
-Both re-labelings have led to the finding that the quality of semi-automatically
-created datasets is often doubtful: (1) As the many ``neutral'' re-labelings of
-XNLI examples by the human annotators indicate, often there seems not be a clear
-preference towards a certain label --- rather, as in the examples above, there is
-too much ambiguity and lacking of needed information around to make a clear decision
-of the relation between those sentences. (2) Further, the predefined labels in such
-datasets are by no means to be taken as undoubtedly indicating true classifications.
+Both re-labelings have led to the finding that the quality of semi-automatically created
+datasets is often doubtful: (1) As the many ``neutral'' re-labelings of XNLI examples
+by the human annotators indicate, often there seems not be a clear preference towards a
+certain label --- rather, as in the examples above, there is too much ambiguity and a lock
+of context information to make a clear decision of the relation between those sentences.
+(2) Further, the gold labels in such datasets are by no means to be taken as undoubtedly
+indicating a generally acceptable classification.
 
 
 
@@ -324,7 +326,7 @@ and German. But still, especially for delicate, subtle expressions, errors can h
 artifacts, which may confuse the model, there also exists the possibility of additionally
 introducing label noise.
 
-Take for example the following XNLI English original premise-hypothesis pair and its aromatically
+Take for example the following XNLI English original premise-hypothesis pair and its automatically
 translated German counterparts:
 
 \begin{examples}
@@ -347,16 +349,6 @@ a wrongly labelled training instance was created.
 \subsection{SRL Noise}
 \label{sec:srl-noise}
 
-A major question arising in the context of using automatically assigned Semantic
-Roles in downstream tasks, is how precise these predicted Semantic Role are. Since
-there is no gold standard available for Semantic Role Labels for the datasets I
-use in my experiments, there is no straight-forward way to evaluate their quality
-automatically. Additionally, in contrast to other tagging tasks like POS prediction
-or NER, Semantic Roles are not as black and white: While it is relatively easy to
-decide if a predicted POS tag is correct or incorrect, it is more a scalar value
-concerning the correctness of SRLs; often, a semantic role labelled squence is not
-completely ``false'' but rather not really informative or precise.
-
 \begin{wrapfigure}[19]{l}{0.65\linewidth}
   \begin{center}
     \includegraphics[width=0.9\linewidth]{images/SRL_assessment.pdf}
@@ -364,21 +356,31 @@ completely ``false'' but rather not really informative or precise.
   \stepcounter{myfigure}
   \caption[SRL assessment]{Independent evaluation of SRL quality by three people. Regardless of the
     label attributed to each example, it is obvious, that the total amount of sentences for which the
-    annotators evaluated the corresponding semanti roles as \emph{helpful}, is relatively stable.}
+    annotators evaluated the corresponding semantic roles as \emph{helpful}, is relatively stable.}
     \label{fig:SRL-assessment}
 \end{wrapfigure}
 
-Therefore, as for the data quality / label noise assessment, I conduct an human evaluation study
-for determining the SRL quality: Three people evaluated the SRL quality of examples regarding
+A major question arising in the context of using automatically assigned Semantic
+Roles in downstream tasks, is how precise these predicted Semantic Role are. Since
+there is no gold standard available for Semantic Role Labels for the datasets I
+use in my experiments, there is no straight-forward way to evaluate their quality
+automatically. Additionally, in contrast to other tagging tasks like POS prediction
+or NER, Semantic Roles are not as black and white: While it is relatively easy to
+decide if a predicted POS tag is correct or incorrect, it is more a scalar value
+concerning the correctness of SRLs; often, a semantic role labelled sequence is not
+completely ``false'' but rather not really informative or precise.
+
+Therefore, as for the data quality / label noise assessment, I conduct a human evaluation study
+for determining the estimated SRL informativeness: Three people evaluated the SRL quality of examples regarding
 whether they estimate them to be helpful, neutral, or harmful to the model for solving
 the task at hand.\myfootnote{For single sentence tasks, 20 examples were randomly sampled, for
 sentence pair tasks 10 examples, and for question answering tasks 2 examples (since the context
-comprises often umpteen sentences.}
+comprises often several sentences).}
 
 In figure \ref{fig:SRL-assessment} the aggregated evaluations per human are summed up:
 Evidently, the predicted SRLs were mostly estimated to be neither of great help to the model
 nor severely distract it. It has to be noted, however, that the inter-annotator agreement between
-the the three people was very low, the computed Fleiss' $\kappa$ was only 0.20 --- indicating
+the three people was very low, the computed Fleiss' $\kappa$ was only 0.20 --- indicating
 an agreement slightly above randomness.
 
 If the annotations are summed up over each dataset, as in figure \ref{fig:data-set-SRL-assessment},
@@ -389,7 +391,7 @@ i.e. all annotators picked the same label (indicated by darker color shades).
 
 Interestingly, for PAWS-X there is comparatively high agreement observable between the annotators:
 The bar which indicates harmful judgement is quite high, with a substantial unisono part. However,
-as is shown in the right figure of \ref{fig:classification-gains}, PAWS-X is one of the datasets
+as is shown in the right part of figure \ref{fig:classification-gains}, PAWS-X is one of the datasets
 where there was a clear performance gain from adding SRL information. This is another sign which
 indicates that it is difficult for humans to estimate if a certain information will be helpful for
 a machine learning model --- even if the intuitive judgement of the quality of the SRLs is rather
@@ -461,13 +463,11 @@ following question would need some ablation experiments to be answered: What par
 is most responsible for the performance boost? To be able to formulate this in a matter which
 can be experimentally tested, I identify two easily separable and testable aspects of SRLs,
 take for example the sentence depicted in figure \ref{srl:normal}: Firstly, the information
-what parts of a sentence are the predicates. The intuition behind this is that maybe the
-head relies mostly on the information as to which tokens carry information about the events
-that happen in a given sentence. To test this, I drop the information about all SRLs,
+on what parts of a sentence are the predicates are isolated. To this end, I drop the information about all SRLs,
 except the information that a token is a predicate (left side of figure \ref{srl:ablation}).
 In the second case, the hypothesis is reversed: Maybe the head is able to get the most useful
 hints from the information which indicates what role certain token groups play in a given
-sentence. To test for this all information about predicates is dropped and only information
+sentence. To test for this, all information about predicates is dropped and only information
 about arguments is preserved (right side of figure \ref{srl:ablation}).
 
 To see the influence of these SRL ghosting techniques, for each classification dataset, I take a
@@ -476,7 +476,7 @@ models for each configuration (preserving only predicate information vs. only ar
 In table \ref{tab:srl-abla} I report the results from this ablation experiments.
 
 
-\tab{tab:srl-abla}{Ablation on effect of PREDs and ARGs information isolated. Note that mostly only the combination of both information structures leads to a significant improvement over vanilly BERT embeddings ($-$SRL)}{
+\tab{tab:srl-abla}{Ablation on effect of PREDs and ARGs information isolated. Note that mostly only the combination of both information structures leads to a significant improvement over vanilla BERT embeddings ($-$SRL).}{
   \scalebox{0.9}{
     \begin{tabular}{llcccc}
                      &                               & \multicolumn{1}{c|}{$-$SRL}                  & \multicolumn{3}{c}{+SRL}                                                                                                 \\
@@ -492,12 +492,12 @@ In table \ref{tab:srl-abla} I report the results from this ablation experiments.
 
 As can be seen, SRL information only displays its full positive effect when both information parts are combined: Providing
 the model only with predicate information already leads to a slight, but insignificant improvement in all experiments.
-By telling the model exclusively about where arguments are located in sentences leads to a greater advancement, but
+By informing the model solely about where arguments are located in a sentence leads to a slightly better performance, but
 mostly also insignificant. For three out of four datasets, informing the model about both SRL information structures
 in combination leads to a further significant increase of accuracy.
 
-Apparently, the crucial aspect of information the GliBERT heads improve from having knowledge
-about semantic roles lies in its relational character: It is not so much an ``annotation''
+Therefore, the crucial aspect of information the GliBERT heads improve by having access to SRL labels
+ lies in their relational character: It is not so much an ``annotation''
 of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
 relationship in which those sequences stand to each other.
 
@@ -605,7 +605,7 @@ subsequent head in solving the down-stream task.
 
 \paragraph*{Differences in head architectures}
 
-The BERT vanilla head for classification adapted to the GLiBERT [CLS] head showed mixed results:
+The BERT vanilla head for classification adapted to the GliBERT [CLS] head showed mixed results:
 While producing 11 improvements out of 16 experiments, 4 of them significantly, there were also
 3 instances where adding SRL information led to a performance decrease, where in two thirds of
 the cases, this decrease was statistically significant. The [CLS] head therefore is a relatively

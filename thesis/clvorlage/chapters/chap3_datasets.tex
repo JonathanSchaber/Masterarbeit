@@ -118,7 +118,7 @@ In this section, I give a detailed description of the selected datasets in alpha
 What kind of task is addressed, what is the text variety, and report some statistical measures,
 e.g. the average length of examples in the different sub-sets (Training, Development, Test). I
 also document the SOTA benchmark results that the authors specify on their datasets; anyhow,
-the results of GLiBERT will not be compared directly with them since my focus is not on dataset
+the results of GliBERT will not be compared directly with them since my focus is not on dataset
 SOTAs but differences between GliBERT with and without SRL information. Nevertheless, for most
 datasets, the GliBERT performance is on par with what the authors report.
 
@@ -167,7 +167,7 @@ the annotators had the list of seven emotions at hand. \citeauthor{troiano2019cr
 report that for approximately half of all sentences, the inter-annotator agreement was perfect;
 i.e. each of the five annotators attributed the same emotion. However, some emotions seem to
 be prone for not being clearly separable: Shame, for example, gets confused with guilt and vice versa
-in 17\% and 19\% of the cases, respectively. Remarkably, this pattern is not visible for the GLiBERT
+in 17\% and 19\% of the cases, respectively. Remarkably, this pattern is not visible for the GliBERT
 predictions, as is exemplified for one ensemble in table \ref{tab:confusion-deisear}: Shame and guilt
 are reliably told apart by the model, however, it has more general problems in recognizing
 sadness and anger.
@@ -894,7 +894,7 @@ lot of reviews are actually of the following structure:
   \item Erkennt Drucker nicht... \textbar \textbar\ ...,wenn er als Netzwerkdrucker an der FritzBox hängt, und eine manuelle Konfiguration über IP-Adresse ist nicht möglich.
 \end{examples}
 
-i.e. that the title and the text of the review form one continuous sequence, rendering a introduction
+i.e. that the title and the text of the review form one continuous sequence, rendering an introduction
 of the [SEP] special token rather superfluous, if not harmful. Nevertheless, the
 separator symbol arguably ``\textbar \textbar'' introduces some noise, especially for the ParZu
 parser, which needs to parse the sequence.
