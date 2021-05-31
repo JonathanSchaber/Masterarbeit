@@ -452,7 +452,7 @@ gain (or loss, respectively).
     Augusta    \colorbox{llight-blue}{I-A1}
     .          \colorbox{white}{O}
       \end{BVerbatim}
-      \caption{Regular SRLs.}
+      \caption{Regular SRL markup on a XNLI premise-hypothesis pair.}
       \label{srl:normal}
     \end{srl}
 \end{minipage}
@@ -463,8 +463,8 @@ following question would need some ablation experiments to be answered: What par
 is most responsible for the performance boost? To be able to formulate this in a matter which
 can be experimentally tested, I identify two easily separable and testable aspects of SRLs,
 take for example the sentence depicted in figure \ref{srl:normal}: Firstly, the information
-on what parts of a sentence are the predicates are isolated. To this end, I drop the information about all SRLs,
-except the information that a token is a predicate (left side of figure \ref{srl:ablation}).
+on what parts of a sentence are the predicates is isolated to determine the effect of indicating only
+predicate information to the head (left side of figure \ref{srl:ablation}).
 In the second case, the hypothesis is reversed: Maybe the head is able to get the most useful
 hints from the information which indicates what role certain token groups play in a given
 sentence. To test for this, all information about predicates is dropped and only information
@@ -496,10 +496,10 @@ By informing the model solely about where arguments are located in a sentence le
 mostly also insignificant. For three out of four datasets, informing the model about both SRL information structures
 in combination leads to a further significant increase of accuracy.
 
-Therefore, the crucial aspect of information the GliBERT heads improve by having access to SRL labels
- lies in their relational character: It is not so much an ``annotation''
-of certain parts of sentences --- as for e.g. named entities ---, but the indication of the
-relationship in which those sequences stand to each other.
+Therefore, the crucial aspect of SRL information the GliBERT heads improve from lies
+in the relational character of semantic roles: They are not solely ``annotation'' of certain parts of
+sentences --- like for e.g. named entities ---, but indicate the functional relationship
+in which those sequences stand to each other.
 
 \begingroup
 \begin{srl}[!h]
@@ -553,7 +553,9 @@ relationship in which those sequences stand to each other.
   \end{minipage}
 \end{srl}
 \label{srl:ablation}
-\captionof{srl}{\textbf{Left}: Only predicate SRLs. \textbf{Right}:  Only argument SRLs.}
+\captionof{srl}{Only predicate SRLs (\textbf{left}) and only argument SRLs (\textbf{right}) of \ref{srl:normal}. The experiments revealed
+  that models already slightly improve by having access to these reduced SRL information structures in isolation, but only if the
+  full, combined SRL information is provided, the performance increases reach their maximum (see table \ref{tab:srl-abla}).}
 \endgroup
 
 

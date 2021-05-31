@@ -19,7 +19,7 @@ rounds of experiments where computed with one hyperparameter difference, resulti
 an $\alpha$ and $\beta$ for each dataset. The hyperparameters which were kept stable
 over all experiments are listed in table \ref{tab:hyper-configs}.
 
-\tab{tab:hyper-configs}{Stable hyperparameter configurations.}{
+\tab{tab:hyper-configs}{Hyperparameter configurations that were kept fixed over all experiments.}{
   \scalebox{0.9}{
     \begin{tabular}{ll}
     Learning Rate              & 2e-05                         \\
@@ -30,7 +30,7 @@ over all experiments are listed in table \ref{tab:hyper-configs}.
     SRL Bidirectional          & True                          \\
     SRL Dropout                & 0.1                           \\
     \# of Epochs               & 50 (deISEAR, SCARE, XNLI, MLQA, XQuAD), 20 (PAWS-X) \\
-    Batch Size                 & 16 (classification datasets) 8 (Q\&A datasets) \\
+    Batch Size                 & 16 (classification datasets) 8 (question answering datasets) \\
     Maximum Sequence Length    & 100 (PAWS-X, XNLI) 512 (MLQA, XQuAD)
     \end{tabular}
   }
@@ -46,8 +46,8 @@ the different hyperparameter for the two runs is listed for each dataset.
     deISEAR                    & Maximum Length: 40         & Maximum Length: 200              \\
     SCARE                      & Maximum Length: 50         & Maximum Length: 100              \\
     PAWS-X                     & Examples Train Set: 8,000  & Examples Train Set: 48,977 (all) \\
-    XNLI                       & Predefined splits          & New Splits 70:15:15              \\
-    MLQA                       & Predefined splits          & New Splits 70:15:15              \\
+    XNLI                       & Predefined Splits          & New Splits 70:15:15              \\
+    MLQA                       & Predefined Splits          & New Splits 70:15:15              \\
     XQuAD                      & SRLs Encoded Sentence-wise & Regular GliBERT SRL Encoding     \\
     \end{tabular}
   }
@@ -78,10 +78,10 @@ losses for the same epoch are marked in the same manner.
   \end{center}
   \stepcounter{myfigure}
   \caption[Accuracy/Loss plots of three experiments]{Accuracy and loss plots for three
-experiments (\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and
-\textcolor{std-green}{test} set): The vertical line marks the epoch with the highest
-development set accuracy; the test set accurracy for this epoch is taken as reference performance
-of the model.}
+    experiments (\textcolor{std-blue}{training}, \textcolor{std-red}{development}, and
+    \textcolor{std-green}{test} set): The vertical lines mark the epoch with the highest
+    development set accuracy; the test set accuracy for this epoch is reported as result. The
+    corresponding losses for that epoch are marked in the plots to the right.}
   \label{fig:acc-loss}
 \end{figure}
 
@@ -119,7 +119,7 @@ by the model.
 % development and test results compared).
 
 
-\section{Controlling for Statistical Significance}
+\section{Testing for Statistical Significance}
 
 Before reporting the actual results, I briefly elaborate on my strategy for
 assessing statistical significance, since this is a crucial aspect of empirical
@@ -152,21 +152,21 @@ favor?'' \citep{yeh2000more}
 
 In other words, to be able to reject the above defined null-hypothesis, usually a $p$-value test is
 computed, where $p$ is defined ``as the probability, under the null hypothesis $H_0$, of obtaining
-a result equal to or more extreme than what was actually observe'' \citep[p.~1384]{dror2018hitchhiker}:
+a result equal to or more extreme than what was actually observed'' \citep[p.~1384]{dror2018hitchhiker}:
 
 $Pr(\delta(X) \geq \delta_{observed} | H_0)$.
 
 There are different approaches as to how this probability can
 be computed: \citep{koehn2004statistical}, e.g., proposes a
 ``paired bootstrap resampling'' algorithm he applies to machine
-translation systems. I follow here \cite{morgan2005statistical} who
-argues in favour of an ``approximate randomization '' approach,
+translation systems. I follow here \cite{morgan2005statistical}
+who argues in favour of an ``approximate randomization'' approach,
 which makes less assumptions about the distribution of the sample
-distributions.\myfootnote{ \citeauthor{koehn2004statistical}
-presupposes that the results to be compared stem from different
-subsamples of the original test set which get re-drawn repeatedly
-with replacement. In my case, this does not hold since my results
-are not obtained from subsamples but the whole test set.}
+distributions.\myfootnote{ \citeauthor{koehn2004statistical}, for
+example, presupposes that the results to be compared stem from
+different subsamples of the original test set which get re-drawn
+repeatedly with replacement. In my case, this does not hold since
+the predictions are always performed on the whole test set.}
 
 % ``It is important to have a method at hand that gives us assurances that the
 % observed increase in the test score on a test set reflects true improvement in system
@@ -623,7 +623,7 @@ most gains but with only one of them being significant.
                                        \textbf{Right}: Comparison of accuray points gained/lost after adding SRLs. Darker Colors indicate significant runs; light green stands for a neutral run, i.e. where adding SRLs information performed equally compared to the vanilla architecture}{15}{Results Accumulation for each Dataset}
 
 Still, the sheer number of experiments where adding SRL structure compared to the four experiments
-where it had an negative impact makes the GRU head the most realible extracting task-supporting
+where it had a negative impact makes the GRU head the most realible extracting task-supporting
 features out of SRL-enriched BERT embeddings.
 
 \section{Question Answering Dataset Results}
@@ -664,7 +664,7 @@ setting, this 0.29\% gain is not statistically significant (see table
 \tab{tab:results-qa}{Test set accuracy ensemble results (per 5 models) on question answering tasks. \textbf{Bold} font marks the best result per line, \underline{underline} the second best, and \textit{italics} the poorest.}{
   \scalebox{1}{
     \begin{tabular}{llccc|ccc}
-                                               &           & \multicolumn{6}{c}{\large \textbf{Q\&A Datasets}}  \\ \\
+                                               &           & \multicolumn{6}{c}{\large \textbf{Question Answering Datasets}}  \\ \\
                                                &           & \multicolumn{6}{c}{\textbf{Span Prediction Head}}                                                                                                                                                                                                \\ \cline{3-8}
                                                &           & \multicolumn{3}{c|}{subtokenized}                                                                                                & \multicolumn{3}{c}{subtokens merged}                                                                          \\ \cline{3-8}
                                                &           & \multicolumn{1}{c|}{$-$SRL}                     & \multicolumn{2}{c|}{+SRL}                                                      & \multicolumn{1}{c|}{$-$SRL}         & \multicolumn{2}{c}{+SRL}                                                \\ %\cline{3-4}\cline{6-7}
@@ -687,7 +687,7 @@ the BERT subtokenization always showed stronger results than BERT merging. 5 tim
 total 8 settings the differences were even highly significant with $p < 1\%$ and one time
 moderately significant with $p < 5\%$.
 
-Also for the Q\&A datasets, I compare setting-wise the performance of $-$SRL against the better +SRL experiment
+Also for the question answering datasets, I compare setting-wise the performance of $-$SRL against the better +SRL experiment
 (see right side of table \ref{tab:qa-gain-loss-token-merged}): The only significant result is the MLQA $\alpha$
 subtokenized setting, where the SRL-enriching led to a loss of 1.01\%. The other results are mixed, with $-$SRL
 performing 3 times better than +SRL.

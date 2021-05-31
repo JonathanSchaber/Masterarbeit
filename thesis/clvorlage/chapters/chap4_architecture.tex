@@ -764,10 +764,10 @@ n$.} to it, and selecting the component, i.e. class, with the highest probabilit
 
 $\hat{y} = argmax(softmax(w_{0}W+b))$
 
-where $W^{i\times j}$ is the weight matrix of the FFNN layer and $b$ is a bias term learned during
-fine-tuning. The dimensionalities ($i$ and $j$) of $W$ vary according to the setting and dataset:
-while $j$ is the number of classes for the task --- this number ranges from 2 (PAWS-X, \emph{true},
-\emph{false}) to 7 (deISEAR, \emph{Angst, Wut, Ekel, Freude, Scham, Schuld, Traurigkeit}) ---, $i$
+where $W^{m\times n}$ is the weight matrix of the FFNN layer and $b$ is a bias term learned during
+fine-tuning. The dimensionalities ($m$ and $n$) of $W$ vary according to the setting and dataset:
+while $n$ is the number of classes for the task --- this number ranges from 2 (PAWS-X, \emph{true},
+\emph{false}) to 7 (deISEAR, \emph{Angst, Wut, Ekel, Freude, Scham, Schuld, Traurigkeit}) ---, $m$
 is either equal to 768 (no SRL information) or equal to 800 (plus SRL information).
 
 In figure \ref{fig:cls-head}, the information flow through GliBERT's network and the final FFNN
@@ -841,7 +841,7 @@ large vector, the positional information of the SRLs don't get lost.
     \includegraphics[width=1.0\linewidth]{images/bert_qa.png}
   \end{center}
   \stepcounter{myfigure}
-  \caption[BERT Q\&A]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
+  \caption[BERT Question Answering]{Vanilla BERT question answering head. Figure taken from \citep{devlin2018bert}.}
   \label{fig:bert-qa}
 \end{wrapfigure}
 
@@ -888,7 +888,7 @@ $\overrightarrow{h_i} \in \mathbb{R}^{712}$ for the forward and $\overleftarrow{
 networks, $\overrightarrow{h_n}$ and $\overleftarrow{h_n}$ get concatenated, and this
 vector $w \in \mathbb{R}^{1424}= \overrightarrow{h_n} ; \overleftarrow{h_n}$ gets fed into a final dense
 layer, which computes class probabilities, similar to the [CLS] and FFNN head final
-layers.\myfootnote{Note that the $n$th hidden state of the backward network is actually
+layers.\myfootnote{Note that the $n$-th hidden state of the backward network is actually
 the state corresponding to the token $t_0$, i.e. the first token, in the sequence.} This
 process is illustrated in figure \ref{fig:gru-head}.
 
@@ -935,7 +935,7 @@ as beginning of the answer span and the corresponding end token is selected.
 
 \subsubsection{Span Prediction Head}
 
-The standard implementation of the Q\&A BERT head consists of one one-layer FFNN which predicts
+The standard implementation of the question answering BERT head consists of one one-layer FFNN which predicts
 on each input token the probability of it being the start of the answer span and the end of the
 answer span, respectively (as seen in figure \ref{fig:span-pred-head}). After both probabilities are computed for all tokens, the ones with
 the highest probability get selected; no further logic is enforced, such as that the index of
@@ -947,8 +947,7 @@ $index_{start} = argmax(softmax(\hat{y}_{0_{[0]}}, \hat{y}_{1_{[0]}}, \dotso , \
 
 $index_{end} = argmax(softmax(\hat{y}_{0_{[1]}}, \hat{y}_{1_{[1]}}, \dotso , \hat{y}_{n_{[1]}})$
 
-where $\hat{y}_i = w_iW+b$ for the $i$-th input token with $\hat{y} \in \mathbb{R}^2$ and
-the rectangular brackets denote dimension selection.
+where $\hat{y}_i = w_iW+b$ for the $i$-th input token with $\hat{y} \in \mathbb{R}^2$ (rectangular brackets denote dimension selection).
 
 Since the standard implementation already implements a model that predicts on each token,
 the SRL-embedding enriching is straightforward:
@@ -958,7 +957,7 @@ SRL-enriched token. Secondly, the start and end span indexes have to be recomput
 where the BERT subtokens merging approach is selected.
 
 \fig{images/head-span_pred.png}{fig:span-pred-head}{The GliBERT head for span prediction
-    in Question Answering Tasks. After the tokens and SRLs were consumed by BERT and the SRL
+    in question answering Tasks. After the tokens and SRLs were consumed by BERT and the SRL
     embedding module, one FFNN predict on each token in the sequence, how likely it is first
     and the last token of the answer span. After these predictions have been made for all tokens, the token
     with the highest value for each position gets selected.}{10}{Span Prediction Head}
