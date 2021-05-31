@@ -142,7 +142,7 @@ After training a model, its results and actual predictions get written to two fi
     <file name result files>.results.json
 
 The former contains information about the hyperparameters used during training (the passed config
-file is simply written to it) and for each epoch the loss and accurracy for all sets are reported.
+file is simply written to it) and for each epoch the loss and accuracy for all sets are reported.
 In the latter, the actual predictions and gold labels for the development and test set for each epoch
 are written.
 
@@ -173,17 +173,21 @@ To control for two models, or ensembles, if the differences between the control
 (-c) and test (-t) one are statistically significant, run the following command:
 
     $ python test_significanc.py -c \
-        <control_file_1>.json \
-        <control_file_2>.json \
+        <control file 1>.json \
+        <control file 2>.json \
         ...
-        <control_file_n>.json \
+        <control file n>.json \
         -t \
-        <test_file_1>.json \
-        <test_file_2>.json \
+        <test file 1>.json \
+        <test file 2>.json \
         ...
-        <test_file_n>.json
+        <test file n>.json
 
 
-# Miscallenaoues (Plotting graphs, etc.)
+# Miscellaneous
 
+The following command takes one results gile as input and plots two graphs, the
+loss and accuracy development of its mode:
+
+    $ Rscript --vanilla R_scripts/graphs.R <results file>.json
 
