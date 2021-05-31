@@ -169,6 +169,19 @@ best epoch get ensembled and a majority vote is carried out:
 
 ![ensemble_predic.py output](miscellaneous/ensemble_predict.png)
 
+To control for two models, or ensembles, if the differences between the control
+(-c) and test (-t) one are statistically significant, run the following command:
+
+    $ python test_significanc.py -c \
+        <control_file_1>.json \
+        <control_file_2>.json \
+        ...
+        <control_file_n>.json \
+        -t \
+        <test_file_1>.json \
+        <test_file_2>.json \
+        ...
+        <test_file_n>.json
 
 
 # Miscallenaoues (Plotting graphs, etc.)
