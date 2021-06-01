@@ -17,8 +17,7 @@ log.txt
 results/*
 tags
 __pycache__/
-thesis/clvorlage/images/
-thesis/clvorlage/appendix/
+thesis/*
 .Rhistory
 .RData
 .Rhistory
