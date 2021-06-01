@@ -35,9 +35,9 @@ Download the data and adhere to the following folder structure (it is important 
 
 	/<path>/<to>/MLQA/
 			├─dev/
-			    ├─dev-context-de-question-de.json
+				├─dev-context-de-question-de.json
 			├─test/
-			    ├─test-context-de-question-de.json
+				├─test-context-de-question-de.json
 
 	/<path>/<to>/PAWS-X/
 			├─de/
