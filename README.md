@@ -1,6 +1,6 @@
 # Enriching BERT Embeddings with Semantic Role Labels for Natural Language Understanding Tasks in German
 
-This repository contains all code files relating to my master's thesis.
+This repository contains all code files relating to my [MA thesis](https://github.com/JonathanSchaber/Masterarbeit/blob/master/Schaber-Enriching_BERT_Embeddings.pdf).
 
 To reproduce the results, run the commands under [Preparing the Data](#preparing-the-data)
 
