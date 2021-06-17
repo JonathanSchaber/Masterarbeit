@@ -172,7 +172,7 @@ best epoch get ensembled and a majority vote is carried out:
 ![ensemble_predic.py output](miscellaneous/ensemble_predict.png)
 
 To control for two models, or ensembles, if the differences between the control
-(`-c`) and test (`-t) one are statistically significant, run the following command:
+(`-c`) and test (`-t`) one are statistically significant, run the following command:
 
     $ python test_significanc.py -c \
         <control file 1>.json \
@@ -188,7 +188,7 @@ To control for two models, or ensembles, if the differences between the control
 
 # Miscellaneous
 
-The following command takes one results gile as input and plots two graphs, the
+The following command takes one results file as input and plots two graphs, the
 loss and accuracy development of its mode:
 
     $ Rscript --vanilla R_scripts/graphs.R <results file>.json
